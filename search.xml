@@ -4,11 +4,11 @@
   
     
     <entry>
-      <title>test</title>
-      <link href="/blog/2025/01/27/2025-1-26/"/>
-      <url>/blog/2025/01/27/2025-1-26/</url>
+      <title>我的第一篇文章</title>
+      <link href="/blog/2025/01/27/test/"/>
+      <url>/blog/2025/01/27/test/</url>
       
-        <content type="html"><![CDATA[<h1 id="谁便写点东西试试"><a href="#谁便写点东西试试" class="headerlink" title="谁便写点东西试试"></a>谁便写点东西试试</h1><p>时间过得真快啊</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="图像分析与处理题库"><a href="#图像分析与处理题库" class="headerlink" title="图像分析与处理题库"></a>图像分析与处理题库</h1><h2 id="01-绪论"><a href="#01-绪论" class="headerlink" title="01 绪论"></a>01 绪论</h2><p><strong>数字图像</strong> </p><p><strong>图像是客观世界能量或状态以可视化形式在二维平面上的投影。</strong><br><img src="/blog/.io//image/street.png" alt="街道"><br><img src="/blog/.io//image%5C1.jpg"></p>]]></content>
       
       
       
@@ -17,11 +17,11 @@
     
     
     <entry>
-      <title>我的第一篇文章</title>
-      <link href="/blog/2025/01/27/test/"/>
-      <url>/blog/2025/01/27/test/</url>
+      <title>test</title>
+      <link href="/blog/2025/01/27/2025-1-26/"/>
+      <url>/blog/2025/01/27/2025-1-26/</url>
       
-        <content type="html"><![CDATA[<h1 id="图像分析与处理题库"><a href="#图像分析与处理题库" class="headerlink" title="图像分析与处理题库"></a>图像分析与处理题库</h1><h2 id="01-绪论"><a href="#01-绪论" class="headerlink" title="01 绪论"></a>01 绪论</h2><p><strong>数字图像</strong> </p><p><strong>图像是客观世界能量或状态以可视化形式在二维平面上的投影。</strong><br><img src="/blog/image/street.png" alt="街道"></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="谁便写点东西试试"><a href="#谁便写点东西试试" class="headerlink" title="谁便写点东西试试"></a>谁便写点东西试试</h1><p>时间过得真快啊</p>]]></content>
       
       
       
@@ -43,6 +43,17 @@
     
   
   
+    
+    
+    <entry>
+      <title>音乐</title>
+      <link href="/blog/movies/index.html"/>
+      <url>/blog/movies/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
     
     
     <entry>
@@ -69,8 +80,8 @@
     
     <entry>
       <title>音乐</title>
-      <link href="/blog/movies/index.html"/>
-      <url>/blog/movies/index.html</url>
+      <link href="/blog/music/index.html"/>
+      <url>/blog/music/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -82,17 +93,6 @@
       <title>tags</title>
       <link href="/blog/tags/index.html"/>
       <url>/blog/tags/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>音乐</title>
-      <link href="/blog/music/index.html"/>
-      <url>/blog/music/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
