@@ -9,8 +9,15 @@
   <entry>
     <title>第二篇博客</title>
     <url>/blog/2025/01/29/%E7%AC%AC%E4%BA%8C%E7%AF%87%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<p><img src="/blog/.io//%E7%AC%AC%E4%BA%8C%E7%AF%87%E5%8D%9A%E5%AE%A2.assets/202412-%E8%A5%BF%E5%8D%97%E5%B4%87%E6%A5%BC-%E5%86%AC%E5%AD%A3-%E6%99%9A%E9%9C%9E-17381521699422-17381521755794.png"></p>
-<p>好美啊</p>
+    <content><![CDATA[<p><img src="/blog/.io//%E7%AC%AC%E4%BA%8C%E7%AF%87%E5%8D%9A%E5%AE%A2.assets/%E5%B7%A5%E7%A8%8B%E5%85%89%E5%AD%A6%E5%AF%BC%E8%AE%BA-17381526471529.png">好美啊</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>我的第一篇文章</title>
+    <url>/blog/2025/01/27/test/</url>
+    <content><![CDATA[<h1 id="图像分析与处理题库"><a href="#图像分析与处理题库" class="headerlink" title="图像分析与处理题库"></a>图像分析与处理题库</h1><h2 id="01-绪论"><a href="#01-绪论" class="headerlink" title="01 绪论"></a>01 绪论</h2><p><strong>数字图像</strong> </p>
+<p><strong>图像是客观世界能量或状态以可视化形式在二维平面上的投影。</strong><br><img src="/blog/.io//image/street.png" alt="街道"></p>
+<p><img src="/blog/.io//test.assets/%E5%A4%A9%E5%AE%89%E9%97%A8.png"></p>
 ]]></content>
   </entry>
   <entry>
@@ -32,14 +39,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>我的第一篇文章</title>
-    <url>/blog/2025/01/27/test/</url>
-    <content><![CDATA[<h1 id="图像分析与处理题库"><a href="#图像分析与处理题库" class="headerlink" title="图像分析与处理题库"></a>图像分析与处理题库</h1><h2 id="01-绪论"><a href="#01-绪论" class="headerlink" title="01 绪论"></a>01 绪论</h2><p><strong>数字图像</strong> </p>
-<p><strong>图像是客观世界能量或状态以可视化形式在二维平面上的投影。</strong><br><img src="/blog/.io//image/street.png" alt="街道"></p>
-<p><img src="/blog/.io//test.assets/%E5%A4%A9%E5%AE%89%E9%97%A8.png"></p>
-]]></content>
-  </entry>
-  <entry>
     <title>音乐</title>
     <url>/blog/Gallery/index.html</url>
     <content><![CDATA[]]></content>
@@ -50,6 +49,11 @@
     <content><![CDATA[]]></content>
   </entry>
   <entry>
+    <title>音乐</title>
+    <url>/blog/categories/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>tags</title>
     <url>/blog/tags/index.html</url>
     <content><![CDATA[]]></content>
@@ -57,11 +61,6 @@
   <entry>
     <title>音乐</title>
     <url>/blog/music/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>音乐</title>
-    <url>/blog/categories/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
 </search>
