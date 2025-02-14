@@ -35,11 +35,6 @@
   </entry>
   <entry>
     <title>音乐</title>
-    <url>/blog/Gallery/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>音乐</title>
     <url>/blog/categories/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
@@ -56,6 +51,11 @@
   <entry>
     <title>tags</title>
     <url>/blog/tags/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>音乐</title>
+    <url>/blog/Gallery/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
 </search>
