@@ -86,8 +86,19 @@
     
     <entry>
       <title>音乐</title>
-      <link href="/blog/movies/index.html"/>
-      <url>/blog/movies/index.html</url>
+      <link href="/blog/Gallery/index.html"/>
+      <url>/blog/Gallery/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>音乐</title>
+      <link href="/blog/music/index.html"/>
+      <url>/blog/music/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -99,17 +110,6 @@
       <title>音乐</title>
       <link href="/blog/categories/index.html"/>
       <url>/blog/categories/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>音乐</title>
-      <link href="/blog/Gallery/index.html"/>
-      <url>/blog/Gallery/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -130,8 +130,8 @@
     
     <entry>
       <title>音乐</title>
-      <link href="/blog/music/index.html"/>
-      <url>/blog/music/index.html</url>
+      <link href="/blog/movies/index.html"/>
+      <url>/blog/movies/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
