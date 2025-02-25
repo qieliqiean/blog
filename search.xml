@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>心想事成</title>
-    <url>/blog/2025/01/30/%E5%BF%83%E6%83%B3%E4%BA%8B%E6%88%90/</url>
-    <content><![CDATA[<h1 id="心想事成"><a href="#心想事成" class="headerlink" title="心想事成"></a>心想事成</h1><p>还是写点不想让认识的人瞧见，但又想倾述的事吧。</p>
-<p>一个人在野地里坐到黄昏，等天空把夕阳吹成一朵炽热的花，风轻轻而来，也把泪水带离脸颊，我甚至不知道为什么而哭，或许只是对这人世间的理解偏差，这样的寂寞太漫长了，一条河流怎么能盛装得下，我捡起一颗将死的野草，告诉它，这个夏天就此作罢！</p>
-<p>相见的人，不想见的人。<br>讨厌的人，麻烦的事。<br><img src="/blog/image/1738159231727.jpg"></p>
+    <title>井中月</title>
+    <url>/blog/2025/02/25/%E4%BA%95%E4%B8%AD%E6%9C%88/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>想法</category>
+      </categories>
+      <tags>
+        <tag>井中月</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>笼中雀</title>
+    <url>/blog/2025/02/25/%E7%AC%BC%E4%B8%AD%E9%9B%80/</url>
+    <content><![CDATA[<hr>
+<p>置身其中，好一个笼中雀。</p>
 ]]></content>
+      <categories>
+        <category>想法</category>
+      </categories>
+      <tags>
+        <tag>笼中雀</tag>
+      </tags>
   </entry>
   <entry>
     <title>语法写作笔记</title>
@@ -22,7 +38,10 @@
 </blockquote>
 </blockquote>
 <h1 id="代码段"><a href="#代码段" class="headerlink" title="代码段"></a>代码段</h1><p><strong>记住符号是键盘数字1左边的那个，不是enter左边的那个</strong></p>
-<p>&#96;&#96;（两个符号中间填东西就行）</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="code">`中间的就是代码段`</span></span><br></pre></td></tr></table></figure>
+
+
+
 <p><code>中间的就是代码段</code></p>
 <p><code>hello world</code></p>
 <p>hello world</p>
@@ -37,52 +56,20 @@
 <p>$ \beta $<br>$$<br>\beta \times x \geq 30<br>$$</p>
 <h1 id="分隔符"><a href="#分隔符" class="headerlink" title="分隔符"></a>分隔符</h1><p>—后面不能接东西</p>
 <hr>
-<h1 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h1><p>（|||）</p>
-<table>
-<thead>
-<tr>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th align="center">5</th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>77</td>
-<td>rr</td>
-<td>rr</td>
-<td>g</td>
-<td align="center">r</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td align="center"></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td align="center"></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td align="center"></td>
-<td></td>
-</tr>
-</tbody></table>
-<h1 id="分点"><a href="#分点" class="headerlink" title="分点"></a>分点</h1><p>-英文这个符号后面接一个空格</p>
+<h1 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h1><p>建议用typora自带的&#x3D;&#x3D;<strong>Ctrl T</strong>&#x3D;&#x3D;快捷键</p>
+<h1 id="分点"><a href="#分点" class="headerlink" title="分点"></a>分点</h1><h2 id="无序分点"><a href="#无序分点" class="headerlink" title="无序分点"></a>无序分点</h2><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> 后面接文本</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>后面接文本</p>
+<h2 id="有序分点"><a href="#有序分点" class="headerlink" title="有序分点"></a>有序分点</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1. 中间有空格</span><br><span class="line">2.</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>中间有空格</li>
+<li>记住句号后面有空格</li>
+</ol>
+</li>
+</ul>
+<p>-英文这个符号后面接一个空格</p>
 <ul>
 <li>第一</li>
 <li>第二</li>
@@ -91,24 +78,56 @@
 <h1 id="插入视频"><a href="#插入视频" class="headerlink" title="插入视频"></a>插入视频</h1><h1 id="文字样式"><a href="#文字样式" class="headerlink" title="文字样式"></a>文字样式</h1><h2 id="下划线"><a href="#下划线" class="headerlink" title="下划线"></a>下划线</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;u&gt;下划线演示&lt;/u&gt;</span><br></pre></td></tr></table></figure>
 
 <p><u>试试下划线</u></p>
-<p>这个不方便建议用<u>typora</u>的ctrl+u</p>
+<p>这个不方便建议用<u>typora</u>的&#x3D;&#x3D;ctrl+u&#x3D;&#x3D;</p>
 <h2 id="斜体"><a href="#斜体" class="headerlink" title="斜体"></a>斜体</h2><p>_ 要斜的字体（没有空格）_<br><em>斜体</em><br><strong>&#x3D;&#x3D;备注&#x3D;&#x3D;</strong>：斜体和加粗可以同时使用，如：<em><strong>字体</strong></em></p>
+<p>建议用typora的&#x3D;&#x3D;Ctrl I&#x3D;&#x3D;</p>
 <h2 id="加粗"><a href="#加粗" class="headerlink" title="加粗"></a>加粗</h2><p>** 要加粗的字体（星号与字体之间没有空格）**</p>
 <p><em><strong>示例</strong></em></p>
 <p><strong>加粗</strong></p>
-<h2 id="高亮"><a href="#高亮" class="headerlink" title="高亮"></a>高亮</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">文本`高亮`演示</span><br><span class="line">==高亮部分==</span><br></pre></td></tr></table></figure>
+<p>建议用&#x3D;&#x3D;Ctrl B&#x3D;&#x3D;快捷键</p>
+<h2 id="高亮"><a href="#高亮" class="headerlink" title="高亮"></a>高亮</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">文本`高亮`演示</span><br><span class="line">==高亮部分==</span><br><span class="line">typora适用，markdown不适用，网页端无法正常显示</span><br></pre></td></tr></table></figure>
 
 <p><code>高亮</code></p>
 <p>&#x3D;&#x3D;两个等号夹中间&#x3D;&#x3D;</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hello</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="文本删除线"><a href="#文本删除线" class="headerlink" title="文本删除线"></a>文本删除线</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">文本~~删除~~线演示</span><br></pre></td></tr></table></figure>
 
 <p><del>两个波浪线</del></p>
+<h2 id="大小"><a href="#大小" class="headerlink" title="大小"></a>大小</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-size:60px&quot;</span>&gt;</span>大小<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><span style="font-size:40px">大小</span></p>
+<h2 id="颜色"><a href="#颜色" class="headerlink" title="颜色"></a>颜色</h2><p>&#x3D;&#x3D;字体颜色支持16进制颜色与RGB颜色表，或者简单的red,blue这种&#x3D;&#x3D;</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:blue&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:rgb(116, 219, 38)&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#FF0000&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><span style="color:blue">文本</span></p>
+<p><span style="color:rgb(116, 219, 38)">文本</span></p>
+<p><span style="color:#FF0000">文本</span></p>
+<h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family:Simsun&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #宋体</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family: &#x27;Microsoft YaHei&#x27;&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #微软雅黑</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family: &#x27;Times New Roman&#x27;&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #新罗马</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family: &#x27;SimHei&#x27;&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #黑体</span><br></pre></td></tr></table></figure>
+
+<p><span style="font-family:Simsun">文本</span></p>
+<p><span style="font-family: 'Microsoft YaHei'">文本</span> </p>
+<p><span style="font-family: 'Times New Roman'">文本</span></p>
+<h2 id="字体位置"><a href="#字体位置" class="headerlink" title="字体位置"></a>字体位置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;div style=&quot;text-align: center;&quot;&gt;文本居中&lt;/div&gt;</span><br><span class="line">&lt;div style=&quot;text-align: right;&quot;&gt;文本居右&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<div style="text-align: center;">文本居中</div>
+
+<div style="text-align: right;">文本居右</div>
+
 <h1 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h1><p><a href="#%E8%A1%A8%E6%A0%BC">跳转</a></p>
 <p><a href="##%E4%B8%8B%E5%88%92%E7%BA%BF">跳转到高亮</a></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">英文中括号+英文小括号，括号里是要跳转的地方</span><br><span class="line">[跳转链接名字，随意取](#大纲标题)  PS:#后面不接空格</span><br></pre></td></tr></table></figure>
 
+<p><a href="##%E6%96%9C%E4%BD%93">跳转到斜体</a></p>
+<p>建议用&#x3D;&#x3D;Ctrl K&#x3D;&#x3D;快捷键</p>
+<h1 id="任务列表"><a href="#任务列表" class="headerlink" title="任务列表"></a>任务列表</h1><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> [ ] 记得取快递(-和[]间有空格，[ ]中间也有空格，[]和后面的文本也有空格)</span><br></pre></td></tr></table></figure>
 
-
+<ul>
+<li><ul>
+<li><input checked="" disabled="" type="checkbox"> 记得取快递</li>
+</ul>
+</li>
+</ul>
 <h1 id="文章置顶"><a href="#文章置顶" class="headerlink" title="文章置顶"></a>文章置顶</h1><ul>
 <li>你可以直接在文章的<code>front-matter</code>区域里添加<code>sticky: 1</code>属性来把这篇文章置顶。数值越大，置顶的优先级越大。</li>
 </ul>
@@ -117,114 +136,130 @@
 <table>
 <thead>
 <tr>
-<th align="center">写法</th>
-<th>解释</th>
+<th>写法</th>
+<th align="center">解释</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">title</td>
-<td>【必需】文章标题</td>
+<td>title</td>
+<td align="center">【必需】文章标题</td>
 </tr>
 <tr>
-<td align="center">date</td>
-<td>【必需】文章创建日期</td>
+<td>date</td>
+<td align="center">【必需】文章创建日期</td>
 </tr>
 <tr>
-<td align="center">updated</td>
-<td>【可选】文章更新日期</td>
+<td>updated</td>
+<td align="center">【可选】文章更新日期</td>
 </tr>
 <tr>
-<td align="center">tags</td>
-<td>【可选】文章标籤</td>
+<td>tags</td>
+<td align="center">【可选】文章标籤</td>
 </tr>
 <tr>
-<td align="center">categories</td>
-<td>【可选】文章分类</td>
+<td>categories</td>
+<td align="center">【可选】文章分类</td>
 </tr>
 <tr>
-<td align="center">keywords</td>
-<td>【可选】文章关键字</td>
+<td>keywords</td>
+<td align="center">【可选】文章关键字</td>
 </tr>
 <tr>
-<td align="center">description</td>
-<td>【可选】文章描述</td>
+<td>description</td>
+<td align="center">【可选】文章描述</td>
 </tr>
 <tr>
-<td align="center">top_img</td>
-<td>【可选】文章顶部图片</td>
+<td>top_img</td>
+<td align="center">【可选】文章顶部图片</td>
 </tr>
 <tr>
-<td align="center">cover</td>
-<td>【可选】文章缩略图(如果没有设置top_img,文章页顶部将显示缩略图，可设为false&#x2F;图片地址&#x2F;留空)</td>
+<td>cover</td>
+<td align="center">【可选】文章缩略图(如果没有设置top_img,文章页顶部将显示缩略图，可设为false&#x2F;图片地址&#x2F;留空)</td>
 </tr>
 <tr>
-<td align="center">comments</td>
-<td>【可选】显示文章评论模块(默认 true)</td>
+<td>comments</td>
+<td align="center">【可选】显示文章评论模块(默认 true)</td>
 </tr>
 <tr>
-<td align="center">toc</td>
-<td>【可选】显示文章TOC(默认为设置中toc的enable配置)</td>
+<td>toc</td>
+<td align="center">【可选】显示文章TOC(默认为设置中toc的enable配置)</td>
 </tr>
 <tr>
-<td align="center">toc_number</td>
-<td>【可选】显示toc_number(默认为设置中toc的number配置)</td>
+<td>toc_number</td>
+<td align="center">【可选】显示toc_number(默认为设置中toc的number配置)</td>
 </tr>
 <tr>
-<td align="center">toc_style_simple</td>
-<td>【可选】显示 toc 简洁模式</td>
+<td>toc_style_simple</td>
+<td align="center">【可选】显示 toc 简洁模式</td>
 </tr>
 <tr>
-<td align="center">copyright</td>
-<td>【可选】显示文章版权模块(默认为设置中post_copyright的enable配置)</td>
+<td>copyright</td>
+<td align="center">【可选】显示文章版权模块(默认为设置中post_copyright的enable配置)</td>
 </tr>
 <tr>
-<td align="center">copyright_author</td>
-<td>【可选】文章版权模块的文章作者</td>
+<td>copyright_author</td>
+<td align="center">【可选】文章版权模块的文章作者</td>
 </tr>
 <tr>
-<td align="center">copyright_author_href</td>
-<td>【可选】文章版权模块的文章作者链接</td>
+<td>copyright_author_href</td>
+<td align="center">【可选】文章版权模块的文章作者链接</td>
 </tr>
 <tr>
-<td align="center">copyright_url</td>
-<td>【可选】文章版权模块的文章连结链接</td>
+<td>copyright_url</td>
+<td align="center">【可选】文章版权模块的文章连结链接</td>
 </tr>
 <tr>
-<td align="center">copyright_info</td>
-<td>【可选】文章版权模块的版权声明文字</td>
+<td>copyright_info</td>
+<td align="center">【可选】文章版权模块的版权声明文字</td>
 </tr>
 <tr>
-<td align="center">mathjax</td>
-<td>【可选】显示mathjax(当设置mathjax的per_page: false时，才需要配置，默认 false)</td>
+<td>mathjax</td>
+<td align="center">【可选】显示mathjax(当设置mathjax的per_page: false时，才需要配置，默认 false)</td>
 </tr>
 <tr>
-<td align="center">katex</td>
-<td>【可选】显示katex(当设置katex的per_page: false时，才需要配置，默认 false)</td>
+<td>katex</td>
+<td align="center">【可选】显示katex(当设置katex的per_page: false时，才需要配置，默认 false)</td>
 </tr>
 <tr>
-<td align="center">aplayer</td>
-<td>【可选】在需要的页面加载aplayer的js和css,请参考文章下面的音乐 配置</td>
+<td>aplayer</td>
+<td align="center">【可选】在需要的页面加载aplayer的js和css,请参考文章下面的音乐 配置</td>
 </tr>
 <tr>
-<td align="center">highlight_shrink</td>
-<td>【可选】配置代码框是否展开(true&#x2F;false)(默认为设置中highlight_shrink的配置)</td>
+<td>highlight_shrink</td>
+<td align="center">【可选】配置代码框是否展开(true&#x2F;false)(默认为设置中highlight_shrink的配置)</td>
 </tr>
 <tr>
-<td align="center">aside</td>
-<td>【可选】显示侧边栏 (默认 true)</td>
+<td>aside</td>
+<td align="center">【可选】显示侧边栏 (默认 true)</td>
 </tr>
 </tbody></table>
 ]]></content>
       <categories>
-        <category>markdown</category>
+        <category>学习</category>
       </categories>
       <tags>
         <tag>markdown语法</tag>
       </tags>
   </entry>
   <entry>
+    <title>分类</title>
+    <url>/blog/categories/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>照片</title>
+    <url>/blog/Gallery/index.html</url>
+    <content><![CDATA[<p><img src="/blog/image/1.jpg"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>电影</title>
+    <url>/blog/movies/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>写给你的小作文</title>
-    <url>/blog/2025/02/14/%E5%86%99%E7%BB%99%E9%82%B5%E8%89%BA%E5%8D%9A%E7%9A%84%E5%B0%8F%E4%BD%9C%E6%96%87/</url>
+    <url>/blog/movies/%E5%86%99%E7%BB%99%E9%82%B5%E8%89%BA%E5%8D%9A%E7%9A%84%E5%B0%8F%E4%BD%9C%E6%96%87.html</url>
     <content><![CDATA[<h1 id="一"><a href="#一" class="headerlink" title="一"></a>一</h1><p><u>感觉我和你没什么好说的。</u><br><img src="/blog/image/sy1.jpg"></p>
 <p>那就从这句话开始说吧。其实这张纸我一直有好好留着，从确山带到了秦皇岛，后来又带去了深圳，现在又让我带来了长春。</p>
 <h1 id="二"><a href="#二" class="headerlink" title="二"></a>二</h1><p>高中的有些事情我一直记得，记得跟你说我喜欢你，但是当初你好像并没有给我答案，没有接受，也没有拒绝。</p>
@@ -259,19 +294,12 @@
 ]]></content>
   </entry>
   <entry>
-    <title>分类</title>
-    <url>/blog/categories/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>电影</title>
-    <url>/blog/movies/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>tags</title>
-    <url>/blog/tags/index.html</url>
-    <content><![CDATA[]]></content>
+    <title>心想事成</title>
+    <url>/blog/movies/%E5%BF%83%E6%83%B3%E4%BA%8B%E6%88%90.html</url>
+    <content><![CDATA[<h1 id="心想事成"><a href="#心想事成" class="headerlink" title="心想事成"></a>心想事成</h1><p>还是写点不想让认识的人瞧见，但又想倾述的事吧。</p>
+<p>一个人在野地里坐到黄昏，等天空把夕阳吹成一朵炽热的花，风轻轻而来，也把泪水带离脸颊，我甚至不知道为什么而哭，或许只是对这人世间的理解偏差，这样的寂寞太漫长了，一条河流怎么能盛装得下，我捡起一颗将死的野草，告诉它，这个夏天就此作罢！</p>
+<p>相见的人，不想见的人。<br>讨厌的人，麻烦的事。<br><img src="/blog/image/1738159231727.jpg"></p>
+]]></content>
   </entry>
   <entry>
     <title>音乐</title>
@@ -279,9 +307,8 @@
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>照片</title>
-    <url>/blog/Gallery/index.html</url>
-    <content><![CDATA[<p><img src="/blog/image/1.jpg"></p>
-]]></content>
+    <title>分类</title>
+    <url>/blog/tags/index.html</url>
+    <content><![CDATA[]]></content>
   </entry>
 </search>
