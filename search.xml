@@ -107,9 +107,31 @@
     
     
     <entry>
+      <title>音乐</title>
+      <link href="/blog/music/index.html"/>
+      <url>/blog/music/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>照片</title>
+      <link href="/blog/Gallery/index.html"/>
+      <url>/blog/Gallery/index.html</url>
+      
+        <content type="html"><![CDATA[<p><img src="/image/1.jpg" alt=""></p>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>分类</title>
-      <link href="/blog/categories/index.html"/>
-      <url>/blog/categories/index.html</url>
+      <link href="/blog/tags/index.html"/>
+      <url>/blog/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -152,32 +174,10 @@
     
     <entry>
       <title>分类</title>
-      <link href="/blog/tags/index.html"/>
-      <url>/blog/tags/index.html</url>
+      <link href="/blog/categories/index.html"/>
+      <url>/blog/categories/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>音乐</title>
-      <link href="/blog/music/index.html"/>
-      <url>/blog/music/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>照片</title>
-      <link href="/blog/Gallery/index.html"/>
-      <url>/blog/Gallery/index.html</url>
-      
-        <content type="html"><![CDATA[<p><img src="/image/1.jpg" alt=""></p>]]></content>
       
     </entry>
     
