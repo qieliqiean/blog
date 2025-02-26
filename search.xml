@@ -1,186 +1,479 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>数值分析</title>
-      <link href="/blog/2025/02/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/"/>
-      <url>/blog/2025/02/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/</url>
-      
-        <content type="html"><![CDATA[<h1 id="误差">误差</h1><h2 id="误差-2">误差</h2><p>设 $x$ 为准确值，$x^* $ 为 $x$ 的一个近似值，称  $$e^* = x^* - x$$  为<strong>绝对误差</strong>，简称为<strong>误差</strong>。</p><p>对于一般情形，  $$| x^*  - x | ≤ ε^* $$$ε^* $为<strong>绝对误差限</strong><br><strong>相对误差</strong>的公式表示为：  $$e_r^* = \frac{e^* }{x}$$</p><p>实际中一般取$$e_r^* = \frac{e^* }{x^* }$$</p><p>$x$ 的<strong>相对误差上限</strong>定义为  $$\varepsilon^* = \frac{\varepsilon^* }{|x^* |}$$</p><h2 id="有效数字">有效数字</h2><h3 id="有效数字的定义">有效数字的定义</h3><p>若近似值 $ x^* $ 的误差限是某一位的半个单位，该位到 $ x $ 的第一位非零数字共有 $ n $ 位，则 $ x $ 有 $ n $ 位有效数字。</p><p><strong>示例</strong><br>圆周率 $ \pi = 3.14159265 \dots $</p><ul class="lvl-0"><li class="lvl-2"><p>按四舍五入原则，若取四位小数，则 $ \pi \approx 3.1416 $；</p></li><li class="lvl-2"><p>取五位小数，则 $ \pi \approx 3.14159 $。</p></li></ul><p>它们的绝对误差不超过末位数的半个单位，即：</p><ul class="lvl-0"><li class="lvl-2"><p>$$| \pi - 3.1416 | \leq \frac{1}{2} \times 10^{-4}$$  五位有效数值</p></li><li class="lvl-2"><p>$$| \pi - 3.14159 | \leq \frac{1}{2} \times 10^{-5}$$  六位有效数值</p></li></ul><blockquote><p>按四舍五入规则的直接从后往前数就行了</p></blockquote><p>用科学计数法，记 $ x^* = \pm 0.a_1 a_2 \cdots a_n \times 10^m $（其中 $ a_1 \neq 0 $）。若 $ |x - x^* | \leq 0.5 \times 10^{m-n} $（即 $ a_n $ 的截取按四舍五入规则），则称 $ x^* $ 为有 <strong>$ n $</strong> 位有效数字，精确到 <strong>$ 10^{m-n} $</strong>。</p><h3 id="有效数字与相对误差的关系">有效数字与相对误差的关系</h3><p><strong>有效数字 ⇒ 相对误差限</strong></p><p>已知 $ x^* $ 有 $ n $ 位有效数字，则其相对误差限为<br>$$<br>\varepsilon_r *  = \left| \frac{\varepsilon^* }{x^* } \right| = \frac{0.5 \times 10^{m-n}}{0.a_1 a_2 \cdots a_n \times 10^m} = \frac{10^{-n}}{2 \times 0.a_1 \cdots}  \leq \frac{1}{2a_1} \times 10^{-n+1}<br>$$<br><strong>相对误差限 ⇒ 有效数字</strong></p><p>已知 $ x^* $ 的相对误差限可写为<br>$$<br>\varepsilon_r * = \frac{1}{2(a_1 + 1)} \times 10^{-n+1}<br>$$<br>则<br>$$ { }<br>|x - x^* | \leq \varepsilon_r^ *   \cdot |x^* | = \frac{10^{-n+1}}{2(a_1 + 1)} \times 0.a_1 a_2 \cdots \times 10^m<br>&lt; \frac{10^{-n+1}}{2(a_1 + 1)} \cdot (a_1 + 1) \times 10^{m-1} = 0.5 \times 10^{m-n}<br>$$<br>可见 $ x^* $ 至少有 $ n $ 位有效数字。</p><h2 id="求函数值和算术运算的误差估计">求函数值和算术运算的误差估计</h2><p>设多元函数 $ A = f(x_1, x_2, \cdots, x_n) $，$ x_1^* , x_2^* , \cdots, x_n^*  $ 为 $ x_1, x_2, \cdots, x_n $ 的近似值。 则 $ A $ 的近似值 $ A^* $：$ A^* = f(x_1^* , x_2^* , \cdots, x_n^* ) $。</p><p>函数值 $ A^* $ 的绝对误差： $$ A - A^*  = f(x_1, \cdots, x_n) - f(x_1^* , \cdots, x_n^* ) $$</p><p>在点 $ x = (x_1, x_2, \cdots, x_n) $ 的 Taylor 展开式，设 $ |x_i - x_i^* | $ ($ i = 1, 2, \cdots, n $) 都很小</p><p>略去高阶项：<br>$$<br>A - A^* = f(x_1, \cdots, x_n) - f(x_1^* , \cdots, x_n^* ) \approx \sum_{j=1}^n \frac{\partial f(x)}{\partial x_j} (x_j - x_j^* )<br>$$<br>或<br>$$<br>e(A) \approx \sum_{j=1}^n \frac{\partial f(x)}{\partial x_j} e(x_j)<br>$$</p><p>$$<br>|e(A)| \leq \sum_{j=1}^n \left| \frac{\partial f(x)}{\partial x_j} \right| |e(x_j)|<br>$$</p><p><strong>一元函数时：</strong><br>$$<br>e^* (x)=x^*-x<br>$$</p><p>$$<br>e^* (A)=f(x^* )-f(x)= f'(\xi)(x^* -x)<br>$$</p><h2 id="病态问题与条件数">病态问题与条件数</h2><p>$$ | e_r(y) | = \left| \frac{e(y)}{f(x^* )} \right| = \left| \frac{f(x) - f(x^* )}{f(x^* )} \right| $$ $$ = \left| \frac{f(x) - f(x^* )}{x - x^* } \cdot \frac{x}{f(x)} \cdot \frac{x - x^* }{x} \right| $$ $$ \approx \left| \frac{x \cdot f'(x)}{f(x)} \right| \cdot \left| \frac{x - x^*}{x} \right| = \left| \frac{x \cdot f'(x)}{f(x)} \right| \cdot | e_r(x) | $$</p><p>$| \frac{x \cdot f'(x)}{f(x)} |$为条件数，条件数很大时，初始数据的微小误差可能引起结果 $ A $ 的很大误差。</p><p>对数学问题而言，如果输入数据有微小扰动，引起输出数据（即数学问题的解）有很大扰动，则称数学问题是病态问题，否则称为良态问题。</p>]]></content>
-      
-      
+<search>
+  <entry>
+    <title>井中月</title>
+    <url>/blog/2025/02/25/%E4%BA%95%E4%B8%AD%E6%9C%88/</url>
+    <content><![CDATA[]]></content>
       <categories>
-          
-          <category> 学习 </category>
-          
+        <category>想法</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 数值分析 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>井中月</title>
-      <link href="/blog/2025/02/25/%E4%BA%95%E4%B8%AD%E6%9C%88/"/>
-      <url>/blog/2025/02/25/%E4%BA%95%E4%B8%AD%E6%9C%88/</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
+      <tags>
+        <tag>井中月</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>笼中雀</title>
+    <url>/blog/2025/02/25/%E7%AC%BC%E4%B8%AD%E9%9B%80/</url>
+    <content><![CDATA[<hr>
+<p>置身其中，好一个笼中雀。</p>
+]]></content>
       <categories>
-          
-          <category> 想法 </category>
-          
+        <category>想法</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 井中月 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>笼中雀</title>
-      <link href="/blog/2025/02/25/%E7%AC%BC%E4%B8%AD%E9%9B%80/"/>
-      <url>/blog/2025/02/25/%E7%AC%BC%E4%B8%AD%E9%9B%80/</url>
-      
-        <content type="html"><![CDATA[<hr><p>置身其中，好一个笼中雀。</p>]]></content>
-      
-      
+      <tags>
+        <tag>笼中雀</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数值分析</title>
+    <url>/blog/2025/02/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<h1 id="误差">误差</h1>
+<h2 id="误差-2">误差</h2>
+<p>设 $x$ 为准确值，$x^* $ 为 $x$ 的一个近似值，称  $$e^* = x^* - x$$  为<strong>绝对误差</strong>，简称为<strong>误差</strong>。</p>
+<p>对于一般情形，  $$| x^*  - x | ≤ ε^* $$$ε^* $为<strong>绝对误差限</strong><br>
+<strong>相对误差</strong>的公式表示为：  $$e_r^* = \frac{e^* }{x}$$</p>
+<p>实际中一般取$$e_r^* = \frac{e^* }{x^* }$$</p>
+<p>$x$ 的<strong>相对误差上限</strong>定义为  $$\varepsilon^* = \frac{\varepsilon^* }{|x^* |}$$</p>
+<h2 id="有效数字">有效数字</h2>
+<h3 id="有效数字的定义">有效数字的定义</h3>
+<p>若近似值 $ x^* $ 的误差限是某一位的半个单位，该位到 $ x $ 的第一位非零数字共有 $ n $ 位，则 $ x $ 有 $ n $ 位有效数字。</p>
+<p><strong>示例</strong><br>
+圆周率 $ \pi = 3.14159265 \dots $</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>按四舍五入原则，若取四位小数，则 $ \pi \approx 3.1416 $；</p>
+</li>
+<li class="lvl-2">
+<p>取五位小数，则 $ \pi \approx 3.14159 $。</p>
+</li>
+</ul>
+<p>它们的绝对误差不超过末位数的半个单位，即：</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>$$| \pi - 3.1416 | \leq \frac{1}{2} \times 10^{-4}$$  五位有效数值</p>
+</li>
+<li class="lvl-2">
+<p>$$| \pi - 3.14159 | \leq \frac{1}{2} \times 10^{-5}$$  六位有效数值</p>
+</li>
+</ul>
+<blockquote>
+<p>按四舍五入规则的直接从后往前数就行了</p>
+</blockquote>
+<p>用科学计数法，记 $ x^* = \pm 0.a_1 a_2 \cdots a_n \times 10^m $（其中 $ a_1 \neq 0 $）。若 $ |x - x^* | \leq 0.5 \times 10^{m-n} $（即 $ a_n $ 的截取按四舍五入规则），则称 $ x^* $ 为有 <strong>$ n $</strong> 位有效数字，精确到 <strong>$ 10^{m-n} $</strong>。</p>
+<h3 id="有效数字与相对误差的关系">有效数字与相对误差的关系</h3>
+<p><strong>有效数字 ⇒ 相对误差限</strong></p>
+<p>已知 $ x^* $ 有 $ n $ 位有效数字，则其相对误差限为<br>
+$$<br>
+\varepsilon_r *  = \left| \frac{\varepsilon^* }{x^* } \right| = \frac{0.5 \times 10^{m-n}}{0.a_1 a_2 \cdots a_n \times 10^m} = \frac{10^{-n}}{2 \times 0.a_1 \cdots}  \leq \frac{1}{2a_1} \times 10^{-n+1}<br>
+$$<br>
+<strong>相对误差限 ⇒ 有效数字</strong></p>
+<p>已知 $ x^* $ 的相对误差限可写为<br>
+$$<br>
+\varepsilon_r * = \frac{1}{2(a_1 + 1)} \times 10^{-n+1}<br>
+$$<br>
+则<br>
+$$ { }<br>
+|x - x^* | \leq \varepsilon_r^ *   \cdot |x^* | = \frac{10^{-n+1}}{2(a_1 + 1)} \times 0.a_1 a_2 \cdots \times 10^m<br>
+&lt; \frac{10^{-n+1}}{2(a_1 + 1)} \cdot (a_1 + 1) \times 10^{m-1} = 0.5 \times 10^{m-n}<br>
+$$<br>
+可见 $ x^* $ 至少有 $ n $ 位有效数字。</p>
+<h2 id="求函数值和算术运算的误差估计">求函数值和算术运算的误差估计</h2>
+<p>设多元函数 $ A = f(x_1, x_2, \cdots, x_n) $，$ x_1^* , x_2^* , \cdots, x_n^*  $ 为 $ x_1, x_2, \cdots, x_n $ 的近似值。 则 $ A $ 的近似值 $ A^* $：$ A^* = f(x_1^* , x_2^* , \cdots, x_n^* ) $。</p>
+<p>函数值 $ A^* $ 的绝对误差： $$ A - A^*  = f(x_1, \cdots, x_n) - f(x_1^* , \cdots, x_n^* ) $$</p>
+<p>在点 $ x = (x_1, x_2, \cdots, x_n) $ 的 Taylor 展开式，设 $ |x_i - x_i^* | $ ($ i = 1, 2, \cdots, n $) 都很小</p>
+<p>略去高阶项：<br>
+$$<br>
+A - A^* = f(x_1, \cdots, x_n) - f(x_1^* , \cdots, x_n^* ) \approx \sum_{j=1}^n \frac{\partial f(x)}{\partial x_j} (x_j - x_j^* )<br>
+$$<br>
+或<br>
+$$<br>
+e(A) \approx \sum_{j=1}^n \frac{\partial f(x)}{\partial x_j} e(x_j)<br>
+$$</p>
+<p>$$<br>
+|e(A)| \leq \sum_{j=1}^n \left| \frac{\partial f(x)}{\partial x_j} \right| |e(x_j)|<br>
+$$</p>
+<p><strong>一元函数时：</strong><br>
+$$<br>
+e^* (x)=x^*-x<br>
+$$</p>
+<p>$$<br>
+e^* (A)=f(x^* )-f(x)= f'(\xi)(x^* -x)<br>
+$$</p>
+<h2 id="病态问题与条件数">病态问题与条件数</h2>
+<p>$$ | e_r(y) | = \left| \frac{e(y)}{f(x^* )} \right| = \left| \frac{f(x) - f(x^* )}{f(x^* )} \right| $$ $$ = \left| \frac{f(x) - f(x^* )}{x - x^* } \cdot \frac{x}{f(x)} \cdot \frac{x - x^* }{x} \right| $$ $$ \approx \left| \frac{x \cdot f'(x)}{f(x)} \right| \cdot \left| \frac{x - x^*}{x} \right| = \left| \frac{x \cdot f'(x)}{f(x)} \right| \cdot | e_r(x) | $$</p>
+<p>$| \frac{x \cdot f'(x)}{f(x)} |$为条件数，条件数很大时，初始数据的微小误差可能引起结果 $ A $ 的很大误差。</p>
+<p>对数学问题而言，如果输入数据有微小扰动，引起输出数据（即数学问题的解）有很大扰动，则称数学问题是病态问题，否则称为良态问题。</p>
+]]></content>
       <categories>
-          
-          <category> 想法 </category>
-          
+        <category>学习</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 笼中雀 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>语法写作笔记</title>
-      <link href="/blog/2025/01/27/%E8%AF%AD%E6%B3%95%E5%86%99%E4%BD%9C%E7%AC%94%E8%AE%B0/"/>
-      <url>/blog/2025/01/27/%E8%AF%AD%E6%B3%95%E5%86%99%E4%BD%9C%E7%AC%94%E8%AE%B0/</url>
-      
-        <content type="html"><![CDATA[<h1 id="引用块">引用块</h1><p>引用块用&gt; 中间有个空格，引用块里可以接二级引用块<br><em><strong><mark>示例</mark></strong></em></p><blockquote><p>一级引用块</p><blockquote><p>二级引用块</p><blockquote><p>三级引用块</p></blockquote></blockquote></blockquote><h1 id="代码段">代码段</h1><p><strong>记住符号是键盘数字1左边的那个，不是enter左边的那个</strong></p><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">`中间的就是代码段`</span></span><br></pre></td></tr></table></figure><p><code>中间的就是代码段</code></p><p><code>hello world</code></p><p>hello world</p><h1 id="代码块">代码块</h1><p>用3个`和3个包围代码，前面的3个后面可接使用的代码语言，即可自动识别高亮</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">File</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,create_time=<span class="string">&#x27;today&#x27;</span></span>): <span class="comment">#对create_time设置默认值</span></span><br><span class="line">        <span class="variable language_">self</span>.name=name</span><br><span class="line">        <span class="variable language_">self</span>.create_time=create_time</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_info</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.name+<span class="string">&#x27;is created at&#x27;</span>+<span class="variable language_">self</span>.create_time</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Video</span>(<span class="title class_ inherited__">File</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,window_size=(<span class="params"><span class="number">640</span>,<span class="number">480</span></span>)</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(name=name,create_time=<span class="string">&#x27;today&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.window_size=window_size</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Text</span>(<span class="title class_ inherited__">File</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,laguage=<span class="string">&#x27;zh-cn&#x27;</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(name=name,create_time=<span class="string">&#x27;today&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.laguage=laguage</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_more_info</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.get_info()+<span class="string">&#x27;,using laguage of &#x27;</span>+<span class="variable language_">self</span>.laguage</span><br><span class="line">v = Video(<span class="string">&quot;my_video&quot;</span>)   <span class="comment">#定义v的时候必须要输入__init__的参数，否则会报错</span></span><br><span class="line">t = Text(<span class="string">&quot;my_text&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(v.get_info())     <span class="comment"># 调用父类的功能</span></span><br><span class="line"><span class="built_in">print</span>(t.create_time)    <span class="comment"># 调用父类的属性</span></span><br><span class="line"><span class="built_in">print</span>(t.laguage)       <span class="comment"># 调用自己的属性</span></span><br><span class="line"><span class="built_in">print</span>(t.get_more_info()) <span class="comment"># 调用自己加工父类的功能</span></span><br><span class="line"></span><br></pre></td></tr></table></figure><h1 id="公式段和公式块（latex语法）">公式段和公式块（latex语法）</h1><p>段：两个$$中间用latex语法</p><p>块：$$$$中间用latex语法</p><p>$\beta x$</p><p>$\beta$</p><p>$试试$</p><p>$ \beta $<br>$$<br>\beta \times x \geq 30<br>$$</p><p>$$<br>\varepsilon_r * = \frac{1}{2(a_1 + 1)} \times 10^{-n+1}<br>$$</p><h2 id="一些latex代码">一些latex代码</h2><ul class="lvl-0"><li class="lvl-2"><p>$\varepsilon$</p></li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\varepsilon</span><br></pre></td></tr></table></figure><ul class="lvl-0"><li class="lvl-2"><p>上下标</p></li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">_&#123;下标内容&#125;^&#123;上标内容&#125; 或 ^&#123;上标内容&#125;_&#123;下标内容&#125;</span><br><span class="line">如果下标或上标的内容多于一个字符，需要用 &#123;&#125; 包裹，例如 x_&#123;ij&#125; 而不是 x_ij</span><br><span class="line">$$x_i^2 + y_j^3 = z_&#123;ij&#125;^&#123;n+1&#125;$$</span><br></pre></td></tr></table></figure><p>$$x_i^2 + y_j^3 = z_{ij}^{n+1}$$</p><ul class="lvl-0"><li class="lvl-2"><p>绝对值</p></li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">|x|</span><br></pre></td></tr></table></figure><p>$|x|$</p><ul class="lvl-0"><li class="lvl-2"><p>小于等于，大于等于</p></li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">小于等于：\leq</span><br><span class="line">大于等于：\geq</span><br><span class="line">$$a \leq b \geq c$$</span><br></pre></td></tr></table></figure><p>$$a\leq b \geq c$$</p><ul class="lvl-0"><li class="lvl-2"><p>$\xi$</p></li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\xi</span><br></pre></td></tr></table></figure><h1 id="分隔符">分隔符</h1><p>---后面不能接东西</p><hr><h1 id="表格">表格</h1><p>建议用typora自带的==<strong>Ctrl T</strong>==快捷键</p><h1 id="分点">分点</h1><h2 id="无序分点">无序分点</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> 后面接文本</span><br></pre></td></tr></table></figure><ul class="lvl-0"><li class="lvl-2"><p>后面接文本</p><h2 id="有序分点">有序分点</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. 中间有空格</span><br><span class="line">2.</span><br></pre></td></tr></table></figure><ol><li class="lvl-5"><p>中间有空格</p></li><li class="lvl-5"><p>记住句号后面有空格</p></li></ol></li></ul><p>-英文这个符号后面接一个空格</p><ul class="lvl-0"><li class="lvl-2"><p>第一</p></li><li class="lvl-2"><p>第二</p></li></ul><h1 id="插入视频">插入视频</h1><h1 id="文字样式">文字样式</h1><h2 id="下划线">下划线</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;u&gt;下划线演示&lt;/u&gt;</span><br></pre></td></tr></table></figure><p><u>试试下划线</u></p><p>这个不方便建议用<u>typora</u>的<mark>ctrl+u</mark></p><h2 id="斜体">斜体</h2><p>_ 要斜的字体（没有空格）_<br><em>斜体</em><br><strong><mark>备注</mark></strong>：斜体和加粗可以同时使用，如：<em><strong>字体</strong></em></p><p>建议用typora的<mark>Ctrl I</mark></p><h2 id="加粗">加粗</h2><p>** 要加粗的字体（星号与字体之间没有空格）**</p><p><em><strong>示例</strong></em></p><p><strong>加粗</strong></p><p>建议用<mark>Ctrl B</mark>快捷键</p><h2 id="高亮">高亮</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">文本`高亮`演示</span><br><span class="line">==高亮部分==</span><br><span class="line">typora适用，markdown不适用，网页端无法正常显示</span><br></pre></td></tr></table></figure><p><code>高亮</code></p><p><mark>两个等号夹中间</mark></p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hello</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="文本删除线">文本删除线</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">文本~~删除~~线演示</span><br></pre></td></tr></table></figure><p><s>两个波浪线</s></p><h2 id="大小">大小</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-size:60px&quot;</span>&gt;</span>大小<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure><p><span style="font-size:40px">大小</span></p><h2 id="颜色">颜色</h2><p><mark>字体颜色支持16进制颜色与RGB颜色表，或者简单的red,blue这种</mark></p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:blue&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:rgb(116, 219, 38)&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#FF0000&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure><p><span style="color:blue">文本</span></p><p><span style="color:rgb(116, 219, 38)">文本</span></p><p><span style="color:#FF0000">文本</span></p><h2 id="字体">字体</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family:Simsun&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #宋体</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family: &#x27;Microsoft YaHei&#x27;&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #微软雅黑</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family: &#x27;Times New Roman&#x27;&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #新罗马</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family: &#x27;SimHei&#x27;&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #黑体</span><br></pre></td></tr></table></figure><p><span style="font-family:Simsun">文本</span></p><p><span style="font-family: 'Microsoft YaHei'">文本</span></p><p><span style="font-family: 'Times New Roman'">文本</span></p><h2 id="字体位置">字体位置</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=&quot;text-align: center;&quot;&gt;文本居中&lt;/div&gt;</span><br><span class="line">&lt;div style=&quot;text-align: right;&quot;&gt;文本居右&lt;/div&gt;</span><br></pre></td></tr></table></figure><div style="text-align: center;">文本居中</div><div style="text-align: right;">文本居右</div><h1 id="跳转">跳转</h1><p><a href="#%E8%A1%A8%E6%A0%BC">跳转</a></p><p><a href="##%E4%B8%8B%E5%88%92%E7%BA%BF">跳转到高亮</a></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">英文中括号+英文小括号，括号里是要跳转的地方</span><br><span class="line">[跳转链接名字，随意取](#大纲标题)  PS:#后面不接空格</span><br></pre></td></tr></table></figure><p><a href="##%E6%96%9C%E4%BD%93">跳转到斜体</a></p><p>建议用<mark>Ctrl K</mark>快捷键</p><h1 id="任务列表">任务列表</h1><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> [ ] 记得取快递(-和[]间有空格，[ ]中间也有空格，[]和后面的文本也有空格)</span><br></pre></td></tr></table></figure><ul class="lvl-0"><li class="lvl-2"><ul class="lvl-2"><li class="lvl-4"><input type="checkbox" id="checkbox0" checked="true"><label for="checkbox0">记得取快递</label></li></ul></li></ul><h1 id="文章置顶">文章置顶</h1><ul class="lvl-0"><li class="lvl-2"><p>你可以直接在文章的<code>front-matter</code>区域里添加<code>sticky: 1</code>属性来把这篇文章置顶。数值越大，置顶的优先级越大。</p></li></ul><h1 id="Post-Front-matter">Post Front-matter</h1><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title:</span><br><span class="line">date:</span><br><span class="line">updated:</span><br><span class="line">tags:</span><br><span class="line">categories:</span><br><span class="line">keywords:</span><br><span class="line">description:</span><br><span class="line">top<span class="emphasis">_img:</span></span><br><span class="line"><span class="emphasis">comments:</span></span><br><span class="line"><span class="emphasis">cover:</span></span><br><span class="line"><span class="emphasis">toc:</span></span><br><span class="line"><span class="emphasis">toc_</span>number:</span><br><span class="line">toc<span class="emphasis">_style_</span>simple:</span><br><span class="line">copyright:</span><br><span class="line">copyright<span class="emphasis">_author:</span></span><br><span class="line"><span class="emphasis">copyright_</span>author<span class="emphasis">_href:</span></span><br><span class="line"><span class="emphasis">copyright_</span>url:</span><br><span class="line">copyright<span class="emphasis">_info:</span></span><br><span class="line"><span class="emphasis">mathjax:</span></span><br><span class="line"><span class="emphasis">katex:</span></span><br><span class="line"><span class="emphasis">aplayer:</span></span><br><span class="line"><span class="emphasis">highlight_</span>shrink:</span><br><span class="line"><span class="section">aside:</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></table></figure><table><thead><tr><th>写法</th><th style="text-align:center">解释</th></tr></thead><tbody><tr><td>title</td><td style="text-align:center">【必需】文章标题</td></tr><tr><td>date</td><td style="text-align:center">【必需】文章创建日期</td></tr><tr><td>updated</td><td style="text-align:center">【可选】文章更新日期</td></tr><tr><td>tags</td><td style="text-align:center">【可选】文章标籤</td></tr><tr><td>categories</td><td style="text-align:center">【可选】文章分类</td></tr><tr><td>keywords</td><td style="text-align:center">【可选】文章关键字</td></tr><tr><td>description</td><td style="text-align:center">【可选】文章描述</td></tr><tr><td>top_img</td><td style="text-align:center">【可选】文章顶部图片</td></tr><tr><td>cover</td><td style="text-align:center">【可选】文章缩略图(如果没有设置top_img,文章页顶部将显示缩略图，可设为false/图片地址/留空)</td></tr><tr><td>comments</td><td style="text-align:center">【可选】显示文章评论模块(默认 true)</td></tr><tr><td>toc</td><td style="text-align:center">【可选】显示文章TOC(默认为设置中toc的enable配置)</td></tr><tr><td>toc_number</td><td style="text-align:center">【可选】显示toc_number(默认为设置中toc的number配置)</td></tr><tr><td>toc_style_simple</td><td style="text-align:center">【可选】显示 toc 简洁模式</td></tr><tr><td>copyright</td><td style="text-align:center">【可选】显示文章版权模块(默认为设置中post_copyright的enable配置)</td></tr><tr><td>copyright_author</td><td style="text-align:center">【可选】文章版权模块的文章作者</td></tr><tr><td>copyright_author_href</td><td style="text-align:center">【可选】文章版权模块的文章作者链接</td></tr><tr><td>copyright_url</td><td style="text-align:center">【可选】文章版权模块的文章连结链接</td></tr><tr><td>copyright_info</td><td style="text-align:center">【可选】文章版权模块的版权声明文字</td></tr><tr><td>mathjax</td><td style="text-align:center">【可选】显示mathjax(当设置mathjax的per_page: false时，才需要配置，默认 false)</td></tr><tr><td>katex</td><td style="text-align:center">【可选】显示katex(当设置katex的per_page: false时，才需要配置，默认 false)</td></tr><tr><td>aplayer</td><td style="text-align:center">【可选】在需要的页面加载aplayer的js和css,请参考文章下面的音乐 配置</td></tr><tr><td>highlight_shrink</td><td style="text-align:center">【可选】配置代码框是否展开(true/false)(默认为设置中highlight_shrink的配置)</td></tr><tr><td>aside</td><td style="text-align:center">【可选】显示侧边栏 (默认 true)</td></tr></tbody></table>]]></content>
-      
-      
+      <tags>
+        <tag>数值分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>语法写作笔记</title>
+    <url>/blog/2025/01/27/%E8%AF%AD%E6%B3%95%E5%86%99%E4%BD%9C%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h1 id="引用块">引用块</h1>
+<p>引用块用&gt; 中间有个空格，引用块里可以接二级引用块<br>
+<em><strong><mark>示例</mark></strong></em></p>
+<blockquote>
+<p>一级引用块</p>
+<blockquote>
+<p>二级引用块</p>
+<blockquote>
+<p>三级引用块</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h1 id="代码段">代码段</h1>
+<p><strong>记住符号是键盘数字1左边的那个，不是enter左边的那个</strong></p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="code">`中间的就是代码段`</span></span><br></pre></td></tr></table></figure>
+<p><code>中间的就是代码段</code></p>
+<p><code>hello world</code></p>
+<p>hello world</p>
+<h1 id="代码块">代码块</h1>
+<p>用3个`和3个包围代码，前面的3个后面可接使用的代码语言，即可自动识别高亮</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">File</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,create_time=<span class="string">&#x27;today&#x27;</span></span>): <span class="comment">#对create_time设置默认值</span></span><br><span class="line">        <span class="variable language_">self</span>.name=name</span><br><span class="line">        <span class="variable language_">self</span>.create_time=create_time</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_info</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.name+<span class="string">&#x27;is created at&#x27;</span>+<span class="variable language_">self</span>.create_time</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Video</span>(<span class="title class_ inherited__">File</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,window_size=(<span class="params"><span class="number">640</span>,<span class="number">480</span></span>)</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(name=name,create_time=<span class="string">&#x27;today&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.window_size=window_size</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Text</span>(<span class="title class_ inherited__">File</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,laguage=<span class="string">&#x27;zh-cn&#x27;</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(name=name,create_time=<span class="string">&#x27;today&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.laguage=laguage</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_more_info</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.get_info()+<span class="string">&#x27;,using laguage of &#x27;</span>+<span class="variable language_">self</span>.laguage</span><br><span class="line">v = Video(<span class="string">&quot;my_video&quot;</span>)   <span class="comment">#定义v的时候必须要输入__init__的参数，否则会报错</span></span><br><span class="line">t = Text(<span class="string">&quot;my_text&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(v.get_info())     <span class="comment"># 调用父类的功能</span></span><br><span class="line"><span class="built_in">print</span>(t.create_time)    <span class="comment"># 调用父类的属性</span></span><br><span class="line"><span class="built_in">print</span>(t.laguage)       <span class="comment"># 调用自己的属性</span></span><br><span class="line"><span class="built_in">print</span>(t.get_more_info()) <span class="comment"># 调用自己加工父类的功能</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="公式段和公式块（latex语法）">公式段和公式块（latex语法）</h1>
+<p>段：两个$$中间用latex语法</p>
+<p>块：$$$$中间用latex语法</p>
+<p>$\beta x$</p>
+<p>$\beta$</p>
+<p>$试试$</p>
+<p>$ \beta $<br>
+$$<br>
+\beta \times x \geq 30<br>
+$$</p>
+<p>$$<br>
+\varepsilon_r * = \frac{1}{2(a_1 + 1)} \times 10^{-n+1}<br>
+$$</p>
+<h2 id="一些latex代码">一些latex代码</h2>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>$\varepsilon$</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\varepsilon</span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>上下标</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">_&#123;下标内容&#125;^&#123;上标内容&#125; 或 ^&#123;上标内容&#125;_&#123;下标内容&#125;</span><br><span class="line">如果下标或上标的内容多于一个字符，需要用 &#123;&#125; 包裹，例如 x_&#123;ij&#125; 而不是 x_ij</span><br><span class="line">$$x_i^2 + y_j^3 = z_&#123;ij&#125;^&#123;n+1&#125;$$</span><br></pre></td></tr></table></figure>
+<p>$$x_i^2 + y_j^3 = z_{ij}^{n+1}$$</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>绝对值</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|x|</span><br></pre></td></tr></table></figure>
+<p>$|x|$</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>小于等于，大于等于</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">小于等于：\leq</span><br><span class="line">大于等于：\geq</span><br><span class="line">$$a \leq b \geq c$$</span><br></pre></td></tr></table></figure>
+<p>$$a\leq b \geq c$$</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>$\xi$</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\xi</span><br></pre></td></tr></table></figure>
+<h1 id="分隔符">分隔符</h1>
+<p>---后面不能接东西</p>
+<hr>
+<h1 id="表格">表格</h1>
+<p>建议用typora自带的==<strong>Ctrl T</strong>==快捷键</p>
+<h1 id="分点">分点</h1>
+<h2 id="无序分点">无序分点</h2>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> 后面接文本</span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>后面接文本</p>
+<h2 id="有序分点">有序分点</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1. 中间有空格</span><br><span class="line">2.</span><br></pre></td></tr></table></figure>
+<ol>
+<li class="lvl-5">
+<p>中间有空格</p>
+</li>
+<li class="lvl-5">
+<p>记住句号后面有空格</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>-英文这个符号后面接一个空格</p>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>第一</p>
+</li>
+<li class="lvl-2">
+<p>第二</p>
+</li>
+</ul>
+<h1 id="插入视频">插入视频</h1>
+<h1 id="文字样式">文字样式</h1>
+<h2 id="下划线">下划线</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;u&gt;下划线演示&lt;/u&gt;</span><br></pre></td></tr></table></figure>
+<p><u>试试下划线</u></p>
+<p>这个不方便建议用<u>typora</u>的<mark>ctrl+u</mark></p>
+<h2 id="斜体">斜体</h2>
+<p>_ 要斜的字体（没有空格）_<br>
+<em>斜体</em><br>
+<strong><mark>备注</mark></strong>：斜体和加粗可以同时使用，如：<em><strong>字体</strong></em></p>
+<p>建议用typora的<mark>Ctrl I</mark></p>
+<h2 id="加粗">加粗</h2>
+<p>** 要加粗的字体（星号与字体之间没有空格）**</p>
+<p><em><strong>示例</strong></em></p>
+<p><strong>加粗</strong></p>
+<p>建议用<mark>Ctrl B</mark>快捷键</p>
+<h2 id="高亮">高亮</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">文本`高亮`演示</span><br><span class="line">==高亮部分==</span><br><span class="line">typora适用，markdown不适用，网页端无法正常显示</span><br></pre></td></tr></table></figure>
+<p><code>高亮</code></p>
+<p><mark>两个等号夹中间</mark></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hello</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="文本删除线">文本删除线</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">文本~~删除~~线演示</span><br></pre></td></tr></table></figure>
+<p><s>两个波浪线</s></p>
+<h2 id="大小">大小</h2>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-size:60px&quot;</span>&gt;</span>大小<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><span style="font-size:40px">大小</span></p>
+<h2 id="颜色">颜色</h2>
+<p><mark>字体颜色支持16进制颜色与RGB颜色表，或者简单的red,blue这种</mark></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:blue&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:rgb(116, 219, 38)&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#FF0000&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><span style="color:blue">文本</span></p>
+<p><span style="color:rgb(116, 219, 38)">文本</span></p>
+<p><span style="color:#FF0000">文本</span></p>
+<h2 id="字体">字体</h2>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family:Simsun&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #宋体</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family: &#x27;Microsoft YaHei&#x27;&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #微软雅黑</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family: &#x27;Times New Roman&#x27;&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #新罗马</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family: &#x27;SimHei&#x27;&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #黑体</span><br></pre></td></tr></table></figure>
+<p><span style="font-family:Simsun">文本</span></p>
+<p><span style="font-family: 'Microsoft YaHei'">文本</span></p>
+<p><span style="font-family: 'Times New Roman'">文本</span></p>
+<h2 id="字体位置">字体位置</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;div style=&quot;text-align: center;&quot;&gt;文本居中&lt;/div&gt;</span><br><span class="line">&lt;div style=&quot;text-align: right;&quot;&gt;文本居右&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<div style="text-align: center;">文本居中</div>
+<div style="text-align: right;">文本居右</div>
+<h1 id="跳转">跳转</h1>
+<p><a href="#%E8%A1%A8%E6%A0%BC">跳转</a></p>
+<p><a href="##%E4%B8%8B%E5%88%92%E7%BA%BF">跳转到高亮</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">英文中括号+英文小括号，括号里是要跳转的地方</span><br><span class="line">[跳转链接名字，随意取](#大纲标题)  PS:#后面不接空格</span><br></pre></td></tr></table></figure>
+<p><a href="##%E6%96%9C%E4%BD%93">跳转到斜体</a></p>
+<p>建议用<mark>Ctrl K</mark>快捷键</p>
+<h1 id="任务列表">任务列表</h1>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> [ ] 记得取快递(-和[]间有空格，[ ]中间也有空格，[]和后面的文本也有空格)</span><br></pre></td></tr></table></figure>
+<ul class="lvl-0">
+<li class="lvl-2">
+<ul class="lvl-2">
+<li class="lvl-4"><input type="checkbox" id="checkbox0" checked="true"><label for="checkbox0">记得取快递</label></li>
+</ul>
+</li>
+</ul>
+<h1 id="文章置顶">文章置顶</h1>
+<ul class="lvl-0">
+<li class="lvl-2">
+<p>你可以直接在文章的<code>front-matter</code>区域里添加<code>sticky: 1</code>属性来把这篇文章置顶。数值越大，置顶的优先级越大。</p>
+</li>
+</ul>
+<h1 id="Post-Front-matter">Post Front-matter</h1>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title:</span><br><span class="line">date:</span><br><span class="line">updated:</span><br><span class="line">tags:</span><br><span class="line">categories:</span><br><span class="line">keywords:</span><br><span class="line">description:</span><br><span class="line">top<span class="emphasis">_img:</span></span><br><span class="line"><span class="emphasis">comments:</span></span><br><span class="line"><span class="emphasis">cover:</span></span><br><span class="line"><span class="emphasis">toc:</span></span><br><span class="line"><span class="emphasis">toc_</span>number:</span><br><span class="line">toc<span class="emphasis">_style_</span>simple:</span><br><span class="line">copyright:</span><br><span class="line">copyright<span class="emphasis">_author:</span></span><br><span class="line"><span class="emphasis">copyright_</span>author<span class="emphasis">_href:</span></span><br><span class="line"><span class="emphasis">copyright_</span>url:</span><br><span class="line">copyright<span class="emphasis">_info:</span></span><br><span class="line"><span class="emphasis">mathjax:</span></span><br><span class="line"><span class="emphasis">katex:</span></span><br><span class="line"><span class="emphasis">aplayer:</span></span><br><span class="line"><span class="emphasis">highlight_</span>shrink:</span><br><span class="line"><span class="section">aside:</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>写法</th>
+<th style="text-align:center">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>title</td>
+<td style="text-align:center">【必需】文章标题</td>
+</tr>
+<tr>
+<td>date</td>
+<td style="text-align:center">【必需】文章创建日期</td>
+</tr>
+<tr>
+<td>updated</td>
+<td style="text-align:center">【可选】文章更新日期</td>
+</tr>
+<tr>
+<td>tags</td>
+<td style="text-align:center">【可选】文章标籤</td>
+</tr>
+<tr>
+<td>categories</td>
+<td style="text-align:center">【可选】文章分类</td>
+</tr>
+<tr>
+<td>keywords</td>
+<td style="text-align:center">【可选】文章关键字</td>
+</tr>
+<tr>
+<td>description</td>
+<td style="text-align:center">【可选】文章描述</td>
+</tr>
+<tr>
+<td>top_img</td>
+<td style="text-align:center">【可选】文章顶部图片</td>
+</tr>
+<tr>
+<td>cover</td>
+<td style="text-align:center">【可选】文章缩略图(如果没有设置top_img,文章页顶部将显示缩略图，可设为false/图片地址/留空)</td>
+</tr>
+<tr>
+<td>comments</td>
+<td style="text-align:center">【可选】显示文章评论模块(默认 true)</td>
+</tr>
+<tr>
+<td>toc</td>
+<td style="text-align:center">【可选】显示文章TOC(默认为设置中toc的enable配置)</td>
+</tr>
+<tr>
+<td>toc_number</td>
+<td style="text-align:center">【可选】显示toc_number(默认为设置中toc的number配置)</td>
+</tr>
+<tr>
+<td>toc_style_simple</td>
+<td style="text-align:center">【可选】显示 toc 简洁模式</td>
+</tr>
+<tr>
+<td>copyright</td>
+<td style="text-align:center">【可选】显示文章版权模块(默认为设置中post_copyright的enable配置)</td>
+</tr>
+<tr>
+<td>copyright_author</td>
+<td style="text-align:center">【可选】文章版权模块的文章作者</td>
+</tr>
+<tr>
+<td>copyright_author_href</td>
+<td style="text-align:center">【可选】文章版权模块的文章作者链接</td>
+</tr>
+<tr>
+<td>copyright_url</td>
+<td style="text-align:center">【可选】文章版权模块的文章连结链接</td>
+</tr>
+<tr>
+<td>copyright_info</td>
+<td style="text-align:center">【可选】文章版权模块的版权声明文字</td>
+</tr>
+<tr>
+<td>mathjax</td>
+<td style="text-align:center">【可选】显示mathjax(当设置mathjax的per_page: false时，才需要配置，默认 false)</td>
+</tr>
+<tr>
+<td>katex</td>
+<td style="text-align:center">【可选】显示katex(当设置katex的per_page: false时，才需要配置，默认 false)</td>
+</tr>
+<tr>
+<td>aplayer</td>
+<td style="text-align:center">【可选】在需要的页面加载aplayer的js和css,请参考文章下面的音乐 配置</td>
+</tr>
+<tr>
+<td>highlight_shrink</td>
+<td style="text-align:center">【可选】配置代码框是否展开(true/false)(默认为设置中highlight_shrink的配置)</td>
+</tr>
+<tr>
+<td>aside</td>
+<td style="text-align:center">【可选】显示侧边栏 (默认 true)</td>
+</tr>
+</tbody>
+</table>
+]]></content>
       <categories>
-          
-          <category> 学习 </category>
-          
+        <category>学习</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> markdown语法 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-  
-  
-    
-    
-    <entry>
-      <title>照片</title>
-      <link href="/blog/Gallery/index.html"/>
-      <url>/blog/Gallery/index.html</url>
-      
-        <content type="html"><![CDATA[<p><img src="/image/1.jpg" alt=""></p>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>写给你的小作文</title>
-      <link href="/blog/movies/%E5%86%99%E7%BB%99%E9%82%B5%E8%89%BA%E5%8D%9A%E7%9A%84%E5%B0%8F%E4%BD%9C%E6%96%87.html"/>
-      <url>/blog/movies/%E5%86%99%E7%BB%99%E9%82%B5%E8%89%BA%E5%8D%9A%E7%9A%84%E5%B0%8F%E4%BD%9C%E6%96%87.html</url>
-      
-        <content type="html"><![CDATA[<h1 id="一">一</h1><p><u>感觉我和你没什么好说的。</u><br><img src="/image/sy1.jpg" alt=""></p><p>那就从这句话开始说吧。其实这张纸我一直有好好留着，从确山带到了秦皇岛，后来又带去了深圳，现在又让我带来了长春。</p><h1 id="二">二</h1><p>高中的有些事情我一直记得，记得跟你说我喜欢你，但是当初你好像并没有给我答案，没有接受，也没有拒绝。</p><p>但至那以后咱俩好像话就越来越少，后来也就没在做同桌了。其实当时我是很难过的，看到你天天和别的男同学有说有笑我其实更难过（）。</p><p>高中有段时间我成绩不好，应该是高二，要说跟你没关系，那就是自欺欺人。后来我就慢慢想开了，大抵是你真的不喜欢我，觉得这段不会有结果的关系就这样了吧。</p><p>后来便是大学的时候你偶尔找我聊会天，我也觉得这样就好，只是有时候做梦会梦到你。</p><p>至于去年为什么要送你吃，我觉得应当送你，所以我送了。</p><p>后来的后来就是现在了。</p><p>有些事是好的，但又不是足够好的。</p><h1 id="三">三</h1><p>关于表达欲的问题我一直有在想。</p><p><img src="/image/sy2.jpg" alt=""></p><p>之前做过MBTI测试，不出所料结果是INFJ，因为这种性格的描述真的太像我了。</p><p>后来慢慢了解到我可能是回避型依恋人格。</p><p>但是我又觉得自己可能又可能是纯纯犯贱。</p><p>之前发了条朋友圈是希望你能看到的，但既然想让你看到，应该由我亲口告诉你，可却没有，所以说自己有点贱。<br><img src="/image/sy3.jpg" alt=""></p><h1 id="四">四</h1><p>有些时候会莫名其妙想一些事情，现在如何，未来如何，如果现在做了将来又会如何，所以会遇到事情会下意识犹豫。很多事情都习惯拖着，拖到不能拖了才会下定决心回应。可时间又是不等人的，就像两个人聊天，当你还在想如何回复时，可能下个问题就来了，先前的问题就被永远搁置了。</p><p>之前你问我要不要找你去玩，我真的一直在想，一直在犹豫，我感觉像我这种人对于某些事下定决心是一件很难的事情。</p><p>之前没告诉你，其实我的车票已经改了好几次。<br><img src="/image/sy4.jpg" alt=""></p><p><img src="/image/sy5.jpg" alt=""></p><p>（今天为啥去驻马店坐高铁，因为卧铺票真的很难候补啊～～捏麻麻的，我是真的腰疼屁股疼）</p><h1 id="五">五</h1><p>之前读到过一句话，我觉得非常适合我---我这样胆小慢热的人，需要别人千百次的主动和回应才愿意相信那才是真的。</p><p>你问我喜不喜欢你，说不喜欢这是不可能。</p><p>但是如果你问是否像高中那般喜欢，给出确凿无疑的答案那又是自欺欺人了。</p><p>没有人能比得过我回忆的那个你，即便是现在的你。</p><h1 id="六">六</h1><p>你关心我，我真的很开心。</p><h1 id="七">七</h1><p>记得高中下晚自习你习惯对我摆手说再见，我老是沉默不语，你后来逗我说怎么不说“再见”。</p><p>不说“再见”，是因为希望再见。</p><hr><p>写于2025年2月14日，于长春的高铁上。修改上传于宿舍。</p><hr><p>“怎么一回来就在敲代码”<br>“额，没有”<br>“那在写什么”<br>“小作文”<br>“嗯？”<br>“嗯”</p>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>分类</title>
-      <link href="/blog/categories/index.html"/>
-      <url>/blog/categories/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>心想事成</title>
-      <link href="/blog/movies/%E5%BF%83%E6%83%B3%E4%BA%8B%E6%88%90.html"/>
-      <url>/blog/movies/%E5%BF%83%E6%83%B3%E4%BA%8B%E6%88%90.html</url>
-      
-        <content type="html"><![CDATA[<h1 id="心想事成">心想事成</h1><p>还是写点不想让认识的人瞧见，但又想倾述的事吧。</p><p>一个人在野地里坐到黄昏，等天空把夕阳吹成一朵炽热的花，风轻轻而来，也把泪水带离脸颊，我甚至不知道为什么而哭，或许只是对这人世间的理解偏差，这样的寂寞太漫长了，一条河流怎么能盛装得下，我捡起一颗将死的野草，告诉它，这个夏天就此作罢！</p><p>相见的人，不想见的人。讨厌的人，麻烦的事。<br><img src="/image/1738159231727.jpg" alt=""></p>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>分类</title>
-      <link href="/blog/tags/index.html"/>
-      <url>/blog/tags/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>电影</title>
-      <link href="/blog/movies/index.html"/>
-      <url>/blog/movies/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>音乐</title>
-      <link href="/blog/music/index.html"/>
-      <url>/blog/music/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-  
+      <tags>
+        <tag>markdown语法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>音乐</title>
+    <url>/blog/music/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>照片</title>
+    <url>/blog/Gallery/index.html</url>
+    <content><![CDATA[<p><img src="/image/1.jpg" alt=""></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>心想事成</title>
+    <url>/blog/movies/%E5%BF%83%E6%83%B3%E4%BA%8B%E6%88%90.html</url>
+    <content><![CDATA[<h1 id="心想事成">心想事成</h1>
+<p>还是写点不想让认识的人瞧见，但又想倾述的事吧。</p>
+<p>一个人在野地里坐到黄昏，等天空把夕阳吹成一朵炽热的花，风轻轻而来，也把泪水带离脸颊，我甚至不知道为什么而哭，或许只是对这人世间的理解偏差，这样的寂寞太漫长了，一条河流怎么能盛装得下，我捡起一颗将死的野草，告诉它，这个夏天就此作罢！</p>
+<p>相见的人，不想见的人。讨厌的人，麻烦的事。<br>
+<img src="/image/1738159231727.jpg" alt=""></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>写给你的小作文</title>
+    <url>/blog/movies/%E5%86%99%E7%BB%99%E9%82%B5%E8%89%BA%E5%8D%9A%E7%9A%84%E5%B0%8F%E4%BD%9C%E6%96%87.html</url>
+    <content><![CDATA[<h1 id="一">一</h1>
+<p><u>感觉我和你没什么好说的。</u><br>
+<img src="/image/sy1.jpg" alt=""></p>
+<p>那就从这句话开始说吧。其实这张纸我一直有好好留着，从确山带到了秦皇岛，后来又带去了深圳，现在又让我带来了长春。</p>
+<h1 id="二">二</h1>
+<p>高中的有些事情我一直记得，记得跟你说我喜欢你，但是当初你好像并没有给我答案，没有接受，也没有拒绝。</p>
+<p>但至那以后咱俩好像话就越来越少，后来也就没在做同桌了。其实当时我是很难过的，看到你天天和别的男同学有说有笑我其实更难过（）。</p>
+<p>高中有段时间我成绩不好，应该是高二，要说跟你没关系，那就是自欺欺人。后来我就慢慢想开了，大抵是你真的不喜欢我，觉得这段不会有结果的关系就这样了吧。</p>
+<p>后来便是大学的时候你偶尔找我聊会天，我也觉得这样就好，只是有时候做梦会梦到你。</p>
+<p>至于去年为什么要送你吃，我觉得应当送你，所以我送了。</p>
+<p>后来的后来就是现在了。</p>
+<p>有些事是好的，但又不是足够好的。</p>
+<h1 id="三">三</h1>
+<p>关于表达欲的问题我一直有在想。</p>
+<p><img src="/image/sy2.jpg" alt=""></p>
+<p>之前做过MBTI测试，不出所料结果是INFJ，因为这种性格的描述真的太像我了。</p>
+<p>后来慢慢了解到我可能是回避型依恋人格。</p>
+<p>但是我又觉得自己可能又可能是纯纯犯贱。</p>
+<p>之前发了条朋友圈是希望你能看到的，但既然想让你看到，应该由我亲口告诉你，可却没有，所以说自己有点贱。<br>
+<img src="/image/sy3.jpg" alt=""></p>
+<h1 id="四">四</h1>
+<p>有些时候会莫名其妙想一些事情，现在如何，未来如何，如果现在做了将来又会如何，所以会遇到事情会下意识犹豫。很多事情都习惯拖着，拖到不能拖了才会下定决心回应。可时间又是不等人的，就像两个人聊天，当你还在想如何回复时，可能下个问题就来了，先前的问题就被永远搁置了。</p>
+<p>之前你问我要不要找你去玩，我真的一直在想，一直在犹豫，我感觉像我这种人对于某些事下定决心是一件很难的事情。</p>
+<p>之前没告诉你，其实我的车票已经改了好几次。<br>
+<img src="/image/sy4.jpg" alt=""></p>
+<p><img src="/image/sy5.jpg" alt=""></p>
+<p>（今天为啥去驻马店坐高铁，因为卧铺票真的很难候补啊～～捏麻麻的，我是真的腰疼屁股疼）</p>
+<h1 id="五">五</h1>
+<p>之前读到过一句话，我觉得非常适合我---我这样胆小慢热的人，需要别人千百次的主动和回应才愿意相信那才是真的。</p>
+<p>你问我喜不喜欢你，说不喜欢这是不可能。</p>
+<p>但是如果你问是否像高中那般喜欢，给出确凿无疑的答案那又是自欺欺人了。</p>
+<p>没有人能比得过我回忆的那个你，即便是现在的你。</p>
+<h1 id="六">六</h1>
+<p>你关心我，我真的很开心。</p>
+<h1 id="七">七</h1>
+<p>记得高中下晚自习你习惯对我摆手说再见，我老是沉默不语，你后来逗我说怎么不说“再见”。</p>
+<p>不说“再见”，是因为希望再见。</p>
+<hr>
+<p>写于2025年2月14日，于长春的高铁上。修改上传于宿舍。</p>
+<hr>
+<p>“怎么一回来就在敲代码”<br>
+“额，没有”<br>
+“那在写什么”<br>
+“小作文”<br>
+“嗯？”<br>
+“嗯”</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>分类</title>
+    <url>/blog/categories/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>分类</title>
+    <url>/blog/tags/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>电影</title>
+    <url>/blog/movies/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
 </search>
