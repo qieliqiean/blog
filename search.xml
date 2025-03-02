@@ -1,211 +1,624 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>深度学习相关知识</title>
-      <link href="/blog/2025/02/27/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/"/>
-      <url>/blog/2025/02/27/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="准确度-accuracy-、精确率（precision-、召回率（recall）、F1值"><a href="#准确度-accuracy-、精确率（precision-、召回率（recall）、F1值" class="headerlink" title="准确度(accuracy)、精确率（precision)、召回率（recall）、F1值"></a>准确度(accuracy)、精确率（precision)、召回率（recall）、F1值</h1><p>TP（True Positives)：真正例，预测为正例而且实际上也是正例；</p><p>FP（False Positives)：假正例，预测为正例然而实际上却是负例；</p><p>FN（false Negatives)：假负例，预测为负例然而实际上却是正例；</p><p>TN（True Negatives)：真负例，预测为负例而且实际上也是负例。</p><p><img src="/blog/image/TP.PNG"></p><h2 id="准确率-Accuracy"><a href="#准确率-Accuracy" class="headerlink" title="准确率 Accuracy"></a>准确率 Accuracy</h2><p>&#x3D;&#x3D;准确度&#x3D;&#x3D;：正例和负例中预测正确数量占总数量的比例，用公式表示：<br>$$<br>ACC&#x3D;\frac{TP+TN}{TP+FP+FN+TN}<br>$$</p><h2 id="精确度-Precision"><a href="#精确度-Precision" class="headerlink" title="精确度 Precision"></a>精确度 Precision</h2><p>精确度：以<strong>预测结果</strong>为判断依据，<strong>预测为正例的样本中预测正确的比例</strong>。预测为正例的结果分两种，要么实际是正例TP，要么实际是负例FP，则可用公式表示:<br>$$<br>precision&#x3D;\frac{TP}{TP+FP}<br>$$<br>精确度还有一个名字，叫做**“查准率”<strong>，我们关心的主要部分是正例，所以查准率就是相对正例的预测结果而言，正例预测的准确度。直白的意思就是模型预测为正例的样本中，其中真正的正例占预测为正例样本的比例，用此标准来</strong>评估预测正例的准确度**。</p><h2 id="召回率-Recall"><a href="#召回率-Recall" class="headerlink" title="召回率 Recall"></a>召回率 Recall</h2><p>召回率：以<strong>实际样本</strong>为判断依据，<strong>实际为正例的样本中，被预测正确的正例占总实际正例样本的比例</strong>。实际为正例的样本中，要么在预测中被预测正确TP，要么在预测中预测错误FN，用公式表示：<br>$$<br>recall&#x3D;\frac{TP}{TP+FN}<br>$$<br>召回率的另一个名字，叫做**“查全率”**，评估所有实际正例是否被预测出来的覆盖率占比多少</p><h2 id="F1分数（F1-Score）"><a href="#F1分数（F1-Score）" class="headerlink" title="F1分数（F1-Score）"></a>F1分数（F1-Score）</h2><p><strong>定义</strong>：精确率与召回率的<strong>调和平均数</strong>，平衡两者性能<br>$$<br>F1&#x3D;\frac{2 \times Precision \times Recall}{Precision+Recall}<br>$$</p><h1 id="Batch-Normalization（批量归一化）-和-Layer-Normalization（层归一化）"><a href="#Batch-Normalization（批量归一化）-和-Layer-Normalization（层归一化）" class="headerlink" title="Batch Normalization（批量归一化） 和 Layer Normalization（层归一化）"></a>Batch Normalization（批量归一化） 和 Layer Normalization（层归一化）</h1><hr><h2 id="1-核心概念对比"><a href="#1-核心概念对比" class="headerlink" title="1. 核心概念对比"></a>1. <strong>核心概念对比</strong></h2><h3 id="Batch-Normalization-BN"><a href="#Batch-Normalization-BN" class="headerlink" title="Batch Normalization (BN)"></a><strong>Batch Normalization (BN)</strong></h3><ul><li><p><strong>归一化方向</strong>：对 <strong>同一特征维度</strong> 跨所有样本和空间位置归一化。</p></li><li><p><strong>核心公式</strong>：</p><p>假设输入张量形状为 <code>(N, C, H, W)</code>（Batch Size, Channels, Height, Width），则对每个通道 <code>c</code> 计算均值和方差：<br>$$<br>\mu_c &#x3D; \frac{1}{N \cdot H \cdot W} \sum_{n&#x3D;1}^N \sum_{h&#x3D;1}^H \sum_{w&#x3D;1}^W x_{n,c,h,w}, \quad \sigma_c^2 &#x3D; \frac{1}{N \cdot H \cdot W} \sum_{n&#x3D;1}^N \sum_{h&#x3D;1}^H \sum_{w&#x3D;1}^W (x_{n,c,h,w} - \mu_c)^2<br>$$</p></li><li><p><strong>适用场景</strong>：图像处理（CNN）、固定长度的结构化数据。</p></li></ul><h3 id="Layer-Normalization-LN"><a href="#Layer-Normalization-LN" class="headerlink" title="Layer Normalization (LN)"></a><strong>Layer Normalization (LN)</strong></h3><ul><li><p><strong>归一化方向</strong>：对 <strong>同一样本</strong> 的所有特征维度归一化。</p></li><li><p><strong>核心公式</strong>：</p><p>假设输入张量形状为 <code>(N, C, H, W)</code>，对每个样本 <code>n</code> 计算均值和方差：<br>$$<br>\mu_n &#x3D; \frac{1}{C \cdot H \cdot W} \sum_{c&#x3D;1}^C \sum_{h&#x3D;1}^H \sum_{w&#x3D;1}^W x_{n,c,h,w}, \quad \sigma_n^2 &#x3D; \frac{1}{C \cdot H \cdot W} \sum_{c&#x3D;1}^C \sum_{h&#x3D;1}^H \sum_{w&#x3D;1}^W (x_{n,c,h,w} - \mu_n)^2<br>$$</p></li><li><p><strong>适用场景</strong>：序列数据（RNN、Transformer）、动态长度输入。</p></li></ul><hr><h2 id="2-公式符号解释"><a href="#2-公式符号解释" class="headerlink" title="2. 公式符号解释"></a>2. <strong>公式符号解释</strong></h2><h3 id="输入张量形状"><a href="#输入张量形状" class="headerlink" title="输入张量形状"></a><strong>输入张量形状</strong></h3><p>假设输入为 <code>(N, C, H, W)</code>：</p><ul><li><code>N</code>: 批次大小（Batch Size）</li><li><code>C</code>: 通道数（特征维度）</li><li><code>H</code>: 高度（空间维度）</li><li><code>W</code>: 宽度（空间维度）</li></ul><h3 id="BN-公式符号"><a href="#BN-公式符号" class="headerlink" title="BN 公式符号"></a><strong>BN 公式符号</strong></h3><ul><li><code>μₐ</code>: 第 <code>c</code> 个通道的均值（跨所有样本和空间位置）。</li><li><code>σₐ²</code>: 第 <code>c</code> 个通道的方差。</li><li><code>xₙ,ₐ,ₕ,ᵥ</code>: 第 <code>n</code> 个样本、第 <code>c</code> 个通道、位置 <code>(h, w)</code> 的像素值。</li></ul><h3 id="LN-公式符号"><a href="#LN-公式符号" class="headerlink" title="LN 公式符号"></a><strong>LN 公式符号</strong></h3><ul><li><code>μₙ</code>: 第 <code>n</code> 个样本的均值（跨所有特征和空间位置）。</li><li><code>σₙ²</code>: 第 <code>n</code> 个样本的方差。</li><li><code>xₙ,ₐ,ₕ,ᵥ</code>: 同上。</li></ul><hr><h2 id="3-具体示例对比"><a href="#3-具体示例对比" class="headerlink" title="3. 具体示例对比"></a>3. <strong>具体示例对比</strong></h2><h3 id="输入数据"><a href="#输入数据" class="headerlink" title="输入数据"></a><strong>输入数据</strong></h3><ul><li><code>N=2</code>（2张图像），<code>C=3</code>（RGB三通道），<code>H=2</code>, <code>W=2</code>（2x2像素）。</li><li><strong>样本1</strong>：<ul><li>通道0（红）：<code>[[1, 3], [5, 7]]</code></li><li>通道1（绿）：<code>[[2, 4], [6, 8]]</code></li><li>通道2（蓝）：<code>[[3, 5], [7, 9]]</code></li></ul></li><li><strong>样本2</strong>：<ul><li>通道0（红）：<code>[[2, 4], [6, 8]]</code></li><li>通道1（绿）：<code>[[3, 5], [7, 9]]</code></li><li>通道2（蓝）：<code>[[4, 6], [8, 10]]</code></li></ul></li></ul><hr><h3 id="BN-计算示例（以通道0为例）"><a href="#BN-计算示例（以通道0为例）" class="headerlink" title="BN 计算示例（以通道0为例）"></a><strong>BN 计算示例（以通道0为例）</strong></h3><ol><li><strong>计算均值 <code>μ₀</code></strong>：<br>$$<br>\mu_0 &#x3D; \frac{(1+3+5+7) + (2+4+6+8)}{8} &#x3D; \frac{16 + 20}{8} &#x3D; 4.5<br>$$</li><li><strong>计算方差 <code>σ₀²</code></strong>：<br>$$<br>\sigma_0^2 &#x3D; \frac{(1-4.5)^2 + (3-4.5)^2 + \cdots + (8-4.5)^2}{8} &#x3D; \frac{21 + 21}{8} &#x3D; 5.25<br>$$</li><li><strong>归一化后</strong>：每个像素值变为 <code>(x - 4.5) / √(5.25 + ε)</code>。</li></ol><hr><h3 id="LN-计算示例（以样本1为例）"><a href="#LN-计算示例（以样本1为例）" class="headerlink" title="LN 计算示例（以样本1为例）"></a><strong>LN 计算示例（以样本1为例）</strong></h3><ol><li><strong>计算均值 <code>μ₁</code></strong>：<br>$$<br>\mu_1 &#x3D; \frac{1+3+5+7 + 2+4+6+8 + 3+5+7+9}{12} &#x3D; \frac{60}{12} &#x3D; 5<br>$$</li><li><strong>计算方差 <code>σ₁²</code></strong>：<br>$$<br>\sigma_1^2 &#x3D; \frac{(1-5)^2 + (3-5)^2 + \cdots + (9-5)^2}{12} &#x3D; \frac{84}{12} &#x3D; 7<br>$$</li><li><strong>归一化后</strong>：每个像素值变为 <code>(x - 5) / √(7 + ε)</code>。</li></ol><hr><h2 id="4-对比总结表格"><a href="#4-对比总结表格" class="headerlink" title="4. 对比总结表格"></a>4. <strong>对比总结表格</strong></h2><table><thead><tr><th><strong>特性</strong></th><th>Batch Normalization (BN)</th><th>Layer Normalization (LN)</th></tr></thead><tbody><tr><td><strong>归一化维度</strong></td><td>同一特征维度跨样本和空间位置</td><td>同一样本的所有特征维度</td></tr><tr><td><strong>参数数量</strong></td><td><code>2C</code>（每通道独立参数）</td><td><code>2</code>（全局共享参数）</td></tr><tr><td><strong>依赖条件</strong></td><td>需大 Batch Size（如32+）</td><td>不依赖 Batch Size</td></tr><tr><td><strong>适用场景</strong></td><td>图像（CNN）、静态数据</td><td>文本（Transformer）、动态序列数据</td></tr><tr><td><strong>训练&#x2F;测试差异</strong></td><td>测试时用全局移动平均统计量</td><td>测试时直接计算当前样本统计量</td></tr></tbody></table><hr><h2 id="5-注意事项"><a href="#5-注意事项" class="headerlink" title="5. 注意事项"></a>5. <strong>注意事项</strong></h2><ol><li><p><strong>BN 的局限性</strong>：</p><ul><li>小 Batch Size 时性能下降（方差估计不准确）。</li><li>对序列数据（如变长文本）不友好。</li></ul></li><li><p><strong>LN 的优势</strong>：</p><ul><li>适用于单样本推理（如实时生成文本）。</li><li>对特征维度间的动态变化更鲁棒。</li></ul></li></ol><hr><h2 id="6-代码示例（PyTorch）"><a href="#6-代码示例（PyTorch）" class="headerlink" title="6. 代码示例（PyTorch）"></a>6. <strong>代码示例（PyTorch）</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Batch Normalization（图像任务）</span></span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line">bn = nn.BatchNorm2d(num_features=<span class="number">3</span>)  <span class="comment"># 输入通道数 C=3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Layer Normalization（NLP任务）</span></span><br><span class="line">ln = nn.LayerNorm(normalized_shape=<span class="number">256</span>)  <span class="comment"># 输入特征维度=256</span></span><br></pre></td></tr></table></figure><h1 id="上采样（Upsampling）与下采样（Downsampling）详解"><a href="#上采样（Upsampling）与下采样（Downsampling）详解" class="headerlink" title="上采样（Upsampling）与下采样（Downsampling）详解"></a>上采样（Upsampling）与下采样（Downsampling）详解</h1><hr><h2 id="核心区别"><a href="#核心区别" class="headerlink" title="核心区别"></a><strong>核心区别</strong></h2><ul><li><strong>上采样</strong>：放大特征图尺寸，<strong>恢复细节信息</strong>（如目标边缘、小物体位置）。  </li><li><strong>下采样</strong>：缩小特征图尺寸，<strong>提取抽象语义</strong>（如目标类别、整体形状）。  </li><li><strong>协作关系</strong>：两者结合实现多尺度检测（如同时识别近处大车和远处小车）。</li></ul><hr><h2 id="1-下采样（Downsampling）"><a href="#1-下采样（Downsampling）" class="headerlink" title="1. 下采样（Downsampling）"></a><strong>1. 下采样（Downsampling）</strong></h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a><strong>作用</strong></h3><ul><li>压缩特征图，减少计算量。</li><li>捕获高层语义信息（例如“这是一辆车”）。</li></ul><h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a><strong>实现方式</strong></h3><table><thead><tr><th>方法</th><th>说明</th></tr></thead><tbody><tr><td><strong>跨步卷积</strong></td><td>增大卷积步长（如<code>stride=2</code>），跳过部分像素，直接缩小特征图尺寸。</td></tr><tr><td><strong>池化（Pooling）</strong></td><td>取局部区域的最大值（Max Pooling）或平均值（Average Pooling）。</td></tr></tbody></table><h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a><strong>特点</strong></h3><ul><li><strong>输出尺寸</strong>：缩小（例如输入<code>256x256</code> → 输出<code>128x128</code>）。</li><li><strong>信息保留</strong>：丢弃细节，保留整体特征。</li><li><strong>类比</strong>：眯眼看照片，忽略纹理细节，只关注轮廓。</li></ul><hr><h2 id="2-上采样（Upsampling）"><a href="#2-上采样（Upsampling）" class="headerlink" title="2. 上采样（Upsampling）"></a><strong>2. 上采样（Upsampling）</strong></h2><h3 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a><strong>作用</strong></h3><ul><li>扩大特征图尺寸，辅助精确定位（如车轮、车灯位置）。</li><li>与浅层特征融合，增强小目标检测能力。</li></ul><h3 id="实现方式-1"><a href="#实现方式-1" class="headerlink" title="实现方式"></a><strong>实现方式</strong></h3><table><thead><tr><th>方法</th><th>说明</th></tr></thead><tbody><tr><td><strong>插值（Interpolation）</strong></td><td>通过双线性插值、最近邻插值等算法填充像素（类似图像放大）。</td></tr><tr><td><strong>转置卷积（Transposed Convolution）</strong></td><td>反向卷积操作，通过可学习参数生成更大特征图。</td></tr></tbody></table><h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a><strong>特点</strong></h3><ul><li><strong>输出尺寸</strong>：放大（例如输入<code>128x128</code> → 输出<code>256x256</code>）。</li><li><strong>信息保留</strong>：补充细节，但可能引入噪声。</li><li><strong>类比</strong>：放大模糊图片，猜测缺失的像素。</li></ul><hr><h2 id="对比总结"><a href="#对比总结" class="headerlink" title="对比总结"></a><strong>对比总结</strong></h2><table><thead><tr><th><strong>特性</strong></th><th>下采样</th><th>上采样</th></tr></thead><tbody><tr><td><strong>目的</strong></td><td>提取抽象特征，减少计算量</td><td>恢复细节，精确定位</td></tr><tr><td><strong>典型操作</strong></td><td>池化、跨步卷积</td><td>插值、转置卷积</td></tr><tr><td><strong>信息流</strong></td><td>从细节到语义</td><td>从语义到细节</td></tr><tr><td><strong>应用阶段</strong></td><td>Backbone（特征提取层）</td><td>Neck（特征融合层）</td></tr></tbody></table><h2 id="实际例子"><a href="#实际例子" class="headerlink" title="实际例子"></a><strong>实际例子</strong></h2><ul><li><strong>场景</strong>：检测一张包含“近处行人”和“远处车辆”的图像。</li><li><strong>下采样</strong>：深层特征图（20x20）捕获“远处车辆”的抽象轮廓。</li><li><strong>上采样</strong>：将该特征图放大到40x40，与浅层特征（包含“近处行人”细节）融合，实现多尺度检测。</li></ul>]]></content>
-      
-      
+<search>
+  <entry>
+    <title>井中月</title>
+    <url>/blog/2025/02/25/%E4%BA%95%E4%B8%AD%E6%9C%88/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       <categories>
-          
-          <category> 学习 </category>
-          
+        <category>想法</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 深度学习 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>数值分析</title>
-      <link href="/blog/2025/02/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/"/>
-      <url>/blog/2025/02/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="误差"><a href="#误差" class="headerlink" title="误差"></a>误差</h1><h2 id="误差-1"><a href="#误差-1" class="headerlink" title="误差"></a>误差</h2><p>设 $x$ 为准确值，$x^* $ 为 $x$ 的一个近似值，称  $$e^* &#x3D; x^* - x$$  为<strong>绝对误差</strong>，简称为<strong>误差</strong>。</p><p>对于一般情形，  $$| x^*  - x | ≤ ε^* $$$ε^* $为<strong>绝对误差限</strong><br><strong>相对误差</strong>的公式表示为：  $$e_r^* &#x3D; \frac{e^* }{x}$$</p><p>实际中一般取$$e_r^* &#x3D; \frac{e^* }{x^* }$$</p><p>$x$ 的<strong>相对误差上限</strong>定义为  $$\varepsilon^* &#x3D; \frac{\varepsilon^* }{|x^* |}$$</p><h2 id="有效数字"><a href="#有效数字" class="headerlink" title="有效数字"></a>有效数字</h2><h3 id="有效数字的定义"><a href="#有效数字的定义" class="headerlink" title="有效数字的定义"></a>有效数字的定义</h3><p>若近似值 $ x^* $ 的误差限是某一位的半个单位，该位到 $ x $ 的第一位非零数字共有 $ n $ 位，则 $ x $ 有 $ n $ 位有效数字。  </p><p><strong>示例</strong><br>圆周率 $ \pi &#x3D; 3.14159265 \dots $  </p><ul><li>按四舍五入原则，若取四位小数，则 $ \pi \approx 3.1416 $；  </li><li>取五位小数，则 $ \pi \approx 3.14159 $。</li></ul><p>它们的绝对误差不超过末位数的半个单位，即：  </p><ul><li>$$| \pi - 3.1416 | \leq \frac{1}{2} \times 10^{-4}$$  五位有效数值  </li><li>$$| \pi - 3.14159 | \leq \frac{1}{2} \times 10^{-5}$$  六位有效数值</li></ul><blockquote><p>按四舍五入规则的直接从后往前数就行了</p></blockquote><p>用科学计数法，记 $ x^* &#x3D; \pm 0.a_1 a_2 \cdots a_n \times 10^m $（其中 $ a_1 \neq 0 $）。若 $ |x - x^* | \leq 0.5 \times 10^{m-n} $（即 $ a_n $ 的截取按四舍五入规则），则称 $ x^* $ 为有 <strong>$ n $</strong> 位有效数字，精确到 <strong>$ 10^{m-n} $</strong>。</p><h3 id="有效数字与相对误差的关系"><a href="#有效数字与相对误差的关系" class="headerlink" title="有效数字与相对误差的关系"></a>有效数字与相对误差的关系</h3><p><strong>有效数字 ⇒ 相对误差限</strong></p><p> 已知 $ x^* $ 有 $ n $ 位有效数字，则其相对误差限为<br>$$<br>\varepsilon_r *  &#x3D; \left| \frac{\varepsilon^* }{x^* } \right| &#x3D; \frac{0.5 \times 10^{m-n}}{0.a_1 a_2 \cdots a_n \times 10^m} &#x3D; \frac{10^{-n}}{2 \times 0.a_1 \cdots}  \leq \frac{1}{2a_1} \times 10^{-n+1}<br>$$<br><strong>相对误差限 ⇒ 有效数字</strong></p><p> 已知 $ x^* $ 的相对误差限可写为<br>$$<br>\varepsilon_r * &#x3D; \frac{1}{2(a_1 + 1)} \times 10^{-n+1}<br>$$<br>则<br>$$ { }<br>|x - x^* | \leq \varepsilon_r^ *   \cdot |x^* | &#x3D; \frac{10^{-n+1}}{2(a_1 + 1)} \times 0.a_1 a_2 \cdots \times 10^m<br>&lt; \frac{10^{-n+1}}{2(a_1 + 1)} \cdot (a_1 + 1) \times 10^{m-1} &#x3D; 0.5 \times 10^{m-n}<br>$$<br>可见 $ x^* $ 至少有 $ n $ 位有效数字。</p><h2 id="求函数值和算术运算的误差估计"><a href="#求函数值和算术运算的误差估计" class="headerlink" title="求函数值和算术运算的误差估计"></a>求函数值和算术运算的误差估计</h2><p>设多元函数 $ A &#x3D; f(x_1, x_2, \cdots, x_n) $，$ x_1^* , x_2^* , \cdots, x_n^*  $ 为 $ x_1, x_2, \cdots, x_n $ 的近似值。 则 $ A $ 的近似值 $ A^* $：$ A^* &#x3D; f(x_1^* , x_2^* , \cdots, x_n^* ) $。 </p><p>函数值 $ A^* $ 的绝对误差： $$ A - A^*  &#x3D; f(x_1, \cdots, x_n) - f(x_1^* , \cdots, x_n^* ) $$ </p><p>在点 $ x &#x3D; (x_1, x_2, \cdots, x_n) $ 的 Taylor 展开式，设 $ |x_i - x_i^* | $ ($ i &#x3D; 1, 2, \cdots, n $) 都很小</p><p>略去高阶项：<br>$$<br>A - A^* &#x3D; f(x_1, \cdots, x_n) - f(x_1^* , \cdots, x_n^* ) \approx \sum_{j&#x3D;1}^n \frac{\partial f(x)}{\partial x_j} (x_j - x_j^* )<br>$$<br>或<br>$$<br>e(A) \approx \sum_{j&#x3D;1}^n \frac{\partial f(x)}{\partial x_j} e(x_j)<br>$$</p><p>$$<br>|e(A)| \leq \sum_{j&#x3D;1}^n \left| \frac{\partial f(x)}{\partial x_j} \right| |e(x_j)|<br>$$</p><p><strong>一元函数时：</strong><br>$$<br>e^* (x)&#x3D;x^*-x<br>$$</p><p>$$<br>e^* (A)&#x3D;f(x^* )-f(x)&#x3D; f’(\xi)(x^* -x)<br>$$</p><h2 id="病态问题与条件数"><a href="#病态问题与条件数" class="headerlink" title="病态问题与条件数"></a>病态问题与条件数</h2><p>$$ | e_r(y) | &#x3D; \left| \frac{e(y)}{f(x^* )} \right| &#x3D; \left| \frac{f(x) - f(x^* )}{f(x^* )} \right| $$ $$ &#x3D; \left| \frac{f(x) - f(x^* )}{x - x^* } \cdot \frac{x}{f(x)} \cdot \frac{x - x^* }{x} \right| $$ $$ \approx \left| \frac{x \cdot f’(x)}{f(x)} \right| \cdot \left| \frac{x - x^*}{x} \right| &#x3D; \left| \frac{x \cdot f’(x)}{f(x)} \right| \cdot | e_r(x) | $$ </p><p>$| \frac{x \cdot f’(x)}{f(x)} |$为条件数，条件数很大时，初始数据的微小误差可能引起结果 $ A $ 的很大误差。</p><p>对数学问题而言，如果输入数据有微小扰动，引起输出数据（即数学问题的解）有很大扰动，则称数学问题是病态问题，否则称为良态问题。</p>]]></content>
-      
-      
+      <tags>
+        <tag>井中月</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>语法写作笔记</title>
+    <url>/blog/2025/01/27/%E8%AF%AD%E6%B3%95%E5%86%99%E4%BD%9C%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="引用块"><a href="#引用块" class="headerlink" title="引用块"></a>引用块</h1><p>引用块用&gt; 中间有个空格，引用块里可以接二级引用块<br><em><strong>&#x3D;&#x3D;示例&#x3D;&#x3D;</strong></em></p>
+<blockquote>
+<p>一级引用块</p>
+<blockquote>
+<p>二级引用块</p>
+<blockquote>
+<p>三级引用块</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h1 id="代码段"><a href="#代码段" class="headerlink" title="代码段"></a>代码段</h1><p><strong>记住符号是键盘数字1左边的那个，不是enter左边的那个</strong></p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="code">`中间的就是代码段`</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>中间的就是代码段</code></p>
+<p><code>hello world</code></p>
+<p>hello world</p>
+<h1 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h1><p>用3个&#96;和3个包围代码，前面的3个后面可接使用的代码语言，即可自动识别高亮</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">File</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,create_time=<span class="string">&#x27;today&#x27;</span></span>): <span class="comment">#对create_time设置默认值</span></span><br><span class="line">        <span class="variable language_">self</span>.name=name</span><br><span class="line">        <span class="variable language_">self</span>.create_time=create_time</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_info</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.name+<span class="string">&#x27;is created at&#x27;</span>+<span class="variable language_">self</span>.create_time</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Video</span>(<span class="title class_ inherited__">File</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,window_size=(<span class="params"><span class="number">640</span>,<span class="number">480</span></span>)</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(name=name,create_time=<span class="string">&#x27;today&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.window_size=window_size</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Text</span>(<span class="title class_ inherited__">File</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,laguage=<span class="string">&#x27;zh-cn&#x27;</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(name=name,create_time=<span class="string">&#x27;today&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.laguage=laguage</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_more_info</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.get_info()+<span class="string">&#x27;,using laguage of &#x27;</span>+<span class="variable language_">self</span>.laguage</span><br><span class="line">v = Video(<span class="string">&quot;my_video&quot;</span>)   <span class="comment">#定义v的时候必须要输入__init__的参数，否则会报错</span></span><br><span class="line">t = Text(<span class="string">&quot;my_text&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(v.get_info())     <span class="comment"># 调用父类的功能</span></span><br><span class="line"><span class="built_in">print</span>(t.create_time)    <span class="comment"># 调用父类的属性</span></span><br><span class="line"><span class="built_in">print</span>(t.laguage)       <span class="comment"># 调用自己的属性</span></span><br><span class="line"><span class="built_in">print</span>(t.get_more_info()) <span class="comment"># 调用自己加工父类的功能</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="公式段和公式块（latex语法）"><a href="#公式段和公式块（latex语法）" class="headerlink" title="公式段和公式块（latex语法）"></a>公式段和公式块（latex语法）</h1><p>段：两个$$中间用latex语法</p>
+<p>块：$$$$中间用latex语法</p>
+<p>$\beta x$</p>
+<p>$\beta$</p>
+<p>$试试$</p>
+<p>$ \beta $<br>$$<br>\beta \times x \geq 30<br>$$</p>
+<p>$$<br>\varepsilon_r * &#x3D; \frac{1}{2(a_1 + 1)} \times 10^{-n+1}<br>$$</p>
+<h2 id="一些latex代码"><a href="#一些latex代码" class="headerlink" title="一些latex代码"></a>一些latex代码</h2><ul>
+<li>$\varepsilon$</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\varepsilon</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>上下标</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">_&#123;下标内容&#125;^&#123;上标内容&#125; 或 ^&#123;上标内容&#125;_&#123;下标内容&#125;</span><br><span class="line">如果下标或上标的内容多于一个字符，需要用 &#123;&#125; 包裹，例如 x_&#123;ij&#125; 而不是 x_ij</span><br><span class="line">$$x_i^2 + y_j^3 = z_&#123;ij&#125;^&#123;n+1&#125;$$</span><br></pre></td></tr></table></figure>
+
+<p>$$x_i^2 + y_j^3 &#x3D; z_{ij}^{n+1}$$</p>
+<ul>
+<li>绝对值</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|x|</span><br></pre></td></tr></table></figure>
+
+<p>$|x|$</p>
+<ul>
+<li>小于等于，大于等于</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">小于等于：\leq</span><br><span class="line">大于等于：\geq</span><br><span class="line">$$a \leq b \geq c$$</span><br></pre></td></tr></table></figure>
+
+<p>$$a\leq b \geq c$$</p>
+<ul>
+<li>$\xi$</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">\xi</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="分隔符"><a href="#分隔符" class="headerlink" title="分隔符"></a>分隔符</h1><p>—后面不能接东西</p>
+<hr>
+<h1 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h1><p>建议用typora自带的&#x3D;&#x3D;<strong>Ctrl T</strong>&#x3D;&#x3D;快捷键</p>
+<h1 id="分点"><a href="#分点" class="headerlink" title="分点"></a>分点</h1><h2 id="无序分点"><a href="#无序分点" class="headerlink" title="无序分点"></a>无序分点</h2><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> 后面接文本</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>后面接文本</p>
+<h2 id="有序分点"><a href="#有序分点" class="headerlink" title="有序分点"></a>有序分点</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1. 中间有空格</span><br><span class="line">2.</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>中间有空格</li>
+<li>记住句号后面有空格</li>
+</ol>
+</li>
+</ul>
+<p>-英文这个符号后面接一个空格</p>
+<ul>
+<li>第一</li>
+<li>第二</li>
+</ul>
+<h1 id="插入视频"><a href="#插入视频" class="headerlink" title="插入视频"></a>插入视频</h1><h1 id="文字样式"><a href="#文字样式" class="headerlink" title="文字样式"></a>文字样式</h1><h2 id="下划线"><a href="#下划线" class="headerlink" title="下划线"></a>下划线</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;u&gt;下划线演示&lt;/u&gt;</span><br></pre></td></tr></table></figure>
+
+<p><u>试试下划线</u></p>
+<p>这个不方便建议用<u>typora</u>的&#x3D;&#x3D;ctrl+u&#x3D;&#x3D;</p>
+<h2 id="斜体"><a href="#斜体" class="headerlink" title="斜体"></a>斜体</h2><p>_ 要斜的字体（没有空格）_<br><em>斜体</em><br><strong>&#x3D;&#x3D;备注&#x3D;&#x3D;</strong>：斜体和加粗可以同时使用，如：<em><strong>字体</strong></em></p>
+<p>建议用typora的&#x3D;&#x3D;Ctrl I&#x3D;&#x3D;</p>
+<h2 id="加粗"><a href="#加粗" class="headerlink" title="加粗"></a>加粗</h2><p>** 要加粗的字体（星号与字体之间没有空格）**</p>
+<p><em><strong>示例</strong></em></p>
+<p><strong>加粗</strong></p>
+<p>建议用&#x3D;&#x3D;Ctrl B&#x3D;&#x3D;快捷键</p>
+<h2 id="高亮"><a href="#高亮" class="headerlink" title="高亮"></a>高亮</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">文本`高亮`演示</span><br><span class="line">==高亮部分==</span><br><span class="line">typora适用，markdown不适用，网页端无法正常显示</span><br></pre></td></tr></table></figure>
+
+<p><code>高亮</code></p>
+<p>&#x3D;&#x3D;两个等号夹中间&#x3D;&#x3D;</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hello</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文本删除线"><a href="#文本删除线" class="headerlink" title="文本删除线"></a>文本删除线</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">文本~~删除~~线演示</span><br></pre></td></tr></table></figure>
+
+<p><del>两个波浪线</del></p>
+<h2 id="大小"><a href="#大小" class="headerlink" title="大小"></a>大小</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-size:60px&quot;</span>&gt;</span>大小<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><span style="font-size:40px">大小</span></p>
+<h2 id="颜色"><a href="#颜色" class="headerlink" title="颜色"></a>颜色</h2><p>&#x3D;&#x3D;字体颜色支持16进制颜色与RGB颜色表，或者简单的red,blue这种&#x3D;&#x3D;</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:blue&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:rgb(116, 219, 38)&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#FF0000&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><span style="color:blue">文本</span></p>
+<p><span style="color:rgb(116, 219, 38)">文本</span></p>
+<p><span style="color:#FF0000">文本</span></p>
+<h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family:Simsun&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #宋体</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family: &#x27;Microsoft YaHei&#x27;&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #微软雅黑</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family: &#x27;Times New Roman&#x27;&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #新罗马</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family: &#x27;SimHei&#x27;&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #黑体</span><br></pre></td></tr></table></figure>
+
+<p><span style="font-family:Simsun">文本</span></p>
+<p><span style="font-family: 'Microsoft YaHei'">文本</span> </p>
+<p><span style="font-family: 'Times New Roman'">文本</span></p>
+<h2 id="字体位置"><a href="#字体位置" class="headerlink" title="字体位置"></a>字体位置</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;div style=&quot;text-align: center;&quot;&gt;文本居中&lt;/div&gt;</span><br><span class="line">&lt;div style=&quot;text-align: right;&quot;&gt;文本居右&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<div style="text-align: center;">文本居中</div>
+
+<div style="text-align: right;">文本居右</div>
+
+<h1 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h1><p><a href="#%E8%A1%A8%E6%A0%BC">跳转</a></p>
+<p><a href="##%E4%B8%8B%E5%88%92%E7%BA%BF">跳转到高亮</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">英文中括号+英文小括号，括号里是要跳转的地方</span><br><span class="line">[跳转链接名字，随意取](#大纲标题)  PS:#后面不接空格</span><br></pre></td></tr></table></figure>
+
+<p><a href="##%E6%96%9C%E4%BD%93">跳转到斜体</a></p>
+<p>建议用&#x3D;&#x3D;Ctrl K&#x3D;&#x3D;快捷键</p>
+<h1 id="任务列表"><a href="#任务列表" class="headerlink" title="任务列表"></a>任务列表</h1><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> [ ] 记得取快递(-和[]间有空格，[ ]中间也有空格，[]和后面的文本也有空格)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><ul>
+<li><input checked="" disabled="" type="checkbox"> 记得取快递</li>
+</ul>
+</li>
+</ul>
+<h1 id="文章置顶"><a href="#文章置顶" class="headerlink" title="文章置顶"></a>文章置顶</h1><ul>
+<li>你可以直接在文章的<code>front-matter</code>区域里添加<code>sticky: 1</code>属性来把这篇文章置顶。数值越大，置顶的优先级越大。</li>
+</ul>
+<h1 id="Post-Front-matter"><a href="#Post-Front-matter" class="headerlink" title="Post Front-matter"></a>Post Front-matter</h1><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title:</span><br><span class="line">date:</span><br><span class="line">updated:</span><br><span class="line">tags:</span><br><span class="line">categories:</span><br><span class="line">keywords:</span><br><span class="line">description:</span><br><span class="line">top<span class="emphasis">_img:</span></span><br><span class="line"><span class="emphasis">comments:</span></span><br><span class="line"><span class="emphasis">cover:</span></span><br><span class="line"><span class="emphasis">toc:</span></span><br><span class="line"><span class="emphasis">toc_</span>number:</span><br><span class="line">toc<span class="emphasis">_style_</span>simple:</span><br><span class="line">copyright:</span><br><span class="line">copyright<span class="emphasis">_author:</span></span><br><span class="line"><span class="emphasis">copyright_</span>author<span class="emphasis">_href:</span></span><br><span class="line"><span class="emphasis">copyright_</span>url:</span><br><span class="line">copyright<span class="emphasis">_info:</span></span><br><span class="line"><span class="emphasis">mathjax:</span></span><br><span class="line"><span class="emphasis">katex:</span></span><br><span class="line"><span class="emphasis">aplayer:</span></span><br><span class="line"><span class="emphasis">highlight_</span>shrink:</span><br><span class="line"><span class="section">aside:</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>写法</th>
+<th align="center">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>title</td>
+<td align="center">【必需】文章标题</td>
+</tr>
+<tr>
+<td>date</td>
+<td align="center">【必需】文章创建日期</td>
+</tr>
+<tr>
+<td>updated</td>
+<td align="center">【可选】文章更新日期</td>
+</tr>
+<tr>
+<td>tags</td>
+<td align="center">【可选】文章标籤</td>
+</tr>
+<tr>
+<td>categories</td>
+<td align="center">【可选】文章分类</td>
+</tr>
+<tr>
+<td>keywords</td>
+<td align="center">【可选】文章关键字</td>
+</tr>
+<tr>
+<td>description</td>
+<td align="center">【可选】文章描述</td>
+</tr>
+<tr>
+<td>top_img</td>
+<td align="center">【可选】文章顶部图片</td>
+</tr>
+<tr>
+<td>cover</td>
+<td align="center">【可选】文章缩略图(如果没有设置top_img,文章页顶部将显示缩略图，可设为false&#x2F;图片地址&#x2F;留空)</td>
+</tr>
+<tr>
+<td>comments</td>
+<td align="center">【可选】显示文章评论模块(默认 true)</td>
+</tr>
+<tr>
+<td>toc</td>
+<td align="center">【可选】显示文章TOC(默认为设置中toc的enable配置)</td>
+</tr>
+<tr>
+<td>toc_number</td>
+<td align="center">【可选】显示toc_number(默认为设置中toc的number配置)</td>
+</tr>
+<tr>
+<td>toc_style_simple</td>
+<td align="center">【可选】显示 toc 简洁模式</td>
+</tr>
+<tr>
+<td>copyright</td>
+<td align="center">【可选】显示文章版权模块(默认为设置中post_copyright的enable配置)</td>
+</tr>
+<tr>
+<td>copyright_author</td>
+<td align="center">【可选】文章版权模块的文章作者</td>
+</tr>
+<tr>
+<td>copyright_author_href</td>
+<td align="center">【可选】文章版权模块的文章作者链接</td>
+</tr>
+<tr>
+<td>copyright_url</td>
+<td align="center">【可选】文章版权模块的文章连结链接</td>
+</tr>
+<tr>
+<td>copyright_info</td>
+<td align="center">【可选】文章版权模块的版权声明文字</td>
+</tr>
+<tr>
+<td>mathjax</td>
+<td align="center">【可选】显示mathjax(当设置mathjax的per_page: false时，才需要配置，默认 false)</td>
+</tr>
+<tr>
+<td>katex</td>
+<td align="center">【可选】显示katex(当设置katex的per_page: false时，才需要配置，默认 false)</td>
+</tr>
+<tr>
+<td>aplayer</td>
+<td align="center">【可选】在需要的页面加载aplayer的js和css,请参考文章下面的音乐 配置</td>
+</tr>
+<tr>
+<td>highlight_shrink</td>
+<td align="center">【可选】配置代码框是否展开(true&#x2F;false)(默认为设置中highlight_shrink的配置)</td>
+</tr>
+<tr>
+<td>aside</td>
+<td align="center">【可选】显示侧边栏 (默认 true)</td>
+</tr>
+</tbody></table>
+<h1 id="图片插入"><a href="#图片插入" class="headerlink" title="图片插入"></a>图片插入</h1><p><img src="/blog/image/street.png"></p>
+]]></content>
       <categories>
-          
-          <category> 学习 </category>
-          
+        <category>学习</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 数值分析 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>井中月</title>
-      <link href="/blog/2025/02/25/%E4%BA%95%E4%B8%AD%E6%9C%88/"/>
-      <url>/blog/2025/02/25/%E4%BA%95%E4%B8%AD%E6%9C%88/</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-      
+      <tags>
+        <tag>markdown语法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数值分析</title>
+    <url>/blog/2025/02/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="误差"><a href="#误差" class="headerlink" title="误差"></a>误差</h1><h2 id="误差-1"><a href="#误差-1" class="headerlink" title="误差"></a>误差</h2><p>设 $x$ 为准确值，$x^* $ 为 $x$ 的一个近似值，称  $$e^* &#x3D; x^* - x$$  为<strong>绝对误差</strong>，简称为<strong>误差</strong>。</p>
+<p>对于一般情形，  $$| x^*  - x | ≤ ε^* $$$ε^* $为<strong>绝对误差限</strong><br><strong>相对误差</strong>的公式表示为：  $$e_r^* &#x3D; \frac{e^* }{x}$$</p>
+<p>实际中一般取$$e_r^* &#x3D; \frac{e^* }{x^* }$$</p>
+<p>$x$ 的<strong>相对误差上限</strong>定义为  $$\varepsilon^* &#x3D; \frac{\varepsilon^* }{|x^* |}$$</p>
+<h2 id="有效数字"><a href="#有效数字" class="headerlink" title="有效数字"></a>有效数字</h2><h3 id="有效数字的定义"><a href="#有效数字的定义" class="headerlink" title="有效数字的定义"></a>有效数字的定义</h3><p>若近似值 $ x^* $ 的误差限是某一位的半个单位，该位到 $ x $ 的第一位非零数字共有 $ n $ 位，则 $ x $ 有 $ n $ 位有效数字。  </p>
+<p><strong>示例</strong><br>圆周率 $ \pi &#x3D; 3.14159265 \dots $  </p>
+<ul>
+<li>按四舍五入原则，若取四位小数，则 $ \pi \approx 3.1416 $；  </li>
+<li>取五位小数，则 $ \pi \approx 3.14159 $。</li>
+</ul>
+<p>它们的绝对误差不超过末位数的半个单位，即：  </p>
+<ul>
+<li>$$| \pi - 3.1416 | \leq \frac{1}{2} \times 10^{-4}$$  五位有效数值  </li>
+<li>$$| \pi - 3.14159 | \leq \frac{1}{2} \times 10^{-5}$$  六位有效数值</li>
+</ul>
+<blockquote>
+<p>按四舍五入规则的直接从后往前数就行了</p>
+</blockquote>
+<p>用科学计数法，记 $ x^* &#x3D; \pm 0.a_1 a_2 \cdots a_n \times 10^m $（其中 $ a_1 \neq 0 $）。若 $ |x - x^* | \leq 0.5 \times 10^{m-n} $（即 $ a_n $ 的截取按四舍五入规则），则称 $ x^* $ 为有 <strong>$ n $</strong> 位有效数字，精确到 <strong>$ 10^{m-n} $</strong>。</p>
+<h3 id="有效数字与相对误差的关系"><a href="#有效数字与相对误差的关系" class="headerlink" title="有效数字与相对误差的关系"></a>有效数字与相对误差的关系</h3><p><strong>有效数字 ⇒ 相对误差限</strong></p>
+<p> 已知 $ x^* $ 有 $ n $ 位有效数字，则其相对误差限为<br>$$<br>\varepsilon_r *  &#x3D; \left| \frac{\varepsilon^* }{x^* } \right| &#x3D; \frac{0.5 \times 10^{m-n}}{0.a_1 a_2 \cdots a_n \times 10^m} &#x3D; \frac{10^{-n}}{2 \times 0.a_1 \cdots}  \leq \frac{1}{2a_1} \times 10^{-n+1}<br>$$<br><strong>相对误差限 ⇒ 有效数字</strong></p>
+<p> 已知 $ x^* $ 的相对误差限可写为<br>$$<br>\varepsilon_r * &#x3D; \frac{1}{2(a_1 + 1)} \times 10^{-n+1}<br>$$<br>则<br>$$ { }<br>|x - x^* | \leq \varepsilon_r^ *   \cdot |x^* | &#x3D; \frac{10^{-n+1}}{2(a_1 + 1)} \times 0.a_1 a_2 \cdots \times 10^m<br>&lt; \frac{10^{-n+1}}{2(a_1 + 1)} \cdot (a_1 + 1) \times 10^{m-1} &#x3D; 0.5 \times 10^{m-n}<br>$$<br>可见 $ x^* $ 至少有 $ n $ 位有效数字。</p>
+<h2 id="求函数值和算术运算的误差估计"><a href="#求函数值和算术运算的误差估计" class="headerlink" title="求函数值和算术运算的误差估计"></a>求函数值和算术运算的误差估计</h2><p>设多元函数 $ A &#x3D; f(x_1, x_2, \cdots, x_n) $，$ x_1^* , x_2^* , \cdots, x_n^*  $ 为 $ x_1, x_2, \cdots, x_n $ 的近似值。 则 $ A $ 的近似值 $ A^* $：$ A^* &#x3D; f(x_1^* , x_2^* , \cdots, x_n^* ) $。 </p>
+<p>函数值 $ A^* $ 的绝对误差： $$ A - A^*  &#x3D; f(x_1, \cdots, x_n) - f(x_1^* , \cdots, x_n^* ) $$ </p>
+<p>在点 $ x &#x3D; (x_1, x_2, \cdots, x_n) $ 的 Taylor 展开式，设 $ |x_i - x_i^* | $ ($ i &#x3D; 1, 2, \cdots, n $) 都很小</p>
+<p>略去高阶项：<br>$$<br>A - A^* &#x3D; f(x_1, \cdots, x_n) - f(x_1^* , \cdots, x_n^* ) \approx \sum_{j&#x3D;1}^n \frac{\partial f(x)}{\partial x_j} (x_j - x_j^* )<br>$$<br>或<br>$$<br>e(A) \approx \sum_{j&#x3D;1}^n \frac{\partial f(x)}{\partial x_j} e(x_j)<br>$$</p>
+<p>$$<br>|e(A)| \leq \sum_{j&#x3D;1}^n \left| \frac{\partial f(x)}{\partial x_j} \right| |e(x_j)|<br>$$</p>
+<p><strong>一元函数时：</strong><br>$$<br>e^* (x)&#x3D;x^*-x<br>$$</p>
+<p>$$<br>e^* (A)&#x3D;f(x^* )-f(x)&#x3D; f’(\xi)(x^* -x)<br>$$</p>
+<h2 id="病态问题与条件数"><a href="#病态问题与条件数" class="headerlink" title="病态问题与条件数"></a>病态问题与条件数</h2><p>$$ | e_r(y) | &#x3D; \left| \frac{e(y)}{f(x^* )} \right| &#x3D; \left| \frac{f(x) - f(x^* )}{f(x^* )} \right| $$ $$ &#x3D; \left| \frac{f(x) - f(x^* )}{x - x^* } \cdot \frac{x}{f(x)} \cdot \frac{x - x^* }{x} \right| $$ $$ \approx \left| \frac{x \cdot f’(x)}{f(x)} \right| \cdot \left| \frac{x - x^*}{x} \right| &#x3D; \left| \frac{x \cdot f’(x)}{f(x)} \right| \cdot | e_r(x) | $$ </p>
+<p>$| \frac{x \cdot f’(x)}{f(x)} |$为条件数，条件数很大时，初始数据的微小误差可能引起结果 $ A $ 的很大误差。</p>
+<p>对数学问题而言，如果输入数据有微小扰动，引起输出数据（即数学问题的解）有很大扰动，则称数学问题是病态问题，否则称为良态问题。</p>
+]]></content>
       <categories>
-          
-          <category> 想法 </category>
-          
+        <category>学习</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 井中月 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>笼中雀</title>
-      <link href="/blog/2025/02/25/%E7%AC%BC%E4%B8%AD%E9%9B%80/"/>
-      <url>/blog/2025/02/25/%E7%AC%BC%E4%B8%AD%E9%9B%80/</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><hr><p>置身其中，好一个笼中雀。</p>]]></content>
-      
-      
+      <tags>
+        <tag>数值分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>笼中雀</title>
+    <url>/blog/2025/02/25/%E7%AC%BC%E4%B8%AD%E9%9B%80/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><hr>
+<p>置身其中，好一个笼中雀。</p>
+]]></content>
       <categories>
-          
-          <category> 想法 </category>
-          
+        <category>想法</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 笼中雀 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>语法写作笔记</title>
-      <link href="/blog/2025/01/27/%E8%AF%AD%E6%B3%95%E5%86%99%E4%BD%9C%E7%AC%94%E8%AE%B0/"/>
-      <url>/blog/2025/01/27/%E8%AF%AD%E6%B3%95%E5%86%99%E4%BD%9C%E7%AC%94%E8%AE%B0/</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="引用块"><a href="#引用块" class="headerlink" title="引用块"></a>引用块</h1><p>引用块用&gt; 中间有个空格，引用块里可以接二级引用块<br><em><strong>&#x3D;&#x3D;示例&#x3D;&#x3D;</strong></em></p><blockquote><p>一级引用块</p><blockquote><p>二级引用块</p><blockquote><p>三级引用块</p></blockquote></blockquote></blockquote><h1 id="代码段"><a href="#代码段" class="headerlink" title="代码段"></a>代码段</h1><p><strong>记住符号是键盘数字1左边的那个，不是enter左边的那个</strong></p><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">`中间的就是代码段`</span></span><br></pre></td></tr></table></figure><p><code>中间的就是代码段</code></p><p><code>hello world</code></p><p>hello world</p><h1 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h1><p>用3个&#96;和3个包围代码，前面的3个后面可接使用的代码语言，即可自动识别高亮</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">File</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,create_time=<span class="string">&#x27;today&#x27;</span></span>): <span class="comment">#对create_time设置默认值</span></span><br><span class="line">        <span class="variable language_">self</span>.name=name</span><br><span class="line">        <span class="variable language_">self</span>.create_time=create_time</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_info</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.name+<span class="string">&#x27;is created at&#x27;</span>+<span class="variable language_">self</span>.create_time</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Video</span>(<span class="title class_ inherited__">File</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,window_size=(<span class="params"><span class="number">640</span>,<span class="number">480</span></span>)</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(name=name,create_time=<span class="string">&#x27;today&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.window_size=window_size</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Text</span>(<span class="title class_ inherited__">File</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,laguage=<span class="string">&#x27;zh-cn&#x27;</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(name=name,create_time=<span class="string">&#x27;today&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.laguage=laguage</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_more_info</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.get_info()+<span class="string">&#x27;,using laguage of &#x27;</span>+<span class="variable language_">self</span>.laguage</span><br><span class="line">v = Video(<span class="string">&quot;my_video&quot;</span>)   <span class="comment">#定义v的时候必须要输入__init__的参数，否则会报错</span></span><br><span class="line">t = Text(<span class="string">&quot;my_text&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(v.get_info())     <span class="comment"># 调用父类的功能</span></span><br><span class="line"><span class="built_in">print</span>(t.create_time)    <span class="comment"># 调用父类的属性</span></span><br><span class="line"><span class="built_in">print</span>(t.laguage)       <span class="comment"># 调用自己的属性</span></span><br><span class="line"><span class="built_in">print</span>(t.get_more_info()) <span class="comment"># 调用自己加工父类的功能</span></span><br><span class="line"></span><br></pre></td></tr></table></figure><h1 id="公式段和公式块（latex语法）"><a href="#公式段和公式块（latex语法）" class="headerlink" title="公式段和公式块（latex语法）"></a>公式段和公式块（latex语法）</h1><p>段：两个$$中间用latex语法</p><p>块：$$$$中间用latex语法</p><p>$\beta x$</p><p>$\beta$</p><p>$试试$</p><p>$ \beta $<br>$$<br>\beta \times x \geq 30<br>$$</p><p>$$<br>\varepsilon_r * &#x3D; \frac{1}{2(a_1 + 1)} \times 10^{-n+1}<br>$$</p><h2 id="一些latex代码"><a href="#一些latex代码" class="headerlink" title="一些latex代码"></a>一些latex代码</h2><ul><li>$\varepsilon$</li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\varepsilon</span><br></pre></td></tr></table></figure><ul><li>上下标</li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">_&#123;下标内容&#125;^&#123;上标内容&#125; 或 ^&#123;上标内容&#125;_&#123;下标内容&#125;</span><br><span class="line">如果下标或上标的内容多于一个字符，需要用 &#123;&#125; 包裹，例如 x_&#123;ij&#125; 而不是 x_ij</span><br><span class="line">$$x_i^2 + y_j^3 = z_&#123;ij&#125;^&#123;n+1&#125;$$</span><br></pre></td></tr></table></figure><p>$$x_i^2 + y_j^3 &#x3D; z_{ij}^{n+1}$$</p><ul><li>绝对值</li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">|x|</span><br></pre></td></tr></table></figure><p>$|x|$</p><ul><li>小于等于，大于等于</li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">小于等于：\leq</span><br><span class="line">大于等于：\geq</span><br><span class="line">$$a \leq b \geq c$$</span><br></pre></td></tr></table></figure><p>$$a\leq b \geq c$$</p><ul><li>$\xi$</li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\xi</span><br></pre></td></tr></table></figure><h1 id="分隔符"><a href="#分隔符" class="headerlink" title="分隔符"></a>分隔符</h1><p>—后面不能接东西</p><hr><h1 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h1><p>建议用typora自带的&#x3D;&#x3D;<strong>Ctrl T</strong>&#x3D;&#x3D;快捷键</p><h1 id="分点"><a href="#分点" class="headerlink" title="分点"></a>分点</h1><h2 id="无序分点"><a href="#无序分点" class="headerlink" title="无序分点"></a>无序分点</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> 后面接文本</span><br></pre></td></tr></table></figure><ul><li><p>后面接文本</p><h2 id="有序分点"><a href="#有序分点" class="headerlink" title="有序分点"></a>有序分点</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. 中间有空格</span><br><span class="line">2.</span><br></pre></td></tr></table></figure><ol><li>中间有空格</li><li>记住句号后面有空格</li></ol></li></ul><p>-英文这个符号后面接一个空格</p><ul><li>第一</li><li>第二</li></ul><h1 id="插入视频"><a href="#插入视频" class="headerlink" title="插入视频"></a>插入视频</h1><h1 id="文字样式"><a href="#文字样式" class="headerlink" title="文字样式"></a>文字样式</h1><h2 id="下划线"><a href="#下划线" class="headerlink" title="下划线"></a>下划线</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;u&gt;下划线演示&lt;/u&gt;</span><br></pre></td></tr></table></figure><p><u>试试下划线</u></p><p>这个不方便建议用<u>typora</u>的&#x3D;&#x3D;ctrl+u&#x3D;&#x3D;</p><h2 id="斜体"><a href="#斜体" class="headerlink" title="斜体"></a>斜体</h2><p>_ 要斜的字体（没有空格）_<br><em>斜体</em><br><strong>&#x3D;&#x3D;备注&#x3D;&#x3D;</strong>：斜体和加粗可以同时使用，如：<em><strong>字体</strong></em></p><p>建议用typora的&#x3D;&#x3D;Ctrl I&#x3D;&#x3D;</p><h2 id="加粗"><a href="#加粗" class="headerlink" title="加粗"></a>加粗</h2><p>** 要加粗的字体（星号与字体之间没有空格）**</p><p><em><strong>示例</strong></em></p><p><strong>加粗</strong></p><p>建议用&#x3D;&#x3D;Ctrl B&#x3D;&#x3D;快捷键</p><h2 id="高亮"><a href="#高亮" class="headerlink" title="高亮"></a>高亮</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">文本`高亮`演示</span><br><span class="line">==高亮部分==</span><br><span class="line">typora适用，markdown不适用，网页端无法正常显示</span><br></pre></td></tr></table></figure><p><code>高亮</code></p><p>&#x3D;&#x3D;两个等号夹中间&#x3D;&#x3D;</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hello</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Hello World&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="文本删除线"><a href="#文本删除线" class="headerlink" title="文本删除线"></a>文本删除线</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">文本~~删除~~线演示</span><br></pre></td></tr></table></figure><p><del>两个波浪线</del></p><h2 id="大小"><a href="#大小" class="headerlink" title="大小"></a>大小</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-size:60px&quot;</span>&gt;</span>大小<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure><p><span style="font-size:40px">大小</span></p><h2 id="颜色"><a href="#颜色" class="headerlink" title="颜色"></a>颜色</h2><p>&#x3D;&#x3D;字体颜色支持16进制颜色与RGB颜色表，或者简单的red,blue这种&#x3D;&#x3D;</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:blue&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:rgb(116, 219, 38)&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#FF0000&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure><p><span style="color:blue">文本</span></p><p><span style="color:rgb(116, 219, 38)">文本</span></p><p><span style="color:#FF0000">文本</span></p><h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family:Simsun&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #宋体</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family: &#x27;Microsoft YaHei&#x27;&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #微软雅黑</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family: &#x27;Times New Roman&#x27;&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #新罗马</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;font-family: &#x27;SimHei&#x27;&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span> #黑体</span><br></pre></td></tr></table></figure><p><span style="font-family:Simsun">文本</span></p><p><span style="font-family: 'Microsoft YaHei'">文本</span> </p><p><span style="font-family: 'Times New Roman'">文本</span></p><h2 id="字体位置"><a href="#字体位置" class="headerlink" title="字体位置"></a>字体位置</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=&quot;text-align: center;&quot;&gt;文本居中&lt;/div&gt;</span><br><span class="line">&lt;div style=&quot;text-align: right;&quot;&gt;文本居右&lt;/div&gt;</span><br></pre></td></tr></table></figure><div style="text-align: center;">文本居中</div><div style="text-align: right;">文本居右</div><h1 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h1><p><a href="#%E8%A1%A8%E6%A0%BC">跳转</a></p><p><a href="##%E4%B8%8B%E5%88%92%E7%BA%BF">跳转到高亮</a></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">英文中括号+英文小括号，括号里是要跳转的地方</span><br><span class="line">[跳转链接名字，随意取](#大纲标题)  PS:#后面不接空格</span><br></pre></td></tr></table></figure><p><a href="##%E6%96%9C%E4%BD%93">跳转到斜体</a></p><p>建议用&#x3D;&#x3D;Ctrl K&#x3D;&#x3D;快捷键</p><h1 id="任务列表"><a href="#任务列表" class="headerlink" title="任务列表"></a>任务列表</h1><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> [ ] 记得取快递(-和[]间有空格，[ ]中间也有空格，[]和后面的文本也有空格)</span><br></pre></td></tr></table></figure><ul><li><ul><li><input checked="" disabled="" type="checkbox"> 记得取快递</li></ul></li></ul><h1 id="文章置顶"><a href="#文章置顶" class="headerlink" title="文章置顶"></a>文章置顶</h1><ul><li>你可以直接在文章的<code>front-matter</code>区域里添加<code>sticky: 1</code>属性来把这篇文章置顶。数值越大，置顶的优先级越大。</li></ul><h1 id="Post-Front-matter"><a href="#Post-Front-matter" class="headerlink" title="Post Front-matter"></a>Post Front-matter</h1><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title:</span><br><span class="line">date:</span><br><span class="line">updated:</span><br><span class="line">tags:</span><br><span class="line">categories:</span><br><span class="line">keywords:</span><br><span class="line">description:</span><br><span class="line">top<span class="emphasis">_img:</span></span><br><span class="line"><span class="emphasis">comments:</span></span><br><span class="line"><span class="emphasis">cover:</span></span><br><span class="line"><span class="emphasis">toc:</span></span><br><span class="line"><span class="emphasis">toc_</span>number:</span><br><span class="line">toc<span class="emphasis">_style_</span>simple:</span><br><span class="line">copyright:</span><br><span class="line">copyright<span class="emphasis">_author:</span></span><br><span class="line"><span class="emphasis">copyright_</span>author<span class="emphasis">_href:</span></span><br><span class="line"><span class="emphasis">copyright_</span>url:</span><br><span class="line">copyright<span class="emphasis">_info:</span></span><br><span class="line"><span class="emphasis">mathjax:</span></span><br><span class="line"><span class="emphasis">katex:</span></span><br><span class="line"><span class="emphasis">aplayer:</span></span><br><span class="line"><span class="emphasis">highlight_</span>shrink:</span><br><span class="line"><span class="section">aside:</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></table></figure><table><thead><tr><th>写法</th><th align="center">解释</th></tr></thead><tbody><tr><td>title</td><td align="center">【必需】文章标题</td></tr><tr><td>date</td><td align="center">【必需】文章创建日期</td></tr><tr><td>updated</td><td align="center">【可选】文章更新日期</td></tr><tr><td>tags</td><td align="center">【可选】文章标籤</td></tr><tr><td>categories</td><td align="center">【可选】文章分类</td></tr><tr><td>keywords</td><td align="center">【可选】文章关键字</td></tr><tr><td>description</td><td align="center">【可选】文章描述</td></tr><tr><td>top_img</td><td align="center">【可选】文章顶部图片</td></tr><tr><td>cover</td><td align="center">【可选】文章缩略图(如果没有设置top_img,文章页顶部将显示缩略图，可设为false&#x2F;图片地址&#x2F;留空)</td></tr><tr><td>comments</td><td align="center">【可选】显示文章评论模块(默认 true)</td></tr><tr><td>toc</td><td align="center">【可选】显示文章TOC(默认为设置中toc的enable配置)</td></tr><tr><td>toc_number</td><td align="center">【可选】显示toc_number(默认为设置中toc的number配置)</td></tr><tr><td>toc_style_simple</td><td align="center">【可选】显示 toc 简洁模式</td></tr><tr><td>copyright</td><td align="center">【可选】显示文章版权模块(默认为设置中post_copyright的enable配置)</td></tr><tr><td>copyright_author</td><td align="center">【可选】文章版权模块的文章作者</td></tr><tr><td>copyright_author_href</td><td align="center">【可选】文章版权模块的文章作者链接</td></tr><tr><td>copyright_url</td><td align="center">【可选】文章版权模块的文章连结链接</td></tr><tr><td>copyright_info</td><td align="center">【可选】文章版权模块的版权声明文字</td></tr><tr><td>mathjax</td><td align="center">【可选】显示mathjax(当设置mathjax的per_page: false时，才需要配置，默认 false)</td></tr><tr><td>katex</td><td align="center">【可选】显示katex(当设置katex的per_page: false时，才需要配置，默认 false)</td></tr><tr><td>aplayer</td><td align="center">【可选】在需要的页面加载aplayer的js和css,请参考文章下面的音乐 配置</td></tr><tr><td>highlight_shrink</td><td align="center">【可选】配置代码框是否展开(true&#x2F;false)(默认为设置中highlight_shrink的配置)</td></tr><tr><td>aside</td><td align="center">【可选】显示侧边栏 (默认 true)</td></tr></tbody></table><h1 id="图片插入"><a href="#图片插入" class="headerlink" title="图片插入"></a>图片插入</h1><p><img src="/blog/image/street.png"></p>]]></content>
-      
-      
+      <tags>
+        <tag>笼中雀</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>深度学习相关知识</title>
+    <url>/blog/2025/02/27/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="准确度-accuracy-、精确率（precision-、召回率（recall）、F1值"><a href="#准确度-accuracy-、精确率（precision-、召回率（recall）、F1值" class="headerlink" title="准确度(accuracy)、精确率（precision)、召回率（recall）、F1值"></a>准确度(accuracy)、精确率（precision)、召回率（recall）、F1值</h1><p>TP（True Positives)：真正例，预测为正例而且实际上也是正例；</p>
+<p>FP（False Positives)：假正例，预测为正例然而实际上却是负例；</p>
+<p>FN（false Negatives)：假负例，预测为负例然而实际上却是正例；</p>
+<p>TN（True Negatives)：真负例，预测为负例而且实际上也是负例。</p>
+<p><img src="/blog/image/TP.PNG"></p>
+<h2 id="准确率-Accuracy"><a href="#准确率-Accuracy" class="headerlink" title="准确率 Accuracy"></a>准确率 Accuracy</h2><blockquote>
+<p><strong>准确度</strong>：正例和负例中预测正确数量占总数量的比例。</p>
+</blockquote>
+<p>用公式表示：<br>$$<br>ACC&#x3D;\frac{TP+TN}{TP+FP+FN+TN}<br>$$</p>
+<h2 id="精确度-Precision"><a href="#精确度-Precision" class="headerlink" title="精确度 Precision"></a>精确度 Precision</h2><p>精确度：以<strong>预测结果</strong>为判断依据，<strong>预测为正例的样本中预测正确的比例</strong>。预测为正例的结果分两种，要么实际是正例TP，要么实际是负例FP，则可用公式表示:<br>$$<br>precision&#x3D;\frac{TP}{TP+FP}<br>$$<br>精确度还有一个名字，叫做**“查准率”<strong>，我们关心的主要部分是正例，所以查准率就是相对正例的预测结果而言，正例预测的准确度。直白的意思就是模型预测为正例的样本中，其中真正的正例占预测为正例样本的比例，用此标准来</strong>评估预测正例的准确度**。</p>
+<h2 id="召回率-Recall"><a href="#召回率-Recall" class="headerlink" title="召回率 Recall"></a>召回率 Recall</h2><p>召回率：以<strong>实际样本</strong>为判断依据，<strong>实际为正例的样本中，被预测正确的正例占总实际正例样本的比例</strong>。实际为正例的样本中，要么在预测中被预测正确TP，要么在预测中预测错误FN，用公式表示：<br>$$<br>recall&#x3D;\frac{TP}{TP+FN}<br>$$<br>召回率的另一个名字，叫做**“查全率”**，评估所有实际正例是否被预测出来的覆盖率占比多少</p>
+<h2 id="F1分数（F1-Score）"><a href="#F1分数（F1-Score）" class="headerlink" title="F1分数（F1-Score）"></a>F1分数（F1-Score）</h2><p><strong>定义</strong>：精确率与召回率的<strong>调和平均数</strong>，平衡两者性能<br>$$<br>F1&#x3D;\frac{2 \times Precision \times Recall}{Precision+Recall}<br>$$</p>
+<h1 id="Batch-Normalization（批量归一化）-和-Layer-Normalization（层归一化）"><a href="#Batch-Normalization（批量归一化）-和-Layer-Normalization（层归一化）" class="headerlink" title="Batch Normalization（批量归一化） 和 Layer Normalization（层归一化）"></a>Batch Normalization（批量归一化） 和 Layer Normalization（层归一化）</h1><hr>
+<h2 id="1-核心概念对比"><a href="#1-核心概念对比" class="headerlink" title="1. 核心概念对比"></a>1. <strong>核心概念对比</strong></h2><h3 id="Batch-Normalization-BN"><a href="#Batch-Normalization-BN" class="headerlink" title="Batch Normalization (BN)"></a><strong>Batch Normalization (BN)</strong></h3><ul>
+<li><p><strong>归一化方向</strong>：对 <strong>同一特征维度</strong> 跨所有样本和空间位置归一化。</p>
+</li>
+<li><p><strong>核心公式</strong>：</p>
+<p>假设输入张量形状为 <code>(N, C, H, W)</code>（Batch Size, Channels, Height, Width），则对每个通道 <code>c</code> 计算均值和方差：<br>$$<br>\mu_c &#x3D; \frac{1}{N \cdot H \cdot W} \sum_{n&#x3D;1}^N \sum_{h&#x3D;1}^H \sum_{w&#x3D;1}^W x_{n,c,h,w}, \quad \sigma_c^2 &#x3D; \frac{1}{N \cdot H \cdot W} \sum_{n&#x3D;1}^N \sum_{h&#x3D;1}^H \sum_{w&#x3D;1}^W (x_{n,c,h,w} - \mu_c)^2<br>$$</p>
+</li>
+<li><p><strong>适用场景</strong>：图像处理（CNN）、固定长度的结构化数据。</p>
+</li>
+</ul>
+<h3 id="Layer-Normalization-LN"><a href="#Layer-Normalization-LN" class="headerlink" title="Layer Normalization (LN)"></a><strong>Layer Normalization (LN)</strong></h3><ul>
+<li><p><strong>归一化方向</strong>：对 <strong>同一样本</strong> 的所有特征维度归一化。</p>
+</li>
+<li><p><strong>核心公式</strong>：</p>
+<p>假设输入张量形状为 <code>(N, C, H, W)</code>，对每个样本 <code>n</code> 计算均值和方差：<br>$$<br>\mu_n &#x3D; \frac{1}{C \cdot H \cdot W} \sum_{c&#x3D;1}^C \sum_{h&#x3D;1}^H \sum_{w&#x3D;1}^W x_{n,c,h,w}, \quad \sigma_n^2 &#x3D; \frac{1}{C \cdot H \cdot W} \sum_{c&#x3D;1}^C \sum_{h&#x3D;1}^H \sum_{w&#x3D;1}^W (x_{n,c,h,w} - \mu_n)^2<br>$$</p>
+</li>
+<li><p><strong>适用场景</strong>：序列数据（RNN、Transformer）、动态长度输入。</p>
+</li>
+</ul>
+<hr>
+<h2 id="2-公式符号解释"><a href="#2-公式符号解释" class="headerlink" title="2. 公式符号解释"></a>2. <strong>公式符号解释</strong></h2><h3 id="输入张量形状"><a href="#输入张量形状" class="headerlink" title="输入张量形状"></a><strong>输入张量形状</strong></h3><p>假设输入为 <code>(N, C, H, W)</code>：</p>
+<ul>
+<li><code>N</code>: 批次大小（Batch Size）</li>
+<li><code>C</code>: 通道数（特征维度）</li>
+<li><code>H</code>: 高度（空间维度）</li>
+<li><code>W</code>: 宽度（空间维度）</li>
+</ul>
+<h3 id="BN-公式符号"><a href="#BN-公式符号" class="headerlink" title="BN 公式符号"></a><strong>BN 公式符号</strong></h3><ul>
+<li><code>μₐ</code>: 第 <code>c</code> 个通道的均值（跨所有样本和空间位置）。</li>
+<li><code>σₐ²</code>: 第 <code>c</code> 个通道的方差。</li>
+<li><code>xₙ,ₐ,ₕ,ᵥ</code>: 第 <code>n</code> 个样本、第 <code>c</code> 个通道、位置 <code>(h, w)</code> 的像素值。</li>
+</ul>
+<h3 id="LN-公式符号"><a href="#LN-公式符号" class="headerlink" title="LN 公式符号"></a><strong>LN 公式符号</strong></h3><ul>
+<li><code>μₙ</code>: 第 <code>n</code> 个样本的均值（跨所有特征和空间位置）。</li>
+<li><code>σₙ²</code>: 第 <code>n</code> 个样本的方差。</li>
+<li><code>xₙ,ₐ,ₕ,ᵥ</code>: 同上。</li>
+</ul>
+<hr>
+<h2 id="3-具体示例对比"><a href="#3-具体示例对比" class="headerlink" title="3. 具体示例对比"></a>3. <strong>具体示例对比</strong></h2><h3 id="输入数据"><a href="#输入数据" class="headerlink" title="输入数据"></a><strong>输入数据</strong></h3><ul>
+<li><code>N=2</code>（2张图像），<code>C=3</code>（RGB三通道），<code>H=2</code>, <code>W=2</code>（2x2像素）。</li>
+<li><strong>样本1</strong>：<ul>
+<li>通道0（红）：<code>[[1, 3], [5, 7]]</code></li>
+<li>通道1（绿）：<code>[[2, 4], [6, 8]]</code></li>
+<li>通道2（蓝）：<code>[[3, 5], [7, 9]]</code></li>
+</ul>
+</li>
+<li><strong>样本2</strong>：<ul>
+<li>通道0（红）：<code>[[2, 4], [6, 8]]</code></li>
+<li>通道1（绿）：<code>[[3, 5], [7, 9]]</code></li>
+<li>通道2（蓝）：<code>[[4, 6], [8, 10]]</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="BN-计算示例（以通道0为例）"><a href="#BN-计算示例（以通道0为例）" class="headerlink" title="BN 计算示例（以通道0为例）"></a><strong>BN 计算示例（以通道0为例）</strong></h3><ol>
+<li><strong>计算均值 <code>μ₀</code></strong>：<br>$$<br>\mu_0 &#x3D; \frac{(1+3+5+7) + (2+4+6+8)}{8} &#x3D; \frac{16 + 20}{8} &#x3D; 4.5<br>$$</li>
+<li><strong>计算方差 <code>σ₀²</code></strong>：<br>$$<br>\sigma_0^2 &#x3D; \frac{(1-4.5)^2 + (3-4.5)^2 + \cdots + (8-4.5)^2}{8} &#x3D; \frac{21 + 21}{8} &#x3D; 5.25<br>$$</li>
+<li><strong>归一化后</strong>：每个像素值变为 <code>(x - 4.5) / √(5.25 + ε)</code>。</li>
+</ol>
+<hr>
+<h3 id="LN-计算示例（以样本1为例）"><a href="#LN-计算示例（以样本1为例）" class="headerlink" title="LN 计算示例（以样本1为例）"></a><strong>LN 计算示例（以样本1为例）</strong></h3><ol>
+<li><strong>计算均值 <code>μ₁</code></strong>：<br>$$<br>\mu_1 &#x3D; \frac{1+3+5+7 + 2+4+6+8 + 3+5+7+9}{12} &#x3D; \frac{60}{12} &#x3D; 5<br>$$</li>
+<li><strong>计算方差 <code>σ₁²</code></strong>：<br>$$<br>\sigma_1^2 &#x3D; \frac{(1-5)^2 + (3-5)^2 + \cdots + (9-5)^2}{12} &#x3D; \frac{84}{12} &#x3D; 7<br>$$</li>
+<li><strong>归一化后</strong>：每个像素值变为 <code>(x - 5) / √(7 + ε)</code>。</li>
+</ol>
+<hr>
+<h2 id="4-对比总结表格"><a href="#4-对比总结表格" class="headerlink" title="4. 对比总结表格"></a>4. <strong>对比总结表格</strong></h2><table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th>Batch Normalization (BN)</th>
+<th>Layer Normalization (LN)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>归一化维度</strong></td>
+<td>同一特征维度跨样本和空间位置</td>
+<td>同一样本的所有特征维度</td>
+</tr>
+<tr>
+<td><strong>参数数量</strong></td>
+<td><code>2C</code>（每通道独立参数）</td>
+<td><code>2</code>（全局共享参数）</td>
+</tr>
+<tr>
+<td><strong>依赖条件</strong></td>
+<td>需大 Batch Size（如32+）</td>
+<td>不依赖 Batch Size</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>图像（CNN）、静态数据</td>
+<td>文本（Transformer）、动态序列数据</td>
+</tr>
+<tr>
+<td><strong>训练&#x2F;测试差异</strong></td>
+<td>测试时用全局移动平均统计量</td>
+<td>测试时直接计算当前样本统计量</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="5-注意事项"><a href="#5-注意事项" class="headerlink" title="5. 注意事项"></a>5. <strong>注意事项</strong></h2><ol>
+<li><p><strong>BN 的局限性</strong>：</p>
+<ul>
+<li>小 Batch Size 时性能下降（方差估计不准确）。</li>
+<li>对序列数据（如变长文本）不友好。</li>
+</ul>
+</li>
+<li><p><strong>LN 的优势</strong>：</p>
+<ul>
+<li>适用于单样本推理（如实时生成文本）。</li>
+<li>对特征维度间的动态变化更鲁棒。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="6-代码示例（PyTorch）"><a href="#6-代码示例（PyTorch）" class="headerlink" title="6. 代码示例（PyTorch）"></a>6. <strong>代码示例（PyTorch）</strong></h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Batch Normalization（图像任务）</span></span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line">bn = nn.BatchNorm2d(num_features=<span class="number">3</span>)  <span class="comment"># 输入通道数 C=3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Layer Normalization（NLP任务）</span></span><br><span class="line">ln = nn.LayerNorm(normalized_shape=<span class="number">256</span>)  <span class="comment"># 输入特征维度=256</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="上采样（Upsampling）与下采样（Downsampling）详解"><a href="#上采样（Upsampling）与下采样（Downsampling）详解" class="headerlink" title="上采样（Upsampling）与下采样（Downsampling）详解"></a>上采样（Upsampling）与下采样（Downsampling）详解</h1><hr>
+<h2 id="核心区别"><a href="#核心区别" class="headerlink" title="核心区别"></a><strong>核心区别</strong></h2><ul>
+<li><strong>上采样</strong>：放大特征图尺寸，<strong>恢复细节信息</strong>（如目标边缘、小物体位置）。  </li>
+<li><strong>下采样</strong>：缩小特征图尺寸，<strong>提取抽象语义</strong>（如目标类别、整体形状）。  </li>
+<li><strong>协作关系</strong>：两者结合实现多尺度检测（如同时识别近处大车和远处小车）。</li>
+</ul>
+<hr>
+<h2 id="1-下采样（Downsampling）"><a href="#1-下采样（Downsampling）" class="headerlink" title="1. 下采样（Downsampling）"></a><strong>1. 下采样（Downsampling）</strong></h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a><strong>作用</strong></h3><ul>
+<li>压缩特征图，减少计算量。</li>
+<li>捕获高层语义信息（例如“这是一辆车”）。</li>
+</ul>
+<h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a><strong>实现方式</strong></h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>跨步卷积</strong></td>
+<td>增大卷积步长（如<code>stride=2</code>），跳过部分像素，直接缩小特征图尺寸。</td>
+</tr>
+<tr>
+<td><strong>池化（Pooling）</strong></td>
+<td>取局部区域的最大值（Max Pooling）或平均值（Average Pooling）。</td>
+</tr>
+</tbody></table>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a><strong>特点</strong></h3><ul>
+<li><strong>输出尺寸</strong>：缩小（例如输入<code>256x256</code> → 输出<code>128x128</code>）。</li>
+<li><strong>信息保留</strong>：丢弃细节，保留整体特征。</li>
+<li><strong>类比</strong>：眯眼看照片，忽略纹理细节，只关注轮廓。</li>
+</ul>
+<hr>
+<h2 id="2-上采样（Upsampling）"><a href="#2-上采样（Upsampling）" class="headerlink" title="2. 上采样（Upsampling）"></a><strong>2. 上采样（Upsampling）</strong></h2><h3 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a><strong>作用</strong></h3><ul>
+<li>扩大特征图尺寸，辅助精确定位（如车轮、车灯位置）。</li>
+<li>与浅层特征融合，增强小目标检测能力。</li>
+</ul>
+<h3 id="实现方式-1"><a href="#实现方式-1" class="headerlink" title="实现方式"></a><strong>实现方式</strong></h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>插值（Interpolation）</strong></td>
+<td>通过双线性插值、最近邻插值等算法填充像素（类似图像放大）。</td>
+</tr>
+<tr>
+<td><strong>转置卷积（Transposed Convolution）</strong></td>
+<td>反向卷积操作，通过可学习参数生成更大特征图。</td>
+</tr>
+</tbody></table>
+<h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a><strong>特点</strong></h3><ul>
+<li><strong>输出尺寸</strong>：放大（例如输入<code>128x128</code> → 输出<code>256x256</code>）。</li>
+<li><strong>信息保留</strong>：补充细节，但可能引入噪声。</li>
+<li><strong>类比</strong>：放大模糊图片，猜测缺失的像素。</li>
+</ul>
+<hr>
+<h2 id="对比总结"><a href="#对比总结" class="headerlink" title="对比总结"></a><strong>对比总结</strong></h2><table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th>下采样</th>
+<th>上采样</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>目的</strong></td>
+<td>提取抽象特征，减少计算量</td>
+<td>恢复细节，精确定位</td>
+</tr>
+<tr>
+<td><strong>典型操作</strong></td>
+<td>池化、跨步卷积</td>
+<td>插值、转置卷积</td>
+</tr>
+<tr>
+<td><strong>信息流</strong></td>
+<td>从细节到语义</td>
+<td>从语义到细节</td>
+</tr>
+<tr>
+<td><strong>应用阶段</strong></td>
+<td>Backbone（特征提取层）</td>
+<td>Neck（特征融合层）</td>
+</tr>
+</tbody></table>
+<h2 id="实际例子"><a href="#实际例子" class="headerlink" title="实际例子"></a><strong>实际例子</strong></h2><ul>
+<li><strong>场景</strong>：检测一张包含“近处行人”和“远处车辆”的图像。</li>
+<li><strong>下采样</strong>：深层特征图（20x20）捕获“远处车辆”的抽象轮廓。</li>
+<li><strong>上采样</strong>：将该特征图放大到40x40，与浅层特征（包含“近处行人”细节）融合，实现多尺度检测。</li>
+</ul>
+<h1 id="消融实验"><a href="#消融实验" class="headerlink" title="消融实验"></a>消融实验</h1>]]></content>
       <categories>
-          
-          <category> 学习 </category>
-          
+        <category>学习</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> markdown语法 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-  
-  
-    
-    
-    <entry>
-      <title>分类</title>
-      <link href="/blog/categories/index.html"/>
-      <url>/blog/categories/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>分类</title>
-      <link href="/blog/tags/index.html"/>
-      <url>/blog/tags/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>照片</title>
-      <link href="/blog/Gallery/index.html"/>
-      <url>/blog/Gallery/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/blog/image/1.jpg"></p>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>写给你的小作文</title>
-      <link href="/blog/movies/%E5%86%99%E7%BB%99%E9%82%B5%E8%89%BA%E5%8D%9A%E7%9A%84%E5%B0%8F%E4%BD%9C%E6%96%87.html"/>
-      <url>/blog/movies/%E5%86%99%E7%BB%99%E9%82%B5%E8%89%BA%E5%8D%9A%E7%9A%84%E5%B0%8F%E4%BD%9C%E6%96%87.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="一"><a href="#一" class="headerlink" title="一"></a>一</h1><p><u>感觉我和你没什么好说的。</u><br><img src="/blog/image/sy1.jpg"></p><p>那就从这句话开始说吧。其实这张纸我一直有好好留着，从确山带到了秦皇岛，后来又带去了深圳，现在又让我带来了长春。</p><h1 id="二"><a href="#二" class="headerlink" title="二"></a>二</h1><p>高中的有些事情我一直记得，记得跟你说我喜欢你，但是当初你好像并没有给我答案，没有接受，也没有拒绝。</p><p>但至那以后咱俩好像话就越来越少，后来也就没在做同桌了。其实当时我是很难过的，看到你天天和别的男同学有说有笑我其实更难过（）。</p><p>高中有段时间我成绩不好，应该是高二，要说跟你没关系，那就是自欺欺人。后来我就慢慢想开了，大抵是你真的不喜欢我，觉得这段不会有结果的关系就这样了吧。</p><p>后来便是大学的时候你偶尔找我聊会天，我也觉得这样就好，只是有时候做梦会梦到你。</p><p>至于去年为什么要送你吃，我觉得应当送你，所以我送了。</p><p>后来的后来就是现在了。</p><p>有些事是好的，但又不是足够好的。</p><h1 id="三"><a href="#三" class="headerlink" title="三"></a>三</h1><p>关于表达欲的问题我一直有在想。</p><p><img src="/blog/image/sy2.jpg"></p><p>之前做过MBTI测试，不出所料结果是INFJ，因为这种性格的描述真的太像我了。</p><p>后来慢慢了解到我可能是回避型依恋人格。</p><p>但是我又觉得自己可能又可能是纯纯犯贱。</p><p>之前发了条朋友圈是希望你能看到的，但既然想让你看到，应该由我亲口告诉你，可却没有，所以说自己有点贱。<br><img src="/blog/image/sy3.jpg"></p><h1 id="四"><a href="#四" class="headerlink" title="四"></a>四</h1><p>有些时候会莫名其妙想一些事情，现在如何，未来如何，如果现在做了将来又会如何，所以会遇到事情会下意识犹豫。很多事情都习惯拖着，拖到不能拖了才会下定决心回应。可时间又是不等人的，就像两个人聊天，当你还在想如何回复时，可能下个问题就来了，先前的问题就被永远搁置了。</p><p>之前你问我要不要找你去玩，我真的一直在想，一直在犹豫，我感觉像我这种人对于某些事下定决心是一件很难的事情。</p><p>之前没告诉你，其实我的车票已经改了好几次。<br><img src="/blog/image/sy4.jpg"></p><p><img src="/blog/image/sy5.jpg"></p><p>（今天为啥去驻马店坐高铁，因为卧铺票真的很难候补啊～～捏麻麻的，我是真的腰疼屁股疼）</p><h1 id="五"><a href="#五" class="headerlink" title="五"></a>五</h1><p>之前读到过一句话，我觉得非常适合我—我这样胆小慢热的人，需要别人千百次的主动和回应才愿意相信那才是真的。</p><p>你问我喜不喜欢你，说不喜欢这是不可能。</p><p>但是如果你问是否像高中那般喜欢，给出确凿无疑的答案那又是自欺欺人了。</p><p>没有人能比得过我回忆的那个你，即便是现在的你。</p><h1 id="六"><a href="#六" class="headerlink" title="六"></a>六</h1><p>你关心我，我真的很开心。</p><h1 id="七"><a href="#七" class="headerlink" title="七"></a>七</h1><p>记得高中下晚自习你习惯对我摆手说再见，我老是沉默不语，你后来逗我说怎么不说“再见”。</p><p>不说“再见”，是因为希望再见。</p><hr><p>写于2025年2月14日，于长春的高铁上。修改上传于宿舍。</p><hr><p>“怎么一回来就在敲代码”<br> “额，没有”<br> “那在写什么”<br> “小作文”<br> “嗯？”<br> “嗯”</p>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>音乐</title>
-      <link href="/blog/music/index.html"/>
-      <url>/blog/music/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>电影</title>
-      <link href="/blog/movies/index.html"/>
-      <url>/blog/movies/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>心想事成</title>
-      <link href="/blog/movies/%E5%BF%83%E6%83%B3%E4%BA%8B%E6%88%90.html"/>
-      <url>/blog/movies/%E5%BF%83%E6%83%B3%E4%BA%8B%E6%88%90.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="心想事成"><a href="#心想事成" class="headerlink" title="心想事成"></a>心想事成</h1><p>还是写点不想让认识的人瞧见，但又想倾述的事吧。</p><p>一个人在野地里坐到黄昏，等天空把夕阳吹成一朵炽热的花，风轻轻而来，也把泪水带离脸颊，我甚至不知道为什么而哭，或许只是对这人世间的理解偏差，这样的寂寞太漫长了，一条河流怎么能盛装得下，我捡起一颗将死的野草，告诉它，这个夏天就此作罢！</p><p>相见的人，不想见的人。<br>讨厌的人，麻烦的事。<br><img src="/blog/image/1738159231727.jpg"></p>]]></content>
-      
-    </entry>
-    
-    
-  
+      <tags>
+        <tag>深度学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>照片</title>
+    <url>/blog/Gallery/index.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/blog/image/1.jpg"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>电影</title>
+    <url>/blog/movies/index.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+  </entry>
+  <entry>
+    <title>心想事成</title>
+    <url>/blog/movies/%E5%BF%83%E6%83%B3%E4%BA%8B%E6%88%90.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="心想事成"><a href="#心想事成" class="headerlink" title="心想事成"></a>心想事成</h1><p>还是写点不想让认识的人瞧见，但又想倾述的事吧。</p>
+<p>一个人在野地里坐到黄昏，等天空把夕阳吹成一朵炽热的花，风轻轻而来，也把泪水带离脸颊，我甚至不知道为什么而哭，或许只是对这人世间的理解偏差，这样的寂寞太漫长了，一条河流怎么能盛装得下，我捡起一颗将死的野草，告诉它，这个夏天就此作罢！</p>
+<p>相见的人，不想见的人。<br>讨厌的人，麻烦的事。<br><img src="/blog/image/1738159231727.jpg"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>音乐</title>
+    <url>/blog/music/index.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+  </entry>
+  <entry>
+    <title>分类</title>
+    <url>/blog/categories/index.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+  </entry>
+  <entry>
+    <title>写给你的小作文</title>
+    <url>/blog/movies/%E5%86%99%E7%BB%99%E9%82%B5%E8%89%BA%E5%8D%9A%E7%9A%84%E5%B0%8F%E4%BD%9C%E6%96%87.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="一"><a href="#一" class="headerlink" title="一"></a>一</h1><p><u>感觉我和你没什么好说的。</u><br><img src="/blog/image/sy1.jpg"></p>
+<p>那就从这句话开始说吧。其实这张纸我一直有好好留着，从确山带到了秦皇岛，后来又带去了深圳，现在又让我带来了长春。</p>
+<h1 id="二"><a href="#二" class="headerlink" title="二"></a>二</h1><p>高中的有些事情我一直记得，记得跟你说我喜欢你，但是当初你好像并没有给我答案，没有接受，也没有拒绝。</p>
+<p>但至那以后咱俩好像话就越来越少，后来也就没在做同桌了。其实当时我是很难过的，看到你天天和别的男同学有说有笑我其实更难过（）。</p>
+<p>高中有段时间我成绩不好，应该是高二，要说跟你没关系，那就是自欺欺人。后来我就慢慢想开了，大抵是你真的不喜欢我，觉得这段不会有结果的关系就这样了吧。</p>
+<p>后来便是大学的时候你偶尔找我聊会天，我也觉得这样就好，只是有时候做梦会梦到你。</p>
+<p>至于去年为什么要送你吃，我觉得应当送你，所以我送了。</p>
+<p>后来的后来就是现在了。</p>
+<p>有些事是好的，但又不是足够好的。</p>
+<h1 id="三"><a href="#三" class="headerlink" title="三"></a>三</h1><p>关于表达欲的问题我一直有在想。</p>
+<p><img src="/blog/image/sy2.jpg"></p>
+<p>之前做过MBTI测试，不出所料结果是INFJ，因为这种性格的描述真的太像我了。</p>
+<p>后来慢慢了解到我可能是回避型依恋人格。</p>
+<p>但是我又觉得自己可能又可能是纯纯犯贱。</p>
+<p>之前发了条朋友圈是希望你能看到的，但既然想让你看到，应该由我亲口告诉你，可却没有，所以说自己有点贱。<br><img src="/blog/image/sy3.jpg"></p>
+<h1 id="四"><a href="#四" class="headerlink" title="四"></a>四</h1><p>有些时候会莫名其妙想一些事情，现在如何，未来如何，如果现在做了将来又会如何，所以会遇到事情会下意识犹豫。很多事情都习惯拖着，拖到不能拖了才会下定决心回应。可时间又是不等人的，就像两个人聊天，当你还在想如何回复时，可能下个问题就来了，先前的问题就被永远搁置了。</p>
+<p>之前你问我要不要找你去玩，我真的一直在想，一直在犹豫，我感觉像我这种人对于某些事下定决心是一件很难的事情。</p>
+<p>之前没告诉你，其实我的车票已经改了好几次。<br><img src="/blog/image/sy4.jpg"></p>
+<p><img src="/blog/image/sy5.jpg"></p>
+<p>（今天为啥去驻马店坐高铁，因为卧铺票真的很难候补啊～～捏麻麻的，我是真的腰疼屁股疼）</p>
+<h1 id="五"><a href="#五" class="headerlink" title="五"></a>五</h1><p>之前读到过一句话，我觉得非常适合我—我这样胆小慢热的人，需要别人千百次的主动和回应才愿意相信那才是真的。</p>
+<p>你问我喜不喜欢你，说不喜欢这是不可能。</p>
+<p>但是如果你问是否像高中那般喜欢，给出确凿无疑的答案那又是自欺欺人了。</p>
+<p>没有人能比得过我回忆的那个你，即便是现在的你。</p>
+<h1 id="六"><a href="#六" class="headerlink" title="六"></a>六</h1><p>你关心我，我真的很开心。</p>
+<h1 id="七"><a href="#七" class="headerlink" title="七"></a>七</h1><p>记得高中下晚自习你习惯对我摆手说再见，我老是沉默不语，你后来逗我说怎么不说“再见”。</p>
+<p>不说“再见”，是因为希望再见。</p>
+<hr>
+<p>写于2025年2月14日，于长春的高铁上。修改上传于宿舍。</p>
+<hr>
+<p>“怎么一回来就在敲代码”<br> “额，没有”<br> “那在写什么”<br> “小作文”<br> “嗯？”<br> “嗯”</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>分类</title>
+    <url>/blog/tags/index.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+  </entry>
 </search>
