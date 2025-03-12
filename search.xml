@@ -132,6 +132,17 @@
     
     
     <entry>
+      <title>照片</title>
+      <link href="/blog/Gallery/index.html"/>
+      <url>/blog/Gallery/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/blog/image/1.jpg"></p>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>分类</title>
       <link href="/blog/categories/index.html"/>
       <url>/blog/categories/index.html</url>
@@ -154,9 +165,9 @@
     
     
     <entry>
-      <title>电影</title>
-      <link href="/blog/movies/index.html"/>
-      <url>/blog/movies/index.html</url>
+      <title>音乐</title>
+      <link href="/blog/music/index.html"/>
+      <url>/blog/music/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -176,17 +187,6 @@
     
     
     <entry>
-      <title>照片</title>
-      <link href="/blog/Gallery/index.html"/>
-      <url>/blog/Gallery/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/blog/image/1.jpg"></p>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>分类</title>
       <link href="/blog/tags/index.html"/>
       <url>/blog/tags/index.html</url>
@@ -198,9 +198,9 @@
     
     
     <entry>
-      <title>音乐</title>
-      <link href="/blog/music/index.html"/>
-      <url>/blog/music/index.html</url>
+      <title>电影</title>
+      <link href="/blog/movies/index.html"/>
+      <url>/blog/movies/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
