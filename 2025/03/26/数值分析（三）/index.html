@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>数值分析（三） | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="此文章包含线性方程组的解法部分—————————————————————————————————————————————————————- 线性方程组的解法向量与矩阵范数向量范数我们用 $\mathbb{R}^n$ 表示 $n$ 维实向量的空间。 定义 如果向量 $X \in \mathbb{R}^n$ 的某个实值函数 $N(X) &#x3D; |X|$ 满足以下条件：  $|X| \geq 0$">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>数值分析（三） | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="MathJax &#x3D; {  tex: {    inlineMath: [[&#39;$&#39;, &#39;$&#39;], [&#39;\\(&#39;, &#39;\\)&#39;]]  }};  此文章包含线性方程组的解法部分—————————————————————————————————————————————————————- 线性方程组的解法向量与矩阵范数向量范数我们用 $\mathbb{R}^n$ 表示 $n$ 维实向量的空间。 定义  he">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数值分析（三）">
 <meta property="og:url" content="https://qieliqiean.github.io/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
 <meta property="og:site_name" content="且离且安的碎碎念">
-<meta property="og:description" content="此文章包含线性方程组的解法部分—————————————————————————————————————————————————————- 线性方程组的解法向量与矩阵范数向量范数我们用 $\mathbb{R}^n$ 表示 $n$ 维实向量的空间。 定义 如果向量 $X \in \mathbb{R}^n$ 的某个实值函数 $N(X) &#x3D; |X|$ 满足以下条件：  $|X| \geq 0$">
+<meta property="og:description" content="MathJax &#x3D; {  tex: {    inlineMath: [[&#39;$&#39;, &#39;$&#39;], [&#39;\\(&#39;, &#39;\\)&#39;]]  }};  此文章包含线性方程组的解法部分—————————————————————————————————————————————————————- 线性方程组的解法向量与矩阵范数向量范数我们用 $\mathbb{R}^n$ 表示 $n$ 维实向量的空间。 定义  he">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qieliqiean.github.io/blog/image/00d69812ece14254143ca78eb066782f.jpg">
 <meta property="article:published_time" content="2025-03-26T06:47:47.000Z">
-<meta property="article:modified_time" content="2025-04-15T11:29:00.890Z">
+<meta property="article:modified_time" content="2025-04-21T03:51:41.174Z">
 <meta property="article:author" content="lian">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://qieliqiean.github.io/blog/image/00d69812ece14254143ca78eb066782f.jpg"><script type="application/ld+json">{
@@ -17,7 +17,7 @@
   "url": "https://qieliqiean.github.io/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%89%EF%BC%89/",
   "image": "https://qieliqiean.github.io/blog/image/00d69812ece14254143ca78eb066782f.jpg",
   "datePublished": "2025-03-26T06:47:47.000Z",
-  "dateModified": "2025-04-15T11:29:00.890Z",
+  "dateModified": "2025-04-21T03:51:41.174Z",
   "author": [
     {
       "@type": "Person",
@@ -162,9 +162,14 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/image/00d69812ece14254143ca78eb066782f.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">数值分析（三）</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">数值分析（三）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-26T06:47:47.000Z" title="发表于 2025-03-26 14:47:47">2025-03-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-04-15T11:29:00.890Z" title="更新于 2025-04-15 19:29:00">2025-04-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">5.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>25分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>此文章包含线性方程组的解法部分—————————————————————————————————————————————————————-</p>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/image/00d69812ece14254143ca78eb066782f.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">数值分析（三）</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">数值分析（三）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-26T06:47:47.000Z" title="发表于 2025-03-26 14:47:47">2025-03-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-04-21T03:51:41.174Z" title="更新于 2025-04-21 11:51:41">2025-04-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>23分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><script>MathJax = {  tex: {    inlineMath: [['$', '$'], ['\\(', '\\)']]  }};</script><script id="MathJax-script" async  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<p>此文章包含线性方程组的解法部分—————————————————————————————————————————————————————-</p>
 <h1 id="线性方程组的解法"><a href="#线性方程组的解法" class="headerlink" title="线性方程组的解法"></a>线性方程组的解法</h1><h2 id="向量与矩阵范数"><a href="#向量与矩阵范数" class="headerlink" title="向量与矩阵范数"></a>向量与矩阵范数</h2><h3 id="向量范数"><a href="#向量范数" class="headerlink" title="向量范数"></a>向量范数</h3><p>我们用 $\mathbb{R}^n$ 表示 $n$ 维实向量的空间。</p>
 <p>定义</p>
+<blockquote>
+<p>hexo显示有误，下面 |.| 皆为范数 ||.||</p>
+</blockquote>
 <p>如果向量 $X \in \mathbb{R}^n$ 的某个实值函数 $N(X) &#x3D; |X|$ 满足以下条件：</p>
 <ol>
 <li>$|X| \geq 0$，且$|X| &#x3D; 0$当且仅当$X &#x3D; 0$<br>（<strong>正定性</strong>）</li>
@@ -173,8 +178,7 @@
 </ol>
 <p><u>则称 $N(X)$ 是向量 $X$ 的范数。</u></p>
 <blockquote>
-<p><strong>(1) 无穷范数（最大范数）</strong></p>
-<p>$$<br>|X|_\infty  &#x3D;  \max _{1 \leq i \leq n}|x_i|<br>$$</p>
+<p><strong>(1) 无穷范数（最大范数）</strong><br>$$<br>|X|_\infty  &#x3D;  \max _{1 \leq i \leq n}|x_i|<br>$$</p>
 <p><strong>(2) 1-范数（绝对和范数）</strong></p>
 <p>$|X|_1 &#x3D; \sum _{i&#x3D;1}^n |x_i|$</p>
 <p><strong>(3) 2-范数（欧几里得范数）</strong></p>
@@ -241,15 +245,13 @@
 <p><strong>特别有</strong></p>
 </blockquote>
 <blockquote>
-<p>行和范数（∞-范数）</p>
-<p>$$<br>|A| _\infty &#x3D; \max _{1 \leq i \leq n} \sum _{j&#x3D;1}^n |a _{ij}|<br>$$</p>
+<p><strong>行和范数（∞-范数）</strong><br>$$<br>|A| _\infty &#x3D; \max _{1 \leq i \leq n} \sum _{j&#x3D;1}^n |a _{ij}|<br>$$</p>
 </blockquote>
 <blockquote>
-<p>列和范数（1-范数）</p>
-<p>$$<br>|A|_1 &#x3D; \max _{1 \leq j \leq n} \sum _{i&#x3D;1}^n |a _{ij}|<br>$$</p>
+<p><strong>列和范数（1-范数）</strong><br>$$<br>|A|_1 &#x3D; \max _{1 \leq j \leq n} \sum _{i&#x3D;1}^n |a _{ij}|<br>$$</p>
 </blockquote>
 <blockquote>
-<p>谱范数（2-范数）</p>
+<p><strong>谱范数（2-范数）</strong></p>
 </blockquote>
 <blockquote>
 <p>$$<br>|A|_2 &#x3D; \sqrt{\lambda _{\max}(A^T A)}<br>$$</p>
@@ -261,7 +263,7 @@
 </blockquote>
 <p><strong>一些定理</strong></p>
 <ol>
-<li>对于任意算子范数  $|\cdot|$ ，有：</li>
+<li>对于任意算子范数  $||\cdot||$ ，有：</li>
 </ol>
 <p>$$<br>\rho(A) \leq |A|<br>$$</p>
 <ol start="2">
@@ -283,7 +285,21 @@
 <p>特别地，一阶主子式：</p>
 <p>$$<br>D_1 &#x3D; a_{11} \neq 0<br>$$</p>
 <p><strong>顺序主子式定义如下：</strong></p>
-<p>$$<br>A_k &#x3D; \begin{pmatrix}<br>a_{11} &amp; \cdots &amp; a_{1k} \<br>\vdots &amp; \ddots &amp; \vdots \<br>a_{k1} &amp; \cdots &amp; a_{kk}<br>\end{pmatrix}, \quad<br>D_k &#x3D; \det(A_k)<br>$$</p>
+<span>
+$$
+A_k = \begin{pmatrix}
+a_{11} & \cdots & a_{1k} \\
+\vdots & \ddots & \vdots \\
+a_{k1} & \cdots & a_{kk}
+\end{pmatrix}, \quad
+D_k = \det(A_k)
+$$
+</span>
+
+
+
+
+
 <p><strong>推论</strong></p>
 <p>如果矩阵 $A$ 的顺序主子式 $D_k \neq 0$（$k&#x3D;1,2,\ldots,n-1$），则：</p>
 <p>$$<br>a_{11}^{(1)} &#x3D; D_1<br>$$</p>
@@ -313,31 +329,98 @@
 </li>
 </ol>
 <h2 id="列主元消去法"><a href="#列主元消去法" class="headerlink" title="列主元消去法"></a>列主元消去法</h2><p>设方程组的增广矩阵为：</p>
-<p>$$<br>B &#x3D; \begin{bmatrix}<br>a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} &amp; b_1 \<br>a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} &amp; b_2  \<br>\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \<br>a_{n1} &amp; a_{n2} &amp; \cdots &amp; a_{nn} &amp; b_n<br>\end{bmatrix}<br>$$</p>
-<p>在矩阵 $A$ 的第一列选取绝对值最大的元素：</p>
-<p>$$<br>|a_{i_1,1}| &#x3D; \max_{1 \leq i \leq n} |a_{i1}| \neq 0<br>$$</p>
+<span>
+$$
+B = \begin{bmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} & b_1 \\ 
+a_{21} & a_{22} & \cdots & a_{2n} & b_2  \\  
+\vdots & \vdots & \ddots & \vdots & \vdots \\
+a_{n1} & a_{n2} & \cdots & a_{nn} & b_n
+\end{bmatrix}
+$$
+
+</span>
+
+
+
+<p>在矩阵 $A$ 的第一列选取绝对值最大的元素：<br>$$<br>|a_{i_1,1}| &#x3D; \max_{1 \leq i \leq n} |a_{i1}| \neq 0<br>$$</p>
 <p>交换矩阵 $B$ 的第1行与第$i_1$行，经第一次消元计算得：</p>
 <p>$$<br>(A|b) \rightarrow (A^{(2)}|b^{(2)})<br>$$</p>
 <p>设已完成第$k-1$步的选主元素、交换两行及消元计算，$(A|b)$约化为：</p>
-<p>$$<br>(A^{(k)}|b^{(k)}) &#x3D;<br>\begin{bmatrix}<br>a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1k} &amp; \cdots &amp; a_{1n} &amp; b_1 \<br> &amp; a_{22} &amp; \cdots &amp; a_{2k} &amp; \cdots &amp; a_{2n} &amp; b_2 \<br> &amp; &amp; \ddots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \<br> &amp; &amp; &amp; a_{kk} &amp; \cdots &amp; a_{kn} &amp; b_k \<br> &amp; &amp; &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \<br> &amp; &amp; &amp; a_{nk} &amp; \cdots &amp; a_{nn} &amp; b_n<br>\end{bmatrix}<br>$$</p>
-<p>在$A^{(k)}$右下角子矩阵的第1列选取主元素：</p>
-<p>$$<br>|a_{i_k,k}| &#x3D; \max_{k \leq i \leq n} |a_{i,k}| \neq 0<br>$$</p>
+<span>
+$$
+(A^{(k)}|b^{(k)}) = 
+\begin{bmatrix}
+a_{11} & a_{12} & \cdots & a_{1k} & \cdots & a_{1n} & b_1 \\
+ & a_{22} & \cdots & a_{2k} & \cdots & a_{2n} & b_2 \\
+ & & \ddots & \vdots & \ddots & \vdots & \vdots \\
+ & & & a_{kk} & \cdots & a_{kn} & b_k \\
+ & & & \vdots & \ddots & \vdots & \vdots \\
+ & & & a_{nk} & \cdots & a_{nn} & b_n
+\end{bmatrix}
+$$
+
+</span>
+
+
+
+<p>在$A^{(k)}$右下角子矩阵的第1列选取主元素：<br>$$<br>|a_{i_k,k}| &#x3D; \max_{k \leq i \leq n} |a_{i,k}| \neq 0<br>$$</p>
 <p>消元后三角矩阵</p>
-<h1 id="begin-bmatrix-a-11-a-12-cdots-a-1n-a-22-cdots-a-2n-ddots-vdots-a-nn-end-bmatrix-begin-bmatrix-x-1-x-2-vdots-x-n-end-bmatrix"><a href="#begin-bmatrix-a-11-a-12-cdots-a-1n-a-22-cdots-a-2n-ddots-vdots-a-nn-end-bmatrix-begin-bmatrix-x-1-x-2-vdots-x-n-end-bmatrix" class="headerlink" title="$$\begin{bmatrix}a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \ &amp; a_{22} &amp; \cdots &amp; a_{2n} \ &amp; &amp; \ddots &amp; \vdots \ &amp; &amp; &amp; a_{nn}\end{bmatrix}\begin{bmatrix}x_1 \x_2 \\vdots \x_n\end{bmatrix}"></a>$$<br>\begin{bmatrix}<br>a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \<br> &amp; a_{22} &amp; \cdots &amp; a_{2n} \<br> &amp; &amp; \ddots &amp; \vdots \<br> &amp; &amp; &amp; a_{nn}<br>\end{bmatrix}<br>\begin{bmatrix}<br>x_1 \<br>x_2 \<br>\vdots \<br>x_n<br>\end{bmatrix}</h1><p>\begin{bmatrix}<br>b_1 \<br>b_2 \<br>\vdots \<br>b_n<br>\end{bmatrix}<br>$$</p>
+<span>
+$$
+\begin{bmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} \\
+ & a_{22} & \cdots & a_{2n} \\
+ & & \ddots & \vdots \\
+ & & & a_{nn}
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\
+x_2 \\
+\vdots \\
+x_n
+\end{bmatrix}
+=
+\begin{bmatrix}
+b_1 \\
+b_2 \\
+\vdots \\
+b_n
+\end{bmatrix}
+$$
+
+
+
+
+
 <p>回代求解公式</p>
-<p>$$<br>\begin{cases}<br>x_n &#x3D; \dfrac{b_n}{a_{nn}} \[2ex]<br>x_i &#x3D; \left(b_i - \sum\limits_{j&#x3D;i+1}^{n} a_{ij} x_j\right) \bigg&#x2F; a_{ii} \quad (i &#x3D; n-1, \ldots, 2, 1)<br>\end{cases}<br>$$</p>
-<h2 id="高斯消元法-1"><a href="#高斯消元法-1" class="headerlink" title="高斯消元法"></a>高斯消元法</h2><p><strong>定理</strong><br>设$A$为$n$阶矩阵，如果$A$的顺序主子式*$|D_i| \neq 0$* $(i &#x3D; 1,2,\cdots,n-1)$，则$A$的LU分解唯一（其中$L$为单位下三角阵，U为上三角矩阵）。</p>
-<h3 id="道立特分解法（Doolittle-Factorization）"><a href="#道立特分解法（Doolittle-Factorization）" class="headerlink" title="道立特分解法（Doolittle Factorization）"></a>道立特分解法（Doolittle Factorization）</h3><p>通过比较法直接导出L和U的计算公式。k,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,</p>
-<p><img src="/blog/attachments/BYGS294T.png" alt="\&lt;img alt&#x3D;&quot;&quot; data-attachment-key&#x3D;&quot;BYGS294T&quot; src&#x3D;&quot;attachments&#x2F;BYGS294T.png&quot; ztype&#x3D;&quot;zimage&quot;&gt;"></p>
+<span>
+$$
+\begin{cases}
+x_n = \dfrac{b_n}{a_{nn}} \\
+x_i = \left(b_i - \sum\limits_{j=i+1}^{n} a_{ij} x_j\right) \bigg/ a_{ii} \quad (i = n-1, \ldots, 2, 1)
+\end{cases}
+$$
+
+
+
+</span>
+
+<h2 id="矩阵三角分解法"><a href="#矩阵三角分解法" class="headerlink" title="矩阵三角分解法"></a>矩阵三角分解法</h2><p><strong>定理</strong><br>设$A$为$n$阶矩阵，如果$A$的顺序主子式$|D_i| \neq 0$ $(i &#x3D; 1,2,\cdots,n-1)$</p>
+<p>则$A$的LU分解唯一（其中$L$为单位下三角阵，U为上三角矩阵）。</p>
+<h3 id="道立特分解法（Doolittle-Factorization）"><a href="#道立特分解法（Doolittle-Factorization）" class="headerlink" title="道立特分解法（Doolittle Factorization）"></a>道立特分解法（Doolittle Factorization）</h3><p>通过比较法直接导出L和U的计算公式。</p>
+<p><img src="/blog/image/Snipaste_2025-04-07_20-28-30.png"></p>
 <p><strong>方法备注：</strong></p>
 <ol>
 <li><p>L的对角线元素为1，U的第一行元素 $u_{1j}&#x3D;a_{1j}$</p>
 </li>
-<li><p>然后求L的第一列元素，随后求U的第二列，然后L，随后U，交替往复。（瞪眼法）</p>
+<li><p>然后求L的第一列元素，随后求U的第二列，然后L，随后U，交替往复。<strong>（瞪眼法）</strong></p>
 </li>
 </ol>
-<h3 id="平方根法（Choleski’s-Method）"><a href="#平方根法（Choleski’s-Method）" class="headerlink" title="平方根法（Choleski’s Method）"></a>平方根法（Choleski’s Method）</h3><p><strong>对称矩阵</strong></p>
-<p>一个矩阵 $A &#x3D; (a_{ij})<em>{n \times n}$ 称为<strong>对称阵</strong>，如果满足：<br>$a</em>{ij} &#x3D; a_{ji}$</p>
+<h3 id="平方根法（Choleski’s-Method）"><a href="#平方根法（Choleski’s-Method）" class="headerlink" title="平方根法（Choleski’s Method）"></a>平方根法（Choleski’s Method）</h3><blockquote>
+<p><strong>对称矩阵</strong></p>
+<p>一个矩阵 $A &#x3D; (a_{ij})_{n \times n}$ 称为<strong>对称阵</strong>，如果满足：</p>
+<p>$a_{ij} &#x3D; a_{ji}$</p>
 <p><strong>正定矩阵</strong></p>
 <p>一个矩阵 $A$ 称为<strong>正定阵</strong>，如果对任意非零向量 $\vec{x} \neq \vec{0}$，满足：<br>$\vec{x}^T A \vec{x} &gt; 0$</p>
 <p><strong>对称正定矩阵的性质</strong></p>
@@ -347,66 +430,146 @@
 <li><strong>特征值性质</strong><br>$A$的所有特征值（eigenvalue）$\lambda_i$均为正数：<br>$\lambda_i &gt; 0 \quad (i&#x3D;1,2,\cdots,n)$</li>
 <li><strong>主子式性质</strong><br>$A$的全部顺序主子式满足：<br>$\det(A_k) &gt; 0 \quad (k&#x3D;1,2,\cdots,n)$<br>特别地，矩阵行列式可表示为：<br>$\det(A) &#x3D; \prod_{i&#x3D;1}^n \lambda_i$</li>
 </ol>
+</blockquote>
 <hr>
-<p>设**<u>对称正定</u>**矩阵$A$的LU分解结果为：<br>$A &#x3D; LU$<br>其中：</p>
+<p>设<strong>对称正定</strong>矩阵$A$的LU分解结果为：<br>$A &#x3D; LU$<br>其中：</p>
 <ul>
 <li><p>$L$ 为<strong>单位下三角阵</strong>（主对角线元素为1）</p>
 </li>
 <li><p>$U$ 为<strong>上三角阵</strong>，可进一步分解为对角阵乘积：</p>
-<p>$$$<br>u_{11} &amp; &amp; \<br>&amp; u_{22} &amp; \<br>&amp; &amp; \ddots \<br>&amp; &amp; &amp; u_{nn}<br>\end{bmatrix} \quad (D \text{为对角阵}) $$</p>
-<p>$$$</p>
+<p><img src="/blog/image/Snipaste_2025-04-21_09-49-01.png"></p>
 </li>
 </ul>
 <p>由对称性$A &#x3D; A^T$，有$L&#x3D;\tilde{U}^T$， 故$A &#x3D; LDL^T$</p>
-<p>取对角阵的平方根：<br>$D^{1&#x2F;2} &#x3D; \mathrm{diag}\left( \sqrt{u_{11}}, \sqrt{u_{22}}, \dots, \sqrt{u_{nn}} \right)$<br>定义新的下三角阵：<br>$\tilde{L} &#x3D; LD^{1&#x2F;2}$<br>则矩阵可表示为：<br>$A &#x3D; \tilde{L}\tilde{L}^T$</p>
+<p>取对角阵的平方根：<br>$$<br>D^{1&#x2F;2} &#x3D; \mathrm{diag}\left( \sqrt{u_{11}}, \sqrt{u_{22}}, \dots, \sqrt{u_{nn}} \right)<br>$$</p>
+<p>定义新的下三角阵：<br>$\tilde{L} &#x3D; LD^{1&#x2F;2}$<br>则矩阵可表示为：<br>$A &#x3D; \tilde{L}\tilde{L}^T$</p>
 <p><strong>定理</strong><br>设矩阵$A \in \mathbb{R}^{n \times n}$对称正定，则存在<strong>非奇异下三角阵</strong>$L$满足：<br>$A &#x3D; LL^T$<br>若进一步限定$L$的主对角元素满足：<br>$l_{ii} &gt; 0 \quad (i&#x3D;1,2,\dots,n)$<br>则该分解<strong>唯一存在</strong>。</p>
 <hr>
 <h3 id="追赶法"><a href="#追赶法" class="headerlink" title="追赶法"></a>追赶法</h3><ol>
 <li><p><strong>三对角矩阵形式</strong>：</p>
-<p>$$<br>A &#x3D; \begin{bmatrix}<br>b_1 &amp; c_1 &amp; &amp; \<br>a_2 &amp; b_2 &amp; c_2 &amp; \<br>&amp; \ddots &amp; \ddots &amp; \ddots \<br>&amp; &amp; a_{n-1} &amp; b_{n-1} &amp; c_{n-1} \<br>&amp; &amp; &amp; a_n &amp; b_n<br>\end{bmatrix}<br>$$</p>
+<span>
+$$
+A = \begin{bmatrix}
+b_1 & c_1 & & \\
+a_2 & b_2 & c_2 & \\
+& \ddots & \ddots & \ddots \\
+& & a_{n-1} & b_{n-1} & c_{n-1} \\
+& & & a_n & b_n
+\end{bmatrix}
+$$
+</span>
 </li>
 <li><p><strong>LU分解形式</strong>：</p>
-<p>$$<br>A &#x3D; LU &#x3D; \begin{bmatrix}<br>\alpha_1 &amp; &amp; &amp; \<br>r_2 &amp; \alpha_2 &amp; &amp; \<br>&amp; \ddots &amp; \ddots &amp; \<br>&amp; &amp; r_n &amp; \alpha_n<br>\end{bmatrix}<br>\begin{bmatrix}<br>1 &amp; \beta_1 &amp; &amp; \<br>&amp; 1 &amp; \beta_2 &amp; \<br>&amp; &amp; \ddots &amp; \beta_{n-1} \<br>&amp; &amp; &amp; 1<br>\end{bmatrix}<br>$$</p>
+<span>
+$$
+A = LU = \begin{bmatrix}
+\alpha_1 & & & \\
+r_2 & \alpha_2 & & \\
+& \ddots & \ddots & \\
+& & r_n & \alpha_n
+\end{bmatrix}
+\begin{bmatrix}
+1 & \beta_1 & & \\
+& 1 & \beta_2 & \\
+& & \ddots & \beta_{n-1} \\
+& & & 1
+\end{bmatrix}
+$$
+</span>
 </li>
 <li><p><strong>首行元素</strong>：</p>
-<p>$$<br>\begin{cases}<br>b_1 &#x3D; \alpha_1 \<br>c_1 &#x3D; \alpha_1 \beta_1<br>\end{cases}<br>$$</p>
+<span>
+$$
+\begin{cases}
+b_1 = \alpha_1 \\
+c_1 = \alpha_1 \beta_1
+\end{cases}
+$$
+</span>
 </li>
 <li><p><strong>中间元素（$i &#x3D; 2, \ldots, n$）</strong>：</p>
-<p>$$<br>\begin{cases}<br>a_i &#x3D; r_i \<br>b_i &#x3D; r_i \beta_{i-1} + \alpha_i \<br>c_i &#x3D; \alpha \beta_i<br>\end{cases}<br>$$</p>
-</li>
+<span>
+$$
+\begin{cases}
+a_i = r_i \\
+b_i = r_i \beta_{i-1} + \alpha_i \\
+c_i = \alpha \beta_i
+\end{cases}
+$$</li>
 </ol>
+</span>
+
 <hr>
 <blockquote>
 <p><strong>解题过程</strong></p>
 <ol>
 <li><p><strong>方程组分解</strong>： 原方程组$AX &#x3D; f$分解为两个三角方程组：</p>
-<p>$$<br>\begin{cases}<br>Ly &#x3D; f \<br>Ux &#x3D; y<br>\end{cases}<br>$$</p>
+<span>
+$$
+\begin{cases}
+Ly = f \\
+Ux = y
+\end{cases}
+$$
+</span>
 </li>
 <li><p><strong>计算 ${\beta_i}$ 的递推关系</strong>：</p>
-<p>$$<br>\begin{cases}<br>\beta_1 &#x3D; \dfrac{c_1}{b_1} \<br>\beta_i &#x3D; \dfrac{c_i}{b_i - a_i \beta_{i-1}} \quad (i &#x3D; 2, 3, \ldots, n-1)<br>\end{cases}<br>$$</p>
+<span>
+$$
+\begin{cases}
+\beta_1 = \dfrac{c_1}{b_1} \\
+\beta_i = \dfrac{c_i}{b_i - a_i \beta_{i-1}} \quad (i = 2, 3, \ldots, n-1)
+\end{cases}
+$$
+</span>
 </li>
 <li><p><strong>计算 ${\alpha_i}$ 和${r_i}$的递推关系</strong>：</p>
-<p>$$<br>\begin{cases}<br>\alpha_1&#x3D;b_1 \<br>\alpha_i&#x3D;b_i-a_i \beta_{i-1} \quad (i &#x3D; 2, 3, \ldots, n)<br>\end{cases}<br>$$</p>
-<p>$$<br>r_i&#x3D;a_i<br>$$</p>
-</li>
+<span>
+$$
+\begin{cases}
+\alpha_1=b_1 \\
+\alpha_i=b_i-a_i \beta_{i-1} \quad (i = 2, 3, \ldots, n) \\
+r_i=a_i
+\end{cases}
+$$</li>
+</ol>
+</span>
+
+
+
+<ol start="4">
 <li><p><strong>解下三角方程组 $Ly &#x3D; f$</strong>：</p>
-<p>$$<br>\begin{cases}<br>y_1 &#x3D; \dfrac{f_1}{b_1} \<br>y_i &#x3D; \dfrac{f_i - a_i y_{i-1}}{b_i - a_i \beta_{i-1}} \quad (i &#x3D; 2, 3, \ldots, n)<br>\end{cases}<br>$$</p>
+<span>
+$$
+\begin{cases}
+y_1 = \dfrac{f_1}{b_1} \\
+y_i = \dfrac{f_i - a_i y_{i-1}}{b_i - a_i \beta_{i-1}} \quad (i = 2, 3, \ldots, n)
+\end{cases}
+$$
+</span>
 </li>
 <li><p><strong>解上三角方程组 $Ux &#x3D; y$</strong>：</p>
-<p>$$<br>\begin{cases}<br>x_n &#x3D; y_n \<br>x_i &#x3D; y_i - \beta_i x_{i+1} \quad (i &#x3D; n-1, \ldots, 2, 1)<br>\end{cases}<br>$$</p>
-</li>
+<span>
+$$
+\begin{cases}
+x_n = y_n \\
+x_i = y_i - \beta_i x_{i+1} \quad (i = n-1, \ldots, 2, 1)
+\end{cases}
+$$</li>
 </ol>
+</span>
+
 <p><strong>例题</strong></p>
-<p><img src="/blog/attachments/CRAB85U7.png" alt="\&lt;img alt&#x3D;&quot;&quot; data-attachment-key&#x3D;&quot;CRAB85U7&quot; src&#x3D;&quot;attachments&#x2F;CRAB85U7.png&quot; ztype&#x3D;&quot;zimage&quot;&gt;"></p>
+<p><img src="/blog/image/shuzhifenxi1.jpg"></p>
 </blockquote>
 <p><strong>定理</strong></p>
 <blockquote>
-<p><strong><u>对角占优矩阵（Diagonally Dominant Matrix）</u></strong></p>
+<p><strong>对角占优矩阵（Diagonally Dominant Matrix）</strong></p>
 <p>对于$n$阶矩阵$A &#x3D; (a_{ij})$，若其<strong>每一行</strong>满足： $|a_{ii}| \geq \sum_{\substack{j&#x3D;1 \ j \neq i}}^{n} |a_{ij}| \quad (i&#x3D;1,2,\dots,n)$ 则称$A$为<strong>行对角占优矩阵</strong>。</p>
 <p>若其<strong>每一列</strong>满足： $|a_{jj}| \geq \sum_{\substack{i&#x3D;1 \ i \neq j}}^{n} |a_{ij}| \quad (j&#x3D;1,2,\dots,n)$ 则称$A$为<strong>列对角占优矩阵</strong>。</p>
 <p><u>上面两个条件满足其一就是对角占优矩阵</u></p>
 <hr>
-<p><strong><u>严格对角占优矩阵（Strictly Diagonally Dominant Matrix）</u></strong></p>
+<p><strong>严格对角占优矩阵（Strictly Diagonally Dominant Matrix）</strong></p>
 <p>将上述不等式中的”≥”改为严格”&gt;”：</p>
 </blockquote>
 <p>若$A$为<strong>对角占优</strong>（diagonally dominant）的三对角阵，且满足：</p>
@@ -418,54 +581,80 @@
 </ol>
 <p><strong>注</strong><br>当$A$是<strong>严格对角占优阵</strong>时（即满足严格不等式 $|b_i| &gt; |a_i| + |c_i|$），不要求三对角线上所有元素非零（允许$a_i&#x3D;0$或$c_i&#x3D;0$的特殊情况存在）。</p>
 <hr>
-<h2 id="线性方程组的误差分析"><a href="#线性方程组的误差分析" class="headerlink" title="线性方程组的误差分析"></a>线性方程组的误差分析</h2><h3 id="情形1：矩阵-A-精确，右端项-vec-b-存在误差"><a href="#情形1：矩阵-A-精确，右端项-vec-b-存在误差" class="headerlink" title="情形1：矩阵$A$精确，右端项$\vec{b}$存在误差"></a>情形1：矩阵$A$精确，右端项$\vec{b}$存在误差</h3><p>设$\vec{b}$有扰动$\delta\vec{b}$，对应解的扰动为$\delta\vec{x}$，满足：<br>$A(\vec{x} + \delta\vec{x}) &#x3D; \vec{b} + \delta\vec{b}$</p>
+<h2 id="线性方程组的误差分析"><a href="#线性方程组的误差分析" class="headerlink" title="线性方程组的误差分析"></a>线性方程组的误差分析</h2><h3 id="情形1：矩阵-A-精确，右端项-vec-b-存在误差"><a href="#情形1：矩阵-A-精确，右端项-vec-b-存在误差" class="headerlink" title="情形1：矩阵$A$精确，右端项$\vec{b}$存在误差"></a>情形1：矩阵$A$精确，右端项$\vec{b}$存在误差</h3><p>设$\vec{b}$有扰动$\delta\vec{b}$，对应解的扰动为$\delta\vec{x}$，满足：<br>$$<br>A(\vec{x} + \delta\vec{x}) &#x3D; \vec{b} + \delta\vec{b}<br>$$</p>
 <ol>
 <li><strong>扰动解表达式</strong><br>$\delta\vec{x} &#x3D; A^{-1}\delta\vec{b}$</li>
 <li><strong>范数不等式</strong><br>$|\delta\vec{x}| \leq |A^{-1}| \cdot |\delta\vec{b}|$</li>
 <li><strong>原始解范数关系</strong><br>$|\vec{b}| &#x3D; |A\vec{x}| \leq |A| \cdot |\vec{x}| \implies \frac{1}{|\vec{x}|} \leq \frac{|A|}{|\vec{b}|}$</li>
 <li><strong>相对误差界</strong><br>$\frac{|\delta\vec{x}|}{|\vec{x}|} \leq |A| \cdot |A^{-1}| \cdot \frac{|\delta\vec{b}|}{|\vec{b}|}$</li>
 </ol>
-<h3 id="情形2：矩阵-A-存在误差-delta-A"><a href="#情形2：矩阵-A-存在误差-delta-A" class="headerlink" title="情形2：矩阵$A$存在误差$\delta A$"></a>情形2：矩阵$A$存在误差$\delta A$</h3><p>设矩阵有扰动$\delta A$，解的扰动满足：<br>$(A + \delta A)(\vec{x} + \delta\vec{x}) &#x3D; \vec{b}$</p>
+<h3 id="情形2：矩阵-A-存在误差-delta-A"><a href="#情形2：矩阵-A-存在误差-delta-A" class="headerlink" title="情形2：矩阵$A$存在误差$\delta A$"></a>情形2：矩阵$A$存在误差$\delta A$</h3><p>设矩阵有扰动$\delta A$，解的扰动满足：<br>$$<br>(A + \delta A)(\vec{x} + \delta\vec{x}) &#x3D; \vec{b}<br>$$</p>
 <p>推导过程略</p>
 <p>$$<br>\frac{|\delta \bar{x}|}{|\bar{x}|} \leq \frac{|A^{-1}| \cdot |\delta A|}{1 - |A^{-1}| \cdot |\delta A|} &#x3D; \frac{|A| \cdot |A^{-1}| \cdot \frac{|\delta A|}{|A|}}{1 - |A| \cdot |A^{-1}| \cdot \frac{|\delta A|}{|A|}}<br>$$</p>
 <hr>
-<h3 id="条件数"><a href="#条件数" class="headerlink" title="条件数"></a>条件数</h3><p>矩阵$A$的条件数定义为：<br>$\text{cond}(A) &#x3D; |A| \cdot |A^{-1}|$</p>
+<h3 id="条件数"><a href="#条件数" class="headerlink" title="条件数"></a>条件数</h3><p>矩阵$A$的条件数定义为：<br>$$<br>\text{cond}(A) &#x3D; |A| \cdot |A^{-1}|<br>$$</p>
 <p><strong>核心结论</strong></p>
-<p>条件数与病态性关系： $\text{cond}(A) \text{ 越大} \implies A \text{ 越病态} \implies \text{解算结果越难准确}$</p>
+<p><strong>条件数与病态性关系</strong>： </p>
+<p>$\text{cond}(A) \text{ 越大} \implies A \text{ 越病态} \implies \text{解算结果越难准确}$</p>
 <p>$cond(A)$的大小与$||.||$的取法有关，但相对大小一致</p>
 <p><strong>常用条件数定义</strong></p>
 <p><em>一般矩阵条件数</em></p>
-<p>$\text{cond}(A)<em>1 &#x3D; |A|<em>1 \cdot |A^{-1}|<em>1$ $\text{cond}(A)</em>\infty &#x3D; |A|</em>\infty \cdot |A^{-1}|</em>\infty$ $\text{cond}(A)_2 &#x3D; |A|<em>2 \cdot |A^{-1}|<em>2 &#x3D; \sqrt{\frac{\lambda</em>{\max}(A^T A)}{\lambda</em>{\min}(A^T A)}}$</p>
+<span>
+$$
+\begin{cases}
+\text{cond}(A)_1 = \|A\|_1 \cdot \|A^{-1}\|_1  \\
+\text{cond}(A)_\infty = \|A\|_\infty \cdot \|A^{-1}\|_\infty  \\
+\text{cond}(A)_2 = \|A\|_2 \cdot \|A^{-1}\|_2 = \sqrt{\frac{\lambda_{\max}(A^T A)}{\lambda_{\min}(A^T A)}}
+\end{cases}
+$$
+</span>
+
 <p><em>对称矩阵的特殊情形</em></p>
 <p>当$A$为对称矩阵时： $\text{cond}(A)_2 &#x3D; \frac{\max|\lambda|}{\min|\lambda|}$</p>
-<p><strong>条件数性质</strong> □ 若$A$可逆，则$\text{cond}(A)_p \geq 1$；<br>□ 若$A$可逆且$\alpha \in \mathbb{R}$，则$\text{cond}(\alpha A) &#x3D; \text{cond}(A)$； □ 若$A$正交，则$\text{cond}(A)_2 &#x3D; 1$； □ 若$A$可逆且$R$正交，则： $\text{cond}(RA)_2 &#x3D; \text{cond}(AR)_2 &#x3D; \text{cond}(A)_2$</p>
+<p><strong>条件数性质</strong></p>
+<p>□ 若$A$可逆，则$\text{cond}(A)_p \geq 1$；<br>□ 若$A$可逆且$\alpha \in \mathbb{R}$，则$\text{cond}(\alpha A) &#x3D; \text{cond}(A)$； </p>
+<p>□若$A$正交，则$\text{cond}(A)_2 &#x3D; 1$； </p>
+<p>□ 若$A$可逆且$R$正交，则： $\text{cond}(RA)_2 &#x3D; \text{cond}(AR)_2 &#x3D; \text{cond}(A)_2$</p>
 <hr>
 <h3 id="近似解的误差估计及改善"><a href="#近似解的误差估计及改善" class="headerlink" title="近似解的误差估计及改善"></a>近似解的误差估计及改善</h3><p>设 $A\vec{x} &#x3D; \vec{b}$ 的近似解为 $\vec{x}^*$，则：</p>
 <ol>
 <li><p>残差向量： $\vec{r} &#x3D; \vec{b} - A\vec{x}^* \neq \vec{0}$</p>
 </li>
-<li><p>误差上界（严格按原图符号）：</p>
+<li><p>误差上界：</p>
 </li>
 </ol>
-<p>$$<br>   \frac{|\vec{x} - \vec{x}^*|}{|\vec{x}|} \leq \text{cond}(A) \cdot \frac{|\vec{r}|}{|\vec{b}|}<br>$$</p>
+<p>$$<br>\frac{|\vec{x} - \vec{x}^*|}{|\vec{x}|} \leq \text{cond}(A) \cdot \frac{|\vec{r}|}{|\vec{b}|}<br>$$</p>
 <p><strong>改善方法</strong></p>
 <p><strong>Step 1</strong><br>求初始近似解： $A\vec{x}_1 &#x3D; \vec{b} \quad \Rightarrow \quad \vec{x}_1$</p>
 <p><strong>Step 2</strong><br>计算残差： $\vec{r}_1 &#x3D; \vec{b} - A\vec{x}_1$</p>
 <p><strong>Step 3</strong><br>解校正方程： $A\vec{d}_1 &#x3D; \vec{r}_1 \quad \Rightarrow \quad \vec{d}_1$</p>
 <p><strong>Step 4</strong><br>更新解： $\vec{x}_2 &#x3D; \vec{x}_1 + \vec{d}_1$</p>
-<p>若 $\vec{d}_1$ 可精确解得： $\vec{x}_2 &#x3D; \vec{x}_1 + A^{-1}(\vec{b} - A\vec{x}_1) &#x3D; A^{-1}\vec{b}$ 此时 $\vec{x}_2$ 即为精确解。</p>
+<p>若 $\vec{d}_1$ 可精确解得：<br>$$<br>\vec{x}_2 &#x3D; \vec{x}_1 + A^{-1}(\vec{b} - A\vec{x}_1) &#x3D; A^{-1}\vec{b}<br>$$<br>此时 $\vec{x}_2$ 即为精确解。</p>
 <p><strong>经验表明</strong>：<br>若$A$不是非常病态（例如：$ε \cdot \text{cond}(A)_∞ &lt; 1$），则如此迭代可达到机器精度；<br>但若$A$病态，则此算法也不能改进。</p>
 <h2 id="解线性方程的迭代法"><a href="#解线性方程的迭代法" class="headerlink" title="解线性方程的迭代法"></a>解线性方程的迭代法</h2><p>方程组改写形式</p>
 <p>$A \bar{x} &#x3D; \bar{b} \quad \Rightarrow \quad \bar{x} &#x3D; B \bar{x} + \bar{f}$</p>
 <p>建立迭代</p>
 <p>$\bar{x}^{(k+1)} &#x3D; B \bar{x}^{(k)} + \bar{f}$</p>
 <p>从初值$\bar{x}^{(0)}$得到${\bar{x}^{(k)}}$</p>
-<h3 id="Jacobi迭代法"><a href="#Jacobi迭代法" class="headerlink" title="Jacobi迭代法"></a>Jacobi迭代法</h3><p>线性方程组标准形式</p>
-<p>$$<br>\begin{cases}<br>a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n &#x3D; b_1 \<br>a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n &#x3D; b_2 \<br>\vdots \quad \vdots \quad \ddots \quad \vdots \<br>a_{n1}x_1 + a_{n2}x_2 + \cdots + a_{nn}x_n &#x3D; b_n<br>\end{cases}<br>$$</p>
+<h3 id="Jacobi-雅可比-迭代法"><a href="#Jacobi-雅可比-迭代法" class="headerlink" title="Jacobi(雅可比)迭代法"></a>Jacobi(雅可比)迭代法</h3><p>线性方程组标准形式</p>
+<span>
+$$
+\begin{cases}
+a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n = b_1 \\
+a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n = b_2 \\
+\vdots \quad \vdots \quad \ddots \quad \vdots \\
+a_{n1}x_1 + a_{n2}x_2 + \cdots + a_{nn}x_n = b_n
+\end{cases}
+$$
+
+</span>
+
+
+
 <p><strong>条件</strong>：$a_{ii} \neq 0$（主对角元非零）</p>
-<p>Jacobi迭代公式（分量形式）</p>
+<p><strong>Jacobi迭代公式（分量形式）</strong></p>
 <p>第i分量迭代式</p>
-<p>$x_i^{(k+1)} &#x3D; \frac{1}{a_{ii}} \left( b_i - \sum_{\substack{j&#x3D;1 \ j \neq i}}^{n} a_{ij}x_j^{(k)} \right)$</p>
+<p>$$<br>x_i^{(k+1)} &#x3D; \frac{1}{a_{ii}} \left( b_i - \sum_{\substack{j&#x3D;1 \ j \neq i}}^{n} a_{ij}x_j^{(k)} \right)<br>$$</p>
 <ol>
 <li><p>第一分量： $x_1 &#x3D; \frac{1}{a_{11}}(-a_{12}x_2 - \cdots - a_{1n}x_n + b_1)$</p>
 </li>
@@ -476,14 +665,62 @@
 </ol>
 <p><strong>Jacobi迭代的矩阵形式</strong></p>
 <p><strong>矩阵分解形式</strong></p>
-<p><img src="/blog/attachments/VA45AE7J.png" alt="\&lt;img alt&#x3D;&quot;&quot; data-attachment-key&#x3D;&quot;VA45AE7J&quot; src&#x3D;&quot;attachments&#x2F;VA45AE7J.png&quot; ztype&#x3D;&quot;zimage&quot;&gt;"></p>
-<p>$A\vec{x} &#x3D; \vec{b} \Leftrightarrow (D + L + U)\vec{x} &#x3D; \vec{b}$</p>
-<p><strong>迭代推导过程</strong> $D\vec{x} &#x3D; -(L + U)\vec{x} + \vec{b}$ $\vec{x} &#x3D; -D^{-1}(L + U)\vec{x} + D^{-1}\vec{b}$ $\vec{x}^{(k+1)} &#x3D; -D^{-1}(L + U)\vec{x}^{(k)} + D^{-1}\vec{b}$</p>
-<p>$$$<br>a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \<br> &amp; a_{22} &amp; \cdots &amp; a_{2n} \<br> &amp;  &amp; \ddots &amp; \vdots \<br> &amp;  &amp;  &amp; a_{nn}<br>\end{bmatrix} &#x3D; D + L + U $$</p>
+<p><img src="/blog/image/Snipaste_2025-04-06_16-16-19.png"></p>
+<p>$$<br>A\vec{x} &#x3D; \vec{b} \Leftrightarrow (D + L + U)\vec{x} &#x3D; \vec{b}<br>$$</p>
+<p><strong>迭代推导过程</strong> </p>
+<span>
+$$
+\begin{cases}
+D\vec{x} = -(L + U)\vec{x} + \vec{b}  \\
+\vec{x} = -D^{-1}(L + U)\vec{x} + D^{-1}\vec{b}  \\
+\vec{x}^{(k+1)} = -D^{-1}(L + U)\vec{x}^{(k)} + D^{-1}\vec{b}
+\end{cases}
+$$
+</span>
+
+
+
+<span>
+$$
+\begin{bmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} \\
+ & a_{22} & \cdots & a_{2n} \\
+ &  & \ddots & \vdots \\
+ &  &  & a_{nn}
+\end{bmatrix} = D + L + U
+$$
+ </span>
+
 <ul>
-<li><strong>对角阵</strong> $D$：<br>$$ D &#x3D; \text{diag}(a_{11}, a_{22}, \dots, a_{nn}) $$</li>
-<li><strong>严格下三角</strong> $L$：<br>$$ L &#x3D; \begin{bmatrix}<br>0 &amp;  &amp;  &amp;  \<br>a_{21} &amp; 0 &amp;  &amp;  \<br>\vdots &amp; \ddots &amp; \ddots &amp;  \<br>a_{n1} &amp; \cdots &amp; a_{n,n-1} &amp; 0<br>\end{bmatrix} $$</li>
-<li><strong>严格上三角</strong> $U$：<br>$$ U &#x3D; \begin{bmatrix}<br>0 &amp; a_{12} &amp; \cdots &amp; a_{1n} \<br> &amp; 0 &amp; \ddots &amp; \vdots \<br> &amp;  &amp; \ddots &amp; a_{n-1,n} \<br> &amp;  &amp;  &amp; 0<br>\end{bmatrix} $$</li>
+<li><p><strong>对角阵</strong> $D$：<br>$$ D &#x3D; \text{diag}(a_{11}, a_{22}, \dots, a_{nn}) $$</p>
+</li>
+<li><p><strong>严格下三角</strong> $L$：</p>
+<span>
+$$
+L=
+\begin{bmatrix}
+0 &  &  &  \\
+a_{21} & 0 &  &  \\
+\vdots & \ddots & \ddots &  \\
+a_{n1} & \cdots & a_{n,n-1} & 0
+\end{bmatrix}
+$$
+</span>
+
+
+</li>
+<li><p><strong>严格上三角</strong> $U$：</p>
+<span>
+$$
+U = \begin{bmatrix}
+0 & a_{12} & \cdots & a_{1n} \\
+ & 0 & \ddots & \vdots \\
+ &  & \ddots & a_{n-1,n} \\
+ &  &  & 0
+\end{bmatrix}
+$$
+
+</span></li>
 </ul>
 <h3 id="Gauss-Seidel迭代法"><a href="#Gauss-Seidel迭代法" class="headerlink" title="Gauss-Seidel迭代法"></a>Gauss-Seidel迭代法</h3><p><strong>迭代公式</strong></p>
 <ol>
@@ -521,52 +758,54 @@
 </ul>
 </blockquote>
 <h2 id="迭代法的收敛性"><a href="#迭代法的收敛性" class="headerlink" title="迭代法的收敛性"></a>迭代法的收敛性</h2><h3 id="递推公式与收敛条件"><a href="#递推公式与收敛条件" class="headerlink" title="递推公式与收敛条件"></a>递推公式与收敛条件</h3><ol>
-<li><strong>递推公式</strong>：<br>$$$</li>
+<li><p><strong>递推公式</strong>：<br>$$<br>  \vec x^{(k+1)} &#x3D; B\vec x^{(k)} +\vec f<br>$$</p>
+</li>
+<li><p><strong>收敛条件推导</strong>：</p>
+</li>
 </ol>
-<p>\vec x^{(k+1)} &#x3D; B\vec x^{(k)} +\vec f</p>
-<p>$$</p>
-<ol start="2">
-<li><strong>收敛条件推导</strong>：<br>$$</li>
-</ol>
-<p>\begin{aligned} e^{(k+1)} &amp;&#x3D; x^{(k+1)} - x^* \ &amp;&#x3D; (Bx^{(k)} + f) - (Bx^* + f) \ &amp;&#x3D; B(x^{(k)} - x^*) \ &amp;&#x3D; Be^{(k)} \end{aligned}</p>
-<p>$$<br>进一步可得：<br>$$</p>
-<p>e^{(k)} &#x3D; B^k e^{(0)}</p>
-<p>$$<br><strong>定理</strong>：<br>设方程 $ x &#x3D; Bx + f $ 存在唯一解，则从任意初始值 $ x^{(0)} $ 出发，迭代格式<br>$$</p>
-<p>x^{(k+1)} &#x3D; Bx^{(k)} + f</p>
-<p>$$<br>收敛的充要条件是 $ B^k \to 0 $（当 $ k \to \infty $ 时）。</p>
-<p><strong>矩阵序列收敛定义</strong>：<br>设 $ A &#x3D; (a_{ij})<em>{n \times n} $，$ A_k &#x3D; (a</em>{ij}^{(k)})_{n \times n} \in \mathbb{R}^{n \times n} $，则<br>$$</p>
-<p>\lim_{k \to \infty} A_k &#x3D; A</p>
-<p>$$<br>定义为对所有 $ 1 \leq i, j \leq n $，满足<br>$$</p>
-<p>\lim_{k \to \infty} a_{ij}^{(k)} &#x3D; a_{ij}.</p>
-<p>$$</p>
-<p>等价于对任何算子范数有$||A_k-A||\to 0 \quad as \quad k\to \infty$</p>
+<p>$$<br>e^{(k+1)} &#x3D; x^{(k+1)} - x^*<br>&#x3D; (Bx^{(k)} + f) - (Bx^* + f)<br>&#x3D; B(x^{(k)} - x^*)<br>&#x3D; Be^{(k)}<br>$$</p>
+<p>进一步可得：<br>$$<br>e^{(k)} &#x3D; B^k e^{(0)}<br>$$<br><strong>定理</strong>：<br>设方程 $ x &#x3D; Bx + f $ 存在唯一解，则从任意初始值 $ x^{(0)} $ 出发，迭代格式<br>$$<br>x^{(k+1)} &#x3D; Bx^{(k)} + f<br>$$</p>
+<p>收敛的充要条件是 $ B^k \to 0 $（当 $ k \to \infty $ 时）。</p>
+<p><strong>矩阵序列收敛定义</strong>：<br>设 $ A &#x3D; (a_{ij})<em>{n \times n} $，$ A_k &#x3D; (a</em>{ij}^{(k)})<em>{n \times n} \in \mathbb{R}^{n \times n} $，则<br>$$<br>\lim</em>{k \to \infty} A_k &#x3D; A<br>$$<br>定义为对所有 $ 1 \leq i, j \leq n $，满足<br>$$<br>\lim_{k \to \infty} a_{ij}^{(k)} &#x3D; a_{ij}<br>$$<br>等价于对任何算子范数有$||A_k-A||\to 0 \quad as \quad k\to \infty$</p>
 <p><strong>定理：</strong></p>
 <p>$B^k \to0\Leftrightarrow \rho(B)&lt;1$</p>
-<p><strong>迭代算法收敛条件</strong><br>$$</p>
-<p>\text{迭代从任意向量 } \text{ 出发} (收敛)\Leftrightarrow B^k \to 0 \quad (k \to \infty) \Leftrightarrow \rho(B) &lt; 1</p>
-<p>$$<br><strong>定理</strong></p>
-<p>设有方程组<br>$$</p>
-<p>x &#x3D; Bx + f</p>
-<p>$$<br>对于任意初始向量 $ x^{(0)} $ 及任意 $ f $，解此方程组的迭代法<br>$$</p>
-<p>x^{(k+1)} &#x3D; Bx^{(k)} + f</p>
-<p>$$<br>收敛的充要条件是<br>$$</p>
-<p>\rho(B) &lt; 1</p>
-<p>$$$<br>当$\rho(B) &lt; 1$时，迭代过程收敛，且$\rho(B) $越小，迭代收敛越快。</p>
+<p><strong>迭代算法收敛条件</strong><br>$$<br>\text{迭代从任意向量 } \text{ 出发} (收敛)\Leftrightarrow B^k \to 0 \quad (k \to \infty) \Leftrightarrow \rho(B) &lt; 1<br>$$<br><strong>定理</strong></p>
+<p>设有方程组<br>$$<br>x &#x3D; Bx + f<br>$$<br>对于任意初始向量 $ x^{(0)} $ 及任意 $ f $，解此方程组的迭代法</p>
+<p>$$<br>x^{(k+1)} &#x3D; Bx^{(k)} + f<br>$$</p>
+<p>收敛的充要条件是<br>$$<br>\rho(B) &lt; 1<br>$$</p>
+<p>当$\rho(B) &lt; 1$时，迭代过程收敛，且$\rho(B) $越小，迭代收敛越快。</p>
 <hr>
 <p>注意到<br>$$ \vec{e}^{(k+1)} &#x3D; \vec{x}^{(k+1)} - \vec{x}^* &#x3D; B(\vec{x}^{(k)} - \vec{x}^*) &#x3D; B\vec{e}^{(k)} &#x3D; B^{k+1}\vec{e}^{(0)} $$</p>
 <p>则<br>$$ |\vec{e}^k| &#x3D; |B^k\vec{e}^{(0)}| \leq |B^k||\vec{e}^{(0)}| \leq |B|^k|\vec{e}^{(0)}|, |\vec{e}^k| \approx (\rho(B))^k|\vec{e}^{(0)}| $$</p>
 <p><strong>定义</strong></p>
 <p> 称 $ R(B) &#x3D; -\ln \rho(B) $ 为迭代法的<u>收敛速度</u>。</p>
 <p><strong>例题</strong></p>
-<p>已知方程组<br>$$ \begin{bmatrix} 1 &amp; -2 \ -0.32 &amp; 1 \end{bmatrix} \begin{bmatrix} x_1 \ x_2 \end{bmatrix} &#x3D; \begin{bmatrix} b_1 \ b_2 \end{bmatrix} $$<br>考察解此方程组的Jacobi迭代法是否收敛，它的渐近收敛速度为多少。</p>
-<p>解：方程组的Jacobi迭代阵 $ B &#x3D; \begin{bmatrix} 0 &amp; 2 \ 0.32 &amp; 0 \end{bmatrix} $</p>
-<p>$$ |\lambda I - B| &#x3D; \begin{vmatrix} \lambda &amp; -2 \ -0.32 &amp; \lambda \end{vmatrix} &#x3D; 0 $$<br>$$ \lambda_1 &#x3D; -0.8, \lambda_2 &#x3D; 0.8 $$</p>
+<p>已知方程组</p>
+<span>
+$$
+\begin{bmatrix} 1 & -2 \\ -0.32 & 1 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} b_1 \\ b_2 \end{bmatrix}
+$$
+</span>
+
+<p>考察解此方程组的Jacobi迭代法是否收敛，它的渐近收敛速度为多少。</p>
+<p>解：方程组的Jacobi迭代阵</p>
+<span>
+$$
+B = \begin{bmatrix} 0 & 2 \\ 0.32 & 0 \end{bmatrix}
+$$
+</span>
+
+<span>
+$$
+|\lambda I - B| = \begin{vmatrix} \lambda & -2 \\ -0.32 & \lambda \end{vmatrix} = 0
+$$
+</span>
+
+<p>$$ \lambda_1 &#x3D; -0.8, \lambda_2 &#x3D; 0.8 $$</p>
 <p>因 $ \rho(B) &#x3D; 0.8 $ 故方程组的Jacobi迭代收敛。其渐近收敛速度<br>$$ R(B) &#x3D; -\ln \rho(B) &#x3D; -\ln 0.8 &#x3D; 0.223 $$</p>
 <hr>
 <p><strong>定理（充分条件）</strong></p>
-<p>若存在一个矩阵范数使得 $ |B| &#x3D; q &lt; 1 $，则迭代收敛，且有下列误差估计：<br>$$$</p>
-<p>|\vec{x}^* - \vec{x}^{(k)}| \leq \frac{q}{1-q} |\vec{x}^{(k)} - \vec{x}^{(k-1)}| \ |\vec{x}^* - \vec{x}^{(k)}| \leq \frac{q^k}{1-q} |\vec{x}^{(1)} - \vec{x}^{(0)}|</p>
-<p>$$$</p>
+<p>若存在一个矩阵范数使得 $ |B| &#x3D; q &lt; 1 $，则迭代收敛，且有下列误差估计：<br>$$<br>|\vec{x}^* - \vec{x}^{(k)}| \leq \frac{q}{1-q} |\vec{x}^{(k)} - \vec{x}^{(k-1)}| \ |\vec{x}^* - \vec{x}^{(k)}| \leq \frac{q^k}{1-q} |\vec{x}^{(1)} - \vec{x}^{(0)}|<br>$$</p>
 <p><strong>注</strong>：因 $ \rho(B) \leq |B| &lt; 1 $，故收敛性得证。</p>
 <hr>
 <p><strong>定理（充分条件）：</strong></p>
@@ -590,19 +829,14 @@
 </ol>
 <p><strong>矩阵形式公式</strong></p>
 <ol>
-<li><strong>基本形式</strong>：<br>$$$</li>
+<li><p><strong>基本形式</strong>：<br>  $$<br>  \vec{x}^{(k+1)} &#x3D; x_i^{(k)} + \omega \frac{r_i^{(k+1)}}{a_{ii}}<br>  &#x3D; (1 - \omega) \vec{x}^{(k)} + \omega D^{-1} \left[ -L \vec{x}^{(k+1)} - U \vec{x}^{(k)} + \vec{b} \right]<br>  $$</p>
+</li>
+<li><p><strong>标准迭代形式</strong>：</p>
+</li>
 </ol>
-<p>\vec{x}^{(k+1)} &#x3D; x_i^{(k)} + \omega \frac{r_i^{(k+1)}}{a_{ii}}&#x3D; (1 - \omega) \vec{x}^{(k)} + \omega D^{-1} \left[ -L \vec{x}^{(k+1)} - U \vec{x}^{(k)} + \vec{b} \right]</p>
-<p>$$</p>
-<ol start="2">
-<li><strong>标准迭代形式</strong>：<br>$$</li>
-</ol>
-<p>\vec{x}^{(k+1)} &#x3D; (D + \omega L)^{-1} \left[ (1 - \omega) D - \omega U \right] \vec{x}^{(k)} + (D + \omega L)^{-1} \omega \vec{b} \ H_{\omega}&#x3D;(D + \omega L)^{-1} \left[ (1 - \omega) D - \omega U \right]</p>
-<p>$$$</p>
+<p>$$<br>\vec{x}^{(k+1)}<br>&#x3D; (D + \omega L)^{-1} \left[ (1 - \omega) D - \omega U \right] \vec{x}^{(k)} + (D + \omega L)^{-1} \omega \vec{b}H_{\omega} \<br>&#x3D;(D + \omega L)^{-1} \left[ (1 - \omega) D - \omega U \right]<br>$$</p>
 <hr>
-<p><strong>定理</strong>：设$A$可逆，且$a_{ii} \neq 0$，则松弛法从任意$\vec{x}^{(0)}$出发对某个$\omega$收敛的充要条件为：<br>$$ \rho(H_\omega) &lt; 1 $$<br>其中<br>$$$</p>
-<p>H_\omega &#x3D; (D + \omega L)^{-1} \left[ (1 - \omega) D - \omega U \right]</p>
-<p>$$</p>
+<p><strong>定理</strong>：设$A$可逆，且$a_{ii} \neq 0$，则松弛法从任意$\vec{x}^{(0)}$出发对某个$\omega$收敛的充要条件为：<br>$$ \rho(H_\omega) &lt; 1 $$<br>其中<br>$$<br>H_\omega &#x3D; (D + \omega L)^{-1} \left[ (1 - \omega) D - \omega U \right]<br>$$</p>
 <p>为迭代矩阵</p>
 <hr>
 <p><strong>定理</strong>（必要条件）</p>
@@ -614,23 +848,18 @@
 <p><strong>定理</strong></p>
 <p><strong>设</strong> $A$ 为对称正定三对角矩阵，则：</p>
 <ol>
-<li>谱半径关系：<br>$$</li>
+<li>谱半径关系：</li>
 </ol>
-<p>\rho(B_{G-S}) &#x3D; [\rho(B_J)]^2 &lt; 1</p>
-<p>$$</p>
+<p>$$<br>\rho(B_{G-S}) &#x3D; [\rho(B_J)]^2 &lt; 1<br>$$</p>
 <ol start="2">
-<li>SOR最佳松弛因子为<br>$$</li>
+<li>SOR最佳松弛因子为</li>
 </ol>
-<p>\omega&#x3D;\frac{2}{1 + \sqrt{1 - [\rho(B_J)]^2}}</p>
-<p>$$</p>
+<p>$$<br>\omega&#x3D;\frac{2}{1 + \sqrt{1 - [\rho(B_J)]^2}}<br>$$</p>
 <ol start="3">
-<li>此时收敛速度<br>$$</li>
+<li>此时收敛速度</li>
 </ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\rho = \omega - 1 </span><br></pre></td></tr></table></figure>
-
-<p>$$</p>
-<p>$$</p>
-</article><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/blog/image/00d69812ece14254143ca78eb066782f.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2025/02/27/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" title="深度学习相关知识"><img class="cover" src="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">深度学习相关知识</div></div><div class="info-2"><div class="info-item-1">准确度(accuracy)、精确率（precision)、召回率（recall）、F1值TP（True Positives)：真正例，预测为正例而且实际上也是正例； FP（False Positives)：假正例，预测为正例然而实际上却是负例； FN（false Negatives)：假负例，预测为负例然而实际上却是正例； TN（True Negatives)：真负例，预测为负例而且实际上也是负例。  准确率 Accuracy 准确度：正例和负例中预测正确数量占总数量的比例。  用公式表示：$$ACC&#x3D;\frac{TP+TN}{TP+FP+FN+TN}$$ 精确度...</div></div></div></a><a class="pagination-related" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%8C%EF%BC%89/" title="数值分析（二）"><img class="cover" src="/blog/image/00d69812ece14254143ca78eb066782f.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">数值分析（二）</div></div><div class="info-2"><div class="info-item-1">此文章包含数值积分部分—————————————————————————————————————————————————————- 数值积分数值积分近似公式梯形公式$$\int _{a}^{b} f(x) dx \approx \frac{(b - a)}{2} \left[ f(a) + f(b) \right]$$ 中矩公式$$\int _{a}^{b} f(x) dx \approx (b - a) f\left( \frac{a + b}{2} \right)$$ 辛普森公式（Simpson’s Rule）$$\int _{a}^{b} f(x) dx \approx \frac{(b - a)}{6} \left[ f(a) + 4f\left( \frac{a + b}{2} \right) + f(b) \right]$$ 机械求积公式一般的，我们取区间 $[a, b]$ 内若干个节点 $x_k$ 处的函数值 $f(x_k)$，通过加权平均的方法近似地得出平均高度。这类求积公式的一般形式为： $$\int_a^b f(x) , dx \approx...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84%E7%9A%84%E8%A7%A3%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">线性方程组的解法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E4%B8%8E%E7%9F%A9%E9%98%B5%E8%8C%83%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">向量与矩阵范数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E8%8C%83%E6%95%B0"><span class="toc-number">1.1.1.</span> <span class="toc-text">向量范数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E8%8C%83%E6%95%B0"><span class="toc-number">1.1.2.</span> <span class="toc-text">矩阵范数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">高斯消元法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E4%B8%BB%E5%85%83%E6%B6%88%E5%8E%BB%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">列主元消去法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#begin-bmatrix-a-11-a-12-cdots-a-1n-a-22-cdots-a-2n-ddots-vdots-a-nn-end-bmatrix-begin-bmatrix-x-1-x-2-vdots-x-n-end-bmatrix"><span class="toc-number">2.</span> <span class="toc-text">$$\begin{bmatrix}a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \ &amp; a_{22} &amp; \cdots &amp; a_{2n} \ &amp; &amp; \ddots &amp; \vdots \ &amp; &amp; &amp; a_{nn}\end{bmatrix}\begin{bmatrix}x_1 \x_2 \\vdots \x_n\end{bmatrix}</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83%E6%B3%95-1"><span class="toc-number">2.1.</span> <span class="toc-text">高斯消元法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%93%E7%AB%8B%E7%89%B9%E5%88%86%E8%A7%A3%E6%B3%95%EF%BC%88Doolittle-Factorization%EF%BC%89"><span class="toc-number">2.1.1.</span> <span class="toc-text">道立特分解法（Doolittle Factorization）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B3%E6%96%B9%E6%A0%B9%E6%B3%95%EF%BC%88Choleski%E2%80%99s-Method%EF%BC%89"><span class="toc-number">2.1.2.</span> <span class="toc-text">平方根法（Choleski’s Method）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%BD%E8%B5%B6%E6%B3%95"><span class="toc-number">2.1.3.</span> <span class="toc-text">追赶法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84%E7%9A%84%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90"><span class="toc-number">2.2.</span> <span class="toc-text">线性方程组的误差分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%BD%A21%EF%BC%9A%E7%9F%A9%E9%98%B5-A-%E7%B2%BE%E7%A1%AE%EF%BC%8C%E5%8F%B3%E7%AB%AF%E9%A1%B9-vec-b-%E5%AD%98%E5%9C%A8%E8%AF%AF%E5%B7%AE"><span class="toc-number">2.2.1.</span> <span class="toc-text">情形1：矩阵$A$精确，右端项$\vec{b}$存在误差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%BD%A22%EF%BC%9A%E7%9F%A9%E9%98%B5-A-%E5%AD%98%E5%9C%A8%E8%AF%AF%E5%B7%AE-delta-A"><span class="toc-number">2.2.2.</span> <span class="toc-text">情形2：矩阵$A$存在误差$\delta A$</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E6%95%B0"><span class="toc-number">2.2.3.</span> <span class="toc-text">条件数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%91%E4%BC%BC%E8%A7%A3%E7%9A%84%E8%AF%AF%E5%B7%AE%E4%BC%B0%E8%AE%A1%E5%8F%8A%E6%94%B9%E5%96%84"><span class="toc-number">2.2.4.</span> <span class="toc-text">近似解的误差估计及改善</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%9A%84%E8%BF%AD%E4%BB%A3%E6%B3%95"><span class="toc-number">2.3.</span> <span class="toc-text">解线性方程的迭代法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jacobi%E8%BF%AD%E4%BB%A3%E6%B3%95"><span class="toc-number">2.3.1.</span> <span class="toc-text">Jacobi迭代法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gauss-Seidel%E8%BF%AD%E4%BB%A3%E6%B3%95"><span class="toc-number">2.3.2.</span> <span class="toc-text">Gauss-Seidel迭代法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3%E6%B3%95%E7%9A%84%E6%94%B6%E6%95%9B%E6%80%A7"><span class="toc-number">2.4.</span> <span class="toc-text">迭代法的收敛性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E6%8E%A8%E5%85%AC%E5%BC%8F%E4%B8%8E%E6%94%B6%E6%95%9B%E6%9D%A1%E4%BB%B6"><span class="toc-number">2.4.1.</span> <span class="toc-text">递推公式与收敛条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%BE%E5%BC%9B%E6%B3%95"><span class="toc-number">2.5.</span> <span class="toc-text">松弛法</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%89%EF%BC%89/" title="数值分析（三）"><img src="/blog/image/00d69812ece14254143ca78eb066782f.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析（三）"/></a><div class="content"><a class="title" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%89%EF%BC%89/" title="数值分析（三）">数值分析（三）</a><time datetime="2025-03-26T06:47:47.000Z" title="发表于 2025-03-26 14:47:47">2025-03-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%8C%EF%BC%89/" title="数值分析（二）"><img src="/blog/image/00d69812ece14254143ca78eb066782f.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析（二）"/></a><div class="content"><a class="title" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%8C%EF%BC%89/" title="数值分析（二）">数值分析（二）</a><time datetime="2025-03-26T06:47:47.000Z" title="发表于 2025-03-26 14:47:47">2025-03-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E5%9B%9B%EF%BC%89/" title="数值分析（四）"><img src="/blog/image/img3.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析（四）"/></a><div class="content"><a class="title" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E5%9B%9B%EF%BC%89/" title="数值分析（四）">数值分析（四）</a><time datetime="2025-03-26T06:47:47.000Z" title="发表于 2025-03-26 14:47:47">2025-03-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/02/27/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" title="深度学习相关知识"><img src="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="深度学习相关知识"/></a><div class="content"><a class="title" href="/blog/2025/02/27/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" title="深度学习相关知识">深度学习相关知识</a><time datetime="2025-02-27T06:11:35.000Z" title="发表于 2025-02-27 14:11:35">2025-02-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/02/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%80%EF%BC%89/" title="数值分析（一）"><img src="/blog/image/00d69812ece14254143ca78eb066782f.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析（一）"/></a><div class="content"><a class="title" href="/blog/2025/02/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%80%EF%BC%89/" title="数值分析（一）">数值分析（一）</a><time datetime="2025-02-26T02:23:25.000Z" title="发表于 2025-02-26 10:23:25">2025-02-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"><script>(() => {
+<p>$$<br>\rho &#x3D; \omega - 1<br>$$</p>
+</article><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/blog/image/00d69812ece14254143ca78eb066782f.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2025/02/27/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" title="深度学习相关知识"><img class="cover" src="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">深度学习相关知识</div></div><div class="info-2"><div class="info-item-1">准确度(accuracy)、精确率（precision)、召回率（recall）、F1值TP（True Positives)：真正例，预测为正例而且实际上也是正例； FP（False Positives)：假正例，预测为正例然而实际上却是负例； FN（false Negatives)：假负例，预测为负例然而实际上却是正例； TN（True Negatives)：真负例，预测为负例而且实际上也是负例。  准确率 Accuracy 准确度：正例和负例中预测正确数量占总数量的比例。  用公式表示：$$ACC&#x3D;\frac{TP+TN}{TP+FP+FN+TN}$$ 精确度...</div></div></div></a><a class="pagination-related" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E5%9B%9B%EF%BC%89/" title="数值分析（四）"><img class="cover" src="/blog/image/img3.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">数值分析（四）</div></div><div class="info-2"><div class="info-item-1">此文章包含非线性方程组求根部分—————————————————————————————————————————————————————- 第七章 非线性方程求根前言：求 f(x) &#x3D; 0 的根 数学物理中的许多问题常常归结为解函数方程 f(x) &#x3D; 0，方程 f(x) &#x3D; 0 的解 x* 称作它的根，或称为 f(x) 的零点。 设函数 f(x) 在 [a,b] 上连续且 f(a)f(b) &lt; 0，根据连续函数的性质可知方程 f(x) &#x3D; 0 在区间 [a,b] 内一定有实根，这时称 (a,b) 为方程 f(x) &#x3D; 0 的有根区间。  二分法 二分法的思想是将有根区间折半进行搜索，即对有根区间 $[a, b]$，取中点 $x_1 &#x3D; \frac{a + b}{2}$ 将它分为两半，检查 $f(a)$ 与 $f(x)$ 是否同号，如果确系同号，说明所求的根在 $[x_1, b]$ ；否则根必在 $[a, x_1]$不管出现哪一种情况，新的有根区间仅为原来的一半。  误差分析 第1步产生的 $x_1 &#x3D;...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84%E7%9A%84%E8%A7%A3%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">线性方程组的解法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E4%B8%8E%E7%9F%A9%E9%98%B5%E8%8C%83%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">向量与矩阵范数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E8%8C%83%E6%95%B0"><span class="toc-number">1.1.1.</span> <span class="toc-text">向量范数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E8%8C%83%E6%95%B0"><span class="toc-number">1.1.2.</span> <span class="toc-text">矩阵范数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">高斯消元法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E4%B8%BB%E5%85%83%E6%B6%88%E5%8E%BB%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">列主元消去法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E4%B8%89%E8%A7%92%E5%88%86%E8%A7%A3%E6%B3%95"><span class="toc-number">1.4.</span> <span class="toc-text">矩阵三角分解法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%93%E7%AB%8B%E7%89%B9%E5%88%86%E8%A7%A3%E6%B3%95%EF%BC%88Doolittle-Factorization%EF%BC%89"><span class="toc-number">1.4.1.</span> <span class="toc-text">道立特分解法（Doolittle Factorization）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B3%E6%96%B9%E6%A0%B9%E6%B3%95%EF%BC%88Choleski%E2%80%99s-Method%EF%BC%89"><span class="toc-number">1.4.2.</span> <span class="toc-text">平方根法（Choleski’s Method）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%BD%E8%B5%B6%E6%B3%95"><span class="toc-number">1.4.3.</span> <span class="toc-text">追赶法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84%E7%9A%84%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90"><span class="toc-number">1.5.</span> <span class="toc-text">线性方程组的误差分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%BD%A21%EF%BC%9A%E7%9F%A9%E9%98%B5-A-%E7%B2%BE%E7%A1%AE%EF%BC%8C%E5%8F%B3%E7%AB%AF%E9%A1%B9-vec-b-%E5%AD%98%E5%9C%A8%E8%AF%AF%E5%B7%AE"><span class="toc-number">1.5.1.</span> <span class="toc-text">情形1：矩阵$A$精确，右端项$\vec{b}$存在误差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%BD%A22%EF%BC%9A%E7%9F%A9%E9%98%B5-A-%E5%AD%98%E5%9C%A8%E8%AF%AF%E5%B7%AE-delta-A"><span class="toc-number">1.5.2.</span> <span class="toc-text">情形2：矩阵$A$存在误差$\delta A$</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E6%95%B0"><span class="toc-number">1.5.3.</span> <span class="toc-text">条件数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%91%E4%BC%BC%E8%A7%A3%E7%9A%84%E8%AF%AF%E5%B7%AE%E4%BC%B0%E8%AE%A1%E5%8F%8A%E6%94%B9%E5%96%84"><span class="toc-number">1.5.4.</span> <span class="toc-text">近似解的误差估计及改善</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%9A%84%E8%BF%AD%E4%BB%A3%E6%B3%95"><span class="toc-number">1.6.</span> <span class="toc-text">解线性方程的迭代法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jacobi-%E9%9B%85%E5%8F%AF%E6%AF%94-%E8%BF%AD%E4%BB%A3%E6%B3%95"><span class="toc-number">1.6.1.</span> <span class="toc-text">Jacobi(雅可比)迭代法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gauss-Seidel%E8%BF%AD%E4%BB%A3%E6%B3%95"><span class="toc-number">1.6.2.</span> <span class="toc-text">Gauss-Seidel迭代法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3%E6%B3%95%E7%9A%84%E6%94%B6%E6%95%9B%E6%80%A7"><span class="toc-number">1.7.</span> <span class="toc-text">迭代法的收敛性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E6%8E%A8%E5%85%AC%E5%BC%8F%E4%B8%8E%E6%94%B6%E6%95%9B%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.7.1.</span> <span class="toc-text">递推公式与收敛条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%BE%E5%BC%9B%E6%B3%95"><span class="toc-number">1.8.</span> <span class="toc-text">松弛法</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%89%EF%BC%89/" title="数值分析（三）"><img src="/blog/image/00d69812ece14254143ca78eb066782f.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析（三）"/></a><div class="content"><a class="title" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%89%EF%BC%89/" title="数值分析（三）">数值分析（三）</a><time datetime="2025-03-26T06:47:47.000Z" title="发表于 2025-03-26 14:47:47">2025-03-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E5%9B%9B%EF%BC%89/" title="数值分析（四）"><img src="/blog/image/img3.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析（四）"/></a><div class="content"><a class="title" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E5%9B%9B%EF%BC%89/" title="数值分析（四）">数值分析（四）</a><time datetime="2025-03-26T06:47:47.000Z" title="发表于 2025-03-26 14:47:47">2025-03-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%8C%EF%BC%89/" title="数值分析（二）"><img src="/blog/image/00d69812ece14254143ca78eb066782f.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析（二）"/></a><div class="content"><a class="title" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%8C%EF%BC%89/" title="数值分析（二）">数值分析（二）</a><time datetime="2025-03-26T06:47:47.000Z" title="发表于 2025-03-26 14:47:47">2025-03-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/02/27/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" title="深度学习相关知识"><img src="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="深度学习相关知识"/></a><div class="content"><a class="title" href="/blog/2025/02/27/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" title="深度学习相关知识">深度学习相关知识</a><time datetime="2025-02-27T06:11:35.000Z" title="发表于 2025-02-27 14:11:35">2025-02-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/02/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%80%EF%BC%89/" title="数值分析（一）"><img src="/blog/image/00d69812ece14254143ca78eb066782f.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析（一）"/></a><div class="content"><a class="title" href="/blog/2025/02/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%80%EF%BC%89/" title="数值分析（一）">数值分析（一）</a><time datetime="2025-02-26T02:23:25.000Z" title="发表于 2025-02-26 10:23:25">2025-02-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"><script>(() => {
   const loadMathjax = () => {
     if (!window.MathJax) {
       window.MathJax = {
