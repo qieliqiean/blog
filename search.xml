@@ -717,6 +717,865 @@ $$
       </categories>
   </entry>
   <entry>
+    <title>数值分析（一）</title>
+    <url>/blog/2025/02/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>此文章包含误差、插值法和函数逼近内容—————————————————————————————————————————————————————-</p>
+<p><span style="color:blue">$C^p[a,b]$表示具有$p$阶连续导数的函数空间；$C^0$表述函数连续，没有要求可导</span></p>
+<h1 id="第一章-误差"><a href="#第一章-误差" class="headerlink" title="第一章 误差"></a>第一章 误差</h1><h2 id="误差"><a href="#误差" class="headerlink" title="误差"></a>误差</h2><p>设 $x$ 为准确值，$x^* $ 为 $x$ 的一个近似值，称  $$e^* &#x3D; x^* - x$$  为<strong>绝对误差</strong>，简称为<strong>误差</strong>。</p>
+<p>对于一般情形，  $$| x^*  - x | ≤ ε^* $$$ε^* $为<strong>绝对误差限</strong><br><strong>相对误差</strong>的公式表示为：  $$e_r^* &#x3D; \frac{e^* }{x}$$</p>
+<p>实际中一般取$$e_r^* &#x3D; \frac{e^* }{x^* }$$</p>
+<p>$x$ 的<strong>相对误差上限</strong>定义为$\varepsilon^* &#x3D; \frac{\varepsilon^* }{|x^* |}$</p>
+<h2 id="有效数字"><a href="#有效数字" class="headerlink" title="有效数字"></a>有效数字</h2><h3 id="有效数字的定义"><a href="#有效数字的定义" class="headerlink" title="有效数字的定义"></a>有效数字的定义</h3><p>若近似值 $ x^* $ 的误差限是某一位的半个单位，该位到 $ x $ 的第一位非零数字共有 $ n $ 位，则 $ x $ 有 $ n $ 位有效数字。  </p>
+<p><strong>示例</strong><br>圆周率 $ \pi &#x3D; 3.14159265 \dots $  </p>
+<ul>
+<li>按四舍五入原则，若取四位小数，则 $ \pi \approx 3.1416 $；  </li>
+<li>取五位小数，则 $ \pi \approx 3.14159 $。</li>
+</ul>
+<p>它们的绝对误差不超过末位数的半个单位，即：  </p>
+<ul>
+<li>$$| \pi - 3.1416 | \leq \frac{1}{2} \times 10^{-4}$$  五位有效数值  </li>
+<li>$$| \pi - 3.14159 | \leq \frac{1}{2} \times 10^{-5}$$  六位有效数值</li>
+</ul>
+<blockquote>
+<p>按四舍五入规则的直接从后往前数就行了</p>
+</blockquote>
+<p>用科学计数法，记 $ x^* &#x3D; \pm 0.a_1 a_2 \cdots a_n \times 10^m $（其中 $ a_1 \neq 0 $）。若 $ |x - x^* | \leq 0.5 \times 10^{m-n} $（即 $ a_n $ 的截取按四舍五入规则），则称 $ x^* $ 为有 <strong>$ n $</strong> 位有效数字，精确到 <strong>$ 10^{m-n} $</strong>。</p>
+<h3 id="有效数字与相对误差的关系"><a href="#有效数字与相对误差的关系" class="headerlink" title="有效数字与相对误差的关系"></a>有效数字与相对误差的关系</h3><p><strong>有效数字 ⇒ 相对误差限</strong></p>
+<p> 已知 $ x^* $ 有 $ n $ 位有效数字，则其相对误差限为<br>$$<br>\varepsilon_r *  &#x3D; \left| \frac{\varepsilon^* }{x^* } \right| &#x3D; \frac{0.5 \times 10^{m-n}}{0.a_1 a_2 \cdots a_n \times 10^m} &#x3D; \frac{10^{-n}}{2 \times 0.a_1 \cdots}  \leq \frac{1}{2a_1} \times 10^{-n+1}<br>$$<br><strong>相对误差限 ⇒ 有效数字</strong></p>
+<p> 已知 $ x^* $ 的相对误差限可写为<br>$$<br>\varepsilon_r * &#x3D; \frac{1}{2(a_1 + 1)} \times 10^{-n+1}<br>$$<br>则<br>$$ { }<br>|x - x^* | \leq \varepsilon_r^ *   \cdot |x^* | &#x3D; \frac{10^{-n+1}}{2(a_1 + 1)} \times 0.a_1 a_2 \cdots \times 10^m<br>&lt; \frac{10^{-n+1}}{2(a_1 + 1)} \cdot (a_1 + 1) \times 10^{m-1} &#x3D; 0.5 \times 10^{m-n}<br>$$<br>可见 $ x^* $ 至少有 $ n $ 位有效数字。</p>
+<h2 id="求函数值和算术运算的误差估计"><a href="#求函数值和算术运算的误差估计" class="headerlink" title="求函数值和算术运算的误差估计"></a>求函数值和算术运算的误差估计</h2><p>设多元函数 $ A &#x3D; f(x_1, x_2, \cdots, x_n) $，$ x_1^* , x_2^* , \cdots, x_n^*  $ 为 $ x_1, x_2, \cdots, x_n $ 的近似值。 则 $ A $ 的近似值 $ A^* $：$ A^* &#x3D; f(x_1^* , x_2^* , \cdots, x_n^* ) $。 </p>
+<p>函数值 $ A^* $ 的绝对误差： $$ A - A^*  &#x3D; f(x_1, \cdots, x_n) - f(x_1^* , \cdots, x_n^* ) $$ </p>
+<p>在点 $ x &#x3D; (x_1, x_2, \cdots, x_n) $ 的 Taylor 展开式，设 $ |x_i - x_i^* | $ ($ i &#x3D; 1, 2, \cdots, n $) 都很小</p>
+<p>略去高阶项：<br>$$<br>A - A^* &#x3D; f(x_1, \cdots, x_n) - f(x_1^* , \cdots, x_n^* ) \approx \sum_{j&#x3D;1}^n \frac{\partial f(x)}{\partial x_j} (x_j - x_j^* )<br>$$<br>或<br>$$<br>e(A) \approx \sum_{j&#x3D;1}^n \frac{\partial f(x)}{\partial x_j} e(x_j)<br>$$</p>
+<p>$$<br>|e(A)| \leq \sum_{j&#x3D;1}^n \left| \frac{\partial f(x)}{\partial x_j} \right| |e(x_j)|<br>$$</p>
+<p><strong>一元函数时：</strong><br>$$<br>e^* (x)&#x3D;x^*-x<br>$$</p>
+<p>$$<br>e^* (A)&#x3D;f(x^* )-f(x)&#x3D; f’(\xi)(x^* -x)<br>$$</p>
+<h2 id="病态问题与条件数"><a href="#病态问题与条件数" class="headerlink" title="病态问题与条件数"></a>病态问题与条件数</h2><p>$$ | e_r(y) | &#x3D; \left| \frac{e(y)}{f(x^* )} \right| &#x3D; \left| \frac{f(x) - f(x^* )}{f(x^* )} \right| $$ $$ &#x3D; \left| \frac{f(x) - f(x^* )}{x - x^* } \cdot \frac{x}{f(x)} \cdot \frac{x - x^* }{x} \right| $$ $$ \approx \left| \frac{x \cdot f’(x)}{f(x)} \right| \cdot \left| \frac{x - x^*}{x} \right| &#x3D; \left| \frac{x \cdot f’(x)}{f(x)} \right| \cdot | e_r(x) | $$ </p>
+<p>$| \frac{x \cdot f’(x)}{f(x)} |$为条件数，条件数很大时，初始数据的微小误差可能引起结果 $ A $ 的很大误差。</p>
+<p>对数学问题而言，如果输入数据有微小扰动，引起输出数据（即数学问题的解）有很大扰动，则称数学问题是病态问题，否则称为良态问题。</p>
+<h1 id="第二章-插值法"><a href="#第二章-插值法" class="headerlink" title="第二章 插值法"></a>第二章 插值法</h1><h2 id="插值法定义"><a href="#插值法定义" class="headerlink" title="插值法定义"></a>插值法定义</h2><h2 id="插值函数定义"><a href="#插值函数定义" class="headerlink" title="插值函数定义"></a>插值函数定义</h2><p>设函数 $y &#x3D; f(x)$ 在区间 $[a, b]$ 上有定义，且满足节点排列：<br>$$ a \leq x_0 &lt; x_1 &lt; \cdots &lt; x_n \leq b $$</p>
+<p>已知在点 ${x_0, x_1, \ldots, x_n}$ 上的对应函数值 ${y_0, y_1, \ldots, y_n}$。</p>
+<p>若存在一简单函数 $p(x)$，满足插值条件：<br>$$ p(x_i) &#x3D; y_i \quad (i &#x3D; 0, 1, 2, \ldots, n) \tag{2.1} $$  （1） </p>
+<p>则称：</p>
+<ul>
+<li>$p(x)$ 为 $f(x)$ 的<strong>插值函数</strong></li>
+<li>${x_0, x_1, \ldots, x_n}$ 为<strong>插值节点</strong></li>
+<li>包含节点的区间 $[a, b]$ 为<strong>插值区间</strong></li>
+<li>式 (1) 为<strong>插值条件</strong></li>
+<li>求插值函数的方法称为<strong>插值法</strong></li>
+</ul>
+<hr>
+<h3 id="插值函数分类"><a href="#插值函数分类" class="headerlink" title="插值函数分类"></a>插值函数分类</h3><p>当 $p(x)$ 具有以下形式时：</p>
+<ol>
+<li><p><strong>多项式插值</strong><br>$$ p(x) &#x3D; a_0 + a_1x + \cdots + a_nx^n \quad (a_i \in \mathbb{R}) \tag{2.2} $$<br>其中多项式次数 $\leq n$</p>
+</li>
+<li><p><strong>分段插值</strong><br>$p(x)$ 为分段多项式</p>
+</li>
+<li><p><strong>三角插值</strong><br>$p(x)$ 为三角多项式</p>
+</li>
+</ol>
+<blockquote>
+<p>满足$p(x_i)&#x3D;y_i,i&#x3D;0,\cdots n$ 次数不超过<strong>n</strong>的插值多项式是唯一存在的</p>
+</blockquote>
+<h2 id="拉格朗日插值"><a href="#拉格朗日插值" class="headerlink" title="拉格朗日插值"></a>拉格朗日插值</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>求 <strong>n次多项式</strong>：<br>$$<br>L_n(x) &#x3D; y_0 l_0(x) + y_1 l_1(x) + \cdots + y_n l_n(x)<br>$$<br>满足插值条件：<br>$$<br>L_n(x_i) &#x3D; y_i \quad (i &#x3D; 0,1,2,\ldots,n)<br>$$</p>
+<p><strong>约束条件</strong>：</p>
+<ul>
+<li>无重合节点：当 $i \neq j$ 时，$x_i \neq x_j$</li>
+</ul>
+<hr>
+<h3 id="线性插值特例-n-1"><a href="#线性插值特例-n-1" class="headerlink" title="线性插值特例 ($n&#x3D;1$)"></a>线性插值特例 ($n&#x3D;1$)</h3><p>已知两点 $(x_0, y_0)$ 和 $(x_1, y_1)$，构造一次多项式：<br>$$<br>L_1(x) &#x3D; l_0(x)y_0 + l_1(x)y_1<br>$$</p>
+<p><strong>插值条件</strong>：<br>$$<br>\begin{cases}<br>L_1(x_0) &#x3D; y_0 \<br>L_1(x_1) &#x3D; y_1<br>\end{cases}<br>$$</p>
+<p><strong>几何意义</strong>：$L_1(x)$ 是过点 $(x_0, y_0)$ 和 $(x_1, y_1)$ 的直线</p>
+<h4 id="插值公式"><a href="#插值公式" class="headerlink" title="插值公式"></a>插值公式</h4><p>$$<br>L_1(x) &#x3D; \frac{x - x_1}{x_0 - x_1} y_0 + \frac{x - x_0}{x_1 - x_0}y_1<br>$$</p>
+<p>$$<br>\frac{x - x_1}{x_0 - x_1}与\frac{x - x_0}{x_1 - x_0}称为拉氏基函数<br>$$</p>
+<p>等价于点斜式：<br>$$<br>L_1(x) &#x3D; y_0 + \frac{y_1 - y_0}{x_1 - x_0}(x - x_0)<br>$$</p>
+<hr>
+<h4 id="公式说明"><a href="#公式说明" class="headerlink" title="公式说明"></a>公式说明</h4><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$l_i(x)$</td>
+<td>拉格朗日基函数，满足 $l_i(x_j) &#x3D; \delta_{ij}$</td>
+</tr>
+<tr>
+<td>$\delta_{ij}$</td>
+<td>克罗内克函数，当 $i&#x3D;j$ 时为1，否则为0</td>
+</tr>
+<tr>
+<td>$x_i$</td>
+<td>互不相同的插值节点</td>
+</tr>
+</tbody></table>
+<h3 id="n-geq-1-时的插值公式"><a href="#n-geq-1-时的插值公式" class="headerlink" title="$n \geq 1$时的插值公式"></a>$n \geq 1$时的插值公式</h3><p><strong>目标</strong>：希望找到$l_i(x_j)$，满足下式：<br>$$<br>l_i(x_j) &#x3D; \delta_{ij} &#x3D; \begin{cases}<br>1 &amp; i &#x3D; j \<br>0 &amp; i \neq j<br>\end{cases} \quad (i,j&#x3D;0,1,\dots,n)<br>$$</p>
+<p><strong>然后令</strong>：<br>$$<br>L_n(x) &#x3D; \sum_{i&#x3D;0}^n l_i(x) y_i \quad \text{显然满足} \quad L_n(x_i) &#x3D; y_i<br>$$</p>
+<ol>
+<li><p><strong>零点分析</strong>：<br>每个基函数 $l_i(x)$ 在 $n$ 个节点处取零值：<br>$$<br>l_i(x_j) &#x3D; 0 \quad (j \neq i)<br>$$<br>即多项式可表示为：<br>$$<br>l_i(x) &#x3D; C_i \prod_{\substack{j&#x3D;0 \ j \neq i}}^n (x - x_j)<br>$$</p>
+</li>
+<li><p><strong>归一化条件</strong>：<br>通过 $l_i(x_i) &#x3D; 1$ 确定常数 $C_i$：<br>$$<br>C_i &#x3D; \frac{1}{\prod_{\substack{j&#x3D;0 \ j \neq i}}^n (x_i - x_j)}<br>$$</p>
+</li>
+<li><p><strong>最终基函数表达式</strong></p>
+</li>
+</ol>
+<p>$$<br>l_i(x) &#x3D; \prod_{\substack{j&#x3D;0 \ j \neq i}}^n \frac{x - x_j}{x_i - x_j}<br>$$</p>
+<ol start="4">
+<li><strong>插值多项式合成</strong></li>
+</ol>
+<p>$$<br>L_n(x)&#x3D; \sum_{i&#x3D;0}^n l_i(x) y_i—-&gt;      L_n(x) &#x3D; \sum_{i&#x3D;0}^n \left[ \prod_{\substack{j&#x3D;0 \ j \neq i}}^n \frac{x - x_j}{x_i - x_j} \right] y_i<br>$$</p>
+<blockquote>
+<p>$$<br>\sum_{i&#x3D;0}^n l_i(x) &#x3D; 1 \quad \text{（特别地，当所有 $y_i&#x3D;1$ 时 $L_n(x)&#x3D;1$）}<br>$$</p>
+</blockquote>
+<hr>
+<h3 id="一点零次插值、线性插值、抛物插值公式"><a href="#一点零次插值、线性插值、抛物插值公式" class="headerlink" title="一点零次插值、线性插值、抛物插值公式"></a>一点零次插值、线性插值、抛物插值公式</h3><ol>
+<li><strong>一点零次插值</strong></li>
+</ol>
+<p><strong>条件</strong>：仅1个节点 $(x_0, y_0)$  </p>
+<p><strong>多项式：</strong><br>$$<br>L_n(x) &#x3D; y_0<br>$$</p>
+<hr>
+<ol start="2">
+<li><strong>两点一次插值（线性插值）</strong></li>
+</ol>
+<p><strong>条件</strong>：2个节点 $(x_0, y_0)$ 和 $(x_1, y_1)$  </p>
+<p><strong>多项式</strong>：<br>$$<br>L_1(x) &#x3D; \frac{x - x_1}{x_0 - x_1} y_0 + \frac{x - x_0}{x_1 - x_0} y_1<br>$$</p>
+<p><strong>等价形式</strong>：<br>$$<br>L_1(x) &#x3D; y_0 + \frac{y_1 - y_0}{x_1 - x_0}(x - x_0)<br>$$</p>
+<hr>
+<ol start="3">
+<li><strong>三点二次插值（抛物插值）</strong></li>
+</ol>
+<p><strong>条件</strong>：3个节点 $(x_0, y_0)$，$(x_1, y_1)$，$(x_2, y_2)$<br><strong>多项式</strong>：<br>$$<br>L_2(x) &#x3D; \frac{(x - x_1)(x - x_2)}{(x_0 - x_1)(x_0 - x_2)} y_0 + \frac{(x - x_0)(x - x_2)}{(x_1 - x_0)(x_1 - x_2)} y_1 + \frac{(x - x_0)(x - x_1)}{(x_2 - x_0)(x_2 - x_1)} y_2<br>$$</p>
+<h3 id="插值余项与误差估计"><a href="#插值余项与误差估计" class="headerlink" title="插值余项与误差估计"></a>插值余项与误差估计</h3><p><strong>条件</strong>：</p>
+<ol>
+<li>函数 $f^{(n)}(x)$ 在区间 $[a, b]$ 上连续</li>
+<li>$f^{(n+1)}(x)$ 在 $(a, b)$ 内存在</li>
+<li>$L_n(x)$ 是满足插值条件的 $n$ 次多项式，插值节点为 $a \leq x_0 &lt; x_1 &lt; \cdots &lt; x_n \leq b (n+1个)$</li>
+</ol>
+<p><strong>结论</strong>：<br>对任意 $x \in [a,b]$，插值余项满足：<br>$$<br>R_n(x) &#x3D; f(x) - L_n(x) &#x3D; \frac{f^{(n+1)}(\xi)}{(n+1)!} \prod_{j&#x3D;0}^n (x - x_j) \quad<br>$$<br>其中 $\xi \in (a, b)$，且 $\xi$ 的值依赖于 $x$</p>
+<h4 id="误差上界估计"><a href="#误差上界估计" class="headerlink" title="误差上界估计"></a><strong>误差上界估计</strong></h4><p>若记 $\max_{x \in [a,b]} |f^{(n+1)}(x)| &#x3D; M_{n+1}$，则余项绝对误差满足：<br>$$<br>|R_n(x)| \leq \frac{M_{n+1}}{(n+1)!} \cdot |\omega_{n+1}(x)| \quad<br>$$<br>其中 $\omega_{n+1}(x) &#x3D; \prod_{j&#x3D;0}^n (x - x_j)$ 为节点多项式</p>
+<blockquote>
+<p>$$<br>\omega_{n+1}(x) &#x3D; (x - x_0)(x - x_1)\cdots(x - x_n)<br>$$</p>
+<p>$$<br>\omega_{n+1}’(x_k) &#x3D; (x_k - x_0)\cdots(x_k - x_{k-1})(x_k - x_{k+1})\cdots(x_k - x_n)<br>$$</p>
+<p>$$<br>L_n(x) &#x3D; \sum_{k&#x3D;0}^{n} y_k \frac{\omega_{n+1}(x)}{(x - x_k)\omega’_{n+1}(x_k)}<br>$$</p>
+</blockquote>
+<ul>
+<li>节点多项式 $\omega_{n+1}(x)$ 是(n+1)个线性因子的乘积</li>
+<li>导数 $\omega’_{n+1}(x_k)$ 计算时排除$(x_k - x_k)$项</li>
+<li>基函数构造 $\frac{\omega_{n+1}(x)}{(x - x_k)}$ 确保在$x&#x3D;x_k$时取值为1</li>
+</ul>
+<p><strong>n&#x3D;1时，线性插值余项</strong><br>$$<br>R_1(x) &#x3D; \frac{1}{2} f’’(\xi) \omega_2(x) &#x3D; \frac{1}{2} f’’(\xi) (x - x_0)(x - x_1), \quad \xi \in [x_0, x_1]<br>$$</p>
+<p><strong>n&#x3D;2时，抛物插值余项</strong><br>$$<br>R_2(x) &#x3D; \frac{1}{6} f’’’(\xi) (x - x_0)(x - x_1)(x - x_2), \quad \xi \in [x_0, x_2]<br>$$</p>
+<h2 id="差商与牛顿插值"><a href="#差商与牛顿插值" class="headerlink" title="差商与牛顿插值"></a>差商与牛顿插值</h2><h3 id="差商及其性质"><a href="#差商及其性质" class="headerlink" title="差商及其性质"></a>差商及其性质</h3><h4 id="差商（均差）的定义"><a href="#差商（均差）的定义" class="headerlink" title="差商（均差）的定义"></a>差商（均差）的定义</h4><p><strong>1阶差商</strong><br>$$<br>f[x_i, x_j] &#x3D; \frac{f(x_i) - f(x_j)}{x_i - x_j} \quad (i \neq j, x_i \neq x_j)<br>$$<br><strong>2阶差商</strong><br>$$<br>f[x_i, x_j, x_k] &#x3D; \frac{f[x_i, x_j] - f[x_j, x_k]}{x_i - x_k} \quad (i \neq k)<br>$$<br><strong>$k+1$阶差商</strong><br>$$<br>f[x_0, …, x_{k+1}] &#x3D; \frac{f[x_0, x_1, …, x_k] - f[x_1, …, x_k, x_{k+1}]}{x_0 - x_{k+1}}<br>&#x3D; \frac{f[x_0, …, x_{k-1}, x_k] - f[x_0, …, x_{k-1}, x_{k+1}]}{x_k - x_{k+1}}<br>$$</p>
+<blockquote>
+<p>k阶差商必须由k+1个节点构成，k个节点是构造不出k阶差商的。</p>
+<p>差商的值与$x_i$顺序无关的</p>
+</blockquote>
+<h4 id="差商性质"><a href="#差商性质" class="headerlink" title="差商性质"></a>差商性质</h4><ol>
+<li><p><strong>k阶差商的线性组合</strong><br>k阶差商可以表示为函数值 $ f(x_0), f(x_1), \ldots, f(x_k) $ 的线性组合，即<br>$$<br>f[x_0, x_1, \ldots, x_k] &#x3D; \sum_{j&#x3D;0}^k \frac{f(x_j)}{(x_j - x_0) \cdots (x_j - x_{j-1})(x_j - x_{j+1}) \cdots (x_j - x_k)}（用数学归纳法证明）<br>$$</p>
+</li>
+<li><p><strong>对称性</strong><br>差商具有对称性，即<br>$$<br>f[x_0, x_1, \ldots, x_k] &#x3D; f[x_1, x_0, x_2, \ldots, x_k] &#x3D; \cdots &#x3D; f[x_1, \ldots, x_k, x_0]<br>$$</p>
+</li>
+<li><p><strong>与导数的关系</strong><br>若函数 $ f(x) $ 在区间 $[a, b]$ 上有 $ n $ 阶导数，且节点 $ x_i \in [a, b] $（$ i &#x3D; 0, 1, \ldots, n $），则 $ n $ 阶差商与 $ n $ 阶导数有如下关系式：<br>$$<br>f[x_0, x_1, \ldots, x_n] &#x3D; \frac{f^{(n)}(\xi)}{n!}<br>$$<br>其中 $ \xi \in [a, b] $。</p>
+</li>
+<li><p><strong>多项式性质</strong><br>若 $ f(x) $ 是 $ n $ 次多项式，则其 $ k $ 阶差商 $ f[x_0, x_1, \ldots, x_{k-1}, x] $ 当 $ k \leq n $ 时是一个 $ n-k $ 次多项式，而当 $ k &gt; n $ 时恒为零。</p>
+</li>
+</ol>
+<h4 id="差商表"><a href="#差商表" class="headerlink" title="差商表"></a>差商表</h4><table>
+<thead>
+<tr>
+<th align="center">$ x_i $</th>
+<th align="center">$ f(x_i) $</th>
+<th align="center">一阶差商</th>
+<th align="center">二阶差商</th>
+<th align="center">三阶差商</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">$ x_0 $</td>
+<td align="center">$ f(x_0) $</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">$ x_1 $</td>
+<td align="center">$ f(x_1) $</td>
+<td align="center">$ f[x_0, x_1] $</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">$ x_2 $</td>
+<td align="center">$ f(x_2) $</td>
+<td align="center">$ f[x_1, x_2] $</td>
+<td align="center">$ f[x_0, x_1, x_2] $</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">$ x_3 $</td>
+<td align="center">$ f(x_3) $</td>
+<td align="center">$ f[x_2, x_3] $</td>
+<td align="center">$ f[x_1, x_2, x_3] $</td>
+<td align="center">$ f[x_0, x_1, x_2, x_3] $</td>
+</tr>
+</tbody></table>
+<h3 id="牛顿插值"><a href="#牛顿插值" class="headerlink" title="牛顿插值"></a>牛顿插值</h3><p>Newton插值是通过选取特殊的基函数来实现的，这时，取</p>
+<p>$$<br>\varphi_0(x) &#x3D; 1<br>$$</p>
+<p>$$<br>\varphi_{i+1}(x) &#x3D; (x - x_i)\varphi_i(x), \quad i &#x3D; 0, 1, \ldots, n - 1<br>$$</p>
+<p>作为Newton插值的以 $ x_0, x_1, \ldots, x_n $ 为节点的基函数，而次数不超过 $ n $ 的多项式 $ N_n(x) $ 可表示为</p>
+<p>$$<br>N_n(x) &#x3D; c_0 + c_1(x - x_0) + c_2(x - x_0)(x - x_1) + \cdots + c_n(x - x_0)(x - x_1)\cdots(x - x_{n-1})<br>$$</p>
+<p>其中 $ c_0, c_1, \ldots, c_n $ 是待定系数。</p>
+<p><em><strong>下面推导待定系数：</strong></em><br>$$<br>f(x_0)&#x3D;N_n(x_0)&#x3D;c_0<br>$$</p>
+<p>$$<br>f(x_1) &#x3D; N_n(x_1) &#x3D; c_0 + c_1(x_1 - x_0)&#x3D; f(x_0) + c_1(x_1 - x_0)<br>$$</p>
+<p>$$<br>c_1 &#x3D; \frac{f(x_1) - f(x_0)}{x_1 - x_0} &#x3D; f[x_0, x_1]<br>$$</p>
+<p>通过插值条件运用数学归纳法可以求得<br>$$<br>c_k &#x3D; f[x_0, x_1, \ldots, x_k]<br>$$</p>
+<p>因此，得到满足插值条件的 $ n $ 次插值多项式：<br>$$<br>N_n(x) &#x3D; c_0 + c_1(x - x_0) + c_2(x - x_0)(x - x_1) + \cdots + c_n(x - x_0)\cdots(x - x_{n-1})<br>$$</p>
+<p><em><strong>余项的推导</strong></em><br>$$<br>f(x) &#x3D; f(x_0) + (x - x_0)f[x, x_0] \quad \text{(1)}<br>$$</p>
+<p>$$<br>f[x, x_0] &#x3D; f[x_0, x_1] + (x - x_1)f[x, x_0, x_1] \quad \text{(2)}<br>$$</p>
+<p>$$<br>\vdots<br>$$</p>
+<p>$$<br>f[x, x_0, \ldots, x_{n-1}] &#x3D; f[x_0, \ldots, x_n] + (x - x_n)f[x, x_0, \ldots, x_n] \quad \text{(n-1)}<br>$$</p>
+<p>$$<br>\text{(1)} + (x - x_0) \times \text{(2)} + \cdots + (x - x_0)\cdots(x - x_{n-1}) \times \text{(n-1)}<br>$$</p>
+<p>$$<br>\Rightarrow f(x) &#x3D; f(x_0) + f[x_0, x_1](x - x_0) + f[x_0, x_1, x_2](x - x_0)(x - x_1) + \cdots + f[x_0, \ldots, x_n](x - x_0)\cdots(x - x_{n-1}) + f[x, x_0, \cdots, x_n](x - x_0)\cdots(x - x_{n-1})(x - x_n)<br>$$</p>
+<blockquote>
+<p>$$<br>c_i &#x3D; f[x_0, \ldots, x_i]<br>$$</p>
+<p>$$<br>R_n(x)&#x3D;f[x, x_0, \ldots, x_n](x - x_0)\cdots(x - x_{n-1})(x - x_n)&#x3D;f[x, x_0, \ldots, x_n]\omega_{n+1}(x)<br>$$</p>
+<p>$$<br>\omega_{n+1}(x) &#x3D; (x - x_0)(x - x_1)\cdots(x - x_n)<br>$$</p>
+</blockquote>
+<p><strong>注：</strong></p>
+<p>由唯一性可知 $ N_n(x) \equiv L_n(x) $，只是算法不同，故其余项也相同，即</p>
+<p>$$<br>f[x, x_0, \ldots, x_n] \omega_{n+1}(x) &#x3D; \frac{f^{(n+1)}(\xi_x)}{(n+1)!} \omega_{n+1}(x)<br>$$</p>
+<p>则</p>
+<p>$$<br>f[x_0, \ldots, x_k] &#x3D; \frac{f^{(k)}(\xi)}{k!}, \quad \xi \in (x_{\min}, x_{\max})<br>$$</p>
+<blockquote>
+<p><strong>证明（不用掌握）：</strong></p>
+<p>$$ f[x_0, x_1, \ldots, x_k] &#x3D; \frac{f^{(k)}(\xi)}{k!}, \quad \xi \in (x_{\min}, x_{\max}) $$</p>
+<hr>
+<p>数学归纳法推导</p>
+<p><span style="color:#FF0000">基例验证（$ k&#x3D;1 $）</span></p>
+<p><strong>命题</strong>：对任意两节点 $ x_0, x_1 $，一阶差商满足：<br>$$ f[x_0, x_1] &#x3D; \frac{f’(\xi)}{1!}, \quad \xi \in (x_0, x_1) $$</p>
+<p><strong>推导步骤</strong>：</p>
+<ol>
+<li><strong>差商定义</strong>：<br>$$<br>  f[x_0, x_1] &#x3D; \frac{f(x_1) - f(x_0)}{x_1 - x_0}<br>$$</li>
+<li><strong>微分中值定理</strong>：存在 $ \xi \in (x_0, x_1) $，使得：<br>$$<br>  \frac{f(x_1) - f(x_0)}{x_1 - x_0} &#x3D; f’(\xi)<br>$$</li>
+<li><strong>结论</strong>：<br>$$<br>  f[x_0, x_1] &#x3D; \frac{f’(\xi)}{1!} \quad \text{（基例成立）}<br>$$</li>
+</ol>
+<hr>
+<p><span style="color:#FF0000">归纳假设（假设 $ k&#x3D;m $ 时成立）</span></p>
+<p>假设对任意 $ m+1 $ 个节点 $ x_0, x_1, \ldots, x_m $，有：<br>$$<br>f[x_0, x_1, \ldots, x_m] &#x3D; \frac{f^{(m)}(\eta)}{m!}, \quad \eta \in (x_{\min}, x_{\max})<br>$$</p>
+<hr>
+<p><span style="color:#FF0000">归纳步骤（证明 $ k&#x3D;m+1 $ 时成立）</span></p>
+<p><strong>目标</strong>：对任意 $ m+2 $ 个节点 $ x_0, x_1, \ldots, x_{m+1} $，证明：<br>$$<br>f[x_0, x_1, \ldots, x_{m+1}] &#x3D; \frac{f^{(m+1)}(\xi)}{(m+1)!}, \quad \xi \in (x_{\min}, x_{\max})<br>$$</p>
+<p><strong>推导过程</strong>：</p>
+<ol>
+<li><strong>差商递归关系</strong>：<br>$$<br>  f[x_0, \ldots, x_{m+1}] &#x3D; \frac{f[x_1, \ldots, x_{m+1}] - f[x_0, \ldots, x_m]}{x_{m+1} - x_0}<br>$$</li>
+<li><strong>应用归纳假设</strong>：</li>
+</ol>
+<ul>
+<li>对 $ f[x_1, \ldots, x_{m+1}] $：<br>$$<br>f[x_1, \ldots, x_{m+1}] &#x3D; \frac{f^{(m)}(\eta_1)}{m!}, \quad \eta_1 \in (x_1, x_{m+1})<br>$$</li>
+<li>对 $ f[x_0, \ldots, x_m] $：<br>$$<br>f[x_0, \ldots, x_m] &#x3D; \frac{f^{(m)}(\eta_2)}{m!}, \quad \eta_2 \in (x_0, x_m)<br>$$</li>
+</ul>
+<ol start="3">
+<li><strong>构造辅助函数</strong>：<br> 定义 $ g(x) &#x3D; f^{(m)}(x) $，则：<br>$$<br>  f[x_0, \ldots, x_{m+1}] &#x3D; \frac{g(\eta_1) - g(\eta_2)}{(x_{m+1} - x_0) \cdot m!}<br>$$</li>
+<li><strong>广义微分中值定理</strong>：<br> 存在 $ \xi \in (\eta_2, \eta_1) \subseteq (x_{\min}, x_{\max}) $，使得：<br>$$<br>  \frac{g(\eta_1) - g(\eta_2)}{\eta_1 - \eta_2} &#x3D; g’(\xi) &#x3D; f^{(m+1)}(\xi)<br>$$</li>
+<li><strong>结合节点间距</strong>：<br> 由于 $ \eta_1 - \eta_2 \leq x_{m+1} - x_0 $，整理得：<br>$$<br>  f[x_0, \ldots, x_{m+1}] &#x3D; \frac{f^{(m+1)}(\xi)}{(m+1)!}<br>$$</li>
+</ol>
+<hr>
+<p><span style="color:#FF0000">归纳结论</span></p>
+<p>对所有 $ k \geq 1 $，公式成立：<br>$$<br>\boxed{f[x_0, x_1, \ldots, x_k] &#x3D; \frac{f^{(k)}(\xi)}{k!}, \quad \xi \in (x_{\min}, x_{\max})}<br>$$</p>
+<hr>
+<h2 id="关键符号说明"><a href="#关键符号说明" class="headerlink" title="关键符号说明"></a>关键符号说明</h2><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$ f[x_0, \ldots, x_k] $</td>
+<td>$ k $ 阶差商，节点 $ x_0, \ldots, x_k $ 处的函数变化率</td>
+</tr>
+<tr>
+<td>$ f^{(k)}(\xi) $</td>
+<td>函数 $ f $ 在区间内的 $ k $ 阶导数</td>
+</tr>
+<tr>
+<td>$ \xi $</td>
+<td>区间内的某点，由中值定理保证存在</td>
+</tr>
+</tbody></table>
+</blockquote>
+<h4 id="差分形式的牛顿插值公式"><a href="#差分形式的牛顿插值公式" class="headerlink" title="差分形式的牛顿插值公式"></a>差分形式的牛顿插值公式</h4><p><strong>节点等距分布条件</strong>：<br>当节点满足等距分布时：<br>$$ x_i &#x3D; x_0 + ih \quad (i&#x3D;0,\ldots,n) $$</p>
+<hr>
+<p><strong>向前差分</strong><br>$$<br>\Delta f_i &#x3D; f_{i+1} - f_i<br>$$</p>
+<p>$$<br>\Delta^k f_i &#x3D; \Delta(\Delta^{k-1}f_i) &#x3D; \Delta^{k-1}f_{i+1} - \Delta^{k-1}f_i<br>$$</p>
+<hr>
+<p><strong>向后差分</strong><br>$$<br>\nabla f_i &#x3D; f_i - f_{i-1}<br>$$</p>
+<p>$$<br>\nabla^k f_i &#x3D; \nabla(\nabla^{k-1}f_i) &#x3D; \nabla^{k-1}f_i - \nabla^{k-1}f_{i-1}<br>$$</p>
+<hr>
+<p><strong>中心差分</strong><br>$$<br>\delta f_i &#x3D; f_{i+\frac{1}{2}} - f_{i-\frac{1}{2}} \quad \text{其中} \quad f_{i\pm\frac{1}{2}} &#x3D; f\left(x_i \pm \frac{h}{2}\right)<br>$$</p>
+<p>$$<br>\delta^k f_i &#x3D; \delta^{k-1}f_{i+\frac{1}{2}} - \delta^{k-1}f_{i-\frac{1}{2}}<br>$$</p>
+<hr>
+<p><strong>差分的重要性质：</strong></p>
+<ol>
+<li><p>差分可由函数值计算<br>$$<br>\Delta^n f_k &#x3D; \sum_{j&#x3D;0}^n (-1)^{j} \binom{n}{j} f_{n+k-j} \<br>\nabla^n f_k &#x3D; \sum_{j&#x3D;0}^n (-1)^{n-j} \binom{n}{j} f_{k+j-n}<br>$$<br>其中：</p>
+<ul>
+<li>$ \binom{n}{j} &#x3D; \frac{n(n-1)\cdots(n-j+1)}{j!} $ 是二项式系数。</li>
+</ul>
+</li>
+<li><p>函数值可由差分值算出<br>$$<br>f_{n+k} &#x3D; \sum_{j&#x3D;0}^n \binom{n}{j} \Delta^j f_k<br>$$</p>
+</li>
+<li><p>差商和差分的关系</p>
+</li>
+</ol>
+<p>$$<br>f[x_k, x_{k+1}, \ldots, x_{k+m}] &#x3D; \frac{1}{m! h^m} \Delta^m f_k<br>$$</p>
+<p>$$<br>f[x_k, x_{k-1}, \ldots, x_{k-m}] &#x3D; \frac{1}{m! h^m} \nabla^m f_k<br>$$</p>
+<ol start="4">
+<li>差分与导数的关系<br>$$<br>\Delta^n f_k &#x3D; h^n f^{(n)}(\xi), \quad \xi \in (x_k, x_{k+n})<br>$$</li>
+</ol>
+<p><strong>牛顿公式：</strong><br>$$<br>N_n(x) &#x3D; f(x_0) + f[x_0, x_1](x - x_0) + \cdots + f[x_0, \ldots, x_n](x - x_0)\cdots(x - x_{n-1})<br>$$</p>
+<p><span style="color:rgb(255, 53, 116)">牛顿前插公式：</span><br>设 $ x &#x3D; x_0 + th $（$ 0 \leq t \leq 1 $），则<br>$$<br>N_n(x) &#x3D; N_n(x_0 + th) &#x3D; \sum_{k&#x3D;0}^{n} \binom{t}{k} \Delta^k f(x_0)<br>$$<br>余项：<br>$$<br>R_n(x) &#x3D; \frac{f^{(n+1)}(\xi)}{(n+1)!} t(t-1)\cdots(t-n) h^{n+1}, \quad \xi \in (x_0, x_n)<br>$$</p>
+<p><span style="color:rgb(255, 53, 116)">牛顿后插公式：</span><br>将节点顺序倒置：<br>$$<br>N_n(x) &#x3D; f(x_n) + f[x_n, x_{n-1}](x - x_n) + \cdots + f[x_n, \ldots, x_0](x - x_n)\cdots(x - x_1)<br>$$<br>设 $ x &#x3D; x_n + th $（$ -1 \leq t \leq 0 $），则<br>$$<br>N_n(x) &#x3D; N_n(x_n + th) &#x3D; \sum_{k&#x3D;0}^{n} (-1)^k \binom{-t}{k} \nabla^k f(x_n)<br>$$<br>余项：<br>$$<br>R_n(x) &#x3D; \frac{f^{(n+1)}(\xi)}{(n+1)!} t(t+1)\cdots(t+n) h^{n+1}, \quad \xi \in (x_0, x_n)<br>$$</p>
+<p>注：一般当 $ x $ 靠近 $ x_0 $ 时用前插，靠近 $ x_n $ 时用后插，故两种公式亦称为表初公式和表末公式。</p>
+<p><strong>差分表</strong></p>
+<p><img src="/blog/image/Snipaste_2025-03-12_16-09-19.png"></p>
+<p><strong>例题</strong></p>
+<p><img src="/blog/image/Snipaste_2025-03-12_16-34-22.png"></p>
+<h2 id="埃尔米特插值"><a href="#埃尔米特插值" class="headerlink" title="埃尔米特插值"></a>埃尔米特插值</h2><p><span style="color:blue">不仅要求函数值重合，而且要求若干阶导数也重合，这种插值问题称为埃尔米特插值问题。</span></p>
+<h3 id="低次埃尔米特插值多项式"><a href="#低次埃尔米特插值多项式" class="headerlink" title="低次埃尔米特插值多项式"></a><span style="color:#FF0000">低次埃尔米特插值多项式</span></h3><ol>
+<li><h4 id="二点三次埃尔米特插值多项式"><a href="#二点三次埃尔米特插值多项式" class="headerlink" title="二点三次埃尔米特插值多项式"></a>二点三次埃尔米特插值多项式</h4><p>**问题描述：**给定区间 $[x_0, x_1]$ 两端点的函数值与导数值：</p>
+<table>
+<thead>
+<tr>
+<th>$x$</th>
+<th>$x_0$</th>
+<th>$x_1$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$f(x)$</td>
+<td>$y_0$</td>
+<td>$y_1$</td>
+</tr>
+<tr>
+<td>$f’(x)$</td>
+<td>$m_0$</td>
+<td>$m_1$</td>
+</tr>
+</tbody></table>
+<p>要求构造三次多项式 $H_3(x)$，满足：<br>$$<br>\begin{cases}<br>H_3(x_0) &#x3D; y_0, &amp; H_3(x_1) &#x3D; y_1 \<br>H_3’(x_0) &#x3D; m_0, &amp; H_3’(x_1) &#x3D; m_1<br>\end{cases}<br>$$</p>
+<hr>
+<p><strong>解法形式</strong></p>
+<p>设 $H_3(x)$ 为：<br>$$<br>H_3(x) &#x3D; \alpha_0(x)y_0 + \alpha_1(x)y_1 + \beta_0(x)m_0 + \beta_1(x)m_1<br>$$<br>其中 $\alpha_i(x)$ 和 $\beta_i(x)$ 为基函数（<u>三次式</u>），满足以下条件：</p>
+<ol>
+<li><p><strong>插值条件</strong>：</p>
+<ul>
+<li>$\alpha_i(x_j) &#x3D; \delta_{ij}$（$\delta_{ij}$ 为克罗内克函数）</li>
+<li>$\alpha’_i(x_j) &#x3D; 0$</li>
+<li>$\beta_i(x_j) &#x3D; 0$</li>
+<li>$ \beta’_i(x_j) &#x3D; \delta _{ij}$</li>
+</ul>
+</li>
+<li><p><strong>基函数构造</strong>：<br>$$<br>\alpha_i(x) &#x3D; (a_i x + b_i) l_i^2(x), \quad \beta_i(x) &#x3D; c_i(x - x_i) l_i^2(x)<br>$$<br>其中 $l_i(x) &#x3D; \frac{x - x_j}{x_i - x_j}$（$j \neq i$）为拉格朗日基函数。</p>
+</li>
+</ol>
+<hr>
+<p><strong>基函数推导</strong></p>
+<p>$\alpha_0(x)$ 的构造</p>
+<p>通过条件 $\alpha_0(x_0) &#x3D; 1$ 和 $\alpha’_0(x_0) &#x3D; 0$，解得：<br>$$<br>\begin{cases}<br>a_0 &#x3D; -\dfrac{2}{x_0 - x_1}, \<br>b_0 &#x3D; 1 + \dfrac{2x_0}{x_0 - x_1}<br>\end{cases}<br>$$<br>最终形式为：<br>$$<br>\alpha_0(x) &#x3D; \left(1 - 2\dfrac{x - x_0}{x_0 - x_1}\right)\left(\dfrac{x - x_1}{x_0 - x_1}\right)^2 \<br>\alpha_1(x) &#x3D; \left(1 - 2\dfrac{x - x_1}{x_1 - x_0}\right)\left(\dfrac{x - x_0}{x_1 - x_0}\right)^2<br>$$</p>
+<p>$\beta_i(x)$ 的构造<br>$$<br>\beta_0(x) &#x3D; (x - x_0)\left(\dfrac{x - x_1}{x_0 - x_1}\right)^2, \quad \beta_1(x) &#x3D; (x - x_1)\left(\dfrac{x - x_0}{x_1 - x_0}\right)^2<br>$$</p>
+<hr>
+<p><strong>最终表达式</strong><br>$$<br>H_3(x) &#x3D; y_0\left(1 - 2\dfrac{x - x_0}{x_0 -x_1}\right)\left(\dfrac{x - x_1}{x_0 - x_1}\right)^2<br>$$</p>
+</li>
+</ol>
+<p>$$<br>+y_1\left(1 - 2\dfrac{x - x_1}{x_1 - x_0}\right)\left(\dfrac{x - x_0}{x_1 - x_0}\right)^2<br>$$</p>
+<p>$$<br>+m_0(x - x_0)\left(\dfrac{x - x_1}{x_0 - x_1}\right)^2 + m_1(x - x_1)\left(\dfrac{x - x_0}{x_1 - x_0}\right)^2<br>$$</p>
+<blockquote>
+<p>$$<br>\sum_{i&#x3D;0}^1 \alpha_i(x) &#x3D; 1 \quad \text{（当 $f(x) &#x3D; 1$ 时）}<br>$$</p>
+</blockquote>
+<blockquote>
+<p>余项为：<br>$$<br>R(x)&#x3D;\frac{1}{4!}f^{(4)}(\xi)(x-x_0)^2(x-x_1)^2\<br>\xi \in(x_0,x_1)<br>$$</p>
+</blockquote>
+<ol start="2">
+<li><h4 id="三点三次带一个导数值的插值多项式"><a href="#三点三次带一个导数值的插值多项式" class="headerlink" title="三点三次带一个导数值的插值多项式"></a>三点三次带一个导数值的插值多项式</h4></li>
+</ol>
+<p><strong>问题描述</strong></p>
+<p>给定函数表如下：</p>
+<table>
+<thead>
+<tr>
+<th>$x$</th>
+<th>$x_0$</th>
+<th>$x_1$</th>
+<th>$x_2$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$f(x)$</td>
+<td>$y_0$</td>
+<td>$y_1$</td>
+<td>$y_2$</td>
+</tr>
+<tr>
+<td>$f’(x)$</td>
+<td></td>
+<td>$m_1$</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>要求构造三次多项式 $H_3(x)$，满足：<br>$$<br>\begin{cases}<br>H_3(x_i) &#x3D; y_i, &amp; i &#x3D; 0, 1, 2 \<br>H_3’(x_1) &#x3D; m_1<br>\end{cases}<br>$$</p>
+<p><strong>解法形式</strong></p>
+<p>利用满足插值条件的 Newton 插值多项式，设：<br>$$<br>H_3(x) &#x3D; y_0 + f[x_0, x_1](x - x_0) + f[x_0, x_1, x_2](x - x_0)(x - x_1) + k(x - x_0)(x - x_1)(x - x_2)<br>$$<br>其中 $k$ 为待定系数。</p>
+<p><strong>待定系数求解</strong></p>
+<p>通过导数条件 $H_3’(x_1) &#x3D; m_1$ 确定 $k$：<br>$$<br>H_3’(x_1) &#x3D; f[x_0, x_1] + f[x_0, x_1, x_2](x_1 - x_0) + k(x_1 - x_0)(x_1 - x_2) &#x3D; m_1<br>$$<br>解得：<br>$$<br>k &#x3D; \frac{m_1 - f[x_0, x_1] - f[x_0, x_1, x_2](x_1 - x_0)}{(x_1 - x_0)(x_1 - x_2)}<br>$$</p>
+<p><strong>最终表达式</strong></p>
+<p>将 $k$ 代入后，$H_3(x)$ 的完整形式为：<br>$$<br>H_3(x) &#x3D; y_0 + f[x_0, x_1](x - x_0) + f[x_0, x_1, x_2](x - x_0)(x - x_1) \<br>+\frac{m_1 - f[x_0, x_1] - f[x_0, x_1, x_2](x_1 - x_0)}{(x_1 - x_0)(x_1 - x_2)} (x - x_0)(x - x_1)(x - x_2)<br>$$</p>
+<blockquote>
+<p>余项为：<br>$$<br>R(x)&#x3D;\frac{1}{4!}f^{(4)}(\xi)(x-x_0)(x-x_1)^2(x-x_2)\<br>\xi \in(x_0,x_2)<br>$$</p>
+</blockquote>
+<h3 id="一般埃尔米特插值多项式"><a href="#一般埃尔米特插值多项式" class="headerlink" title="一般埃尔米特插值多项式"></a>一般埃尔米特插值多项式</h3><p><strong>问题描述</strong></p>
+<p>已知节点 $x_0, x_1, \ldots, x_n$ 处的函数值 $y_0, y_1, \ldots, y_n$ 和导数值 $y’_0, y’_1, \ldots, y’_n$</p>
+<p>要求构造次数为 $2n+1$ 的多项式$H_{2n+1}(x)$（这样的Hermite 插值唯一），满足：<br>$$<br>\begin{cases}<br>H_{2n+1}(x_i) &#x3D; y_i, \<br>H’_{2n+1}(x_i) &#x3D; y’_i<br>\end{cases}<br>\quad (i &#x3D; 0, 1, \ldots, n)<br>$$</p>
+<p><strong>解法形式</strong></p>
+<p>设多项式为：<br>$$<br>H_{2n+1}(x) &#x3D; \sum_{i&#x3D;0}^n y_i \alpha_i(x) + \sum_{i&#x3D;0}^n y’_i \beta_i(x)<br>$$</p>
+<p>其中基函数 $\alpha_i(x)$ 和 $\beta_j(x)$ 满足：<br>$$<br>\alpha_i(x_j) &#x3D; \delta_{ij} \quad \alpha’_i(x_j) &#x3D; 0 ;<br>$$</p>
+<p>$$<br>\beta_i(x_j) &#x3D; 0 \quad \beta^{‘} _i(x_j) &#x3D; \delta _{ij}<br>$$</p>
+<blockquote>
+<p>$\alpha_i(x)$ 和 $\beta_i(x)$ 均为 $2n+1$ 次多项式。</p>
+</blockquote>
+<p><strong>基函数构造</strong></p>
+<p><u>$\alpha_i(x)$ 的构造</u></p>
+<ol>
+<li><p><strong>零点性质</strong>：$\alpha_i(x)$ 在 $x_0, x_1, \ldots, x_n$ 处有二重零点（除 $x_i$ 外）。</p>
+</li>
+<li><p><strong>形式假设</strong>：<br>$$<br>\alpha_i(x) &#x3D; [A_ix + B_i] l_i^2(x)<br>$$<br>其中 $l_i(x) &#x3D; \prod_{\substack{\ i \neq i}} \dfrac{x - x_j}{x_i - x_j}$ 为拉格朗日基函数。</p>
+</li>
+<li><p><strong>条件求解</strong>：</p>
+<ul>
+<li>$\alpha_i(x_i) &#x3D; 1 \Rightarrow B_i &#x3D; 1$</li>
+<li>$\alpha’_i(x_i) &#x3D; 0 \Rightarrow A_i &#x3D; -2 l_i’(x_i)$</li>
+</ul>
+<p>最终形式为：<br>$$<br>\alpha_i(x) &#x3D; \left[ 1 - 2 l_i’(x_i)(x - x_i) \right] l_i^2(x)<br>$$</p>
+</li>
+</ol>
+<p><u>$\beta_i(x)$ 的构造</u></p>
+<ol>
+<li><p><strong>零点性质</strong>：$\beta_i(x)$ 在 $x_0, x_1, \ldots, x_n$ 处有二重零点（除 $x_i$ 外）。</p>
+</li>
+<li><p><strong>形式假设</strong>：<br>$$<br>\beta_i(x) &#x3D; C_i (x - x_i) l_i^2(x)<br>$$</p>
+</li>
+<li><p><strong>条件求解</strong>：</p>
+<ul>
+<li>$\beta’_i(x_i) &#x3D; 1 \Rightarrow C_i &#x3D; 1$</li>
+</ul>
+<p>最终形式为：<br>$$<br>\beta_i(x) &#x3D; (x - x_i) l_i^2(x)<br>$$</p>
+</li>
+</ol>
+<blockquote>
+<p><span style="color:blue"><strong>余项分析</strong></span></p>
+<p>设区间 $[a, b]$ 满足 $a &#x3D; x_0 &lt; x_1 &lt; \cdots &lt; x_n &#x3D; b$，且 $f \in C^{2n}&gt;[a, b]$，则插值余项为：<br>$$<br>R_n(x) &#x3D; \frac{f^{(2n+2)}(\xi)}{(2n+2)!} \left[ \prod_{i&#x3D;0}^n (x - x_i) \right]^2<br>$$<br>其中 $\xi \in (a, b)$。</p>
+</blockquote>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><h2 id="分段低次插值"><a href="#分段低次插值" class="headerlink" title="分段低次插值"></a>分段低次插值</h2><h3 id="分段线性插值"><a href="#分段线性插值" class="headerlink" title="分段线性插值"></a>分段线性插值</h3><p><strong>定义</strong></p>
+<p>设已知节点 $a&lt;x_0 &lt; x_1 &lt; \cdots &lt; x_n &#x3D; b$ 处的函数值为 $f_0, f_1, \ldots, f_n$，记区间宽度：<br>$$<br>h_k &#x3D; x_{k+1} - x_k, \quad h &#x3D; \max_{k} h_k<br>$$<br>分段线性插值通过折线段连接插值点逼近 $f(x)$，构造折线函数 $I_h(x)$ 满足：</p>
+<ol>
+<li><strong>连续性</strong>：$I_h(x) \in C[a, b]$</li>
+<li><strong>插值条件</strong>：$I_h(x_k) &#x3D; f_k \quad (k &#x3D; 0, 1, \ldots, n)$</li>
+<li><strong>分段线性</strong>：在每段区间 $[x_k, x_{k+1}]$ 上，$I_h(x)$ 为线性函数。</li>
+</ol>
+<p><strong>分段线性插值函数可表示为：</strong><br>$$<br>I_h(x) &#x3D; \sum_{k&#x3D;0}^n f_k l_k(x)<br>$$<br>其中 $l_k(x)$ 为分段线性基函数。</p>
+<p><strong>基函数定义</strong></p>
+<p>基函数 $l_k(x)$ 在区间内的表达式为：<br>$$<br>l_k(x) &#x3D;<br>\begin{cases}<br>\dfrac{x - x_{k-1}}{x_k - x_{k-1}}, &amp; x \in [x_{k-1}, x_k] \quad (k \neq 0) \<br>\dfrac{x - x_{k+1}}{x_k - x_{k+1}}, &amp; x \in [x_k, x_{k+1}] \quad (k \neq n) \<br>0, &amp; x \notin [x_{k-1}, x_{k+1}]<br>\end{cases}<br>$$</p>
+<p><strong>区间分段表达式</strong></p>
+<p>左半区间 $[x_{k-1}, x_k]$：<br>$$<br>I_h(x) &#x3D; \dfrac{x - x_{k-1}}{x_k - x_{k-1}} f_k + \dfrac{x - x_k}{x_{k-1} - x_k} f_{k-1}<br>$$</p>
+<p>右半区间 $[x_k, x_{k+1}]$：<br>$$<br>I_h(x) &#x3D; \dfrac{x - x_{k+1}}{x_k - x_{k+1}} f_k + \dfrac{x - x_k}{x_{k+1} - x_k} f_{k+1}<br>$$</p>
+<p><strong>收敛性与性质</strong></p>
+<ol>
+<li><p><strong>一致收敛性</strong>：当 $h \to 0$ 时，$I_h(x)$ 在 $[a, b]$ 上一致收敛到 $f(x)$。</p>
+</li>
+<li><p><strong>光滑性缺失</strong>：分段线性插值函数仅连续（$C^0$），但不可导（失去原函数的光滑性）。</p>
+<blockquote>
+<p><strong><span style="color:blue">插值误差</span></strong><br>$$<br>\max_{x_k \leq x \leq x_{k+1}} |f(x) - I_h(x)| \leq \frac{M_2}{2} \max_{x_k \leq x \leq x_{k+1}} |(x - x_k)(x - x_{k+1})|<br>$$<br>或<br>$$<br>\max_{a \leq x \leq b} |f(x) - I_h(x)| \leq \frac{M_2}{8} h^2<br>$$<br>其中<br>$$<br>M_2 &#x3D; \max_{a \leq x \leq b} |f’’(x)|<br>$$</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="分段三次-Hermite-插值"><a href="#分段三次-Hermite-插值" class="headerlink" title="分段三次 Hermite 插值"></a>分段三次 Hermite 插值</h3><p><u><strong>问题描述</strong></u></p>
+<p>在节点 $x_0 &lt; x_1 &lt; \cdots &lt; x_n$ 上已知函数值 $f_k$ 和导数值 $f’_k &#x3D; m_k$，构造分段插值多项式函数 $I_h(x)$ 满足：</p>
+<ol>
+<li><strong>光滑性</strong>：$I_h \in C^1[a, b]$</li>
+<li><strong>插值条件</strong>：<br>$$<br>I_h(x_k) &#x3D; f_k, \quad I’_h(x_k) &#x3D; f’_k \quad (k &#x3D; 0, 1, \ldots, n)<br>$$</li>
+<li><strong>分段三次多项式</strong>：在每段区间 $[x_k, x_{k+1}]$ 上，$I_h(x)$ 为三次多项式。</li>
+</ol>
+<p><u><strong>全局表达式</strong></u></p>
+<p>插值函数可表示为：<br>$$<br>I_h(x) &#x3D; \sum_{k&#x3D;0}^n \left[ f(x_k) \alpha_k(x) + f’(x_k) \beta_k(x) \right]<br>$$</p>
+<p><u><strong>区间局部表达式</strong></u></p>
+<p>在区间 $[x_k, x_{k+1}]$ 上的具体形式为：<br>$$<br>I_h(x) &#x3D; \left( \dfrac{x - x_{k+1}}{x_k - x_{k+1}} \right)^2 \left( 1 + 2 \dfrac{x - x_k}{x_{k+1} - x_k} \right) f_k<br>+\left( \dfrac{x - x_k}{x_{k+1} - x_k} \right)^2 \left( 1 + 2 \dfrac{x - x_{k+1}}{x_k - x_{k+1}} \right) f_{k+1}<br>+\left( \dfrac{x - x_{k+1}}{x_k - x_{k+1}} \right)^2 (x - x_k) f’<em>k<br>+\left( \dfrac{x - x_k}{x</em>{k+1} - x_k} \right)^2 (x - x_{k+1}) f’_{k+1}<br>$$</p>
+<p><u><strong>基函数定义</strong></u></p>
+<p>$\alpha_k(x)$ 的分段表达式<br>$$<br>\alpha_k(x) &#x3D;<br>\begin{cases}<br>\left(\dfrac{x - x_{k-1}}{x_k - x_{k-1}} \right)^2 \left( 1 + 2 \dfrac{x - x_k}{x_{k-1} - x_k} \right), &amp; x \in [x_{k-1}, x_k] \quad (k \neq 0) \<br>\left(\dfrac{x - x_{k+1}}{x_k - x_{k+1}} \right)^2 \left( 1 + 2 \dfrac{x - x_k}{x_{k+1} - x_k} \right), &amp; x \in [x_k, x_{k+1}] \quad (k \neq n) \<br>0, &amp; \text{其他区间}<br>\end{cases}<br>$$</p>
+<p>$\beta_k(x)$ 的分段表达式<br>$$<br>\beta_k(x) &#x3D;<br>\begin{cases}<br>\left( \dfrac{x - x_{k-1}}{x_k - x_{k-1}} \right)^2 (x - x_k), &amp; x \in [x_{k-1}, x_k] \quad (k \neq 0) \<br>\left( \dfrac{x - x_{k+1}}{x_k - x_{k+1}} \right)^2 (x - x_k), &amp; x \in [x_k, x_{k+1}] \quad (k \neq n) \<br>0, &amp; \text{其他区间}<br>\end{cases}<br>$$</p>
+<blockquote>
+<p><strong>误差估计：</strong><br>$$<br>|f(x) - I_h(x)| \leq \frac{1}{384}h_k^4 \max_{x_k \leq x \leq x_{k+1}} |f^{(4)}(x)| \<br>x\in[x_k,x_{k+1}] \<br>h_k&#x3D;x_{k+1}-x_k<br>$$</p>
+<p>设函数满足：</p>
+<ul>
+<li>$ f \in C^4[a,b] $</li>
+<li>$ I_h(x) $ 是 $ f(x) $ 在节点<br>$$<br> a &#x3D; x_0 &lt; x_1 &lt; \cdots &lt; x_n &#x3D; b<br>$$<br> 上的分段三次埃尔米特插值多项式</li>
+</ul>
+<p>则有全局误差估计：<br>$$<br>\max_{a \leq x \leq b} |f(x) - I_h(x)| \leq \frac{h^4}{384} \max_{a \leq x \leq b} |f^{(4)}(x)| \<br>h&#x3D;\max_{0 \leq k \leq n-1}(x_{k+1}-x_k)<br>$$</p>
+</blockquote>
+<blockquote>
+<p><span style="color:blue">$C^k$表示函数有K阶连续导数；$C^0$表述函数连续，没有要求可导</span></p>
+</blockquote>
+<h2 id="样条插值"><a href="#样条插值" class="headerlink" title="样条插值"></a>样条插值</h2><h3 id="样条插值的概念"><a href="#样条插值的概念" class="headerlink" title="样条插值的概念"></a>样条插值的概念</h3><p>对于给定节点 $a&#x3D;x_0&lt;x_1&lt;\cdots&lt;x_n&#x3D;b$，若存在函数 $s(x)$ 满足：  </p>
+<ol>
+<li>在每个小区间 $\left[x_j, x_{j+1}\right]$ 是一个次数不超过 3 次的多项式；  </li>
+<li>在每一个内节点上具有直到二阶的连续导数，<br>则称 $s(x)$ 是节点 $x_0, x_1,\cdots, x_n$ 上的三次样条函数。</li>
+</ol>
+<p>若在节点上给定函数值 $f\left(x_j\right)&#x3D;y_j(j&#x3D;0,\cdots, n)$，并满足<br>3) $s\left(x_j\right)&#x3D;y_j, j&#x3D;0,\cdots, n$<br>则称 $s(x)$ 是三次样条插值函数。</p>
+<h3 id="三次样条插值函数-s-x-的确定："><a href="#三次样条插值函数-s-x-的确定：" class="headerlink" title="三次样条插值函数 $s(x)$ 的确定："></a>三次样条插值函数 $s(x)$ 的确定：</h3><p>$$ s(x)&#x3D;\left{\begin{array}{c}<br>s_1(x), &amp; x_0\leq x\leq x_1, \<br>\ldots \<br>s_n(x), &amp; x_{n-1}\leq x\leq x_n.<br>\end{array}\right. $$</p>
+<p>在每个 $\left[x_j, x_{j+1}\right]$ 上要确定 4 个待定系数，共 $4n$ 个参数。因二阶导数连续，故在内节点 $x_j$ 上满足连续性条件：<br>$$<br>\begin{gathered}<br>s\left(x_j-0\right)&#x3D;s\left(x_j+0\right), \quad s^{\prime}\left(x_j-0\right)&#x3D;s^{\prime}\left(x_j+0\right), \<br>s^{\prime\prime}\left(x_j-0\right)&#x3D;s^{\prime\prime}\left(x_j+0\right), \quad (j&#x3D;1,\cdots, n-1)<br>\end{gathered}<br>$$</p>
+<p>再加上插值条件，共 $4n-2$ 个条件。还需 2 个条件，通常在两个端点加上边界条件。</p>
+<p><strong>常见三种边界条件</strong>：  </p>
+<ol>
+<li><strong>第一种边界条件</strong>：$s^{\prime}\left(x_0\right)&#x3D;y_0^{\prime}, \quad s^{\prime}\left(x_n\right)&#x3D;y_n^{\prime}$。  </li>
+<li><strong>第二种边界条件</strong>：$s^{\prime\prime}\left(x_0\right)&#x3D;y_0^{\prime\prime}, \quad s^{\prime\prime}\left(x_n\right)&#x3D;y_n^{\prime\prime}$。<br>特别地，<strong>自然边界条件</strong>：$s^{\prime\prime}\left(x_0\right)&#x3D;0, \quad s^{\prime\prime}\left(x_n\right)&#x3D;0$。  </li>
+<li><strong>第三种边界条件（周期边界条件）</strong>：<br>$$s^{\prime}\left(x_0+0\right)&#x3D;s^{\prime}\left(x_n-0\right), \quad s^{\prime\prime}\left(x_0+0\right)&#x3D;s^{\prime\prime}\left(x_n-0\right).$$<br><em>注意</em>：因插值条件 $y_0&#x3D;y_n$，故 $s\left(x_0+0\right)&#x3D;s\left(x_n-0\right)$ 已经成立。</li>
+</ol>
+<h3 id="三次样条插值函数的建立"><a href="#三次样条插值函数的建立" class="headerlink" title="三次样条插值函数的建立"></a>三次样条插值函数的建立</h3><p>求三次样条插值函数常用<strong>三弯矩法</strong>和<strong>三转角法</strong>。</p>
+<p><strong>三转角法</strong>：假定 $s^{\prime}\left(x_j\right)&#x3D;m_j(j&#x3D;0,\cdots, n)$，根据分段三次埃尔米特插值多项式，<br>$$ s(x)&#x3D;\sum_{j&#x3D;0}^n\left[f_j\alpha_j(x)+m_j\beta_j(x)\right] $$<br>由插值条件、连续性条件和边界条件，可得关于 $m_j$ 的三对角方程组，求出 $m_j$，得到三次样条插值函数。</p>
+<p><strong>三弯矩法</strong>：令 $s^{\prime\prime}\left(x_j\right)&#x3D;M_j, \quad j&#x3D;0,\cdots, n, \quad h_j&#x3D;x_{j+1}-x_j$<br>则 $s^{\prime\prime}(x)&#x3D;\frac{x_{j+1}-x}{h_j} M_{j}+\frac{x-x_j}{h_j} M_{j+1}, \quad x\in\left[x_j, x_{j+1}\right]$<br>$$<br>\begin{aligned}<br>s^{\prime}(x) &amp;&#x3D; -\frac{\left(x_{j+1}-x\right)^{2}}{2 h_{j}} M_{j} + \frac{\left(x-x_{j}\right)^{2}}{2 h_{j}} M_{j+1} + c_{1}, \<br>s(x) &amp;&#x3D; \frac{\left(x_{j+1}-x\right)^{3}}{6 h_{j}} M_{j} + \frac{\left(x-x_{j}\right)^{3}}{6 h_{j}} M_{j+1} + c_{1} x + c_{2}, \<br>s\left(x_{j}\right) &amp;&#x3D; \frac{1}{6} h_{j}^{2} M_{j} + c_{1} x_{j} + c_{2} &#x3D; y_{j}, \<br>s\left(x_{j+1}\right) &amp;&#x3D; \frac{1}{6} h_{j}^{2} M_{j+1} + c_{1} x_{j+1} + c_{2} &#x3D; y_{j+1}, \<br>c_{1} &amp;&#x3D; \frac{y_{j+1}-y_{j}}{h_{j}} - \frac{1}{6} h_{j}\left(M_{j+1}-M_{j}\right), \<br>c_{2} &amp;&#x3D; \frac{y_{j} x_{j+1} - y_{j+1} x_{j}}{h_{j}} - \frac{1}{6} h_{j}\left(x_{j+1} M_{j} - x_{j} M_{j+1}\right).<br>\end{aligned}<br>$$</p>
+<p>$$<br>s(x) &#x3D; \frac{\left(x_{j+1}-x\right)^{3}}{6 h_{j}} M_{j} + \frac{\left(x-x_{j}\right)^{3}}{6 h_{j}} M_{j+1} + \left(y_{j}-\frac{M_{j} h_{j}^{2}}{6}\right)\frac{x_{j+1}-x}{h_{j}} + \left(y_{j+1}-\frac{M_{j+1} h_{j}^{2}}{6}\right)\frac{x-x_{j}}{h_{j}}<br>$$</p>
+<p>$$<br>s^{\prime}(x) &#x3D; -\frac{\left(x_{j+1}-x\right)^2}{2 h_j} M_{j} + \frac{\left(x-x_j\right)^2}{2 h_j} M_{j+1} + \frac{y_{j+1}-y_j}{h_j} - \frac{M_{j+1}-M_{j}}{6} h_{j}.<br>$$</p>
+<p>为了求 $M_0,\cdots, M_n$，要用导数连续条件：$s^{\prime}\left(x_j+0\right)&#x3D;s^{\prime}\left(x_j-0\right)$。</p>
+<p>$$<br>\begin{align*}<br>s^{\prime}\left(x_{j}+0\right) &amp;&#x3D; -\frac{h_{j}}{3} M_{j} - \frac{h_{j}}{6} M_{j+1} + \frac{y_{j+1}-y_{j}}{h_{j}}, \<br>s^{\prime}\left(x_{j+1}-0\right) &amp;&#x3D; \frac{h_{j}}{6} M_{j} + \frac{h_{j}}{3} M_{j+1} + \frac{y_{j+1}-y_{j}}{h_{j}}, \<br>s^{\prime}\left(x_{j}-0\right) &amp;&#x3D; \frac{h_{j-1}}{6} M_{j-1} + \frac{h_{j-1}}{3} M_{j} + \frac{y_{j-1}-y_{j-1}}{h_{j-1}}. \<br>\frac{h_{j-1}}{6} M_{j-1} + \frac{h_{j-1}+h_{j}}{3} M_{j} + \frac{h_{j}}{6} M_{j+1} &amp;&#x3D; \frac{y_{j}-y_{j-1}}{h_{j-1}} - \frac{y_{j+1}-y_{j}}{h_{j}}, \quad j&#x3D;1,\cdots, n-1,<br>\end{align*}<br>$$</p>
+<p>$$<br>\mu_{j} M_{j-1} + 2 M_{j} + \lambda_{j} M_{j+1} &#x3D; d_{j}, \quad j&#x3D;1,\cdots, n-1,<br>$$</p>
+<p>其中$d_{j}&#x3D;6 f\left[x_{j-1}, x_{j}, x_{j+1}\right]$</p>
+<p><strong><span style="color:blue">$\lambda_{j}&#x3D; \frac{h_j}{h_{j-1}+h_j}$，$\mu_j &#x3D; \frac{h_{j-1}}{h_{j-1}+h_j}$。</span></strong></p>
+<p><strong>在第一边界条件下</strong>：</p>
+<h1 id="begin-bmatrix-2-1-mu-1-2-lambda-1-ddots-ddots-ddots-mu-n-1-2-lambda-n-1-1-2-end-bmatrix-begin-bmatrix-M-0-M-1-vdots-M-n-1-M-n-end-bmatrix"><a href="#begin-bmatrix-2-1-mu-1-2-lambda-1-ddots-ddots-ddots-mu-n-1-2-lambda-n-1-1-2-end-bmatrix-begin-bmatrix-M-0-M-1-vdots-M-n-1-M-n-end-bmatrix" class="headerlink" title="$$\begin{bmatrix}2 &amp; 1 &amp; &amp; &amp; \\mu_1 &amp; 2 &amp; \lambda_1 &amp; &amp; \ &amp; \ddots &amp; \ddots &amp; \ddots &amp; \ &amp; &amp; \mu_{n-1} &amp; 2 &amp; \lambda_{n-1} \ &amp; &amp; &amp; 1 &amp; 2\end{bmatrix}\begin{bmatrix}M_0 \M_1 \\vdots \M_{n-1} \M_n\end{bmatrix}"></a>$$<br>\begin{bmatrix}<br>2 &amp; 1 &amp; &amp; &amp; \<br>\mu_1 &amp; 2 &amp; \lambda_1 &amp; &amp; \<br> &amp; \ddots &amp; \ddots &amp; \ddots &amp; \<br> &amp; &amp; \mu_{n-1} &amp; 2 &amp; \lambda_{n-1} \<br> &amp; &amp; &amp; 1 &amp; 2<br>\end{bmatrix}<br>\begin{bmatrix}<br>M_0 \<br>M_1 \<br>\vdots \<br>M_{n-1} \<br>M_n<br>\end{bmatrix}</h1><p>\begin{bmatrix}<br>d_0 \<br>d_1 \<br>\vdots \<br>d_{n-1} \<br>d_n<br>\end{bmatrix}<br>$$</p>
+<blockquote>
+<p>$$<br>\lambda_0 &#x3D; 1\<br>\mu_n &#x3D; 1\<br>d_0 &#x3D; \frac{6}{h_0} \left( f[x_0, x_1] - f’<em>0 \right)\<br>d_j &#x3D; 6 \frac{f[x_j, x</em>{j+1}] - f[x_{j-1}, x_j]}{h_{j-1} + h_j} &#x3D; 6 f[x_{j-1}, x_j, x_{j+1}], \quad j &#x3D; 1, 2, \dots, n-1  \</p>
+<p>d_n &#x3D; \frac{6}{h_{n-1}} \left( f’<em>n - f[x</em>{n-1}, x_n] \right)<br>$$</p>
+</blockquote>
+<h1 id="第二边界条件矩阵方程-begin-bmatrix-2-lambda-1-mu-2-2-lambda-2-ddots-ddots-ddots-mu-n-1-2-end-bmatrix-begin-bmatrix-M-1-M-2-vdots-M-n-1-end-bmatrix"><a href="#第二边界条件矩阵方程-begin-bmatrix-2-lambda-1-mu-2-2-lambda-2-ddots-ddots-ddots-mu-n-1-2-end-bmatrix-begin-bmatrix-M-1-M-2-vdots-M-n-1-end-bmatrix" class="headerlink" title="第二边界条件矩阵方程$$\begin{bmatrix}2 &amp; \lambda_1 &amp; &amp; \\mu_2 &amp; 2 &amp; \lambda_2 &amp; \ &amp; \ddots &amp; \ddots &amp; \ddots \ &amp; &amp; \mu_{n-1} &amp; 2\end{bmatrix}\begin{bmatrix}M_1 \M_2 \\vdots \M_{n-1}\end{bmatrix}"></a><strong>第二边界条件矩阵方程</strong><br>$$<br>\begin{bmatrix}<br>2 &amp; \lambda_1 &amp; &amp; \<br>\mu_2 &amp; 2 &amp; \lambda_2 &amp; \<br> &amp; \ddots &amp; \ddots &amp; \ddots \<br> &amp; &amp; \mu_{n-1} &amp; 2<br>\end{bmatrix}<br>\begin{bmatrix}<br>M_1 \<br>M_2 \<br>\vdots \<br>M_{n-1}<br>\end{bmatrix}</h1><p>\begin{bmatrix}<br>d_1 - \mu_1 f’’<em>0 \<br>d_2 \<br>\vdots \<br>d</em>{n-1} - \lambda_{n-1} f’’_n<br>\end{bmatrix}<br>$$</p>
+<p>边界条件约束：<br>$$<br>\begin{cases}<br>M_0 &#x3D; f’’_0 \<br>M_n &#x3D; f’’_n<br>\end{cases}<br>$$</p>
+<h1 id="第三边界条件（周期边界条件）矩阵方程-begin-bmatrix-2-lambda-1-mu-1-mu-2-2-lambda-2-ddots-ddots-ddots-mu-n-1-2-lambda-n-1-lambda-n-mu-n-2-end-bmatrix-begin-bmatrix-M-1-M-2-vdots-M-n-1-M-n-end-bmatrix"><a href="#第三边界条件（周期边界条件）矩阵方程-begin-bmatrix-2-lambda-1-mu-1-mu-2-2-lambda-2-ddots-ddots-ddots-mu-n-1-2-lambda-n-1-lambda-n-mu-n-2-end-bmatrix-begin-bmatrix-M-1-M-2-vdots-M-n-1-M-n-end-bmatrix" class="headerlink" title="第三边界条件（周期边界条件）矩阵方程$$\begin{bmatrix}2 &amp; \lambda_1 &amp; &amp; &amp; \mu_1 \\mu_2 &amp; 2 &amp; \lambda_2 &amp; &amp; \ &amp; \ddots &amp; \ddots &amp; \ddots &amp; \ &amp; &amp; \mu_{n-1} &amp; 2 &amp; \lambda_{n-1} \\lambda_n &amp; &amp; &amp; \mu_n &amp; 2\end{bmatrix}\begin{bmatrix}M_1 \M_2 \\vdots \M_{n-1} \M_n\end{bmatrix}"></a><strong>第三边界条件（周期边界条件）矩阵方程</strong><br>$$<br>\begin{bmatrix}<br>2 &amp; \lambda_1 &amp; &amp; &amp; \mu_1 \<br>\mu_2 &amp; 2 &amp; \lambda_2 &amp; &amp; \<br> &amp; \ddots &amp; \ddots &amp; \ddots &amp; \<br> &amp; &amp; \mu_{n-1} &amp; 2 &amp; \lambda_{n-1} \<br>\lambda_n &amp; &amp; &amp; \mu_n &amp; 2<br>\end{bmatrix}<br>\begin{bmatrix}<br>M_1 \<br>M_2 \<br>\vdots \<br>M_{n-1} \<br>M_n<br>\end{bmatrix}</h1><p>\begin{bmatrix}<br>d_1 \<br>d_2 \<br>\vdots \<br>d_{n-1} \<br>d_n<br>\end{bmatrix}<br>$$</p>
+<p>特殊约束条件<br>$$<br>\begin{cases}<br>x_0 &#x3D; x_n \quad (\text{周期条件}) \<br>M_0 &#x3D; M_n \quad (\text{弯矩周期约束}) \<br>\mu_n M_{n-1} + 2M_n + \lambda_n M_1 &#x3D; d_n \quad (\text{闭环方程})<br>\end{cases}<br>$$</p>
+<p>参数定义<br>$$<br>\begin{aligned}<br>\mu_n &amp;&#x3D; \frac{h_{n-1}}{h_{n-1} + h_0} \quad (\text{末节点弯矩传递系数}) \<br>\lambda_n &amp;&#x3D; \frac{h_0}{h_{n-1} + h_0} \quad (\text{首节点弯矩传递系数}) \<br>d_n &amp;&#x3D; 6f[x_{n-1}, x_n, x_1] \quad (\text{三阶差商计算})<br>\end{aligned}<br>$$</p>
+<h3 id="误差界与收敛性"><a href="#误差界与收敛性" class="headerlink" title="误差界与收敛性"></a>误差界与收敛性</h3><p> 设 $f(x) \in C^4[a,b]$，$S(x)$ 满足第一或第二边界条件，<br>令 $h &#x3D; \max\limits_{0 \leq i \leq n-1} h_i$，其中 $h_i &#x3D; x_{i+1} - x_i$，则有估计式：<br>$$<br>\max_{a \leq x \leq b} \left| f^{(k)}(x) - s^{(k)}(x) \right| \leq C_k \left( \max_{a \leq x \leq b} \left| f^{(4)}(x) \right| \right) h^{4-k}<br>$$<br>其中常数项系数为：<br>$$<br>\begin{cases}<br>C_0 &#x3D; \dfrac{5}{384} \<br>C_1 &#x3D; \dfrac{1}{24} \<br>C_2 &#x3D; \dfrac{3}{8}<br>\end{cases} \quad (k&#x3D;0,1,2)<br>$$</p>
+<h1 id="第三章-函数逼近"><a href="#第三章-函数逼近" class="headerlink" title="第三章 函数逼近"></a>第三章 函数逼近</h1><h2 id="范数与赋范线性空间"><a href="#范数与赋范线性空间" class="headerlink" title="范数与赋范线性空间"></a>范数与赋范线性空间</h2><p>设 $S$ 是实数域上的线性空间，$x \in S$，如果存在唯一实数 $|\cdot|$，满足以下条件：  </p>
+<ol>
+<li><p><strong>正定性</strong>：<br>$$<br>|x| \geq 0，\quad \text{当且仅当} \ x &#x3D; 0 \ \text{时，} \ |x| &#x3D; 0<br>$$</p>
+</li>
+<li><p><strong>齐次性</strong>：<br>$$<br>| \alpha x | &#x3D; |\alpha| \cdot |x|，\quad \alpha \in \mathbb{R}<br>$$</p>
+</li>
+<li><p><strong>三角不等式</strong>：<br>$$<br>|x + y| \leq |x| + |y|，\quad x, y \in S<br>$$</p>
+</li>
+</ol>
+<p>则称 $| \cdot |$ 为线性空间 $S$ 上的<strong>范数</strong>，$S$ 与 $| \cdot |$ 一起称为<strong>赋范线性空间</strong>，记为 $X$。</p>
+<p><strong>常用范数定义</strong></p>
+<h4 id="1-mathbb-R-n-上的向量范数"><a href="#1-mathbb-R-n-上的向量范数" class="headerlink" title="1. $\mathbb{R}^n$ 上的向量范数"></a><strong>1. $\mathbb{R}^n$ 上的向量范数</strong></h4><p>设 $x &#x3D; (x_1, \dots, x_n)^T \in \mathbb{R}^n$，定义以下三种常用范数：  </p>
+<ol>
+<li><p><strong>∞-范数（最大范数）</strong>：<br>$$<br>|x|<em>\infty &#x3D; \max</em>{1 \leq i \leq n} |x_i|<br>$$</p>
+</li>
+<li><p><strong>1-范数</strong>：<br>$$<br>|x|<em>1 &#x3D; \sum</em>{i&#x3D;1}^n |x_i|<br>$$</p>
+</li>
+<li><p><strong>2-范数</strong>：<br>$$<br>|x|<em>2 &#x3D; \left( \sum</em>{i&#x3D;1}^n x_i^2 \right)^{1&#x2F;2}<br>$$</p>
+</li>
+</ol>
+<hr>
+<h4 id="2-C-a-b-上的函数范数"><a href="#2-C-a-b-上的函数范数" class="headerlink" title="2. $C[a, b]$ 上的函数范数"></a><strong>2. $C[a, b]$ 上的函数范数</strong></h4><p>设 $f(x) \in C[a, b]$，定义以下三种常用范数：  </p>
+<ol>
+<li><p><strong>∞-范数</strong>：<br>$$<br>|f|<em>\infty &#x3D; \max</em>{a \leq x \leq b} |f(x)|<br>$$</p>
+</li>
+<li><p><strong>1-范数</strong>：<br>$$<br>|f|_1 &#x3D; \int_a^b |f(x)| , dx<br>$$</p>
+</li>
+<li><p><strong>2-范数</strong>：<br>$$<br>|f|_2 &#x3D; \left( \int_a^b f^2(x) , dx \right)^{1&#x2F;2}<br>$$</p>
+</li>
+</ol>
+<h2 id="内积与内积空间"><a href="#内积与内积空间" class="headerlink" title="内积与内积空间"></a>内积与内积空间</h2><h3 id="权函数"><a href="#权函数" class="headerlink" title="权函数"></a>权函数</h3><p>设 $[a, b]$ 是有限或无限区间，在 $[a, b]$ 上的非负函数 $\rho(x)$ 满足以下条件：  </p>
+<ol>
+<li><p><strong>积分存在性</strong>：<br>对任意非负整数 $k &#x3D; 0, 1, 2, \ldots$，积分<br>$$<br>\int_a^b x^k \rho(x) , dx<br>$$<br>存在且为有限值。  </p>
+</li>
+<li><p><strong>非负连续性条件</strong>：<br>对 $[a, b]$ 上的任意非负连续函数 $g(x)$，若满足<br>$$<br>\int_a^b g(x)\rho(x) , dx &#x3D; 0,<br>$$<br>则必有 $g(x) \equiv 0$（即 $g(x)$ 在 $[a, b]$ 上恒为零）。</p>
+</li>
+</ol>
+<p>满足上述条件的函数 $\rho(x)$ 称为 $[a, b]$ 上的一个<strong>权函数</strong>。</p>
+<h3 id="内积"><a href="#内积" class="headerlink" title="内积"></a>内积</h3><p>在 $\mathbb{R}^n$ 中，向量 $x &#x3D; (x_1, x_2, \dots, x_n)^T$ 和 $y &#x3D; (y_1, y_2, \dots, y_n)^T$ 的内积定义为：<br>$$<br>(x, y) &#x3D; x_1 y_1 + x_2 y_2 + \dots + x_n y_n \tag{1.5}<br>$$</p>
+<p>设 $X$ 是数域 $K$（实数域 $\mathbb{R}$ 或复数域 $\mathbb{C}$）上的线性空间。对任意 $u, v \in X$，有K中一个数与之对应，记为$(u,v)$，它满足以下条件：</p>
+<ol>
+<li><p><strong>共轭对称性</strong>：<br>$$<br>(u, v) &#x3D; \overline{(v, u)}<br>$$<br>其中 $\overline{(v, u)}$ 表示 $(v, u)$ 的复共轭。当 $K &#x3D; \mathbb{R}$ 时，简化为对称性 $(u, v) &#x3D; (v, u)$。  </p>
+</li>
+<li><p><strong>线性性</strong>：<br>$$<br>(\alpha u, v) &#x3D; \alpha (u, v), \quad \forall \alpha \in K<br>$$</p>
+</li>
+<li><p><strong>可加性）</strong>：<br>$$<br>(u + v, w) &#x3D; (u, w) + (v, w), \quad \forall w \in X<br>$$</p>
+</li>
+<li><p><strong>正定性</strong>：<br>$$<br>(u, u) \geq 0<br>$$<br>当且仅当 $u &#x3D; 0$ 时，$(u, u) &#x3D; 0$。</p>
+</li>
+</ol>
+<p>定义了内积的线性空间称为<strong>内积空间</strong>。</p>
+<hr>
+<p>设 $f(x), g(x) \in C[a, b]$，$\rho(x)$ 是 $[a, b]$ 上的权函数，积分<br>$$<br>(f, g) &#x3D; \int_a^b \rho(x) f(x) g(x) , dx<br>$$<br>称为函数 $f(x)$ 与 $g(x)$ 在 $[a, b]$ 上的<strong>内积</strong>。</p>
+<blockquote>
+<p>向量模（范数）的定义</p>
+<p>设向量 $ f \in \mathbb{R}^n $，其模（范数）定义为：<br>$$<br>| f |<em>2 &#x3D; \left( \sum</em>{k&#x3D;1}^{n} f_k^2 \right)^{\frac{1}{2}}<br>$$<br>将此定义推广到任何内积空间中，就有以下定义。</p>
+<hr>
+<p>设函数 $ f(x) \in C[a, b] $，定义量<br>$$<br>| f |_2 &#x3D; \sqrt{ \int_a^b \rho(x) f^2(x) , dx } &#x3D; \sqrt{ (f, f) }<br>$$<br>称为函数 $ f(x) $ 的<strong>欧氏范数</strong>。</p>
+</blockquote>
+<blockquote>
+<p><strong>定理</strong>  </p>
+<p>对任何 $ f, g \in C[a, b] $，下列结论成立：  </p>
+<ol>
+<li><p><strong>柯西-许瓦兹不等式</strong>：<br>$$<br>  |(f, g)| \leq |f|_2 |g|_2 \<br>  或 \quad |(f, g)|^2 \leq (f,f)(g,g)<br>$$</p>
+</li>
+<li><p><strong>三角不等式</strong>：<br>$$<br>  |f + g|_2 \leq |f|_2 + |g|_2<br>$$</p>
+</li>
+<li><p><strong>平行四边形定律</strong>：<br>$$<br>  |f + g|_2^2 + |f - g|_2^2 &#x3D; 2 \left( |f|_2^2 + |g|_2^2 \right)<br>$$</p>
+</li>
+</ol>
+</blockquote>
+<h3 id="线性无关相关概念与定理"><a href="#线性无关相关概念与定理" class="headerlink" title="线性无关相关概念与定理"></a>线性无关相关概念与定理</h3><p>设集合 $ S $ 是数域 $ P $ 上的线性空间，元素 $ x_1, x_2, \dots, x_n \in S $。如果存在不全为零的数 $ \alpha_1, \alpha_2, \dots, \alpha_n \in P $，使得<br>$$<br>\alpha_1 x_1 + \alpha_2 x_2 + \dots + \alpha_n x_n &#x3D; 0 \quad (1.1)<br>$$<br>则称 $ x_1, x_2, \dots, x_n $ <strong>线性相关</strong>。否则，若等式 (1.1) 只对<br>$$<br>\alpha_1 &#x3D; \alpha_2 &#x3D; \dots &#x3D; \alpha_n &#x3D; 0<br>$$<br>成立，则称 $ x_1, x_2, \dots, x_n $ <strong>线性无关</strong>。</p>
+<hr>
+<p><strong>基的定义</strong>  </p>
+<p>若线性空间 $ S $ 是由 $ n $ 个线性无关元素 $ x_1, x_2, \dots, x_n $ 生成的，即对任意 $ x \in S $，都有<br>$$<br>x &#x3D; \alpha_1 x_1 + \alpha_2 x_2 + \dots + \alpha_n x_n,<br>$$<br>则 $ x_1, x_2, \dots, x_n $ 称为空间 $ S $ 的一组<strong>基</strong>，记为<br>$$<br>S &#x3D; \text{span}{x_1, x_2, \dots, x_n}.<br>$$<br>其中，系数 $ \alpha_1, \alpha_2, \dots, \alpha_n $ 称为 $ x $ 在基 $ x_1, x_2, \dots, x_n $ 下的<strong>坐标</strong>，记作 $ (\alpha_1, \alpha_2, \dots, \alpha_n) $。</p>
+<hr>
+<h3 id="无限维线性空间"><a href="#无限维线性空间" class="headerlink" title="无限维线性空间"></a><strong>无限维线性空间</strong></h3><p>如果 $ S $ 中有无限个线性无关元素 $ x_1, x_2, \dots, x_n, \dots $，则称 $ S $ 为<strong>无限维线性空间</strong>。</p>
+<blockquote>
+<p><strong>定理3</strong> </p>
+<p>设 $ X $ 为一个内积空间，$ u_1, u_2, \dots, u_n \in X $，矩阵 $ G $ 定义为：<br>$$<br>G &#x3D; \begin{pmatrix}<br>(u_1, u_1) &amp; (u_2, u_1) &amp; \cdots &amp; (u_n, u_1) \<br>(u_1, u_2) &amp; (u_2, u_2) &amp; \cdots &amp; (u_n, u_2) \<br>\vdots &amp; \vdots &amp; &amp; \vdots \<br>(u_1, u_n) &amp; (u_2, u_n) &amp; \cdots &amp; (u_n, u_n)<br>\end{pmatrix}<br>$$<br>矩阵 $ G $ 称为<strong>格拉姆(Gram)矩阵</strong>。矩阵 $ G $ 非奇异(<strong>等价与$detG≠0$</strong>)的充分必要条件是 $ u_1, u_2, \dots, u_n $ 线性无关。</p>
+</blockquote>
+<h2 id="函数的最佳平方逼近"><a href="#函数的最佳平方逼近" class="headerlink" title="函数的最佳平方逼近"></a>函数的最佳平方逼近</h2><p>设函数 $ f(x) \in C[a, b] $，用 $ n $ 次多项式<br>$$<br>s(x) &#x3D; \sum_{k&#x3D;0}^{n} a_k x^k<br>$$<br>作最佳平方逼近，就是要求得以 $ a_0^<em>, a_1^</em>, \dots, a_n^* $ 为系数的多项式<br>$$<br>s^<em>(x) &#x3D; \sum_{k&#x3D;0}^{n} a_k^</em> x^k<br>$$<br>使得<br>$$<br>| f(x) - s^<em>(x) |_2^2 &#x3D; \int_a^b [f(x) - s^</em>(x)]^2 , dx &#x3D; \min_{s(x) \in H_n} | f(x) - s(x) |_2^2<br>$$<br>其中 $ H_n $ 表示所有 $ n $ 次多项式的集合。</p>
+<hr>
+<p><strong>推广到一般情况</strong></p>
+<p>对于给定的权函数 $ \rho(x) $，要求得 $ a_k^* $（$ k &#x3D; 0, 1, \dots, n $）使得<br>$$<br>| f(x) - s^<em>(x) |_2^2 &#x3D; \int_a^b \rho(x) [f(x) - s^</em>(x)]^2 , dx &#x3D; \min_{s(x) \in H_n} | f(x) - s(x) |_2^2<br>$$</p>
+<p><strong>进一步推广</strong></p>
+<p>$ n $ 次多项式<br>$$<br>s(x) &#x3D; \sum_{k&#x3D;0}^{n} a_k x^k<br>$$<br>是以 $ 1, x, \dots, x^n $ 为基函数的线性组合。进一步推广可将 $ x^k $ 改为一般的线性无关的连续函数 $ \varphi_k(x) $，全体构成 $ C[a, b] $ 的子空间，即<br>$$<br>\Phi &#x3D; \text{span}{ \varphi_0, \varphi_1, \dots, \varphi_n }<br>$$<br>最佳平方逼近问题可叙述为：求 $ a_0^<em>, a_1^</em>, \dots, a_n^* $ 使得<br>$$<br>| f(x) - s^*(x) |<em>2^2 &#x3D; \left| f(x) - \sum</em>{k&#x3D;0}^n a_k \varphi_k(x) \right|<em>2^2 &#x3D; \min</em>{s(x) \in \Phi} | f(x) - s(x) |_2^2<br>$$<br>其中，$ \Phi &#x3D; \text{span}{ \varphi_0, \varphi_1, \dots, \varphi_n } $ 是由基函数 $ \varphi_k(x) $ 生成的函数空间。</p>
+<p>上述问题等价于求解多元函数<br>$$<br>I(a_0, a_1, \dots, a_n) &#x3D; \int_a^b \rho(x) \left| f(x) - \sum_{k&#x3D;0}^n a_k \varphi_k(x) \right|^2 dx<br>$$<br>的最小值问题。</p>
+<p>由多元函数极值存在的必要条件可得如下的法方程组：<br>$$<br>\sum_{j&#x3D;0}^{n} (\varphi_j, \varphi_k) a_j &#x3D; (f, \varphi_k), \quad (k &#x3D; 0, 1, \ldots, n)<br>$$</p>
+<p>可证明方程组有唯一解 $ a_k &#x3D; a_k^* $（$ k &#x3D; 0, 1, \dots, n $），从而得到</p>
+<p>$s^<em>(x) &#x3D; a_0^</em> \varphi_0(x) + \cdots + a_n^* \varphi_n(x)$</p>
+<p>若令<br>$$<br>\delta(x) &#x3D; f(x) - S^<em>(x),<br>$$<br><strong><u>则最佳平方逼近的误差为</u></strong><br>$$<br>|\delta(x)|^2_2 &#x3D; \left( f(x) - S^</em>(x), f(x) - S^<em>(x) \right) \<br>&#x3D; (f(x), f(x)) - (S^</em>(x), f(x)) &#x3D; |f(x)|^2_2 - \sum_{k&#x3D;0}^n a_k^* (\varphi_k(x), f(x)).<br>$$<br><strong>PS</strong>:根据法方程可得$(S^<em>(x),\varphi_k)&#x3D;(f,\varphi_k)$,进一步得$(f-S^</em>(x),\varphi_k)&#x3D;0$，即$(f-S^<em>,S^</em>)&#x3D;0$</p>
+<blockquote>
+<p>若取基函数<br>$$<br>\varphi_k(x) &#x3D; x^k, \quad \rho(x) &#x3D; 1, \quad f(x) \in C[0, 1],<br>$$<br>则要在 $ H_n $ 中求 $ n $ 次最佳平方逼近多项式<br>$$<br>s^*(x) &#x3D; a_0 + a_1 x + \dots + a_n x^n.<br>$$</p>
+<p>此时，内积定义为<br>$$<br>(\varphi_i(x), \varphi_j(x)) &#x3D; \int_0^1 x^{i+j} , dx &#x3D; \frac{1}{i + j + 1},<br>$$<br>而<br>$$<br>(f(x), \varphi_k(x)) &#x3D; \int_0^1 f(x) x^k , dx &#x3D; d_k.<br>$$</p>
+<p>用 $ H $ 表示格拉姆矩阵 $ G_n &#x3D; G(1, x, \dots, x^n) $，即<br>$$<br>H &#x3D; \begin{pmatrix}<br>1 &amp; \frac{1}{2} &amp; \cdots &amp; \frac{1}{n+1} \<br>\frac{1}{2} &amp; \frac{1}{3} &amp; \cdots &amp; \frac{1}{n+2} \<br>\vdots &amp; \vdots &amp; &amp; \vdots \<br>\frac{1}{n+1} &amp; \frac{1}{n+2} &amp; \cdots &amp; \frac{1}{2n+1}<br>\end{pmatrix},<br>$$<br>称 $ H $ 为<strong>希尔伯特(Hilbert)矩阵</strong>。记向量<br>$$<br>a &#x3D; (a_0, a_1, \dots, a_n)^T, \quad d &#x3D; (d_0, d_1, \dots, d_n)^T,<br>$$<br>则线性方程组<br>$$<br>H a &#x3D; d<br>$$<br>的解 $ a_k &#x3D; a_k^* $（$ k &#x3D; 0, 1, \dots, n $）即为所求。</p>
+</blockquote>
+<h2 id="用正交函数系作最佳平方逼近"><a href="#用正交函数系作最佳平方逼近" class="headerlink" title="用正交函数系作最佳平方逼近"></a>用正交函数系作最佳平方逼近</h2><p>若 ${g_k(x)}(k&#x3D;0,1,\dots,n)$ 是带权 $\rho(x)$ 正交的函数系，即满足：</p>
+<p>$$<br>(g_k, g_j) &#x3D; \int_a^b \rho(x) g_k(x) g_j(x) , dx &#x3D; 0 \quad (k \neq j)<br>$$</p>
+<p>通过法方程组 $\sum _{k&#x3D;0}^n  (g_k, g_j)a_j &#x3D; (f, g_j)$ 可以独立解得：</p>
+<p>$$<br>a_j^* &#x3D; \frac{(f, g_j)}{(g_j, g_j)} &#x3D; \frac{\int_a^b \rho(x) f(x) g_j(x) , dx}{\int_a^b \rho(x) g_j^2(x) , dx} \quad (j&#x3D;0,1,\dots,n)<br>$$</p>
+<blockquote>
+<p>$a^*_j$与$n$无关</p>
+</blockquote>
+<p>从而得到最佳平方逼近函数：<br>$$<br>s^<em>(x) &#x3D; \sum_{j&#x3D;0}^na_j^</em> g_j(x) &#x3D; \sum_{j&#x3D;0}^n \frac{(f, g_j)}{(g_j, g_j)} g_j(x)<br>$$</p>
+<p><strong>广义Fourier级数</strong></p>
+<p>对于函数 $f(x) \in C[a, b]$ 与正交基函数系 ${g_k(x)}(k&#x3D;0,1,\dots,n)$，按公式逐个计算出 $a_j^*$ 后，可以得到一个级数：</p>
+<p>$$<br> a_0^* g_0(x) + a_1^* g_1(x) + \dots + a_n^* g_n(x)<br>$$</p>
+<p>这个级数称为 $f(x)$ 对应于基函数系  ${g_k(x)}(k&#x3D;0,1,\dots,n)$的广义Fourier级数。</p>
+<p>系数 $ a_k^* $ 为广义Fourier系数，对任意固定的 $ n $，其部分和为：</p>
+<p>$$<br>S_n(x) &#x3D; \sum_{k&#x3D;0}^n a_k^* g_k(x)<br>$$</p>
+<p>$ S_n(x) $ 称为广义多项式，是所求的最佳平方逼近多项式。</p>
+<p><strong>勒让德多项式作为基函数</strong></p>
+<p>当 $ f(x) \in C[-1, 1] $ 时，可以用勒让德多项式 $ {P_k(x)} $ 作为基函数，即 $ {g_k(x)} &#x3D; {P_k(x)} $。此时，最佳平方逼近多项式为：</p>
+<p>$$<br>s_n^<em>(x) &#x3D; a_0^</em> P_0(x) + a_1^* P_1(x) + \dots + a_n^* P_n(x)<br>$$</p>
+<p>其中，系数 $ a_k^* $ 的计算公式为：</p>
+<p>$$<br>a_k^* &#x3D; \frac{(P_k, f)}{(P_k, P_k)} &#x3D; \frac{2k+1}{2} \int_{-1}^1 f(x) P_k(x) , dx \quad(k&#x3D;0,1,\cdots,n)<br>$$</p>
+<p>则 $ s_n^*(x) $ 是使 $ | f(x) - \sum _{k&#x3D;0}^n a_k P_k(x) |_2^2 $ 最小的最佳平方逼近多项式。</p>
+<p>此时的平方误差为：</p>
+<p>$$<br>|\delta_n|<em>2^2 &#x3D; \int</em>{-1}^{1} [f(x)]^2 , dx - \sum_{k&#x3D;0}^{n} \frac{2}{2k+1} a^{*2}<br>$$</p>
+<blockquote>
+<p><strong>例题</strong></p>
+<p>求函数 $ f(x) &#x3D; e^x $ 在区间 $[-1, 1]$ 上的三次最佳平方逼近多项式，使用基函数 ${P_0, P_1, P_2, P_3}$。</p>
+<ol>
+<li><p><strong>计算内积 $(P_k, f)$：</strong><br>$$<br>  (P_0, f) &#x3D; \int_{-1}^{1} e^x , dx &#x3D; e - \frac{1}{e} \approx 2.3504<br>$$<br>$$<br>  (P_1, f) &#x3D; \int_{-1}^{1} x e^x , dx &#x3D; 2e^{-1} \approx 0.7358<br>$$<br>$$<br>  (P_2, f) &#x3D; \int_{-1}^{1} \left( \frac{3}{2} x^2 - \frac{1}{2} \right) e^x , dx \approx 0.02013<br>$$<br>$$<br>  (P_3, f) &#x3D; \int_{-1}^{1} \left( \frac{5}{2} x^3 - \frac{3}{2} x \right) e^x , dx \approx 0.02013<br>$$</p>
+</li>
+<li><p><em><em>计算系数 $ a_k^</em> $：</em>*<br>$$<br>  a_0^* &#x3D; \frac{(P_0, f)}{2} \approx 1.1752 \<br>  a_1^* &#x3D; \frac{3}{2} (P_1, f) \approx 1.1036 \<br>  a_2^* &#x3D; \frac{5}{2} (P_2, f) \approx 0.3578 \<br>  a_3^* &#x3D; \frac{7}{2} (P_3, f) \approx 0.07046<br>$$</p>
+</li>
+<li><p><strong>得到逼近多项式 $ S_3^*(x) $：</strong><br>$$<br>  S_3^*(x) &#x3D; 0.9963 + 0.9979x + 0.5367x^2 + 0.1761x^3<br>$$</p>
+</li>
+<li><p><strong>计算平方误差：</strong><br>$$<br>  \left|| \delta_3 \right||<em>2^2 &#x3D; \left|| e^x - s_3^*(x) \right||<em>2^2 &#x3D; \int</em>{-1}^{1} e^{2x} , dx - \sum</em>{k&#x3D;0}^{3} \frac{2}{2k+1} {a_k^*}^2 &#x3D; 0.88 \times 10^{-4}<br>$$</p>
+</li>
+</ol>
+<p>  <u>如果所给的区间不是 $[-1, 1]$，而是一般的有限区间 $[a, b]$，可以通过变量置换将其转化为区间 $[-1, 1]$ 上的情形来处理</u>。</p>
+<p>  变量置换公式</p>
+<p>  通过以下变量置换公式，将区间 $[a, b]$ 转化为 $[-1, 1]$：</p>
+<p>$$<br>  x &#x3D; \frac{a + b}{2} + \frac{b - a}{2} t<br>$$</p>
+<p>  其中：</p>
+<ul>
+<li>$ x $ 为原区间 $[a, b]$ 上的变量；</li>
+<li>$ t $ 为转化后的区间 $[-1, 1]$ 上的变量。</li>
+</ul>
+<p>  <strong>例题：求函数 $ f(x) &#x3D; \sqrt{x} $ 在区间 $[0, 1]$ 上的一次最佳平方逼近多项式</strong></p>
+<ol>
+<li><p><strong>变量变换</strong>：<br>令 $ x &#x3D; \frac{1}{2}(1 + t) $，则 $ t \in [-1, 1] $，且：<br>$$<br>f(x) &#x3D; \sqrt{x} &#x3D; \sqrt{\frac{1}{2}(1 + t)} &#x3D; \frac{1}{\sqrt{2}} \sqrt{1 + t} &#x3D; \varphi(t)<br>$$</p>
+</li>
+<li><p><strong>求解 $ \varphi(t) $ 的一次最佳平方逼近多项式 $ q_1(t) $</strong>：<br>使用勒让德多项式 $ {P_0, P_1} $ 作为基函数，计算系数 $ a_0 $ 和 $ a_1 $：<br>$$<br>a_0^* &#x3D; \frac{1}{2} (\varphi, P_0) &#x3D; \frac{1}{2} \int_{-1}^{1} \frac{1}{\sqrt{2}} \sqrt{1 + t} \cdot 1 , dt &#x3D; \frac{2}{3} \<br>a_1^* &#x3D; \frac{3}{2} (\varphi, P_1) &#x3D; \frac{3}{2} \int_{-1}^{1} \frac{1}{\sqrt{2}} \sqrt{1 + t} \cdot t , dt &#x3D; \frac{6}{15}<br>$$<br>因此，一次最佳平方逼近多项式为：<br>$$<br>q_1(t) &#x3D; a_0 P_0(t) + a_1 P_1(t) &#x3D; \frac{2}{3} + \frac{6}{15} t<br>$$</p>
+</li>
+<li><p><strong>将 $ t &#x3D; 2x - 1 $ 代入 $ q_1(t) $</strong>：<br>得到 $ \sqrt{x} $ 在区间 $[0, 1]$ 上的一次最佳平方逼近多项式：<br>$$<br>s_1(x) &#x3D; \frac{2}{3} + \frac{6}{15} (2x - 1) &#x3D; \frac{4}{15} + \frac{12}{15} x<br>$$</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="正交多项式"><a href="#正交多项式" class="headerlink" title="正交多项式"></a>正交多项式</h2><h3 id="正交函数族与正交多项式"><a href="#正交函数族与正交多项式" class="headerlink" title="正交函数族与正交多项式"></a><strong>正交函数族与正交多项式</strong></h3><p>若 $ f(x), g(x) \in C[a, b] $，$ \rho(x) \in C[a, b] $，且 $ \rho(x) $ 为 $[a, b]$ 上的权函数，且<br>$$<br>(f, g) &#x3D; \int_a^b \rho(x) f(x) g(x) , dx &#x3D; 0<br>$$<br>则称 $ f(x) $ 与 $ g(x) $ 在 $[a, b]$ 上带权 $ \rho(x) $ 正交。  </p>
+<p>设在 $[a, b]$ 给定函数族 $ {\varphi_n(x)} $，且满足<br>$$<br>(\varphi_i, \varphi_k) &#x3D; \int_a^b \rho(x) \varphi_i(x) \varphi_k(x) , dx &#x3D;<br>\begin{cases}<br>0, &amp; i \neq k, \<br>c_k, &amp; i &#x3D; k<br>\end{cases} \quad (i, k &#x3D; 0, 1, 2, \dots),<br>$$<br>则称函数族 $ {\varphi_n(x)} $ 为 $[a, b]$ 上带权 $ \rho(x) $ 的正交函数族。<br>特别地，当 $ c_k &#x3D; 1 $ 时，则该函数族称为<strong>标准正交函数族</strong>。  </p>
+<hr>
+<p>设 $ p_n(x) $ 是 $[a, b]$ 上首项系数 $ a_n \neq 0 $ 的 $ n $ 次多项式，$ \rho(x) $ 为 $[a, b]$ 上的权函数。若多项式序列 ${p_n(x)}_0^\infty$ 满足正交性，则称 ${p_n(x)}_0^\infty$ 为以 $ \rho(x) $ 为权函数的 $[a, b]$ 上的<strong>正交多项式序列</strong>，并称 $ p_n(x) $ 为以 $ \rho(x) $ 为权函数的 $[a, b]$ 上的 $ n $ 次<strong>正交多项式</strong>。</p>
+<h4 id="正交多项式序列"><a href="#正交多项式序列" class="headerlink" title="正交多项式序列"></a><strong>正交多项式序列</strong></h4><p>只要给定 $[a, b]$ 上的权函数 $ \rho(x) $，由 $ {1, x, \dots, x^n, \dots} $，利用逐个正交化手续，可构造<strong>正交多项式</strong>序列：<br>$$<br>P_0(x) &#x3D; 1, \quad P_n(x) &#x3D; x^n - \sum_{j&#x3D;0}^{n-1} \frac{(x^n, P_j)}{(P_j, P_j)} P_j(x), \quad n &#x3D; 1, 2, \dots. \quad (2.3)<br>$$</p>
+<h4 id="性质"><a href="#性质" class="headerlink" title="性质"></a><strong>性质</strong></h4><ol>
+<li><p><strong>首项系数为1</strong>：<br>$ P_n(x) $ 的首项系数为 1。  </p>
+</li>
+<li><p><strong>表示性</strong>：<br>任意 $ Q_n(x) \in H_n $ 均可表示为 $ P_0(x), P_1(x), \dots, P_n(x) $ 的线性组合。  </p>
+</li>
+<li><p><strong>正交性</strong>：<br>当 $ i \neq j $ 时，$ (P_i, P_j) &#x3D; 0 $，且 $ P_n(x) $ 与任意次数小于 $ n $ 的多项式正交。 </p>
+<hr>
+<p><strong>递推关系</strong></p>
+<p>  设 ${\varphi_n(x)}<em>{0}^{\infty}$ 是 $[a, b]$ 上带权 $\rho(x)$ 的正交多项式，对 $n \geq 0$ 成立递推关系<br>$$<br>\varphi</em>{n+1}(x) &#x3D; (x - \alpha_n) \varphi_n(x) - \beta_n \varphi_{n-1}(x), \quad n &#x3D; 0, 1, \dots<br>$$<br>其中<br>$$<br>\varphi_0(x) &#x3D; 1, \quad \varphi_{-1}(x) &#x3D; 0,<br>$$<br>$$<br>\alpha_n &#x3D; \frac{(x \varphi_n, \varphi_n)}{(\varphi_n, \varphi_n)}, \quad n &#x3D; 0, 1, \dots,<br>$$<br>$$<br>\beta_n &#x3D; \frac{(\varphi_n, \varphi_{n})}{(\varphi_{n-1}, \varphi_{n-1})}, \quad n &#x3D; 1, 2, \dots,<br>$$</p>
+<p><strong>零点性质</strong>：<br>  设 ${ \varphi_n(x) }^{\infty}_0$ 是 $[a, b]$ 上带权 $\rho(x)$ 的正交多项式，则 $\varphi_n(x)$（$n \geq 1$）在区间 $(a, b)$ 内有 $n$ 个不同的零点。<u>（零点都是实的、单重的）</u></p>
+</li>
+</ol>
+<h2 id="勒让德（Legendre）多项式"><a href="#勒让德（Legendre）多项式" class="headerlink" title="勒让德（Legendre）多项式"></a>勒让德（Legendre）多项式</h2><h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>勒让德多项式由 <strong>Rodrigues公式</strong> 定义：<br>$$<br>P_n(x) &#x3D; \frac{1}{2^n n!} \frac{d^n}{dx^n}(x^2-1)^n<br>$$</p>
+<p>最高项系数为1的勒让德多项式为<br>$$<br>\widetilde{P}_n(x) &#x3D; \frac{n!}{(2n)!} \cdot \frac{d^n}{dx^n}  (x^2 - 1)^n<br>$$</p>
+<ul>
+<li>$ P_0(x) &#x3D; 1 $</li>
+<li>$ P_1(x) &#x3D; x $</li>
+<li>$ P_2(x) &#x3D; \frac{1}{2}(3x^2 - 1)$</li>
+</ul>
+<hr>
+<h3 id="重要性质"><a href="#重要性质" class="headerlink" title="重要性质"></a>重要性质</h3><h4 id="性质1：正交性"><a href="#性质1：正交性" class="headerlink" title="性质1：正交性"></a>性质1：正交性</h4><p>在区间 $[-1, 1]$ 上满足正交性：<br>$$<br>\int_{-1}^1 P_n(x) P_m(x) , dx &#x3D;<br>\begin{cases}<br>0, &amp; m \neq n \<br>\frac{2}{2n+1}, &amp; m &#x3D; n<br>\end{cases}<br>$$</p>
+<h4 id="性质2：奇偶性"><a href="#性质2：奇偶性" class="headerlink" title="性质2：奇偶性"></a>性质2：奇偶性</h4><p>满足奇偶对称性：<br>$$<br>P_n(-x) &#x3D; (-1)^n P_n(x)<br>$$</p>
+<h4 id="性质3：最小平方误差"><a href="#性质3：最小平方误差" class="headerlink" title="性质3：最小平方误差"></a>性质3：最小平方误差</h4><p>在所有<strong>最高项系数为1的n次多项式</strong>中，勒让德多项式 $ P_n(x) $ 在 $[-1, 1]$ 上与零的平方误差最小。</p>
+<h4 id="性质4：实零点"><a href="#性质4：实零点" class="headerlink" title="性质4：实零点"></a>性质4：实零点</h4><p>$ P_n(x) $ 在区间 $[-1, 1]$ 内有 $ n $ 个不同的实零点（可用反证法证明）。</p>
+<h4 id="性质5：递推关系"><a href="#性质5：递推关系" class="headerlink" title="性质5：递推关系"></a>性质5：递推关系</h4><p>当 $ n \geq 1 $ 时，满足递推公式：<br>$$<br>(n+1)P_{n+1}(x) &#x3D; (2n+1)xP_n(x) - nP_{n-1}(x)<br>$$</p>
+<h2 id="切比雪夫-Chebyshev-多项式"><a href="#切比雪夫-Chebyshev-多项式" class="headerlink" title="切比雪夫*Chebyshev*多项式"></a>切比雪夫*Chebyshev*多项式</h2><p>当区间为 $[-1, 1]$，权函数 $\rho(x) &#x3D; \dfrac{1}{\sqrt{1 - x^2}}$ 时，由序列 ${1, x, \cdots, x^n, \cdots}$ 正交化得到的正交多项式就是 Chebyshev 多项式，它可表为：</p>
+<p>$$T_n(x) &#x3D; \cos(n \arccos x) \quad |x| \leq 1$$</p>
+<p>若令 $x &#x3D; \cos\theta$，则 $T_n(x) &#x3D; \cos n\theta$，$0 \leq \theta \leq \pi$。</p>
+<p><strong>Chebyshev 多项式重要性质：</strong></p>
+<p><strong>性质 1</strong>  </p>
+<p>Chebyshev 多项式 ${T_n(x)}$ 在区间 $[-1, 1]$ 上带权 $\rho(x) &#x3D; \dfrac{1}{\sqrt{1 - x^2}}$ 正交，且：</p>
+<p>$$<br>\int_{-1}^{1} \dfrac{T_n(x)T_m(x)}{\sqrt{1 - x^2}} , dx &#x3D;<br>\begin{cases}<br>0, &amp; n \neq m \<br>\dfrac{\pi}{2}, &amp; n &#x3D; m \neq 0 \<br>\pi, &amp; n &#x3D; m &#x3D; 0<br>\end{cases}<br>$$</p>
+<p><strong>性质 2 递推关系</strong><br>$$<br>\begin{cases}<br>T_{n+1}(x) &#x3D; 2xT_n(x) - T_{n-1}(x) &amp; (n &#x3D; 1, 2, \cdots), \<br>T_0(x) &#x3D; 1, \<br>T_1(x) &#x3D; x.<br>\end{cases}<br>$$</p>
+<p>由递推关系可得：<br>$$<br>T_0(x)&#x3D; 1\<br>T_1(x)&#x3D; x \<br>T_2(x)&#x3D; 2x^2 - 1,\<br>T_3(x)&#x3D; 4x^3 - 3x,\<br>T_4(x) &#x3D; 8x^4 - 8x^2 + 1\<br>T_5(x) &#x3D; 16x^5 - 20x^3 + 5x.<br>$$</p>
+<p><strong>性质 3</strong>  </p>
+<p>$T_{2k}(x)$ 只含 $x$ 的偶次方，$T_{2k+1}(x)$ 只含 $x$ 的奇次方，这一性质由递推关系可直接得到。</p>
+<p><strong>性质 4</strong>  </p>
+<p>$T_n(x)$ 在区间 $[-1, 1]$ 上有 $n$ 个零点：</p>
+<p>$$x_k &#x3D; \cos \dfrac{2k + 1}{2n}\pi, \quad k &#x3D; 0, 1, \cdots, n - 1$$</p>
+<p><strong>性质5</strong></p>
+<p>$T_n(x)$的首项$x^n$的系数为$2^{n-1}(n&#x3D;1,2…)$</p>
+<h2 id="最小二乘拟合"><a href="#最小二乘拟合" class="headerlink" title="最小二乘拟合"></a>最小二乘拟合</h2><p>对于给定的数据 $(x_i, y_i)$（$i&#x3D;1,2,\ldots,N$），选取线性无关的函数族 $\varphi_0, \varphi_1, \ldots, \varphi_m$ 及权函数 $\omega(x)$，要求在函数类 $\Phi &#x3D; \text{Span}{\varphi_0, \varphi_1, \ldots, \varphi_m}$ 中寻找一个函数</p>
+<p>$$<br>\varphi^<em>(x) &#x3D; a_0^</em> \varphi_0 + a_1^* \varphi_1 + \cdots + a_m^* \varphi_m \quad （m &lt; N）<br>$$</p>
+<p>使</p>
+<p>$$<br>I &#x3D; \sum_{i&#x3D;1}^N \omega(x_i) [y_i - \varphi(x_i)]^2<br>$$</p>
+<p>达到极小。显然上式是 $m+1$ 个变量 $a_0, a_1, \ldots, a_m$ 的二次函数：</p>
+<p>$$<br>I(a_0, a_1, \ldots, a_m) &#x3D; \sum_{i&#x3D;1}^N \omega(x_i) \left[ y_i - \sum_{k&#x3D;0}^m a_k \varphi_k(x_i) \right]^2<br>$$</p>
+<p>根据多元函数极值条件<br>$$<br>\frac{1}{2} \frac{\partial I}{\partial a_j} &#x3D; \sum_{i&#x3D;1}^N \omega(x_i) \varphi_j(x_i) \left[ y_i - \sum_{k&#x3D;0}^m a_k \varphi_k(x_i) \right] &#x3D; 0 \quad （j&#x3D;0,1,\ldots,m）<br>$$</p>
+<blockquote>
+<p><strong>引入内积：</strong><br>$$<br>(f, g) &#x3D;<br>\begin{cases}<br>\sum ^{N} <em>{i&#x3D;1} \omega(x_i) f(x_i) g(x_i) &amp; \text{离散型} \<br>\int</em>{a}^{b} \rho(x) f(x) g(x) , dx &amp; \text{连续型}<br>\end{cases}<br>$$</p>
+</blockquote>
+<p>方程组：</p>
+<p>$$<br>\sum_{i&#x3D;1}^{N} \omega(x_i) \left[ y_i - \sum_{k&#x3D;0}^{m} a_k \varphi_k(x_i) \right] \varphi_j(x_i) &#x3D; 0 \quad (j &#x3D; 0, 1, \ldots, m)<br>$$</p>
+<p>可以表示为：</p>
+<p>$$<br>a_0 (\varphi_j, \varphi_0) + a_1 (\varphi_j, \varphi_1) + \cdots + a_m (\varphi_j, \varphi_m) &#x3D; (\varphi_j, y)  \quad (j &#x3D; 0, 1, \ldots, m)<br>$$</p>
+<p>这个方程组称为<strong>法方程</strong>或<strong>正规方程组</strong>。若用 ${\varphi_0, \varphi_1, \ldots, \varphi_m}$ 构成一个 $N \times (m+1)$ 的矩阵 $A$，即：</p>
+<p>$$<br>A &#x3D;<br>\begin{bmatrix}<br>\varphi_0(x_1) &amp; \varphi_1(x_1) &amp; \cdots &amp; \varphi_m(x_1) \<br>\varphi_0(x_2) &amp; \varphi_1(x_2) &amp; \cdots &amp; \varphi_m(x_2) \<br>\vdots &amp; \vdots &amp; \ddots &amp; \vdots \<br>\varphi_0(x_N) &amp; \varphi_1(x_N) &amp; \cdots &amp; \varphi_m(x_N)<br>\end{bmatrix}<br>$$</p>
+<p>引入向量：</p>
+<p>$$<br>\alpha &#x3D; (a_0, a_1, \ldots, a_m)^T, \quad Y &#x3D; (y_1, y_2, \ldots, y_N)^T<br>$$</p>
+<p>法方程组可以写成以下矩阵形式：(权w&#x3D;1)</p>
+<p>$$<br>A^T A \alpha &#x3D; A^T Y<br>$$</p>
+<p>由于 $\varphi_0, \varphi_1, \ldots, \varphi_m$ 线性无关，法方程组存在唯一解：</p>
+<p>$$<br>\alpha &#x3D; (a_0^<em>, a_1^</em>, \ldots, a_m^*)^T<br>$$</p>
+<p>从而得到函数：</p>
+<p>$$<br>\varphi^<em>(x) &#x3D; a_0^</em> \varphi_0 + a_1^* \varphi_1 + \cdots + a_m^* \varphi_m<br>$$</p>
+<p>最小平方误差为：</p>
+<p>$$<br>\delta^2 &#x3D; | y - \varphi^* |^2_2 &#x3D; (y - \varphi^<em>, y - \varphi^</em>) &#x3D; | y |^2_2 - \sum_{j&#x3D;0}^m a_j^* (\varphi_j, y)<br>$$</p>
+<h3 id="代数多项式拟合"><a href="#代数多项式拟合" class="headerlink" title="代数多项式拟合"></a>代数多项式拟合</h3><p>若取基函数 $\varphi_0 &#x3D; 1, \varphi_1 &#x3D; x, \ldots, \varphi_m &#x3D; x^m$，则相应的法方程组为：</p>
+<h1 id="begin-bmatrix-sum-i-1-N-omega-i-sum-i-1-N-omega-i-x-i-cdots-sum-i-1-N-omega-i-x-i-m-sum-i-1-N-omega-i-x-i-sum-i-1-N-omega-i-x-i-2-cdots-sum-i-1-N-omega-i-x-i-m-1-vdots-vdots-ddots-vdots-sum-i-1-N-omega-i-x-i-m-sum-i-1-N-omega-i-x-i-m-1-cdots-sum-i-1-N-omega-i-x-i-2m-end-bmatrix-begin-bmatrix-a-0-a-1-vdots-a-m-end-bmatrix"><a href="#begin-bmatrix-sum-i-1-N-omega-i-sum-i-1-N-omega-i-x-i-cdots-sum-i-1-N-omega-i-x-i-m-sum-i-1-N-omega-i-x-i-sum-i-1-N-omega-i-x-i-2-cdots-sum-i-1-N-omega-i-x-i-m-1-vdots-vdots-ddots-vdots-sum-i-1-N-omega-i-x-i-m-sum-i-1-N-omega-i-x-i-m-1-cdots-sum-i-1-N-omega-i-x-i-2m-end-bmatrix-begin-bmatrix-a-0-a-1-vdots-a-m-end-bmatrix" class="headerlink" title="$$\begin{bmatrix}\sum_{i&#x3D;1}^{N} \omega_i &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^m \\sum_{i&#x3D;1}^{N} \omega_i x_i &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^2 &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{m+1} \\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\sum_{i&#x3D;1}^{N} \omega_i x_i^m &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{m+1} &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{2m}\end{bmatrix}\begin{bmatrix}a_0 \a_1 \\vdots \a_m\end{bmatrix}"></a>$$<br>\begin{bmatrix}<br>\sum_{i&#x3D;1}^{N} \omega_i &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^m \<br>\sum_{i&#x3D;1}^{N} \omega_i x_i &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^2 &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{m+1} \<br>\vdots &amp; \vdots &amp; \ddots &amp; \vdots \<br>\sum_{i&#x3D;1}^{N} \omega_i x_i^m &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{m+1} &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{2m}<br>\end{bmatrix}<br>\begin{bmatrix}<br>a_0 \<br>a_1 \<br>\vdots \<br>a_m<br>\end{bmatrix}</h1><p>\begin{bmatrix}<br>\sum_{i&#x3D;1}^{N} \omega_i y_i \<br>\sum_{i&#x3D;1}^{N} \omega_i x_i y_i \<br>\vdots \<br>\sum_{i&#x3D;1}^{N} \omega_i x_i^m y_i<br>\end{bmatrix}<br>$$</p>
+<p>求出法方程组的解 $a_0, a_1, \ldots, a_m$，即可得到拟合多项式：</p>
+<p>$$<br>\varphi(x) &#x3D; a_0 + a_1 x + \cdots + a_m x^m<br>$$<br><span style="color:#FF0000">PS:当$n\geq3$时候，求解法方程时将出现系数矩阵为病态的问题</span></p>
+<h3 id="用正交多项式拟合"><a href="#用正交多项式拟合" class="headerlink" title="用正交多项式拟合"></a>用正交多项式拟合</h3><p>用最小二乘法得到的法方程，其系数矩阵 $G$ 是病态的。但如果 $\varphi_0(x), \varphi_1(x), \ldots, \varphi_n(x)$ 是关于点集 ${x_i}$（$i &#x3D; 0, 1, \ldots, m$）带权 $\omega(x_i)$（$i &#x3D; 0, 1, \ldots, m$）正交的函数族，即：</p>
+<p>$$<br>(\varphi_j, \varphi_k) &#x3D; \sum_{i&#x3D;0}^{m} \omega(x_i) \varphi_j(x_i) \varphi_k(x_i) &#x3D;<br>\begin{cases}<br>0, &amp; j \neq k, \<br>A_k &gt; 0, &amp; j &#x3D; k<br>\end{cases}<br>$$</p>
+<p><span style="color:#FF0000"> $a_k^<em>$ 的表达式为：</span><br>$$<br>a_k^</em> &#x3D; \frac{(f, \varphi_k)}{(\varphi_k, \varphi_k)} &#x3D; \frac{\sum_{i&#x3D;0}^{m} \omega(x_i) f(x_i) \varphi_k(x_i)}{\sum_{i&#x3D;0}^{m} \omega(x_i) \varphi_k^2(x_i)}, \quad k &#x3D; 0, 1, \ldots, n<br>$$</p>
+<p><span style="color:#FF0000"> 平方误差的表达式为：</span><br>$$<br>| \delta |_2^2 &#x3D; | f |<em>2^2 - \sum</em>{k&#x3D;0}^{n} A_k (a_k^*)^2<br>$$</p>
+<h3 id="正交多项式构造"><a href="#正交多项式构造" class="headerlink" title="正交多项式构造"></a>正交多项式构造</h3><p>根据给定节点 $x_0, x_1, \ldots, x_m$ 及权函数 $\omega(x) &gt; 0$，构造带权正交多项式 ${P_n(x)}$，其中 $n \leq m$，并用递推公式表示 $P_k(x)$。</p>
+<p>定义首项系数为 1 的多项式 $P_k(x)$：</p>
+<p>$$<br>P_0(x) &#x3D; 1 \<br>P_1(x) &#x3D; (x - \alpha_1)P_0(x) \<br>P_{k+1}(x) &#x3D; (x - \alpha_{k+1}) P_k(x) - \beta_k P_{k-1}(x) \quad k &#x3D; 1, 2, \ldots，n-1<br>$$</p>
+<p>根据 $P_k(x)$ 的正交性，得：</p>
+<p>$$<br>\alpha_{k+1} &#x3D; \frac{(x P_k, P_k)}{(P_k, P_k)}, \quad k &#x3D; 0, 1, \ldots, n-1<br>$$</p>
+<p>$$<br>\beta_k &#x3D; \frac{(P_k, P_k)}{(P_{k-1}, P_{k-1})}, \quad k &#x3D; 1, 2, \ldots, n-1<br>$$</p>
+<p>逐步把 $a_k^* P_k(x)$ 累加到 $S(x)$ 中去，最后就可得到所求的拟合曲线</p>
+<p>$$<br>y &#x3D; S(x) &#x3D; a_0^* P_0(x) + a_1^* P_1(x) + \cdots + a_n^* P_n(x).<br>$$</p>
+<h2 id="最佳一致逼近多项式"><a href="#最佳一致逼近多项式" class="headerlink" title="最佳一致逼近多项式"></a>最佳一致逼近多项式</h2><h3 id="最佳平方逼近"><a href="#最佳平方逼近" class="headerlink" title="最佳平方逼近"></a>最佳平方逼近</h3><p><strong>最佳平方逼近</strong>，即连续型 L-S 逼近，在 $|f|_2 &#x3D; \sqrt{(f, f)}$ 意义下，使得 $|P - y|_2$ 最小。</p>
+<h3 id="最佳一致逼近"><a href="#最佳一致逼近" class="headerlink" title="最佳一致逼近"></a>最佳一致逼近</h3><p><strong>最佳一致逼近</strong>（Uniform Approximation），在 $|f|<em>\infty &#x3D; \max</em>{x \in [a, b]} |f(x)|$ 意义下，使得 $|P - y|_\infty$ 最小，也称为 <strong>minimax problem</strong>。</p>
+<h3 id="偏差"><a href="#偏差" class="headerlink" title="偏差"></a>偏差</h3><p>设 $ f \in C[a, b] $，$ p_n \in H_n &#x3D; \text{span}{1, x, \cdots, x^n} $，称</p>
+<p>$$<br>\Delta(f, p_n) &#x3D; |f - p_n|<em>\infty &#x3D; \max</em>{a \leq x \leq b} |f(x) - p_n(x)|<br>$$</p>
+<p>为 $ p_n $ 与 $ f $ 的<strong>偏差</strong>。</p>
+<h3 id="偏差点"><a href="#偏差点" class="headerlink" title="偏差点"></a>偏差点</h3><p>设 $ f \in C[a, b] $，$ p \in H_n $，若存在 $ x_0 \in [a, b] $ 使得</p>
+<p>$$<br>|f(x_0) - p(x_0)| &#x3D; \Delta(f, p) &#x3D; \max_{a \leq x \leq b} |f(x) - p(x)| &#x3D; \mu,<br>$$</p>
+<p>则称 $ x_0 $ 是 $ p $ 关于 $ f $ 的<strong>偏差点</strong>。</p>
+<ul>
+<li>若 $ p(x_0) - f(x_0) &#x3D; \mu $，则称 $ x_0 $ 为<strong>正偏差点</strong>；</li>
+<li>若 $ p(x_0) - f(x_0) &#x3D; -\mu $，则称 $ x_0 $ 为<strong>负偏差点</strong>。。</li>
+</ul>
+<h3 id="最小偏差"><a href="#最小偏差" class="headerlink" title="最小偏差"></a>最小偏差</h3><p>若</p>
+<p>$$<br>E_n &#x3D; \inf_{p_n \in H_n} \Delta(f, p_n) &#x3D; \min_{p_n \in H_n} \Delta(f, p_n)<br>$$</p>
+<p>则称 $ E_n $ 为 $ p_n $ 与 $ f $ 的 <strong>最小偏差</strong>。</p>
+<h3 id="最佳一致逼近多项式-1"><a href="#最佳一致逼近多项式-1" class="headerlink" title="最佳一致逼近多项式"></a>最佳一致逼近多项式</h3><p>设 $ f \in C[a, b] $，若存在 $ p_n^* \in H_n $，使<br>$$<br>\Delta(f, p_n^*) &#x3D; E_n &#x3D; \min_{p_n \in H_n} \Delta(f, p_n)<br>$$</p>
+<p>则称 $ p_n^* $ 为 $ f $ 在 $[a, b]$ 上的<strong>最佳一致逼近多项式</strong>，简称<strong>最佳逼近多项式</strong>。</p>
+<blockquote>
+<p><strong>定理：</strong></p>
+<p>若 $ p^<em>(x) \in H_n $ 是 $ f(x) \in C[a, b] $ 的最佳逼近多项式，则 $ p^</em>(x) $ 同时存在正、负偏差点。</p>
+<p><strong>定理：</strong></p>
+<p>若 $ f \in C[a, b] $，则存在 $ p_n^* \in H_n $，使得</p>
+<p>$$<br>\Delta(f, p_n^*) &#x3D; E_n &#x3D; \min_{p_n \in H_n} \Delta(f, p_n)<br>$$<br>成立</p>
+<p><strong>定理：</strong></p>
+<p>$ p_n \in H_n $ 是 $ f \in C[a, b] $ 的最佳逼近多项式的充分必要条件是，在 $[a, b]$ 上至少有 $ n + 2 $ 个轮流为正负的偏差点，即至少有 $ n + 2 $ 个点 $ a \leq x_1 &lt; x_2 &lt; \dots &lt; x_{n+2} \leq b $，使得</p>
+<p>$$<br>p_n^<em>(x_k) - f(x_k) &#x3D; (-1)^k \sigma | f - p_n^</em> |_\infty, \quad \sigma &#x3D; \pm 1, \quad k &#x3D; 1, 2, \cdots, n+2<br>$$</p>
+<p>上述点 ${x_k}_{1}^{n+2}$ 称为 <strong>Chebyshev 交错点组</strong>。</p>
+<p><strong>推论1（唯一性定理）：</strong></p>
+<p>设 $ f \in C[a, b] $，则在 $ H_n $ 中的最佳逼近多项式是唯一的。</p>
+<p><strong>推论 2</strong>：</p>
+<p>若 $ f \in C[a, b] $，则其最佳逼近多项式 $ p_n^*(x) \in H_n $ 是 $ f $ 的一个 <strong>Lagrange 插值多项式</strong>。</p>
+</blockquote>
+<blockquote>
+<h3 id="最佳一次一致逼近多项式的求法"><a href="#最佳一次一致逼近多项式的求法" class="headerlink" title="最佳一次一致逼近多项式的求法"></a>最佳一次一致逼近多项式的求法</h3><p><strong>推导过程</strong></p>
+<p>$ n &#x3D; 1 $ 时求 $ p_1(x) &#x3D; a_0 + a_1 x $ 的方法</p>
+<p>设 $ f \in C^2[a, b] $ 且 $ f’’ $ 在 $[a, b]$ 上不变号，由上面的定理可知，存在点<br>$$<br>a \leq x_1 &lt; x_2 &lt; x_3 \leq b,<br>$$</p>
+<p>使得</p>
+<p>$$<br>p_1(x_k) - f(x_k) &#x3D; (-1)^k \sigma E_n, \quad k &#x3D; 1, 2, 3; \quad \sigma &#x3D; \pm 1.<br>$$</p>
+<p>由于 $ f’’ \neq 0 $，故 $ f’ $ 在 $[a, b]$ 上单调，于是 $ f’(x) - p_1’(x) &#x3D; f’(x) - a_1&#x3D;0 $ 只有一个根 $ x_2 $。因此，$ p_1 $ 对 $ f $ 的另两个偏差点只能在 $[a, b]$ 的端点，故有</p>
+<p>$$<br>x_1 &#x3D; a, \quad x_3 &#x3D; b.<br>$$</p>
+<p>由此可得</p>
+<p>$$<br>p_1(a) - f(a) &#x3D; -\left[ p_1(x_2) - f(x_2) \right] &#x3D; p_1(b) - f(b),<br>$$</p>
+<p>或</p>
+<p>$$<br>a_0 + a_1 a - f(a) &#x3D; a_0 + a_1 b - f(b)<br>$$</p>
+<p>$$<br>a_0 + a_1 a - f(a) &#x3D; -\left[ a_0 + a_1 x_2 - f(x_2) \right]<br>$$</p>
+<p>通过上面两个公式可得</p>
+<p>$$<br>a_1 &#x3D; \frac{f(b) - f(a)}{b - a}<br>$$</p>
+<p>$$<br>a_0 &#x3D; \frac{1}{2} \left[ f(a) + f(x_2) \right] - \frac{a+x_2}{2} \frac{f(b) - f(a)}{b - a} \<br>f’(x_2) &#x3D; a_1<br>$$</p>
+<p>由此得 $ f $ 在 $[a, b]$ 上的最佳一次逼近多项式</p>
+<p>$$<br>p_1(x) &#x3D; a_0 + a_1 x.<br>$$</p>
+<p><u><strong>例题</strong></u></p>
+<p>求函数 $ f(x) &#x3D; \sqrt{x} $ 在区间 $[-1, 1]$ 上的最佳一次逼近多项式。</p>
+<ol>
+<li>确定二阶导数不变号</li>
+</ol>
+<p>函数 $ f(x) &#x3D; \sqrt{x} $ 的二阶导数为：</p>
+<p>$$<br>f’’(x) &#x3D; -\frac{1}{4} x^{-\frac{3}{2}}<br>$$</p>
+<p>在区间 $\left(\frac{1}{4}, 1\right)$ 上，$ f’’(x) $ 不变号。</p>
+<ol start="2">
+<li>计算多项式系数</li>
+</ol>
+<p>根据最佳一次逼近多项式的性质，设 $ p_1(x) &#x3D; a_0 + a_1 x $<br>$$<br>a_1&#x3D;\frac {f(1)-f(\frac{1}{4})}{1-\frac{1}{4}}&#x3D;\frac{2}{3} \<br>f’(x_2) &#x3D; \frac{1}{2\sqrt{x_2}} &#x3D; a_1 \<br>x_2&#x3D;\frac{9}{16} \<br>a_0 &#x3D; \frac{1}{2} \left[ f(a) + f(x_2) \right] - \frac{a+x_2}{2} \frac{f(b) - f(a)}{b - a}&#x3D;\frac{17}{48}<br>$$</p>
+<p>最佳一次逼近多项式为：<br>$$<br>p_1(x) &#x3D; \frac{17}{48} + \frac{2}{3} x<br>$$</p>
+<p>在区间 $\left[\frac{1}{4}, 1\right]$ 上，最大误差为：</p>
+<p>$$<br>\max_{\frac{1}{4} \leq x \leq 1} \left| \sqrt{x} - p_1(x) \right| &#x3D; \frac{1}{48}<br>$$</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>数值分析</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数值分析（二）</title>
     <url>/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>此文章包含数值积分部分—————————————————————————————————————————————————————-</p>
@@ -1744,28 +2603,6 @@ $$
       </tags>
   </entry>
   <entry>
-    <title>笼中雀</title>
-    <url>/blog/2025/02/25/%E7%AC%BC%E4%B8%AD%E9%9B%80/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>总有些时间，是想写点什么，但又感觉没什么好写的。</p>
-<blockquote>
-<p>以前总想着如果自己没能做到一些东西，通过逃避是可以躲过去的。但其实现在才发现人生上一个阶段没解决的问题，只会在下一个阶段更加放大，现在好像已经躲不掉了。 或许早该重新梳理一遍曾经的路了，沉下心来先解决 一些曾经没解决的问题！</p>
-</blockquote>
-<hr>
-<p>一路走来，渐渐认识到，我一直是个很难做出决定的人。在每次决定前都会犹豫，所以就习惯拖着，最后发现已经无需做决定了，时间已经排除掉会犹豫的选项了。</p>
-<hr>
-<p>我要自由，自由。</p>
-<hr>
-<hr>
-<p>置身其中，好一个笼中雀。</p>
-]]></content>
-      <categories>
-        <category>想法</category>
-      </categories>
-      <tags>
-        <tag>笼中雀</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>markdown和latex语法写作笔记</title>
     <url>/blog/2025/01/27/%E8%AF%AD%E6%B3%95%E5%86%99%E4%BD%9C%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="引用块"><a href="#引用块" class="headerlink" title="引用块"></a>引用块</h1><p>引用块用&gt; 中间有个空格，引用块里可以接二级引用块<br><em><strong>&#x3D;&#x3D;示例&#x3D;&#x3D;</strong></em></p>
@@ -2024,892 +2861,26 @@ $$
       </tags>
   </entry>
   <entry>
-    <title>数值分析（一）</title>
-    <url>/blog/2025/02/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>此文章包含误差、插值法和函数逼近内容—————————————————————————————————————————————————————-</p>
-<p><span style="color:blue">$C^p[a,b]$表示具有$p$阶连续导数的函数空间；$C^0$表述函数连续，没有要求可导</span></p>
-<h1 id="第一章-误差"><a href="#第一章-误差" class="headerlink" title="第一章 误差"></a>第一章 误差</h1><h2 id="误差"><a href="#误差" class="headerlink" title="误差"></a>误差</h2><p>设 $x$ 为准确值，$x^* $ 为 $x$ 的一个近似值，称  $$e^* &#x3D; x^* - x$$  为<strong>绝对误差</strong>，简称为<strong>误差</strong>。</p>
-<p>对于一般情形，  $$| x^*  - x | ≤ ε^* $$$ε^* $为<strong>绝对误差限</strong><br><strong>相对误差</strong>的公式表示为：  $$e_r^* &#x3D; \frac{e^* }{x}$$</p>
-<p>实际中一般取$$e_r^* &#x3D; \frac{e^* }{x^* }$$</p>
-<p>$x$ 的<strong>相对误差上限</strong>定义为$\varepsilon^* &#x3D; \frac{\varepsilon^* }{|x^* |}$</p>
-<h2 id="有效数字"><a href="#有效数字" class="headerlink" title="有效数字"></a>有效数字</h2><h3 id="有效数字的定义"><a href="#有效数字的定义" class="headerlink" title="有效数字的定义"></a>有效数字的定义</h3><p>若近似值 $ x^* $ 的误差限是某一位的半个单位，该位到 $ x $ 的第一位非零数字共有 $ n $ 位，则 $ x $ 有 $ n $ 位有效数字。  </p>
-<p><strong>示例</strong><br>圆周率 $ \pi &#x3D; 3.14159265 \dots $  </p>
-<ul>
-<li>按四舍五入原则，若取四位小数，则 $ \pi \approx 3.1416 $；  </li>
-<li>取五位小数，则 $ \pi \approx 3.14159 $。</li>
-</ul>
-<p>它们的绝对误差不超过末位数的半个单位，即：  </p>
-<ul>
-<li>$$| \pi - 3.1416 | \leq \frac{1}{2} \times 10^{-4}$$  五位有效数值  </li>
-<li>$$| \pi - 3.14159 | \leq \frac{1}{2} \times 10^{-5}$$  六位有效数值</li>
-</ul>
+    <title>笼中雀</title>
+    <url>/blog/2025/02/25/%E7%AC%BC%E4%B8%AD%E9%9B%80/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>总有些时间，是想写点什么，但又感觉没什么好写的。</p>
 <blockquote>
-<p>按四舍五入规则的直接从后往前数就行了</p>
-</blockquote>
-<p>用科学计数法，记 $ x^* &#x3D; \pm 0.a_1 a_2 \cdots a_n \times 10^m $（其中 $ a_1 \neq 0 $）。若 $ |x - x^* | \leq 0.5 \times 10^{m-n} $（即 $ a_n $ 的截取按四舍五入规则），则称 $ x^* $ 为有 <strong>$ n $</strong> 位有效数字，精确到 <strong>$ 10^{m-n} $</strong>。</p>
-<h3 id="有效数字与相对误差的关系"><a href="#有效数字与相对误差的关系" class="headerlink" title="有效数字与相对误差的关系"></a>有效数字与相对误差的关系</h3><p><strong>有效数字 ⇒ 相对误差限</strong></p>
-<p> 已知 $ x^* $ 有 $ n $ 位有效数字，则其相对误差限为<br>$$<br>\varepsilon_r *  &#x3D; \left| \frac{\varepsilon^* }{x^* } \right| &#x3D; \frac{0.5 \times 10^{m-n}}{0.a_1 a_2 \cdots a_n \times 10^m} &#x3D; \frac{10^{-n}}{2 \times 0.a_1 \cdots}  \leq \frac{1}{2a_1} \times 10^{-n+1}<br>$$<br><strong>相对误差限 ⇒ 有效数字</strong></p>
-<p> 已知 $ x^* $ 的相对误差限可写为<br>$$<br>\varepsilon_r * &#x3D; \frac{1}{2(a_1 + 1)} \times 10^{-n+1}<br>$$<br>则<br>$$ { }<br>|x - x^* | \leq \varepsilon_r^ *   \cdot |x^* | &#x3D; \frac{10^{-n+1}}{2(a_1 + 1)} \times 0.a_1 a_2 \cdots \times 10^m<br>&lt; \frac{10^{-n+1}}{2(a_1 + 1)} \cdot (a_1 + 1) \times 10^{m-1} &#x3D; 0.5 \times 10^{m-n}<br>$$<br>可见 $ x^* $ 至少有 $ n $ 位有效数字。</p>
-<h2 id="求函数值和算术运算的误差估计"><a href="#求函数值和算术运算的误差估计" class="headerlink" title="求函数值和算术运算的误差估计"></a>求函数值和算术运算的误差估计</h2><p>设多元函数 $ A &#x3D; f(x_1, x_2, \cdots, x_n) $，$ x_1^* , x_2^* , \cdots, x_n^*  $ 为 $ x_1, x_2, \cdots, x_n $ 的近似值。 则 $ A $ 的近似值 $ A^* $：$ A^* &#x3D; f(x_1^* , x_2^* , \cdots, x_n^* ) $。 </p>
-<p>函数值 $ A^* $ 的绝对误差： $$ A - A^*  &#x3D; f(x_1, \cdots, x_n) - f(x_1^* , \cdots, x_n^* ) $$ </p>
-<p>在点 $ x &#x3D; (x_1, x_2, \cdots, x_n) $ 的 Taylor 展开式，设 $ |x_i - x_i^* | $ ($ i &#x3D; 1, 2, \cdots, n $) 都很小</p>
-<p>略去高阶项：<br>$$<br>A - A^* &#x3D; f(x_1, \cdots, x_n) - f(x_1^* , \cdots, x_n^* ) \approx \sum_{j&#x3D;1}^n \frac{\partial f(x)}{\partial x_j} (x_j - x_j^* )<br>$$<br>或<br>$$<br>e(A) \approx \sum_{j&#x3D;1}^n \frac{\partial f(x)}{\partial x_j} e(x_j)<br>$$</p>
-<p>$$<br>|e(A)| \leq \sum_{j&#x3D;1}^n \left| \frac{\partial f(x)}{\partial x_j} \right| |e(x_j)|<br>$$</p>
-<p><strong>一元函数时：</strong><br>$$<br>e^* (x)&#x3D;x^*-x<br>$$</p>
-<p>$$<br>e^* (A)&#x3D;f(x^* )-f(x)&#x3D; f’(\xi)(x^* -x)<br>$$</p>
-<h2 id="病态问题与条件数"><a href="#病态问题与条件数" class="headerlink" title="病态问题与条件数"></a>病态问题与条件数</h2><p>$$ | e_r(y) | &#x3D; \left| \frac{e(y)}{f(x^* )} \right| &#x3D; \left| \frac{f(x) - f(x^* )}{f(x^* )} \right| $$ $$ &#x3D; \left| \frac{f(x) - f(x^* )}{x - x^* } \cdot \frac{x}{f(x)} \cdot \frac{x - x^* }{x} \right| $$ $$ \approx \left| \frac{x \cdot f’(x)}{f(x)} \right| \cdot \left| \frac{x - x^*}{x} \right| &#x3D; \left| \frac{x \cdot f’(x)}{f(x)} \right| \cdot | e_r(x) | $$ </p>
-<p>$| \frac{x \cdot f’(x)}{f(x)} |$为条件数，条件数很大时，初始数据的微小误差可能引起结果 $ A $ 的很大误差。</p>
-<p>对数学问题而言，如果输入数据有微小扰动，引起输出数据（即数学问题的解）有很大扰动，则称数学问题是病态问题，否则称为良态问题。</p>
-<h1 id="第二章-插值法"><a href="#第二章-插值法" class="headerlink" title="第二章 插值法"></a>第二章 插值法</h1><h2 id="插值法定义"><a href="#插值法定义" class="headerlink" title="插值法定义"></a>插值法定义</h2><h2 id="插值函数定义"><a href="#插值函数定义" class="headerlink" title="插值函数定义"></a>插值函数定义</h2><p>设函数 $y &#x3D; f(x)$ 在区间 $[a, b]$ 上有定义，且满足节点排列：<br>$$ a \leq x_0 &lt; x_1 &lt; \cdots &lt; x_n \leq b $$</p>
-<p>已知在点 ${x_0, x_1, \ldots, x_n}$ 上的对应函数值 ${y_0, y_1, \ldots, y_n}$。</p>
-<p>若存在一简单函数 $p(x)$，满足插值条件：<br>$$ p(x_i) &#x3D; y_i \quad (i &#x3D; 0, 1, 2, \ldots, n) \tag{2.1} $$  （1） </p>
-<p>则称：</p>
-<ul>
-<li>$p(x)$ 为 $f(x)$ 的<strong>插值函数</strong></li>
-<li>${x_0, x_1, \ldots, x_n}$ 为<strong>插值节点</strong></li>
-<li>包含节点的区间 $[a, b]$ 为<strong>插值区间</strong></li>
-<li>式 (1) 为<strong>插值条件</strong></li>
-<li>求插值函数的方法称为<strong>插值法</strong></li>
-</ul>
-<hr>
-<h3 id="插值函数分类"><a href="#插值函数分类" class="headerlink" title="插值函数分类"></a>插值函数分类</h3><p>当 $p(x)$ 具有以下形式时：</p>
-<ol>
-<li><p><strong>多项式插值</strong><br>$$ p(x) &#x3D; a_0 + a_1x + \cdots + a_nx^n \quad (a_i \in \mathbb{R}) \tag{2.2} $$<br>其中多项式次数 $\leq n$</p>
-</li>
-<li><p><strong>分段插值</strong><br>$p(x)$ 为分段多项式</p>
-</li>
-<li><p><strong>三角插值</strong><br>$p(x)$ 为三角多项式</p>
-</li>
-</ol>
-<blockquote>
-<p>满足$p(x_i)&#x3D;y_i,i&#x3D;0,\cdots n$ 次数不超过<strong>n</strong>的插值多项式是唯一存在的</p>
-</blockquote>
-<h2 id="拉格朗日插值"><a href="#拉格朗日插值" class="headerlink" title="拉格朗日插值"></a>拉格朗日插值</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>求 <strong>n次多项式</strong>：<br>$$<br>L_n(x) &#x3D; y_0 l_0(x) + y_1 l_1(x) + \cdots + y_n l_n(x)<br>$$<br>满足插值条件：<br>$$<br>L_n(x_i) &#x3D; y_i \quad (i &#x3D; 0,1,2,\ldots,n)<br>$$</p>
-<p><strong>约束条件</strong>：</p>
-<ul>
-<li>无重合节点：当 $i \neq j$ 时，$x_i \neq x_j$</li>
-</ul>
-<hr>
-<h3 id="线性插值特例-n-1"><a href="#线性插值特例-n-1" class="headerlink" title="线性插值特例 ($n&#x3D;1$)"></a>线性插值特例 ($n&#x3D;1$)</h3><p>已知两点 $(x_0, y_0)$ 和 $(x_1, y_1)$，构造一次多项式：<br>$$<br>L_1(x) &#x3D; l_0(x)y_0 + l_1(x)y_1<br>$$</p>
-<p><strong>插值条件</strong>：<br>$$<br>\begin{cases}<br>L_1(x_0) &#x3D; y_0 \<br>L_1(x_1) &#x3D; y_1<br>\end{cases}<br>$$</p>
-<p><strong>几何意义</strong>：$L_1(x)$ 是过点 $(x_0, y_0)$ 和 $(x_1, y_1)$ 的直线</p>
-<h4 id="插值公式"><a href="#插值公式" class="headerlink" title="插值公式"></a>插值公式</h4><p>$$<br>L_1(x) &#x3D; \frac{x - x_1}{x_0 - x_1} y_0 + \frac{x - x_0}{x_1 - x_0}y_1<br>$$</p>
-<p>$$<br>\frac{x - x_1}{x_0 - x_1}与\frac{x - x_0}{x_1 - x_0}称为拉氏基函数<br>$$</p>
-<p>等价于点斜式：<br>$$<br>L_1(x) &#x3D; y_0 + \frac{y_1 - y_0}{x_1 - x_0}(x - x_0)<br>$$</p>
-<hr>
-<h4 id="公式说明"><a href="#公式说明" class="headerlink" title="公式说明"></a>公式说明</h4><table>
-<thead>
-<tr>
-<th>符号</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>$l_i(x)$</td>
-<td>拉格朗日基函数，满足 $l_i(x_j) &#x3D; \delta_{ij}$</td>
-</tr>
-<tr>
-<td>$\delta_{ij}$</td>
-<td>克罗内克函数，当 $i&#x3D;j$ 时为1，否则为0</td>
-</tr>
-<tr>
-<td>$x_i$</td>
-<td>互不相同的插值节点</td>
-</tr>
-</tbody></table>
-<h3 id="n-geq-1-时的插值公式"><a href="#n-geq-1-时的插值公式" class="headerlink" title="$n \geq 1$时的插值公式"></a>$n \geq 1$时的插值公式</h3><p><strong>目标</strong>：希望找到$l_i(x_j)$，满足下式：<br>$$<br>l_i(x_j) &#x3D; \delta_{ij} &#x3D; \begin{cases}<br>1 &amp; i &#x3D; j \<br>0 &amp; i \neq j<br>\end{cases} \quad (i,j&#x3D;0,1,\dots,n)<br>$$</p>
-<p><strong>然后令</strong>：<br>$$<br>L_n(x) &#x3D; \sum_{i&#x3D;0}^n l_i(x) y_i \quad \text{显然满足} \quad L_n(x_i) &#x3D; y_i<br>$$</p>
-<ol>
-<li><p><strong>零点分析</strong>：<br>每个基函数 $l_i(x)$ 在 $n$ 个节点处取零值：<br>$$<br>l_i(x_j) &#x3D; 0 \quad (j \neq i)<br>$$<br>即多项式可表示为：<br>$$<br>l_i(x) &#x3D; C_i \prod_{\substack{j&#x3D;0 \ j \neq i}}^n (x - x_j)<br>$$</p>
-</li>
-<li><p><strong>归一化条件</strong>：<br>通过 $l_i(x_i) &#x3D; 1$ 确定常数 $C_i$：<br>$$<br>C_i &#x3D; \frac{1}{\prod_{\substack{j&#x3D;0 \ j \neq i}}^n (x_i - x_j)}<br>$$</p>
-</li>
-<li><p><strong>最终基函数表达式</strong></p>
-</li>
-</ol>
-<p>$$<br>l_i(x) &#x3D; \prod_{\substack{j&#x3D;0 \ j \neq i}}^n \frac{x - x_j}{x_i - x_j}<br>$$</p>
-<ol start="4">
-<li><strong>插值多项式合成</strong></li>
-</ol>
-<p>$$<br>L_n(x)&#x3D; \sum_{i&#x3D;0}^n l_i(x) y_i—-&gt;      L_n(x) &#x3D; \sum_{i&#x3D;0}^n \left[ \prod_{\substack{j&#x3D;0 \ j \neq i}}^n \frac{x - x_j}{x_i - x_j} \right] y_i<br>$$</p>
-<blockquote>
-<p>$$<br>\sum_{i&#x3D;0}^n l_i(x) &#x3D; 1 \quad \text{（特别地，当所有 $y_i&#x3D;1$ 时 $L_n(x)&#x3D;1$）}<br>$$</p>
+<p>以前总想着如果自己没能做到一些东西，通过逃避是可以躲过去的。但其实现在才发现人生上一个阶段没解决的问题，只会在下一个阶段更加放大，现在好像已经躲不掉了。 或许早该重新梳理一遍曾经的路了，沉下心来先解决 一些曾经没解决的问题！</p>
 </blockquote>
 <hr>
-<h3 id="一点零次插值、线性插值、抛物插值公式"><a href="#一点零次插值、线性插值、抛物插值公式" class="headerlink" title="一点零次插值、线性插值、抛物插值公式"></a>一点零次插值、线性插值、抛物插值公式</h3><ol>
-<li><strong>一点零次插值</strong></li>
-</ol>
-<p><strong>条件</strong>：仅1个节点 $(x_0, y_0)$  </p>
-<p><strong>多项式：</strong><br>$$<br>L_n(x) &#x3D; y_0<br>$$</p>
+<p>一路走来，渐渐认识到，我一直是个很难做出决定的人。在每次决定前都会犹豫，所以就习惯拖着，最后发现已经无需做决定了，时间已经排除掉会犹豫的选项了。</p>
 <hr>
-<ol start="2">
-<li><strong>两点一次插值（线性插值）</strong></li>
-</ol>
-<p><strong>条件</strong>：2个节点 $(x_0, y_0)$ 和 $(x_1, y_1)$  </p>
-<p><strong>多项式</strong>：<br>$$<br>L_1(x) &#x3D; \frac{x - x_1}{x_0 - x_1} y_0 + \frac{x - x_0}{x_1 - x_0} y_1<br>$$</p>
-<p><strong>等价形式</strong>：<br>$$<br>L_1(x) &#x3D; y_0 + \frac{y_1 - y_0}{x_1 - x_0}(x - x_0)<br>$$</p>
+<p>我要自由，自由。</p>
 <hr>
-<ol start="3">
-<li><strong>三点二次插值（抛物插值）</strong></li>
-</ol>
-<p><strong>条件</strong>：3个节点 $(x_0, y_0)$，$(x_1, y_1)$，$(x_2, y_2)$<br><strong>多项式</strong>：<br>$$<br>L_2(x) &#x3D; \frac{(x - x_1)(x - x_2)}{(x_0 - x_1)(x_0 - x_2)} y_0 + \frac{(x - x_0)(x - x_2)}{(x_1 - x_0)(x_1 - x_2)} y_1 + \frac{(x - x_0)(x - x_1)}{(x_2 - x_0)(x_2 - x_1)} y_2<br>$$</p>
-<h3 id="插值余项与误差估计"><a href="#插值余项与误差估计" class="headerlink" title="插值余项与误差估计"></a>插值余项与误差估计</h3><p><strong>条件</strong>：</p>
-<ol>
-<li>函数 $f^{(n)}(x)$ 在区间 $[a, b]$ 上连续</li>
-<li>$f^{(n+1)}(x)$ 在 $(a, b)$ 内存在</li>
-<li>$L_n(x)$ 是满足插值条件的 $n$ 次多项式，插值节点为 $a \leq x_0 &lt; x_1 &lt; \cdots &lt; x_n \leq b (n+1个)$</li>
-</ol>
-<p><strong>结论</strong>：<br>对任意 $x \in [a,b]$，插值余项满足：<br>$$<br>R_n(x) &#x3D; f(x) - L_n(x) &#x3D; \frac{f^{(n+1)}(\xi)}{(n+1)!} \prod_{j&#x3D;0}^n (x - x_j) \quad<br>$$<br>其中 $\xi \in (a, b)$，且 $\xi$ 的值依赖于 $x$</p>
-<h4 id="误差上界估计"><a href="#误差上界估计" class="headerlink" title="误差上界估计"></a><strong>误差上界估计</strong></h4><p>若记 $\max_{x \in [a,b]} |f^{(n+1)}(x)| &#x3D; M_{n+1}$，则余项绝对误差满足：<br>$$<br>|R_n(x)| \leq \frac{M_{n+1}}{(n+1)!} \cdot |\omega_{n+1}(x)| \quad<br>$$<br>其中 $\omega_{n+1}(x) &#x3D; \prod_{j&#x3D;0}^n (x - x_j)$ 为节点多项式</p>
-<blockquote>
-<p>$$<br>\omega_{n+1}(x) &#x3D; (x - x_0)(x - x_1)\cdots(x - x_n)<br>$$</p>
-<p>$$<br>\omega_{n+1}’(x_k) &#x3D; (x_k - x_0)\cdots(x_k - x_{k-1})(x_k - x_{k+1})\cdots(x_k - x_n)<br>$$</p>
-<p>$$<br>L_n(x) &#x3D; \sum_{k&#x3D;0}^{n} y_k \frac{\omega_{n+1}(x)}{(x - x_k)\omega’_{n+1}(x_k)}<br>$$</p>
-</blockquote>
-<ul>
-<li>节点多项式 $\omega_{n+1}(x)$ 是(n+1)个线性因子的乘积</li>
-<li>导数 $\omega’_{n+1}(x_k)$ 计算时排除$(x_k - x_k)$项</li>
-<li>基函数构造 $\frac{\omega_{n+1}(x)}{(x - x_k)}$ 确保在$x&#x3D;x_k$时取值为1</li>
-</ul>
-<p><strong>n&#x3D;1时，线性插值余项</strong><br>$$<br>R_1(x) &#x3D; \frac{1}{2} f’’(\xi) \omega_2(x) &#x3D; \frac{1}{2} f’’(\xi) (x - x_0)(x - x_1), \quad \xi \in [x_0, x_1]<br>$$</p>
-<p><strong>n&#x3D;2时，抛物插值余项</strong><br>$$<br>R_2(x) &#x3D; \frac{1}{6} f’’’(\xi) (x - x_0)(x - x_1)(x - x_2), \quad \xi \in [x_0, x_2]<br>$$</p>
-<h2 id="差商与牛顿插值"><a href="#差商与牛顿插值" class="headerlink" title="差商与牛顿插值"></a>差商与牛顿插值</h2><h3 id="差商及其性质"><a href="#差商及其性质" class="headerlink" title="差商及其性质"></a>差商及其性质</h3><h4 id="差商（均差）的定义"><a href="#差商（均差）的定义" class="headerlink" title="差商（均差）的定义"></a>差商（均差）的定义</h4><p><strong>1阶差商</strong><br>$$<br>f[x_i, x_j] &#x3D; \frac{f(x_i) - f(x_j)}{x_i - x_j} \quad (i \neq j, x_i \neq x_j)<br>$$<br><strong>2阶差商</strong><br>$$<br>f[x_i, x_j, x_k] &#x3D; \frac{f[x_i, x_j] - f[x_j, x_k]}{x_i - x_k} \quad (i \neq k)<br>$$<br><strong>$k+1$阶差商</strong><br>$$<br>f[x_0, …, x_{k+1}] &#x3D; \frac{f[x_0, x_1, …, x_k] - f[x_1, …, x_k, x_{k+1}]}{x_0 - x_{k+1}}<br>&#x3D; \frac{f[x_0, …, x_{k-1}, x_k] - f[x_0, …, x_{k-1}, x_{k+1}]}{x_k - x_{k+1}}<br>$$</p>
-<blockquote>
-<p>k阶差商必须由k+1个节点构成，k个节点是构造不出k阶差商的。</p>
-<p>差商的值与$x_i$顺序无关的</p>
-</blockquote>
-<h4 id="差商性质"><a href="#差商性质" class="headerlink" title="差商性质"></a>差商性质</h4><ol>
-<li><p><strong>k阶差商的线性组合</strong><br>k阶差商可以表示为函数值 $ f(x_0), f(x_1), \ldots, f(x_k) $ 的线性组合，即<br>$$<br>f[x_0, x_1, \ldots, x_k] &#x3D; \sum_{j&#x3D;0}^k \frac{f(x_j)}{(x_j - x_0) \cdots (x_j - x_{j-1})(x_j - x_{j+1}) \cdots (x_j - x_k)}（用数学归纳法证明）<br>$$</p>
-</li>
-<li><p><strong>对称性</strong><br>差商具有对称性，即<br>$$<br>f[x_0, x_1, \ldots, x_k] &#x3D; f[x_1, x_0, x_2, \ldots, x_k] &#x3D; \cdots &#x3D; f[x_1, \ldots, x_k, x_0]<br>$$</p>
-</li>
-<li><p><strong>与导数的关系</strong><br>若函数 $ f(x) $ 在区间 $[a, b]$ 上有 $ n $ 阶导数，且节点 $ x_i \in [a, b] $（$ i &#x3D; 0, 1, \ldots, n $），则 $ n $ 阶差商与 $ n $ 阶导数有如下关系式：<br>$$<br>f[x_0, x_1, \ldots, x_n] &#x3D; \frac{f^{(n)}(\xi)}{n!}<br>$$<br>其中 $ \xi \in [a, b] $。</p>
-</li>
-<li><p><strong>多项式性质</strong><br>若 $ f(x) $ 是 $ n $ 次多项式，则其 $ k $ 阶差商 $ f[x_0, x_1, \ldots, x_{k-1}, x] $ 当 $ k \leq n $ 时是一个 $ n-k $ 次多项式，而当 $ k &gt; n $ 时恒为零。</p>
-</li>
-</ol>
-<h4 id="差商表"><a href="#差商表" class="headerlink" title="差商表"></a>差商表</h4><table>
-<thead>
-<tr>
-<th align="center">$ x_i $</th>
-<th align="center">$ f(x_i) $</th>
-<th align="center">一阶差商</th>
-<th align="center">二阶差商</th>
-<th align="center">三阶差商</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">$ x_0 $</td>
-<td align="center">$ f(x_0) $</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">$ x_1 $</td>
-<td align="center">$ f(x_1) $</td>
-<td align="center">$ f[x_0, x_1] $</td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">$ x_2 $</td>
-<td align="center">$ f(x_2) $</td>
-<td align="center">$ f[x_1, x_2] $</td>
-<td align="center">$ f[x_0, x_1, x_2] $</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">$ x_3 $</td>
-<td align="center">$ f(x_3) $</td>
-<td align="center">$ f[x_2, x_3] $</td>
-<td align="center">$ f[x_1, x_2, x_3] $</td>
-<td align="center">$ f[x_0, x_1, x_2, x_3] $</td>
-</tr>
-</tbody></table>
-<h3 id="牛顿插值"><a href="#牛顿插值" class="headerlink" title="牛顿插值"></a>牛顿插值</h3><p>Newton插值是通过选取特殊的基函数来实现的，这时，取</p>
-<p>$$<br>\varphi_0(x) &#x3D; 1<br>$$</p>
-<p>$$<br>\varphi_{i+1}(x) &#x3D; (x - x_i)\varphi_i(x), \quad i &#x3D; 0, 1, \ldots, n - 1<br>$$</p>
-<p>作为Newton插值的以 $ x_0, x_1, \ldots, x_n $ 为节点的基函数，而次数不超过 $ n $ 的多项式 $ N_n(x) $ 可表示为</p>
-<p>$$<br>N_n(x) &#x3D; c_0 + c_1(x - x_0) + c_2(x - x_0)(x - x_1) + \cdots + c_n(x - x_0)(x - x_1)\cdots(x - x_{n-1})<br>$$</p>
-<p>其中 $ c_0, c_1, \ldots, c_n $ 是待定系数。</p>
-<p><em><strong>下面推导待定系数：</strong></em><br>$$<br>f(x_0)&#x3D;N_n(x_0)&#x3D;c_0<br>$$</p>
-<p>$$<br>f(x_1) &#x3D; N_n(x_1) &#x3D; c_0 + c_1(x_1 - x_0)&#x3D; f(x_0) + c_1(x_1 - x_0)<br>$$</p>
-<p>$$<br>c_1 &#x3D; \frac{f(x_1) - f(x_0)}{x_1 - x_0} &#x3D; f[x_0, x_1]<br>$$</p>
-<p>通过插值条件运用数学归纳法可以求得<br>$$<br>c_k &#x3D; f[x_0, x_1, \ldots, x_k]<br>$$</p>
-<p>因此，得到满足插值条件的 $ n $ 次插值多项式：<br>$$<br>N_n(x) &#x3D; c_0 + c_1(x - x_0) + c_2(x - x_0)(x - x_1) + \cdots + c_n(x - x_0)\cdots(x - x_{n-1})<br>$$</p>
-<p><em><strong>余项的推导</strong></em><br>$$<br>f(x) &#x3D; f(x_0) + (x - x_0)f[x, x_0] \quad \text{(1)}<br>$$</p>
-<p>$$<br>f[x, x_0] &#x3D; f[x_0, x_1] + (x - x_1)f[x, x_0, x_1] \quad \text{(2)}<br>$$</p>
-<p>$$<br>\vdots<br>$$</p>
-<p>$$<br>f[x, x_0, \ldots, x_{n-1}] &#x3D; f[x_0, \ldots, x_n] + (x - x_n)f[x, x_0, \ldots, x_n] \quad \text{(n-1)}<br>$$</p>
-<p>$$<br>\text{(1)} + (x - x_0) \times \text{(2)} + \cdots + (x - x_0)\cdots(x - x_{n-1}) \times \text{(n-1)}<br>$$</p>
-<p>$$<br>\Rightarrow f(x) &#x3D; f(x_0) + f[x_0, x_1](x - x_0) + f[x_0, x_1, x_2](x - x_0)(x - x_1) + \cdots + f[x_0, \ldots, x_n](x - x_0)\cdots(x - x_{n-1}) + f[x, x_0, \cdots, x_n](x - x_0)\cdots(x - x_{n-1})(x - x_n)<br>$$</p>
-<blockquote>
-<p>$$<br>c_i &#x3D; f[x_0, \ldots, x_i]<br>$$</p>
-<p>$$<br>R_n(x)&#x3D;f[x, x_0, \ldots, x_n](x - x_0)\cdots(x - x_{n-1})(x - x_n)&#x3D;f[x, x_0, \ldots, x_n]\omega_{n+1}(x)<br>$$</p>
-<p>$$<br>\omega_{n+1}(x) &#x3D; (x - x_0)(x - x_1)\cdots(x - x_n)<br>$$</p>
-</blockquote>
-<p><strong>注：</strong></p>
-<p>由唯一性可知 $ N_n(x) \equiv L_n(x) $，只是算法不同，故其余项也相同，即</p>
-<p>$$<br>f[x, x_0, \ldots, x_n] \omega_{n+1}(x) &#x3D; \frac{f^{(n+1)}(\xi_x)}{(n+1)!} \omega_{n+1}(x)<br>$$</p>
-<p>则</p>
-<p>$$<br>f[x_0, \ldots, x_k] &#x3D; \frac{f^{(k)}(\xi)}{k!}, \quad \xi \in (x_{\min}, x_{\max})<br>$$</p>
-<blockquote>
-<p><strong>证明（不用掌握）：</strong></p>
-<p>$$ f[x_0, x_1, \ldots, x_k] &#x3D; \frac{f^{(k)}(\xi)}{k!}, \quad \xi \in (x_{\min}, x_{\max}) $$</p>
 <hr>
-<p>数学归纳法推导</p>
-<p><span style="color:#FF0000">基例验证（$ k&#x3D;1 $）</span></p>
-<p><strong>命题</strong>：对任意两节点 $ x_0, x_1 $，一阶差商满足：<br>$$ f[x_0, x_1] &#x3D; \frac{f’(\xi)}{1!}, \quad \xi \in (x_0, x_1) $$</p>
-<p><strong>推导步骤</strong>：</p>
-<ol>
-<li><strong>差商定义</strong>：<br>$$<br>  f[x_0, x_1] &#x3D; \frac{f(x_1) - f(x_0)}{x_1 - x_0}<br>$$</li>
-<li><strong>微分中值定理</strong>：存在 $ \xi \in (x_0, x_1) $，使得：<br>$$<br>  \frac{f(x_1) - f(x_0)}{x_1 - x_0} &#x3D; f’(\xi)<br>$$</li>
-<li><strong>结论</strong>：<br>$$<br>  f[x_0, x_1] &#x3D; \frac{f’(\xi)}{1!} \quad \text{（基例成立）}<br>$$</li>
-</ol>
-<hr>
-<p><span style="color:#FF0000">归纳假设（假设 $ k&#x3D;m $ 时成立）</span></p>
-<p>假设对任意 $ m+1 $ 个节点 $ x_0, x_1, \ldots, x_m $，有：<br>$$<br>f[x_0, x_1, \ldots, x_m] &#x3D; \frac{f^{(m)}(\eta)}{m!}, \quad \eta \in (x_{\min}, x_{\max})<br>$$</p>
-<hr>
-<p><span style="color:#FF0000">归纳步骤（证明 $ k&#x3D;m+1 $ 时成立）</span></p>
-<p><strong>目标</strong>：对任意 $ m+2 $ 个节点 $ x_0, x_1, \ldots, x_{m+1} $，证明：<br>$$<br>f[x_0, x_1, \ldots, x_{m+1}] &#x3D; \frac{f^{(m+1)}(\xi)}{(m+1)!}, \quad \xi \in (x_{\min}, x_{\max})<br>$$</p>
-<p><strong>推导过程</strong>：</p>
-<ol>
-<li><strong>差商递归关系</strong>：<br>$$<br>  f[x_0, \ldots, x_{m+1}] &#x3D; \frac{f[x_1, \ldots, x_{m+1}] - f[x_0, \ldots, x_m]}{x_{m+1} - x_0}<br>$$</li>
-<li><strong>应用归纳假设</strong>：</li>
-</ol>
-<ul>
-<li>对 $ f[x_1, \ldots, x_{m+1}] $：<br>$$<br>f[x_1, \ldots, x_{m+1}] &#x3D; \frac{f^{(m)}(\eta_1)}{m!}, \quad \eta_1 \in (x_1, x_{m+1})<br>$$</li>
-<li>对 $ f[x_0, \ldots, x_m] $：<br>$$<br>f[x_0, \ldots, x_m] &#x3D; \frac{f^{(m)}(\eta_2)}{m!}, \quad \eta_2 \in (x_0, x_m)<br>$$</li>
-</ul>
-<ol start="3">
-<li><strong>构造辅助函数</strong>：<br> 定义 $ g(x) &#x3D; f^{(m)}(x) $，则：<br>$$<br>  f[x_0, \ldots, x_{m+1}] &#x3D; \frac{g(\eta_1) - g(\eta_2)}{(x_{m+1} - x_0) \cdot m!}<br>$$</li>
-<li><strong>广义微分中值定理</strong>：<br> 存在 $ \xi \in (\eta_2, \eta_1) \subseteq (x_{\min}, x_{\max}) $，使得：<br>$$<br>  \frac{g(\eta_1) - g(\eta_2)}{\eta_1 - \eta_2} &#x3D; g’(\xi) &#x3D; f^{(m+1)}(\xi)<br>$$</li>
-<li><strong>结合节点间距</strong>：<br> 由于 $ \eta_1 - \eta_2 \leq x_{m+1} - x_0 $，整理得：<br>$$<br>  f[x_0, \ldots, x_{m+1}] &#x3D; \frac{f^{(m+1)}(\xi)}{(m+1)!}<br>$$</li>
-</ol>
-<hr>
-<p><span style="color:#FF0000">归纳结论</span></p>
-<p>对所有 $ k \geq 1 $，公式成立：<br>$$<br>\boxed{f[x_0, x_1, \ldots, x_k] &#x3D; \frac{f^{(k)}(\xi)}{k!}, \quad \xi \in (x_{\min}, x_{\max})}<br>$$</p>
-<hr>
-<h2 id="关键符号说明"><a href="#关键符号说明" class="headerlink" title="关键符号说明"></a>关键符号说明</h2><table>
-<thead>
-<tr>
-<th>符号</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>$ f[x_0, \ldots, x_k] $</td>
-<td>$ k $ 阶差商，节点 $ x_0, \ldots, x_k $ 处的函数变化率</td>
-</tr>
-<tr>
-<td>$ f^{(k)}(\xi) $</td>
-<td>函数 $ f $ 在区间内的 $ k $ 阶导数</td>
-</tr>
-<tr>
-<td>$ \xi $</td>
-<td>区间内的某点，由中值定理保证存在</td>
-</tr>
-</tbody></table>
-</blockquote>
-<h4 id="差分形式的牛顿插值公式"><a href="#差分形式的牛顿插值公式" class="headerlink" title="差分形式的牛顿插值公式"></a>差分形式的牛顿插值公式</h4><p><strong>节点等距分布条件</strong>：<br>当节点满足等距分布时：<br>$$ x_i &#x3D; x_0 + ih \quad (i&#x3D;0,\ldots,n) $$</p>
-<hr>
-<p><strong>向前差分</strong><br>$$<br>\Delta f_i &#x3D; f_{i+1} - f_i<br>$$</p>
-<p>$$<br>\Delta^k f_i &#x3D; \Delta(\Delta^{k-1}f_i) &#x3D; \Delta^{k-1}f_{i+1} - \Delta^{k-1}f_i<br>$$</p>
-<hr>
-<p><strong>向后差分</strong><br>$$<br>\nabla f_i &#x3D; f_i - f_{i-1}<br>$$</p>
-<p>$$<br>\nabla^k f_i &#x3D; \nabla(\nabla^{k-1}f_i) &#x3D; \nabla^{k-1}f_i - \nabla^{k-1}f_{i-1}<br>$$</p>
-<hr>
-<p><strong>中心差分</strong><br>$$<br>\delta f_i &#x3D; f_{i+\frac{1}{2}} - f_{i-\frac{1}{2}} \quad \text{其中} \quad f_{i\pm\frac{1}{2}} &#x3D; f\left(x_i \pm \frac{h}{2}\right)<br>$$</p>
-<p>$$<br>\delta^k f_i &#x3D; \delta^{k-1}f_{i+\frac{1}{2}} - \delta^{k-1}f_{i-\frac{1}{2}}<br>$$</p>
-<hr>
-<p><strong>差分的重要性质：</strong></p>
-<ol>
-<li><p>差分可由函数值计算<br>$$<br>\Delta^n f_k &#x3D; \sum_{j&#x3D;0}^n (-1)^{j} \binom{n}{j} f_{n+k-j} \<br>\nabla^n f_k &#x3D; \sum_{j&#x3D;0}^n (-1)^{n-j} \binom{n}{j} f_{k+j-n}<br>$$<br>其中：</p>
-<ul>
-<li>$ \binom{n}{j} &#x3D; \frac{n(n-1)\cdots(n-j+1)}{j!} $ 是二项式系数。</li>
-</ul>
-</li>
-<li><p>函数值可由差分值算出<br>$$<br>f_{n+k} &#x3D; \sum_{j&#x3D;0}^n \binom{n}{j} \Delta^j f_k<br>$$</p>
-</li>
-<li><p>差商和差分的关系</p>
-</li>
-</ol>
-<p>$$<br>f[x_k, x_{k+1}, \ldots, x_{k+m}] &#x3D; \frac{1}{m! h^m} \Delta^m f_k<br>$$</p>
-<p>$$<br>f[x_k, x_{k-1}, \ldots, x_{k-m}] &#x3D; \frac{1}{m! h^m} \nabla^m f_k<br>$$</p>
-<ol start="4">
-<li>差分与导数的关系<br>$$<br>\Delta^n f_k &#x3D; h^n f^{(n)}(\xi), \quad \xi \in (x_k, x_{k+n})<br>$$</li>
-</ol>
-<p><strong>牛顿公式：</strong><br>$$<br>N_n(x) &#x3D; f(x_0) + f[x_0, x_1](x - x_0) + \cdots + f[x_0, \ldots, x_n](x - x_0)\cdots(x - x_{n-1})<br>$$</p>
-<p><span style="color:rgb(255, 53, 116)">牛顿前插公式：</span><br>设 $ x &#x3D; x_0 + th $（$ 0 \leq t \leq 1 $），则<br>$$<br>N_n(x) &#x3D; N_n(x_0 + th) &#x3D; \sum_{k&#x3D;0}^{n} \binom{t}{k} \Delta^k f(x_0)<br>$$<br>余项：<br>$$<br>R_n(x) &#x3D; \frac{f^{(n+1)}(\xi)}{(n+1)!} t(t-1)\cdots(t-n) h^{n+1}, \quad \xi \in (x_0, x_n)<br>$$</p>
-<p><span style="color:rgb(255, 53, 116)">牛顿后插公式：</span><br>将节点顺序倒置：<br>$$<br>N_n(x) &#x3D; f(x_n) + f[x_n, x_{n-1}](x - x_n) + \cdots + f[x_n, \ldots, x_0](x - x_n)\cdots(x - x_1)<br>$$<br>设 $ x &#x3D; x_n + th $（$ -1 \leq t \leq 0 $），则<br>$$<br>N_n(x) &#x3D; N_n(x_n + th) &#x3D; \sum_{k&#x3D;0}^{n} (-1)^k \binom{-t}{k} \nabla^k f(x_n)<br>$$<br>余项：<br>$$<br>R_n(x) &#x3D; \frac{f^{(n+1)}(\xi)}{(n+1)!} t(t+1)\cdots(t+n) h^{n+1}, \quad \xi \in (x_0, x_n)<br>$$</p>
-<p>注：一般当 $ x $ 靠近 $ x_0 $ 时用前插，靠近 $ x_n $ 时用后插，故两种公式亦称为表初公式和表末公式。</p>
-<p><strong>差分表</strong></p>
-<p><img src="/blog/image/Snipaste_2025-03-12_16-09-19.png"></p>
-<p><strong>例题</strong></p>
-<p><img src="/blog/image/Snipaste_2025-03-12_16-34-22.png"></p>
-<h2 id="埃尔米特插值"><a href="#埃尔米特插值" class="headerlink" title="埃尔米特插值"></a>埃尔米特插值</h2><p><span style="color:blue">不仅要求函数值重合，而且要求若干阶导数也重合，这种插值问题称为埃尔米特插值问题。</span></p>
-<h3 id="低次埃尔米特插值多项式"><a href="#低次埃尔米特插值多项式" class="headerlink" title="低次埃尔米特插值多项式"></a><span style="color:#FF0000">低次埃尔米特插值多项式</span></h3><ol>
-<li><h4 id="二点三次埃尔米特插值多项式"><a href="#二点三次埃尔米特插值多项式" class="headerlink" title="二点三次埃尔米特插值多项式"></a>二点三次埃尔米特插值多项式</h4><p>**问题描述：**给定区间 $[x_0, x_1]$ 两端点的函数值与导数值：</p>
-<table>
-<thead>
-<tr>
-<th>$x$</th>
-<th>$x_0$</th>
-<th>$x_1$</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>$f(x)$</td>
-<td>$y_0$</td>
-<td>$y_1$</td>
-</tr>
-<tr>
-<td>$f’(x)$</td>
-<td>$m_0$</td>
-<td>$m_1$</td>
-</tr>
-</tbody></table>
-<p>要求构造三次多项式 $H_3(x)$，满足：<br>$$<br>\begin{cases}<br>H_3(x_0) &#x3D; y_0, &amp; H_3(x_1) &#x3D; y_1 \<br>H_3’(x_0) &#x3D; m_0, &amp; H_3’(x_1) &#x3D; m_1<br>\end{cases}<br>$$</p>
-<hr>
-<p><strong>解法形式</strong></p>
-<p>设 $H_3(x)$ 为：<br>$$<br>H_3(x) &#x3D; \alpha_0(x)y_0 + \alpha_1(x)y_1 + \beta_0(x)m_0 + \beta_1(x)m_1<br>$$<br>其中 $\alpha_i(x)$ 和 $\beta_i(x)$ 为基函数（<u>三次式</u>），满足以下条件：</p>
-<ol>
-<li><p><strong>插值条件</strong>：</p>
-<ul>
-<li>$\alpha_i(x_j) &#x3D; \delta_{ij}$（$\delta_{ij}$ 为克罗内克函数）</li>
-<li>$\alpha’_i(x_j) &#x3D; 0$</li>
-<li>$\beta_i(x_j) &#x3D; 0$</li>
-<li>$ \beta’_i(x_j) &#x3D; \delta _{ij}$</li>
-</ul>
-</li>
-<li><p><strong>基函数构造</strong>：<br>$$<br>\alpha_i(x) &#x3D; (a_i x + b_i) l_i^2(x), \quad \beta_i(x) &#x3D; c_i(x - x_i) l_i^2(x)<br>$$<br>其中 $l_i(x) &#x3D; \frac{x - x_j}{x_i - x_j}$（$j \neq i$）为拉格朗日基函数。</p>
-</li>
-</ol>
-<hr>
-<p><strong>基函数推导</strong></p>
-<p>$\alpha_0(x)$ 的构造</p>
-<p>通过条件 $\alpha_0(x_0) &#x3D; 1$ 和 $\alpha’_0(x_0) &#x3D; 0$，解得：<br>$$<br>\begin{cases}<br>a_0 &#x3D; -\dfrac{2}{x_0 - x_1}, \<br>b_0 &#x3D; 1 + \dfrac{2x_0}{x_0 - x_1}<br>\end{cases}<br>$$<br>最终形式为：<br>$$<br>\alpha_0(x) &#x3D; \left(1 - 2\dfrac{x - x_0}{x_0 - x_1}\right)\left(\dfrac{x - x_1}{x_0 - x_1}\right)^2 \<br>\alpha_1(x) &#x3D; \left(1 - 2\dfrac{x - x_1}{x_1 - x_0}\right)\left(\dfrac{x - x_0}{x_1 - x_0}\right)^2<br>$$</p>
-<p>$\beta_i(x)$ 的构造<br>$$<br>\beta_0(x) &#x3D; (x - x_0)\left(\dfrac{x - x_1}{x_0 - x_1}\right)^2, \quad \beta_1(x) &#x3D; (x - x_1)\left(\dfrac{x - x_0}{x_1 - x_0}\right)^2<br>$$</p>
-<hr>
-<p><strong>最终表达式</strong><br>$$<br>H_3(x) &#x3D; y_0\left(1 - 2\dfrac{x - x_0}{x_0 -x_1}\right)\left(\dfrac{x - x_1}{x_0 - x_1}\right)^2<br>$$</p>
-</li>
-</ol>
-<p>$$<br>+y_1\left(1 - 2\dfrac{x - x_1}{x_1 - x_0}\right)\left(\dfrac{x - x_0}{x_1 - x_0}\right)^2<br>$$</p>
-<p>$$<br>+m_0(x - x_0)\left(\dfrac{x - x_1}{x_0 - x_1}\right)^2 + m_1(x - x_1)\left(\dfrac{x - x_0}{x_1 - x_0}\right)^2<br>$$</p>
-<blockquote>
-<p>$$<br>\sum_{i&#x3D;0}^1 \alpha_i(x) &#x3D; 1 \quad \text{（当 $f(x) &#x3D; 1$ 时）}<br>$$</p>
-</blockquote>
-<blockquote>
-<p>余项为：<br>$$<br>R(x)&#x3D;\frac{1}{4!}f^{(4)}(\xi)(x-x_0)^2(x-x_1)^2\<br>\xi \in(x_0,x_1)<br>$$</p>
-</blockquote>
-<ol start="2">
-<li><h4 id="三点三次带一个导数值的插值多项式"><a href="#三点三次带一个导数值的插值多项式" class="headerlink" title="三点三次带一个导数值的插值多项式"></a>三点三次带一个导数值的插值多项式</h4></li>
-</ol>
-<p><strong>问题描述</strong></p>
-<p>给定函数表如下：</p>
-<table>
-<thead>
-<tr>
-<th>$x$</th>
-<th>$x_0$</th>
-<th>$x_1$</th>
-<th>$x_2$</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>$f(x)$</td>
-<td>$y_0$</td>
-<td>$y_1$</td>
-<td>$y_2$</td>
-</tr>
-<tr>
-<td>$f’(x)$</td>
-<td></td>
-<td>$m_1$</td>
-<td></td>
-</tr>
-</tbody></table>
-<p>要求构造三次多项式 $H_3(x)$，满足：<br>$$<br>\begin{cases}<br>H_3(x_i) &#x3D; y_i, &amp; i &#x3D; 0, 1, 2 \<br>H_3’(x_1) &#x3D; m_1<br>\end{cases}<br>$$</p>
-<p><strong>解法形式</strong></p>
-<p>利用满足插值条件的 Newton 插值多项式，设：<br>$$<br>H_3(x) &#x3D; y_0 + f[x_0, x_1](x - x_0) + f[x_0, x_1, x_2](x - x_0)(x - x_1) + k(x - x_0)(x - x_1)(x - x_2)<br>$$<br>其中 $k$ 为待定系数。</p>
-<p><strong>待定系数求解</strong></p>
-<p>通过导数条件 $H_3’(x_1) &#x3D; m_1$ 确定 $k$：<br>$$<br>H_3’(x_1) &#x3D; f[x_0, x_1] + f[x_0, x_1, x_2](x_1 - x_0) + k(x_1 - x_0)(x_1 - x_2) &#x3D; m_1<br>$$<br>解得：<br>$$<br>k &#x3D; \frac{m_1 - f[x_0, x_1] - f[x_0, x_1, x_2](x_1 - x_0)}{(x_1 - x_0)(x_1 - x_2)}<br>$$</p>
-<p><strong>最终表达式</strong></p>
-<p>将 $k$ 代入后，$H_3(x)$ 的完整形式为：<br>$$<br>H_3(x) &#x3D; y_0 + f[x_0, x_1](x - x_0) + f[x_0, x_1, x_2](x - x_0)(x - x_1) \<br>+\frac{m_1 - f[x_0, x_1] - f[x_0, x_1, x_2](x_1 - x_0)}{(x_1 - x_0)(x_1 - x_2)} (x - x_0)(x - x_1)(x - x_2)<br>$$</p>
-<blockquote>
-<p>余项为：<br>$$<br>R(x)&#x3D;\frac{1}{4!}f^{(4)}(\xi)(x-x_0)(x-x_1)^2(x-x_2)\<br>\xi \in(x_0,x_2)<br>$$</p>
-</blockquote>
-<h3 id="一般埃尔米特插值多项式"><a href="#一般埃尔米特插值多项式" class="headerlink" title="一般埃尔米特插值多项式"></a>一般埃尔米特插值多项式</h3><p><strong>问题描述</strong></p>
-<p>已知节点 $x_0, x_1, \ldots, x_n$ 处的函数值 $y_0, y_1, \ldots, y_n$ 和导数值 $y’_0, y’_1, \ldots, y’_n$</p>
-<p>要求构造次数为 $2n+1$ 的多项式$H_{2n+1}(x)$（这样的Hermite 插值唯一），满足：<br>$$<br>\begin{cases}<br>H_{2n+1}(x_i) &#x3D; y_i, \<br>H’_{2n+1}(x_i) &#x3D; y’_i<br>\end{cases}<br>\quad (i &#x3D; 0, 1, \ldots, n)<br>$$</p>
-<p><strong>解法形式</strong></p>
-<p>设多项式为：<br>$$<br>H_{2n+1}(x) &#x3D; \sum_{i&#x3D;0}^n y_i \alpha_i(x) + \sum_{i&#x3D;0}^n y’_i \beta_i(x)<br>$$</p>
-<p>其中基函数 $\alpha_i(x)$ 和 $\beta_j(x)$ 满足：<br>$$<br>\alpha_i(x_j) &#x3D; \delta_{ij} \quad \alpha’_i(x_j) &#x3D; 0 ;<br>$$</p>
-<p>$$<br>\beta_i(x_j) &#x3D; 0 \quad \beta^{‘} _i(x_j) &#x3D; \delta _{ij}<br>$$</p>
-<blockquote>
-<p>$\alpha_i(x)$ 和 $\beta_i(x)$ 均为 $2n+1$ 次多项式。</p>
-</blockquote>
-<p><strong>基函数构造</strong></p>
-<p><u>$\alpha_i(x)$ 的构造</u></p>
-<ol>
-<li><p><strong>零点性质</strong>：$\alpha_i(x)$ 在 $x_0, x_1, \ldots, x_n$ 处有二重零点（除 $x_i$ 外）。</p>
-</li>
-<li><p><strong>形式假设</strong>：<br>$$<br>\alpha_i(x) &#x3D; [A_ix + B_i] l_i^2(x)<br>$$<br>其中 $l_i(x) &#x3D; \prod_{\substack{\ i \neq i}} \dfrac{x - x_j}{x_i - x_j}$ 为拉格朗日基函数。</p>
-</li>
-<li><p><strong>条件求解</strong>：</p>
-<ul>
-<li>$\alpha_i(x_i) &#x3D; 1 \Rightarrow B_i &#x3D; 1$</li>
-<li>$\alpha’_i(x_i) &#x3D; 0 \Rightarrow A_i &#x3D; -2 l_i’(x_i)$</li>
-</ul>
-<p>最终形式为：<br>$$<br>\alpha_i(x) &#x3D; \left[ 1 - 2 l_i’(x_i)(x - x_i) \right] l_i^2(x)<br>$$</p>
-</li>
-</ol>
-<p><u>$\beta_i(x)$ 的构造</u></p>
-<ol>
-<li><p><strong>零点性质</strong>：$\beta_i(x)$ 在 $x_0, x_1, \ldots, x_n$ 处有二重零点（除 $x_i$ 外）。</p>
-</li>
-<li><p><strong>形式假设</strong>：<br>$$<br>\beta_i(x) &#x3D; C_i (x - x_i) l_i^2(x)<br>$$</p>
-</li>
-<li><p><strong>条件求解</strong>：</p>
-<ul>
-<li>$\beta’_i(x_i) &#x3D; 1 \Rightarrow C_i &#x3D; 1$</li>
-</ul>
-<p>最终形式为：<br>$$<br>\beta_i(x) &#x3D; (x - x_i) l_i^2(x)<br>$$</p>
-</li>
-</ol>
-<blockquote>
-<p><span style="color:blue"><strong>余项分析</strong></span></p>
-<p>设区间 $[a, b]$ 满足 $a &#x3D; x_0 &lt; x_1 &lt; \cdots &lt; x_n &#x3D; b$，且 $f \in C^{2n}&gt;[a, b]$，则插值余项为：<br>$$<br>R_n(x) &#x3D; \frac{f^{(2n+2)}(\xi)}{(2n+2)!} \left[ \prod_{i&#x3D;0}^n (x - x_i) \right]^2<br>$$<br>其中 $\xi \in (a, b)$。</p>
-</blockquote>
-<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><h2 id="分段低次插值"><a href="#分段低次插值" class="headerlink" title="分段低次插值"></a>分段低次插值</h2><h3 id="分段线性插值"><a href="#分段线性插值" class="headerlink" title="分段线性插值"></a>分段线性插值</h3><p><strong>定义</strong></p>
-<p>设已知节点 $a&lt;x_0 &lt; x_1 &lt; \cdots &lt; x_n &#x3D; b$ 处的函数值为 $f_0, f_1, \ldots, f_n$，记区间宽度：<br>$$<br>h_k &#x3D; x_{k+1} - x_k, \quad h &#x3D; \max_{k} h_k<br>$$<br>分段线性插值通过折线段连接插值点逼近 $f(x)$，构造折线函数 $I_h(x)$ 满足：</p>
-<ol>
-<li><strong>连续性</strong>：$I_h(x) \in C[a, b]$</li>
-<li><strong>插值条件</strong>：$I_h(x_k) &#x3D; f_k \quad (k &#x3D; 0, 1, \ldots, n)$</li>
-<li><strong>分段线性</strong>：在每段区间 $[x_k, x_{k+1}]$ 上，$I_h(x)$ 为线性函数。</li>
-</ol>
-<p><strong>分段线性插值函数可表示为：</strong><br>$$<br>I_h(x) &#x3D; \sum_{k&#x3D;0}^n f_k l_k(x)<br>$$<br>其中 $l_k(x)$ 为分段线性基函数。</p>
-<p><strong>基函数定义</strong></p>
-<p>基函数 $l_k(x)$ 在区间内的表达式为：<br>$$<br>l_k(x) &#x3D;<br>\begin{cases}<br>\dfrac{x - x_{k-1}}{x_k - x_{k-1}}, &amp; x \in [x_{k-1}, x_k] \quad (k \neq 0) \<br>\dfrac{x - x_{k+1}}{x_k - x_{k+1}}, &amp; x \in [x_k, x_{k+1}] \quad (k \neq n) \<br>0, &amp; x \notin [x_{k-1}, x_{k+1}]<br>\end{cases}<br>$$</p>
-<p><strong>区间分段表达式</strong></p>
-<p>左半区间 $[x_{k-1}, x_k]$：<br>$$<br>I_h(x) &#x3D; \dfrac{x - x_{k-1}}{x_k - x_{k-1}} f_k + \dfrac{x - x_k}{x_{k-1} - x_k} f_{k-1}<br>$$</p>
-<p>右半区间 $[x_k, x_{k+1}]$：<br>$$<br>I_h(x) &#x3D; \dfrac{x - x_{k+1}}{x_k - x_{k+1}} f_k + \dfrac{x - x_k}{x_{k+1} - x_k} f_{k+1}<br>$$</p>
-<p><strong>收敛性与性质</strong></p>
-<ol>
-<li><p><strong>一致收敛性</strong>：当 $h \to 0$ 时，$I_h(x)$ 在 $[a, b]$ 上一致收敛到 $f(x)$。</p>
-</li>
-<li><p><strong>光滑性缺失</strong>：分段线性插值函数仅连续（$C^0$），但不可导（失去原函数的光滑性）。</p>
-<blockquote>
-<p><strong><span style="color:blue">插值误差</span></strong><br>$$<br>\max_{x_k \leq x \leq x_{k+1}} |f(x) - I_h(x)| \leq \frac{M_2}{2} \max_{x_k \leq x \leq x_{k+1}} |(x - x_k)(x - x_{k+1})|<br>$$<br>或<br>$$<br>\max_{a \leq x \leq b} |f(x) - I_h(x)| \leq \frac{M_2}{8} h^2<br>$$<br>其中<br>$$<br>M_2 &#x3D; \max_{a \leq x \leq b} |f’’(x)|<br>$$</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="分段三次-Hermite-插值"><a href="#分段三次-Hermite-插值" class="headerlink" title="分段三次 Hermite 插值"></a>分段三次 Hermite 插值</h3><p><u><strong>问题描述</strong></u></p>
-<p>在节点 $x_0 &lt; x_1 &lt; \cdots &lt; x_n$ 上已知函数值 $f_k$ 和导数值 $f’_k &#x3D; m_k$，构造分段插值多项式函数 $I_h(x)$ 满足：</p>
-<ol>
-<li><strong>光滑性</strong>：$I_h \in C^1[a, b]$</li>
-<li><strong>插值条件</strong>：<br>$$<br>I_h(x_k) &#x3D; f_k, \quad I’_h(x_k) &#x3D; f’_k \quad (k &#x3D; 0, 1, \ldots, n)<br>$$</li>
-<li><strong>分段三次多项式</strong>：在每段区间 $[x_k, x_{k+1}]$ 上，$I_h(x)$ 为三次多项式。</li>
-</ol>
-<p><u><strong>全局表达式</strong></u></p>
-<p>插值函数可表示为：<br>$$<br>I_h(x) &#x3D; \sum_{k&#x3D;0}^n \left[ f(x_k) \alpha_k(x) + f’(x_k) \beta_k(x) \right]<br>$$</p>
-<p><u><strong>区间局部表达式</strong></u></p>
-<p>在区间 $[x_k, x_{k+1}]$ 上的具体形式为：<br>$$<br>I_h(x) &#x3D; \left( \dfrac{x - x_{k+1}}{x_k - x_{k+1}} \right)^2 \left( 1 + 2 \dfrac{x - x_k}{x_{k+1} - x_k} \right) f_k<br>+\left( \dfrac{x - x_k}{x_{k+1} - x_k} \right)^2 \left( 1 + 2 \dfrac{x - x_{k+1}}{x_k - x_{k+1}} \right) f_{k+1}<br>+\left( \dfrac{x - x_{k+1}}{x_k - x_{k+1}} \right)^2 (x - x_k) f’<em>k<br>+\left( \dfrac{x - x_k}{x</em>{k+1} - x_k} \right)^2 (x - x_{k+1}) f’_{k+1}<br>$$</p>
-<p><u><strong>基函数定义</strong></u></p>
-<p>$\alpha_k(x)$ 的分段表达式<br>$$<br>\alpha_k(x) &#x3D;<br>\begin{cases}<br>\left(\dfrac{x - x_{k-1}}{x_k - x_{k-1}} \right)^2 \left( 1 + 2 \dfrac{x - x_k}{x_{k-1} - x_k} \right), &amp; x \in [x_{k-1}, x_k] \quad (k \neq 0) \<br>\left(\dfrac{x - x_{k+1}}{x_k - x_{k+1}} \right)^2 \left( 1 + 2 \dfrac{x - x_k}{x_{k+1} - x_k} \right), &amp; x \in [x_k, x_{k+1}] \quad (k \neq n) \<br>0, &amp; \text{其他区间}<br>\end{cases}<br>$$</p>
-<p>$\beta_k(x)$ 的分段表达式<br>$$<br>\beta_k(x) &#x3D;<br>\begin{cases}<br>\left( \dfrac{x - x_{k-1}}{x_k - x_{k-1}} \right)^2 (x - x_k), &amp; x \in [x_{k-1}, x_k] \quad (k \neq 0) \<br>\left( \dfrac{x - x_{k+1}}{x_k - x_{k+1}} \right)^2 (x - x_k), &amp; x \in [x_k, x_{k+1}] \quad (k \neq n) \<br>0, &amp; \text{其他区间}<br>\end{cases}<br>$$</p>
-<blockquote>
-<p><strong>误差估计：</strong><br>$$<br>|f(x) - I_h(x)| \leq \frac{1}{384}h_k^4 \max_{x_k \leq x \leq x_{k+1}} |f^{(4)}(x)| \<br>x\in[x_k,x_{k+1}] \<br>h_k&#x3D;x_{k+1}-x_k<br>$$</p>
-<p>设函数满足：</p>
-<ul>
-<li>$ f \in C^4[a,b] $</li>
-<li>$ I_h(x) $ 是 $ f(x) $ 在节点<br>$$<br> a &#x3D; x_0 &lt; x_1 &lt; \cdots &lt; x_n &#x3D; b<br>$$<br> 上的分段三次埃尔米特插值多项式</li>
-</ul>
-<p>则有全局误差估计：<br>$$<br>\max_{a \leq x \leq b} |f(x) - I_h(x)| \leq \frac{h^4}{384} \max_{a \leq x \leq b} |f^{(4)}(x)| \<br>h&#x3D;\max_{0 \leq k \leq n-1}(x_{k+1}-x_k)<br>$$</p>
-</blockquote>
-<blockquote>
-<p><span style="color:blue">$C^k$表示函数有K阶连续导数；$C^0$表述函数连续，没有要求可导</span></p>
-</blockquote>
-<h2 id="样条插值"><a href="#样条插值" class="headerlink" title="样条插值"></a>样条插值</h2><h3 id="样条插值的概念"><a href="#样条插值的概念" class="headerlink" title="样条插值的概念"></a>样条插值的概念</h3><p>对于给定节点 $a&#x3D;x_0&lt;x_1&lt;\cdots&lt;x_n&#x3D;b$，若存在函数 $s(x)$ 满足：  </p>
-<ol>
-<li>在每个小区间 $\left[x_j, x_{j+1}\right]$ 是一个次数不超过 3 次的多项式；  </li>
-<li>在每一个内节点上具有直到二阶的连续导数，<br>则称 $s(x)$ 是节点 $x_0, x_1,\cdots, x_n$ 上的三次样条函数。</li>
-</ol>
-<p>若在节点上给定函数值 $f\left(x_j\right)&#x3D;y_j(j&#x3D;0,\cdots, n)$，并满足<br>3) $s\left(x_j\right)&#x3D;y_j, j&#x3D;0,\cdots, n$<br>则称 $s(x)$ 是三次样条插值函数。</p>
-<h3 id="三次样条插值函数-s-x-的确定："><a href="#三次样条插值函数-s-x-的确定：" class="headerlink" title="三次样条插值函数 $s(x)$ 的确定："></a>三次样条插值函数 $s(x)$ 的确定：</h3><p>$$ s(x)&#x3D;\left{\begin{array}{c}<br>s_1(x), &amp; x_0\leq x\leq x_1, \<br>\ldots \<br>s_n(x), &amp; x_{n-1}\leq x\leq x_n.<br>\end{array}\right. $$</p>
-<p>在每个 $\left[x_j, x_{j+1}\right]$ 上要确定 4 个待定系数，共 $4n$ 个参数。因二阶导数连续，故在内节点 $x_j$ 上满足连续性条件：<br>$$<br>\begin{gathered}<br>s\left(x_j-0\right)&#x3D;s\left(x_j+0\right), \quad s^{\prime}\left(x_j-0\right)&#x3D;s^{\prime}\left(x_j+0\right), \<br>s^{\prime\prime}\left(x_j-0\right)&#x3D;s^{\prime\prime}\left(x_j+0\right), \quad (j&#x3D;1,\cdots, n-1)<br>\end{gathered}<br>$$</p>
-<p>再加上插值条件，共 $4n-2$ 个条件。还需 2 个条件，通常在两个端点加上边界条件。</p>
-<p><strong>常见三种边界条件</strong>：  </p>
-<ol>
-<li><strong>第一种边界条件</strong>：$s^{\prime}\left(x_0\right)&#x3D;y_0^{\prime}, \quad s^{\prime}\left(x_n\right)&#x3D;y_n^{\prime}$。  </li>
-<li><strong>第二种边界条件</strong>：$s^{\prime\prime}\left(x_0\right)&#x3D;y_0^{\prime\prime}, \quad s^{\prime\prime}\left(x_n\right)&#x3D;y_n^{\prime\prime}$。<br>特别地，<strong>自然边界条件</strong>：$s^{\prime\prime}\left(x_0\right)&#x3D;0, \quad s^{\prime\prime}\left(x_n\right)&#x3D;0$。  </li>
-<li><strong>第三种边界条件（周期边界条件）</strong>：<br>$$s^{\prime}\left(x_0+0\right)&#x3D;s^{\prime}\left(x_n-0\right), \quad s^{\prime\prime}\left(x_0+0\right)&#x3D;s^{\prime\prime}\left(x_n-0\right).$$<br><em>注意</em>：因插值条件 $y_0&#x3D;y_n$，故 $s\left(x_0+0\right)&#x3D;s\left(x_n-0\right)$ 已经成立。</li>
-</ol>
-<h3 id="三次样条插值函数的建立"><a href="#三次样条插值函数的建立" class="headerlink" title="三次样条插值函数的建立"></a>三次样条插值函数的建立</h3><p>求三次样条插值函数常用<strong>三弯矩法</strong>和<strong>三转角法</strong>。</p>
-<p><strong>三转角法</strong>：假定 $s^{\prime}\left(x_j\right)&#x3D;m_j(j&#x3D;0,\cdots, n)$，根据分段三次埃尔米特插值多项式，<br>$$ s(x)&#x3D;\sum_{j&#x3D;0}^n\left[f_j\alpha_j(x)+m_j\beta_j(x)\right] $$<br>由插值条件、连续性条件和边界条件，可得关于 $m_j$ 的三对角方程组，求出 $m_j$，得到三次样条插值函数。</p>
-<p><strong>三弯矩法</strong>：令 $s^{\prime\prime}\left(x_j\right)&#x3D;M_j, \quad j&#x3D;0,\cdots, n, \quad h_j&#x3D;x_{j+1}-x_j$<br>则 $s^{\prime\prime}(x)&#x3D;\frac{x_{j+1}-x}{h_j} M_{j}+\frac{x-x_j}{h_j} M_{j+1}, \quad x\in\left[x_j, x_{j+1}\right]$<br>$$<br>\begin{aligned}<br>s^{\prime}(x) &amp;&#x3D; -\frac{\left(x_{j+1}-x\right)^{2}}{2 h_{j}} M_{j} + \frac{\left(x-x_{j}\right)^{2}}{2 h_{j}} M_{j+1} + c_{1}, \<br>s(x) &amp;&#x3D; \frac{\left(x_{j+1}-x\right)^{3}}{6 h_{j}} M_{j} + \frac{\left(x-x_{j}\right)^{3}}{6 h_{j}} M_{j+1} + c_{1} x + c_{2}, \<br>s\left(x_{j}\right) &amp;&#x3D; \frac{1}{6} h_{j}^{2} M_{j} + c_{1} x_{j} + c_{2} &#x3D; y_{j}, \<br>s\left(x_{j+1}\right) &amp;&#x3D; \frac{1}{6} h_{j}^{2} M_{j+1} + c_{1} x_{j+1} + c_{2} &#x3D; y_{j+1}, \<br>c_{1} &amp;&#x3D; \frac{y_{j+1}-y_{j}}{h_{j}} - \frac{1}{6} h_{j}\left(M_{j+1}-M_{j}\right), \<br>c_{2} &amp;&#x3D; \frac{y_{j} x_{j+1} - y_{j+1} x_{j}}{h_{j}} - \frac{1}{6} h_{j}\left(x_{j+1} M_{j} - x_{j} M_{j+1}\right).<br>\end{aligned}<br>$$</p>
-<p>$$<br>s(x) &#x3D; \frac{\left(x_{j+1}-x\right)^{3}}{6 h_{j}} M_{j} + \frac{\left(x-x_{j}\right)^{3}}{6 h_{j}} M_{j+1} + \left(y_{j}-\frac{M_{j} h_{j}^{2}}{6}\right)\frac{x_{j+1}-x}{h_{j}} + \left(y_{j+1}-\frac{M_{j+1} h_{j}^{2}}{6}\right)\frac{x-x_{j}}{h_{j}}<br>$$</p>
-<p>$$<br>s^{\prime}(x) &#x3D; -\frac{\left(x_{j+1}-x\right)^2}{2 h_j} M_{j} + \frac{\left(x-x_j\right)^2}{2 h_j} M_{j+1} + \frac{y_{j+1}-y_j}{h_j} - \frac{M_{j+1}-M_{j}}{6} h_{j}.<br>$$</p>
-<p>为了求 $M_0,\cdots, M_n$，要用导数连续条件：$s^{\prime}\left(x_j+0\right)&#x3D;s^{\prime}\left(x_j-0\right)$。</p>
-<p>$$<br>\begin{align*}<br>s^{\prime}\left(x_{j}+0\right) &amp;&#x3D; -\frac{h_{j}}{3} M_{j} - \frac{h_{j}}{6} M_{j+1} + \frac{y_{j+1}-y_{j}}{h_{j}}, \<br>s^{\prime}\left(x_{j+1}-0\right) &amp;&#x3D; \frac{h_{j}}{6} M_{j} + \frac{h_{j}}{3} M_{j+1} + \frac{y_{j+1}-y_{j}}{h_{j}}, \<br>s^{\prime}\left(x_{j}-0\right) &amp;&#x3D; \frac{h_{j-1}}{6} M_{j-1} + \frac{h_{j-1}}{3} M_{j} + \frac{y_{j-1}-y_{j-1}}{h_{j-1}}. \<br>\frac{h_{j-1}}{6} M_{j-1} + \frac{h_{j-1}+h_{j}}{3} M_{j} + \frac{h_{j}}{6} M_{j+1} &amp;&#x3D; \frac{y_{j}-y_{j-1}}{h_{j-1}} - \frac{y_{j+1}-y_{j}}{h_{j}}, \quad j&#x3D;1,\cdots, n-1,<br>\end{align*}<br>$$</p>
-<p>$$<br>\mu_{j} M_{j-1} + 2 M_{j} + \lambda_{j} M_{j+1} &#x3D; d_{j}, \quad j&#x3D;1,\cdots, n-1,<br>$$</p>
-<p>其中$d_{j}&#x3D;6 f\left[x_{j-1}, x_{j}, x_{j+1}\right]$</p>
-<p><strong><span style="color:blue">$\lambda_{j}&#x3D; \frac{h_j}{h_{j-1}+h_j}$，$\mu_j &#x3D; \frac{h_{j-1}}{h_{j-1}+h_j}$。</span></strong></p>
-<p><strong>在第一边界条件下</strong>：</p>
-<h1 id="begin-bmatrix-2-1-mu-1-2-lambda-1-ddots-ddots-ddots-mu-n-1-2-lambda-n-1-1-2-end-bmatrix-begin-bmatrix-M-0-M-1-vdots-M-n-1-M-n-end-bmatrix"><a href="#begin-bmatrix-2-1-mu-1-2-lambda-1-ddots-ddots-ddots-mu-n-1-2-lambda-n-1-1-2-end-bmatrix-begin-bmatrix-M-0-M-1-vdots-M-n-1-M-n-end-bmatrix" class="headerlink" title="$$\begin{bmatrix}2 &amp; 1 &amp; &amp; &amp; \\mu_1 &amp; 2 &amp; \lambda_1 &amp; &amp; \ &amp; \ddots &amp; \ddots &amp; \ddots &amp; \ &amp; &amp; \mu_{n-1} &amp; 2 &amp; \lambda_{n-1} \ &amp; &amp; &amp; 1 &amp; 2\end{bmatrix}\begin{bmatrix}M_0 \M_1 \\vdots \M_{n-1} \M_n\end{bmatrix}"></a>$$<br>\begin{bmatrix}<br>2 &amp; 1 &amp; &amp; &amp; \<br>\mu_1 &amp; 2 &amp; \lambda_1 &amp; &amp; \<br> &amp; \ddots &amp; \ddots &amp; \ddots &amp; \<br> &amp; &amp; \mu_{n-1} &amp; 2 &amp; \lambda_{n-1} \<br> &amp; &amp; &amp; 1 &amp; 2<br>\end{bmatrix}<br>\begin{bmatrix}<br>M_0 \<br>M_1 \<br>\vdots \<br>M_{n-1} \<br>M_n<br>\end{bmatrix}</h1><p>\begin{bmatrix}<br>d_0 \<br>d_1 \<br>\vdots \<br>d_{n-1} \<br>d_n<br>\end{bmatrix}<br>$$</p>
-<blockquote>
-<p>$$<br>\lambda_0 &#x3D; 1\<br>\mu_n &#x3D; 1\<br>d_0 &#x3D; \frac{6}{h_0} \left( f[x_0, x_1] - f’<em>0 \right)\<br>d_j &#x3D; 6 \frac{f[x_j, x</em>{j+1}] - f[x_{j-1}, x_j]}{h_{j-1} + h_j} &#x3D; 6 f[x_{j-1}, x_j, x_{j+1}], \quad j &#x3D; 1, 2, \dots, n-1  \</p>
-<p>d_n &#x3D; \frac{6}{h_{n-1}} \left( f’<em>n - f[x</em>{n-1}, x_n] \right)<br>$$</p>
-</blockquote>
-<h1 id="第二边界条件矩阵方程-begin-bmatrix-2-lambda-1-mu-2-2-lambda-2-ddots-ddots-ddots-mu-n-1-2-end-bmatrix-begin-bmatrix-M-1-M-2-vdots-M-n-1-end-bmatrix"><a href="#第二边界条件矩阵方程-begin-bmatrix-2-lambda-1-mu-2-2-lambda-2-ddots-ddots-ddots-mu-n-1-2-end-bmatrix-begin-bmatrix-M-1-M-2-vdots-M-n-1-end-bmatrix" class="headerlink" title="第二边界条件矩阵方程$$\begin{bmatrix}2 &amp; \lambda_1 &amp; &amp; \\mu_2 &amp; 2 &amp; \lambda_2 &amp; \ &amp; \ddots &amp; \ddots &amp; \ddots \ &amp; &amp; \mu_{n-1} &amp; 2\end{bmatrix}\begin{bmatrix}M_1 \M_2 \\vdots \M_{n-1}\end{bmatrix}"></a><strong>第二边界条件矩阵方程</strong><br>$$<br>\begin{bmatrix}<br>2 &amp; \lambda_1 &amp; &amp; \<br>\mu_2 &amp; 2 &amp; \lambda_2 &amp; \<br> &amp; \ddots &amp; \ddots &amp; \ddots \<br> &amp; &amp; \mu_{n-1} &amp; 2<br>\end{bmatrix}<br>\begin{bmatrix}<br>M_1 \<br>M_2 \<br>\vdots \<br>M_{n-1}<br>\end{bmatrix}</h1><p>\begin{bmatrix}<br>d_1 - \mu_1 f’’<em>0 \<br>d_2 \<br>\vdots \<br>d</em>{n-1} - \lambda_{n-1} f’’_n<br>\end{bmatrix}<br>$$</p>
-<p>边界条件约束：<br>$$<br>\begin{cases}<br>M_0 &#x3D; f’’_0 \<br>M_n &#x3D; f’’_n<br>\end{cases}<br>$$</p>
-<h1 id="第三边界条件（周期边界条件）矩阵方程-begin-bmatrix-2-lambda-1-mu-1-mu-2-2-lambda-2-ddots-ddots-ddots-mu-n-1-2-lambda-n-1-lambda-n-mu-n-2-end-bmatrix-begin-bmatrix-M-1-M-2-vdots-M-n-1-M-n-end-bmatrix"><a href="#第三边界条件（周期边界条件）矩阵方程-begin-bmatrix-2-lambda-1-mu-1-mu-2-2-lambda-2-ddots-ddots-ddots-mu-n-1-2-lambda-n-1-lambda-n-mu-n-2-end-bmatrix-begin-bmatrix-M-1-M-2-vdots-M-n-1-M-n-end-bmatrix" class="headerlink" title="第三边界条件（周期边界条件）矩阵方程$$\begin{bmatrix}2 &amp; \lambda_1 &amp; &amp; &amp; \mu_1 \\mu_2 &amp; 2 &amp; \lambda_2 &amp; &amp; \ &amp; \ddots &amp; \ddots &amp; \ddots &amp; \ &amp; &amp; \mu_{n-1} &amp; 2 &amp; \lambda_{n-1} \\lambda_n &amp; &amp; &amp; \mu_n &amp; 2\end{bmatrix}\begin{bmatrix}M_1 \M_2 \\vdots \M_{n-1} \M_n\end{bmatrix}"></a><strong>第三边界条件（周期边界条件）矩阵方程</strong><br>$$<br>\begin{bmatrix}<br>2 &amp; \lambda_1 &amp; &amp; &amp; \mu_1 \<br>\mu_2 &amp; 2 &amp; \lambda_2 &amp; &amp; \<br> &amp; \ddots &amp; \ddots &amp; \ddots &amp; \<br> &amp; &amp; \mu_{n-1} &amp; 2 &amp; \lambda_{n-1} \<br>\lambda_n &amp; &amp; &amp; \mu_n &amp; 2<br>\end{bmatrix}<br>\begin{bmatrix}<br>M_1 \<br>M_2 \<br>\vdots \<br>M_{n-1} \<br>M_n<br>\end{bmatrix}</h1><p>\begin{bmatrix}<br>d_1 \<br>d_2 \<br>\vdots \<br>d_{n-1} \<br>d_n<br>\end{bmatrix}<br>$$</p>
-<p>特殊约束条件<br>$$<br>\begin{cases}<br>x_0 &#x3D; x_n \quad (\text{周期条件}) \<br>M_0 &#x3D; M_n \quad (\text{弯矩周期约束}) \<br>\mu_n M_{n-1} + 2M_n + \lambda_n M_1 &#x3D; d_n \quad (\text{闭环方程})<br>\end{cases}<br>$$</p>
-<p>参数定义<br>$$<br>\begin{aligned}<br>\mu_n &amp;&#x3D; \frac{h_{n-1}}{h_{n-1} + h_0} \quad (\text{末节点弯矩传递系数}) \<br>\lambda_n &amp;&#x3D; \frac{h_0}{h_{n-1} + h_0} \quad (\text{首节点弯矩传递系数}) \<br>d_n &amp;&#x3D; 6f[x_{n-1}, x_n, x_1] \quad (\text{三阶差商计算})<br>\end{aligned}<br>$$</p>
-<h3 id="误差界与收敛性"><a href="#误差界与收敛性" class="headerlink" title="误差界与收敛性"></a>误差界与收敛性</h3><p> 设 $f(x) \in C^4[a,b]$，$S(x)$ 满足第一或第二边界条件，<br>令 $h &#x3D; \max\limits_{0 \leq i \leq n-1} h_i$，其中 $h_i &#x3D; x_{i+1} - x_i$，则有估计式：<br>$$<br>\max_{a \leq x \leq b} \left| f^{(k)}(x) - s^{(k)}(x) \right| \leq C_k \left( \max_{a \leq x \leq b} \left| f^{(4)}(x) \right| \right) h^{4-k}<br>$$<br>其中常数项系数为：<br>$$<br>\begin{cases}<br>C_0 &#x3D; \dfrac{5}{384} \<br>C_1 &#x3D; \dfrac{1}{24} \<br>C_2 &#x3D; \dfrac{3}{8}<br>\end{cases} \quad (k&#x3D;0,1,2)<br>$$</p>
-<h1 id="第三章-函数逼近"><a href="#第三章-函数逼近" class="headerlink" title="第三章 函数逼近"></a>第三章 函数逼近</h1><h2 id="范数与赋范线性空间"><a href="#范数与赋范线性空间" class="headerlink" title="范数与赋范线性空间"></a>范数与赋范线性空间</h2><p>设 $S$ 是实数域上的线性空间，$x \in S$，如果存在唯一实数 $|\cdot|$，满足以下条件：  </p>
-<ol>
-<li><p><strong>正定性</strong>：<br>$$<br>|x| \geq 0，\quad \text{当且仅当} \ x &#x3D; 0 \ \text{时，} \ |x| &#x3D; 0<br>$$</p>
-</li>
-<li><p><strong>齐次性</strong>：<br>$$<br>| \alpha x | &#x3D; |\alpha| \cdot |x|，\quad \alpha \in \mathbb{R}<br>$$</p>
-</li>
-<li><p><strong>三角不等式</strong>：<br>$$<br>|x + y| \leq |x| + |y|，\quad x, y \in S<br>$$</p>
-</li>
-</ol>
-<p>则称 $| \cdot |$ 为线性空间 $S$ 上的<strong>范数</strong>，$S$ 与 $| \cdot |$ 一起称为<strong>赋范线性空间</strong>，记为 $X$。</p>
-<p><strong>常用范数定义</strong></p>
-<h4 id="1-mathbb-R-n-上的向量范数"><a href="#1-mathbb-R-n-上的向量范数" class="headerlink" title="1. $\mathbb{R}^n$ 上的向量范数"></a><strong>1. $\mathbb{R}^n$ 上的向量范数</strong></h4><p>设 $x &#x3D; (x_1, \dots, x_n)^T \in \mathbb{R}^n$，定义以下三种常用范数：  </p>
-<ol>
-<li><p><strong>∞-范数（最大范数）</strong>：<br>$$<br>|x|<em>\infty &#x3D; \max</em>{1 \leq i \leq n} |x_i|<br>$$</p>
-</li>
-<li><p><strong>1-范数</strong>：<br>$$<br>|x|<em>1 &#x3D; \sum</em>{i&#x3D;1}^n |x_i|<br>$$</p>
-</li>
-<li><p><strong>2-范数</strong>：<br>$$<br>|x|<em>2 &#x3D; \left( \sum</em>{i&#x3D;1}^n x_i^2 \right)^{1&#x2F;2}<br>$$</p>
-</li>
-</ol>
-<hr>
-<h4 id="2-C-a-b-上的函数范数"><a href="#2-C-a-b-上的函数范数" class="headerlink" title="2. $C[a, b]$ 上的函数范数"></a><strong>2. $C[a, b]$ 上的函数范数</strong></h4><p>设 $f(x) \in C[a, b]$，定义以下三种常用范数：  </p>
-<ol>
-<li><p><strong>∞-范数</strong>：<br>$$<br>|f|<em>\infty &#x3D; \max</em>{a \leq x \leq b} |f(x)|<br>$$</p>
-</li>
-<li><p><strong>1-范数</strong>：<br>$$<br>|f|_1 &#x3D; \int_a^b |f(x)| , dx<br>$$</p>
-</li>
-<li><p><strong>2-范数</strong>：<br>$$<br>|f|_2 &#x3D; \left( \int_a^b f^2(x) , dx \right)^{1&#x2F;2}<br>$$</p>
-</li>
-</ol>
-<h2 id="内积与内积空间"><a href="#内积与内积空间" class="headerlink" title="内积与内积空间"></a>内积与内积空间</h2><h3 id="权函数"><a href="#权函数" class="headerlink" title="权函数"></a>权函数</h3><p>设 $[a, b]$ 是有限或无限区间，在 $[a, b]$ 上的非负函数 $\rho(x)$ 满足以下条件：  </p>
-<ol>
-<li><p><strong>积分存在性</strong>：<br>对任意非负整数 $k &#x3D; 0, 1, 2, \ldots$，积分<br>$$<br>\int_a^b x^k \rho(x) , dx<br>$$<br>存在且为有限值。  </p>
-</li>
-<li><p><strong>非负连续性条件</strong>：<br>对 $[a, b]$ 上的任意非负连续函数 $g(x)$，若满足<br>$$<br>\int_a^b g(x)\rho(x) , dx &#x3D; 0,<br>$$<br>则必有 $g(x) \equiv 0$（即 $g(x)$ 在 $[a, b]$ 上恒为零）。</p>
-</li>
-</ol>
-<p>满足上述条件的函数 $\rho(x)$ 称为 $[a, b]$ 上的一个<strong>权函数</strong>。</p>
-<h3 id="内积"><a href="#内积" class="headerlink" title="内积"></a>内积</h3><p>在 $\mathbb{R}^n$ 中，向量 $x &#x3D; (x_1, x_2, \dots, x_n)^T$ 和 $y &#x3D; (y_1, y_2, \dots, y_n)^T$ 的内积定义为：<br>$$<br>(x, y) &#x3D; x_1 y_1 + x_2 y_2 + \dots + x_n y_n \tag{1.5}<br>$$</p>
-<p>设 $X$ 是数域 $K$（实数域 $\mathbb{R}$ 或复数域 $\mathbb{C}$）上的线性空间。对任意 $u, v \in X$，有K中一个数与之对应，记为$(u,v)$，它满足以下条件：</p>
-<ol>
-<li><p><strong>共轭对称性</strong>：<br>$$<br>(u, v) &#x3D; \overline{(v, u)}<br>$$<br>其中 $\overline{(v, u)}$ 表示 $(v, u)$ 的复共轭。当 $K &#x3D; \mathbb{R}$ 时，简化为对称性 $(u, v) &#x3D; (v, u)$。  </p>
-</li>
-<li><p><strong>线性性</strong>：<br>$$<br>(\alpha u, v) &#x3D; \alpha (u, v), \quad \forall \alpha \in K<br>$$</p>
-</li>
-<li><p><strong>可加性）</strong>：<br>$$<br>(u + v, w) &#x3D; (u, w) + (v, w), \quad \forall w \in X<br>$$</p>
-</li>
-<li><p><strong>正定性</strong>：<br>$$<br>(u, u) \geq 0<br>$$<br>当且仅当 $u &#x3D; 0$ 时，$(u, u) &#x3D; 0$。</p>
-</li>
-</ol>
-<p>定义了内积的线性空间称为<strong>内积空间</strong>。</p>
-<hr>
-<p>设 $f(x), g(x) \in C[a, b]$，$\rho(x)$ 是 $[a, b]$ 上的权函数，积分<br>$$<br>(f, g) &#x3D; \int_a^b \rho(x) f(x) g(x) , dx<br>$$<br>称为函数 $f(x)$ 与 $g(x)$ 在 $[a, b]$ 上的<strong>内积</strong>。</p>
-<blockquote>
-<p>向量模（范数）的定义</p>
-<p>设向量 $ f \in \mathbb{R}^n $，其模（范数）定义为：<br>$$<br>| f |<em>2 &#x3D; \left( \sum</em>{k&#x3D;1}^{n} f_k^2 \right)^{\frac{1}{2}}<br>$$<br>将此定义推广到任何内积空间中，就有以下定义。</p>
-<hr>
-<p>设函数 $ f(x) \in C[a, b] $，定义量<br>$$<br>| f |_2 &#x3D; \sqrt{ \int_a^b \rho(x) f^2(x) , dx } &#x3D; \sqrt{ (f, f) }<br>$$<br>称为函数 $ f(x) $ 的<strong>欧氏范数</strong>。</p>
-</blockquote>
-<blockquote>
-<p><strong>定理</strong>  </p>
-<p>对任何 $ f, g \in C[a, b] $，下列结论成立：  </p>
-<ol>
-<li><p><strong>柯西-许瓦兹不等式</strong>：<br>$$<br>  |(f, g)| \leq |f|_2 |g|_2 \<br>  或 \quad |(f, g)|^2 \leq (f,f)(g,g)<br>$$</p>
-</li>
-<li><p><strong>三角不等式</strong>：<br>$$<br>  |f + g|_2 \leq |f|_2 + |g|_2<br>$$</p>
-</li>
-<li><p><strong>平行四边形定律</strong>：<br>$$<br>  |f + g|_2^2 + |f - g|_2^2 &#x3D; 2 \left( |f|_2^2 + |g|_2^2 \right)<br>$$</p>
-</li>
-</ol>
-</blockquote>
-<h3 id="线性无关相关概念与定理"><a href="#线性无关相关概念与定理" class="headerlink" title="线性无关相关概念与定理"></a>线性无关相关概念与定理</h3><p>设集合 $ S $ 是数域 $ P $ 上的线性空间，元素 $ x_1, x_2, \dots, x_n \in S $。如果存在不全为零的数 $ \alpha_1, \alpha_2, \dots, \alpha_n \in P $，使得<br>$$<br>\alpha_1 x_1 + \alpha_2 x_2 + \dots + \alpha_n x_n &#x3D; 0 \quad (1.1)<br>$$<br>则称 $ x_1, x_2, \dots, x_n $ <strong>线性相关</strong>。否则，若等式 (1.1) 只对<br>$$<br>\alpha_1 &#x3D; \alpha_2 &#x3D; \dots &#x3D; \alpha_n &#x3D; 0<br>$$<br>成立，则称 $ x_1, x_2, \dots, x_n $ <strong>线性无关</strong>。</p>
-<hr>
-<p><strong>基的定义</strong>  </p>
-<p>若线性空间 $ S $ 是由 $ n $ 个线性无关元素 $ x_1, x_2, \dots, x_n $ 生成的，即对任意 $ x \in S $，都有<br>$$<br>x &#x3D; \alpha_1 x_1 + \alpha_2 x_2 + \dots + \alpha_n x_n,<br>$$<br>则 $ x_1, x_2, \dots, x_n $ 称为空间 $ S $ 的一组<strong>基</strong>，记为<br>$$<br>S &#x3D; \text{span}{x_1, x_2, \dots, x_n}.<br>$$<br>其中，系数 $ \alpha_1, \alpha_2, \dots, \alpha_n $ 称为 $ x $ 在基 $ x_1, x_2, \dots, x_n $ 下的<strong>坐标</strong>，记作 $ (\alpha_1, \alpha_2, \dots, \alpha_n) $。</p>
-<hr>
-<h3 id="无限维线性空间"><a href="#无限维线性空间" class="headerlink" title="无限维线性空间"></a><strong>无限维线性空间</strong></h3><p>如果 $ S $ 中有无限个线性无关元素 $ x_1, x_2, \dots, x_n, \dots $，则称 $ S $ 为<strong>无限维线性空间</strong>。</p>
-<blockquote>
-<p><strong>定理3</strong> </p>
-<p>设 $ X $ 为一个内积空间，$ u_1, u_2, \dots, u_n \in X $，矩阵 $ G $ 定义为：<br>$$<br>G &#x3D; \begin{pmatrix}<br>(u_1, u_1) &amp; (u_2, u_1) &amp; \cdots &amp; (u_n, u_1) \<br>(u_1, u_2) &amp; (u_2, u_2) &amp; \cdots &amp; (u_n, u_2) \<br>\vdots &amp; \vdots &amp; &amp; \vdots \<br>(u_1, u_n) &amp; (u_2, u_n) &amp; \cdots &amp; (u_n, u_n)<br>\end{pmatrix}<br>$$<br>矩阵 $ G $ 称为<strong>格拉姆(Gram)矩阵</strong>。矩阵 $ G $ 非奇异(<strong>等价与$detG≠0$</strong>)的充分必要条件是 $ u_1, u_2, \dots, u_n $ 线性无关。</p>
-</blockquote>
-<h2 id="函数的最佳平方逼近"><a href="#函数的最佳平方逼近" class="headerlink" title="函数的最佳平方逼近"></a>函数的最佳平方逼近</h2><p>设函数 $ f(x) \in C[a, b] $，用 $ n $ 次多项式<br>$$<br>s(x) &#x3D; \sum_{k&#x3D;0}^{n} a_k x^k<br>$$<br>作最佳平方逼近，就是要求得以 $ a_0^<em>, a_1^</em>, \dots, a_n^* $ 为系数的多项式<br>$$<br>s^<em>(x) &#x3D; \sum_{k&#x3D;0}^{n} a_k^</em> x^k<br>$$<br>使得<br>$$<br>| f(x) - s^<em>(x) |_2^2 &#x3D; \int_a^b [f(x) - s^</em>(x)]^2 , dx &#x3D; \min_{s(x) \in H_n} | f(x) - s(x) |_2^2<br>$$<br>其中 $ H_n $ 表示所有 $ n $ 次多项式的集合。</p>
-<hr>
-<p><strong>推广到一般情况</strong></p>
-<p>对于给定的权函数 $ \rho(x) $，要求得 $ a_k^* $（$ k &#x3D; 0, 1, \dots, n $）使得<br>$$<br>| f(x) - s^<em>(x) |_2^2 &#x3D; \int_a^b \rho(x) [f(x) - s^</em>(x)]^2 , dx &#x3D; \min_{s(x) \in H_n} | f(x) - s(x) |_2^2<br>$$</p>
-<p><strong>进一步推广</strong></p>
-<p>$ n $ 次多项式<br>$$<br>s(x) &#x3D; \sum_{k&#x3D;0}^{n} a_k x^k<br>$$<br>是以 $ 1, x, \dots, x^n $ 为基函数的线性组合。进一步推广可将 $ x^k $ 改为一般的线性无关的连续函数 $ \varphi_k(x) $，全体构成 $ C[a, b] $ 的子空间，即<br>$$<br>\Phi &#x3D; \text{span}{ \varphi_0, \varphi_1, \dots, \varphi_n }<br>$$<br>最佳平方逼近问题可叙述为：求 $ a_0^<em>, a_1^</em>, \dots, a_n^* $ 使得<br>$$<br>| f(x) - s^*(x) |<em>2^2 &#x3D; \left| f(x) - \sum</em>{k&#x3D;0}^n a_k \varphi_k(x) \right|<em>2^2 &#x3D; \min</em>{s(x) \in \Phi} | f(x) - s(x) |_2^2<br>$$<br>其中，$ \Phi &#x3D; \text{span}{ \varphi_0, \varphi_1, \dots, \varphi_n } $ 是由基函数 $ \varphi_k(x) $ 生成的函数空间。</p>
-<p>上述问题等价于求解多元函数<br>$$<br>I(a_0, a_1, \dots, a_n) &#x3D; \int_a^b \rho(x) \left| f(x) - \sum_{k&#x3D;0}^n a_k \varphi_k(x) \right|^2 dx<br>$$<br>的最小值问题。</p>
-<p>由多元函数极值存在的必要条件可得如下的法方程组：<br>$$<br>\sum_{j&#x3D;0}^{n} (\varphi_j, \varphi_k) a_j &#x3D; (f, \varphi_k), \quad (k &#x3D; 0, 1, \ldots, n)<br>$$</p>
-<p>可证明方程组有唯一解 $ a_k &#x3D; a_k^* $（$ k &#x3D; 0, 1, \dots, n $），从而得到</p>
-<p>$s^<em>(x) &#x3D; a_0^</em> \varphi_0(x) + \cdots + a_n^* \varphi_n(x)$</p>
-<p>若令<br>$$<br>\delta(x) &#x3D; f(x) - S^<em>(x),<br>$$<br><strong><u>则最佳平方逼近的误差为</u></strong><br>$$<br>|\delta(x)|^2_2 &#x3D; \left( f(x) - S^</em>(x), f(x) - S^<em>(x) \right) \<br>&#x3D; (f(x), f(x)) - (S^</em>(x), f(x)) &#x3D; |f(x)|^2_2 - \sum_{k&#x3D;0}^n a_k^* (\varphi_k(x), f(x)).<br>$$<br><strong>PS</strong>:根据法方程可得$(S^<em>(x),\varphi_k)&#x3D;(f,\varphi_k)$,进一步得$(f-S^</em>(x),\varphi_k)&#x3D;0$，即$(f-S^<em>,S^</em>)&#x3D;0$</p>
-<blockquote>
-<p>若取基函数<br>$$<br>\varphi_k(x) &#x3D; x^k, \quad \rho(x) &#x3D; 1, \quad f(x) \in C[0, 1],<br>$$<br>则要在 $ H_n $ 中求 $ n $ 次最佳平方逼近多项式<br>$$<br>s^*(x) &#x3D; a_0 + a_1 x + \dots + a_n x^n.<br>$$</p>
-<p>此时，内积定义为<br>$$<br>(\varphi_i(x), \varphi_j(x)) &#x3D; \int_0^1 x^{i+j} , dx &#x3D; \frac{1}{i + j + 1},<br>$$<br>而<br>$$<br>(f(x), \varphi_k(x)) &#x3D; \int_0^1 f(x) x^k , dx &#x3D; d_k.<br>$$</p>
-<p>用 $ H $ 表示格拉姆矩阵 $ G_n &#x3D; G(1, x, \dots, x^n) $，即<br>$$<br>H &#x3D; \begin{pmatrix}<br>1 &amp; \frac{1}{2} &amp; \cdots &amp; \frac{1}{n+1} \<br>\frac{1}{2} &amp; \frac{1}{3} &amp; \cdots &amp; \frac{1}{n+2} \<br>\vdots &amp; \vdots &amp; &amp; \vdots \<br>\frac{1}{n+1} &amp; \frac{1}{n+2} &amp; \cdots &amp; \frac{1}{2n+1}<br>\end{pmatrix},<br>$$<br>称 $ H $ 为<strong>希尔伯特(Hilbert)矩阵</strong>。记向量<br>$$<br>a &#x3D; (a_0, a_1, \dots, a_n)^T, \quad d &#x3D; (d_0, d_1, \dots, d_n)^T,<br>$$<br>则线性方程组<br>$$<br>H a &#x3D; d<br>$$<br>的解 $ a_k &#x3D; a_k^* $（$ k &#x3D; 0, 1, \dots, n $）即为所求。</p>
-</blockquote>
-<h2 id="用正交函数系作最佳平方逼近"><a href="#用正交函数系作最佳平方逼近" class="headerlink" title="用正交函数系作最佳平方逼近"></a>用正交函数系作最佳平方逼近</h2><p>若 ${g_k(x)}(k&#x3D;0,1,\dots,n)$ 是带权 $\rho(x)$ 正交的函数系，即满足：</p>
-<p>$$<br>(g_k, g_j) &#x3D; \int_a^b \rho(x) g_k(x) g_j(x) , dx &#x3D; 0 \quad (k \neq j)<br>$$</p>
-<p>通过法方程组 $\sum _{k&#x3D;0}^n  (g_k, g_j)a_j &#x3D; (f, g_j)$ 可以独立解得：</p>
-<p>$$<br>a_j^* &#x3D; \frac{(f, g_j)}{(g_j, g_j)} &#x3D; \frac{\int_a^b \rho(x) f(x) g_j(x) , dx}{\int_a^b \rho(x) g_j^2(x) , dx} \quad (j&#x3D;0,1,\dots,n)<br>$$</p>
-<blockquote>
-<p>$a^*_j$与$n$无关</p>
-</blockquote>
-<p>从而得到最佳平方逼近函数：<br>$$<br>s^<em>(x) &#x3D; \sum_{j&#x3D;0}^na_j^</em> g_j(x) &#x3D; \sum_{j&#x3D;0}^n \frac{(f, g_j)}{(g_j, g_j)} g_j(x)<br>$$</p>
-<p><strong>广义Fourier级数</strong></p>
-<p>对于函数 $f(x) \in C[a, b]$ 与正交基函数系 ${g_k(x)}(k&#x3D;0,1,\dots,n)$，按公式逐个计算出 $a_j^*$ 后，可以得到一个级数：</p>
-<p>$$<br> a_0^* g_0(x) + a_1^* g_1(x) + \dots + a_n^* g_n(x)<br>$$</p>
-<p>这个级数称为 $f(x)$ 对应于基函数系  ${g_k(x)}(k&#x3D;0,1,\dots,n)$的广义Fourier级数。</p>
-<p>系数 $ a_k^* $ 为广义Fourier系数，对任意固定的 $ n $，其部分和为：</p>
-<p>$$<br>S_n(x) &#x3D; \sum_{k&#x3D;0}^n a_k^* g_k(x)<br>$$</p>
-<p>$ S_n(x) $ 称为广义多项式，是所求的最佳平方逼近多项式。</p>
-<p><strong>勒让德多项式作为基函数</strong></p>
-<p>当 $ f(x) \in C[-1, 1] $ 时，可以用勒让德多项式 $ {P_k(x)} $ 作为基函数，即 $ {g_k(x)} &#x3D; {P_k(x)} $。此时，最佳平方逼近多项式为：</p>
-<p>$$<br>s_n^<em>(x) &#x3D; a_0^</em> P_0(x) + a_1^* P_1(x) + \dots + a_n^* P_n(x)<br>$$</p>
-<p>其中，系数 $ a_k^* $ 的计算公式为：</p>
-<p>$$<br>a_k^* &#x3D; \frac{(P_k, f)}{(P_k, P_k)} &#x3D; \frac{2k+1}{2} \int_{-1}^1 f(x) P_k(x) , dx \quad(k&#x3D;0,1,\cdots,n)<br>$$</p>
-<p>则 $ s_n^*(x) $ 是使 $ | f(x) - \sum _{k&#x3D;0}^n a_k P_k(x) |_2^2 $ 最小的最佳平方逼近多项式。</p>
-<p>此时的平方误差为：</p>
-<p>$$<br>|\delta_n|<em>2^2 &#x3D; \int</em>{-1}^{1} [f(x)]^2 , dx - \sum_{k&#x3D;0}^{n} \frac{2}{2k+1} a^{*2}<br>$$</p>
-<blockquote>
-<p><strong>例题</strong></p>
-<p>求函数 $ f(x) &#x3D; e^x $ 在区间 $[-1, 1]$ 上的三次最佳平方逼近多项式，使用基函数 ${P_0, P_1, P_2, P_3}$。</p>
-<ol>
-<li><p><strong>计算内积 $(P_k, f)$：</strong><br>$$<br>  (P_0, f) &#x3D; \int_{-1}^{1} e^x , dx &#x3D; e - \frac{1}{e} \approx 2.3504<br>$$<br>$$<br>  (P_1, f) &#x3D; \int_{-1}^{1} x e^x , dx &#x3D; 2e^{-1} \approx 0.7358<br>$$<br>$$<br>  (P_2, f) &#x3D; \int_{-1}^{1} \left( \frac{3}{2} x^2 - \frac{1}{2} \right) e^x , dx \approx 0.02013<br>$$<br>$$<br>  (P_3, f) &#x3D; \int_{-1}^{1} \left( \frac{5}{2} x^3 - \frac{3}{2} x \right) e^x , dx \approx 0.02013<br>$$</p>
-</li>
-<li><p><em><em>计算系数 $ a_k^</em> $：</em>*<br>$$<br>  a_0^* &#x3D; \frac{(P_0, f)}{2} \approx 1.1752 \<br>  a_1^* &#x3D; \frac{3}{2} (P_1, f) \approx 1.1036 \<br>  a_2^* &#x3D; \frac{5}{2} (P_2, f) \approx 0.3578 \<br>  a_3^* &#x3D; \frac{7}{2} (P_3, f) \approx 0.07046<br>$$</p>
-</li>
-<li><p><strong>得到逼近多项式 $ S_3^*(x) $：</strong><br>$$<br>  S_3^*(x) &#x3D; 0.9963 + 0.9979x + 0.5367x^2 + 0.1761x^3<br>$$</p>
-</li>
-<li><p><strong>计算平方误差：</strong><br>$$<br>  \left|| \delta_3 \right||<em>2^2 &#x3D; \left|| e^x - s_3^*(x) \right||<em>2^2 &#x3D; \int</em>{-1}^{1} e^{2x} , dx - \sum</em>{k&#x3D;0}^{3} \frac{2}{2k+1} {a_k^*}^2 &#x3D; 0.88 \times 10^{-4}<br>$$</p>
-</li>
-</ol>
-<p>  <u>如果所给的区间不是 $[-1, 1]$，而是一般的有限区间 $[a, b]$，可以通过变量置换将其转化为区间 $[-1, 1]$ 上的情形来处理</u>。</p>
-<p>  变量置换公式</p>
-<p>  通过以下变量置换公式，将区间 $[a, b]$ 转化为 $[-1, 1]$：</p>
-<p>$$<br>  x &#x3D; \frac{a + b}{2} + \frac{b - a}{2} t<br>$$</p>
-<p>  其中：</p>
-<ul>
-<li>$ x $ 为原区间 $[a, b]$ 上的变量；</li>
-<li>$ t $ 为转化后的区间 $[-1, 1]$ 上的变量。</li>
-</ul>
-<p>  <strong>例题：求函数 $ f(x) &#x3D; \sqrt{x} $ 在区间 $[0, 1]$ 上的一次最佳平方逼近多项式</strong></p>
-<ol>
-<li><p><strong>变量变换</strong>：<br>令 $ x &#x3D; \frac{1}{2}(1 + t) $，则 $ t \in [-1, 1] $，且：<br>$$<br>f(x) &#x3D; \sqrt{x} &#x3D; \sqrt{\frac{1}{2}(1 + t)} &#x3D; \frac{1}{\sqrt{2}} \sqrt{1 + t} &#x3D; \varphi(t)<br>$$</p>
-</li>
-<li><p><strong>求解 $ \varphi(t) $ 的一次最佳平方逼近多项式 $ q_1(t) $</strong>：<br>使用勒让德多项式 $ {P_0, P_1} $ 作为基函数，计算系数 $ a_0 $ 和 $ a_1 $：<br>$$<br>a_0^* &#x3D; \frac{1}{2} (\varphi, P_0) &#x3D; \frac{1}{2} \int_{-1}^{1} \frac{1}{\sqrt{2}} \sqrt{1 + t} \cdot 1 , dt &#x3D; \frac{2}{3} \<br>a_1^* &#x3D; \frac{3}{2} (\varphi, P_1) &#x3D; \frac{3}{2} \int_{-1}^{1} \frac{1}{\sqrt{2}} \sqrt{1 + t} \cdot t , dt &#x3D; \frac{6}{15}<br>$$<br>因此，一次最佳平方逼近多项式为：<br>$$<br>q_1(t) &#x3D; a_0 P_0(t) + a_1 P_1(t) &#x3D; \frac{2}{3} + \frac{6}{15} t<br>$$</p>
-</li>
-<li><p><strong>将 $ t &#x3D; 2x - 1 $ 代入 $ q_1(t) $</strong>：<br>得到 $ \sqrt{x} $ 在区间 $[0, 1]$ 上的一次最佳平方逼近多项式：<br>$$<br>s_1(x) &#x3D; \frac{2}{3} + \frac{6}{15} (2x - 1) &#x3D; \frac{4}{15} + \frac{12}{15} x<br>$$</p>
-</li>
-</ol>
-</blockquote>
-<h2 id="正交多项式"><a href="#正交多项式" class="headerlink" title="正交多项式"></a>正交多项式</h2><h3 id="正交函数族与正交多项式"><a href="#正交函数族与正交多项式" class="headerlink" title="正交函数族与正交多项式"></a><strong>正交函数族与正交多项式</strong></h3><p>若 $ f(x), g(x) \in C[a, b] $，$ \rho(x) \in C[a, b] $，且 $ \rho(x) $ 为 $[a, b]$ 上的权函数，且<br>$$<br>(f, g) &#x3D; \int_a^b \rho(x) f(x) g(x) , dx &#x3D; 0<br>$$<br>则称 $ f(x) $ 与 $ g(x) $ 在 $[a, b]$ 上带权 $ \rho(x) $ 正交。  </p>
-<p>设在 $[a, b]$ 给定函数族 $ {\varphi_n(x)} $，且满足<br>$$<br>(\varphi_i, \varphi_k) &#x3D; \int_a^b \rho(x) \varphi_i(x) \varphi_k(x) , dx &#x3D;<br>\begin{cases}<br>0, &amp; i \neq k, \<br>c_k, &amp; i &#x3D; k<br>\end{cases} \quad (i, k &#x3D; 0, 1, 2, \dots),<br>$$<br>则称函数族 $ {\varphi_n(x)} $ 为 $[a, b]$ 上带权 $ \rho(x) $ 的正交函数族。<br>特别地，当 $ c_k &#x3D; 1 $ 时，则该函数族称为<strong>标准正交函数族</strong>。  </p>
-<hr>
-<p>设 $ p_n(x) $ 是 $[a, b]$ 上首项系数 $ a_n \neq 0 $ 的 $ n $ 次多项式，$ \rho(x) $ 为 $[a, b]$ 上的权函数。若多项式序列 ${p_n(x)}_0^\infty$ 满足正交性，则称 ${p_n(x)}_0^\infty$ 为以 $ \rho(x) $ 为权函数的 $[a, b]$ 上的<strong>正交多项式序列</strong>，并称 $ p_n(x) $ 为以 $ \rho(x) $ 为权函数的 $[a, b]$ 上的 $ n $ 次<strong>正交多项式</strong>。</p>
-<h4 id="正交多项式序列"><a href="#正交多项式序列" class="headerlink" title="正交多项式序列"></a><strong>正交多项式序列</strong></h4><p>只要给定 $[a, b]$ 上的权函数 $ \rho(x) $，由 $ {1, x, \dots, x^n, \dots} $，利用逐个正交化手续，可构造<strong>正交多项式</strong>序列：<br>$$<br>P_0(x) &#x3D; 1, \quad P_n(x) &#x3D; x^n - \sum_{j&#x3D;0}^{n-1} \frac{(x^n, P_j)}{(P_j, P_j)} P_j(x), \quad n &#x3D; 1, 2, \dots. \quad (2.3)<br>$$</p>
-<h4 id="性质"><a href="#性质" class="headerlink" title="性质"></a><strong>性质</strong></h4><ol>
-<li><p><strong>首项系数为1</strong>：<br>$ P_n(x) $ 的首项系数为 1。  </p>
-</li>
-<li><p><strong>表示性</strong>：<br>任意 $ Q_n(x) \in H_n $ 均可表示为 $ P_0(x), P_1(x), \dots, P_n(x) $ 的线性组合。  </p>
-</li>
-<li><p><strong>正交性</strong>：<br>当 $ i \neq j $ 时，$ (P_i, P_j) &#x3D; 0 $，且 $ P_n(x) $ 与任意次数小于 $ n $ 的多项式正交。 </p>
-<hr>
-<p><strong>递推关系</strong></p>
-<p>  设 ${\varphi_n(x)}<em>{0}^{\infty}$ 是 $[a, b]$ 上带权 $\rho(x)$ 的正交多项式，对 $n \geq 0$ 成立递推关系<br>$$<br>\varphi</em>{n+1}(x) &#x3D; (x - \alpha_n) \varphi_n(x) - \beta_n \varphi_{n-1}(x), \quad n &#x3D; 0, 1, \dots<br>$$<br>其中<br>$$<br>\varphi_0(x) &#x3D; 1, \quad \varphi_{-1}(x) &#x3D; 0,<br>$$<br>$$<br>\alpha_n &#x3D; \frac{(x \varphi_n, \varphi_n)}{(\varphi_n, \varphi_n)}, \quad n &#x3D; 0, 1, \dots,<br>$$<br>$$<br>\beta_n &#x3D; \frac{(\varphi_n, \varphi_{n})}{(\varphi_{n-1}, \varphi_{n-1})}, \quad n &#x3D; 1, 2, \dots,<br>$$</p>
-<p><strong>零点性质</strong>：<br>  设 ${ \varphi_n(x) }^{\infty}_0$ 是 $[a, b]$ 上带权 $\rho(x)$ 的正交多项式，则 $\varphi_n(x)$（$n \geq 1$）在区间 $(a, b)$ 内有 $n$ 个不同的零点。<u>（零点都是实的、单重的）</u></p>
-</li>
-</ol>
-<h2 id="勒让德（Legendre）多项式"><a href="#勒让德（Legendre）多项式" class="headerlink" title="勒让德（Legendre）多项式"></a>勒让德（Legendre）多项式</h2><h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>勒让德多项式由 <strong>Rodrigues公式</strong> 定义：<br>$$<br>P_n(x) &#x3D; \frac{1}{2^n n!} \frac{d^n}{dx^n}(x^2-1)^n<br>$$</p>
-<p>最高项系数为1的勒让德多项式为<br>$$<br>\widetilde{P}_n(x) &#x3D; \frac{n!}{(2n)!} \cdot \frac{d^n}{dx^n}  (x^2 - 1)^n<br>$$</p>
-<ul>
-<li>$ P_0(x) &#x3D; 1 $</li>
-<li>$ P_1(x) &#x3D; x $</li>
-<li>$ P_2(x) &#x3D; \frac{1}{2}(3x^2 - 1)$</li>
-</ul>
-<hr>
-<h3 id="重要性质"><a href="#重要性质" class="headerlink" title="重要性质"></a>重要性质</h3><h4 id="性质1：正交性"><a href="#性质1：正交性" class="headerlink" title="性质1：正交性"></a>性质1：正交性</h4><p>在区间 $[-1, 1]$ 上满足正交性：<br>$$<br>\int_{-1}^1 P_n(x) P_m(x) , dx &#x3D;<br>\begin{cases}<br>0, &amp; m \neq n \<br>\frac{2}{2n+1}, &amp; m &#x3D; n<br>\end{cases}<br>$$</p>
-<h4 id="性质2：奇偶性"><a href="#性质2：奇偶性" class="headerlink" title="性质2：奇偶性"></a>性质2：奇偶性</h4><p>满足奇偶对称性：<br>$$<br>P_n(-x) &#x3D; (-1)^n P_n(x)<br>$$</p>
-<h4 id="性质3：最小平方误差"><a href="#性质3：最小平方误差" class="headerlink" title="性质3：最小平方误差"></a>性质3：最小平方误差</h4><p>在所有<strong>最高项系数为1的n次多项式</strong>中，勒让德多项式 $ P_n(x) $ 在 $[-1, 1]$ 上与零的平方误差最小。</p>
-<h4 id="性质4：实零点"><a href="#性质4：实零点" class="headerlink" title="性质4：实零点"></a>性质4：实零点</h4><p>$ P_n(x) $ 在区间 $[-1, 1]$ 内有 $ n $ 个不同的实零点（可用反证法证明）。</p>
-<h4 id="性质5：递推关系"><a href="#性质5：递推关系" class="headerlink" title="性质5：递推关系"></a>性质5：递推关系</h4><p>当 $ n \geq 1 $ 时，满足递推公式：<br>$$<br>(n+1)P_{n+1}(x) &#x3D; (2n+1)xP_n(x) - nP_{n-1}(x)<br>$$</p>
-<h2 id="切比雪夫-Chebyshev-多项式"><a href="#切比雪夫-Chebyshev-多项式" class="headerlink" title="切比雪夫*Chebyshev*多项式"></a>切比雪夫*Chebyshev*多项式</h2><p>当区间为 $[-1, 1]$，权函数 $\rho(x) &#x3D; \dfrac{1}{\sqrt{1 - x^2}}$ 时，由序列 ${1, x, \cdots, x^n, \cdots}$ 正交化得到的正交多项式就是 Chebyshev 多项式，它可表为：</p>
-<p>$$T_n(x) &#x3D; \cos(n \arccos x) \quad |x| \leq 1$$</p>
-<p>若令 $x &#x3D; \cos\theta$，则 $T_n(x) &#x3D; \cos n\theta$，$0 \leq \theta \leq \pi$。</p>
-<p><strong>Chebyshev 多项式重要性质：</strong></p>
-<p><strong>性质 1</strong>  </p>
-<p>Chebyshev 多项式 ${T_n(x)}$ 在区间 $[-1, 1]$ 上带权 $\rho(x) &#x3D; \dfrac{1}{\sqrt{1 - x^2}}$ 正交，且：</p>
-<p>$$<br>\int_{-1}^{1} \dfrac{T_n(x)T_m(x)}{\sqrt{1 - x^2}} , dx &#x3D;<br>\begin{cases}<br>0, &amp; n \neq m \<br>\dfrac{\pi}{2}, &amp; n &#x3D; m \neq 0 \<br>\pi, &amp; n &#x3D; m &#x3D; 0<br>\end{cases}<br>$$</p>
-<p><strong>性质 2 递推关系</strong><br>$$<br>\begin{cases}<br>T_{n+1}(x) &#x3D; 2xT_n(x) - T_{n-1}(x) &amp; (n &#x3D; 1, 2, \cdots), \<br>T_0(x) &#x3D; 1, \<br>T_1(x) &#x3D; x.<br>\end{cases}<br>$$</p>
-<p>由递推关系可得：<br>$$<br>T_0(x)&#x3D; 1\<br>T_1(x)&#x3D; x \<br>T_2(x)&#x3D; 2x^2 - 1,\<br>T_3(x)&#x3D; 4x^3 - 3x,\<br>T_4(x) &#x3D; 8x^4 - 8x^2 + 1\<br>T_5(x) &#x3D; 16x^5 - 20x^3 + 5x.<br>$$</p>
-<p><strong>性质 3</strong>  </p>
-<p>$T_{2k}(x)$ 只含 $x$ 的偶次方，$T_{2k+1}(x)$ 只含 $x$ 的奇次方，这一性质由递推关系可直接得到。</p>
-<p><strong>性质 4</strong>  </p>
-<p>$T_n(x)$ 在区间 $[-1, 1]$ 上有 $n$ 个零点：</p>
-<p>$$x_k &#x3D; \cos \dfrac{2k + 1}{2n}\pi, \quad k &#x3D; 0, 1, \cdots, n - 1$$</p>
-<p><strong>性质5</strong></p>
-<p>$T_n(x)$的首项$x^n$的系数为$2^{n-1}(n&#x3D;1,2…)$</p>
-<h2 id="最小二乘拟合"><a href="#最小二乘拟合" class="headerlink" title="最小二乘拟合"></a>最小二乘拟合</h2><p>对于给定的数据 $(x_i, y_i)$（$i&#x3D;1,2,\ldots,N$），选取线性无关的函数族 $\varphi_0, \varphi_1, \ldots, \varphi_m$ 及权函数 $\omega(x)$，要求在函数类 $\Phi &#x3D; \text{Span}{\varphi_0, \varphi_1, \ldots, \varphi_m}$ 中寻找一个函数</p>
-<p>$$<br>\varphi^<em>(x) &#x3D; a_0^</em> \varphi_0 + a_1^* \varphi_1 + \cdots + a_m^* \varphi_m \quad （m &lt; N）<br>$$</p>
-<p>使</p>
-<p>$$<br>I &#x3D; \sum_{i&#x3D;1}^N \omega(x_i) [y_i - \varphi(x_i)]^2<br>$$</p>
-<p>达到极小。显然上式是 $m+1$ 个变量 $a_0, a_1, \ldots, a_m$ 的二次函数：</p>
-<p>$$<br>I(a_0, a_1, \ldots, a_m) &#x3D; \sum_{i&#x3D;1}^N \omega(x_i) \left[ y_i - \sum_{k&#x3D;0}^m a_k \varphi_k(x_i) \right]^2<br>$$</p>
-<p>根据多元函数极值条件<br>$$<br>\frac{1}{2} \frac{\partial I}{\partial a_j} &#x3D; \sum_{i&#x3D;1}^N \omega(x_i) \varphi_j(x_i) \left[ y_i - \sum_{k&#x3D;0}^m a_k \varphi_k(x_i) \right] &#x3D; 0 \quad （j&#x3D;0,1,\ldots,m）<br>$$</p>
-<blockquote>
-<p><strong>引入内积：</strong><br>$$<br>(f, g) &#x3D;<br>\begin{cases}<br>\sum ^{N} <em>{i&#x3D;1} \omega(x_i) f(x_i) g(x_i) &amp; \text{离散型} \<br>\int</em>{a}^{b} \rho(x) f(x) g(x) , dx &amp; \text{连续型}<br>\end{cases}<br>$$</p>
-</blockquote>
-<p>方程组：</p>
-<p>$$<br>\sum_{i&#x3D;1}^{N} \omega(x_i) \left[ y_i - \sum_{k&#x3D;0}^{m} a_k \varphi_k(x_i) \right] \varphi_j(x_i) &#x3D; 0 \quad (j &#x3D; 0, 1, \ldots, m)<br>$$</p>
-<p>可以表示为：</p>
-<p>$$<br>a_0 (\varphi_j, \varphi_0) + a_1 (\varphi_j, \varphi_1) + \cdots + a_m (\varphi_j, \varphi_m) &#x3D; (\varphi_j, y)  \quad (j &#x3D; 0, 1, \ldots, m)<br>$$</p>
-<p>这个方程组称为<strong>法方程</strong>或<strong>正规方程组</strong>。若用 ${\varphi_0, \varphi_1, \ldots, \varphi_m}$ 构成一个 $N \times (m+1)$ 的矩阵 $A$，即：</p>
-<p>$$<br>A &#x3D;<br>\begin{bmatrix}<br>\varphi_0(x_1) &amp; \varphi_1(x_1) &amp; \cdots &amp; \varphi_m(x_1) \<br>\varphi_0(x_2) &amp; \varphi_1(x_2) &amp; \cdots &amp; \varphi_m(x_2) \<br>\vdots &amp; \vdots &amp; \ddots &amp; \vdots \<br>\varphi_0(x_N) &amp; \varphi_1(x_N) &amp; \cdots &amp; \varphi_m(x_N)<br>\end{bmatrix}<br>$$</p>
-<p>引入向量：</p>
-<p>$$<br>\alpha &#x3D; (a_0, a_1, \ldots, a_m)^T, \quad Y &#x3D; (y_1, y_2, \ldots, y_N)^T<br>$$</p>
-<p>法方程组可以写成以下矩阵形式：(权w&#x3D;1)</p>
-<p>$$<br>A^T A \alpha &#x3D; A^T Y<br>$$</p>
-<p>由于 $\varphi_0, \varphi_1, \ldots, \varphi_m$ 线性无关，法方程组存在唯一解：</p>
-<p>$$<br>\alpha &#x3D; (a_0^<em>, a_1^</em>, \ldots, a_m^*)^T<br>$$</p>
-<p>从而得到函数：</p>
-<p>$$<br>\varphi^<em>(x) &#x3D; a_0^</em> \varphi_0 + a_1^* \varphi_1 + \cdots + a_m^* \varphi_m<br>$$</p>
-<p>最小平方误差为：</p>
-<p>$$<br>\delta^2 &#x3D; | y - \varphi^* |^2_2 &#x3D; (y - \varphi^<em>, y - \varphi^</em>) &#x3D; | y |^2_2 - \sum_{j&#x3D;0}^m a_j^* (\varphi_j, y)<br>$$</p>
-<h3 id="代数多项式拟合"><a href="#代数多项式拟合" class="headerlink" title="代数多项式拟合"></a>代数多项式拟合</h3><p>若取基函数 $\varphi_0 &#x3D; 1, \varphi_1 &#x3D; x, \ldots, \varphi_m &#x3D; x^m$，则相应的法方程组为：</p>
-<h1 id="begin-bmatrix-sum-i-1-N-omega-i-sum-i-1-N-omega-i-x-i-cdots-sum-i-1-N-omega-i-x-i-m-sum-i-1-N-omega-i-x-i-sum-i-1-N-omega-i-x-i-2-cdots-sum-i-1-N-omega-i-x-i-m-1-vdots-vdots-ddots-vdots-sum-i-1-N-omega-i-x-i-m-sum-i-1-N-omega-i-x-i-m-1-cdots-sum-i-1-N-omega-i-x-i-2m-end-bmatrix-begin-bmatrix-a-0-a-1-vdots-a-m-end-bmatrix"><a href="#begin-bmatrix-sum-i-1-N-omega-i-sum-i-1-N-omega-i-x-i-cdots-sum-i-1-N-omega-i-x-i-m-sum-i-1-N-omega-i-x-i-sum-i-1-N-omega-i-x-i-2-cdots-sum-i-1-N-omega-i-x-i-m-1-vdots-vdots-ddots-vdots-sum-i-1-N-omega-i-x-i-m-sum-i-1-N-omega-i-x-i-m-1-cdots-sum-i-1-N-omega-i-x-i-2m-end-bmatrix-begin-bmatrix-a-0-a-1-vdots-a-m-end-bmatrix" class="headerlink" title="$$\begin{bmatrix}\sum_{i&#x3D;1}^{N} \omega_i &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^m \\sum_{i&#x3D;1}^{N} \omega_i x_i &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^2 &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{m+1} \\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\sum_{i&#x3D;1}^{N} \omega_i x_i^m &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{m+1} &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{2m}\end{bmatrix}\begin{bmatrix}a_0 \a_1 \\vdots \a_m\end{bmatrix}"></a>$$<br>\begin{bmatrix}<br>\sum_{i&#x3D;1}^{N} \omega_i &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^m \<br>\sum_{i&#x3D;1}^{N} \omega_i x_i &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^2 &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{m+1} \<br>\vdots &amp; \vdots &amp; \ddots &amp; \vdots \<br>\sum_{i&#x3D;1}^{N} \omega_i x_i^m &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{m+1} &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{2m}<br>\end{bmatrix}<br>\begin{bmatrix}<br>a_0 \<br>a_1 \<br>\vdots \<br>a_m<br>\end{bmatrix}</h1><p>\begin{bmatrix}<br>\sum_{i&#x3D;1}^{N} \omega_i y_i \<br>\sum_{i&#x3D;1}^{N} \omega_i x_i y_i \<br>\vdots \<br>\sum_{i&#x3D;1}^{N} \omega_i x_i^m y_i<br>\end{bmatrix}<br>$$</p>
-<p>求出法方程组的解 $a_0, a_1, \ldots, a_m$，即可得到拟合多项式：</p>
-<p>$$<br>\varphi(x) &#x3D; a_0 + a_1 x + \cdots + a_m x^m<br>$$<br><span style="color:#FF0000">PS:当$n\geq3$时候，求解法方程时将出现系数矩阵为病态的问题</span></p>
-<h3 id="用正交多项式拟合"><a href="#用正交多项式拟合" class="headerlink" title="用正交多项式拟合"></a>用正交多项式拟合</h3><p>用最小二乘法得到的法方程，其系数矩阵 $G$ 是病态的。但如果 $\varphi_0(x), \varphi_1(x), \ldots, \varphi_n(x)$ 是关于点集 ${x_i}$（$i &#x3D; 0, 1, \ldots, m$）带权 $\omega(x_i)$（$i &#x3D; 0, 1, \ldots, m$）正交的函数族，即：</p>
-<p>$$<br>(\varphi_j, \varphi_k) &#x3D; \sum_{i&#x3D;0}^{m} \omega(x_i) \varphi_j(x_i) \varphi_k(x_i) &#x3D;<br>\begin{cases}<br>0, &amp; j \neq k, \<br>A_k &gt; 0, &amp; j &#x3D; k<br>\end{cases}<br>$$</p>
-<p><span style="color:#FF0000"> $a_k^<em>$ 的表达式为：</span><br>$$<br>a_k^</em> &#x3D; \frac{(f, \varphi_k)}{(\varphi_k, \varphi_k)} &#x3D; \frac{\sum_{i&#x3D;0}^{m} \omega(x_i) f(x_i) \varphi_k(x_i)}{\sum_{i&#x3D;0}^{m} \omega(x_i) \varphi_k^2(x_i)}, \quad k &#x3D; 0, 1, \ldots, n<br>$$</p>
-<p><span style="color:#FF0000"> 平方误差的表达式为：</span><br>$$<br>| \delta |_2^2 &#x3D; | f |<em>2^2 - \sum</em>{k&#x3D;0}^{n} A_k (a_k^*)^2<br>$$</p>
-<h3 id="正交多项式构造"><a href="#正交多项式构造" class="headerlink" title="正交多项式构造"></a>正交多项式构造</h3><p>根据给定节点 $x_0, x_1, \ldots, x_m$ 及权函数 $\omega(x) &gt; 0$，构造带权正交多项式 ${P_n(x)}$，其中 $n \leq m$，并用递推公式表示 $P_k(x)$。</p>
-<p>定义首项系数为 1 的多项式 $P_k(x)$：</p>
-<p>$$<br>P_0(x) &#x3D; 1 \<br>P_1(x) &#x3D; (x - \alpha_1)P_0(x) \<br>P_{k+1}(x) &#x3D; (x - \alpha_{k+1}) P_k(x) - \beta_k P_{k-1}(x) \quad k &#x3D; 1, 2, \ldots，n-1<br>$$</p>
-<p>根据 $P_k(x)$ 的正交性，得：</p>
-<p>$$<br>\alpha_{k+1} &#x3D; \frac{(x P_k, P_k)}{(P_k, P_k)}, \quad k &#x3D; 0, 1, \ldots, n-1<br>$$</p>
-<p>$$<br>\beta_k &#x3D; \frac{(P_k, P_k)}{(P_{k-1}, P_{k-1})}, \quad k &#x3D; 1, 2, \ldots, n-1<br>$$</p>
-<p>逐步把 $a_k^* P_k(x)$ 累加到 $S(x)$ 中去，最后就可得到所求的拟合曲线</p>
-<p>$$<br>y &#x3D; S(x) &#x3D; a_0^* P_0(x) + a_1^* P_1(x) + \cdots + a_n^* P_n(x).<br>$$</p>
-<h2 id="最佳一致逼近多项式"><a href="#最佳一致逼近多项式" class="headerlink" title="最佳一致逼近多项式"></a>最佳一致逼近多项式</h2><h3 id="最佳平方逼近"><a href="#最佳平方逼近" class="headerlink" title="最佳平方逼近"></a>最佳平方逼近</h3><p><strong>最佳平方逼近</strong>，即连续型 L-S 逼近，在 $|f|_2 &#x3D; \sqrt{(f, f)}$ 意义下，使得 $|P - y|_2$ 最小。</p>
-<h3 id="最佳一致逼近"><a href="#最佳一致逼近" class="headerlink" title="最佳一致逼近"></a>最佳一致逼近</h3><p><strong>最佳一致逼近</strong>（Uniform Approximation），在 $|f|<em>\infty &#x3D; \max</em>{x \in [a, b]} |f(x)|$ 意义下，使得 $|P - y|_\infty$ 最小，也称为 <strong>minimax problem</strong>。</p>
-<h3 id="偏差"><a href="#偏差" class="headerlink" title="偏差"></a>偏差</h3><p>设 $ f \in C[a, b] $，$ p_n \in H_n &#x3D; \text{span}{1, x, \cdots, x^n} $，称</p>
-<p>$$<br>\Delta(f, p_n) &#x3D; |f - p_n|<em>\infty &#x3D; \max</em>{a \leq x \leq b} |f(x) - p_n(x)|<br>$$</p>
-<p>为 $ p_n $ 与 $ f $ 的<strong>偏差</strong>。</p>
-<h3 id="偏差点"><a href="#偏差点" class="headerlink" title="偏差点"></a>偏差点</h3><p>设 $ f \in C[a, b] $，$ p \in H_n $，若存在 $ x_0 \in [a, b] $ 使得</p>
-<p>$$<br>|f(x_0) - p(x_0)| &#x3D; \Delta(f, p) &#x3D; \max_{a \leq x \leq b} |f(x) - p(x)| &#x3D; \mu,<br>$$</p>
-<p>则称 $ x_0 $ 是 $ p $ 关于 $ f $ 的<strong>偏差点</strong>。</p>
-<ul>
-<li>若 $ p(x_0) - f(x_0) &#x3D; \mu $，则称 $ x_0 $ 为<strong>正偏差点</strong>；</li>
-<li>若 $ p(x_0) - f(x_0) &#x3D; -\mu $，则称 $ x_0 $ 为<strong>负偏差点</strong>。。</li>
-</ul>
-<h3 id="最小偏差"><a href="#最小偏差" class="headerlink" title="最小偏差"></a>最小偏差</h3><p>若</p>
-<p>$$<br>E_n &#x3D; \inf_{p_n \in H_n} \Delta(f, p_n) &#x3D; \min_{p_n \in H_n} \Delta(f, p_n)<br>$$</p>
-<p>则称 $ E_n $ 为 $ p_n $ 与 $ f $ 的 <strong>最小偏差</strong>。</p>
-<h3 id="最佳一致逼近多项式-1"><a href="#最佳一致逼近多项式-1" class="headerlink" title="最佳一致逼近多项式"></a>最佳一致逼近多项式</h3><p>设 $ f \in C[a, b] $，若存在 $ p_n^* \in H_n $，使<br>$$<br>\Delta(f, p_n^*) &#x3D; E_n &#x3D; \min_{p_n \in H_n} \Delta(f, p_n)<br>$$</p>
-<p>则称 $ p_n^* $ 为 $ f $ 在 $[a, b]$ 上的<strong>最佳一致逼近多项式</strong>，简称<strong>最佳逼近多项式</strong>。</p>
-<blockquote>
-<p><strong>定理：</strong></p>
-<p>若 $ p^<em>(x) \in H_n $ 是 $ f(x) \in C[a, b] $ 的最佳逼近多项式，则 $ p^</em>(x) $ 同时存在正、负偏差点。</p>
-<p><strong>定理：</strong></p>
-<p>若 $ f \in C[a, b] $，则存在 $ p_n^* \in H_n $，使得</p>
-<p>$$<br>\Delta(f, p_n^*) &#x3D; E_n &#x3D; \min_{p_n \in H_n} \Delta(f, p_n)<br>$$<br>成立</p>
-<p><strong>定理：</strong></p>
-<p>$ p_n \in H_n $ 是 $ f \in C[a, b] $ 的最佳逼近多项式的充分必要条件是，在 $[a, b]$ 上至少有 $ n + 2 $ 个轮流为正负的偏差点，即至少有 $ n + 2 $ 个点 $ a \leq x_1 &lt; x_2 &lt; \dots &lt; x_{n+2} \leq b $，使得</p>
-<p>$$<br>p_n^<em>(x_k) - f(x_k) &#x3D; (-1)^k \sigma | f - p_n^</em> |_\infty, \quad \sigma &#x3D; \pm 1, \quad k &#x3D; 1, 2, \cdots, n+2<br>$$</p>
-<p>上述点 ${x_k}_{1}^{n+2}$ 称为 <strong>Chebyshev 交错点组</strong>。</p>
-<p><strong>推论1（唯一性定理）：</strong></p>
-<p>设 $ f \in C[a, b] $，则在 $ H_n $ 中的最佳逼近多项式是唯一的。</p>
-<p><strong>推论 2</strong>：</p>
-<p>若 $ f \in C[a, b] $，则其最佳逼近多项式 $ p_n^*(x) \in H_n $ 是 $ f $ 的一个 <strong>Lagrange 插值多项式</strong>。</p>
-</blockquote>
-<blockquote>
-<h3 id="最佳一次一致逼近多项式的求法"><a href="#最佳一次一致逼近多项式的求法" class="headerlink" title="最佳一次一致逼近多项式的求法"></a>最佳一次一致逼近多项式的求法</h3><p><strong>推导过程</strong></p>
-<p>$ n &#x3D; 1 $ 时求 $ p_1(x) &#x3D; a_0 + a_1 x $ 的方法</p>
-<p>设 $ f \in C^2[a, b] $ 且 $ f’’ $ 在 $[a, b]$ 上不变号，由上面的定理可知，存在点<br>$$<br>a \leq x_1 &lt; x_2 &lt; x_3 \leq b,<br>$$</p>
-<p>使得</p>
-<p>$$<br>p_1(x_k) - f(x_k) &#x3D; (-1)^k \sigma E_n, \quad k &#x3D; 1, 2, 3; \quad \sigma &#x3D; \pm 1.<br>$$</p>
-<p>由于 $ f’’ \neq 0 $，故 $ f’ $ 在 $[a, b]$ 上单调，于是 $ f’(x) - p_1’(x) &#x3D; f’(x) - a_1&#x3D;0 $ 只有一个根 $ x_2 $。因此，$ p_1 $ 对 $ f $ 的另两个偏差点只能在 $[a, b]$ 的端点，故有</p>
-<p>$$<br>x_1 &#x3D; a, \quad x_3 &#x3D; b.<br>$$</p>
-<p>由此可得</p>
-<p>$$<br>p_1(a) - f(a) &#x3D; -\left[ p_1(x_2) - f(x_2) \right] &#x3D; p_1(b) - f(b),<br>$$</p>
-<p>或</p>
-<p>$$<br>a_0 + a_1 a - f(a) &#x3D; a_0 + a_1 b - f(b)<br>$$</p>
-<p>$$<br>a_0 + a_1 a - f(a) &#x3D; -\left[ a_0 + a_1 x_2 - f(x_2) \right]<br>$$</p>
-<p>通过上面两个公式可得</p>
-<p>$$<br>a_1 &#x3D; \frac{f(b) - f(a)}{b - a}<br>$$</p>
-<p>$$<br>a_0 &#x3D; \frac{1}{2} \left[ f(a) + f(x_2) \right] - \frac{a+x_2}{2} \frac{f(b) - f(a)}{b - a} \<br>f’(x_2) &#x3D; a_1<br>$$</p>
-<p>由此得 $ f $ 在 $[a, b]$ 上的最佳一次逼近多项式</p>
-<p>$$<br>p_1(x) &#x3D; a_0 + a_1 x.<br>$$</p>
-<p><u><strong>例题</strong></u></p>
-<p>求函数 $ f(x) &#x3D; \sqrt{x} $ 在区间 $[-1, 1]$ 上的最佳一次逼近多项式。</p>
-<ol>
-<li>确定二阶导数不变号</li>
-</ol>
-<p>函数 $ f(x) &#x3D; \sqrt{x} $ 的二阶导数为：</p>
-<p>$$<br>f’’(x) &#x3D; -\frac{1}{4} x^{-\frac{3}{2}}<br>$$</p>
-<p>在区间 $\left(\frac{1}{4}, 1\right)$ 上，$ f’’(x) $ 不变号。</p>
-<ol start="2">
-<li>计算多项式系数</li>
-</ol>
-<p>根据最佳一次逼近多项式的性质，设 $ p_1(x) &#x3D; a_0 + a_1 x $<br>$$<br>a_1&#x3D;\frac {f(1)-f(\frac{1}{4})}{1-\frac{1}{4}}&#x3D;\frac{2}{3} \<br>f’(x_2) &#x3D; \frac{1}{2\sqrt{x_2}} &#x3D; a_1 \<br>x_2&#x3D;\frac{9}{16} \<br>a_0 &#x3D; \frac{1}{2} \left[ f(a) + f(x_2) \right] - \frac{a+x_2}{2} \frac{f(b) - f(a)}{b - a}&#x3D;\frac{17}{48}<br>$$</p>
-<p>最佳一次逼近多项式为：<br>$$<br>p_1(x) &#x3D; \frac{17}{48} + \frac{2}{3} x<br>$$</p>
-<p>在区间 $\left[\frac{1}{4}, 1\right]$ 上，最大误差为：</p>
-<p>$$<br>\max_{\frac{1}{4} \leq x \leq 1} \left| \sqrt{x} - p_1(x) \right| &#x3D; \frac{1}{48}<br>$$</p>
-</blockquote>
+<p>置身其中，好一个笼中雀。</p>
 ]]></content>
       <categories>
-        <category>学习</category>
+        <category>想法</category>
       </categories>
       <tags>
-        <tag>数值分析</tag>
+        <tag>笼中雀</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>照片</title>
-    <url>/blog/Gallery/index.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/blog/image/1.jpg"></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>分类</title>
-    <url>/blog/categories/index.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-  </entry>
-  <entry>
-    <title>电影</title>
-    <url>/blog/movies/index.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-  </entry>
-  <entry>
-    <title>音乐</title>
-    <url>/blog/music/index.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-  </entry>
-  <entry>
-    <title>心想事成</title>
-    <url>/blog/movies/%E5%BF%83%E6%83%B3%E4%BA%8B%E6%88%90.html</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="心想事成"><a href="#心想事成" class="headerlink" title="心想事成"></a>心想事成</h1><p>还是写点不想让认识的人瞧见，但又想倾述的事吧。</p>
-<p>一个人在野地里坐到黄昏，等天空把夕阳吹成一朵炽热的花，风轻轻而来，也把泪水带离脸颊，我甚至不知道为什么而哭，或许只是对这人世间的理解偏差，这样的寂寞太漫长了，一条河流怎么能盛装得下，我捡起一颗将死的野草，告诉它，这个夏天就此作罢！</p>
-<p>相见的人，不想见的人。<br>讨厌的人，麻烦的事。<br><img src="/blog/image/1738159231727.jpg"></p>
-]]></content>
   </entry>
   <entry>
     <title>写给你的小作文</title>
@@ -2948,8 +2919,37 @@ $$
 ]]></content>
   </entry>
   <entry>
+    <title>音乐</title>
+    <url>/blog/music/index.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+  </entry>
+  <entry>
     <title>分类</title>
     <url>/blog/tags/index.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+  </entry>
+  <entry>
+    <title>心想事成</title>
+    <url>/blog/movies/%E5%BF%83%E6%83%B3%E4%BA%8B%E6%88%90.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="心想事成"><a href="#心想事成" class="headerlink" title="心想事成"></a>心想事成</h1><p>还是写点不想让认识的人瞧见，但又想倾述的事吧。</p>
+<p>一个人在野地里坐到黄昏，等天空把夕阳吹成一朵炽热的花，风轻轻而来，也把泪水带离脸颊，我甚至不知道为什么而哭，或许只是对这人世间的理解偏差，这样的寂寞太漫长了，一条河流怎么能盛装得下，我捡起一颗将死的野草，告诉它，这个夏天就此作罢！</p>
+<p>相见的人，不想见的人。<br>讨厌的人，麻烦的事。<br><img src="/blog/image/1738159231727.jpg"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>照片</title>
+    <url>/blog/Gallery/index.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="/blog/image/1.jpg"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>分类</title>
+    <url>/blog/categories/index.html</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+  </entry>
+  <entry>
+    <title>电影</title>
+    <url>/blog/movies/index.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\blog\assets\css\APlayer.min.css"><script src="\blog\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
   </entry>
 </search>
