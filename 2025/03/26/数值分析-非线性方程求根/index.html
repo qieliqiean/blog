@@ -1,0 +1,530 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>数值分析-非线性方程求根 | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="此文章包含非线性方程组求根部分—————————————————————————————————————————————————————- 第七章 非线性方程求根前言求 f(x) &#x3D; 0 的根  数学物理中的许多问题常常归结为解函数方程 f(x) &#x3D; 0，方程 f(x) &#x3D; 0 的解 x* 称作它的根，或称为 f(x) 的零点。 设函数 f(x) 在 [a,b] 上连">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数值分析-非线性方程求根">
+<meta property="og:url" content="https://qieliqiean.github.io/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E6%B1%82%E6%A0%B9/index.html">
+<meta property="og:site_name" content="且离且安的碎碎念">
+<meta property="og:description" content="此文章包含非线性方程组求根部分—————————————————————————————————————————————————————- 第七章 非线性方程求根前言求 f(x) &#x3D; 0 的根  数学物理中的许多问题常常归结为解函数方程 f(x) &#x3D; 0，方程 f(x) &#x3D; 0 的解 x* 称作它的根，或称为 f(x) 的零点。 设函数 f(x) 在 [a,b] 上连">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qieliqiean.github.io/blog/image/img3.jpg">
+<meta property="article:published_time" content="2025-03-26T06:47:47.000Z">
+<meta property="article:modified_time" content="2025-05-08T00:49:33.513Z">
+<meta property="article:author" content="lian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qieliqiean.github.io/blog/image/img3.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "数值分析-非线性方程求根",
+  "url": "https://qieliqiean.github.io/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E6%B1%82%E6%A0%B9/",
+  "image": "https://qieliqiean.github.io/blog/image/img3.jpg",
+  "datePublished": "2025-03-26T06:47:47.000Z",
+  "dateModified": "2025-05-08T00:49:33.513Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "lian",
+      "url": "https://qieliqiean.github.io/blog/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E6%B1%82%E6%A0%B9/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: {"path":"/blog/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '数值分析-非线性方程求根',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/image/img3.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">数值分析-非线性方程求根</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">数值分析-非线性方程求根</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-26T06:47:47.000Z" title="发表于 2025-03-26 14:47:47">2025-03-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-08T00:49:33.513Z" title="更新于 2025-05-08 08:49:33">2025-05-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">3.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>16分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>此文章包含非线性方程组求根部分—————————————————————————————————————————————————————-</p>
+<h1 id="第七章-非线性方程求根"><a href="#第七章-非线性方程求根" class="headerlink" title="第七章 非线性方程求根"></a>第七章 非线性方程求根</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><strong>求 f(x) &#x3D; 0 的根</strong></p>
+<ul>
+<li>数学物理中的许多问题常常归结为解函数方程 f(x) &#x3D; 0，方程 f(x) &#x3D; 0 的解 x* 称作它的根，或称为 f(x) 的零点。</li>
+<li>设函数 f(x) 在 [a,b] 上连续且 f(a)f(b) &lt; 0，根据连续函数的性质可知方程 f(x) &#x3D; 0 在区间 [a,b] 内一定有实根，这时称 (a,b) 为方程 f(x) &#x3D; 0 的有根区间。</li>
+</ul>
+<h2 id="二分法"><a href="#二分法" class="headerlink" title="二分法"></a>二分法</h2><ul>
+<li>二分法的思想是将有根区间折半进行搜索，即对有根区间 $[a, b]$，取中点 $x_1 &#x3D; \frac{a + b}{2}$ 将它分为两半，检查 $f(a)$ 与 $f(x)$ 是否同号，如果确系同号，说明所求的根在 $[x_1, b]$ ；否则根必在 $[a, x_1]$<br>不管出现哪一种情况，新的有根区间仅为原来的一半。</li>
+</ul>
+<h3 id="误差分析"><a href="#误差分析" class="headerlink" title="误差分析"></a>误差分析</h3><ul>
+<li>第1步产生的 $x_1 &#x3D; \frac{a + b}{2}$ 有误差 $|x_1 - x^*| \leq \frac{b - a}{2}$  </li>
+<li>第 $k$ 步产生的 $x_k$ 有误差 $|x_k - x^*| \leq \frac{b - a}{2^k}$</li>
+</ul>
+<p>对于给定的精度 $\epsilon$，可估计二分法所需的步数 $k$：<br>$$<br>\frac{b - a}{2^k} &lt; \epsilon \Rightarrow k &gt; \left[\frac{\ln(b - a) - \ln \epsilon}{\ln 2}\right]<br>$$</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ol>
+<li>简单</li>
+<li>对 $f(x)$ 要求不高（只要连续即可）。</li>
+</ol>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ol>
+<li>无法求复根及偶重根。</li>
+<li>收敛慢。</li>
+</ol>
+<blockquote>
+<p>注：用二分法求根，最好先给出 $f(x)$ 草图以确定根的大概位置。或用搜索程序，将 $[a, b]$ 分为若干小区间，对每一个满足 $f(a_k) \cdot f(b_k) &lt; 0$ 的区间调用二分法程序，可找出区间 $[a, b]$ 内的多个根，且不必要求 $f(a) \cdot f(b) &lt; 0$。</p>
+</blockquote>
+<hr>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>求方程 $f(x) &#x3D; x^3 - x - 1 &#x3D; 0$ 在 $[1.0, 1.5]$ 区间内的一个实根，要求准确到小数点后的第2位。</p>
+<p><strong>解</strong></p>
+<p>二分法过程解题过程见下表：</p>
+<p>(这里 $a &#x3D; 1.0$, $f(a) &lt; 0$；  $b &#x3D; 1.5$, $f(b) &gt; 0$)</p>
+<table>
+<thead>
+<tr>
+<th>$k$</th>
+<th>$a_k$</th>
+<th>$b_k$</th>
+<th align="center">$x_k$</th>
+<th>$f(x_k)$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>1.0</td>
+<td>1.5</td>
+<td align="center">1.25</td>
+<td>-</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1.25</td>
+<td>1.5</td>
+<td align="center">1.375</td>
+<td>+</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1.25</td>
+<td>1.375</td>
+<td align="center">1.3125</td>
+<td>-</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1.3125</td>
+<td>1.375</td>
+<td align="center">1.3438</td>
+<td>+</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1.3125</td>
+<td>1.3438</td>
+<td align="center">1.3281</td>
+<td>+</td>
+</tr>
+<tr>
+<td>5</td>
+<td>1.3125</td>
+<td>1.3281</td>
+<td align="center">1.3203</td>
+<td>-</td>
+</tr>
+<tr>
+<td>6</td>
+<td>1.3203</td>
+<td>1.3281</td>
+<td align="center">1.3242</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<h2 id="简单迭代法"><a href="#简单迭代法" class="headerlink" title="简单迭代法"></a>简单迭代法</h2><h3 id="等价变换"><a href="#等价变换" class="headerlink" title="等价变换"></a>等价变换</h3><p>$$<br>f(x) &#x3D; 0 \quad \longleftrightarrow \quad x &#x3D; \varphi(x)<br>$$<br>$$<br>f(x) &#x3D; 0 \text{ 的根} \quad \longleftrightarrow \quad \varphi(x) \text{ 的不动点}<br>$$</p>
+<p>从一个初值 $x_0$ 出发，计算 $x_1 &#x3D; \varphi(x_0)$, $x_2 &#x3D; \varphi(x_1)$, …,<br>若 $ {x_k }_{k&#x3D;0}^{\infty}$ 收敛，即存在 $x^* $ 使得<br>$$<br>\lim _{k \to \infty} x_k &#x3D; x^*<br>$$</p>
+<p>且 $\varphi$ 连续，则由<br>$$<br>\lim_{k \to \infty} x_{k+1} &#x3D; \lim_{k \to \infty} \varphi(x_k)<br>$$<br>可知 $x^*  &#x3D; \varphi(x^* )$，即 $x^*$ 是 $\varphi$ 的不动点，也就是 $f &#x3D; 0$ 的根。</p>
+<blockquote>
+<p>迭代法是一种逐次逼近法，其基本思想是将隐式方程归结为一组显式的计算公式，即说，迭代过程实际上是一个逐步显示化的过程。</p>
+</blockquote>
+<hr>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><p>设 $f(x) &#x3D; x^3 + 4x^2 - 10 &#x3D; 0$ （此方程在 $[1, 2]$ 中有唯一根），用不同的方法将它变换成等价的方程。</p>
+<p><strong>解</strong>：</p>
+<p>(1) $x &#x3D; \varphi_1(x) &#x3D; x - x^3 - 4x^2 + 10$<br>(2) $x &#x3D; \varphi_2(x) &#x3D; \left(\frac{10}{x }-4x\right)^{\frac{1}{2}}$<br>(3) $x &#x3D; \varphi_3(x) &#x3D; \frac{1}{2} \left(10 - x^3\right)^{\frac{1}{2}}$<br>(4) $x &#x3D; \varphi_4(x) &#x3D; \left(\frac{10}{4 + x}\right)^{\frac{1}{2}}$<br>(5) $x &#x3D; \varphi_5(x) &#x3D; x - \frac{x^3 + 4x^2 - 10}{3x^2 + 8x}$</p>
+<p>对所选取的 $\varphi_i(x)$ ($i&#x3D;1, 2, 3, 4, 5$) 迭代法计算结果列入下表（取初始近似值 $x_0 &#x3D; 1.5$）</p>
+<p><img src="/blog/image/Snipaste_2025-04-16_14-40-28.png"></p>
+<blockquote>
+<h3 id="定理"><a href="#定理" class="headerlink" title="定理"></a>定理</h3><p>考虑方程 $x &#x3D; \varphi(x)$, $\varphi(x) \in C[a, b]$，若：</p>
+<p>(I) 当 $x \in [a, b]$ 时，$\varphi(x) \in [a, b]$；</p>
+<p>(II) 存在$0 \leq L &lt; 1$，使得 $|\varphi’(x)| \leq L &lt; 1$ 对 $\forall x \in [a, b]$ 成立。</p>
+<p>则任取 $x_0 \in [a, b]$，由 $x_{k+1} &#x3D; \varphi(x_k)$ 得到的序列 ${x_k}_{k&#x3D;0}^{\infty}$ 收敛于 $\varphi(x)$ 在 $[a, b]$ 上的<strong>唯一</strong>不动点，并且有误差估计式：</p>
+<p>$$<br>|x^* - x_k| \leq \frac{1}{1 - L} |x_{k+1} - x_k|<br>$$</p>
+<p>$$<br> |x^* - x_k| \leq \frac{L^k}{1 - L} |x_1 - x_0| \quad (k &#x3D; 1, 2, \dots)<br>$$</p>
+<p>并且存在极限：</p>
+<p>$$<br> \lim_{k \to \infty} \frac{x^* - x_{k+1}}{x^* - x_k} &#x3D; \varphi’(x^*)<br>$$</p>
+</blockquote>
+<p><strong>示例</strong></p>
+<p>求方程 $f(x) &#x3D; x^3 - x - 1 &#x3D; 0$ 在 $x &#x3D; 1.5$ 附近的根，若将方程改写为：</p>
+<p>$$ x &#x3D; x^3 - 1 $$</p>
+<p>建立迭代公式：</p>
+<p>$$ x_{k+1} &#x3D; x_k^3 - 1 $$</p>
+<p>这是因为：</p>
+<p>$$ \varphi’(x) &#x3D; (x^3 - 1)’ &#x3D; 3x^2 $$</p>
+<p>当 $x &gt; 0.7$ 时，均有 $|\varphi’(x)| &gt; 1$，所以该迭代过程是发散的。</p>
+<hr>
+<p>考虑迭代过程</p>
+<p> (a)<br>$$<br>x_{k+1} &#x3D; \varphi_3(x_k) &#x3D; \frac{1}{2} (10 - x_k^3)^{1&#x2F;2}<br>$$</p>
+<p>(b)<br>$$<br>x_{k+1} &#x3D; \varphi_4(x_k) &#x3D; \left( \frac{10}{4 + x_k} \right)^{1&#x2F;2}<br>$$<br> 的收敛性，当 $|x_k - x^*| &lt; 10^{-5}$ 时，确定 (b) 中迭代次数 $k$。</p>
+<p><strong>解</strong></p>
+<p>对于迭代过程 (b)，迭代函数 $\varphi_4(x) &#x3D; \left( \frac{10}{4 + x} \right)^{1&#x2F;2}$ 于<br>$$<br>|\varphi_4’(x)| &#x3D; \left|\frac{-5}{\sqrt{10} (4 + x)^{3&#x2F;2} }\right| \leq \frac{5}{\sqrt{10}(5)^{3&#x2F;2}} &lt; 0.15<br>$$</p>
+<p>因此，迭代函数 $\varphi_4(x)$ 在 $[1, 2]$ 上满足定理条件 (II)，故迭代过程 (b) 收敛。</p>
+<p>由 $|x^* - x_k| \leq \frac{L^k}{1 - L} |x_1 - x_0| &lt; \epsilon$ （$\epsilon$ 为给定精度要求）</p>
+<p>迭代次数 $k$ 应取：（<span style="color:#FF0000">考试时现推即可</span>）</p>
+<p>$$<br>k &gt; \frac{\lg \epsilon - \lg \frac{|x_1 - x_0|}{1-L}}{\lg L}<br>$$</p>
+<p>由要求 $|x_k - x^*| &lt; 10^{-5}$，应用上述公式，其中 $x_1 &#x3D; 1.3484$ 和 $L_4 &#x3D; 0.15$，$x_0 &#x3D; 1.5$，则有：<br>$$<br>k &gt; \frac{\lg 10^{-5} - \lg \frac{(1.5 - 1.3484)}{0.85}}{\lg 0.15} &#x3D; 5.16<br>$$</p>
+<p>于是，推得所要求迭代次数 $k &#x3D; 6$。</p>
+<p>对于迭代过程 (a)，迭代函数 $\varphi_3(x) &#x3D; \frac{1}{2} (10 - x^3)^{1&#x2F;2}$ 于：<br>$$<br>\varphi_3’(x) &#x3D; \frac{-3x^2}{4\sqrt{10 - x^3}} &lt; 0<br>$$</p>
+<p>注意到 $|\varphi_3’(2)| \approx 2.12$，所以在 $[1, 2]$ 上，定理中条件 (II) 不满足。 但当 $x \in [1, 1.5]$ 时，有 $|\varphi_3’(x)| \leq |\varphi_3’(1.5)| &lt; 0.66 &#x3D; L_3$ 迭代函数 $\varphi_3(x)$ 在 $[1, 1.5]$ 上满足定理的条件 (II)，故迭代过程初值限制在 $[1, 1.5]$ 上时，迭代过程收敛。</p>
+<p>由要求 $|x_k - x^*| &lt; 10^{-5}$，应用上述公式，其中 $x_1 &#x3D; 1.287$ 和 $L_3 &#x3D; 0.66$，$x_0 &#x3D; 1.5$，则有：<br>$$<br>k &gt; \frac{\lg 10^{-5} - \lg \frac{(1.5 - 1.287)}{1-0.66}}{\lg 0.66} &#x3D; 26.58<br>$$</p>
+<p>于是，推得所要求迭代次数 $k &#x3D; 27$。</p>
+<blockquote>
+<p><strong>注</strong>：此题中 $L_4 &lt; L_3$，可知迭代过程 (b) 比迭代过程 (a) 收敛快。</p>
+<p>定理条件<strong>非必要条件</strong>，可将 $[a, b]$ 缩小，定义<strong>局部收敛性</strong>：</p>
+<p>若在 $x^* $ 的某 $\delta$ 邻域 $R &#x3D; { x \ | \ |x - x^*| \leq \delta }$ </p>
+<p>有 $\varphi \in C^1[a, b]$ 且 $|\varphi’(x^*)| &lt; 1$，则对 $\forall x_0 \in R$ 开始的迭代收敛。即调换初值可得到收敛的结果。</p>
+</blockquote>
+<p><strong>定义</strong></p>
+<p>若存在在 $x^* $ 的某个邻域 $R: |x - x^*| \leq \delta$，使迭代过程</p>
+<p>$$<br>x_{k+1} &#x3D; \varphi(x_k)<br>$$</p>
+<p>对于任意初值 $x_0 \in R$ 收敛，则称迭代过程 $x_{k+1} &#x3D; \varphi(x_k)$ 在根 $x^*$ 附近具有局部收敛性。</p>
+<p><strong>定理</strong></p>
+<p>设 $x^* $ 为方程 $x &#x3D; \varphi(x)$ 的根，$\varphi’(x)$ 在 $x^* $ 的邻域连续，且 $|\varphi’(x^*)| &lt; 1$ 则迭代过程</p>
+<p>$$<br>x_{k+1} &#x3D; \varphi(x_k)<br>$$</p>
+<p>具有局部收敛性。</p>
+<h2 id="迭代法的收敛速度"><a href="#迭代法的收敛速度" class="headerlink" title="迭代法的收敛速度"></a>迭代法的收敛速度</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>设迭代 $x_{k+1} &#x3D; \varphi(x_k)$ 收敛到 $\varphi(x)$ 的不动点 $x^*$。</p>
+<p>设 $e_k &#x3D; x_k - x^*$，若</p>
+<p>$$<br>\lim_{k \to \infty}  \frac{|e_{k+1}|}{|e_k|^p} &#x3D; C &gt; 0,<br>$$</p>
+<p>则称该迭代为 $p$ 阶收敛，其中 $C$ 称为渐近误差常数。</p>
+<blockquote>
+<p>当 $p &#x3D; 2$ 时称作平方收敛，<br>当 $p &#x3D; 1$ 时称作线性收敛。</p>
+</blockquote>
+<h3 id="定理-1"><a href="#定理-1" class="headerlink" title="定理"></a>定理</h3><p>设 $x^* $ 为方程 $x &#x3D; \varphi(x)$ 的不动点，若 $\varphi \in C^p(R(x^*))$ 且 $p \geq 2$；</p>
+<p>$$<br>\varphi’(x^* ) &#x3D; \dots &#x3D; \varphi^{(p-1)}(x^* ) &#x3D; 0, \quad \varphi^{(p)}(x^* ) \neq 0,<br>$$</p>
+<p>则 $x_{k+1} &#x3D; \varphi(x_k)$ 在 $R(x^*)$ 内 $p$ 阶收敛。</p>
+<p><strong>证明</strong>：<br>$$<br>x_{k+1} &#x3D; \varphi(x_k) &#x3D; \varphi(x^* ) + \varphi’(x^* ) (x_k - x^* ) + \dots + \frac{\varphi^{(p)}(\xi_k)}{p!} (x_k - x^* )^p<br>$$</p>
+<p>其中 $\xi_k \to x^*$ as $k \to \infty$，极限值为 $C$。</p>
+<h2 id="埃特金（Aitken）算法"><a href="#埃特金（Aitken）算法" class="headerlink" title="埃特金（Aitken）算法"></a>埃特金（Aitken）算法</h2><p>设 $x_k$ 是一个线性收敛序列，其极限为 $x^* $，误差 $e_k &#x3D; x^* - x_k$，若：</p>
+<p>$$<br>\lim_{k \to \infty} \left| \frac{e_{k+1}}{e_k} \right| &#x3D; c \quad (0 &lt; c &lt; 1)<br>$$</p>
+<p>因此，当 $k$ 充分大时：</p>
+<p>$$<br>\frac{x^* - x_{k+1}}{x^* - x_{k+2}} \approx \frac{x^* - x_k}{x^* - x_{k+1}}<br>$$</p>
+<p>由此得：</p>
+<p>$$<br>x^* \approx x_{k+1} - \frac{(x_{k+2} - x_{k+1})^2}{x_{k+2} - 2x_{k+1} + x_k}&#x3D; x_k - \frac{(x_{k+1} - x_k)^2}{x_k - 2x_{k+1} + x_{k+2}}<br>$$</p>
+<p>以上式右端得到的结果作为新的改进值，记为：</p>
+<p>$$<br>\overline x_{k+1} &#x3D; x_k - \frac{(x_{k+1} - x_k)^2}{x_k - 2x_{k+1} + x_{k+2}}<br>$$</p>
+<p>得到新序列 ${ \overline{x}_k }$，较原序列 ${ x_k }$ 更快的收敛到 $x^*$。</p>
+<p><strong>可以证明</strong><br>$$<br>\lim_{k \to \infty} \frac{\overline x_{k+1} - x^* }{x_k - x^* } &#x3D; 0<br>$$</p>
+<p>它表明序列 ${ \overline{x}_k }$的收敛速度比 ${ x_k }$ 的收敛速度快。</p>
+<p><strong>埃特金（Aitken）算法</strong></p>
+<ul>
+<li><p>迭代：$\overline x_{k+1} &#x3D; \varphi(x_k) $</p>
+</li>
+<li><p>重新迭代：$ \tilde x_{k+1} &#x3D; \varphi(\overline{x}_{k+1}) $</p>
+</li>
+<li><p>改进：<br>$$<br> x_{k+1} &#x3D; x_k - \frac{ (\overline x_{k+1} - x_k)^2}{x_k - 2 \overline x_{k+1} + \tilde x_{k+1}}<br>$$</p>
+</li>
+</ul>
+<h2 id="斯蒂芬森迭代"><a href="#斯蒂芬森迭代" class="headerlink" title="斯蒂芬森迭代"></a>斯蒂芬森迭代</h2><ul>
+<li><p>埃特金方法不管原序列 ${x_k}$ 是怎样产生的，对 ${x_k}$ 进行加速计算，得到序列 ${ \tilde{x}_k }$，如果把埃特金加速技巧与不动点迭代结合，则可得到如下的迭代法：<br>$$<br>y_k &#x3D; \varphi(x_k), \quad z_k &#x3D; \varphi(y_k)<br>$$</p>
+<p>$$<br>x_{k+1} &#x3D; x_k - \frac{(y_k - x_k)^2}{z_k - 2y_k + x_k} \quad (k &#x3D; 0, 1, \cdots) \qquad (*)<br>$$</p>
+<p><span style="color:#FF0000">称为斯蒂芬森 (Steffensen) 迭代法</span></p>
+<p>它可以这样理解，我们要求$x &#x3D; \varphi(x)$ 的根 $x^*$</p>
+<p>令</p>
+<p> $\epsilon(x) &#x3D; \varphi(x) - x $</p>
+<p>$ \epsilon(x^* ) &#x3D; \varphi(x^* ) - x^*  &#x3D; 0 $</p>
+<p> 已知 $x^* $ 的近似值 $x_k$ 及 $y_k$，其误差分别为：<br>$$<br>\epsilon(y_k) &#x3D; \varphi(y_k) - y_k &#x3D; z_k - y_k<br>$$</p>
+<p>$$<br>\epsilon(x_k) &#x3D; \varphi(x_k) - x_k &#x3D; y_k - x_k<br>$$</p>
+<p>误差的“外推到零”</p>
+<p>即过 $(x_k, \epsilon(x_k))$ 和 $(y_k, \epsilon(y_k))$ 两点做线性插值函数，它与 $x$ 轴交点就是 $(*)$ 中的 $x_{k+1}$。</p>
+<p>即方程：</p>
+<p>$$<br>\epsilon(x_k) + \frac{\epsilon(y_k) - \epsilon(x_k)}{y_k - x_k}(x - x_k) &#x3D; 0<br>$$</p>
+<p>的解：<br>$$<br>x &#x3D; x_k - \frac{\varepsilon(x_k)}{\varepsilon(y_k) - \varepsilon(x_k)} (y_k - x_k) &#x3D; x_k - \frac{(y_k - x_k)^2}{z_k - 2y_k + x_k} &#x3D; x_{k+1}<br>$$<br>实际上 $(*)$ 是将不动点迭代法计算两步合并为一步得到的，可以写成另一种不动点迭代：<br>$$<br>x_{k+1} &#x3D; \psi(x_k) \quad (k &#x3D; 0, 1, \cdots)<br>$$</p>
+<p>其中：</p>
+<p>$$<br>\psi(x) &#x3D; x - \frac{[\varphi(x) - x]^2}{\varphi(\varphi(x)) - 2\varphi(x) + x}<br>$$</p>
+<p>对于不动点迭代：</p>
+<p>$$<br>x_{k+1} &#x3D; \psi(x_k) \quad (k &#x3D; 0, 1, \cdots)<br>$$</p>
+<p>具有以下局部收敛性定理：</p>
+<blockquote>
+<p>若 $x^* $ 为迭代函数 $\psi(x)$ 的不动点，则 $x^* $ 为 $\varphi(x)$ 的不动点。</p>
+<p>反之，若 $x^* $ 为 $\varphi(x)$ 的不动点，设$\varphi’(x) $存在，且 $\varphi’(x^* ) \neq 1$，则 $x^* $ 是 $\psi(x)$ 的不动点，且斯蒂芬森 (Steffensen) 迭代法是 2 阶收敛的。</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>示例：</strong></p>
+<p>求方程 $3x^2 - e^x &#x3D; 0$ 在 $[3, 4]$ 中的解。</p>
+<p>解：由方程得 $e^x &#x3D; 3x^2$，取对数得<br>$$<br>x &#x3D; \ln 3x^2 &#x3D; 2 \ln x + \ln 3 &#x3D; \varphi(x)<br>$$</p>
+<p>若构造迭代法：</p>
+<p>$$<br>x_{k+1} &#x3D; 2 \ln x_k + \ln 3<br>$$</p>
+<p>由于</p>
+<p>$$<br>\varphi’(x) &#x3D; \frac{2}{x}, \quad \max_{3 \leq x \leq 4} |\varphi’(x)| \leq \frac{2}{3} &lt; 1,<br>$$</p>
+<p>且当$x \in [3,4]$时，$\varphi(x) \in [3,4]$</p>
+<p>故知此迭代法收敛，若取 $x_0 &#x3D; 3.5$ 迭代 16 次得 $x_{16} &#x3D; 3.73307$，有六位有效数字。</p>
+<p>若用斯蒂芬森加速法进行加速，计算结果列入表中：</p>
+<table>
+<thead>
+<tr>
+<th>$k$</th>
+<th>$x_k$</th>
+<th>$y_k$</th>
+<th>$z_k$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>3.5</td>
+<td>3.60414</td>
+<td>3.66202</td>
+</tr>
+<tr>
+<td>1</td>
+<td>3.73444</td>
+<td>3.73381</td>
+<td>3.73447</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3.73307</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="牛顿法"><a href="#牛顿法" class="headerlink" title="牛顿法"></a>牛顿法</h2><h3 id="牛顿迭代法"><a href="#牛顿迭代法" class="headerlink" title="牛顿迭代法"></a>牛顿迭代法</h3><p>牛顿迭代法是一种特殊的不动点迭代法，其计算公式为：</p>
+<p>$$<br>x_{k+1} &#x3D; x_k - \frac{f(x_k)}{f’(x_k)}, \quad k &#x3D; 0, 1, 2, \cdots<br>$$</p>
+<p>其迭代函数为：</p>
+<p>$$<br>\varphi(x) &#x3D; x - \frac{f(x)}{f’(x)}<br>$$</p>
+<p><strong>牛顿迭代法的收敛速度</strong></p>
+<p>当 $f(x^* ) &#x3D; 0, f’(x^* ) \neq 0$ 时，容易证明，$\varphi’(x^* ) &#x3D; 0, \varphi’’(x^* ) &#x3D;  \frac{f’’(x^* )}{f’(x^* )}$，由定理 7.4 知，牛顿迭代法是平方收敛的，且</p>
+<p>$$<br>\lim_{k \to \infty} \frac{e_{k+1}}{e_k^2} &#x3D; \frac{f’’(x^* )}{2f’(x^* )}<br>$$</p>
+<p>其中，$e_k &#x3D; x_k - x^*$ 为误差。</p>
+<h3 id="简化牛顿法"><a href="#简化牛顿法" class="headerlink" title="简化牛顿法"></a>简化牛顿法</h3><p><strong>构造迭代公式</strong><br>$$<br>x_{k+1} &#x3D; x_k - C f(x_k), \quad C \neq 0, \quad k &#x3D; 0, 1, 2, \dots<br>$$</p>
+<p>当 $|g’(x) |&#x3D; |1 - C f’(x)| &lt; 1$，即 $0 &lt; C f’(x) &lt; 2$ 时，公式局部收敛。</p>
+<p><strong>简化牛顿法</strong><br>$$<br>x_{k+1} &#x3D; x_k - \frac{f(x_k)}{f’(x_0)}<br>$$</p>
+<h3 id="牛顿下山法："><a href="#牛顿下山法：" class="headerlink" title="牛顿下山法："></a>牛顿下山法：</h3><p>$$<br>x_{k+1} &#x3D; x_k - \lambda \frac{f(x_k)}{f’(x_k)}, \quad k &#x3D; 0, 1, 2, \dots<br>$$</p>
+<p>其中下山因子 $\lambda &#x3D; 1$，逐次减半直至满足 $|f(x_{k+1})| &lt; |f(x_k)|$。</p>
+<hr>
+<p><strong>示例</strong></p>
+<p>求解 $x^3 - x - 1 &#x3D; 0$ 在 1.5 附近的根 $x^*$。</p>
+<p>解：</p>
+<p>第一列牛顿法 $x_0 &#x3D; 1.5$</p>
+<p>第二列牛顿法$x_0 &#x3D; 0.6$，</p>
+<p>牛顿 $x_0 &#x3D; 0.6$，$\lambda &#x3D; 1$, 经过 16 次迭代得到$\lambda &#x3D; 1&#x2F;32$,此时$x_1&#x3D;1.140625,f(x_1)&#x3D;-0.656643,f(x_0)&#x3D;-1.384$,显然有$|f(x_1)|&lt;|f(x_0)|$,接下来有$x_1$计算$x_2,x_3$时，$\lambda &#x3D; 1$</p>
+<table>
+<thead>
+<tr>
+<th>$k$</th>
+<th>$x_k$</th>
+<th>$x_k$</th>
+<th>$x_k$</th>
+<th>$f(x_k)$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>1.5</td>
+<td>0.6</td>
+<td>0.6</td>
+<td>-1.384</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1.34783</td>
+<td>17.9</td>
+<td>1.140625</td>
+<td>-0.656643</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1.32520</td>
+<td>发散</td>
+<td>1.36181</td>
+<td>0.1866</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1.32472</td>
+<td></td>
+<td>1.32628</td>
+<td>0.00667</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1.32472</td>
+<td></td>
+<td>1.32472</td>
+<td>0.0000086</td>
+</tr>
+</tbody></table>
+<h3 id="重根情形"><a href="#重根情形" class="headerlink" title="重根情形"></a>重根情形</h3><p><strong>知道重数</strong><br>$$<br>x_{k+1} &#x3D; x_k - m \frac{f(x_k)}{f’(x_k)}, \quad k &#x3D; 0, 1, 2, \dots<br>$$<br><strong>重数未知</strong><br>$$<br>x_{k+1} &#x3D; x_k - \frac{f(x_k) f’(x_k)}{[f’(x_k)]^2 - f(x_k) f’’(x_k)}, \quad (k &#x3D; 0, 1, 2, \dots)<br>$$</p>
+<h2 id="弦截法"><a href="#弦截法" class="headerlink" title="弦截法"></a>弦截法</h2><p>$$<br>x_{k+1} &#x3D; x_k -  \frac{f(x_k)}{f(x_k)-f(x_{k-1})} (x_k-x_{k-1}), \quad k &#x3D;  1, 2, \dots<br>$$</p>
+<p>弦截法具有超线性收敛，且收敛阶 $p&#x3D;1.618$</p>
+<h2 id="抛物线法"><a href="#抛物线法" class="headerlink" title="抛物线法"></a>抛物线法</h2><p>以 $x_k, x_{k-1}$ 和 $x_{k-2}$ 为插值节点，得到插值函数</p>
+<p>$$<br>p_2(x) &#x3D; f(x_k) + f[x_k, x_{k-1}](x - x_k) + f[x_k, x_{k-1}, x_{k-2}](x - x_k)(x - x_{k-1})<br>$$</p>
+<p>令 $p_2(x) &#x3D; 0$，得到两个零点：</p>
+<p>$$<br>x_{k+1} &#x3D; x_k - \frac{2 f(x_k)}{\omega \pm \sqrt{\omega - 4 f(x_k)f[x_k, x_{k-1}, x_{k-2}]}}<br>$$</p>
+<p>式中 $\omega &#x3D; f[x_k, x_{k-1}] + f[x_k, x_{k-1}, x_{k-2}](x_k - x_{k-1})$，</p>
+<p>$$<br>\Rightarrow x_{k+1} &#x3D; x_k - \frac{2 f(x_k)}{\omega + \text{sgn}(\omega) \sqrt{\omega - 4 f(x_k)  f[x_k, x_{k-1}, x_{k-2}]}}<br>$$</p>
+<p>插值线法按阶 $p &#x3D; 1.840$ 收敛到 $x^*$。</p>
+</article><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/blog/image/img3.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2025/02/27/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" title="深度学习相关知识"><img class="cover" src="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">深度学习相关知识</div></div><div class="info-2"><div class="info-item-1">准确度(accuracy)、精确率（precision)、召回率（recall）、F1值TP（True Positives)：真正例，预测为正例而且实际上也是正例； FP（False Positives)：假正例，预测为正例然而实际上却是负例； FN（false Negatives)：假负例，预测为负例然而实际上却是正例； TN（True Negatives)：真负例，预测为负例而且实际上也是负例。  准确率 Accuracy 准确度：正例和负例中预测正确数量占总数量的比例。  用公式表示：$$ACC&#x3D;\frac{TP+TN}{TP+FP+FN+TN}$$ 精确度...</div></div></div></a><a class="pagination-related" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%89%EF%BC%89/" title="数值分析（三）"><img class="cover" src="/blog/image/00d69812ece14254143ca78eb066782f.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">数值分析（三）</div></div><div class="info-2"><div class="info-item-1">此文章包含线性方程组的解法部分—————————————————————————————————————————————————————- 线性方程组的解法向量与矩阵范数向量范数我们用 $\mathbb{R}^n$ 表示 $n$ 维实向量的空间。 定义  hexo显示有误，下面 |.| 皆为范数 ||.||  如果向量 $X \in \mathbb{R}^n$ 的某个实值函数 $N(X) &#x3D; |X|$ 满足以下条件：  $|X| \geq 0$ ，且 $|X| &#x3D; 0$ 当且仅当 $X &#x3D; 0$ （正定性）  $|\alpha X| &#x3D; |\alpha| \cdot |X|$ ， $\forall \alpha \in \mathbb{R}$ （齐次性）  $|X + Y| \leq |X| + |Y|$ （三角不等式）   则称 $N(X)$ 是向量 $X$ 的范数。  (1) 无穷范数（最大范数） $$|X|_\infty  &#x3D;  \max _{1 \leq i \leq n}|x_i|$$ (2)...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E6%B1%82%E6%A0%B9"><span class="toc-number">1.</span> <span class="toc-text">第七章 非线性方程求根</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E5%88%86%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">二分法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90"><span class="toc-number">1.2.1.</span> <span class="toc-text">误差分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-number">1.2.2.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9"><span class="toc-number">1.2.3.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.2.4.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E8%BF%AD%E4%BB%A3%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">简单迭代法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AD%89%E4%BB%B7%E5%8F%98%E6%8D%A2"><span class="toc-number">1.3.1.</span> <span class="toc-text">等价变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="toc-number">1.3.2.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E7%90%86"><span class="toc-number">1.3.3.</span> <span class="toc-text">定理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3%E6%B3%95%E7%9A%84%E6%94%B6%E6%95%9B%E9%80%9F%E5%BA%A6"><span class="toc-number">1.4.</span> <span class="toc-text">迭代法的收敛速度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">1.4.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E7%90%86-1"><span class="toc-number">1.4.2.</span> <span class="toc-text">定理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%83%E7%89%B9%E9%87%91%EF%BC%88Aitken%EF%BC%89%E7%AE%97%E6%B3%95"><span class="toc-number">1.5.</span> <span class="toc-text">埃特金（Aitken）算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%AF%E8%92%82%E8%8A%AC%E6%A3%AE%E8%BF%AD%E4%BB%A3"><span class="toc-number">1.6.</span> <span class="toc-text">斯蒂芬森迭代</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%9B%E9%A1%BF%E6%B3%95"><span class="toc-number">1.7.</span> <span class="toc-text">牛顿法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%9B%E9%A1%BF%E8%BF%AD%E4%BB%A3%E6%B3%95"><span class="toc-number">1.7.1.</span> <span class="toc-text">牛顿迭代法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8C%96%E7%89%9B%E9%A1%BF%E6%B3%95"><span class="toc-number">1.7.2.</span> <span class="toc-text">简化牛顿法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%9B%E9%A1%BF%E4%B8%8B%E5%B1%B1%E6%B3%95%EF%BC%9A"><span class="toc-number">1.7.3.</span> <span class="toc-text">牛顿下山法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E6%A0%B9%E6%83%85%E5%BD%A2"><span class="toc-number">1.7.4.</span> <span class="toc-text">重根情形</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%A6%E6%88%AA%E6%B3%95"><span class="toc-number">1.8.</span> <span class="toc-text">弦截法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%9B%E7%89%A9%E7%BA%BF%E6%B3%95"><span class="toc-number">1.9.</span> <span class="toc-text">抛物线法</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/05/12/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E9%95%BF%E6%98%A5%E5%85%89%E6%9C%BA%E6%89%80%EF%BC%89/" title="机电一体化分析与建模（长春光机所）"><img src="/blog/image/20250505084723-2.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="机电一体化分析与建模（长春光机所）"/></a><div class="content"><a class="title" href="/blog/2025/05/12/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E9%95%BF%E6%98%A5%E5%85%89%E6%9C%BA%E6%89%80%EF%BC%89/" title="机电一体化分析与建模（长春光机所）">机电一体化分析与建模（长春光机所）</a><time datetime="2025-05-12T11:27:23.000Z" title="发表于 2025-05-12 19:27:23">2025-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/05/08/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%8F%92%E5%80%BC%E6%B3%95/" title="数值分析-插值法"><img src="/blog/image/hgud.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-插值法"/></a><div class="content"><a class="title" href="/blog/2025/05/08/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%8F%92%E5%80%BC%E6%B3%95/" title="数值分析-插值法">数值分析-插值法</a><time datetime="2025-05-08T00:50:35.000Z" title="发表于 2025-05-08 08:50:35">2025-05-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/04/30/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E8%AF%AF%E5%B7%AE/" title="数值分析-误差"><img src="/blog/image/2023-10-01-083219.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-误差"/></a><div class="content"><a class="title" href="/blog/2025/04/30/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E8%AF%AF%E5%B7%AE/" title="数值分析-误差">数值分析-误差</a><time datetime="2025-04-30T01:42:45.000Z" title="发表于 2025-04-30 09:42:45">2025-04-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/04/23/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%94%EF%BC%89/" title="数值分析（五）"><img src="/blog/image/sakura.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析（五）"/></a><div class="content"><a class="title" href="/blog/2025/04/23/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%94%EF%BC%89/" title="数值分析（五）">数值分析（五）</a><time datetime="2025-04-23T07:10:43.000Z" title="发表于 2025-04-23 15:10:43">2025-04-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E6%B1%82%E6%A0%B9/" title="数值分析-非线性方程求根"><img src="/blog/image/img3.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-非线性方程求根"/></a><div class="content"><a class="title" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E6%B1%82%E6%A0%B9/" title="数值分析-非线性方程求根">数值分析-非线性方程求根</a><time datetime="2025-03-26T06:47:47.000Z" title="发表于 2025-03-26 14:47:47">2025-03-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script async data-pjax src="{&quot;site_uv&quot;:true,&quot;site_pv&quot;:true,&quot;page_pv&quot;:true}"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>

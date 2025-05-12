@@ -1,0 +1,256 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>数值分析-误差 | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="此文章包含数值分析的误差部分—————————————————————————————————————————————————————————————————- $C^p[a,b]$表示具有$p$阶连续导数的函数空间；$C^0$表述函数连续，没有要求可导 第一章 误差误差的度量方式 设 $x$ 为准确值，$x^* $ 为 $x$ 的一个近似值，称  $$e^* &#x3D; x^* - x$$">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数值分析-误差">
+<meta property="og:url" content="https://qieliqiean.github.io/blog/2025/04/30/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E8%AF%AF%E5%B7%AE/index.html">
+<meta property="og:site_name" content="且离且安的碎碎念">
+<meta property="og:description" content="此文章包含数值分析的误差部分—————————————————————————————————————————————————————————————————- $C^p[a,b]$表示具有$p$阶连续导数的函数空间；$C^0$表述函数连续，没有要求可导 第一章 误差误差的度量方式 设 $x$ 为准确值，$x^* $ 为 $x$ 的一个近似值，称  $$e^* &#x3D; x^* - x$$">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qieliqiean.github.io/blog/image/2023-10-01-083219.jpg">
+<meta property="article:published_time" content="2025-04-30T01:42:45.000Z">
+<meta property="article:modified_time" content="2025-05-08T01:44:01.618Z">
+<meta property="article:author" content="lian">
+<meta property="article:tag" content="数值分析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qieliqiean.github.io/blog/image/2023-10-01-083219.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "数值分析-误差",
+  "url": "https://qieliqiean.github.io/blog/2025/04/30/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E8%AF%AF%E5%B7%AE/",
+  "image": "https://qieliqiean.github.io/blog/image/2023-10-01-083219.jpg",
+  "datePublished": "2025-04-30T01:42:45.000Z",
+  "dateModified": "2025-05-08T01:44:01.618Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "lian",
+      "url": "https://qieliqiean.github.io/blog/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/2025/04/30/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E8%AF%AF%E5%B7%AE/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: {"path":"/blog/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '数值分析-误差',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/image/2023-10-01-083219.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">数值分析-误差</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">数值分析-误差</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-04-30T01:42:45.000Z" title="发表于 2025-04-30 09:42:45">2025-04-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-08T01:44:01.618Z" title="更新于 2025-05-08 09:44:01">2025-05-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">906</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>此文章包含数值分析的误差部分—————————————————————————————————————————————————————————————————-</p>
+<p><span style="color:blue">$C^p[a,b]$表示具有$p$阶连续导数的函数空间；$C^0$表述函数连续，没有要求可导</span></p>
+<h1 id="第一章-误差"><a href="#第一章-误差" class="headerlink" title="第一章 误差"></a>第一章 误差</h1><h2 id="误差的度量方式"><a href="#误差的度量方式" class="headerlink" title="误差的度量方式"></a>误差的度量方式</h2><ul>
+<li><p>设 $x$ 为准确值，$x^* $ 为 $x$ 的一个近似值，称  $$e^* &#x3D; x^* - x$$  为<strong>绝对误差</strong>，简称为<strong>误差</strong>。</p>
+</li>
+<li><p>对于一般情形</p>
+</li>
+</ul>
+<p>$$<br>| x^*  - x | ≤ ε^*<br>$$</p>
+<p>$ε^* $为<strong>绝对误差限</strong> </p>
+<ul>
+<li><p><strong>相对误差</strong>的公式表示为：  $$e_r^* &#x3D; \frac{e^* }{x}$$，实际中一般取$$e_r^* &#x3D; \frac{e^* }{x^* }$$</p>
+</li>
+<li><p>$x$ 的<strong>相对误差上限</strong>定义为$\varepsilon^* &#x3D; \frac{\varepsilon^* }{|x^* |}$</p>
+</li>
+</ul>
+<h2 id="有效数字"><a href="#有效数字" class="headerlink" title="有效数字"></a>有效数字</h2><h3 id="有效数字的定义"><a href="#有效数字的定义" class="headerlink" title="有效数字的定义"></a>有效数字的定义</h3><p>若近似值 $ x^* $ 的误差限是某一位的半个单位，该位到 $ x $ 的第一位非零数字共有 $ n $ 位，则 $ x $ 有 $ n $ 位有效数字。  </p>
+<p><strong>示例</strong><br>圆周率 $ \pi &#x3D; 3.14159265 \dots $  </p>
+<ul>
+<li>按四舍五入原则，若取四位小数，则 $ \pi \approx 3.1416 $；  </li>
+<li>取五位小数，则 $ \pi \approx 3.14159 $。</li>
+</ul>
+<p>它们的绝对误差不超过末位数的半个单位，即：  </p>
+<ul>
+<li>$$| \pi - 3.1416 | \leq \frac{1}{2} \times 10^{-4}$$  五位有效数值  </li>
+<li>$$| \pi - 3.14159 | \leq \frac{1}{2} \times 10^{-5}$$  六位有效数值</li>
+</ul>
+<blockquote>
+<p>如果是四舍五入的数字，可以直接从后往前数有几位就行了</p>
+</blockquote>
+<p><strong>科学计数法</strong></p>
+<p>用科学计数法，记 $ x^* &#x3D; \pm 0.a_1 a_2 \cdots a_n \times 10^m $（其中 $ a_1 \neq 0 $）。若 $ |x - x^* | \leq 0.5 \times 10^{m-n} $（即 $ a_n $ 的截取按四舍五入规则），则称 $ x^* $ 为有 <strong>$ n $</strong> 位有效数字，精确到 <strong>$ 10^{m-n} $</strong>。</p>
+<h3 id="有效数字与相对误差的关系"><a href="#有效数字与相对误差的关系" class="headerlink" title="有效数字与相对误差的关系"></a>有效数字与相对误差的关系</h3><p><strong>有效数字 ⇒ 相对误差限</strong></p>
+<p> 已知 $ x^* $ 有 $ n $ 位有效数字，则其相对误差限为<br>$$<br>\varepsilon_r *  &#x3D; \left| \frac{\varepsilon^* }{x^* } \right| &#x3D; \frac{0.5 \times 10^{m-n}}{0.a_1 a_2 \cdots a_n \times 10^m} &#x3D; \frac{10^{-n}}{2 \times 0.a_1 \cdots}  \leq \frac{1}{2a_1} \times 10^{-n+1}<br>$$<br><strong>相对误差限 ⇒ 有效数字</strong></p>
+<p> 已知 $ x^* $ 的相对误差限可写为<br>$$<br>\varepsilon_r * &#x3D; \frac{1}{2(a_1 + 1)} \times 10^{-n+1}<br>$$<br>则<br>$$<br>|x - x^* | \leq \varepsilon_r^ *   \cdot |x^* | &#x3D; \frac{10^{-n+1}}{2(a_1 + 1)} \times 0.a_1 a_2 \cdots \times 10^m<br>&lt; \frac{10^{-n+1}}{2(a_1 + 1)} \cdot (a_1 + 1) \times 10^{m-1} &#x3D; 0.5 \times 10^{m-n}<br>$$<br>可见 $ x^* $ 至少有 $ n $ 位有效数字。</p>
+<h2 id="求函数值和算术运算的误差估计"><a href="#求函数值和算术运算的误差估计" class="headerlink" title="求函数值和算术运算的误差估计"></a>求函数值和算术运算的误差估计</h2><p>设多元函数 $ A &#x3D; f(x_1, x_2, \cdots, x_n) $，$ x_1^* , x_2^* , \cdots, x_n^*  $ 为 $ x_1, x_2, \cdots, x_n $ 的近似值。 则 $ A $ 的近似值 $ A^* $：$ A^* &#x3D; f(x_1^* , x_2^* , \cdots, x_n^* ) $。 </p>
+<p>函数值 $ A^* $ 的绝对误差： $$ A - A^*  &#x3D; f(x_1, \cdots, x_n) - f(x_1^* , \cdots, x_n^* ) $$ </p>
+<p>在点 $ x &#x3D; (x_1, x_2, \cdots, x_n) $ 的 Taylor 展开式，设 $ |x_i - x_i^* | $ ($ i &#x3D; 1, 2, \cdots, n $) 都很小</p>
+<p>略去高阶项：<br>$$<br>A - A^* &#x3D; f(x_1, \cdots, x_n) - f(x_1^* , \cdots, x_n^* ) \approx \sum_{j&#x3D;1}^n \frac{\partial f(x)}{\partial x_j} (x_j - x_j^* )<br>$$<br>或<br>$$<br>e(A) \approx \sum_{j&#x3D;1}^n \frac{\partial f(x)}{\partial x_j} e(x_j)<br>$$</p>
+<p>$$<br>|e(A)| \leq \sum_{j&#x3D;1}^n \left| \frac{\partial f(x)}{\partial x_j} \right| |e(x_j)|<br>$$</p>
+<p><strong>一元函数时：</strong><br>$$<br>e^* (x)&#x3D;x^*-x<br>$$</p>
+<p>$$<br>e^* (A)&#x3D;f(x^* )-f(x)&#x3D; f’(\xi)(x^* -x)<br>$$</p>
+<h2 id="病态问题与条件数"><a href="#病态问题与条件数" class="headerlink" title="病态问题与条件数"></a>病态问题与条件数</h2><p>$$<br> | e_r(y) | &#x3D; \left| \frac{e(y)}{f(x^* )} \right| &#x3D; \left| \frac{f(x) - f(x^* )}{f(x^* )} \right|<br>$$</p>
+<p>$$<br> &#x3D; \left| \frac{f(x) - f(x^* )}{x - x^* } \cdot \frac{x}{f(x)} \cdot \frac{x - x^* }{x} \right|<br>$$</p>
+<p>$$<br> \approx \left| \frac{x \cdot f’(x)}{f(x)} \right| \cdot \left| \frac{x - x^*}{x} \right| &#x3D; \left| \frac{x \cdot f’(x)}{f(x)} \right| \cdot | e_r(x) |<br>$$</p>
+<p>$| \frac{x \cdot f’(x)}{f(x)} |$为条件数，条件数很大时，初始数据的微小误差可能引起结果 $ A $ 的很大误差。</p>
+<p>对数学问题而言，如果输入数据有微小扰动，引起输出数据（即数学问题的解）有很大扰动，则称数学问题是病态问题，否则称为良态问题。</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">数值分析</a></div><div class="post-share"><div class="social-share" data-image="/blog/image/2023-10-01-083219.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2025/04/23/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%94%EF%BC%89/" title="数值分析（五）"><img class="cover" src="/blog/image/sakura.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">数值分析（五）</div></div><div class="info-2"><div class="info-item-1">此部分包含常微分方程的数值解部分———————————————————————————————————————————————————————————– 第五章 常微分方程数值解前言考虑一阶常微分方程的初值问题 &#x2F;* Initial-Value Problem *&#x2F;:  $$ \begin{cases} \frac{dy}{dx} = f(x, y), & x \in [a, b] \\ y(a) = y_0 \end{cases} $$    只要 $f(x, y)$ 在 $[a, b] \times \mathbb{R}^1$ 上连续，且关于 $y$ 满足 Lipschitz 条件，即存在与 $x, y$ 无关的常数 $L$ 使得$$|f(x, y_1) - f(x, y_2)| \leq L |y_1 - y_2|$$ 对任意定义在 $[a, b]$ 上的 $y_1(x)$ 和 $y_2(x)$ 都成立，则上述 IVP (一阶常微分方程的初值问题)存在唯一解。 本章的任务：计算出解函数 $y(x)$ 在一系列节点 $a &#x3D; x_0 &lt;...</div></div></div></a><a class="pagination-related" href="/blog/2025/05/08/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%8F%92%E5%80%BC%E6%B3%95/" title="数值分析-插值法"><img class="cover" src="/blog/image/hgud.jpeg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">数值分析-插值法</div></div><div class="info-2"><div class="info-item-1">此文章包含数值分析的插值法部分————————————————————————————————————————————————————————————————— 第二章 插值法插值法定义设函数 $y &#x3D; f(x)$ 在区间 $[a, b]$ 上有定义，且满足节点排列：$$ a \leq x_0 &lt; x_1 &lt; \cdots &lt; x_n \leq b $$ 已知在点 ${x_0, x_1, \ldots, x_n}$ 上的对应函数值 ${y_0, y_1, \ldots, y_n}$。 若存在一简单函数 $p(x)$，满足插值条件：$$ p(x_i) &#x3D; y_i \quad (i &#x3D; 0, 1, 2, \ldots, n) \tag{2.1} $$  （1）  则称：  $p(x)$ 为 $f(x)$ 的插值函数 ${x_0, x_1, \ldots, x_n}$ 为插值节点 包含节点的区间 $[a, b]$ 为插值区间 式 (1) 为插值条件 求插值函数的方法称为插值法   插值函数分类当 $p(x)$...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2025/02/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%80%EF%BC%89/" title="数值分析（一）"><img class="cover" src="/blog/image/00d69812ece14254143ca78eb066782f.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-26</div><div class="info-item-2">数值分析（一）</div></div><div class="info-2"><div class="info-item-1">此文章包含误差、插值法和函数逼近内容—————————————————————————————————————————————————————- $C^p[a,b]$表示具有$p$阶连续导数的函数空间；$C^0$表述函数连续，没有要求可导 第一章 误差误差设 $x$ 为准确值，$x^* $ 为 $x$ 的一个近似值，称  $$e^* &#x3D; x^* - x$$  为绝对误差，简称为误差。 对于一般情形，  $$| x^*  - x | ≤ ε^* $$$ε^* $为绝对误差限相对误差的公式表示为：  $$e_r^* &#x3D; \frac{e^* }{x}$$ 实际中一般取$$e_r^* &#x3D; \frac{e^* }{x^* }$$ $x$ 的相对误差上限定义为$\varepsilon^* &#x3D; \frac{\varepsilon^* }{|x^* |}$ 有效数字有效数字的定义若近似值 $ x^* $ 的误差限是某一位的半个单位，该位到 $ x $ 的第一位非零数字共有 $ n $ 位，则 $ x $ 有 $ n $ 位有效数字。   示例圆周率 $...</div></div></div></a><a class="pagination-related" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%8C%EF%BC%89/" title="数值分析（二）"><img class="cover" src="/blog/image/00d69812ece14254143ca78eb066782f.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-26</div><div class="info-item-2">数值分析（二）</div></div><div class="info-2"><div class="info-item-1">此文章包含数值积分部分—————————————————————————————————————————————————————- 数值积分数值积分近似公式梯形公式$$\int _{a}^{b} f(x) dx \approx \frac{(b - a)}{2} \left[ f(a) + f(b) \right]$$ 中矩公式$$\int _{a}^{b} f(x) dx \approx (b - a) f\left( \frac{a + b}{2} \right)$$ 辛普森公式（Simpson’s Rule）$$\int _{a}^{b} f(x) dx \approx \frac{(b - a)}{6} \left[ f(a) + 4f\left( \frac{a + b}{2} \right) + f(b) \right]$$ 机械求积公式一般的，我们取区间 $[a, b]$ 内若干个节点 $x_k$ 处的函数值 $f(x_k)$，通过加权平均的方法近似地得出平均高度。这类求积公式的一般形式为： $$\int_a^b f(x) , dx \approx...</div></div></div></a><a class="pagination-related" href="/blog/2025/05/08/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%8F%92%E5%80%BC%E6%B3%95/" title="数值分析-插值法"><img class="cover" src="/blog/image/hgud.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-08</div><div class="info-item-2">数值分析-插值法</div></div><div class="info-2"><div class="info-item-1">此文章包含数值分析的插值法部分————————————————————————————————————————————————————————————————— 第二章 插值法插值法定义设函数 $y &#x3D; f(x)$ 在区间 $[a, b]$ 上有定义，且满足节点排列：$$ a \leq x_0 &lt; x_1 &lt; \cdots &lt; x_n \leq b $$ 已知在点 ${x_0, x_1, \ldots, x_n}$ 上的对应函数值 ${y_0, y_1, \ldots, y_n}$。 若存在一简单函数 $p(x)$，满足插值条件：$$ p(x_i) &#x3D; y_i \quad (i &#x3D; 0, 1, 2, \ldots, n) \tag{2.1} $$  （1）  则称：  $p(x)$ 为 $f(x)$ 的插值函数 ${x_0, x_1, \ldots, x_n}$ 为插值节点 包含节点的区间 $[a, b]$ 为插值区间 式 (1) 为插值条件 求插值函数的方法称为插值法   插值函数分类当 $p(x)$...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E8%AF%AF%E5%B7%AE"><span class="toc-number">1.</span> <span class="toc-text">第一章 误差</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AF%E5%B7%AE%E7%9A%84%E5%BA%A6%E9%87%8F%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text">误差的度量方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97"><span class="toc-number">1.2.</span> <span class="toc-text">有效数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">有效数字的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97%E4%B8%8E%E7%9B%B8%E5%AF%B9%E8%AF%AF%E5%B7%AE%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">1.2.2.</span> <span class="toc-text">有效数字与相对误差的关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%82%E5%87%BD%E6%95%B0%E5%80%BC%E5%92%8C%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E7%9A%84%E8%AF%AF%E5%B7%AE%E4%BC%B0%E8%AE%A1"><span class="toc-number">1.3.</span> <span class="toc-text">求函数值和算术运算的误差估计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%97%85%E6%80%81%E9%97%AE%E9%A2%98%E4%B8%8E%E6%9D%A1%E4%BB%B6%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">病态问题与条件数</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/05/12/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E9%95%BF%E6%98%A5%E5%85%89%E6%9C%BA%E6%89%80%EF%BC%89/" title="机电一体化分析与建模（长春光机所）"><img src="/blog/image/20250505084723-2.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="机电一体化分析与建模（长春光机所）"/></a><div class="content"><a class="title" href="/blog/2025/05/12/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E9%95%BF%E6%98%A5%E5%85%89%E6%9C%BA%E6%89%80%EF%BC%89/" title="机电一体化分析与建模（长春光机所）">机电一体化分析与建模（长春光机所）</a><time datetime="2025-05-12T11:27:23.000Z" title="发表于 2025-05-12 19:27:23">2025-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/05/08/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%8F%92%E5%80%BC%E6%B3%95/" title="数值分析-插值法"><img src="/blog/image/hgud.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-插值法"/></a><div class="content"><a class="title" href="/blog/2025/05/08/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%8F%92%E5%80%BC%E6%B3%95/" title="数值分析-插值法">数值分析-插值法</a><time datetime="2025-05-08T00:50:35.000Z" title="发表于 2025-05-08 08:50:35">2025-05-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/04/30/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E8%AF%AF%E5%B7%AE/" title="数值分析-误差"><img src="/blog/image/2023-10-01-083219.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-误差"/></a><div class="content"><a class="title" href="/blog/2025/04/30/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E8%AF%AF%E5%B7%AE/" title="数值分析-误差">数值分析-误差</a><time datetime="2025-04-30T01:42:45.000Z" title="发表于 2025-04-30 09:42:45">2025-04-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/04/23/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%94%EF%BC%89/" title="数值分析（五）"><img src="/blog/image/sakura.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析（五）"/></a><div class="content"><a class="title" href="/blog/2025/04/23/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%94%EF%BC%89/" title="数值分析（五）">数值分析（五）</a><time datetime="2025-04-23T07:10:43.000Z" title="发表于 2025-04-23 15:10:43">2025-04-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E6%B1%82%E6%A0%B9/" title="数值分析-非线性方程求根"><img src="/blog/image/img3.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-非线性方程求根"/></a><div class="content"><a class="title" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E6%B1%82%E6%A0%B9/" title="数值分析-非线性方程求根">数值分析-非线性方程求根</a><time datetime="2025-03-26T06:47:47.000Z" title="发表于 2025-03-26 14:47:47">2025-03-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script async data-pjax src="{&quot;site_uv&quot;:true,&quot;site_pv&quot;:true,&quot;page_pv&quot;:true}"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
