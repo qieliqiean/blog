@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qieliqiean.github.io/blog/image/20250505084722.jpeg">
 <meta property="article:published_time" content="2025-05-15T07:37:45.000Z">
-<meta property="article:modified_time" content="2025-05-15T08:27:17.084Z">
+<meta property="article:modified_time" content="2025-05-28T08:54:18.211Z">
 <meta property="article:author" content="lian">
 <meta property="article:tag" content="数值分析">
 <meta name="twitter:card" content="summary">
@@ -18,7 +18,7 @@
   "url": "https://qieliqiean.github.io/blog/2025/05/15/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91/",
   "image": "https://qieliqiean.github.io/blog/image/20250505084722.jpeg",
   "datePublished": "2025-05-15T07:37:45.000Z",
-  "dateModified": "2025-05-15T08:27:17.084Z",
+  "dateModified": "2025-05-28T08:54:18.211Z",
   "author": [
     {
       "@type": "Person",
@@ -163,7 +163,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/image/20250505084722.jpeg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">数值分析-函数逼近</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">数值分析-函数逼近</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-05-15T07:37:45.000Z" title="发表于 2025-05-15 15:37:45">2025-05-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-15T08:27:17.084Z" title="更新于 2025-05-15 16:27:17">2025-05-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">6.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>29分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="第三章-函数逼近"><a href="#第三章-函数逼近" class="headerlink" title="第三章 函数逼近"></a>第三章 函数逼近</h1><h2 id="范数与赋范线性空间"><a href="#范数与赋范线性空间" class="headerlink" title="范数与赋范线性空间"></a>范数与赋范线性空间</h2><p>设 $S$ 是实数域上的线性空间，$x \in S$，如果存在唯一实数 $||\cdot||$，满足以下条件：  </p>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/image/20250505084722.jpeg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">数值分析-函数逼近</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">数值分析-函数逼近</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-05-15T07:37:45.000Z" title="发表于 2025-05-15 15:37:45">2025-05-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-28T08:54:18.211Z" title="更新于 2025-05-28 16:54:18">2025-05-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">6.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>30分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="第三章-函数逼近"><a href="#第三章-函数逼近" class="headerlink" title="第三章 函数逼近"></a>第三章 函数逼近</h1><h2 id="范数与赋范线性空间"><a href="#范数与赋范线性空间" class="headerlink" title="范数与赋范线性空间"></a>范数与赋范线性空间</h2><p>设 $S$ 是实数域上的线性空间，$x \in S$，如果存在唯一实数 $||\cdot||$，满足以下条件：  </p>
 <ol>
 <li><p><strong>正定性</strong>：<br>$$<br>||x|| \geq 0，\quad \text{当且仅当} \ x &#x3D; 0 \ \text{时，} \ ||x|| &#x3D; 0<br>$$</p>
 </li>
@@ -174,7 +174,7 @@
 </ol>
 <p>则称 $||\cdot||$ 为线性空间 $S$ 上的<strong>范数</strong>，$S$ 与 $||\cdot||$ 一起称为<strong>赋范线性空间</strong>，记为 $X$。</p>
 <p><strong>常用范数定义</strong></p>
-<h4 id="1-mathbb-R-n-上的向量范数"><a href="#1-mathbb-R-n-上的向量范数" class="headerlink" title="1. $\mathbb{R}^n$ 上的向量范数"></a><strong>1. $\mathbb{R}^n$ 上的向量范数</strong></h4><p>设 $x &#x3D; (x_1, \dots, x_n)^T \in \mathbb{R}^n$，定义以下三种常用范数：  </p>
+<h4 id="向量范数"><a href="#向量范数" class="headerlink" title="向量范数"></a>向量范数</h4><p>设 $x &#x3D; (x_1, \dots, x_n)^T \in \mathbb{R}^n$，定义以下三种常用范数：  </p>
 <ol>
 <li><p><strong>∞-范数（最大范数）</strong>：<br>$$<br>||x|| _ \infty &#x3D; \max_{1 \leq i \leq n} |x_i|<br>$$</p>
 </li>
@@ -184,7 +184,7 @@
 </li>
 </ol>
 <hr>
-<h4 id="2-C-a-b-上的函数范数"><a href="#2-C-a-b-上的函数范数" class="headerlink" title="2. $C[a, b]$ 上的函数范数"></a><strong>2. $C[a, b]$ 上的函数范数</strong></h4><p>设 $f(x) \in C[a, b]$，定义以下三种常用范数：  </p>
+<h4 id="函数范数"><a href="#函数范数" class="headerlink" title="函数范数"></a>函数范数</h4><p>设 $f(x) \in C[a, b]$，定义以下三种常用范数：  </p>
 <ol>
 <li><p><strong>∞-范数</strong>：<br>$$<br>||f||_ \infty &#x3D; \max_{a \leq x \leq b} |f(x)|<br>$$</p>
 </li>
@@ -193,15 +193,15 @@
 <li><p><strong>2-范数</strong>：<br>$$<br>||f||_2 &#x3D; \left( \int_a^b f^2(x) , dx \right)^{1&#x2F;2}<br>$$</p>
 </li>
 </ol>
-<h2 id="内积与内积空间"><a href="#内积与内积空间" class="headerlink" title="内积与内积空间"></a>内积与内积空间</h2><h3 id="权函数"><a href="#权函数" class="headerlink" title="权函数"></a>权函数</h3><p>设 $[a, b]$ 是有限或无限区间，在 $[a, b]$ 上的<strong>非负</strong>函数 $\rho(x)$ 满足以下条件：  </p>
+<h2 id="内积与内积空间"><a href="#内积与内积空间" class="headerlink" title="内积与内积空间"></a>内积与内积空间</h2><h3 id="权函数的定义"><a href="#权函数的定义" class="headerlink" title="权函数的定义"></a>权函数的定义</h3><p>设 $[a, b]$ 是有限或无限区间，在 $[a, b]$ 上的<strong>非负</strong>函数 $\rho(x)$ 满足以下条件：  </p>
 <ol>
-<li><p><strong>积分存在性</strong>：<br>对任意非负整数 $k &#x3D; 0, 1, 2, \ldots$，积分<br>$$<br>\int_a^b x^k \rho(x) , dx<br>$$<br>存在且为有限值。  </p>
+<li><p><strong>积分存在性</strong>：<br>对任意非负整数 $k &#x3D; 0, 1, 2, \ldots$，积分<br>$$<br>\int_a^b x^k \rho(x)dx<br>$$<br>存在且为有限值。  </p>
 </li>
-<li><p><strong>非负连续性条件</strong>：<br>对 $[a, b]$ 上的任意非负连续函数 $g(x)$，若满足<br>$$<br>\int_a^b g(x)\rho(x) , dx &#x3D; 0,<br>$$<br>则必有 $g(x) \equiv 0$（即 $g(x)$ 在 $[a, b]$ 上恒为零）。</p>
+<li><p><strong>非负连续性条件</strong>：<br>对 $[a, b]$ 上的任意非负连续函数 $g(x)$，若满足<br>$$<br>\int_a^b g(x)\rho(x) dx &#x3D; 0<br>$$<br>则必有 $g(x) \equiv 0$（即 $g(x)$ 在 $[a, b]$ 上恒为零）。</p>
 </li>
 </ol>
 <p>满足上述条件的函数 $\rho(x)$ 称为 $[a, b]$ 上的一个<strong>权函数</strong>。</p>
-<h3 id="内积"><a href="#内积" class="headerlink" title="内积"></a>内积</h3><p>在 $\mathbb{R}^n$ 中，向量 $x &#x3D; (x_1, x_2, \dots, x_n)^T$ 和 $y &#x3D; (y_1, y_2, \dots, y_n)^T$ 的内积定义为：<br>$$<br>(x, y) &#x3D; x_1 y_1 + x_2 y_2 + \dots + x_n y_n \tag{1.5}<br>$$</p>
+<h3 id="向量内积"><a href="#向量内积" class="headerlink" title="向量内积"></a>向量内积</h3><p>在 $\mathbb{R}^n$ 中，向量 $x &#x3D; (x_1, x_2, \dots, x_n)^T$ 和 $y &#x3D; (y_1, y_2, \dots, y_n)^T$ 的内积定义为：<br>$$<br>(x, y) &#x3D; x_1 y_1 + x_2 y_2 + \dots + x_n y_n \tag{1.5}<br>$$</p>
 <p>设 $X$ 是数域 $K$（实数域 $\mathbb{R}$ 或复数域 $\mathbb{C}$）上的线性空间。对任意 $u, v \in X$，有K中一个数与之对应，记为$(u,v)$，它满足以下条件：</p>
 <ol>
 <li><p><strong>共轭对称性</strong>：<br>$$<br>(u, v) &#x3D; \overline{(v, u)}<br>$$<br>其中 $\overline{(v, u)}$ 表示 $(v, u)$ 的复共轭。当 $K &#x3D; \mathbb{R}$ 时，简化为对称性 $(u, v) &#x3D; (v, u)$。  </p>
@@ -215,12 +215,13 @@
 </ol>
 <p>定义了内积的线性空间称为<strong>内积空间</strong>。</p>
 <hr>
-<p>设 $f(x), g(x) \in C[a, b]$，$\rho(x)$ 是 $[a, b]$ 上的权函数，积分<br>$$<br>(f, g) &#x3D; \int_a^b \rho(x) f(x) g(x) , dx<br>$$<br>称为函数 $f(x)$ 与 $g(x)$ 在 $[a, b]$ 上的<strong>内积</strong>。</p>
-<blockquote>
-<p>向量模（范数）的定义</p>
+<h3 id="函数内积"><a href="#函数内积" class="headerlink" title="函数内积"></a>函数内积</h3><p>设 $f(x), g(x) \in C[a, b]$，$\rho(x)$ 是 $[a, b]$ 上的权函数，积分<br>$$<br>(f, g) &#x3D; \int_a^b \rho(x) f(x) g(x) , dx<br>$$<br>称为函数 $f(x)$ 与 $g(x)$ 在 $[a, b]$ 上的<strong>内积</strong>。</p>
+<h3 id="函数范数与内积"><a href="#函数范数与内积" class="headerlink" title="函数范数与内积"></a>函数范数与内积</h3><blockquote>
+<p><strong>向量模（范数）的定义</strong></p>
 <p>设向量 $ f \in \mathbb{R}^n $，其模（范数）定义为：<br>$$<br>|| f ||_ 2 &#x3D; \left( \sum_{k&#x3D;1}^{n} f_k^2 \right)^{\frac{1}{2}}<br>$$<br>将此定义推广到任何内积空间中，就有以下定义。</p>
 <hr>
-<p>设函数 $ f(x) \in C[a, b] $，定义量<br>$$<br>|| f ||_2 &#x3D; \sqrt{ \int_a^b \rho(x) f^2(x) , dx } &#x3D; \sqrt{ (f, f) }<br>$$<br>称为函数 $ f(x) $ 的<strong>欧氏范数</strong>。</p>
+<p>设函数 $ f(x) \in C[a, b] $，定义量<br>$$<br>|| f ||_2 &#x3D; \sqrt{ \int_a^b \rho(x) f^2(x) , dx } &#x3D; \sqrt{ (f, f) }<br>$$<br>$$<br>|| f ||_2^2&#x3D;(f, f)<br>$$</p>
+<p>称为函数 $ f(x) $ 的<strong>欧氏范数</strong>。</p>
 </blockquote>
 <blockquote>
 <p><strong>定理</strong>  </p>
@@ -228,15 +229,15 @@
 <ol>
 <li><strong>柯西-许瓦兹不等式</strong>：</li>
 </ol>
-<p>$$<br> |(f, g)| \leq |f|_2 |g|_2 \<br> 或 \quad |(f, g)|^2 \leq (f,f)(g,g)<br>$$</p>
+<p>$$<br>|(f, g)| \leq ||f||_2 ||g||_2 \<br> 或 \quad |(f, g)|^2 \leq (f,f)(g,g)<br>$$</p>
 <ol start="2">
 <li><strong>三角不等式</strong>：</li>
 </ol>
-<p>$$<br> |f + g|_2 \leq |f|_2 + |g|_2<br>$$</p>
+<p>$$<br>||f + g||_2 \leq ||f||_2 + ||g||_2<br>$$</p>
 <ol start="3">
 <li><strong>平行四边形定律</strong>：</li>
 </ol>
-<p>$$<br> |f + g|_2^2 + |f - g|_2^2 &#x3D; 2 \left( |f|_2^2 + |g|_2^2 \right)<br>$$</p>
+<p>$$<br>||f + g||_2^2 + ||f - g||_2^2 &#x3D; 2 \left( ||f||_2^2 + ||g||_2^2 \right)<br>$$</p>
 </blockquote>
 <h3 id="线性无关相关概念与定理"><a href="#线性无关相关概念与定理" class="headerlink" title="线性无关相关概念与定理"></a>线性无关相关概念与定理</h3><p>设集合 $ S $ 是数域 $ P $ 上的线性空间，元素 $ x_1, x_2, \dots, x_n \in S $。如果存在不全为零的数 $ \alpha_1, \alpha_2, \dots, \alpha_n \in P $，使得<br>$$<br>\alpha_1 x_1 + \alpha_2 x_2 + \dots + \alpha_n x_n &#x3D; 0 \quad (1.1)<br>$$<br>则称 $ x_1, x_2, \dots, x_n $ <strong>线性相关</strong>。否则，若等式 (1.1) 只对<br>$$<br>\alpha_1 &#x3D; \alpha_2 &#x3D; \dots &#x3D; \alpha_n &#x3D; 0<br>$$<br>成立，则称 $ x_1, x_2, \dots, x_n $ <strong>线性无关</strong>。</p>
 <hr>
@@ -246,23 +247,71 @@
 <h3 id="无限维线性空间"><a href="#无限维线性空间" class="headerlink" title="无限维线性空间"></a><strong>无限维线性空间</strong></h3><p>如果 $ S $ 中有无限个线性无关元素 $ x_1, x_2, \dots, x_n, \dots $，则称 $ S $ 为<strong>无限维线性空间</strong>。</p>
 <blockquote>
 <p><strong>定理3</strong> </p>
-<p>设 $ X $ 为一个内积空间，$ u_1, u_2, \dots, u_n \in X $，矩阵 $ G $ 定义为：<br>$$<br>G &#x3D; \begin{pmatrix}<br>(u_1, u_1) &amp; (u_2, u_1) &amp; \cdots &amp; (u_n, u_1) \<br>(u_1, u_2) &amp; (u_2, u_2) &amp; \cdots &amp; (u_n, u_2) \<br>\vdots &amp; \vdots &amp; &amp; \vdots \<br>(u_1, u_n) &amp; (u_2, u_n) &amp; \cdots &amp; (u_n, u_n)<br>\end{pmatrix}<br>$$<br>矩阵 $ G $ 称为<strong>格拉姆(Gram)矩阵</strong>。矩阵 $ G $ 非奇异(<strong>等价与$detG≠0$</strong>)的充分必要条件是 $ u_1, u_2, \dots, u_n $ 线性无关。</p>
+<p>设 $ X $ 为一个内积空间，$ u_1, u_2, \dots, u_n \in X $，矩阵 $ G $ 定义为：  </p>
+<span>
+$$
+G = \begin{pmatrix}
+(u_1, u_1) & (u_2, u_1) & \cdots & (u_n, u_1) \\
+(u_1, u_2) & (u_2, u_2) & \cdots & (u_n, u_2) \\
+\vdots & \vdots & & \vdots \\
+(u_1, u_n) & (u_2, u_n) & \cdots & (u_n, u_n)
+\end{pmatrix}
+$$
+</span>
+
+<p>矩阵 $ G $ 称为<strong>格拉姆(Gram)矩阵</strong>。矩阵 $ G $ 非奇异(<strong>等价与$detG≠0$</strong>)的充分必要条件是 $ u_1, u_2, \dots, u_n $ 线性无关。</p>
 </blockquote>
-<h2 id="函数的最佳平方逼近"><a href="#函数的最佳平方逼近" class="headerlink" title="函数的最佳平方逼近"></a>函数的最佳平方逼近</h2><p>设函数 $ f(x) \in C[a, b] $，用 $ n $ 次多项式<br>$$<br>s(x) &#x3D; \sum_{k&#x3D;0}^{n} a_k x^k<br>$$<br>作最佳平方逼近，就是要求得以 $ a_0^<em>, a_1^</em>, \dots, a_n^* $ 为系数的多项式<br>$$<br>s^<em>(x) &#x3D; \sum_{k&#x3D;0}^{n} a_k^</em> x^k<br>$$<br>使得<br>$$<br>| f(x) - s^<em>(x) |_2^2 &#x3D; \int_a^b [f(x) - s^</em>(x)]^2 , dx &#x3D; \min_{s(x) \in H_n} | f(x) - s(x) |_2^2<br>$$<br>其中 $ H_n $ 表示所有 $ n $ 次多项式的集合。</p>
+<h2 id="函数的最佳平方逼近"><a href="#函数的最佳平方逼近" class="headerlink" title="函数的最佳平方逼近"></a>函数的最佳平方逼近</h2><p>设函数 $ f(x) \in C[a, b] $，用 $ n $ 次多项式<br>$$<br>s(x) &#x3D; \sum_{k&#x3D;0}^{n} a_k x^k<br>$$<br>作最佳平方逼近，就是要求得以 $ a_0^* , a_1^* , \dots, a_n^*  $ 为系数的多项式<br>$$<br>s^* (x) &#x3D; \sum_{k&#x3D;0}^{n} a_k^*  x^k<br>$$<br>使得<br>$$<br>|| f(x) - s^* (x) ||_2^2 &#x3D; \int_a^b [f(x) - s^* (x)]^2 dx<br>$$</p>
+<p>$$<br>&#x3D;\min_{s(x) \in H_n} || f(x) - s(x) ||_2^2<br>$$<br>其中 $ H_n $ 表示所有 $ n $ 次多项式的集合。</p>
 <hr>
 <p><strong>推广到一般情况</strong></p>
-<p>对于给定的权函数 $ \rho(x) $，要求得 $ a_k^* $（$ k &#x3D; 0, 1, \dots, n $）使得<br>$$<br>| f(x) - s^<em>(x) |_2^2 &#x3D; \int_a^b \rho(x) [f(x) - s^</em>(x)]^2 , dx &#x3D; \min_{s(x) \in H_n} | f(x) - s(x) |_2^2<br>$$</p>
+<p>对于给定的权函数 $ \rho(x) $，要求得 $ a_k^* $（$ k &#x3D; 0, 1, \dots, n $）使得<br>$$<br>|| f(x) - s^* (x) ||_2^2 &#x3D; \int_a^b \rho(x) [f(x) - s^* (x)]^2 dx<br>$$</p>
+<p>$$<br>&#x3D;\min_{s(x) \in H_n} || f(x) - s(x) ||_2^2<br>$$</p>
 <p><strong>进一步推广</strong></p>
-<p>$ n $ 次多项式<br>$$<br>s(x) &#x3D; \sum_{k&#x3D;0}^{n} a_k x^k<br>$$<br>是以 $ 1, x, \dots, x^n $ 为基函数的线性组合。进一步推广可将 $ x^k $ 改为一般的线性无关的连续函数 $ \varphi_k(x) $，全体构成 $ C[a, b] $ 的子空间，即<br>$$<br>\Phi &#x3D; \text{span}{ \varphi_0, \varphi_1, \dots, \varphi_n }<br>$$<br>最佳平方逼近问题可叙述为：求 $ a_0^<em>, a_1^</em>, \dots, a_n^* $ 使得<br>$$<br>| f(x) - s^*(x) |<em>2^2 &#x3D; \left| f(x) - \sum</em>{k&#x3D;0}^n a_k \varphi_k(x) \right|<em>2^2 &#x3D; \min</em>{s(x) \in \Phi} | f(x) - s(x) |_2^2<br>$$<br>其中，$ \Phi &#x3D; \text{span}{ \varphi_0, \varphi_1, \dots, \varphi_n } $ 是由基函数 $ \varphi_k(x) $ 生成的函数空间。</p>
-<p>上述问题等价于求解多元函数<br>$$<br>I(a_0, a_1, \dots, a_n) &#x3D; \int_a^b \rho(x) \left| f(x) - \sum_{k&#x3D;0}^n a_k \varphi_k(x) \right|^2 dx<br>$$<br>的最小值问题。</p>
+<p>$ n $ 次多项式<br>$$<br>s(x) &#x3D; \sum_{k&#x3D;0}^{n} a_k x^k<br>$$<br>是以 $ 1, x, \dots, x^n $ 为基函数的线性组合。进一步推广可将 $ x^k $ 改为一般的线性无关的连续函数 $ \varphi_k(x) $，全体构成 $ C[a, b] $ 的子空间，即  </p>
+<span>
+$$
+\Phi = \text{span}\{ \varphi_0, \varphi_1, \dots, \varphi_n \}
+$$
+</span>
+
+<p>最佳平方逼近问题可叙述为：求 $ a_0^* , a_1^* , \dots, a_n^*  $ 使得   </p>
+ <span>
+$$
+|| f(x) - s^* (x) ||_2^2 = || f(x) - \sum_ {k=0}^n a_k  \varphi _k (x) ||_2^2= \min_{s(x) \in \Phi} \| f(x) - s(x) \|_2^2
+$$
+</span>
+
+<p>其中，$ \Phi &#x3D; \text{span}{ \varphi_0, \varphi_1, \dots, \varphi_n } $ 是由基函数 $ \varphi_k(x) $ 生成的函数空间。</p>
+<p><strong>上述问题等价于求解多元函数</strong><br>$$<br>I(a_0, a_1, \dots, a_n) &#x3D; \int_a^b \rho(x) \left| f(x) - \sum_{k&#x3D;0}^n a_k \varphi_k(x) \right|^2 dx<br>$$<br>的最小值问题。</p>
 <p>由多元函数极值存在的必要条件可得如下的法方程组：<br>$$<br>\sum_{j&#x3D;0}^{n} (\varphi_j, \varphi_k) a_j &#x3D; (f, \varphi_k), \quad (k &#x3D; 0, 1, \ldots, n)<br>$$</p>
 <p>可证明方程组有唯一解 $ a_k &#x3D; a_k^* $（$ k &#x3D; 0, 1, \dots, n $），从而得到</p>
-<p>$s^<em>(x) &#x3D; a_0^</em> \varphi_0(x) + \cdots + a_n^* \varphi_n(x)$</p>
-<p>若令<br>$$<br>\delta(x) &#x3D; f(x) - S^<em>(x),<br>$$<br><strong><u>则最佳平方逼近的误差为</u></strong><br>$$<br>|\delta(x)|^2_2 &#x3D; \left( f(x) - S^</em>(x), f(x) - S^<em>(x) \right) \<br>&#x3D; (f(x), f(x)) - (S^</em>(x), f(x)) &#x3D; |f(x)|^2_2 - \sum_{k&#x3D;0}^n a_k^* (\varphi_k(x), f(x)).<br>$$<br><strong>PS</strong>:根据法方程可得$(S^<em>(x),\varphi_k)&#x3D;(f,\varphi_k)$,进一步得$(f-S^</em>(x),\varphi_k)&#x3D;0$，即$(f-S^<em>,S^</em>)&#x3D;0$</p>
+<p>$s^* (x) &#x3D; a_0^*  \varphi_0(x) + \cdots + a_n^*  \varphi_n(x)$</p>
+<p>若令<br>$$<br>\delta(x) &#x3D; f(x) - S^* (x),<br>$$</p>
+<h3 id="最佳平方逼近的误差"><a href="#最佳平方逼近的误差" class="headerlink" title="最佳平方逼近的误差"></a>最佳平方逼近的误差</h3><span>
+$$
+\|\delta(x)\|^2_2 = \left( f(x) - S^* (x), f(x) - S^* (x) \right) \\
+= (f(x), f(x)) - (S^*(x), f(x)) = \|f(x)\|^2_2 - \sum_{k=0}^n a_k^* (\varphi_k(x), f(x)).
+$$
+</span>
+
+<p><strong>PS</strong>:根据法方程可得$(S^* (x),\varphi_k)&#x3D;(f,\varphi_k)$,进一步得$(f-S^* (x),\varphi_k)&#x3D;0$，即$(f-S^* ,S^* )&#x3D;0$</p>
 <blockquote>
 <p>若取基函数<br>$$<br>\varphi_k(x) &#x3D; x^k, \quad \rho(x) &#x3D; 1, \quad f(x) \in C[0, 1],<br>$$<br>则要在 $ H_n $ 中求 $ n $ 次最佳平方逼近多项式<br>$$<br>s^*(x) &#x3D; a_0 + a_1 x + \dots + a_n x^n.<br>$$</p>
 <p>此时，内积定义为<br>$$<br>(\varphi_i(x), \varphi_j(x)) &#x3D; \int_0^1 x^{i+j} , dx &#x3D; \frac{1}{i + j + 1},<br>$$<br>而<br>$$<br>(f(x), \varphi_k(x)) &#x3D; \int_0^1 f(x) x^k , dx &#x3D; d_k.<br>$$</p>
-<p>用 $ H $ 表示格拉姆矩阵 $ G_n &#x3D; G(1, x, \dots, x^n) $，即<br>$$<br>H &#x3D; \begin{pmatrix}<br>1 &amp; \frac{1}{2} &amp; \cdots &amp; \frac{1}{n+1} \<br>\frac{1}{2} &amp; \frac{1}{3} &amp; \cdots &amp; \frac{1}{n+2} \<br>\vdots &amp; \vdots &amp; &amp; \vdots \<br>\frac{1}{n+1} &amp; \frac{1}{n+2} &amp; \cdots &amp; \frac{1}{2n+1}<br>\end{pmatrix},<br>$$<br>称 $ H $ 为<strong>希尔伯特(Hilbert)矩阵</strong>。记向量<br>$$<br>a &#x3D; (a_0, a_1, \dots, a_n)^T, \quad d &#x3D; (d_0, d_1, \dots, d_n)^T,<br>$$<br>则线性方程组<br>$$<br>H a &#x3D; d<br>$$<br>的解 $ a_k &#x3D; a_k^* $（$ k &#x3D; 0, 1, \dots, n $）即为所求。</p>
+<p>用 $ H $ 表示格拉姆矩阵 $ G_n &#x3D; G(1, x, \dots, x^n) $，即  </p>
+<span>
+$$
+H = \begin{pmatrix}
+1 & \frac{1}{2} & \cdots & \frac{1}{n+1} \\
+\frac{1}{2} & \frac{1}{3} & \cdots & \frac{1}{n+2} \\
+\vdots & \vdots & & \vdots \\
+\frac{1}{n+1} & \frac{1}{n+2} & \cdots & \frac{1}{2n+1}
+\end{pmatrix},
+$$
+<span>
+
+<p>称 $ H $ 为<strong>希尔伯特(Hilbert)矩阵</strong>。记向量<br>$$<br>a &#x3D; (a_0, a_1, \dots, a_n)^T, \quad d &#x3D; (d_0, d_1, \dots, d_n)^T,<br>$$<br>则线性方程组<br>$$<br>H a &#x3D; d<br>$$<br>的解 $ a_k &#x3D; a_k^* $（$ k &#x3D; 0, 1, \dots, n $）即为所求。</p>
 </blockquote>
 <h2 id="用正交函数系作最佳平方逼近"><a href="#用正交函数系作最佳平方逼近" class="headerlink" title="用正交函数系作最佳平方逼近"></a>用正交函数系作最佳平方逼近</h2><p>若 ${g_k(x)}(k&#x3D;0,1,\dots,n)$ 是带权 $\rho(x)$ 正交的函数系，即满足：</p>
 <p>$$<br>(g_k, g_j) &#x3D; \int_a^b \rho(x) g_k(x) g_j(x) , dx &#x3D; 0 \quad (k \neq j)<br>$$</p>
@@ -271,54 +320,69 @@
 <blockquote>
 <p>$a^*_j$与$n$无关</p>
 </blockquote>
-<p>从而得到最佳平方逼近函数：<br>$$<br>s^<em>(x) &#x3D; \sum_{j&#x3D;0}^na_j^</em> g_j(x) &#x3D; \sum_{j&#x3D;0}^n \frac{(f, g_j)}{(g_j, g_j)} g_j(x)<br>$$</p>
-<p><strong>广义Fourier级数</strong></p>
-<p>对于函数 $f(x) \in C[a, b]$ 与正交基函数系 ${g_k(x)}(k&#x3D;0,1,\dots,n)$，按公式逐个计算出 $a_j^*$ 后，可以得到一个级数：</p>
+<h3 id="最佳平方逼近函数"><a href="#最佳平方逼近函数" class="headerlink" title="最佳平方逼近函数"></a>最佳平方逼近函数</h3><p>$$<br>s^* (x) &#x3D; \sum_{j&#x3D;0}^na_j^*  g_j(x) &#x3D; \sum_{j&#x3D;0}^n \frac{(f, g_j)}{(g_j, g_j)} g_j(x)<br>$$</p>
+<h3 id="广义Fourier级数"><a href="#广义Fourier级数" class="headerlink" title="广义Fourier级数"></a>广义Fourier级数</h3><p>对于函数 $f(x) \in C[a, b]$ 与正交基函数系 ${g_k(x)}(k&#x3D;0,1,\dots,n)$，按公式逐个计算出 $a_j^*$ 后，可以得到一个级数：</p>
 <p>$$<br> a_0^* g_0(x) + a_1^* g_1(x) + \dots + a_n^* g_n(x)<br>$$</p>
-<p>这个级数称为 $f(x)$ 对应于基函数系  ${g_k(x)}(k&#x3D;0,1,\dots,n)$的广义Fourier级数。</p>
+<p>这个级数称为 $f(x)$ 对应于基函数系 ${g_k(x)}(k&#x3D;0,1,\dots,n)$的广义Fourier级数。</p>
 <p>系数 $ a_k^* $ 为广义Fourier系数，对任意固定的 $ n $，其部分和为：</p>
 <p>$$<br>S_n(x) &#x3D; \sum_{k&#x3D;0}^n a_k^* g_k(x)<br>$$</p>
 <p>$ S_n(x) $ 称为广义多项式，是所求的最佳平方逼近多项式。</p>
-<p><strong>勒让德多项式作为基函数</strong></p>
-<p>当 $ f(x) \in C[-1, 1] $ 时，可以用勒让德多项式 $ {P_k(x)} $ 作为基函数，即 $ {g_k(x)} &#x3D; {P_k(x)} $。此时，最佳平方逼近多项式为：</p>
-<p>$$<br>s_n^<em>(x) &#x3D; a_0^</em> P_0(x) + a_1^* P_1(x) + \dots + a_n^* P_n(x)<br>$$</p>
-<p>其中，系数 $ a_k^* $ 的计算公式为：</p>
-<p>$$<br>a_k^* &#x3D; \frac{(P_k, f)}{(P_k, P_k)} &#x3D; \frac{2k+1}{2} \int_{-1}^1 f(x) P_k(x) , dx \quad(k&#x3D;0,1,\cdots,n)<br>$$</p>
-<p>则 $ s_n^*(x) $ 是使 $ | f(x) - \sum _{k&#x3D;0}^n a_k P_k(x) |_2^2 $ 最小的最佳平方逼近多项式。</p>
-<p>此时的平方误差为：</p>
-<p>$$<br>|\delta_n|<em>2^2 &#x3D; \int</em>{-1}^{1} [f(x)]^2 , dx - \sum_{k&#x3D;0}^{n} \frac{2}{2k+1} a^{*2}<br>$$</p>
-<blockquote>
-<p><strong>例题</strong></p>
+<h3 id="勒让德多项式作为基函数"><a href="#勒让德多项式作为基函数" class="headerlink" title="勒让德多项式作为基函数"></a>勒让德多项式作为基函数</h3><p>当 $ f(x) \in C[-1, 1] $ 时，可以用勒让德多项式 $ {P_k(x)} $ 作为基函数，即<span> $ {g_k(x)} &#x3D; {P_k(x)} $</span>。此时，最佳平方逼近多项式为：</p>
+<span>
+$$
+s_n^*(x) = a_0^* P_0(x) + a_1^* P_1(x) + \dots + a_n^* P_n(x)
+$$
+
+</span>
+
+<p>其中，系数 $ a_k^* $ 的计算公式为：<br>$$<br>a_k^* &#x3D; \frac{(P_k, f)}{(P_k, P_k)} &#x3D; \frac{2k+1}{2} \int_{-1}^1 f(x) P_k(x) , dx \quad(k&#x3D;0,1,\cdots,n)<br>$$</p>
+<p>则 $ s_n^<em>(x) $ 是使 $ || f(x) - \sum _{k&#x3D;0}^n a_k^</em>  P_k(x) ||_2^2 $ 最小的最佳平方逼近多项式。</p>
+<p><strong>此时的平方误差为</strong>：</p>
+<span>
+$$
+\|\delta_n\|_2^2 = \int_{-1}^{1} [f(x)]^2 \, dx - \sum_{k=0}^{n} \frac{2}{2k+1} a_k^{*2}
+$$
+
+</span>
+
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><blockquote>
 <p>求函数 $ f(x) &#x3D; e^x $ 在区间 $[-1, 1]$ 上的三次最佳平方逼近多项式，使用基函数 ${P_0, P_1, P_2, P_3}$。</p>
 <ol>
 <li><strong>计算内积 $(P_k, f)$：</strong></li>
 </ol>
-<p>$$<br> (P_0, f) &#x3D; \int_{-1}^{1} e^x , dx &#x3D; e - \frac{1}{e} \approx 2.3504<br>$$</p>
-<p>$$<br> (P_1, f) &#x3D; \int_{-1}^{1} x e^x , dx &#x3D; 2e^{-1} \approx 0.7358<br>$$</p>
-<p>$$<br> (P_2, f) &#x3D; \int_{-1}^{1} \left( \frac{3}{2} x^2 - \frac{1}{2} \right) e^x , dx \approx 0.02013<br>$$</p>
-<p>$$<br> (P_3, f) &#x3D; \int_{-1}^{1} \left( \frac{5}{2} x^3 - \frac{3}{2} x \right) e^x , dx \approx 0.02013<br>$$</p>
+<p>$$<br>(P_0, f) &#x3D; \int_{-1}^{1} e^x , dx &#x3D; e - \frac{1}{e} \approx 2.3504<br>$$</p>
+<p>$$<br>(P_1, f) &#x3D; \int_{-1}^{1} x e^x , dx &#x3D; 2e^{-1} \approx 0.7358<br>$$</p>
+<p>$$<br>(P_2, f) &#x3D; \int_{-1}^{1} \left( \frac{3}{2} x^2 - \frac{1}{2} \right) e^x , dx \approx 0.02013<br>$$</p>
+<p>$$<br>(P_3, f) &#x3D; \int_{-1}^{1} \left( \frac{5}{2} x^3 - \frac{3}{2} x \right) e^x , dx \approx 0.02013<br>$$</p>
 <ol start="2">
-<li><em><em>计算系数 $ a_k^</em> $：</em>*</li>
+<li><strong>计算系数</strong> $ a_k^*  $</li>
 </ol>
-<p>$$<br> a_0^* &#x3D; \frac{(P_0, f)}{2} \approx 1.1752 \<br> a_1^* &#x3D; \frac{3}{2} (P_1, f) \approx 1.1036 \<br> a_2^* &#x3D; \frac{5}{2} (P_2, f) \approx 0.3578 \<br> a_3^* &#x3D; \frac{7}{2} (P_3, f) \approx 0.07046<br>$$</p>
+<p>$$<br>a_0^* &#x3D; \frac{(P_0, f)}{2} \approx 1.1752 \<br>a_1^* &#x3D; \frac{3}{2} (P_1, f) \approx 1.1036 \<br>a_2^* &#x3D; \frac{5}{2} (P_2, f) \approx 0.3578 \<br>a_3^* &#x3D; \frac{7}{2} (P_3, f) \approx 0.07046<br>$$</p>
 <ol start="3">
 <li><strong>得到逼近多项式 $ S_3^*(x) $：</strong></li>
 </ol>
-<p>$$<br> S_3^*(x) &#x3D; 0.9963 + 0.9979x + 0.5367x^2 + 0.1761x^3<br>$$</p>
+<p>$$<br>S_3^*(x) &#x3D; 0.9963 + 0.9979x + 0.5367x^2 + 0.1761x^3<br>$$</p>
 <ol start="4">
 <li><strong>计算平方误差：</strong></li>
 </ol>
-<p>$$<br> \left|| \delta_3 \right||<em>2^2 &#x3D; \left|| e^x - s_3^*(x) \right||<em>2^2 &#x3D; \int</em>{-1}^{1} e^{2x} , dx - \sum</em>{k&#x3D;0}^{3} \frac{2}{2k+1} {a_k^*}^2 &#x3D; 0.88 \times 10^{-4}<br>$$</p>
-<p> <u>如果所给的区间不是 $[-1, 1]$，而是一般的有限区间 $[a, b]$，可以通过变量置换将其转化为区间 $[-1, 1]$ 上的情形来处理</u>。</p>
-<p> 变量置换公式</p>
-<p> 通过以下变量置换公式，将区间 $[a, b]$ 转化为 $[-1, 1]$：</p>
-<p>$$<br> x &#x3D; \frac{a + b}{2} + \frac{b - a}{2} t<br>$$</p>
-<p> 其中：</p>
+<span>
+$$
+\left|| \delta_3 \right||_2^2 = \left|| e^x - s_3^* (x) \right||_2^2 = \int_{-1}^{1} e^{2x} \, dx - \sum_{k=0}^{3} \frac{2}{2k+1} {a_k^* }^2 = 0.88 \times 10^{-4}
+$$
+
+</span>
+
+
+<p><u>如果所给的区间不是 $[-1, 1]$，而是一般的有限区间 $[a, b]$，可以通过变量置换将其转化为区间 $[-1, 1]$ 上的情形来处理</u>。</p>
+<p>变量置换公式</p>
+<p>通过以下变量置换公式，将区间 $[a, b]$ 转化为 $[-1, 1]$：</p>
+<p>$$<br>x &#x3D; \frac{a + b}{2} + \frac{b - a}{2} t<br>$$</p>
+<p>其中：</p>
 <ul>
 <li>$ x $ 为原区间 $[a, b]$ 上的变量；</li>
 <li>$ t $ 为转化后的区间 $[-1, 1]$ 上的变量。</li>
 </ul>
-<p> <strong>例题：求函数 $ f(x) &#x3D; \sqrt{x} $ 在区间 $[0, 1]$ 上的一次最佳平方逼近多项式</strong></p>
+<p><strong>例题：求函数 $ f(x) &#x3D; \sqrt{x} $ 在区间 $[0, 1]$ 上的一次最佳平方逼近多项式</strong></p>
 <ol>
 <li><p><strong>变量变换</strong>：<br>令 $ x &#x3D; \frac{1}{2}(1 + t) $，则 $ t \in [-1, 1] $，且：<br>$$<br>f(x) &#x3D; \sqrt{x} &#x3D; \sqrt{\frac{1}{2}(1 + t)} &#x3D; \frac{1}{\sqrt{2}} \sqrt{1 + t} &#x3D; \varphi(t)<br>$$</p>
 </li>
@@ -328,12 +392,24 @@
 </li>
 </ol>
 </blockquote>
-<h2 id="正交多项式"><a href="#正交多项式" class="headerlink" title="正交多项式"></a>正交多项式</h2><h3 id="正交函数族与正交多项式"><a href="#正交函数族与正交多项式" class="headerlink" title="正交函数族与正交多项式"></a><strong>正交函数族与正交多项式</strong></h3><p>若 $ f(x), g(x) \in C[a, b] $，$ \rho(x) \in C[a, b] $，且 $ \rho(x) $ 为 $[a, b]$ 上的权函数，且<br>$$<br>(f, g) &#x3D; \int_a^b \rho(x) f(x) g(x) , dx &#x3D; 0<br>$$<br>则称 $ f(x) $ 与 $ g(x) $ 在 $[a, b]$ 上带权 $ \rho(x) $ 正交。  </p>
-<p>设在 $[a, b]$ 给定函数族 $ {\varphi_n(x)} $，且满足<br>$$<br>(\varphi_i, \varphi_k) &#x3D; \int_a^b \rho(x) \varphi_i(x) \varphi_k(x) , dx &#x3D;<br>\begin{cases}<br>0, &amp; i \neq k, \<br>c_k, &amp; i &#x3D; k<br>\end{cases} \quad (i, k &#x3D; 0, 1, 2, \dots),<br>$$<br>则称函数族 $ {\varphi_n(x)} $ 为 $[a, b]$ 上带权 $ \rho(x) $ 的正交函数族。<br>特别地，当 $ c_k &#x3D; 1 $ 时，则该函数族称为<strong>标准正交函数族</strong>。  </p>
+<h2 id="正交多项式"><a href="#正交多项式" class="headerlink" title="正交多项式"></a>正交多项式</h2><h3 id="正交函数族"><a href="#正交函数族" class="headerlink" title="正交函数族"></a>正交函数族</h3><p>若 $ f(x), g(x) \in C[a, b] $，$ \rho(x) \in C[a, b] $，且 $ \rho(x) $ 为 $[a, b]$ 上的权函数，且<br>$$<br>(f, g) &#x3D; \int_a^b \rho(x) f(x) g(x) , dx &#x3D; 0<br>$$<br>则称 $ f(x) $ 与 $ g(x) $ 在 $[a, b]$ 上<strong>带权 $ \rho(x) $ 正交</strong>。  </p>
+<p>设在 $[a, b]$ 给定函数族 $ {\varphi_n(x)} $，且满足  </p>
+<span>
+$$
+(\varphi_i, \varphi_k) = \int_a^b \rho(x) \varphi_i(x) \varphi_k(x) \, dx = 
+\begin{cases} 
+0, & i \neq k, \\ 
+c_k, & i = k 
+\end{cases} \quad (i, k = 0, 1, 2, \dots),
+$$
+</span>
+
+<p>则称函数族 $ {\varphi_n(x)} $ 为 $[a, b]$ 上带权 $ \rho(x) $ 的正交函数族。<br>特别地，当 $ c_k &#x3D; 1 $ 时，则该函数族称为<strong>标准正交函数族</strong>。  </p>
 <hr>
-<p>设 $ p_n(x) $ 是 $[a, b]$ 上首项系数 $ a_n \neq 0 $ 的 $ n $ 次多项式，$ \rho(x) $ 为 $[a, b]$ 上的权函数。若多项式序列 ${p_n(x)}_0^\infty$ 满足正交性，则称 ${p_n(x)}_0^\infty$ 为以 $ \rho(x) $ 为权函数的 $[a, b]$ 上的<strong>正交多项式序列</strong>，并称 $ p_n(x) $ 为以 $ \rho(x) $ 为权函数的 $[a, b]$ 上的 $ n $ 次<strong>正交多项式</strong>。</p>
-<h4 id="正交多项式序列"><a href="#正交多项式序列" class="headerlink" title="正交多项式序列"></a><strong>正交多项式序列</strong></h4><p>只要给定 $[a, b]$ 上的权函数 $ \rho(x) $，由 $ {1, x, \dots, x^n, \dots} $，利用逐个正交化手续，可构造<strong>正交多项式</strong>序列：<br>$$<br>P_0(x) &#x3D; 1, \quad P_n(x) &#x3D; x^n - \sum_{j&#x3D;0}^{n-1} \frac{(x^n, P_j)}{(P_j, P_j)} P_j(x), \quad n &#x3D; 1, 2, \dots. \quad (2.3)<br>$$</p>
-<h4 id="性质"><a href="#性质" class="headerlink" title="性质"></a><strong>性质</strong></h4><ol>
+<p>设 $ p_n(x) $ 是 $[a, b]$ 上首项系数 $ a_n \neq 0 $ 的 $ n $ 次多项式，$ \rho(x) $ 为 $[a, b]$ 上的权函数。</p>
+<p>若多项式序列 ${p_n(x)}_0^\infty$ 满足正交性，则称 ${p_n(x)}_0^\infty$ 为以 $ \rho(x) $ 为权函数的 $[a, b]$ 上的<strong>正交多项式序列</strong>，并称 $ p_n(x) $ 为以 $ \rho(x) $ 为权函数的 $[a, b]$ 上的 $ n $ 次<strong>正交多项式</strong>。</p>
+<h3 id="正交多项式序列"><a href="#正交多项式序列" class="headerlink" title="正交多项式序列"></a>正交多项式序列</h3><p>只要给定 $[a, b]$ 上的权函数 $ \rho(x) $，由 $ {1, x, \dots, x^n, \dots} $，利用逐个正交化手续，可构造<strong>正交多项式</strong>序列：<br>$$<br>P_0(x) &#x3D; 1, \quad P_n(x) &#x3D; x^n - \sum_{j&#x3D;0}^{n-1} \frac{(x^n, P_j)}{(P_j, P_j)} P_j(x), \quad n &#x3D; 1, 2, \dots. \quad (2.3)<br>$$</p>
+<h3 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h3><ol>
 <li><p><strong>首项系数为1</strong>：<br>$ P_n(x) $ 的首项系数为 1。  </p>
 </li>
 <li><p><strong>表示性</strong>：<br>任意 $ Q_n(x) \in H_n $ 均可表示为 $ P_0(x), P_1(x), \dots, P_n(x) $ 的线性组合。  </p>
@@ -341,7 +417,8 @@
 <li><p><strong>正交性</strong>：<br>当 $ i \neq j $ 时，$ (P_i, P_j) &#x3D; 0 $，且 $ P_n(x) $ 与任意次数小于 $ n $ 的多项式正交。 </p>
 <hr>
 <p><strong>递推关系</strong></p>
-<p>  设 ${\varphi_n(x)}<em>{0}^{\infty}$ 是 $[a, b]$ 上带权 $\rho(x)$ 的正交多项式，对 $n \geq 0$ 成立递推关系<br>$$<br>\varphi</em>{n+1}(x) &#x3D; (x - \alpha_n) \varphi_n(x) - \beta_n \varphi_{n-1}(x), \quad n &#x3D; 0, 1, \dots<br>$$<br>其中<br>$$<br>\varphi_0(x) &#x3D; 1, \quad \varphi_{-1}(x) &#x3D; 0,<br>$$</p>
+<p>  设 ${\varphi_n(x)}_{0}^{\infty}$ 是 $[a, b]$ 上带权 $\rho(x)$ 的正交多项式，对 $n \geq 0$ 成立递推关系</p>
+<p>$$<br>\varphi_{n+1}(x) &#x3D; (x - \alpha_n) \varphi_n(x) - \beta_n \varphi_{n-1}(x), \quad n &#x3D; 0, 1, \dots<br>$$<br>其中<br>$$<br>\varphi_0(x) &#x3D; 1, \quad \varphi_{-1}(x) &#x3D; 0,<br>$$</p>
 <p>$$<br>\alpha_n &#x3D; \frac{(x \varphi_n, \varphi_n)}{(\varphi_n, \varphi_n)}, \quad n &#x3D; 0, 1, \dots,<br>$$</p>
 <p>$$<br>\beta_n &#x3D; \frac{(\varphi_n, \varphi_{n})}{(\varphi_{n-1}, \varphi_{n-1})}, \quad n &#x3D; 1, 2, \dots,<br>$$</p>
 <p><strong>零点性质</strong>：<br>  设 ${ \varphi_n(x) }^{\infty}_0$ 是 $[a, b]$ 上带权 $\rho(x)$ 的正交多项式，则 $\varphi_n(x)$（$n \geq 1$）在区间 $(a, b)$ 内有 $n$ 个不同的零点。<u>（零点都是实的、单重的）</u></p>
@@ -360,15 +437,47 @@
 <h4 id="性质3：最小平方误差"><a href="#性质3：最小平方误差" class="headerlink" title="性质3：最小平方误差"></a>性质3：最小平方误差</h4><p>在所有<strong>最高项系数为1的n次多项式</strong>中，勒让德多项式 $ P_n(x) $ 在 $[-1, 1]$ 上与零的平方误差最小。</p>
 <h4 id="性质4：实零点"><a href="#性质4：实零点" class="headerlink" title="性质4：实零点"></a>性质4：实零点</h4><p>$ P_n(x) $ 在区间 $[-1, 1]$ 内有 $ n $ 个不同的实零点（可用反证法证明）。</p>
 <h4 id="性质5：递推关系"><a href="#性质5：递推关系" class="headerlink" title="性质5：递推关系"></a>性质5：递推关系</h4><p>当 $ n \geq 1 $ 时，满足递推公式：<br>$$<br>(n+1)P_{n+1}(x) &#x3D; (2n+1)xP_n(x) - nP_{n-1}(x)<br>$$</p>
-<h2 id="切比雪夫-Chebyshev-多项式"><a href="#切比雪夫-Chebyshev-多项式" class="headerlink" title="切比雪夫*Chebyshev*多项式"></a>切比雪夫*Chebyshev*多项式</h2><p>当区间为 $[-1, 1]$，权函数 $\rho(x) &#x3D; \dfrac{1}{\sqrt{1 - x^2}}$ 时，由序列 ${1, x, \cdots, x^n, \cdots}$ 正交化得到的正交多项式就是 Chebyshev 多项式，它可表为：</p>
-<p>$$T_n(x) &#x3D; \cos(n \arccos x) \quad |x| \leq 1$$</p>
-<p>若令 $x &#x3D; \cos\theta$，则 $T_n(x) &#x3D; \cos n\theta$，$0 \leq \theta \leq \pi$。</p>
-<p><strong>Chebyshev 多项式重要性质：</strong></p>
-<p><strong>性质 1</strong>  </p>
+<h2 id="切比雪夫Chebyshev多项式"><a href="#切比雪夫Chebyshev多项式" class="headerlink" title="切比雪夫Chebyshev多项式"></a>切比雪夫Chebyshev多项式</h2><p>当区间为 $[-1, 1]$，权函数 $\rho(x) &#x3D; \dfrac{1}{\sqrt{1 - x^2}}$ 时，由序列 ${1, x, \cdots, x^n, \cdots}$ 正交化得到的正交多项式就是 Chebyshev 多项式，它可表为：</p>
+<p>$$<br>T_n(x) &#x3D; \cos(n \arccos x) \quad |x| \leq 1<br>$$<br>若令 $x &#x3D; \cos\theta$，则 $T_n(x) &#x3D; \cos n\theta$，$0 \leq \theta \leq \pi$。</p>
+<h3 id="Chebyshev-多项式重要性质"><a href="#Chebyshev-多项式重要性质" class="headerlink" title="Chebyshev 多项式重要性质"></a>Chebyshev 多项式重要性质</h3><p><strong>性质 1</strong>  </p>
 <p>Chebyshev 多项式 ${T_n(x)}$ 在区间 $[-1, 1]$ 上带权 $\rho(x) &#x3D; \dfrac{1}{\sqrt{1 - x^2}}$ 正交，且：</p>
-<p>$$<br>\int_{-1}^{1} \dfrac{T_n(x)T_m(x)}{\sqrt{1 - x^2}} , dx &#x3D;<br>\begin{cases}<br>0, &amp; n \neq m \<br>\dfrac{\pi}{2}, &amp; n &#x3D; m \neq 0 \<br>\pi, &amp; n &#x3D; m &#x3D; 0<br>\end{cases}<br>$$</p>
-<p><strong>性质 2 递推关系</strong><br>$$<br>\begin{cases}<br>T_{n+1}(x) &#x3D; 2xT_n(x) - T_{n-1}(x) &amp; (n &#x3D; 1, 2, \cdots), \<br>T_0(x) &#x3D; 1, \<br>T_1(x) &#x3D; x.<br>\end{cases}<br>$$</p>
-<p>由递推关系可得：<br>$$<br>T_0(x)&#x3D; 1\<br>T_1(x)&#x3D; x \<br>T_2(x)&#x3D; 2x^2 - 1,\<br>T_3(x)&#x3D; 4x^3 - 3x,\<br>T_4(x) &#x3D; 8x^4 - 8x^2 + 1\<br>T_5(x) &#x3D; 16x^5 - 20x^3 + 5x.<br>$$</p>
+<span>
+$$
+\int_{-1}^{1} \dfrac{T_n(x)T_m(x)}{\sqrt{1 - x^2}} \, dx = 
+\begin{cases} 
+0, & n \neq m \\
+\dfrac{\pi}{2}, & n = m \neq 0 \\
+\pi, & n = m = 0 
+\end{cases}
+$$
+
+</span>
+
+<p><strong>性质 2 递推关系</strong>  </p>
+<span>
+$$
+\begin{cases}
+T_{n+1}(x) = 2xT_n(x) - T_{n-1}(x) & (n = 1, 2, \cdots), \\
+T_0(x) = 1, \\
+T_1(x) = x.
+\end{cases}
+$$
+
+</span>
+
+<p>由递推关系可得：</p>
+<span>
+$$
+T_0(x)= 1 \quad \\
+T_1(x)= x \quad  \\
+T_2(x)= 2x^2 - 1 \quad \\
+T_3(x)= 4x^3 - 3x \quad \\
+T_4(x) = 8x^4 - 8x^2 + 1 \quad \\
+T_5(x) = 16x^5 - 20x^3 + 5x
+$$
+
+</span>
+
 <p><strong>性质 3</strong>  </p>
 <p>$T_{2k}(x)$ 只含 $x$ 的偶次方，$T_{2k+1}(x)$ 只含 $x$ 的奇次方，这一性质由递推关系可直接得到。</p>
 <p><strong>性质 4</strong>  </p>
@@ -377,39 +486,90 @@
 <p><strong>性质5</strong></p>
 <p>$T_n(x)$的首项$x^n$的系数为$2^{n-1}(n&#x3D;1,2…)$</p>
 <h2 id="最小二乘拟合"><a href="#最小二乘拟合" class="headerlink" title="最小二乘拟合"></a>最小二乘拟合</h2><p>对于给定的数据 $(x_i, y_i)$（$i&#x3D;1,2,\ldots,N$），选取线性无关的函数族 $\varphi_0, \varphi_1, \ldots, \varphi_m$ 及权函数 $\omega(x)$，要求在函数类 $\Phi &#x3D; \text{Span}{\varphi_0, \varphi_1, \ldots, \varphi_m}$ 中寻找一个函数</p>
-<p>$$<br>\varphi^<em>(x) &#x3D; a_0^</em> \varphi_0 + a_1^* \varphi_1 + \cdots + a_m^* \varphi_m \quad （m &lt; N）<br>$$</p>
+<p>$$<br>\varphi^* (x) &#x3D; a_0^*  \varphi_0 + a_1^*  \varphi_1 + \cdots + a_m^*  \varphi_m \quad （m &lt; N）<br>$$</p>
 <p>使</p>
 <p>$$<br>I &#x3D; \sum_{i&#x3D;1}^N \omega(x_i) [y_i - \varphi(x_i)]^2<br>$$</p>
 <p>达到极小。显然上式是 $m+1$ 个变量 $a_0, a_1, \ldots, a_m$ 的二次函数：</p>
 <p>$$<br>I(a_0, a_1, \ldots, a_m) &#x3D; \sum_{i&#x3D;1}^N \omega(x_i) \left[ y_i - \sum_{k&#x3D;0}^m a_k \varphi_k(x_i) \right]^2<br>$$</p>
 <p>根据多元函数极值条件<br>$$<br>\frac{1}{2} \frac{\partial I}{\partial a_j} &#x3D; \sum_{i&#x3D;1}^N \omega(x_i) \varphi_j(x_i) \left[ y_i - \sum_{k&#x3D;0}^m a_k \varphi_k(x_i) \right] &#x3D; 0 \quad （j&#x3D;0,1,\ldots,m）<br>$$</p>
 <blockquote>
-<p><strong>引入内积：</strong><br>$$<br>(f, g) &#x3D;<br>\begin{cases}<br>\sum ^{N} <em>{i&#x3D;1} \omega(x_i) f(x_i) g(x_i) &amp; \text{离散型} \<br>\int</em>{a}^{b} \rho(x) f(x) g(x) , dx &amp; \text{连续型}<br>\end{cases}<br>$$</p>
-</blockquote>
+<p><strong>引入内积：</strong></p>
+<span>
+$$
+(f, g) = 
+\begin{cases} 
+\sum ^{N} _{i=1} \omega(x_i) f(x_i) g(x_i) & \text{离散型} \\
+\int_{a}^{b} \rho(x) f(x) g(x) \, dx & \text{连续型}
+\end{cases}
+$$
+
+</span></blockquote>
 <p>方程组：</p>
 <p>$$<br>\sum_{i&#x3D;1}^{N} \omega(x_i) \left[ y_i - \sum_{k&#x3D;0}^{m} a_k \varphi_k(x_i) \right] \varphi_j(x_i) &#x3D; 0 \quad (j &#x3D; 0, 1, \ldots, m)<br>$$</p>
 <p>可以表示为：</p>
 <p>$$<br>a_0 (\varphi_j, \varphi_0) + a_1 (\varphi_j, \varphi_1) + \cdots + a_m (\varphi_j, \varphi_m) &#x3D; (\varphi_j, y)  \quad (j &#x3D; 0, 1, \ldots, m)<br>$$</p>
 <p>这个方程组称为<strong>法方程</strong>或<strong>正规方程组</strong>。若用 ${\varphi_0, \varphi_1, \ldots, \varphi_m}$ 构成一个 $N \times (m+1)$ 的矩阵 $A$，即：</p>
-<p>$$<br>A &#x3D;<br>\begin{bmatrix}<br>\varphi_0(x_1) &amp; \varphi_1(x_1) &amp; \cdots &amp; \varphi_m(x_1) \<br>\varphi_0(x_2) &amp; \varphi_1(x_2) &amp; \cdots &amp; \varphi_m(x_2) \<br>\vdots &amp; \vdots &amp; \ddots &amp; \vdots \<br>\varphi_0(x_N) &amp; \varphi_1(x_N) &amp; \cdots &amp; \varphi_m(x_N)<br>\end{bmatrix}<br>$$</p>
+<span>
+$$
+A = 
+\begin{bmatrix}
+\varphi_0(x_1) & \varphi_1(x_1) & \cdots & \varphi_m(x_1) \\
+\varphi_0(x_2) & \varphi_1(x_2) & \cdots & \varphi_m(x_2) \\
+\vdots & \vdots & \ddots & \vdots \\
+\varphi_0(x_N) & \varphi_1(x_N) & \cdots & \varphi_m(x_N)
+\end{bmatrix}
+$$
+
+</span>
+
 <p>引入向量：</p>
 <p>$$<br>\alpha &#x3D; (a_0, a_1, \ldots, a_m)^T, \quad Y &#x3D; (y_1, y_2, \ldots, y_N)^T<br>$$</p>
 <p>法方程组可以写成以下矩阵形式：(权w&#x3D;1)</p>
 <p>$$<br>A^T A \alpha &#x3D; A^T Y<br>$$</p>
 <p>由于 $\varphi_0, \varphi_1, \ldots, \varphi_m$ 线性无关，法方程组存在唯一解：</p>
-<p>$$<br>\alpha &#x3D; (a_0^<em>, a_1^</em>, \ldots, a_m^*)^T<br>$$</p>
+<p>$$<br>\alpha &#x3D; (a_0^* , a_1^* , \ldots, a_m^* )^T<br>$$</p>
 <p>从而得到函数：</p>
-<p>$$<br>\varphi^<em>(x) &#x3D; a_0^</em> \varphi_0 + a_1^* \varphi_1 + \cdots + a_m^* \varphi_m<br>$$</p>
+<p>$$<br>\varphi^* (x) &#x3D; a_0^*  \varphi_0 + a_1^*  \varphi_1 + \cdots + a_m^*  \varphi_m<br>$$</p>
 <p>最小平方误差为：</p>
-<p>$$<br>\delta^2 &#x3D; | y - \varphi^* |^2_2 &#x3D; (y - \varphi^<em>, y - \varphi^</em>) &#x3D; | y |^2_2 - \sum_{j&#x3D;0}^m a_j^* (\varphi_j, y)<br>$$</p>
+<p>$$<br>\delta^2 &#x3D; || y - \varphi^*  ||^2_2 &#x3D; (y - \varphi^* , y - \varphi^* ) &#x3D; || y ||^2_2 - \sum_{j&#x3D;0}^m a_j^*  (\varphi_j, y)<br>$$</p>
 <h3 id="代数多项式拟合"><a href="#代数多项式拟合" class="headerlink" title="代数多项式拟合"></a>代数多项式拟合</h3><p>若取基函数 $\varphi_0 &#x3D; 1, \varphi_1 &#x3D; x, \ldots, \varphi_m &#x3D; x^m$，则相应的法方程组为：</p>
-<h1 id="begin-bmatrix-sum-i-1-N-omega-i-sum-i-1-N-omega-i-x-i-cdots-sum-i-1-N-omega-i-x-i-m-sum-i-1-N-omega-i-x-i-sum-i-1-N-omega-i-x-i-2-cdots-sum-i-1-N-omega-i-x-i-m-1-vdots-vdots-ddots-vdots-sum-i-1-N-omega-i-x-i-m-sum-i-1-N-omega-i-x-i-m-1-cdots-sum-i-1-N-omega-i-x-i-2m-end-bmatrix-begin-bmatrix-a-0-a-1-vdots-a-m-end-bmatrix"><a href="#begin-bmatrix-sum-i-1-N-omega-i-sum-i-1-N-omega-i-x-i-cdots-sum-i-1-N-omega-i-x-i-m-sum-i-1-N-omega-i-x-i-sum-i-1-N-omega-i-x-i-2-cdots-sum-i-1-N-omega-i-x-i-m-1-vdots-vdots-ddots-vdots-sum-i-1-N-omega-i-x-i-m-sum-i-1-N-omega-i-x-i-m-1-cdots-sum-i-1-N-omega-i-x-i-2m-end-bmatrix-begin-bmatrix-a-0-a-1-vdots-a-m-end-bmatrix" class="headerlink" title="$$\begin{bmatrix}\sum_{i&#x3D;1}^{N} \omega_i &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^m \\sum_{i&#x3D;1}^{N} \omega_i x_i &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^2 &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{m+1} \\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\sum_{i&#x3D;1}^{N} \omega_i x_i^m &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{m+1} &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{2m}\end{bmatrix}\begin{bmatrix}a_0 \a_1 \\vdots \a_m\end{bmatrix}"></a>$$<br>\begin{bmatrix}<br>\sum_{i&#x3D;1}^{N} \omega_i &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^m \<br>\sum_{i&#x3D;1}^{N} \omega_i x_i &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^2 &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{m+1} \<br>\vdots &amp; \vdots &amp; \ddots &amp; \vdots \<br>\sum_{i&#x3D;1}^{N} \omega_i x_i^m &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{m+1} &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{2m}<br>\end{bmatrix}<br>\begin{bmatrix}<br>a_0 \<br>a_1 \<br>\vdots \<br>a_m<br>\end{bmatrix}</h1><p>\begin{bmatrix}<br>\sum_{i&#x3D;1}^{N} \omega_i y_i \<br>\sum_{i&#x3D;1}^{N} \omega_i x_i y_i \<br>\vdots \<br>\sum_{i&#x3D;1}^{N} \omega_i x_i^m y_i<br>\end{bmatrix}<br>$$</p>
-<p>求出法方程组的解 $a_0, a_1, \ldots, a_m$，即可得到拟合多项式：</p>
-<p>$$<br>\varphi(x) &#x3D; a_0 + a_1 x + \cdots + a_m x^m<br>$$<br><span style="color:#FF0000">PS:当$n\geq3$时候，求解法方程时将出现系数矩阵为病态的问题</span></p>
+<span>
+$$
+\begin{bmatrix}
+\sum_{i=1}^{N} \omega_i & \sum_{i=1}^{N} \omega_i x_i & \cdots & \sum_{i=1}^{N} \omega_i x_i^m \\
+\sum_{i=1}^{N} \omega_i x_i & \sum_{i=1}^{N} \omega_i x_i^2 & \cdots & \sum_{i=1}^{N} \omega_i x_i^{m+1} \\
+\vdots & \vdots & \ddots & \vdots \\
+\sum_{i=1}^{N} \omega_i x_i^m & \sum_{i=1}^{N} \omega_i x_i^{m+1} & \cdots & \sum_{i=1}^{N} \omega_i x_i^{2m}
+\end{bmatrix}
+\begin{bmatrix}
+a_0 \\
+a_1 \\
+\vdots \\
+a_m
+\end{bmatrix}
+=
+\begin{bmatrix}
+\sum_{i=1}^{N} \omega_i y_i \\
+\sum_{i=1}^{N} \omega_i x_i y_i \\
+\vdots \\
+\sum_{i=1}^{N} \omega_i x_i^m y_i
+\end{bmatrix}
+$$
+
+</span>
+
+<p>求出法方程组的解 $a_0, a_1, \ldots, a_m$，即可得到拟合多项式：<br>$$<br>\varphi(x) &#x3D; a_0 + a_1 x + \cdots + a_m x^m<br>$$<br><span style="color:#FF0000">PS:当$n\geq3$时候，求解法方程时将出现系数矩阵为病态的问题</span></p>
 <h3 id="用正交多项式拟合"><a href="#用正交多项式拟合" class="headerlink" title="用正交多项式拟合"></a>用正交多项式拟合</h3><p>用最小二乘法得到的法方程，其系数矩阵 $G$ 是病态的。但如果 $\varphi_0(x), \varphi_1(x), \ldots, \varphi_n(x)$ 是关于点集 ${x_i}$（$i &#x3D; 0, 1, \ldots, m$）带权 $\omega(x_i)$（$i &#x3D; 0, 1, \ldots, m$）正交的函数族，即：</p>
 <p>$$<br>(\varphi_j, \varphi_k) &#x3D; \sum_{i&#x3D;0}^{m} \omega(x_i) \varphi_j(x_i) \varphi_k(x_i) &#x3D;<br>\begin{cases}<br>0, &amp; j \neq k, \<br>A_k &gt; 0, &amp; j &#x3D; k<br>\end{cases}<br>$$</p>
-<p><span style="color:#FF0000"> $a_k^<em>$ 的表达式为：</span><br>$$<br>a_k^</em> &#x3D; \frac{(f, \varphi_k)}{(\varphi_k, \varphi_k)} &#x3D; \frac{\sum_{i&#x3D;0}^{m} \omega(x_i) f(x_i) \varphi_k(x_i)}{\sum_{i&#x3D;0}^{m} \omega(x_i) \varphi_k^2(x_i)}, \quad k &#x3D; 0, 1, \ldots, n<br>$$</p>
-<p><span style="color:#FF0000"> 平方误差的表达式为：</span><br>$$<br>| \delta |_2^2 &#x3D; | f |<em>2^2 - \sum</em>{k&#x3D;0}^{n} A_k (a_k^*)^2<br>$$</p>
+<p><span style="color:#FF0000"> $a_k^* $ 的表达式为：</span><br>$$<br>a_k^*  &#x3D; \frac{(f, \varphi_k)}{(\varphi_k, \varphi_k)} &#x3D; \frac{\sum_{i&#x3D;0}^{m} \omega(x_i) f(x_i) \varphi_k(x_i)}{\sum_{i&#x3D;0}^{m} \omega(x_i) \varphi_k^2(x_i)}, \quad k &#x3D; 0, 1, \ldots, n<br>$$</p>
+<p><span style="color:#FF0000"> 平方误差的表达式为：</span></p>
+<span>
+$$
+\| \delta \|_2^2 = \| f \|_2^2 - \sum_{k=0}^{n} A_k (a_k^* )^2
+$$
+
+</span>
+
 <h3 id="正交多项式构造"><a href="#正交多项式构造" class="headerlink" title="正交多项式构造"></a>正交多项式构造</h3><p>根据给定节点 $x_0, x_1, \ldots, x_m$ 及权函数 $\omega(x) &gt; 0$，构造带权正交多项式 ${P_n(x)}$，其中 $n \leq m$，并用递推公式表示 $P_k(x)$。</p>
 <p>定义首项系数为 1 的多项式 $P_k(x)$：</p>
 <p>$$<br>P_0(x) &#x3D; 1 \<br>P_1(x) &#x3D; (x - \alpha_1)P_0(x) \<br>P_{k+1}(x) &#x3D; (x - \alpha_{k+1}) P_k(x) - \beta_k P_{k-1}(x) \quad k &#x3D; 1, 2, \ldots，n-1<br>$$</p>
@@ -418,10 +578,10 @@
 <p>$$<br>\beta_k &#x3D; \frac{(P_k, P_k)}{(P_{k-1}, P_{k-1})}, \quad k &#x3D; 1, 2, \ldots, n-1<br>$$</p>
 <p>逐步把 $a_k^* P_k(x)$ 累加到 $S(x)$ 中去，最后就可得到所求的拟合曲线</p>
 <p>$$<br>y &#x3D; S(x) &#x3D; a_0^* P_0(x) + a_1^* P_1(x) + \cdots + a_n^* P_n(x).<br>$$</p>
-<h2 id="最佳一致逼近多项式"><a href="#最佳一致逼近多项式" class="headerlink" title="最佳一致逼近多项式"></a>最佳一致逼近多项式</h2><h3 id="最佳平方逼近"><a href="#最佳平方逼近" class="headerlink" title="最佳平方逼近"></a>最佳平方逼近</h3><p><strong>最佳平方逼近</strong>，即连续型 L-S 逼近，在 $|f|_2 &#x3D; \sqrt{(f, f)}$ 意义下，使得 $|P - y|_2$ 最小。</p>
-<h3 id="最佳一致逼近"><a href="#最佳一致逼近" class="headerlink" title="最佳一致逼近"></a>最佳一致逼近</h3><p><strong>最佳一致逼近</strong>（Uniform Approximation），在 $|f|<em>\infty &#x3D; \max</em>{x \in [a, b]} |f(x)|$ 意义下，使得 $|P - y|_\infty$ 最小，也称为 <strong>minimax problem</strong>。</p>
+<h2 id="最佳一致逼近多项式"><a href="#最佳一致逼近多项式" class="headerlink" title="最佳一致逼近多项式"></a>最佳一致逼近多项式</h2><h3 id="最佳平方逼近"><a href="#最佳平方逼近" class="headerlink" title="最佳平方逼近"></a>最佳平方逼近</h3><p><strong>最佳平方逼近</strong>，即连续型 L-S 逼近，在 $||f||_2 &#x3D; \sqrt{(f, f)}$ 意义下，使得 $||P - y||_2$ 最小。</p>
+<h3 id="最佳一致逼近"><a href="#最佳一致逼近" class="headerlink" title="最佳一致逼近"></a>最佳一致逼近</h3><p><strong>最佳一致逼近</strong>（Uniform Approximation），在 $||f||_ \infty &#x3D; \max_{x \in [a, b]} |f(x)|$ 意义下，使得 $||P - y||_\infty$ 最小，也称为 <strong>minimax problem</strong>。</p>
 <h3 id="偏差"><a href="#偏差" class="headerlink" title="偏差"></a>偏差</h3><p>设 $ f \in C[a, b] $，$ p_n \in H_n &#x3D; \text{span}{1, x, \cdots, x^n} $，称</p>
-<p>$$<br>\Delta(f, p_n) &#x3D; |f - p_n|<em>\infty &#x3D; \max</em>{a \leq x \leq b} |f(x) - p_n(x)|<br>$$</p>
+<p>$$<br>\Delta(f, p_n) &#x3D; ||f - p_n||_ \infty &#x3D; \max_{a \leq x \leq b} |f(x) - p_n(x)|<br>$$</p>
 <p>为 $ p_n $ 与 $ f $ 的<strong>偏差</strong>。</p>
 <h3 id="偏差点"><a href="#偏差点" class="headerlink" title="偏差点"></a>偏差点</h3><p>设 $ f \in C[a, b] $，$ p \in H_n $，若存在 $ x_0 \in [a, b] $ 使得</p>
 <p>$$<br>|f(x_0) - p(x_0)| &#x3D; \Delta(f, p) &#x3D; \max_{a \leq x \leq b} |f(x) - p(x)| &#x3D; \mu,<br>$$</p>
@@ -437,26 +597,33 @@
 <p>则称 $ p_n^* $ 为 $ f $ 在 $[a, b]$ 上的<strong>最佳一致逼近多项式</strong>，简称<strong>最佳逼近多项式</strong>。</p>
 <blockquote>
 <p><strong>定理：</strong></p>
-<p>若 $ p^<em>(x) \in H_n $ 是 $ f(x) \in C[a, b] $ 的最佳逼近多项式，则 $ p^</em>(x) $ 同时存在正、负偏差点。</p>
+<p>若 $ p^* (x) \in H_n $ 是 $ f(x) \in C[a, b] $ 的最佳逼近多项式，</p>
+<p>则 $ p^*(x) $ 同时存在正、负偏差点。</p>
 <p><strong>定理：</strong></p>
 <p>若 $ f \in C[a, b] $，则存在 $ p_n^* \in H_n $，使得</p>
 <p>$$<br>\Delta(f, p_n^*) &#x3D; E_n &#x3D; \min_{p_n \in H_n} \Delta(f, p_n)<br>$$<br>成立</p>
 <p><strong>定理：</strong></p>
 <p>$ p_n \in H_n $ 是 $ f \in C[a, b] $ 的最佳逼近多项式的充分必要条件是，在 $[a, b]$ 上至少有 $ n + 2 $ 个轮流为正负的偏差点，即至少有 $ n + 2 $ 个点 $ a \leq x_1 &lt; x_2 &lt; \dots &lt; x_{n+2} \leq b $，使得</p>
-<p>$$<br>p_n^<em>(x_k) - f(x_k) &#x3D; (-1)^k \sigma | f - p_n^</em> |_\infty, \quad \sigma &#x3D; \pm 1, \quad k &#x3D; 1, 2, \cdots, n+2<br>$$</p>
+<span>
+$$
+p_n^*(x_k) - f(x_k) = (-1)^k \sigma || f - p_n^* ||_\infty, \quad \sigma = \pm 1, \quad k = 1, 2, \cdots, n+2
+$$
+
+</span>
+
 <p>上述点 ${x_k}_{1}^{n+2}$ 称为 <strong>Chebyshev 交错点组</strong>。</p>
 <p><strong>推论1（唯一性定理）：</strong></p>
 <p>设 $ f \in C[a, b] $，则在 $ H_n $ 中的最佳逼近多项式是唯一的。</p>
 <p><strong>推论 2</strong>：</p>
 <p>若 $ f \in C[a, b] $，则其最佳逼近多项式 $ p_n^*(x) \in H_n $ 是 $ f $ 的一个 <strong>Lagrange 插值多项式</strong>。</p>
 </blockquote>
-<blockquote>
-<h3 id="最佳一次一致逼近多项式的求法"><a href="#最佳一次一致逼近多项式的求法" class="headerlink" title="最佳一次一致逼近多项式的求法"></a>最佳一次一致逼近多项式的求法</h3><p><strong>推导过程</strong></p>
+<h3 id="最佳一次一致逼近多项式的求法"><a href="#最佳一次一致逼近多项式的求法" class="headerlink" title="最佳一次一致逼近多项式的求法"></a>最佳一次一致逼近多项式的求法</h3><blockquote>
+<p><strong>推导过程</strong></p>
 <p>$ n &#x3D; 1 $ 时求 $ p_1(x) &#x3D; a_0 + a_1 x $ 的方法</p>
 <p>设 $ f \in C^2[a, b] $ 且 $ f’’ $ 在 $[a, b]$ 上不变号，由上面的定理可知，存在点<br>$$<br>a \leq x_1 &lt; x_2 &lt; x_3 \leq b,<br>$$</p>
 <p>使得</p>
 <p>$$<br>p_1(x_k) - f(x_k) &#x3D; (-1)^k \sigma E_n, \quad k &#x3D; 1, 2, 3; \quad \sigma &#x3D; \pm 1.<br>$$</p>
-<p>由于 $ f’’ \neq 0 $，故 $ f’ $ 在 $[a, b]$ 上单调，于是 $ f’(x) - p_1’(x) &#x3D; f’(x) - a_1&#x3D;0 $ 只有一个根 $ x_2 $。因此，$ p_1 $ 对 $ f $ 的另两个偏差点只能在 $[a, b]$ 的端点，故有</p>
+<p>由于 $ f’’ $不变号，故 $ f’ $ 在 $[a, b]$ 上单调，于是 $ f’(x) - p_1’(x) &#x3D; f’(x) - a_1&#x3D;0 $ 只有一个根 $ x_2 $。因此，$ p_1 $ 对 $ f $ 的另两个偏差点只能在 $[a, b]$ 的端点，故有</p>
 <p>$$<br>x_1 &#x3D; a, \quad x_3 &#x3D; b.<br>$$</p>
 <p>由此可得</p>
 <p>$$<br>p_1(a) - f(a) &#x3D; -\left[ p_1(x_2) - f(x_2) \right] &#x3D; p_1(b) - f(b),<br>$$</p>
@@ -465,11 +632,12 @@
 <p>$$<br>a_0 + a_1 a - f(a) &#x3D; -\left[ a_0 + a_1 x_2 - f(x_2) \right]<br>$$</p>
 <p>通过上面两个公式可得</p>
 <p>$$<br>a_1 &#x3D; \frac{f(b) - f(a)}{b - a}<br>$$</p>
-<p>$$<br>a_0 &#x3D; \frac{1}{2} \left[ f(a) + f(x_2) \right] - \frac{a+x_2}{2} \frac{f(b) - f(a)}{b - a} \<br>f’(x_2) &#x3D; a_1<br>$$</p>
+<p>$$<br>a_0 &#x3D; \frac{1}{2} \left[ f(a) + f(x_2) \right] - \frac{a+x_2}{2} a_1\<br>f’(x_2) &#x3D; a_1<br>$$</p>
 <p>由此得 $ f $ 在 $[a, b]$ 上的最佳一次逼近多项式</p>
 <p>$$<br>p_1(x) &#x3D; a_0 + a_1 x.<br>$$</p>
-<p><u><strong>例题</strong></u></p>
-<p>求函数 $ f(x) &#x3D; \sqrt{x} $ 在区间 $[-1, 1]$ 上的最佳一次逼近多项式。</p>
+</blockquote>
+<h3 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h3><blockquote>
+<p>求函数 $ f(x) &#x3D; \sqrt{x} $ 在区间 $[\frac{1}{4}, 1]$ 上的最佳一次一致逼近多项式。</p>
 <ol>
 <li>确定二阶导数不变号</li>
 </ol>
@@ -479,12 +647,27 @@
 <ol start="2">
 <li>计算多项式系数</li>
 </ol>
-<p>根据最佳一次逼近多项式的性质，设 $ p_1(x) &#x3D; a_0 + a_1 x $<br>$$<br>a_1&#x3D;\frac {f(1)-f(\frac{1}{4})}{1-\frac{1}{4}}&#x3D;\frac{2}{3} \<br>f’(x_2) &#x3D; \frac{1}{2\sqrt{x_2}} &#x3D; a_1 \<br>x_2&#x3D;\frac{9}{16} \<br>a_0 &#x3D; \frac{1}{2} \left[ f(a) + f(x_2) \right] - \frac{a+x_2}{2} \frac{f(b) - f(a)}{b - a}&#x3D;\frac{17}{48}<br>$$</p>
+<p>根据最佳一次逼近多项式的性质，设 $ p_1(x) &#x3D; a_0 + a_1 x $</p>
+<p>$$<br>a_1&#x3D;\frac {f(1)-f(\frac{1}{4})}{1-\frac{1}{4}}&#x3D;\frac{2}{3} \quad \<br>f’(x_2) &#x3D; \frac{1}{2\sqrt{x_2}} &#x3D; a_1 \quad \<br>x_2&#x3D;\frac{9}{16} \quad \<br>a_0 &#x3D; \frac{1}{2} \left[ f(a) + f(x_2) \right] - \frac{a+x_2}{2} \frac{f(b) - f(a)}{b - a}&#x3D;\frac{17}{48}<br>$$</p>
 <p>最佳一次逼近多项式为：<br>$$<br>p_1(x) &#x3D; \frac{17}{48} + \frac{2}{3} x<br>$$</p>
-<p>在区间 $\left[\frac{1}{4}, 1\right]$ 上，最大误差为：</p>
-<p>$$<br>\max_{\frac{1}{4} \leq x \leq 1} \left| \sqrt{x} - p_1(x) \right| &#x3D; \frac{1}{48}<br>$$</p>
+<p>在区间 $\left[\frac{1}{4}, 1\right]$ 上，最大误差为：<br>$$<br>\max_{\frac{1}{4} \leq x \leq 1} \left| \sqrt{x} - p_1(x) \right| &#x3D; \frac{1}{48}<br>$$</p>
+<hr>
+<p>求函数 $f(x) &#x3D; \sqrt{1 + x^2}$ 在 $[0,1]$ 上的一次最佳一致逼近多项式，并求其偏差。</p>
+<p><strong>解题过程</strong><br>因 $f’(x) &#x3D; x &#x2F; \sqrt{1 + x^2}$，$f’’(x) &#x3D; 1 &#x2F; (1 + x^2)^{3&#x2F;2}$，所以在 $[0, 1]$ 上 $f’’(x)$ 恒为正，</p>
+<p>故由公式 $|| f - P_n^*  || _{\infty} &#x3D; \min || f - P_n || _{\infty}$ 知：</p>
+<p>$$<br>a_1 &#x3D; \frac{f(1) - f(0)}{1 - 0} &#x3D; \sqrt{2} - 1 \approx 0.4142<br>$$</p>
+<p>由 $f’(x_2) &#x3D; x_2 &#x2F; \sqrt{1 + x_2^2} &#x3D; \sqrt{2} - 1$，得：</p>
+<p>$$<br>x_2 &#x3D; \left( \frac{\sqrt{2} - 1}{2} \right)^{1&#x2F;2} \approx 0.4551<br>$$</p>
+<p>且：</p>
+<p>$$<br>f(x_2) &#x3D; \sqrt{1 + x_2^2} \approx 1.0986<br>$$</p>
+<p>所以：</p>
+<p>$$<br>a_0 &#x3D; \frac{1}{2} \left[ f(0) + f(x_2) \right] - a_1 \cdot \frac{0 + x_2}{2} \approx 0.955<br>$$</p>
+<p>于是得到 $f(x) &#x3D; \sqrt{1 + x^2}$ 在 $[0,1]$ 上一次最佳一致逼近多项式：</p>
+<p>$$<br>P_1(x) &#x3D; 0.955 + 0.4142x<br>$$</p>
+<p>又因区间端点必属于 Chebyshev 交错点组，故：</p>
+<p>$$<br>\Delta(f, P_1) &#x3D; \max_{0 \leq x \leq 1} |f(x) - P_1| &#x3D; |f(0) - P_1(0)| &#x3D; |1 - 0.955| &#x3D; 0.045<br>$$</p>
 </blockquote>
-</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">数值分析</a></div><div class="post-share"><div class="social-share" data-image="/blog/image/20250505084722.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/blog/2025/05/12/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E9%95%BF%E6%98%A5%E5%85%89%E6%9C%BA%E6%89%80%EF%BC%89/" title="机电一体化分析与建模（长春光机所）"><img class="cover" src="/blog/image/20250505084723-2.jpeg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">机电一体化分析与建模（长春光机所）</div></div><div class="info-2"><div class="info-item-1">第四章 电路及接口设计运算放大器电路设计“理想”运算放大器运算放大器的理想化条件通常有以下几点：  开环电压放大倍数（$A_{uo} \to \infty$）：  理想运算放大器要求它的开环增益（即没有任何反馈的增益）无限大。  运算放大器的开环增益就是输入信号与输出信号之比，通常是一个非常大的数值，理想情况下无穷大。  开环增益的表达式为：$$A_{u_o}&#x3D;\frac{u_0}{u_d}$$ 其中：  $u_d$：输入电压信号（即运算放大器的正输入和负输入之间的电压差）  $u_o$：输出电压信号  虚短$$u_d&#x3D;\frac {u_0}{A_{u0}}$$由于$A_{U0} \to \infty$且$u_0$为有限值，则$u_d&#x3D;0$$$u_+&#x3D;u_{-}$$     开环增益越大，意味着即使输入信号很小，输出信号也会被放大得非常明显。    开环输入电阻（$r_{id} \to...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2025/04/30/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E8%AF%AF%E5%B7%AE/" title="数值分析-误差"><img class="cover" src="/blog/image/2023-10-01-083219.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-30</div><div class="info-item-2">数值分析-误差</div></div><div class="info-2"><div class="info-item-1">此文章包含数值分析的误差部分—————————————————————————————————————————————————————————————————- $C^p[a,b]$表示具有$p$阶连续导数的函数空间；$C^0$表述函数连续，没有要求可导 第一章 误差误差的度量方式 设 $x$ 为准确值，$x^* $ 为 $x$ 的一个近似值，称  $$e^* &#x3D; x^* - x$$  为绝对误差，简称为误差。  对于一般情形   $$| x^*  - x | ≤ ε^*$$ $ε^* $为绝对误差限   相对误差的公式表示为：  $$e_r^* &#x3D; \frac{e^* }{x}$$，实际中一般取$$e_r^* &#x3D; \frac{e^* }{x^* }$$  $x$ 的相对误差上限定义为$\varepsilon^* &#x3D; \frac{\varepsilon^* }{|x^* |}$   有效数字有效数字的定义若近似值 $ x^* $ 的误差限是某一位的半个单位，该位到 $ x $ 的第一位非零数字共有 $ n $ 位，则 $ x $ 有 $...</div></div></div></a><a class="pagination-related" href="/blog/2025/05/08/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%8F%92%E5%80%BC%E6%B3%95/" title="数值分析-插值法"><img class="cover" src="/blog/image/hgud.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-08</div><div class="info-item-2">数值分析-插值法</div></div><div class="info-2"><div class="info-item-1">此文章包含数值分析的插值法部分————————————————————————————————————————————————————————————————— 第二章 插值法插值法定义设函数 $y &#x3D; f(x)$ 在区间 $[a, b]$ 上有定义，且满足节点排列：$$ a \leq x_0 &lt; x_1 &lt; \cdots &lt; x_n \leq b $$ 已知在点 ${x_0, x_1, \ldots, x_n}$ 上的对应函数值 ${y_0, y_1, \ldots, y_n}$。 若存在一简单函数 $p(x)$，满足插值条件：$$ p(x_i) &#x3D; y_i \quad (i &#x3D; 0, 1, 2, \ldots, n) \tag{2.1} $$  （1）  则称：  $p(x)$ 为 $f(x)$ 的插值函数 ${x_0, x_1, \ldots, x_n}$ 为插值节点 包含节点的区间 $[a, b]$ 为插值区间 式 (1) 为插值条件 求插值函数的方法称为插值法   插值函数分类当 $p(x)$...</div></div></div></a><a class="pagination-related" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%8C%EF%BC%89/" title="数值分析（二）"><img class="cover" src="/blog/image/00d69812ece14254143ca78eb066782f.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-26</div><div class="info-item-2">数值分析（二）</div></div><div class="info-2"><div class="info-item-1">此文章包含数值积分部分—————————————————————————————————————————————————————- 数值积分数值积分近似公式梯形公式$$\int _{a}^{b} f(x) dx \approx \frac{(b - a)}{2} \left[ f(a) + f(b) \right]$$ 中矩公式$$\int _{a}^{b} f(x) dx \approx (b - a) f\left( \frac{a + b}{2} \right)$$ 辛普森公式（Simpson’s Rule）$$\int _{a}^{b} f(x) dx \approx \frac{(b - a)}{6} \left[ f(a) + 4f\left( \frac{a + b}{2} \right) + f(b) \right]$$ 机械求积公式一般的，我们取区间 $[a, b]$ 内若干个节点 $x_k$ 处的函数值 $f(x_k)$，通过加权平均的方法近似地得出平均高度。这类求积公式的一般形式为： $$\int_a^b f(x) , dx \approx...</div></div></div></a><a class="pagination-related" href="/blog/2025/02/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%80%EF%BC%89/" title="数值分析（一）"><img class="cover" src="/blog/image/00d69812ece14254143ca78eb066782f.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-26</div><div class="info-item-2">数值分析（一）</div></div><div class="info-2"><div class="info-item-1">此文章包含误差、插值法和函数逼近内容—————————————————————————————————————————————————————- $C^p[a,b]$表示具有$p$阶连续导数的函数空间；$C^0$表述函数连续，没有要求可导 第一章 误差误差设 $x$ 为准确值，$x^* $ 为 $x$ 的一个近似值，称  $$e^* &#x3D; x^* - x$$  为绝对误差，简称为误差。 对于一般情形，  $$| x^*  - x | ≤ ε^* $$$ε^* $为绝对误差限相对误差的公式表示为：  $$e_r^* &#x3D; \frac{e^* }{x}$$ 实际中一般取$$e_r^* &#x3D; \frac{e^* }{x^* }$$ $x$ 的相对误差上限定义为$\varepsilon^* &#x3D; \frac{\varepsilon^* }{|x^* |}$ 有效数字有效数字的定义若近似值 $ x^* $ 的误差限是某一位的半个单位，该位到 $ x $ 的第一位非零数字共有 $ n $ 位，则 $ x $ 有 $ n $ 位有效数字。   示例圆周率 $...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91"><span class="toc-number">1.</span> <span class="toc-text">第三章 函数逼近</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8C%83%E6%95%B0%E4%B8%8E%E8%B5%8B%E8%8C%83%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4"><span class="toc-number">1.1.</span> <span class="toc-text">范数与赋范线性空间</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-mathbb-R-n-%E4%B8%8A%E7%9A%84%E5%90%91%E9%87%8F%E8%8C%83%E6%95%B0"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">1. $\mathbb{R}^n$ 上的向量范数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-C-a-b-%E4%B8%8A%E7%9A%84%E5%87%BD%E6%95%B0%E8%8C%83%E6%95%B0"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">2. $C[a, b]$ 上的函数范数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E7%A7%AF%E4%B8%8E%E5%86%85%E7%A7%AF%E7%A9%BA%E9%97%B4"><span class="toc-number">1.2.</span> <span class="toc-text">内积与内积空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.1.</span> <span class="toc-text">权函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E7%A7%AF"><span class="toc-number">1.2.2.</span> <span class="toc-text">内积</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E6%97%A0%E5%85%B3%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%AE%9A%E7%90%86"><span class="toc-number">1.2.3.</span> <span class="toc-text">线性无关相关概念与定理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E9%99%90%E7%BB%B4%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4"><span class="toc-number">1.2.4.</span> <span class="toc-text">无限维线性空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E6%9C%80%E4%BD%B3%E5%B9%B3%E6%96%B9%E9%80%BC%E8%BF%91"><span class="toc-number">1.3.</span> <span class="toc-text">函数的最佳平方逼近</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%AD%A3%E4%BA%A4%E5%87%BD%E6%95%B0%E7%B3%BB%E4%BD%9C%E6%9C%80%E4%BD%B3%E5%B9%B3%E6%96%B9%E9%80%BC%E8%BF%91"><span class="toc-number">1.4.</span> <span class="toc-text">用正交函数系作最佳平方逼近</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E4%BA%A4%E5%A4%9A%E9%A1%B9%E5%BC%8F"><span class="toc-number">1.5.</span> <span class="toc-text">正交多项式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E4%BA%A4%E5%87%BD%E6%95%B0%E6%97%8F%E4%B8%8E%E6%AD%A3%E4%BA%A4%E5%A4%9A%E9%A1%B9%E5%BC%8F"><span class="toc-number">1.5.1.</span> <span class="toc-text">正交函数族与正交多项式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A3%E4%BA%A4%E5%A4%9A%E9%A1%B9%E5%BC%8F%E5%BA%8F%E5%88%97"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">正交多项式序列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%B4%A8"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">性质</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8B%92%E8%AE%A9%E5%BE%B7%EF%BC%88Legendre%EF%BC%89%E5%A4%9A%E9%A1%B9%E5%BC%8F"><span class="toc-number">1.6.</span> <span class="toc-text">勒让德（Legendre）多项式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">1.6.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E6%80%A7%E8%B4%A8"><span class="toc-number">1.6.2.</span> <span class="toc-text">重要性质</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%B4%A81%EF%BC%9A%E6%AD%A3%E4%BA%A4%E6%80%A7"><span class="toc-number">1.6.2.1.</span> <span class="toc-text">性质1：正交性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%B4%A82%EF%BC%9A%E5%A5%87%E5%81%B6%E6%80%A7"><span class="toc-number">1.6.2.2.</span> <span class="toc-text">性质2：奇偶性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%B4%A83%EF%BC%9A%E6%9C%80%E5%B0%8F%E5%B9%B3%E6%96%B9%E8%AF%AF%E5%B7%AE"><span class="toc-number">1.6.2.3.</span> <span class="toc-text">性质3：最小平方误差</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%B4%A84%EF%BC%9A%E5%AE%9E%E9%9B%B6%E7%82%B9"><span class="toc-number">1.6.2.4.</span> <span class="toc-text">性质4：实零点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%B4%A85%EF%BC%9A%E9%80%92%E6%8E%A8%E5%85%B3%E7%B3%BB"><span class="toc-number">1.6.2.5.</span> <span class="toc-text">性质5：递推关系</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB-Chebyshev-%E5%A4%9A%E9%A1%B9%E5%BC%8F"><span class="toc-number">1.7.</span> <span class="toc-text">切比雪夫*Chebyshev*多项式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%8B%9F%E5%90%88"><span class="toc-number">1.8.</span> <span class="toc-text">最小二乘拟合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E6%95%B0%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%8B%9F%E5%90%88"><span class="toc-number">1.8.1.</span> <span class="toc-text">代数多项式拟合</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#begin-bmatrix-sum-i-1-N-omega-i-sum-i-1-N-omega-i-x-i-cdots-sum-i-1-N-omega-i-x-i-m-sum-i-1-N-omega-i-x-i-sum-i-1-N-omega-i-x-i-2-cdots-sum-i-1-N-omega-i-x-i-m-1-vdots-vdots-ddots-vdots-sum-i-1-N-omega-i-x-i-m-sum-i-1-N-omega-i-x-i-m-1-cdots-sum-i-1-N-omega-i-x-i-2m-end-bmatrix-begin-bmatrix-a-0-a-1-vdots-a-m-end-bmatrix"><span class="toc-number">2.</span> <span class="toc-text">$$\begin{bmatrix}\sum_{i&#x3D;1}^{N} \omega_i &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^m \\sum_{i&#x3D;1}^{N} \omega_i x_i &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^2 &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{m+1} \\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\sum_{i&#x3D;1}^{N} \omega_i x_i^m &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{m+1} &amp; \cdots &amp; \sum_{i&#x3D;1}^{N} \omega_i x_i^{2m}\end{bmatrix}\begin{bmatrix}a_0 \a_1 \\vdots \a_m\end{bmatrix}</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%AD%A3%E4%BA%A4%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%8B%9F%E5%90%88"><span class="toc-number">2.0.1.</span> <span class="toc-text">用正交多项式拟合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E4%BA%A4%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%9E%84%E9%80%A0"><span class="toc-number">2.0.2.</span> <span class="toc-text">正交多项式构造</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E4%B8%80%E8%87%B4%E9%80%BC%E8%BF%91%E5%A4%9A%E9%A1%B9%E5%BC%8F"><span class="toc-number">2.1.</span> <span class="toc-text">最佳一致逼近多项式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%B9%B3%E6%96%B9%E9%80%BC%E8%BF%91"><span class="toc-number">2.1.1.</span> <span class="toc-text">最佳平方逼近</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E4%B8%80%E8%87%B4%E9%80%BC%E8%BF%91"><span class="toc-number">2.1.2.</span> <span class="toc-text">最佳一致逼近</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%8F%E5%B7%AE"><span class="toc-number">2.1.3.</span> <span class="toc-text">偏差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%8F%E5%B7%AE%E7%82%B9"><span class="toc-number">2.1.4.</span> <span class="toc-text">偏差点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E5%81%8F%E5%B7%AE"><span class="toc-number">2.1.5.</span> <span class="toc-text">最小偏差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E4%B8%80%E8%87%B4%E9%80%BC%E8%BF%91%E5%A4%9A%E9%A1%B9%E5%BC%8F-1"><span class="toc-number">2.1.6.</span> <span class="toc-text">最佳一致逼近多项式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E4%B8%80%E6%AC%A1%E4%B8%80%E8%87%B4%E9%80%BC%E8%BF%91%E5%A4%9A%E9%A1%B9%E5%BC%8F%E7%9A%84%E6%B1%82%E6%B3%95"><span class="toc-number">2.1.7.</span> <span class="toc-text">最佳一次一致逼近多项式的求法</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/05/15/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91/" title="数值分析-函数逼近"><img src="/blog/image/20250505084722.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-函数逼近"/></a><div class="content"><a class="title" href="/blog/2025/05/15/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91/" title="数值分析-函数逼近">数值分析-函数逼近</a><time datetime="2025-05-15T07:37:45.000Z" title="发表于 2025-05-15 15:37:45">2025-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/05/12/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E9%95%BF%E6%98%A5%E5%85%89%E6%9C%BA%E6%89%80%EF%BC%89/" title="机电一体化分析与建模（长春光机所）"><img src="/blog/image/20250505084723-2.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="机电一体化分析与建模（长春光机所）"/></a><div class="content"><a class="title" href="/blog/2025/05/12/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E9%95%BF%E6%98%A5%E5%85%89%E6%9C%BA%E6%89%80%EF%BC%89/" title="机电一体化分析与建模（长春光机所）">机电一体化分析与建模（长春光机所）</a><time datetime="2025-05-12T11:27:23.000Z" title="发表于 2025-05-12 19:27:23">2025-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/05/08/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%8F%92%E5%80%BC%E6%B3%95/" title="数值分析-插值法"><img src="/blog/image/hgud.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-插值法"/></a><div class="content"><a class="title" href="/blog/2025/05/08/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%8F%92%E5%80%BC%E6%B3%95/" title="数值分析-插值法">数值分析-插值法</a><time datetime="2025-05-08T00:50:35.000Z" title="发表于 2025-05-08 08:50:35">2025-05-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/04/30/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E8%AF%AF%E5%B7%AE/" title="数值分析-误差"><img src="/blog/image/2023-10-01-083219.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-误差"/></a><div class="content"><a class="title" href="/blog/2025/04/30/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E8%AF%AF%E5%B7%AE/" title="数值分析-误差">数值分析-误差</a><time datetime="2025-04-30T01:42:45.000Z" title="发表于 2025-04-30 09:42:45">2025-04-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/04/23/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%B8%B8%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B%E6%95%B0%E5%80%BC%E8%A7%A3/" title="数值分析-常微分方程数值解"><img src="/blog/image/sakura.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-常微分方程数值解"/></a><div class="content"><a class="title" href="/blog/2025/04/23/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%B8%B8%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B%E6%95%B0%E5%80%BC%E8%A7%A3/" title="数值分析-常微分方程数值解">数值分析-常微分方程数值解</a><time datetime="2025-04-23T07:10:43.000Z" title="发表于 2025-04-23 15:10:43">2025-04-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"><script>(() => {
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">数值分析</a></div><div class="post-share"><div class="social-share" data-image="/blog/image/20250505084722.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/blog/2025/05/12/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E9%95%BF%E6%98%A5%E5%85%89%E6%9C%BA%E6%89%80%EF%BC%89/" title="机电一体化分析与建模（长春光机所）"><img class="cover" src="/blog/image/20250505084723-2.jpeg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">机电一体化分析与建模（长春光机所）</div></div><div class="info-2"><div class="info-item-1">第四章 电路及接口设计运算放大器电路设计“理想”运算放大器运算放大器的理想化条件通常有以下几点：  开环电压放大倍数（$A_{uo} \to \infty$）：  理想运算放大器要求它的开环增益（即没有任何反馈的增益）无限大。  运算放大器的开环增益就是输入信号与输出信号之比，通常是一个非常大的数值，理想情况下无穷大。  开环增益的表达式为：$$A_{u_o}&#x3D;\frac{u_0}{u_d}$$ 其中：  $u_d$：输入电压信号（即运算放大器的正输入和负输入之间的电压差）  $u_o$：输出电压信号  虚短$$u_d&#x3D;\frac {u_0}{A_{u0}}$$由于$A_{U0} \to \infty$且$u_0$为有限值，则$u_d&#x3D;0$$$u_+&#x3D;u_{-}$$     开环增益越大，意味着即使输入信号很小，输出信号也会被放大得非常明显。    开环输入电阻（$r_{id} \to...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2025/05/08/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%8F%92%E5%80%BC%E6%B3%95/" title="数值分析-插值法"><img class="cover" src="/blog/image/hgud.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-08</div><div class="info-item-2">数值分析-插值法</div></div><div class="info-2"><div class="info-item-1">此文章包含数值分析的插值法部分————————————————————————————————————————————————————————————————— 第二章 插值法插值法定义设函数 $y &#x3D; f(x)$ 在区间 $[a, b]$ 上有定义，且满足节点排列：$$ a \leq x_0 &lt; x_1 &lt; \cdots &lt; x_n \leq b $$ 已知在点 ${x_0, x_1, \ldots, x_n}$ 上的对应函数值 ${y_0, y_1, \ldots, y_n}$。 若存在一简单函数 $p(x)$，满足插值条件：$$ p(x_i) &#x3D; y_i \quad (i &#x3D; 0, 1, 2, \ldots, n) \tag{2.1} $$  （1）  则称：  $p(x)$ 为 $f(x)$ 的插值函数 ${x_0, x_1, \ldots, x_n}$ 为插值节点 包含节点的区间 $[a, b]$ 为插值区间 式 (1) 为插值条件 求插值函数的方法称为插值法   插值函数分类当 $p(x)$...</div></div></div></a><a class="pagination-related" href="/blog/2025/04/30/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E8%AF%AF%E5%B7%AE/" title="数值分析-误差"><img class="cover" src="/blog/image/2023-10-01-083219.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-30</div><div class="info-item-2">数值分析-误差</div></div><div class="info-2"><div class="info-item-1">此文章包含数值分析的误差部分—————————————————————————————————————————————————————————————————- $C^p[a,b]$表示具有$p$阶连续导数的函数空间；$C^0$表述函数连续，没有要求可导 第一章 误差误差的度量方式 设 $x$ 为准确值，$x^* $ 为 $x$ 的一个近似值，称  $$e^* &#x3D; x^* - x$$  为绝对误差，简称为误差。  对于一般情形   $$| x^*  - x | ≤ ε^*$$ $ε^* $为绝对误差限   相对误差的公式表示为：  $$e_r^* &#x3D; \frac{e^* }{x}$$，实际中一般取$$e_r^* &#x3D; \frac{e^* }{x^* }$$  $x$ 的相对误差上限定义为$\varepsilon^* &#x3D; \frac{\varepsilon^* }{|x^* |}$   有效数字有效数字的定义若近似值 $ x^* $ 的误差限是某一位的半个单位，该位到 $ x $ 的第一位非零数字共有 $ n $ 位，则 $ x $ 有 $...</div></div></div></a><a class="pagination-related" href="/blog/2025/02/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%80%EF%BC%89/" title="数值分析（一）"><img class="cover" src="/blog/image/00d69812ece14254143ca78eb066782f.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-26</div><div class="info-item-2">数值分析（一）</div></div><div class="info-2"><div class="info-item-1">此文章包含误差、插值法和函数逼近内容—————————————————————————————————————————————————————- $C^p[a,b]$表示具有$p$阶连续导数的函数空间；$C^0$表述函数连续，没有要求可导 第一章 误差误差设 $x$ 为准确值，$x^* $ 为 $x$ 的一个近似值，称  $$e^* &#x3D; x^* - x$$  为绝对误差，简称为误差。 对于一般情形，  $$| x^*  - x | ≤ ε^* $$$ε^* $为绝对误差限相对误差的公式表示为：  $$e_r^* &#x3D; \frac{e^* }{x}$$ 实际中一般取$$e_r^* &#x3D; \frac{e^* }{x^* }$$ $x$ 的相对误差上限定义为$\varepsilon^* &#x3D; \frac{\varepsilon^* }{|x^* |}$ 有效数字有效数字的定义若近似值 $ x^* $ 的误差限是某一位的半个单位，该位到 $ x $ 的第一位非零数字共有 $ n $ 位，则 $ x $ 有 $ n $ 位有效数字。   示例圆周率 $...</div></div></div></a><a class="pagination-related" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%8C%EF%BC%89/" title="数值分析（二）"><img class="cover" src="/blog/image/00d69812ece14254143ca78eb066782f.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-26</div><div class="info-item-2">数值分析（二）</div></div><div class="info-2"><div class="info-item-1">此文章包含数值积分部分—————————————————————————————————————————————————————- 数值积分数值积分近似公式梯形公式$$\int _{a}^{b} f(x) dx \approx \frac{(b - a)}{2} \left[ f(a) + f(b) \right]$$ 中矩公式$$\int _{a}^{b} f(x) dx \approx (b - a) f\left( \frac{a + b}{2} \right)$$ 辛普森公式（Simpson’s Rule）$$\int _{a}^{b} f(x) dx \approx \frac{(b - a)}{6} \left[ f(a) + 4f\left( \frac{a + b}{2} \right) + f(b) \right]$$ 机械求积公式一般的，我们取区间 $[a, b]$ 内若干个节点 $x_k$ 处的函数值 $f(x_k)$，通过加权平均的方法近似地得出平均高度。这类求积公式的一般形式为： $$\int_a^b f(x) , dx \approx...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">13</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91"><span class="toc-number">1.</span> <span class="toc-text">第三章 函数逼近</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8C%83%E6%95%B0%E4%B8%8E%E8%B5%8B%E8%8C%83%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4"><span class="toc-number">1.1.</span> <span class="toc-text">范数与赋范线性空间</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E8%8C%83%E6%95%B0"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">向量范数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%8C%83%E6%95%B0"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">函数范数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E7%A7%AF%E4%B8%8E%E5%86%85%E7%A7%AF%E7%A9%BA%E9%97%B4"><span class="toc-number">1.2.</span> <span class="toc-text">内积与内积空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">权函数的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E5%86%85%E7%A7%AF"><span class="toc-number">1.2.2.</span> <span class="toc-text">向量内积</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%86%85%E7%A7%AF"><span class="toc-number">1.2.3.</span> <span class="toc-text">函数内积</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%8C%83%E6%95%B0%E4%B8%8E%E5%86%85%E7%A7%AF"><span class="toc-number">1.2.4.</span> <span class="toc-text">函数范数与内积</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E6%97%A0%E5%85%B3%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%AE%9A%E7%90%86"><span class="toc-number">1.2.5.</span> <span class="toc-text">线性无关相关概念与定理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E9%99%90%E7%BB%B4%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4"><span class="toc-number">1.2.6.</span> <span class="toc-text">无限维线性空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E6%9C%80%E4%BD%B3%E5%B9%B3%E6%96%B9%E9%80%BC%E8%BF%91"><span class="toc-number">1.3.</span> <span class="toc-text">函数的最佳平方逼近</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%B9%B3%E6%96%B9%E9%80%BC%E8%BF%91%E7%9A%84%E8%AF%AF%E5%B7%AE"><span class="toc-number">1.3.1.</span> <span class="toc-text">最佳平方逼近的误差</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%AD%A3%E4%BA%A4%E5%87%BD%E6%95%B0%E7%B3%BB%E4%BD%9C%E6%9C%80%E4%BD%B3%E5%B9%B3%E6%96%B9%E9%80%BC%E8%BF%91"><span class="toc-number">1.4.</span> <span class="toc-text">用正交函数系作最佳平方逼近</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%B9%B3%E6%96%B9%E9%80%BC%E8%BF%91%E5%87%BD%E6%95%B0"><span class="toc-number">1.4.1.</span> <span class="toc-text">最佳平方逼近函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%BF%E4%B9%89Fourier%E7%BA%A7%E6%95%B0"><span class="toc-number">1.4.2.</span> <span class="toc-text">广义Fourier级数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8B%92%E8%AE%A9%E5%BE%B7%E5%A4%9A%E9%A1%B9%E5%BC%8F%E4%BD%9C%E4%B8%BA%E5%9F%BA%E5%87%BD%E6%95%B0"><span class="toc-number">1.4.3.</span> <span class="toc-text">勒让德多项式作为基函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98"><span class="toc-number">1.4.4.</span> <span class="toc-text">例题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E4%BA%A4%E5%A4%9A%E9%A1%B9%E5%BC%8F"><span class="toc-number">1.5.</span> <span class="toc-text">正交多项式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E4%BA%A4%E5%87%BD%E6%95%B0%E6%97%8F"><span class="toc-number">1.5.1.</span> <span class="toc-text">正交函数族</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E4%BA%A4%E5%A4%9A%E9%A1%B9%E5%BC%8F%E5%BA%8F%E5%88%97"><span class="toc-number">1.5.2.</span> <span class="toc-text">正交多项式序列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%B4%A8"><span class="toc-number">1.5.3.</span> <span class="toc-text">性质</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8B%92%E8%AE%A9%E5%BE%B7%EF%BC%88Legendre%EF%BC%89%E5%A4%9A%E9%A1%B9%E5%BC%8F"><span class="toc-number">1.6.</span> <span class="toc-text">勒让德（Legendre）多项式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">1.6.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E6%80%A7%E8%B4%A8"><span class="toc-number">1.6.2.</span> <span class="toc-text">重要性质</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%B4%A81%EF%BC%9A%E6%AD%A3%E4%BA%A4%E6%80%A7"><span class="toc-number">1.6.2.1.</span> <span class="toc-text">性质1：正交性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%B4%A82%EF%BC%9A%E5%A5%87%E5%81%B6%E6%80%A7"><span class="toc-number">1.6.2.2.</span> <span class="toc-text">性质2：奇偶性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%B4%A83%EF%BC%9A%E6%9C%80%E5%B0%8F%E5%B9%B3%E6%96%B9%E8%AF%AF%E5%B7%AE"><span class="toc-number">1.6.2.3.</span> <span class="toc-text">性质3：最小平方误差</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%B4%A84%EF%BC%9A%E5%AE%9E%E9%9B%B6%E7%82%B9"><span class="toc-number">1.6.2.4.</span> <span class="toc-text">性质4：实零点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%B4%A85%EF%BC%9A%E9%80%92%E6%8E%A8%E5%85%B3%E7%B3%BB"><span class="toc-number">1.6.2.5.</span> <span class="toc-text">性质5：递推关系</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%ABChebyshev%E5%A4%9A%E9%A1%B9%E5%BC%8F"><span class="toc-number">1.7.</span> <span class="toc-text">切比雪夫Chebyshev多项式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Chebyshev-%E5%A4%9A%E9%A1%B9%E5%BC%8F%E9%87%8D%E8%A6%81%E6%80%A7%E8%B4%A8"><span class="toc-number">1.7.1.</span> <span class="toc-text">Chebyshev 多项式重要性质</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%8B%9F%E5%90%88"><span class="toc-number">1.8.</span> <span class="toc-text">最小二乘拟合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E6%95%B0%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%8B%9F%E5%90%88"><span class="toc-number">1.8.1.</span> <span class="toc-text">代数多项式拟合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%AD%A3%E4%BA%A4%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%8B%9F%E5%90%88"><span class="toc-number">1.8.2.</span> <span class="toc-text">用正交多项式拟合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E4%BA%A4%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%9E%84%E9%80%A0"><span class="toc-number">1.8.3.</span> <span class="toc-text">正交多项式构造</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E4%B8%80%E8%87%B4%E9%80%BC%E8%BF%91%E5%A4%9A%E9%A1%B9%E5%BC%8F"><span class="toc-number">1.9.</span> <span class="toc-text">最佳一致逼近多项式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%B9%B3%E6%96%B9%E9%80%BC%E8%BF%91"><span class="toc-number">1.9.1.</span> <span class="toc-text">最佳平方逼近</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E4%B8%80%E8%87%B4%E9%80%BC%E8%BF%91"><span class="toc-number">1.9.2.</span> <span class="toc-text">最佳一致逼近</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%8F%E5%B7%AE"><span class="toc-number">1.9.3.</span> <span class="toc-text">偏差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%8F%E5%B7%AE%E7%82%B9"><span class="toc-number">1.9.4.</span> <span class="toc-text">偏差点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E5%81%8F%E5%B7%AE"><span class="toc-number">1.9.5.</span> <span class="toc-text">最小偏差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E4%B8%80%E8%87%B4%E9%80%BC%E8%BF%91%E5%A4%9A%E9%A1%B9%E5%BC%8F-1"><span class="toc-number">1.9.6.</span> <span class="toc-text">最佳一致逼近多项式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E4%B8%80%E6%AC%A1%E4%B8%80%E8%87%B4%E9%80%BC%E8%BF%91%E5%A4%9A%E9%A1%B9%E5%BC%8F%E7%9A%84%E6%B1%82%E6%B3%95"><span class="toc-number">1.9.7.</span> <span class="toc-text">最佳一次一致逼近多项式的求法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98-1"><span class="toc-number">1.9.8.</span> <span class="toc-text">例题</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/05/15/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91/" title="数值分析-函数逼近"><img src="/blog/image/20250505084722.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-函数逼近"/></a><div class="content"><a class="title" href="/blog/2025/05/15/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91/" title="数值分析-函数逼近">数值分析-函数逼近</a><time datetime="2025-05-15T07:37:45.000Z" title="发表于 2025-05-15 15:37:45">2025-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/05/12/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E9%95%BF%E6%98%A5%E5%85%89%E6%9C%BA%E6%89%80%EF%BC%89/" title="机电一体化分析与建模（长春光机所）"><img src="/blog/image/20250505084723-2.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="机电一体化分析与建模（长春光机所）"/></a><div class="content"><a class="title" href="/blog/2025/05/12/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E9%95%BF%E6%98%A5%E5%85%89%E6%9C%BA%E6%89%80%EF%BC%89/" title="机电一体化分析与建模（长春光机所）">机电一体化分析与建模（长春光机所）</a><time datetime="2025-05-12T11:27:23.000Z" title="发表于 2025-05-12 19:27:23">2025-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/05/08/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%8F%92%E5%80%BC%E6%B3%95/" title="数值分析-插值法"><img src="/blog/image/hgud.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-插值法"/></a><div class="content"><a class="title" href="/blog/2025/05/08/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%8F%92%E5%80%BC%E6%B3%95/" title="数值分析-插值法">数值分析-插值法</a><time datetime="2025-05-08T00:50:35.000Z" title="发表于 2025-05-08 08:50:35">2025-05-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/04/30/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E8%AF%AF%E5%B7%AE/" title="数值分析-误差"><img src="/blog/image/2023-10-01-083219.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-误差"/></a><div class="content"><a class="title" href="/blog/2025/04/30/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E8%AF%AF%E5%B7%AE/" title="数值分析-误差">数值分析-误差</a><time datetime="2025-04-30T01:42:45.000Z" title="发表于 2025-04-30 09:42:45">2025-04-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/04/23/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%B8%B8%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B%E6%95%B0%E5%80%BC%E8%A7%A3/" title="数值分析-常微分方程数值解"><img src="/blog/image/sakura.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-常微分方程数值解"/></a><div class="content"><a class="title" href="/blog/2025/04/23/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%B8%B8%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B%E6%95%B0%E5%80%BC%E8%A7%A3/" title="数值分析-常微分方程数值解">数值分析-常微分方程数值解</a><time datetime="2025-04-23T07:10:43.000Z" title="发表于 2025-04-23 15:10:43">2025-04-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"><script>(() => {
   const loadMathjax = () => {
     if (!window.MathJax) {
       window.MathJax = {
