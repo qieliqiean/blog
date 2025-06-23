@@ -1,0 +1,761 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>数值分析公式记忆汇总 | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="拉格朗日插值两点一次插值（线性插值） 条件：2个节点 $(x_0, y_0)$ 和 $(x_1, y_1)$   多项式：$$L_1(x) &#x3D; \frac{x - x_1}{x_0 - x_1} y_0 + \frac{x - x_0}{x_1 - x_0} y_1$$ 等价形式：$$L_1(x) &#x3D; y_0 + \frac{y_1 - y_0}{x_1 - x_0}(x -">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数值分析公式记忆汇总">
+<meta property="og:url" content="https://qieliqiean.github.io/blog/2025/06/12/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%85%AC%E5%BC%8F%E8%AE%B0%E5%BF%86%E6%B1%87%E6%80%BB/index.html">
+<meta property="og:site_name" content="且离且安的碎碎念">
+<meta property="og:description" content="拉格朗日插值两点一次插值（线性插值） 条件：2个节点 $(x_0, y_0)$ 和 $(x_1, y_1)$   多项式：$$L_1(x) &#x3D; \frac{x - x_1}{x_0 - x_1} y_0 + \frac{x - x_0}{x_1 - x_0} y_1$$ 等价形式：$$L_1(x) &#x3D; y_0 + \frac{y_1 - y_0}{x_1 - x_0}(x -">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qieliqiean.github.io/blog/image/hgud.jpeg">
+<meta property="article:published_time" content="2025-06-12T00:51:15.000Z">
+<meta property="article:modified_time" content="2025-06-17T04:34:52.148Z">
+<meta property="article:author" content="lian">
+<meta property="article:tag" content="数值分析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qieliqiean.github.io/blog/image/hgud.jpeg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "数值分析公式记忆汇总",
+  "url": "https://qieliqiean.github.io/blog/2025/06/12/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%85%AC%E5%BC%8F%E8%AE%B0%E5%BF%86%E6%B1%87%E6%80%BB/",
+  "image": "https://qieliqiean.github.io/blog/image/hgud.jpeg",
+  "datePublished": "2025-06-12T00:51:15.000Z",
+  "dateModified": "2025-06-17T04:34:52.148Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "lian",
+      "url": "https://qieliqiean.github.io/blog/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/2025/06/12/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%85%AC%E5%BC%8F%E8%AE%B0%E5%BF%86%E6%B1%87%E6%80%BB/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: {"path":"/blog/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '数值分析公式记忆汇总',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/image/hgud.jpeg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">数值分析公式记忆汇总</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">数值分析公式记忆汇总</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-06-12T00:51:15.000Z" title="发表于 2025-06-12 08:51:15">2025-06-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-06-17T04:34:52.148Z" title="更新于 2025-06-17 12:34:52">2025-06-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">6.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>31分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="拉格朗日插值"><a href="#拉格朗日插值" class="headerlink" title="拉格朗日插值"></a>拉格朗日插值</h1><p><strong>两点一次插值（线性插值）</strong></p>
+<p><strong>条件</strong>：2个节点 $(x_0, y_0)$ 和 $(x_1, y_1)$  </p>
+<p><strong>多项式</strong>：<br>$$<br>L_1(x) &#x3D; \frac{x - x_1}{x_0 - x_1} y_0 + \frac{x - x_0}{x_1 - x_0} y_1<br>$$</p>
+<p><strong>等价形式</strong>：<br>$$<br>L_1(x) &#x3D; y_0 + \frac{y_1 - y_0}{x_1 - x_0}(x - x_0)<br>$$</p>
+<hr>
+<p><strong>三点二次插值（抛物插值）</strong></p>
+<p><strong>条件</strong>：3个节点 $(x_0, y_0)$，$(x_1, y_1)$，$(x_2, y_2)$<br><strong>多项式</strong>：<br>$$<br>L_2(x) &#x3D; \frac{(x - x_1)(x - x_2)}{(x_0 - x_1)(x_0 - x_2)} y_0 + \frac{(x - x_0)(x - x_2)}{(x_1 - x_0)(x_1 - x_2)} y_1 + \frac{(x - x_0)(x - x_1)}{(x_2 - x_0)(x_2 - x_1)} y_2<br>$$</p>
+<hr>
+<p><strong>多个插值节点</strong><br>$$<br>L_n(x)&#x3D; \sum_{i&#x3D;0}^n l_i(x) y_i&#x3D; \sum_{i&#x3D;0}^n \left[ \prod_{\substack{j&#x3D;0 \ j \neq i}}^n \frac{x - x_j}{x_i - x_j} \right] y_i<br>$$</p>
+<hr>
+<h2 id="插值余项与误差估计"><a href="#插值余项与误差估计" class="headerlink" title="插值余项与误差估计"></a>插值余项与误差估计</h2><p>对任意 $x \in [a,b]$，插值余项满足：<br>$$<br>R_n(x) &#x3D; f(x) - L_n(x) &#x3D; \frac{f^{(n+1)}(\xi)}{(n+1)!} \prod_{j&#x3D;0}^n (x - x_j) \quad<br>$$<br>其中 $\xi \in (a, b)$，且 $\xi$ 的值依赖于 $x$</p>
+<p><strong>n&#x3D;1时，线性插值余项</strong><br>$$<br>R_1(x) &#x3D; \frac{1}{2} f’’(\xi) \omega_2(x) &#x3D; \frac{1}{2} f’’(\xi) (x - x_0)(x - x_1), \quad \xi \in [x_0, x_1]<br>$$</p>
+<p><strong>n&#x3D;2时，抛物插值余项</strong><br>$$<br>R_2(x) &#x3D; \frac{1}{6} f’’’(\xi) (x - x_0)(x - x_1)(x - x_2), \quad \xi \in [x_0, x_2]<br>$$</p>
+<h1 id="二点三次埃尔米特插值多项式"><a href="#二点三次埃尔米特插值多项式" class="headerlink" title="二点三次埃尔米特插值多项式"></a>二点三次埃尔米特插值多项式</h1><p>**问题描述：**给定区间 $[x_0, x_1]$ 两端点的函数值与导数值：</p>
+<table>
+<thead>
+<tr>
+<th>$x$</th>
+<th>$x_0$</th>
+<th>$x_1$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$f(x)$</td>
+<td>$y_0$</td>
+<td>$y_1$</td>
+</tr>
+<tr>
+<td>$f’(x)$</td>
+<td>$m_0$</td>
+<td>$m_1$</td>
+</tr>
+</tbody></table>
+<ol>
+<li><strong>最终表达式</strong><br>$$<br>H_3(x) &#x3D; y_0\left(1 - 2\dfrac{x - x_0}{x_0 -x_1}\right)\left(\dfrac{x - x_1}{x_0 - x_1}\right)^2<br>$$</li>
+</ol>
+<p>$$<br>+y_1\left(1 - 2\dfrac{x - x_1}{x_1 - x_0}\right)\left(\dfrac{x - x_0}{x_1 - x_0}\right)^2<br>$$</p>
+<p>$$<br>+m_0(x - x_0)\left(\dfrac{x - x_1}{x_0 - x_1}\right)^2 + m_1(x - x_1)\left(\dfrac{x - x_0}{x_1 - x_0}\right)^2<br>$$</p>
+<h1 id="牛顿插值"><a href="#牛顿插值" class="headerlink" title="牛顿插值"></a>牛顿插值</h1><p>$$<br>N_n(x)&#x3D; f(x_0) + f[x_0, x_1](x - x_0) + \cdots + f[x_0, \ldots, x_n](x - x_0)\cdots(x - x_{n-1})<br>$$</p>
+<p><strong>余项公式</strong><br>$$<br>R_n(x)&#x3D;f[x, x_0, \ldots, x_n](x - x_0)\cdots(x - x_{n-1})(x - x_n)&#x3D;f[x, x_0, \ldots, x_n]\omega_{n+1}(x)<br>$$<br><strong>差商表</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">$ x_i $</th>
+<th align="center">$ f(x_i) $</th>
+<th align="center">一阶差商</th>
+<th align="center">二阶差商</th>
+<th align="center">三阶差商</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">$ x_0 $</td>
+<td align="center">$ f(x_0) $</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">$ x_1 $</td>
+<td align="center">$ f(x_1) $</td>
+<td align="center">$ f[x_0, x_1] $</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">$ x_2 $</td>
+<td align="center">$ f(x_2) $</td>
+<td align="center">$ f[x_1, x_2] $</td>
+<td align="center">$ f[x_0, x_1, x_2] $</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">$ x_3 $</td>
+<td align="center">$ f(x_3) $</td>
+<td align="center">$ f[x_2, x_3] $</td>
+<td align="center">$ f[x_1, x_2, x_3] $</td>
+<td align="center">$ f[x_0, x_1, x_2, x_3] $</td>
+</tr>
+</tbody></table>
+<h1 id="差分形式的牛顿插值"><a href="#差分形式的牛顿插值" class="headerlink" title="差分形式的牛顿插值"></a>差分形式的牛顿插值</h1><p><span style="color:rgb(255, 53, 116)">牛顿前插公式：</span><br>设 $ x &#x3D; x_0 + th $（$ 0 \leq t \leq 1 $），则<br>$$<br>N_n(x) &#x3D; N_n(x_0 + th) &#x3D; \sum_{k&#x3D;0}^{n} \binom{t}{k} \Delta^k f(x_0)<br>$$</p>
+<p>$$<br>&#x3D; f_0 + t\Delta f_0 + \frac{t(t - 1)}{2!}\Delta^2 f_0 + \dots + \frac{t(t - 1)\dots(t - n + 1)}{n!}\Delta^n f_0<br>$$</p>
+<p>余项：<br>$$<br>R_n(x) &#x3D; \frac{f^{(n+1)}(\xi)}{(n+1)!} t(t-1)\cdots(t-n) h^{n+1}, \quad \xi \in (x_0, x_n)<br>$$</p>
+<p><span style="color:rgb(255, 53, 116)">牛顿后插公式：</span><br>将节点顺序倒置：<br>$$<br>N_n(x) &#x3D; f(x_n) + f[x_n, x_{n-1}](x - x_n) + \cdots + f[x_n, \ldots, x_0](x - x_n)\cdots(x - x_1)<br>$$<br>设 $ x &#x3D; x_n + th $（$ -1 \leq t \leq 0 $），则<br>$$<br>N_n(x) &#x3D; N_n(x_n + th) &#x3D; \sum_{k&#x3D;0}^{n} (-1)^k \binom{-t}{k} \nabla^k f(x_n)<br>$$</p>
+<p>$$<br>&#x3D; f_n + t\nabla f_n + \frac{t(t + 1)}{2!}\nabla^2 f_n + \dots + \frac{t(t + 1)\dots(t + n - 1)}{n!}\nabla^n f_n<br>$$</p>
+<p>余项：<br>$$<br>R_n(x) &#x3D; \frac{f^{(n+1)}(\xi)}{(n+1)!} t(t+1)\cdots(t+n) h^{n+1}, \quad \xi \in (x_0, x_n)<br>$$</p>
+<p>注：一般当 $ x $ 靠近 $ x_0 $ 时用前插，靠近 $ x_n $ 时用后插，故两种公式亦称为表初公式和表末公式。</p>
+<p><strong>差分表</strong></p>
+<p><img src="/blog/../image/Snipaste_2025-03-12_16-09-19-17497100633471.png"></p>
+<h1 id="三次样条插值"><a href="#三次样条插值" class="headerlink" title="三次样条插值"></a>三次样条插值</h1><h2 id="第一边界条件"><a href="#第一边界条件" class="headerlink" title="第一边界条件"></a>第一边界条件</h2><p><strong>第一种边界条件</strong>(已知两端的<strong>一阶</strong>导数值)<br>$$<br>s^{\prime}\left(x_0\right)&#x3D;y_0^{\prime}\<br>s^{\prime}\left(x_n\right)&#x3D;y_n^{\prime}<br>$$</p>
+<span>
+
+<h1 id="题目中所给节点数，就是系数矩阵的阶数-begin-bmatrix-2-lambda-0-mu-1-2-lambda-1-ddots-ddots-ddots-mu-n-1-2-lambda-n-1-mu-n-2-end-bmatrix-begin-bmatrix-M-0-M-1-vdots-M-n-1-M-n-end-bmatrix"><a href="#题目中所给节点数，就是系数矩阵的阶数-begin-bmatrix-2-lambda-0-mu-1-2-lambda-1-ddots-ddots-ddots-mu-n-1-2-lambda-n-1-mu-n-2-end-bmatrix-begin-bmatrix-M-0-M-1-vdots-M-n-1-M-n-end-bmatrix" class="headerlink" title="题目中所给节点数，就是系数矩阵的阶数$$\begin{bmatrix}2 &amp; \lambda_0 &amp; &amp; &amp; \\mu_1 &amp; 2 &amp; \lambda_1 &amp; &amp; \ &amp; \ddots &amp; \ddots &amp; \ddots &amp; \ &amp; &amp; \mu_{n-1} &amp; 2 &amp; \lambda_{n-1} \ &amp; &amp; &amp; \mu_{n} &amp; 2\end{bmatrix}\begin{bmatrix}M_0 \M_1 \\vdots \M_{n-1} \M_n\end{bmatrix}"></a><span style="color:#FF0000">题目中所给节点数，就是系数矩阵的阶数</span><br>$$<br>\begin{bmatrix}<br>2 &amp; \lambda_0 &amp; &amp; &amp; \<br>\mu_1 &amp; 2 &amp; \lambda_1 &amp; &amp; \<br> &amp; \ddots &amp; \ddots &amp; \ddots &amp; \<br> &amp; &amp; \mu_{n-1} &amp; 2 &amp; \lambda_{n-1} \<br> &amp; &amp; &amp; \mu_{n} &amp; 2<br>\end{bmatrix}<br>\begin{bmatrix}<br>M_0 \<br>M_1 \<br>\vdots \<br>M_{n-1} \<br>M_n<br>\end{bmatrix}</h1><p>\begin{bmatrix}<br>d_0 \<br>d_1 \<br>\vdots \<br>d_{n-1} \<br>d_n<br>\end{bmatrix}<br>$$<br></span></p>
+<blockquote>
+<p>$$<br>\lambda_0 &#x3D; 1\<br>\mu_n &#x3D; 1\<br>\quad h_j&#x3D;x_{j+1}-x_j<br>$$</p>
+<p>$$<br>\lambda_{j}&#x3D; \frac{h_j}{h_{j-1}+h_j}\<br>\mu_j &#x3D; \frac{h_{j-1}}{h_{j-1}+h_j}<br>$$</p>
+<p><span style="color:#FF0000">可以这样记，系数矩阵中$\lambda$在对角线上，$\mu$在下,故$\lambda_{j}$取大的$h_j$，$\mu_{j}$取小的$h_{j-1}$，二者和为1</span><br>$$<br>d_0 &#x3D; \frac{6}{h_0} \left( f[x_0, x_1] - f’_0 \right)<br>$$</p>
+<p>$$<br>d_j &#x3D; 6 \frac{f[x_j, x_{j+1}] - f[x_{j-1}, x_j]}{h_{j-1} + h_j} &#x3D; 6 f[x_{j-1}, x_j, x_{j+1}], \quad j &#x3D; 1, 2, \dots, n-1<br>$$</p>
+<p>$$<br>d_n &#x3D; \frac{6}{h_{n-1}} \left( f’_n - f[x _{n-1}, x_n] \right)<br>$$</p>
+<p>$$<br>s(x) &#x3D; \frac{\left(x_{j+1}-x\right)^{3}}{6 h_{j}} M_{j} + \frac{\left(x-x_{j}\right)^{3}}{6 h_{j}} M_{j+1} + \left(y_{j}-\frac{M_{j} h_{j}^{2}}{6}\right)\frac{x_{j+1}-x}{h_{j}} + \left(y_{j+1}-\frac{M_{j+1} h_{j}^{2}}{6}\right)\frac{x-x_{j}}{h_{j}}<br>$$</p>
+</blockquote>
+<h2 id="第二边界条件"><a href="#第二边界条件" class="headerlink" title="第二边界条件"></a>第二边界条件</h2><h1 id="begin-bmatrix-2-lambda-1-mu-2-2-lambda-2-ddots-ddots-ddots-mu-n-1-2-end-bmatrix-begin-bmatrix-M-1-M-2-vdots-M-n-1-end-bmatrix"><a href="#begin-bmatrix-2-lambda-1-mu-2-2-lambda-2-ddots-ddots-ddots-mu-n-1-2-end-bmatrix-begin-bmatrix-M-1-M-2-vdots-M-n-1-end-bmatrix" class="headerlink" title="$$\begin{bmatrix}2 &amp; \lambda_1 &amp; &amp; \\mu_2 &amp; 2 &amp; \lambda_2 &amp; \ &amp; \ddots &amp; \ddots &amp; \ddots \ &amp; &amp; \mu_{n-1} &amp; 2\end{bmatrix}\begin{bmatrix}M_1 \M_2 \\vdots \M_{n-1}\end{bmatrix}"></a>$$<br>\begin{bmatrix}<br>2 &amp; \lambda_1 &amp; &amp; \<br>\mu_2 &amp; 2 &amp; \lambda_2 &amp; \<br> &amp; \ddots &amp; \ddots &amp; \ddots \<br> &amp; &amp; \mu_{n-1} &amp; 2<br>\end{bmatrix}<br>\begin{bmatrix}<br>M_1 \<br>M_2 \<br>\vdots \<br>M_{n-1}<br>\end{bmatrix}</h1><p>\begin{bmatrix}<br>d_1 - \mu_1 f’’<em>0 \<br>d_2 \<br>\vdots \<br>d</em>{n-1} - \lambda_{n-1} f’’_n<br>\end{bmatrix}<br>$$</p>
+<p>$$<br>\begin{cases}<br>M_0 &#x3D; f’’_0 \<br>M_n &#x3D; f’’_n<br>\end{cases}<br>$$</p>
+<p>$$<br>s(x) &#x3D; \frac{\left(x_{j+1}-x\right)^{3}}{6 h_{j}} M_{j} + \frac{\left(x-x_{j}\right)^{3}}{6 h_{j}} M_{j+1} + \left(y_{j}-\frac{M_{j} h_{j}^{2}}{6}\right)\frac{x_{j+1}-x}{h_{j}} + \left(y_{j+1}-\frac{M_{j+1} h_{j}^{2}}{6}\right)\frac{x-x_{j}}{h_{j}}<br>$$</p>
+<h1 id="向量范数"><a href="#向量范数" class="headerlink" title="向量范数"></a>向量范数</h1><p><span style="color:#FF0000">所有的范数无论是比值，或是求和、积分或者其他运算，都是以绝对值进行的</span></p>
+<p>设 $x &#x3D; (x_1, \dots, x_n)^T \in \mathbb{R}^n$，定义以下三种常用范数：  </p>
+<ol>
+<li><p><strong>∞-范数（最大范数）</strong>：<br>$$<br>||x|| _ \infty &#x3D; \max_{1 \leq i \leq n} |x_i|<br>$$</p>
+</li>
+<li><p><strong>1-范数</strong>：<br>$$<br>||x|| _ 1 &#x3D; \sum_{i&#x3D;1}^n |x_i|<br>$$</p>
+</li>
+<li><p><strong>2-范数</strong>：<br>$$<br>||x|| _ 2 &#x3D; \left( \sum_{i&#x3D;1}^n x_i^2 \right)^{1&#x2F;2}<br>$$</p>
+</li>
+</ol>
+<hr>
+<h1 id="函数范数"><a href="#函数范数" class="headerlink" title="函数范数"></a>函数范数</h1><p>设 $f(x) \in C[a, b]$，定义以下三种常用范数：  </p>
+<ol>
+<li><p><strong>∞-范数</strong>：<br>$$<br>||f||_ \infty &#x3D; \max_{a \leq x \leq b} |f(x)|<br>$$</p>
+</li>
+<li><p><strong>1-范数</strong>：<br>$$<br>||f||_1 &#x3D; \int_a^b |f(x)| , dx<br>$$</p>
+</li>
+<li><p><strong>2-范数</strong>：<br>$$<br>||f||_2 &#x3D; \left( \int_a^b f^2(x) , dx \right)^{1&#x2F;2}<br>$$</p>
+</li>
+</ol>
+<h1 id="矩阵范数"><a href="#矩阵范数" class="headerlink" title="矩阵范数"></a>矩阵范数</h1><blockquote>
+<p><strong>常用矩阵范数</strong>(<strong>下面的$x$都指的是向量</strong>)</p>
+<ol>
+<li><strong>Frobenius范数</strong></li>
+</ol>
+<p>$$<br>||A||_F &#x3D; \sqrt {\sum _{i&#x3D;1}^n  \sum _{j&#x3D;1}^n |a _{ij}|^2}<br>$$</p>
+<p>对于方阵 $A \in \mathbb{R}^{n \times n}$ 和向量 $x \in \mathbb{R}^n$ 有：</p>
+<p>$$<br>||Ax||_2 \leq ||A||_F \cdot ||x||_2<br>$$</p>
+<ol start="2">
+<li><strong>算子范数（Operator Norm）</strong></li>
+</ol>
+<p>矩阵范数与向量范数的<strong>相容性</strong>（<em>consistent</em>）</p>
+<p>$$<br>||A|| _p &#x3D; \max _{x \neq 0} \frac{||Ax|| _p}{||x|| _p} &#x3D; \max _{||x|| _p&#x3D;1} ||Ax|| _p<br>$$</p>
+<p>进一步：</p>
+<p>$$<br>||Ax||_p \leq ||A||_p ||x||_p<br>$$</p>
+<blockquote>
+<p><strong>行和范数（∞-范数）</strong><br>$$<br>||A|| _\infty &#x3D; \max _{1 \leq i \leq n} \sum _{j&#x3D;1}^n |a _{ij}|<br>$$</p>
+</blockquote>
+<blockquote>
+<p><strong>列和范数（1-范数）</strong></p>
+<p>$$<br>||A||_1 &#x3D; \max _{1 \leq j \leq n} \sum _{i&#x3D;1}^n |a _{ij}|<br>$$</p>
+</blockquote>
+<blockquote>
+<p><strong>谱范数（2-范数）</strong></p>
+</blockquote>
+<blockquote>
+<p>$$<br>||A||_2 &#x3D; \sqrt{\lambda _{\max}(A^T A)}<br>$$</p>
+<p>矩阵$A^T A$的最大特征根</p>
+</blockquote>
+<p><strong>矩阵谱半径定义</strong></p>
+<p>设矩阵 $A \in \mathbb{C}^{n \times n}$ 的特征根为 $\lambda_1, \lambda_2, \ldots, \lambda_n$，则矩阵 $A$ 的<strong>谱半径</strong>（<em>spectral radius</em>）定义为：</p>
+<p>$$<br>\rho(A) &#x3D; \max_{1 \leq i \leq n} |\lambda_i|<br>$$</p>
+</blockquote>
+<p><strong>一些定理</strong></p>
+<ol>
+<li>对于任意算子范数  $||\cdot||$  ，有：</li>
+</ol>
+<p>$$<br>\rho(A) \leq ||A||<br>$$</p>
+<ol start="2">
+<li><p>若$A$对称，则有</p>
+<p>$$<br>||A||_2 &#x3D; \rho(A)<br>$$</p>
+</li>
+</ol>
+<h1 id="向量内积"><a href="#向量内积" class="headerlink" title="向量内积"></a>向量内积</h1><p>在 $\mathbb{R}^n$ 中，向量 $x &#x3D; (x_1, x_2, \dots, x_n)^T$ 和 $y &#x3D; (y_1, y_2, \dots, y_n)^T$ 的内积定义为：<br>$$<br>(x, y) &#x3D; x_1 y_1 + x_2 y_2 + \dots + x_n y_n \tag{1.5}<br>$$</p>
+<h1 id="函数内积"><a href="#函数内积" class="headerlink" title="函数内积"></a>函数内积</h1><p>设 $f(x), g(x) \in C[a, b]$，$\rho(x)$ 是 $[a, b]$ 上的权函数，积分<br>$$<br>(f, g) &#x3D; \int_a^b \rho(x) f(x) g(x) , dx<br>$$<br>称为函数 $f(x)$ 与 $g(x)$ 在 $[a, b]$ 上的<strong>内积</strong>。</p>
+<hr>
+<p>设函数 $ f(x) \in C[a, b] $，定义量<br>$$<br>|| f ||_2 &#x3D; \sqrt{ \int_a^b \rho(x) f^2(x) , dx } &#x3D; \sqrt{ (f, f) }<br>$$</p>
+<p>$$<br>|| f ||_2^2&#x3D;(f, f)<br>$$</p>
+<p>称为函数 $ f(x) $ 的<strong>欧氏范数</strong>。</p>
+<h1 id="最佳平方逼近"><a href="#最佳平方逼近" class="headerlink" title="最佳平方逼近"></a>最佳平方逼近</h1><p><strong>正规方程组</strong><br>$$<br>\sum_{j&#x3D;0}^{n} (\varphi_j, \varphi_k) a_j &#x3D; (f, \varphi_k), \quad (k &#x3D; 0, 1, \ldots, n)<br>$$<br><strong>误差</strong><br>$$<br>|\delta(x)|^2_2 &#x3D; |f(x)|^2_2 - \sum_{k&#x3D;0}^n a_k^* (\varphi_k(x), f(x)).<br>$$</p>
+<h3 id="勒让德多项式作为基函数"><a href="#勒让德多项式作为基函数" class="headerlink" title="勒让德多项式作为基函数"></a>勒让德多项式作为基函数</h3><p>当 $ f(x) \in C[-1, 1] $ 时，可以用勒让德多项式 $ {P_k(x)} $ 作为基函数，即<span> $ {g_k(x)} &#x3D; {P_k(x)} $</span>。此时，最佳平方逼近多项式为：</p>
+<span>
+$$
+s_n^*(x) = a_0^* P_0(x) + a_1^* P_1(x) + \dots + a_n^* P_n(x)
+$$
+
+</span>
+
+<p>其中，系数 $ a_k^* $ 的计算公式为：<br>$$<br>a_k^* &#x3D; \frac{(P_k, f)}{(P_k, P_k)} &#x3D; \frac{2k+1}{2} \int_{-1}^1 f(x) P_k(x) , dx \quad(k&#x3D;0,1,\cdots,n)<br>$$</p>
+<p>则 $ s_n^<em>(x) $ 是使 $ || f(x) - \sum _{k&#x3D;0}^n a_k^</em>  P_k(x) ||_2^2 $ 最小的最佳平方逼近多项式。</p>
+<p><strong>此时的平方误差为</strong>：</p>
+<span>
+$$
+\|\delta_n\|_2^2 = \int_{-1}^{1} [f(x)]^2 \, dx - \sum_{k=0}^{n} \frac{2}{2k+1} a_k^{*2}
+$$
+
+</span>
+
+<p><u>如果所给的区间不是 $[-1, 1]$，而是一般的有限区间 $[a, b]$，可以通过变量置换将其转化为区间 $[-1, 1]$ 上的情形来处理</u>。</p>
+<p>变量置换公式</p>
+<p>通过以下变量置换公式，将区间 $[a, b]$ 转化为 $[-1, 1]$：</p>
+<p>$$<br>x &#x3D; \frac{a + b}{2} + \frac{b - a}{2} t<br>$$</p>
+<h1 id="勒让德（Legendre）多项式"><a href="#勒让德（Legendre）多项式" class="headerlink" title="勒让德（Legendre）多项式"></a>勒让德（Legendre）多项式</h1><ul>
+<li>$ P_0(x) &#x3D; 1 $</li>
+<li>$ P_1(x) &#x3D; x $</li>
+<li>$ P_2(x) &#x3D; \frac{1}{2}(3x^2 - 1)$</li>
+<li>$P3(x)&#x3D;\frac{1}{2}(5x^3 - 3x)$</li>
+</ul>
+<p>在区间 $[-1, 1]$ 上满足正交性：<br>$$<br>\int_{-1}^1 P_n(x) P_m(x) , dx &#x3D;<br>\begin{cases}<br>0, &amp; m \neq n \<br>\frac{2}{2n+1}, &amp; m &#x3D; n<br>\end{cases}<br>$$</p>
+<h1 id="切比雪夫Chebyshev多项式"><a href="#切比雪夫Chebyshev多项式" class="headerlink" title="切比雪夫Chebyshev多项式"></a>切比雪夫Chebyshev多项式</h1><p>当区间为 $[-1, 1]$，权函数 $\rho(x) &#x3D; \dfrac{1}{\sqrt{1 - x^2}}$ 时，由序列 ${1, x, \cdots, x^n, \cdots}$ 正交化得到的正交多项式就是 Chebyshev 多项式，它可表为：</p>
+<p>$$<br>T_n(x) &#x3D; \cos(n \arccos x) \quad |x| \leq 1<br>$$<br>若令 $x &#x3D; \cos\theta$，则 $T_n(x) &#x3D; \cos n\theta$，$0 \leq \theta \leq \pi$。</p>
+<h2 id="Chebyshev-多项式重要性质"><a href="#Chebyshev-多项式重要性质" class="headerlink" title="Chebyshev 多项式重要性质"></a>Chebyshev 多项式重要性质</h2><p><strong>性质 1</strong>  </p>
+<p>Chebyshev 多项式 ${T_n(x)}$ 在区间 $[-1, 1]$ 上带权 $\rho(x) &#x3D; \dfrac{1}{\sqrt{1 - x^2}}$ 正交，<br>$$<br>T_k(x) &#x3D; \cos(k \cdot \arccos x)<br>$$</p>
+<p>且：</p>
+<span>
+$$
+\int_{-1}^{1} \dfrac{T_n(x)T_m(x)}{\sqrt{1 - x^2}} \, dx = 
+\begin{cases} 
+0, & n \neq m \\
+\dfrac{\pi}{2}, & n = m \neq 0 \\
+\pi, & n = m = 0 
+\end{cases}
+$$
+
+</span>
+
+<p><strong>性质 2 递推关系</strong>  </p>
+<span>
+$$
+\begin{cases}
+T_{n+1}(x) = 2xT_n(x) - T_{n-1}(x) & (n = 1, 2, \cdots), \\
+T_0(x) = 1, \\
+T_1(x) = x.
+\end{cases}
+$$
+
+</span>
+
+<p>由递推关系可得：</p>
+<span>
+$$
+T_0(x)= 1 \quad \\
+T_1(x)= x \quad  \\
+T_2(x)= 2x^2 - 1 \quad \\
+T_3(x)= 4x^3 - 3x \quad \\
+T_4(x) = 8x^4 - 8x^2 + 1 \quad \\
+T_5(x) = 16x^5 - 20x^3 + 5x
+$$
+
+</span>
+
+
+
+<blockquote>
+<p>$T_{n+1}$的根为：<br>$$<br>x_k &#x3D; \cos\left(\frac{(2k+1)\pi}{2(n+1)})\right),\quad k&#x3D;0,1,\ldots,n<br>$$</p>
+</blockquote>
+<h1 id="最小二乘拟合"><a href="#最小二乘拟合" class="headerlink" title="最小二乘拟合"></a>最小二乘拟合</h1><p>若用 ${\varphi_0, \varphi_1, \ldots, \varphi_m}$ 构成一个 $N \times (m+1)$ 的矩阵 $A$，即：</p>
+<span>
+$$
+A = 
+\begin{bmatrix}
+\varphi_0(x_1) & \varphi_1(x_1) & \cdots & \varphi_m(x_1) \\
+\varphi_0(x_2) & \varphi_1(x_2) & \cdots & \varphi_m(x_2) \\
+\vdots & \vdots & \ddots & \vdots \\
+\varphi_0(x_N) & \varphi_1(x_N) & \cdots & \varphi_m(x_N)
+\end{bmatrix}
+$$
+
+</span>
+
+<p>引入向量：</p>
+<p>$$<br>\alpha &#x3D; (a_0, a_1, \ldots, a_m)^T, \quad Y &#x3D; (y_1, y_2, \ldots, y_N)^T<br>$$</p>
+<p><strong>法方程组</strong>可以写成以下矩阵形式：(权w&#x3D;1)<br>$$<br>A^T A \alpha &#x3D; A^T Y<br>$$</p>
+<p>由于 $\varphi_0, \varphi_1, \ldots, \varphi_m$ 线性无关，法方程组存在唯一解：</p>
+<p>$$<br>\alpha &#x3D; (a_0^* , a_1^* , \ldots, a_m^* )^T<br>$$</p>
+<p>从而得到函数：</p>
+<p>$$<br>\varphi^* (x) &#x3D; a_0^*  \varphi_0 + a_1^*  \varphi_1 + \cdots + a_m^*  \varphi_m<br>$$</p>
+<p>最小平方误差为：</p>
+<p>$$<br>\delta^2 &#x3D; || y - \varphi^*  ||^2_2 &#x3D; (y - \varphi^* , y - \varphi^* ) &#x3D; || y ||^2_2 - \sum_{j&#x3D;0}^m a_j^*  (\varphi_j, y)<br>$$</p>
+<h3 id="代数多项式拟合"><a href="#代数多项式拟合" class="headerlink" title="代数多项式拟合"></a>代数多项式拟合</h3><p>若取基函数 $\varphi_0 &#x3D; 1, \varphi_1 &#x3D; x, \ldots, \varphi_m &#x3D; x^m$，则相应的法方程组为：</p>
+<span>
+$$
+\begin{bmatrix}
+\sum_{i=1}^{N} \omega_i & \sum_{i=1}^{N} \omega_i x_i & \cdots & \sum_{i=1}^{N} \omega_i x_i^m \\
+\sum_{i=1}^{N} \omega_i x_i & \sum_{i=1}^{N} \omega_i x_i^2 & \cdots & \sum_{i=1}^{N} \omega_i x_i^{m+1} \\
+\vdots & \vdots & \ddots & \vdots \\
+\sum_{i=1}^{N} \omega_i x_i^m & \sum_{i=1}^{N} \omega_i x_i^{m+1} & \cdots & \sum_{i=1}^{N} \omega_i x_i^{2m}
+\end{bmatrix}
+\begin{bmatrix}
+a_0 \\
+a_1 \\
+\vdots \\
+a_m
+\end{bmatrix}
+=
+\begin{bmatrix}
+\sum_{i=1}^{N} \omega_i y_i \\
+\sum_{i=1}^{N} \omega_i x_i y_i \\
+\vdots \\
+\sum_{i=1}^{N} \omega_i x_i^m y_i
+\end{bmatrix}
+$$
+
+</span>
+
+<p>即<br>$$<br>A^T\omega A\alpha&#x3D;A^T\omega Y<br>$$<br><span><br>$$<br>A &#x3D;<br>\begin{bmatrix}<br>1 &amp; x_1 &amp; \cdots &amp; x_1^m \<br>1 &amp; x_2 &amp; \cdots &amp; x_2^m  \<br>1 &amp; x_3 &amp; \cdots &amp; x_3^m  \<br>\vdots &amp; \vdots &amp; \ddots &amp; \vdots \<br>1 &amp; x_N &amp; \cdots &amp; x_N^m<br>\end{bmatrix}<br>$$</p>
+</span>   
+$$
+\omega =\begin{bmatrix}
+\omega_1& &  &  \\
+ & \omega _2 &  &   \\
+ &  & \omega_3 &   \\
+ &  &  & \ddots \\
+ &  &  &  & \omega _n
+\end{bmatrix}
+$$
+
+
+<p>求出法方程组的解 $a_0, a_1, \ldots, a_m$，即可得到拟合多项式：<br>$$<br>\varphi(x) &#x3D; a_0 + a_1 x + \cdots + a_m x^m<br>$$<br><span style="color:#FF0000">PS:当$n\geq3$时候，求解法方程时将出现系数矩阵为病态的问题</span></p>
+<h1 id="最佳一次一致逼近多项式"><a href="#最佳一次一致逼近多项式" class="headerlink" title="最佳一次一致逼近多项式"></a>最佳一次一致逼近多项式</h1><p>求 $ p_1(x) &#x3D; a_0 + a_1 x $ 的方法</p>
+<p><span style="color:#FF0000">首先判断$f’’(x)$不变号</span></p>
+</span>
+
+<p>$$<br>a_1 &#x3D; \frac{f(b) - f(a)}{b - a}<br>$$</p>
+<p>$$<br>a_0 &#x3D; \frac{1}{2} \left[ f(a) + f(x_2) \right] - \frac{a+x_2}{2} a_1\<br>f’(x_2) &#x3D; a_1<br>$$</p>
+<p>由此得 $ f $ 在 $[a, b]$ 上的最佳一次逼近多项式</p>
+<p>$$<br>p_1(x) &#x3D; a_0 + a_1 x.<br>$$<br><strong>偏差</strong><br>$$<br>\Delta(f, P_1) &#x3D; \max_{a \leq x \leq b} |f(x) - P_1| \<br>&#x3D;\max_{a \leq x \leq b} |f(a) - P_1(a)| \<br>&#x3D;\max_{a \leq x \leq b} |f(b) - P_1(b)| \<br>&#x3D;\max_{a \leq x \leq b} |f(x_2) - P_1(x_2)|<br>$$</p>
+<h1 id="梯形公式"><a href="#梯形公式" class="headerlink" title="梯形公式"></a>梯形公式</h1><p>$$<br>\int _{a}^{b} f(x) dx \approx \frac{(b - a)}{2} \left[ f(a) + f(b) \right]<br>$$</p>
+<p><strong>余项公式</strong>:<br>$$<br>R[f] &#x3D;-\frac{1}{12} (b-a)^3 f’’(\xi)<br>$$</p>
+<p>$$<br>\xi \in [a,b]<br>$$</p>
+<h1 id="复化梯形公式"><a href="#复化梯形公式" class="headerlink" title="复化梯形公式"></a>复化梯形公式</h1><p> <strong>区间划分</strong></p>
+<p>$$<br>h &#x3D; \frac{b - a}{n}, \quad x_k &#x3D; a + kh \quad (k &#x3D; 0, \ldots, n)<br>$$<br><strong>整体复化公式</strong><br>$$<br>\begin{aligned}<br>\int_a^b f(x) dx &amp;\approx \sum_{k&#x3D;1}^n \frac{h}{2} [f(x_{k-1}) + f(x_k)] \<br>&amp;&#x3D; \frac{h}{2} \left[ f(a) + 2\sum_{k&#x3D;1}^{n-1} f(x_k) + f(b) \right] \<br>&amp;&#x3D;T_n<br>\end{aligned}<br>$$</p>
+<p><strong>4.误差分析</strong><br>$$<br>\begin{aligned}<br>R[f]<br>&amp;&#x3D; -\frac{(b - a)}{12} h^2 f’’(\xi), \quad \xi \in (a, b)<br>\end{aligned}<br>$$</p>
+<h1 id="矩形公式"><a href="#矩形公式" class="headerlink" title="矩形公式"></a>矩形公式</h1><p>$$<br>\int _{a}^{b} f(x) dx \approx (b - a) f\left( \frac{a + b}{2} \right)<br>$$</p>
+<h1 id="辛普森公式"><a href="#辛普森公式" class="headerlink" title="辛普森公式"></a>辛普森公式</h1><p>$$<br>\int _{a}^{b} f(x) dx \approx \frac{(b - a)}{6} \left[ f(a) + 4f\left( \frac{a + b}{2} \right) + f(b) \right]<br>$$</p>
+<p><strong>余项公式</strong>:<br>$$<br>R[f] &#x3D;-\frac{1}{2880} (b-a)^5 f^{(4)}(\xi)<br>$$</p>
+<p>$$<br>\xi \in [a,b]<br>$$</p>
+<h1 id="复化Simpson公式"><a href="#复化Simpson公式" class="headerlink" title="复化Simpson公式"></a>复化Simpson公式</h1><p><strong>1. 区间划分</strong></p>
+<p>$$<br> h &#x3D; \frac{b - a}{n}<br>$$</p>
+<p>$$<br> x_k &#x3D; a + kh \quad (k &#x3D; 0, \ldots, n)<br>$$</p>
+<p><strong>2. 整体复化公式</strong><br>$$<br>\begin{aligned}<br>\int_a^b f(x) dx &amp;\approx \frac{h}{6} \left[ f(a) + 4\sum_{k&#x3D;0}^{n-1} f\left(x_{k+\frac{1}{2}}\right) + 2\sum_{k&#x3D;1}^{n-1} f(x_k) + f(b) \right] \<br>&amp;&#x3D; S_n<br>\end{aligned}<br>$$</p>
+<p><strong>3.误差分析</strong><br>$$<br>R[f] &#x3D; -\frac{b - a}{2880} h^4 f^{(4)}(\xi), \quad \xi \in (a,b)<br>$$</p>
+<h1 id="代数精度"><a href="#代数精度" class="headerlink" title="代数精度"></a>代数精度</h1><p>欲使求积公式有 $m$ 次代数精度，需满足它对 $f(x) &#x3D; 1, x, x^2, \ldots, x^m$ 都能准确成立：<br>$$<br>\sum_{k&#x3D;0}^n A_k x_k^\alpha &#x3D; \int_a^b x^\alpha dx \quad (\alpha &#x3D; 0,1,2,\ldots,m)<br>$$<br>具体表现为：</p>
+<span>
+$$
+\begin{aligned}
+\sum_{k=0}^n A_k &= b - a \\
+\sum_{k=0}^n A_k x_k &= \frac{1}{2}(b^2 - a^2) \\
+\sum_{k=0}^n A_k x_k^2 &= \frac{1}{3}(b^3 - a^3) \\
+&\vdots \\
+\sum_{k=0}^n A_k x_k^m &= \frac{1}{m+1}(b^{m+1} - a^{m+1})
+\end{aligned}
+$$
+
+</span>
+
+<h1 id="插值型的求积公式"><a href="#插值型的求积公式" class="headerlink" title="插值型的求积公式"></a>插值型的求积公式</h1><p><strong>最终得到插值型求积公式：</strong><br>$$<br>I _{ n } &#x3D; \sum _{ k&#x3D;0 }^{ n } A _{ k } f ( x _{ k } )<br>$$</p>
+<p>求积系数：</p>
+<span>
+$$
+A _{ k } = \int _{ a }^{ b } l _{ k } ( x ) dx=\int _{ a }^{ b }\prod_{\substack{j=0 \\ j \neq k}}^{n} \frac{x - x_j}{x_k - x_j} dx \quad (k = 0,1,\ldots,n) \\
+$$
+</span>
+
+<p><strong>余项公式</strong></p>
+<p>插值型求积公式的余项为：<br>$$<br>R[f] &#x3D; I - I_n &#x3D; \int_a^b \frac{f^{(n+1)}(\xi)}{(n+1)!} \omega_{n+1}(x) dx<br>$$<br>式中 $\xi$ 与变量 $x$ 有关，<br>$$<br>\omega_{n+1}(x) &#x3D; (x - x_0)(x - x_1) \cdots (x - x_n)<br>$$</p>
+<h1 id="高斯求积公式"><a href="#高斯求积公式" class="headerlink" title="高斯求积公式"></a>高斯求积公式</h1><p>构造具有2n+1次代数精度的求积公式</p>
+<p>$$<br>\int_a^b \rho(x) f(x) dx \approx \sum_{k&#x3D;0}^{n} A_k f(x_k)<br>$$</p>
+<ul>
+<li><p>节点：$x_0, \ldots, x_n$（共n+1个）</p>
+</li>
+<li><p>系数：$A_0, \ldots, A_n$（共n+1个）</p>
+<p>二者都作为待定系数</p>
+</li>
+</ul>
+<p><strong>精度条件方程</strong>：<br>$$<br>\int \rho(x) \cdot 1 dx &#x3D; \sum_{k&#x3D;0}^{n} A_k \<br>\int \rho(x) x dx &#x3D; \sum_{k&#x3D;0}^{n} A_k x_k \<br>\vdots \<br>\int \rho(x) x^{2n+1} dx &#x3D; \sum_{k&#x3D;0}^{n} A_k x_k^{2n+1}<br>$$</p>
+<p><strong>代数精度</strong>：</p>
+<blockquote>
+<p>当取$f(x)&#x3D;1,x,x^2,\ldots,x^{2n+1}$代入可求解，得到的公式具有<strong>2n+1次代数精度</strong></p>
+</blockquote>
+<ul>
+<li>节点称为<strong>Gauss点</strong></li>
+<li>公式称为<strong>Gauss型求积公式</strong></li>
+</ul>
+<h3 id="高斯求积公式的余项"><a href="#高斯求积公式的余项" class="headerlink" title="高斯求积公式的余项"></a>高斯求积公式的余项</h3><p>$$<br>R_n[f] &#x3D; \int_a^b \rho(x) f(x) , dx - \sum_{k&#x3D;0}^{n} A_k f(x_k) \<br> &#x3D; \frac{f^{(2n+2)}(\eta)}{(2n+2)!} \int_a^b \omega_{n+1}^2(x) \rho(x) , dx, \quad \eta \in [a, b]<br>$$</p>
+<h2 id="高斯-勒让德求积公式"><a href="#高斯-勒让德求积公式" class="headerlink" title="高斯-勒让德求积公式"></a>高斯-勒让德求积公式</h2><p>(1) 一个节点时  <strong>$n&#x3D;0$</strong><br>$$<br>\int_{-1}^{1} f(x)dx \approx 2f(0).<br>$$</p>
+<p>(2) 两个节点时 <strong>$n&#x3D;1$</strong><br>$$<br>\int_{-1}^{1} f(x)dx \approx<br>f\left(-\frac{1}{\sqrt{3}}\right)+<br>f\left(\frac{1}{\sqrt{3}}\right).<br>$$</p>
+<p>(3) 三个节点时 <strong>$n&#x3D;2$</strong><br>$$<br>\int_{-1}^{1} f(x)dx \approx<br>\frac{5}{9}f\left(-\sqrt{\frac{3}{5}}\right)+<br>\frac{8}{9}f(0)+<br>\frac{5}{9}f\left(\sqrt{\frac{3}{5}}\right).<br>$$</p>
+<h1 id="高斯-切比雪夫求积公式"><a href="#高斯-切比雪夫求积公式" class="headerlink" title="高斯-切比雪夫求积公式"></a>高斯-切比雪夫求积公式</h1><p>可以得到$n+1$点的Gauss型求积公式：<br>$$<br>\int_{-1}^{1} \frac{f(x)}{\sqrt{1-x^2}} dx \approx \frac{\pi}{n+1} \sum_{k&#x3D;0}^{n} f\left(\cos\frac{2k+1}{2(n+1)}\pi\right) \<br> k&#x3D;0,1,\ldots,n<br>$$</p>
+<ul>
+<li><p>$n&#x3D;1$<br>$$<br>\int_{-1}^{1} \frac{f(x)}{\sqrt{1-x^2}} dx \approx \frac{\pi}{2} f\left(-\frac{\sqrt{2}}{2}\right) + \frac{\pi}{2} f\left(\frac{\sqrt{2}}{2}\right)<br>$$</p>
+</li>
+<li><p>$n&#x3D;2$<br>$$<br>\int_{-1}^{1} \frac{f(x)}{\sqrt{1-x^2}} dx \approx \frac{\pi}{3} f\left(\cos(\frac{5}{6}\pi)\right) + \frac{\pi}{3} f\left(\cos(\frac{1}{2}\pi)\right)</p>
+<ul>
+<li>\frac{\pi}{3} f\left(\cos(\frac{1}{6}\pi)\right)<br>$$</li>
+</ul>
+</li>
+</ul>
+<h1 id="道立特分解法（Doolittle-Factorization）"><a href="#道立特分解法（Doolittle-Factorization）" class="headerlink" title="道立特分解法（Doolittle Factorization）"></a>道立特分解法（Doolittle Factorization）</h1><p>通过比较法直接导出L和U的计算公式。</p>
+<p><img src="/blog/../image/Snipaste_2025-04-07_20-28-30-17498878480523.png"></p>
+<p><strong>方法备注：</strong></p>
+<ol>
+<li><span style="color:#FF0000">L的对角线元素为1，U的第一行元素$u_{1j}&#x3D;a_{1j}$</span></li>
+<li>然后求L的第一列元素，随后求U的第二列，然后L，随后U，交替往复。<strong>（瞪眼法）</strong></li>
+</ol>
+<h1 id="追赶法"><a href="#追赶法" class="headerlink" title="追赶法"></a>追赶法</h1><span>
+$$
+A=\begin{bmatrix}b_1&c_1\\a_2&b_2&c_2\\&\ddots&\ddots&\ddots\\&&a_{n-1}&b_{n-1}&c_{n-1}\\&&&a_n&b_n\end{bmatrix}=\begin{bmatrix}\alpha_1\\r_2&\alpha_2\\&\ddots&\ddots\\&&r_n&\alpha_n\end{bmatrix}\begin{bmatrix}1&\beta_1\\&1&\ddots\\&&\ddots&\beta_{n-1}\\&&&1\end{bmatrix}
+$$
+</span>
+
+<p>并且满足</p>
+<ol>
+<li><p>$a_i \ne 0\ (i &#x3D; 2, 3, \dots, n),\ c_i \ne 0\ (i &#x3D; 1, 2, \dots, n - 1);$</p>
+</li>
+<li><p>$|b_1| &gt; |c_1|,\ |b_i| \ge |a_i| + |c_i|\ (i &#x3D; 2, 3, \dots, n - 1),\ |b_n| &gt; |a_n|.$</p>
+</li>
+</ol>
+<p>$$<br>\boxed{<br>\text{条件1保证方程组不能降阶，条件2保证三角分解可做到底。}<br>}<br>$$</p>
+<p>$$<br>r_i&#x3D;a_i<br>$$</p>
+<p>$$<br>\beta_1&#x3D;\frac{c_1}{b_1}<br>$$</p>
+<p>$$<br>\beta_i&#x3D;\frac{c_i}{b_i-a_i \beta_{i-1}}<br>$$</p>
+<p>$$<br>\alpha_1&#x3D;b_{1}\quad \<br>\alpha_{i}&#x3D;b_{i}-a_{i}\beta_{i-1}<br>$$</p>
+<h1 id="Jacobi-雅可比-迭代法"><a href="#Jacobi-雅可比-迭代法" class="headerlink" title="Jacobi(雅可比)迭代法"></a>Jacobi(雅可比)迭代法</h1><p><strong>Jacobi迭代公式（分量形式）</strong></p>
+<p>第i分量迭代式</p>
+<p>$$<br>x_i^{(k+1)} &#x3D; \frac{1}{a_{ii}} \left( b_i - \sum_{\substack{j&#x3D;1 \ j \neq i}}^{n} a_{ij}x_j^{(k)} \right)<br>$$</p>
+<ol>
+<li>第一分量：$x_1 &#x3D; \frac{1}{a_{11}}(-a_{12}x_2 - \cdots - a_{1n}x_n + b_1)$</li>
+<li>第二分量：$x_2 &#x3D; \frac{1}{a_{22}}(-a_{21}x_1 - \cdots - a_{2n}x_n + b_2)$</li>
+<li>第n分量：$x_n &#x3D; \frac{1}{a_{nn}}(-a_{n1}x_1 - \cdots - a_{nn-1}x_{n-1} + b_n)$</li>
+</ol>
+<p><strong>Jacobi迭代的矩阵形式</strong></p>
+<p><strong>矩阵分解形式</strong></p>
+<p><img src="/blog/../image/Snipaste_2025-04-06_16-16-19-17498920634395.png"></p>
+<p>$$<br>A\vec{x} &#x3D; \vec{b} \Leftrightarrow (D + L + U)\vec{x} &#x3D; \vec{b}<br>$$</p>
+<p>$$<br>\begin{gathered}<br>\boldsymbol{L}&#x3D;\begin{bmatrix}0\a_{21}&amp;0\\vdots&amp;\ddots\\vdots&amp;&amp;\ddots\a_{n-1}&amp;\cdots&amp;\cdots&amp;a_{n,n-1}&amp;0\end{bmatrix}<br>U&#x3D;\begin{bmatrix}<br>0&amp;a_{12}&amp;\cdots&amp;a_{1n}\&amp;\ddots&amp;\ddots&amp;\vdots\&amp;&amp;\ddots&amp;a_{n-1,n}\<br>&amp;&amp;&amp;0<br>\end{bmatrix}<br>\quad<br>\boldsymbol{D}&#x3D;\begin{bmatrix}a_{11}\&amp;a_{22}\&amp;&amp;\ddots\&amp;&amp;&amp;\ddots\&amp;&amp;&amp;&amp;a_{nn}\end{bmatrix}\quad\end{gathered}<br>$$<br><span style="color:#FF0000">Jacobi迭代阵</span><br>$$<br>B_J&#x3D;-D^{-1}(L + U)<br>$$</p>
+<h1 id="Gauss-Seidel迭代法"><a href="#Gauss-Seidel迭代法" class="headerlink" title="Gauss-Seidel迭代法"></a>Gauss-Seidel迭代法</h1><p><strong>迭代公式</strong></p>
+<ol>
+<li>第1分量： $x_1^{(k+1)} &#x3D; \frac{1}{a_{11}} \left( -a_{12}x_2^{(k)} - a_{13}x_3^{(k)} - \cdots - a_{1n}x_n^{(k)} + b_1 \right)$</li>
+<li>第2分量： $x_2^{(k+1)} &#x3D; \frac{1}{a_{22}} \left( -a_{21}x_1^{(k+1)} - a_{23}x_3^{(k)} - \cdots - a_{2n}x_n^{(k)} + b_2 \right)$</li>
+<li>第3分量： $x_3^{(k+1)} &#x3D; \frac{1}{a_{33}} \left( -a_{31}x_1^{(k+1)} - a_{32}x_2^{(k+1)} - \cdots - a_{3n}x_n^{(k)} + b_3 \right)$</li>
+<li>第n分量：  $x_n^{(k+1)} &#x3D; \frac{1}{a_{nn}} \left( -a_{n1}x_1^{(k+1)} - \cdots - a_{n,n-1}x_{n-1}^{(k+1)} + b_n \right)$</li>
+</ol>
+<p><span style="color:#FF0000">Gauss-Seidel迭代阵</span><br>$$<br>B &#x3D; -(D + L)^{-1}U<br>$$</p>
+<hr>
+<p><strong>定理</strong></p>
+<p>设有方程组</p>
+<p>$$<br>x &#x3D; Bx + f<br>$$</p>
+<p>对于任意初始向量 $x^{(0)}$ 及任意 $f$，解此方程组的迭代法</p>
+<p>$$<br>x^{(k+1)} &#x3D; Bx^{(k)} + f<br>$$</p>
+<p>收敛的充要条件是</p>
+<p>$$<br>\rho(B) &lt; 1<br>$$</p>
+<p>当$\rho(B) &lt; 1$时，迭代过程收敛，且$\rho(B) $越小，迭代收敛越快。</p>
+<p><strong>定义</strong></p>
+<p>称 $R(B) &#x3D; -\ln \rho(B)$ 为迭代法的<span style="color:#FF0000">收敛速度</span></p>
+<p><strong>定理（充分条件）</strong></p>
+<p>若存在一个矩阵范数使得 $|B| &#x3D; q &lt; 1$，则迭代收敛，且有下列误差估计：</p>
+<p>$$<br>|\vec{x}^* - \vec{x}^{(k)}| \leq \frac{q}{1-q} |\vec{x}^{(k)} - \vec{x}^{(k-1)}|<br>$$</p>
+<p>$$<br>|\vec{x}^* - \vec{x}^{(k)}| \leq \frac{q^k}{1-q} |\vec{x}^{(1)} - \vec{x}^{(0)}|<br>$$</p>
+<p><strong>注</strong>：因 $\rho(B) \leq |B| &lt; 1$，故收敛性得证。</p>
+<hr>
+<p><strong>定理（充分条件）：</strong></p>
+<p>若A为严格对角占优阵，则解$A \vec x&#x3D; \vec b$的Jacobi和Gauss-Seidel迭代均收敛。</p>
+<h1 id="松弛法"><a href="#松弛法" class="headerlink" title="松弛法"></a>松弛法</h1><p>$$<br>x_i^{(k+1)} &#x3D; &#x3D;x_i^{(k)} + \frac{\omega }{a_{ii}}\left [b_i - \sum_{j&lt;i} a_{ij}x_j^{(k+1)} - \sum_{j \geq i} a_{ij}x_j^{(k)} \right ]<br>$$</p>
+<p><strong>定理</strong>：设$A$可逆，且$a_{ii} \neq 0$，则松弛法从任意$\vec{x}^{(0)}$出发对某个$\omega$收敛的充要条件为： $\rho(H_\omega) &lt; 1$ 其中<br>$$<br>H_\omega &#x3D; (D + \omega L)^{-1} \left[ (1 - \omega) D - \omega U \right]<br>$$</p>
+<p>为迭代矩阵</p>
+<p><strong>定理</strong>（必要条件）</p>
+<p>设$A$可逆，且$a_{ii} \neq 0$，则松弛法从任意$\vec{x}^{(0)}$出发对某个$\omega$收敛$\Rightarrow 0&lt; \omega&lt;2 $</p>
+<hr>
+<p><strong>定理（Ostrowski-Reich充分条件）</strong></p>
+<p><strong>设</strong> $A$ 为对称正定矩阵，且松弛因子满足 $0 &lt; \omega &lt; 2$，<br><strong>则</strong> 松弛法从任意初始向量 $\vec{x}^{(0)}$ 出发均收敛。</p>
+<h1 id="不动点迭代法"><a href="#不动点迭代法" class="headerlink" title="不动点迭代法"></a>不动点迭代法</h1><h3 id="等价变换"><a href="#等价变换" class="headerlink" title="等价变换"></a>等价变换</h3><p>$$<br>f(x) &#x3D; 0 \quad \longleftrightarrow \quad x &#x3D; \varphi(x)<br>$$</p>
+<p>$$<br>f(x) &#x3D; 0 \text{ 的根} \quad \longleftrightarrow \quad \varphi(x) \text{ 的不动点}<br>$$</p>
+<p>从一个初值 $x_0$ 出发，计算 $x_1 &#x3D; \varphi(x_0)$, $x_2 &#x3D; \varphi(x_1)$, …,<br>若 $ {x_k }_{k&#x3D;0}^{\infty}$ 收敛，即存在 $x^* $ 使得<br>$$<br>\lim _{k \to \infty} x_k &#x3D; x^*<br>$$</p>
+<p>且 $\varphi$ 连续，则由<br>$$<br>\lim_{k \to \infty} x_{k+1} &#x3D; \lim_{k \to \infty} \varphi(x_k)<br>$$<br>可知 $x^*  &#x3D; \varphi(x^* )$，即 $x^*$ 是 $\varphi$ 的不动点，也就是 $f &#x3D; 0$ 的根。</p>
+<blockquote>
+<p>迭代法是一种逐次逼近法，其基本思想是将隐式方程归结为一组显式的计算公式，即说，迭代过程实际上是一个逐步显示化的过程。</p>
+</blockquote>
+<h2 id="迭代法收敛定理"><a href="#迭代法收敛定理" class="headerlink" title="迭代法收敛定理"></a>迭代法收敛定理</h2><blockquote>
+<p><strong>定理1</strong> 如果迭代函数 $\varphi(x) \in C[a,b]$，并且  </p>
+<ol>
+<li>$\forall x \in [a,b]$，都有 $\varphi(x) \in [a,b]$，  </li>
+<li>$\exists 0 \leq \text{常数 } L &lt; 1$，使得 $\forall x,y \in [a,b]$，都有</li>
+</ol>
+<p>$$<br> |\varphi(x) - \varphi(y)| \leq L |x - y|;<br>$$</p>
+<p>那么 $\varphi(x)$ 在 $[a,b]$ 上存在唯一的不动点 $x^*$。</p>
+<p><strong>定理2</strong> 考虑方程 $x &#x3D; \varphi(x)$, $\varphi(x) \in C^1[a, b]$，若：</p>
+<p>(I) 当 $x \in [a, b]$ 时，$\varphi(x) \in [a, b]$；</p>
+<p>(II) 存在$0 \leq L &lt; 1$，使得 $|\varphi’(x)| \leq L &lt; 1$ 对 $\forall x \in [a, b]$ 成立。</p>
+<p>则任取 $x_0 \in [a, b]$，由 $x_{k+1} &#x3D; \varphi(x_k)$ 得到的序列 ${x_k}_{k&#x3D;0}^{\infty}$ 收敛于 $\varphi(x)$ 在 $[a, b]$ 上的<strong>唯一</strong>不动点，并且有误差估计式：</p>
+<p>$$<br>|x^* - x_k| \leq \frac{1}{1 - L} |x_{k+1} - x_k|<br>$$</p>
+<p>$$<br>|x^* - x_k| \leq \frac{L^k}{1 - L} |x_1 - x_0| \quad (k &#x3D; 1, 2, \dots)<br>$$</p>
+<p>并且存在极限：</p>
+<p>$$<br>\lim_{k \to \infty} \frac{x^* - x_{k+1}}{x^* - x_k} &#x3D; \varphi’(x^*)<br>$$</p>
+</blockquote>
+<h2 id="迭代法的收敛阶"><a href="#迭代法的收敛阶" class="headerlink" title="迭代法的收敛阶"></a>迭代法的收敛阶</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>设迭代 $x_{k+1} &#x3D; \varphi(x_k)$ 收敛到 $\varphi(x)$ 的不动点 $x^*$。</p>
+<p>设 $e_k &#x3D; x_k - x^*$，若</p>
+<p>$$<br>\lim_{k \to \infty}  \frac{e_{k+1}}{e_k^p} &#x3D; C<br>$$</p>
+<p>则称该迭代为 <strong>$p$ 阶收敛</strong>，其中 $C$ 称为渐近误差常数（$C \neq0$）。</p>
+<blockquote>
+<ul>
+<li>$p &#x3D; 1$ 时称作<strong>线性收敛</strong></li>
+<li>$p &gt; 1$ 时称作<strong>超线性收敛</strong></li>
+<li>p &#x3D; 2 时称作<strong>平方收敛</strong></li>
+</ul>
+</blockquote>
+<h3 id="定理"><a href="#定理" class="headerlink" title="定理"></a>定理</h3><p>设 $x^* $ 为方程 $x &#x3D; \varphi(x)$ 的不动点，若 $\varphi \in C^p(R(x^*))$ 且 $p \geq 2$；</p>
+<p>$$<br>\varphi’(x^* ) &#x3D; \dots &#x3D; \varphi^{(p-1)}(x^* ) &#x3D; 0, \quad \varphi^{(p)}(x^* ) \neq 0,<br>$$</p>
+<p>则 $x_{k+1} &#x3D; \varphi(x_k)$ 在 $R(x^*)$ 内 $p$ 阶收敛。</p>
+<h3 id="定理-1"><a href="#定理-1" class="headerlink" title="定理"></a>定理</h3><p>设 $x^* $ 为方程 $x &#x3D; \varphi(x)$ 的不动点，若 $\varphi \in C^p(R(x^*))$ 且 $p \geq 2$；</p>
+<p>$$<br>\varphi’(x^* ) &#x3D; \dots &#x3D; \varphi^{(p-1)}(x^* ) &#x3D; 0, \quad \varphi^{(p)}(x^* ) \neq 0,<br>$$</p>
+<p>则 $x_{k+1} &#x3D; \varphi(x_k)$ 在 $R(x^*)$ 内 $p$ 阶收敛。</p>
+<p><strong>证明</strong>：<br>$$<br>x_{k+1} &#x3D; \varphi(x_k) &#x3D; \varphi(x^* ) + \varphi’(x^* ) (x_k - x^* ) + \dots + \frac{\varphi^{(p)}(\xi_k)}{p!} (x_k - x^* )^p<br>$$</p>
+<p>其中 $\xi_k \to x^<em>$ as $k \to \infty$，极限值为 $C$。<br>$$<br>\lim <em>{k\rightarrow\infty}\frac{e</em>{k+1}}{e_k^p}&#x3D; \lim <em>{k\rightarrow\infty}\frac{x</em>{k+1}-x^{</em>}}{\left(x_{k}-x^{<em>}\right)^{p}}&#x3D;\frac{\varphi^{(p)}\left(x^{</em>}\right)}{p !}<br>$$</p>
+<h1 id="牛顿法"><a href="#牛顿法" class="headerlink" title="牛顿法"></a>牛顿法</h1><h3 id="牛顿迭代法"><a href="#牛顿迭代法" class="headerlink" title="牛顿迭代法"></a>牛顿迭代法</h3><p>牛顿迭代法是一种特殊的不动点迭代法，其计算公式为：</p>
+<p>$$<br>x_{k+1} &#x3D; x_k - \frac{f(x_k)}{f’(x_k)}, \quad k &#x3D; 0, 1, 2, \cdots<br>$$</p>
+<p>其迭代函数为：</p>
+<p>$$<br>\varphi(x) &#x3D; x - \frac{f(x)}{f’(x)}<br>$$<br><strong>牛顿迭代法的收敛速度</strong></p>
+<p>当 $f(x^* ) &#x3D; 0, f’(x^* ) \neq 0$ 时，容易证明，$\varphi’(x^* ) &#x3D; 0, \varphi’’(x^* ) &#x3D;  \frac{f’’(x^* )}{f’(x^* )}$，由定理 7.4 知，牛顿迭代法是平方收敛的，且</p>
+<p>$$<br>\lim_{k \to \infty} \frac{e_{k+1}}{e_k^2} &#x3D; \frac{f’’(x^* )}{2f’(x^* )}<br>$$</p>
+<p>其中，$e_k &#x3D; x_k - x^*$ 为误差。</p>
+<h3 id="简化牛顿法"><a href="#简化牛顿法" class="headerlink" title="简化牛顿法"></a>简化牛顿法</h3><p>$$<br>x_{k+1} &#x3D; x_k - \frac{f(x_k)}{f’(x_0)}<br>$$</p>
+<h3 id="牛顿下山法："><a href="#牛顿下山法：" class="headerlink" title="牛顿下山法："></a>牛顿下山法：</h3><p>$$<br>x_{k+1} &#x3D; x_k - \lambda \frac{f(x_k)}{f’(x_k)}, \quad k &#x3D; 0, 1, 2, \dots<br>$$</p>
+<p>其中下山因子 $\lambda &#x3D; 1$，逐次减半直至满足 $|f(x_{k+1})| &lt; |f(x_k)|$。</p>
+<h3 id="牛顿法的重根情形"><a href="#牛顿法的重根情形" class="headerlink" title="牛顿法的重根情形"></a>牛顿法的重根情形</h3><p><strong>方法1</strong>（知道重数）<br>$$<br>x_{k+1} &#x3D; x_k - m \frac{f(x_k)}{f’(x_k)}, \quad k &#x3D; 0, 1, 2, \dots<br>$$<br><strong>方法2</strong><br>$$<br>x_{k+1} &#x3D; x_k - \frac{f(x_k) f’(x_k)}{[f’(x_k)]^2 - f(x_k) f’’(x_k)}, \quad (k &#x3D; 0, 1, 2, \dots)<br>$$</p>
+<h2 id="弦截法"><a href="#弦截法" class="headerlink" title="弦截法"></a>弦截法</h2><p>$$<br>x_{k+1} &#x3D; x_k -  \frac{f(x_k)}{f(x_k)-f(x_{k-1})} (x_k-x_{k-1}), \quad k &#x3D;  1, 2, \dots<br>$$</p>
+<blockquote>
+<p><strong>欧拉法</strong><br>$$<br>y_{n+1} &#x3D; y_n + h f(x_n, y_n)<br>$$<br><strong>隐式欧拉法</strong><br>$$<br>y_{n+1} &#x3D; y_n + h f(x_{n+1}, y_{n+1}) \quad (n &#x3D; 0, \dots, N-1)<br>$$</p>
+<p><strong>改进欧拉法</strong><br>$$<br>y_{n+1} &#x3D; y_n + \frac{h}{2} \left[ f(x_n, y_n) + f(x_{n+1}, y_n + h f(x_n, y_n)) \right]<br>$$</p>
+<p><strong>四阶经典R-K方法</strong><br>$$<br>y_{n+1} &#x3D; y_n + \frac{h}{6} (K_1 + 2K_2 + 2K_3 + K_4)<br>$$</p>
+<p>$$<br>K_1 &#x3D; f(x_n, y_n)<br>$$</p>
+<p>$$<br>K_2 &#x3D; f(x_n + \frac{h}{2}, y_n + \frac{h}{2} K_1)<br>$$</p>
+<p>$$<br>K_3 &#x3D; f(x_n + \frac{h}{2}, y_n + \frac{h}{2} K_2)<br>$$</p>
+<p>$$<br>K_4 &#x3D; f(x_n + h, y_n + h K_3)<br>$$</p>
+<p><strong>稳定区间</strong></p>
+<ol>
+<li>欧拉法</li>
+</ol>
+ <div>
+
+
+<p>$$<br> E(h\lambda)&#x3D;1+h\lambda \<br> -2 &lt; \lambda h &lt; 0<br>$$</p>
+ </div>
+
+<ol start="2">
+<li>改进欧拉法</li>
+</ol>
+ <div>
+
+
+<p>$$<br> E(h\lambda)&#x3D;1 + h\lambda + \frac{(h\lambda)^2}{2} \<br> -2 &lt; h\lambda &lt; 0<br>$$</p>
+ </div>
+
+<ol start="3">
+<li>4阶经典龙格库塔方法</li>
+</ol>
+<p>$$<br> E(h\lambda) &#x3D; 1 + h\lambda + \frac{(h\lambda)^2}{2!} + \frac{(h\lambda)^3}{3!} + \frac{(h\lambda)^4}{4!}.<br>$$</p>
+<p>$$<br> -2.78 &lt; h\lambda &lt; 0<br>$$</p>
+</blockquote>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">数值分析</a></div><div class="post-share"><div class="social-share" data-image="/blog/image/hgud.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/blog/2025/06/09/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-QR%E5%88%86%E8%A7%A3/" title="数值分析-QR分解"><img class="cover" src="/blog/image/vhsuv.png" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">数值分析-QR分解</div></div><div class="info-2"><div class="info-item-1">QR分解例题1 例题2 例题3  约化为对称三对角阵例题1 例题2  </div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2025/05/15/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91/" title="数值分析-函数逼近"><img class="cover" src="/blog/image/20250505084722.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-15</div><div class="info-item-2">数值分析-函数逼近</div></div><div class="info-2"><div class="info-item-1">第三章 函数逼近范数与赋范线性空间设 $S$ 是实数域上的线性空间，$x \in S$，如果存在唯一实数 $||\cdot||$，满足以下条件：    正定性：$$||x|| \geq 0，\quad \text{当且仅当} \ x &#x3D; 0 \ \text{时，} \ ||x|| &#x3D; 0$$  齐次性：$$|| \alpha x || &#x3D; |\alpha| \cdot ||x||，\quad \alpha \in \mathbb{R}$$  三角不等式：$$||x + y|| \leq ||x|| + ||y||，\quad x, y \in S$$   则称 $||\cdot||$ 为线性空间 $S$ 上的范数，$S$ 与 $||\cdot||$ 一起称为赋范线性空间，记为 $X$。 常用范数定义 向量范数设 $x &#x3D; (x_1, \dots, x_n)^T \in \mathbb{R}^n$，定义以下三种常用范数：    ∞-范数（最大范数）：$$||x|| _ \infty &#x3D; \max_{1 \leq i \leq n}...</div></div></div></a><a class="pagination-related" href="/blog/2025/05/08/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%8F%92%E5%80%BC%E6%B3%95/" title="数值分析-插值法"><img class="cover" src="/blog/image/hgud.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-08</div><div class="info-item-2">数值分析-插值法</div></div><div class="info-2"><div class="info-item-1">此文章包含数值分析的插值法部分————————————————————————————————————————————————————————————————— 第二章 插值法插值法定义设函数 $y &#x3D; f(x)$ 在区间 $[a, b]$ 上有定义，且满足节点排列：$$ a \leq x_0 &lt; x_1 &lt; \cdots &lt; x_n \leq b $$ 已知在点 ${x_0, x_1, \ldots, x_n}$ 上的对应函数值 ${y_0, y_1, \ldots, y_n}$。 若存在一简单函数 $p(x)$，满足插值条件：$$ p(x_i) &#x3D; y_i \quad (i &#x3D; 0, 1, 2, \ldots, n) \tag{2.1} $$  （1）  则称：  $p(x)$ 为 $f(x)$ 的插值函数 ${x_0, x_1, \ldots, x_n}$ 为插值节点 包含节点的区间 $[a, b]$ 为插值区间 式 (1) 为插值条件 求插值函数的方法称为插值法   插值函数分类当 $p(x)$...</div></div></div></a><a class="pagination-related" href="/blog/2025/03/26/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86/" title="数值分析-数值积分"><img class="cover" src="/blog/image/IMG_0146.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-26</div><div class="info-item-2">数值分析-数值积分</div></div><div class="info-2"><div class="info-item-1">此文章包含数值积分部分—————————————————————————————————————————————————————- 数值积分记忆内容汇总 梯形公式n&#x3D;1 积分公式:$$\int_{a}^{b} f(x) dx \approx \frac{b-a}{2} \left[ f(a) + f(b) \right]$$ 代数精度: 1 余项公式:$$R[f] &#x3D;-\frac{1}{12} (b-a)^3 f’’(\xi)$$ $$\xi \in [a,b]$$ 辛普森公式n&#x3D;2 积分公式:$$\int_{a}^{b} f(x) dx \approx \frac{b-a}{6} \left[ f(a) + 4f\left( \frac{a+b}{2} \right) + f(b) \right]$$ 代数精度: 3 余项公式:$$R[f] &#x3D; -\frac{1}{2880} (b-a)^5 f^{(4)}(\xi)$$ $$\xi \in (a,b)$$ 复化梯形公式$$\int_a^b f(x) dx &#x3D;...</div></div></div></a><a class="pagination-related" href="/blog/2025/04/30/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E8%AF%AF%E5%B7%AE/" title="数值分析-误差"><img class="cover" src="/blog/image/2023-10-01-083219.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-30</div><div class="info-item-2">数值分析-误差</div></div><div class="info-2"><div class="info-item-1">此文章包含数值分析的误差部分—————————————————————————————————————————————————————————————————- $C^p[a,b]$表示具有$p$阶连续导数的函数空间；$C^0$表述函数连续，没有要求可导 第一章 误差误差的度量方式 设 $x$ 为准确值，$x^* $ 为 $x$ 的一个近似值，称  $$e^* &#x3D; x^* - x$$  为绝对误差，简称为误差。  对于一般情形   $$| x^*  - x | ≤ ε^*$$ $ε^* $为绝对误差限   相对误差的公式表示为：  $$e_r^* &#x3D; \frac{e^* }{x}$$，实际中一般取$$e_r^* &#x3D; \frac{e^* }{x^* }$$  $x$ 的相对误差上限定义为$\varepsilon_r^* &#x3D; \frac{\varepsilon^* }{|x^* |}$   有效数字有效数字的定义若近似值 $ x^* $ 的误差限是某一位的半个单位，该位到 $ x $ 的第一位非零数字共有 $ n $ 位，则 $ x $ 有...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC"><span class="toc-number">1.</span> <span class="toc-text">拉格朗日插值</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E5%80%BC%E4%BD%99%E9%A1%B9%E4%B8%8E%E8%AF%AF%E5%B7%AE%E4%BC%B0%E8%AE%A1"><span class="toc-number">1.1.</span> <span class="toc-text">插值余项与误差估计</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E7%82%B9%E4%B8%89%E6%AC%A1%E5%9F%83%E5%B0%94%E7%B1%B3%E7%89%B9%E6%8F%92%E5%80%BC%E5%A4%9A%E9%A1%B9%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">二点三次埃尔米特插值多项式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%9B%E9%A1%BF%E6%8F%92%E5%80%BC"><span class="toc-number">3.</span> <span class="toc-text">牛顿插值</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B7%AE%E5%88%86%E5%BD%A2%E5%BC%8F%E7%9A%84%E7%89%9B%E9%A1%BF%E6%8F%92%E5%80%BC"><span class="toc-number">4.</span> <span class="toc-text">差分形式的牛顿插值</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E6%AC%A1%E6%A0%B7%E6%9D%A1%E6%8F%92%E5%80%BC"><span class="toc-number">5.</span> <span class="toc-text">三次样条插值</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6"><span class="toc-number">5.1.</span> <span class="toc-text">第一边界条件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E4%B8%AD%E6%89%80%E7%BB%99%E8%8A%82%E7%82%B9%E6%95%B0%EF%BC%8C%E5%B0%B1%E6%98%AF%E7%B3%BB%E6%95%B0%E7%9F%A9%E9%98%B5%E7%9A%84%E9%98%B6%E6%95%B0-begin-bmatrix-2-lambda-0-mu-1-2-lambda-1-ddots-ddots-ddots-mu-n-1-2-lambda-n-1-mu-n-2-end-bmatrix-begin-bmatrix-M-0-M-1-vdots-M-n-1-M-n-end-bmatrix"><span class="toc-number">6.</span> <span class="toc-text">题目中所给节点数，就是系数矩阵的阶数$$\begin{bmatrix}2 &amp; \lambda_0 &amp; &amp; &amp; \\mu_1 &amp; 2 &amp; \lambda_1 &amp; &amp; \ &amp; \ddots &amp; \ddots &amp; \ddots &amp; \ &amp; &amp; \mu_{n-1} &amp; 2 &amp; \lambda_{n-1} \ &amp; &amp; &amp; \mu_{n} &amp; 2\end{bmatrix}\begin{bmatrix}M_0 \M_1 \\vdots \M_{n-1} \M_n\end{bmatrix}</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6"><span class="toc-number">6.1.</span> <span class="toc-text">第二边界条件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#begin-bmatrix-2-lambda-1-mu-2-2-lambda-2-ddots-ddots-ddots-mu-n-1-2-end-bmatrix-begin-bmatrix-M-1-M-2-vdots-M-n-1-end-bmatrix"><span class="toc-number">7.</span> <span class="toc-text">$$\begin{bmatrix}2 &amp; \lambda_1 &amp; &amp; \\mu_2 &amp; 2 &amp; \lambda_2 &amp; \ &amp; \ddots &amp; \ddots &amp; \ddots \ &amp; &amp; \mu_{n-1} &amp; 2\end{bmatrix}\begin{bmatrix}M_1 \M_2 \\vdots \M_{n-1}\end{bmatrix}</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E8%8C%83%E6%95%B0"><span class="toc-number">8.</span> <span class="toc-text">向量范数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%8C%83%E6%95%B0"><span class="toc-number">9.</span> <span class="toc-text">函数范数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E8%8C%83%E6%95%B0"><span class="toc-number">10.</span> <span class="toc-text">矩阵范数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E5%86%85%E7%A7%AF"><span class="toc-number">11.</span> <span class="toc-text">向量内积</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%86%85%E7%A7%AF"><span class="toc-number">12.</span> <span class="toc-text">函数内积</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%B9%B3%E6%96%B9%E9%80%BC%E8%BF%91"><span class="toc-number">13.</span> <span class="toc-text">最佳平方逼近</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8B%92%E8%AE%A9%E5%BE%B7%E5%A4%9A%E9%A1%B9%E5%BC%8F%E4%BD%9C%E4%B8%BA%E5%9F%BA%E5%87%BD%E6%95%B0"><span class="toc-number">13.0.1.</span> <span class="toc-text">勒让德多项式作为基函数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8B%92%E8%AE%A9%E5%BE%B7%EF%BC%88Legendre%EF%BC%89%E5%A4%9A%E9%A1%B9%E5%BC%8F"><span class="toc-number">14.</span> <span class="toc-text">勒让德（Legendre）多项式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%ABChebyshev%E5%A4%9A%E9%A1%B9%E5%BC%8F"><span class="toc-number">15.</span> <span class="toc-text">切比雪夫Chebyshev多项式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chebyshev-%E5%A4%9A%E9%A1%B9%E5%BC%8F%E9%87%8D%E8%A6%81%E6%80%A7%E8%B4%A8"><span class="toc-number">15.1.</span> <span class="toc-text">Chebyshev 多项式重要性质</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%8B%9F%E5%90%88"><span class="toc-number">16.</span> <span class="toc-text">最小二乘拟合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E6%95%B0%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%8B%9F%E5%90%88"><span class="toc-number">16.0.1.</span> <span class="toc-text">代数多项式拟合</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E4%B8%80%E6%AC%A1%E4%B8%80%E8%87%B4%E9%80%BC%E8%BF%91%E5%A4%9A%E9%A1%B9%E5%BC%8F"><span class="toc-number">17.</span> <span class="toc-text">最佳一次一致逼近多项式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A2%AF%E5%BD%A2%E5%85%AC%E5%BC%8F"><span class="toc-number">18.</span> <span class="toc-text">梯形公式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%8D%E5%8C%96%E6%A2%AF%E5%BD%A2%E5%85%AC%E5%BC%8F"><span class="toc-number">19.</span> <span class="toc-text">复化梯形公式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9F%A9%E5%BD%A2%E5%85%AC%E5%BC%8F"><span class="toc-number">20.</span> <span class="toc-text">矩形公式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BE%9B%E6%99%AE%E6%A3%AE%E5%85%AC%E5%BC%8F"><span class="toc-number">21.</span> <span class="toc-text">辛普森公式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%8D%E5%8C%96Simpson%E5%85%AC%E5%BC%8F"><span class="toc-number">22.</span> <span class="toc-text">复化Simpson公式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E6%95%B0%E7%B2%BE%E5%BA%A6"><span class="toc-number">23.</span> <span class="toc-text">代数精度</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8F%92%E5%80%BC%E5%9E%8B%E7%9A%84%E6%B1%82%E7%A7%AF%E5%85%AC%E5%BC%8F"><span class="toc-number">24.</span> <span class="toc-text">插值型的求积公式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%AB%98%E6%96%AF%E6%B1%82%E7%A7%AF%E5%85%AC%E5%BC%8F"><span class="toc-number">25.</span> <span class="toc-text">高斯求积公式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E6%96%AF%E6%B1%82%E7%A7%AF%E5%85%AC%E5%BC%8F%E7%9A%84%E4%BD%99%E9%A1%B9"><span class="toc-number">25.0.1.</span> <span class="toc-text">高斯求积公式的余项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E6%96%AF-%E5%8B%92%E8%AE%A9%E5%BE%B7%E6%B1%82%E7%A7%AF%E5%85%AC%E5%BC%8F"><span class="toc-number">25.1.</span> <span class="toc-text">高斯-勒让德求积公式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%AB%98%E6%96%AF-%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB%E6%B1%82%E7%A7%AF%E5%85%AC%E5%BC%8F"><span class="toc-number">26.</span> <span class="toc-text">高斯-切比雪夫求积公式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%81%93%E7%AB%8B%E7%89%B9%E5%88%86%E8%A7%A3%E6%B3%95%EF%BC%88Doolittle-Factorization%EF%BC%89"><span class="toc-number">27.</span> <span class="toc-text">道立特分解法（Doolittle Factorization）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%BD%E8%B5%B6%E6%B3%95"><span class="toc-number">28.</span> <span class="toc-text">追赶法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Jacobi-%E9%9B%85%E5%8F%AF%E6%AF%94-%E8%BF%AD%E4%BB%A3%E6%B3%95"><span class="toc-number">29.</span> <span class="toc-text">Jacobi(雅可比)迭代法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gauss-Seidel%E8%BF%AD%E4%BB%A3%E6%B3%95"><span class="toc-number">30.</span> <span class="toc-text">Gauss-Seidel迭代法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%BE%E5%BC%9B%E6%B3%95"><span class="toc-number">31.</span> <span class="toc-text">松弛法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%8D%E5%8A%A8%E7%82%B9%E8%BF%AD%E4%BB%A3%E6%B3%95"><span class="toc-number">32.</span> <span class="toc-text">不动点迭代法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AD%89%E4%BB%B7%E5%8F%98%E6%8D%A2"><span class="toc-number">32.0.1.</span> <span class="toc-text">等价变换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3%E6%B3%95%E6%94%B6%E6%95%9B%E5%AE%9A%E7%90%86"><span class="toc-number">32.1.</span> <span class="toc-text">迭代法收敛定理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3%E6%B3%95%E7%9A%84%E6%94%B6%E6%95%9B%E9%98%B6"><span class="toc-number">32.2.</span> <span class="toc-text">迭代法的收敛阶</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">32.2.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E7%90%86"><span class="toc-number">32.2.2.</span> <span class="toc-text">定理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E7%90%86-1"><span class="toc-number">32.2.3.</span> <span class="toc-text">定理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%9B%E9%A1%BF%E6%B3%95"><span class="toc-number">33.</span> <span class="toc-text">牛顿法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%9B%E9%A1%BF%E8%BF%AD%E4%BB%A3%E6%B3%95"><span class="toc-number">33.0.1.</span> <span class="toc-text">牛顿迭代法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8C%96%E7%89%9B%E9%A1%BF%E6%B3%95"><span class="toc-number">33.0.2.</span> <span class="toc-text">简化牛顿法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%9B%E9%A1%BF%E4%B8%8B%E5%B1%B1%E6%B3%95%EF%BC%9A"><span class="toc-number">33.0.3.</span> <span class="toc-text">牛顿下山法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%9B%E9%A1%BF%E6%B3%95%E7%9A%84%E9%87%8D%E6%A0%B9%E6%83%85%E5%BD%A2"><span class="toc-number">33.0.4.</span> <span class="toc-text">牛顿法的重根情形</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%A6%E6%88%AA%E6%B3%95"><span class="toc-number">33.1.</span> <span class="toc-text">弦截法</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/06/12/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%85%AC%E5%BC%8F%E8%AE%B0%E5%BF%86%E6%B1%87%E6%80%BB/" title="数值分析公式记忆汇总"><img src="/blog/image/hgud.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析公式记忆汇总"/></a><div class="content"><a class="title" href="/blog/2025/06/12/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%85%AC%E5%BC%8F%E8%AE%B0%E5%BF%86%E6%B1%87%E6%80%BB/" title="数值分析公式记忆汇总">数值分析公式记忆汇总</a><time datetime="2025-06-12T00:51:15.000Z" title="发表于 2025-06-12 08:51:15">2025-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/06/09/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-QR%E5%88%86%E8%A7%A3/" title="数值分析-QR分解"><img src="/blog/image/vhsuv.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-QR分解"/></a><div class="content"><a class="title" href="/blog/2025/06/09/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-QR%E5%88%86%E8%A7%A3/" title="数值分析-QR分解">数值分析-QR分解</a><time datetime="2025-06-09T10:36:09.000Z" title="发表于 2025-06-09 18:36:09">2025-06-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/05/15/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91/" title="数值分析-函数逼近"><img src="/blog/image/20250505084722.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-函数逼近"/></a><div class="content"><a class="title" href="/blog/2025/05/15/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91/" title="数值分析-函数逼近">数值分析-函数逼近</a><time datetime="2025-05-15T07:37:45.000Z" title="发表于 2025-05-15 15:37:45">2025-05-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/05/12/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E9%95%BF%E6%98%A5%E5%85%89%E6%9C%BA%E6%89%80%EF%BC%89/" title="机电一体化分析与建模（长春光机所）"><img src="/blog/image/20250505084723-2.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="机电一体化分析与建模（长春光机所）"/></a><div class="content"><a class="title" href="/blog/2025/05/12/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E9%95%BF%E6%98%A5%E5%85%89%E6%9C%BA%E6%89%80%EF%BC%89/" title="机电一体化分析与建模（长春光机所）">机电一体化分析与建模（长春光机所）</a><time datetime="2025-05-12T11:27:23.000Z" title="发表于 2025-05-12 19:27:23">2025-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/05/08/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%8F%92%E5%80%BC%E6%B3%95/" title="数值分析-插值法"><img src="/blog/image/hgud.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-插值法"/></a><div class="content"><a class="title" href="/blog/2025/05/08/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%8F%92%E5%80%BC%E6%B3%95/" title="数值分析-插值法">数值分析-插值法</a><time datetime="2025-05-08T00:50:35.000Z" title="发表于 2025-05-08 08:50:35">2025-05-08</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script async data-pjax src="{&quot;site_uv&quot;:true,&quot;site_pv&quot;:true,&quot;page_pv&quot;:true}"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
