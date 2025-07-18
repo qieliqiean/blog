@@ -1,0 +1,1723 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>机电一体化分析与建模（1-4章） | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第二章12 16题第三章3 7 8第四章8 11第五章19第六章9 第一章 绪论 机电系统：是机械电子系统的简称，是由机械系统和电气系统组成的，其核心是控制系统。  机电控制系统一般由7个部分组成：    放大器：是将比较得出的偏差信号进行放大，用来推动执行器去控制被控对象。 被控对象：是控制系统要操纵的对象。 机电控制系统的执行器：也称为执行元件或执行装置。  根据使用能量的不同，可以将执行装置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机电一体化分析与建模（1-4章）">
+<meta property="og:url" content="https://qieliqiean.github.io/blog/2025/05/12/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="且离且安的碎碎念">
+<meta property="og:description" content="第二章12 16题第三章3 7 8第四章8 11第五章19第六章9 第一章 绪论 机电系统：是机械电子系统的简称，是由机械系统和电气系统组成的，其核心是控制系统。  机电控制系统一般由7个部分组成：    放大器：是将比较得出的偏差信号进行放大，用来推动执行器去控制被控对象。 被控对象：是控制系统要操纵的对象。 机电控制系统的执行器：也称为执行元件或执行装置。  根据使用能量的不同，可以将执行装置">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qieliqiean.github.io/blog/image/20250505084723-2.jpeg">
+<meta property="article:published_time" content="2025-05-12T11:27:23.000Z">
+<meta property="article:modified_time" content="2025-07-09T11:25:48.797Z">
+<meta property="article:author" content="lian">
+<meta property="article:tag" content="机电一体化分析与建模">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qieliqiean.github.io/blog/image/20250505084723-2.jpeg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "机电一体化分析与建模（1-4章）",
+  "url": "https://qieliqiean.github.io/blog/2025/05/12/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E4%B8%80%EF%BC%89/",
+  "image": "https://qieliqiean.github.io/blog/image/20250505084723-2.jpeg",
+  "datePublished": "2025-05-12T11:27:23.000Z",
+  "dateModified": "2025-07-09T11:25:48.797Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "lian",
+      "url": "https://qieliqiean.github.io/blog/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/2025/05/12/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E4%B8%80%EF%BC%89/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: {"path":"/blog/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '机电一体化分析与建模（1-4章）',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/image/20250505084723-2.jpeg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">机电一体化分析与建模（1-4章）</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">机电一体化分析与建模（1-4章）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-05-12T11:27:23.000Z" title="发表于 2025-05-12 19:27:23">2025-05-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-07-09T11:25:48.797Z" title="更新于 2025-07-09 19:25:48">2025-07-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">16.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>54分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>第二章12 16题<br>第三章3 7 8<br>第四章8 11<br>第五章19<br>第六章9</p>
+<h1 id="第一章-绪论"><a href="#第一章-绪论" class="headerlink" title="第一章 绪论"></a>第一章 绪论</h1><ol>
+<li><p><strong>机电系统</strong>：是机械电子系统的简称，是由<strong>机械系统</strong>和<strong>电气系统</strong>组成的，其核心是<strong>控制系统。</strong></p>
+</li>
+<li><p>机电控制系统一般由7个部分组成：</p>
+</li>
+</ol>
+<p><img src="/blog/image/Snipaste_2025-06-28_08-40-57.png"></p>
+<p><strong>放大器</strong>：是将比较得出的偏差信号进行放大，用来推动<strong>执行器</strong>去控制被控对象。</p>
+<p><strong>被控对象</strong>：是控制系统要操纵的对象。</p>
+<p><strong>机电控制系统的执行器</strong>：也称为执行元件或执行装置。</p>
+<ol start="3">
+<li>根据<strong>使用能量的不同</strong>，可以将<strong>执行装置</strong>大体分为<u>电气式</u>、<u>液压式</u>、<u>气动式</u></li>
+</ol>
+<p><strong>液压式执行装置</strong>：</p>
+<p>a)    优点：液压驱动装置具有<u>重量轻、惯性小、快速性好</u>等优点；</p>
+<p>b)   缺点：液压元件<u>易漏油</u>，会<u>污染环境</u>，也有可能<u>引起火灾</u>；液压系统<u>易受环境温度变化的影响</u></p>
+<p><strong>气动执行装置：</strong></p>
+<p>a)    优点：是<u>动作迅速、反应快、维护简单、成本低</u>，同时由于空气黏度很小，压力损失小，节能高效，适用于<u>远距离输送</u>；<u>工作环境适应性好</u></p>
+<p>b)   缺点：由于空气可压缩性较大。负载变化时系统的动作稳定性较差，也不易获得较大输出力或力矩，同时需要对气源中杂质和水分进行处理，排气时噪声较大。</p>
+<ol start="4">
+<li><p><strong>机电控制系统的基本要求</strong>：<u>稳定性、快速性、准确性</u></p>
+<ul>
+<li><p><u>稳定性</u>是保证控制系统正常工作的先决条件。</p>
+</li>
+<li><p>稳定系统：被控量偏离期望值的偏差 <strong>随时间增长逐渐减小或趋于零</strong>，过渡过程的振荡 <strong>逐渐减弱</strong>，最终能达到平衡状态（<span style="color:#FF0000">偏差减小，震荡减弱</span>）</p>
+</li>
+<li><p>不稳定系统：被控量偏离期望值的偏差 <strong>随时间增长而发散</strong>，过渡过程的振荡 <strong>逐步增强</strong>，导致被控量失控（）</p>
+</li>
+<li><p><strong>稳态误差</strong>：被控量的<u>稳态值</u>与<u>期望值</u>之间会有误差存在，称之为稳态误差。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>机电控制系统控制方式的分类</strong>：一般可以分为<u>开环控制</u>、<u>闭环控制</u>和<u>复合控制</u>。</p>
+</li>
+<li><p><strong>复合控制方式</strong>：是把<u>偏差控制</u>与按<u>扰动控制</u>结合起来的控制方式</p>
+</li>
+<li><p><strong>开环控制系统与闭环控制系统不同的地方是</strong>：开环控制系统不需要被控对象的<u>反馈信号</u>，他的控制器直接根据<u>给定信号</u>去控制被控对象工作。</p>
+</li>
+</ol>
+<h1 id="第二章-自动控制系统基本知识"><a href="#第二章-自动控制系统基本知识" class="headerlink" title="第二章 自动控制系统基本知识"></a>第二章 自动控制系统基本知识</h1><ol>
+<li><p><strong>控制系统的组成</strong>：由<u>给定单元</u>、<u>控制单元</u>、<u>执行单元</u>、<u>被控对象</u>、<u>测量单元</u>等五大部分组成。</p>
+<p><img src="/blog/image/Snipaste_2025-06-28_09-32-30.png"></p>
+</li>
+<li><p><strong>控制系统的分类：</strong></p>
+<ul>
+<li>按<strong>系统输入信号</strong>的特点分类：<u>定值控制系统</u>、<u>随动控制系统</u>、<u>程序控制系统</u>。</li>
+<li>按<strong>系统信号的传递</strong>特点分类：开环控制系统、闭环控制系统、复合环控制系统。</li>
+<li>按<strong>系统的变量</strong>特点分类：连续控制系统、离散控制系统。</li>
+</ul>
+</li>
+<li><p><strong>建立系统数学模型的方法</strong>：</p>
+</li>
+</ol>
+<p>（1）分析计算法（<strong>解析法</strong>）</p>
+<p>（2）<strong>实验测定法</strong></p>
+<ol start="4">
+<li><p><strong>传递函数</strong>定义为：在零初始条件下，线性定常系统的输出量的拉普拉斯变换式与输入量的拉普拉斯变换式之比  </p>
+</li>
+<li><p><strong>恒值系统与随动系统</strong>：它们的特征方程和通解是相同的，所不同的是它们的边界条件和特解。研究恒值系统和随动系统不仅在方法上基本相同，而且运动方程也很相似。（特解代表系统强制运动，通解代表系统自然运动）</p>
+</li>
+<li><p><strong>几个典型环节的传递函数</strong></p>
+<ul>
+<li><p><strong>比例环节</strong></p>
+<p><img src="/blog/image/Snipaste_2025-06-28_09-57-05.png"></p>
+</li>
+<li><p><strong>惯性环节</strong></p>
+<p><img src="/blog/image/Snipaste_2025-06-28_10-00-48.png"></p>
+</li>
+<li><p><strong>积分环节</strong></p>
+<p><img src="/blog/image/Snipaste_2025-06-28_10-00-58.png"></p>
+<p><img src="/blog/image/Snipaste_2025-06-28_10-01-17.png"></p>
+</li>
+<li><p><strong>振荡环节</strong></p>
+<p><img src="/blog/image/Snipaste_2025-06-28_10-01-10.png"></p>
+<p><img src="/blog/image/Snipaste_2025-06-28_10-01-24.png"></p>
+<p><img src="/blog/image/Snipaste_2025-06-28_10-01-29.png"></p>
+</li>
+<li><p><strong>实际微分环节</strong></p>
+<p><img src="/blog/image/Snipaste_2025-06-28_10-01-38.png"></p>
+<p><img src="/blog/image/Snipaste_2025-06-28_10-01-43.png"></p>
+</li>
+<li><p><strong>延迟环节</strong></p>
+<p><img src="/blog/image/Snipaste_2025-06-28_10-01-50.png"></p>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="/blog/image/Snipaste_2025-06-28_10-01-54.png"></p>
+<h2 id="控制器的控制规律及响应特性（PID）"><a href="#控制器的控制规律及响应特性（PID）" class="headerlink" title="控制器的控制规律及响应特性（PID）"></a>控制器的控制规律及响应特性（PID）</h2><p><strong>1. 比例控制（P）</strong></p>
+<p><u><strong>工作原理</strong></u></p>
+<p>控制器输出与输入信号 <strong>成比例关系</strong>，数学表达式：</p>
+<p>$$<br>y(t) &#x3D; Kx(t) \quad \text{或} \quad \Delta y &#x3D; K\Delta x<br>$$</p>
+<p>（$K$ 为比例放大系数，$\Delta$ 表示信号变化量）</p>
+<p><u><strong>特性</strong></u></p>
+<ul>
+<li><p><strong>余差特性</strong>：过渡过程结束后，被控量的稳定值与给定值存在 <strong>余差</strong>（偏差无法完全消除）。</p>
+</li>
+<li><p><strong>响应特性</strong>：比例系数 $K$ 越大，响应越快；$K$ 越小，响应越慢</p>
+</li>
+</ul>
+<p><u><strong>性能</strong></u></p>
+<ul>
+<li><p><strong>优点</strong>：结构简单，响应快速</p>
+</li>
+<li><p><strong>缺点</strong>：无法消除稳态误差（余差），仅适用于对稳态精度要求不高的场景。</p>
+</li>
+</ul>
+<hr>
+<p>   <strong>2. 比例积分控制（PI）</strong></p>
+<p><strong>工作原理</strong></p>
+<p>   输出为 <strong>比例作用 + 积分作用</strong>，数学表达式：</p>
+<p>$$<br>   y(t) &#x3D; K\left[ x(t) + \frac{1}{T_i} \int x(t)dt \right]<br>$$</p>
+<p>   （$T_i$ 为积分时间，积分部分累积历史偏差，逐步消除余差）</p>
+<p><strong>特性</strong></p>
+<ul>
+<li><p><strong>余差特性</strong>：积分作用可 <strong>理论上消除余差</strong>（稳态误差为零）。</p>
+</li>
+<li><p><strong>积分特性</strong>：$T_i$ 越小，积分速度越快、作用越强；但 $T_i$ 过小会导致系统振荡加剧，甚至失稳（积分作用与稳定性存在矛盾）。</p>
+</li>
+</ul>
+<p><strong>性能</strong></p>
+<ul>
+<li><p><strong>优点</strong>：消除稳态误差，提高控制精度；继承比例控制的快速性。</p>
+</li>
+<li><p><strong>缺点</strong>：积分作用会降低系统稳定性（需合理设置 $T_i$），过渡过程可能更振荡或变慢。</p>
+<hr>
+</li>
+</ul>
+<p>   <strong>3. 比例微分控制（PD）</strong></p>
+<p>   <strong>工作原理</strong></p>
+<p>   输出为 <strong>比例作用 + 微分作用</strong>，数学表达式：</p>
+<p>$$<br>   y(t) &#x3D; K\left[ x(t) + T_d \frac{dx(t)}{dt} \right]<br>$$</p>
+<p>   （$T_d$ 为微分时间，微分部分反映信号变化率，实现 “超前控制”）</p>
+<p>   <strong>特性</strong></p>
+<ul>
+<li><p><strong>超前特性</strong>：微分作用可 <strong>预见偏差变化趋势</strong>（如偏差增大时提前抑制），改善动态响应。</p>
+</li>
+<li><p><strong>微分特性</strong>：$T_d$ 越大，微分作用越强，超调越小；但 $T_d$ 过大易引发被控量剧烈振荡；$T_d$ 过小则控制效果不明显。</p>
+</li>
+</ul>
+<p>   <strong>性能</strong></p>
+<ul>
+<li><p><strong>优点</strong>：抑制超调，改善动态响应（超前控制）</p>
+</li>
+<li><p><strong>缺点</strong>：对高频噪声敏感</p>
+<hr>
+</li>
+</ul>
+<p>   <strong>4. 比例积分微分控制（PID）</strong></p>
+<p>   <strong>工作原理</strong></p>
+<p>   输出为 <strong>比例 + 积分 + 微分作用</strong>，数学表达式：</p>
+<p>$$<br>   y(t) &#x3D; K\left[ x(t) + \frac{1}{T_i} \int x(t)dt + T_d \frac{dx(t)}{dt} \right]<br>$$</p>
+<p>   <strong>特性</strong></p>
+<ul>
+<li><p><strong>协同特性</strong>：综合三者优势，兼顾 <strong>快速性（P）、稳定性（D）、精度（I）</strong>。</p>
+</li>
+<li><p><strong>参数特性</strong>：参数整定复杂（需平衡 $K$、$T_i$、$T_d$），但适配范围广（尤其高精度控制）。</p>
+</li>
+</ul>
+<p>   <strong>性能</strong></p>
+<ul>
+<li><p><strong>优点</strong>：兼具快速响应、消除余差、抑制振荡的能力，适用于<strong>高精度复杂控制</strong>场景</p>
+</li>
+<li><p><strong>缺点</strong>：参数调试难度大</p>
+</li>
+</ul>
+<ol start="7">
+<li><p><strong>控制系统的控制质量指标</strong>：<u>衰减率</u>、<u>余差</u>、<u>最大偏差</u>、<u>过渡过程时间</u></p>
+</li>
+<li><p>**稳定性：**当自控系统处于平衡状时，由于受到内部或外部的扰动，被调量偏离原有的平衡值，当扰动过后，经过足够的时间，系统仍能够回到原有的平衡工作状态，即被调量回到原有平衡值上，则系统是稳定的，否则，系统是不稳定的</p>
+</li>
+<li><p><strong>误差</strong>是描述自动控制系统精度的指标，反映了系统在<strong>跟随输入信号</strong>和<strong>抑制干扰信号</strong>整个过程的精度。 所以误差有动态误差和稳态误差两种。</p>
+</li>
+</ol>
+<ul>
+<li><p><strong>动态误差</strong>描述系统的误差随时间变化的过程</p>
+</li>
+<li><p><strong>稳态误差</strong>（也称静态误差或余差）反映动态过程在时间趋于无穷大时，系统到达稳态时的误差</p>
+</li>
+</ul>
+<h1 id="第三章-机电系统中的传感器技术"><a href="#第三章-机电系统中的传感器技术" class="headerlink" title="第三章 机电系统中的传感器技术"></a>第三章 机电系统中的传感器技术</h1><ol>
+<li><strong>传感器的组成</strong>：传感器一般由<u>敏感元件</u>、<u>转换元件</u>、<u>基本转换电路</u>三部分组成</li>
+</ol>
+<p><img src="/blog/image/Snipaste_2025-06-28_14-53-18.png"></p>
+<ol start="2">
+<li><strong>传感器的分类</strong>：</li>
+</ol>
+<p>按<strong>输入量</strong>分类：<u>物理量传感器</u>、<u>化学量传感器</u>、<u>生物量传感器</u>三大类；</p>
+<p>按<strong>输出信号形式</strong>分类：<u>模拟式</u>、<u>开关式</u>、<u>数字式</u>；</p>
+<p>按<strong>转换原理</strong>分类：<u>结构型</u>、<u>物性型</u>、<u>复合型</u>；</p>
+<ol start="3">
+<li><p><strong>传感器的基本特性</strong>：静态特性、动态特性</p>
+<ul>
+<li><strong>静态特性</strong>：灵敏度、线性度、迟滞性、重复性、分辨力以及零漂等  </li>
+<li><strong>动态特性</strong>：传感器要检测的输入信号是随时间而变化的，传感器的特性应能<strong>跟踪</strong>输入信号的变化，才能获得准确的输出信号</li>
+</ul>
+</li>
+<li><p><strong>电学式压力传感器</strong>：</p>
+<ul>
+<li><p><strong>电阻应变片式压力传感器</strong> ：靠电阻值来度量压变和压力的，所以必需考虑电阻丝的温度效应</p>
+</li>
+<li><p><strong>电容式压力传感器</strong>：采用变电容测量原理，将由被测压力引起的<u>弹性元件的位移变形</u>转变为<u>电容的变化</u>，测出电容量便可知道被测压力的大小。<br>$$<br>C &#x3D; \frac{\varepsilon A}{d}<br>$$</p>
+</li>
+<li><p><strong>压阻式压力传感器</strong>：  压阻式压力传感器是基于半导体材料（单晶硅）的<strong>压阻效应</strong>（<u>固体受力后电阻率发生变化的现象</u>  ）原理制成的传感器  </p>
+<p>特点：灵敏度高，频率响应高；测量范围宽；精度高，工作可靠；易于微小型化  </p>
+</li>
+<li><p><strong>压电式压力传感器</strong>  ：压电传感器主要是利用<strong>压电效应</strong>制造而成的</p>
+<p>压电效应 ：某些晶体介质，当沿着一定方向受到机械力作用发生变形时，就产生了<strong>极化效应</strong>，而在其某些表面上会产生电荷；当机械力撤掉之后，又会重新回到不带电的状态，此现象称为“压电效应  “<br>$$<br>p &#x3D; \frac{Q}{kS} \tag{3-4}<br>$$<br>$Q$ 为电荷量，$k$ 为压电常数，$S$ 为作用面积，$p$ 为压力。通过测量电荷量可知被测压力大小。</p>
+</li>
+<li><p><strong>差动变压器式压力传感器</strong>  :由弹性敏感元件和差动变压器构成的压力传感器。 它的弹性敏感元件作为受力机构，把<strong>被测压力转换成位移</strong>，再用差动变压器把位移转换为与被测压力成一定关系的电信号</p>
+</li>
+</ul>
+</li>
+<li><p><strong>位移传感器</strong>：<u>电感式位移传感器</u>、<u>电容式位移传感器</u>、电阻式位移传感器、<u>光栅位移传感器</u>、光电式位移传感器、超声波式位移传感器、霍尔式位移传感器等。  </p>
+</li>
+<li><p><strong>电感式位移传感器</strong>：</p>
+<ul>
+<li><p><strong>电涡流式位移传感器</strong>：电涡流式位移传感器是利用<strong>电涡流原理</strong>设计而成的，它可以实现静态和动态地、非接触、高线性度、高分辨率地<strong>测量金属表面与传感器探头之间的距离及其变化</strong>  </p>
+</li>
+<li><p><strong>差动变压器式位移传感器</strong></p>
+<p>差动变压器式位移传感器是利用<strong>线圈的互感作用</strong>将<strong>位移转换成感应电势的变化</strong>。</p>
+<ul>
+<li><p>传感器主要由线圈、铁心和活动衔铁三个部分组成，如图3.10（a）（b）所示。</p>
+</li>
+<li><p>线圈包括一个初级线圈和两个反接的次级线圈，当线圈输入交流激励电压时，次级线圈将产生感应电动势$e_1$和$e_2$。由于两个次级线圈极性反接，因此传感器的输出电压为两者之差，即$e_y&#x3D;e_1-e_2$</p>
+</li>
+<li><p>活动衔铁能改变线圈之间的耦合程度。输出ey的大小随活动衔铁的位置而改变。当活动衔铁的位置居中时，即e1&#x3D;e2，ey&#x3D;0；当活动衔铁向上移时，即e1&gt;e2，ey&gt;0;当活动衔铁向下移时，即e1&lt;e2，ey&lt;0。活动衔铁的位置往复变化，其输出电压也随之变化，输出特性如图3.10（c）所示。</p>
+</li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-06-23_15-51-57.png"></p>
+</li>
+</ul>
+</li>
+<li><p><strong>光栅式位移传感器</strong></p>
+<ul>
+<li>光栅的特点是<strong>测量精度高</strong>（可达±１μｍ）、<strong>响应速度快</strong>和<strong>量程范围大</strong>等。 用于精密机械的位移测量  </li>
+<li>光栅传感器工作的基础是<strong>莫尔条纹</strong>  </li>
+<li>光栅传感器可以根据<u>莫尔条纹移动量和移动方</u>向判定<u>光栅的位移量和位移的方向</u></li>
+</ul>
+</li>
+<li><p><strong>速度传感器</strong>：测速发电机、电涡轮式转速传感器  、霍尔转速传感器   、光电式转速传感器  </p>
+<ul>
+<li>光电法测转速分透射式和反射式两种</li>
+</ul>
+</li>
+<li><p><strong>温度传感器</strong>：热电偶、热敏电阻、热电阻</p>
+</li>
+<li><p><strong>热电偶冷端补偿</strong>（温度补偿）的3种方法：<u>延长导线法、机械调零法、补偿电桥法</u></p>
+<blockquote>
+<p><strong>说明热电偶的工作原理。当热端与冷端之间距离较远时，采用什么冷端补偿方式较好？</strong></p>
+<p>热电偶的工作原理是<strong>基于物体的热电效应</strong></p>
+<p>（即不同导体或半导体材料连接形成回路时，在两个接点处温度不同会产生热电动势，从而测量温度。）</p>
+<p><strong>当热端与冷端之间的距离较远时：</strong></p>
+<ul>
+<li>需要使用<strong>补偿导线</strong>来延长热电偶的冷端，使之远离测量点</li>
+<li>注意<strong>导线的型号、极性、以及接点的温度</strong>。</li>
+</ul>
+</blockquote>
+</li>
+<li><p><strong>热敏电阻</strong>：一般把金属氧化物陶瓷半导体材料经成形、烧结等工艺制成的测温元件叫做热敏电阻</p>
+<ul>
+<li><p>热敏电阻是<strong>中低温区</strong>最常用的一种温度检测器  </p>
+</li>
+<li><p><strong>分类</strong>：</p>
+<p><strong>根据温度系数正负</strong>：PTC热敏电阻（电阻温度系数为正）、NTC热敏电阻（电阻温度系数为负）。</p>
+<p><strong>NTC</strong>热敏电阻<strong>根据不同的用途</strong>：负指数型NTC（电阻值与温度之间呈负指数关系，用于测量宽度较宽的温度测量）、突变型NTC（当温度上升到某一设定值时，其电阻值突然下降，多作电路保护）</p>
+<p><strong>PTC</strong>热敏电阻：突变型PTC（温度范围较窄，一般用于恒温加热控制或温度开关）、线性型PTC（可用于温度补偿或温度测量）。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>热电阻</strong>:把金属导体如铜、镍、铂制成的测温电阻称为热电阻。  </p>
+<ul>
+<li>热电阻是利用物质在温度变化时本身电阻也随着发生变化的特性来测量温度的</li>
+</ul>
+</li>
+<li><p><strong>热电阻传感器的测量电路</strong><br>热电阻传感器的测量电路一般使用电桥电路，由于工业用热电阻安装在生产现场，离控制室较远，因此热电阻的引线对测量结果有较大影响。为此，热电阻内部引线方式有<strong>二线制、三线制和四线制三种</strong>。</p>
+</li>
+</ol>
+<p>​      <img src="/blog/image/IMG_20250328_095737_%E7%9C%8B%E5%9B%BE%E7%8E%8B.jpg"></p>
+<blockquote>
+<p><strong>两线制</strong></p>
+<p><span style="color:#FF0000">电路结构</span></p>
+<ul>
+<li><p>采用 <strong>电桥电路</strong> 测量热电阻 $  R_t  $：电源 $  E_s  $ 供电，桥臂含固定电阻 $  R_1 \quad R_2  $、可调电阻 $  R_3  $，中间串联微安表 $  \mu A  $ 检测平衡。</p>
+</li>
+<li><p>热电阻 $  R_t  $ 通过 <strong>两根引线</strong> 接入电桥，引线自身存在电阻 $  r  $（图中虚线框内两侧的 $  r  $），即 <strong>引线电阻会串联在热电阻回路中</strong>。</p>
+</li>
+</ul>
+<p><span style="color:#FF0000">优缺点</span></p>
+<ul>
+<li>这种引线方式简单、费用低，但是引线电阻以及引线电阻的变化会带来附加误差。</li>
+<li>两线制适于引线不长，精度要求较低的场合。</li>
+</ul>
+</blockquote>
+<p><img src="/blog/image/Snipaste_2025-06-29_10-12-28.png"></p>
+<blockquote>
+<p><strong>三线制</strong></p>
+<p>热电阻的一端与一根导线相接，另一端同时接两根导线。</p>
+<p><span style="color:#FF0000">工作原理</span></p>
+<p>惠斯通电桥</p>
+<p><img src="/blog/image/Snipaste_2025-06-29_11-00-42.png"></p>
+<p>图中热电阻 $  R_t  $ 的三根导线，粗细相同，长度相等，阻值都是 $  r  $。其中一根串联在电桥的电源上，对电桥的平衡与否毫无影响。另外两根分别串联在电桥的相邻两臂里，使相邻两臂的阻值都增加同样大的阻值 $  r  $。</p>
+<p><strong>当电桥平衡时，可写出下列关系，即</strong></p>
+<p>$(R_t + r)R_2 &#x3D; (R_3 + r)R_1$</p>
+<p>由此可以得出</p>
+<p>$R_t &#x3D; \frac{(R_3 + r)R_1 - rR_2}{R_2} &#x3D; \frac{R_3R_1}{R_2} + \frac{R_1r}{R_2} - r$</p>
+<p>设计电桥时如满足 $  R_1 &#x3D; R_2  $，则上式等号右边含有 $  r  $ 的两项完全消去，就和 $  r&#x3D;0  $ 的电桥平衡公式完全一样了。这种情况下，导线电阻 $  r  $ 对热电阻的测量毫无影响。但必须注意，只有在左右对称的电桥（即 $  R_1 &#x3D; R_2  $ 的电桥），且只有在平衡状态下才是如此。</p>
+<p><img src="/blog/image/IMG_20250328_095926.jpg"></p>
+<p><strong>为什么使用三线制？有什么作用？</strong></p>
+<p>由于热电阻的电阻值较小，因此在热电阻与测量仪表之间引线过长会引起测量误差。所以此时引线电阻及其随长度和温度的变化就不能忽略不计。<span style="color:#FF0000">为了消除和减小引线电阻对测量精度的影响</span>，通常采用三线制连接法  </p>
+<ul>
+<li>减少引线电阻误差，提高测量精度</li>
+<li>适用于长距离测温</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>四线制</strong></p>
+<p><span style="color:#FF0000">工作原理</span></p>
+<ol>
+<li><strong>电流激励回路</strong></li>
+</ol>
+<ul>
+<li>恒流源（如 1mA）通过两根导线向热电阻提供稳定电流 I。</li>
+<li>引线电阻（$r_1 \quad r_4$）的压降被恒流源的高输出阻抗克服，不影响电流大小。</li>
+</ul>
+<ol start="2">
+<li><strong>电压测量回路</strong></li>
+</ol>
+<ul>
+<li><p>高阻抗电压表（输入阻抗 &gt;10 MΩ）通过另两根导线直接测量热电阻两端电压 U。</p>
+</li>
+<li><p>因测量回路电流趋近于零（I≈0），引线电阻（$r_2 \quad r_3$）的压降 IR≈0</p>
+<p>故<br>$$<br>R_t&#x3D;\frac{U}{I}<br>$$<br><img src="/blog/image/IMG_20250328_095932.jpg"></p>
+<p><strong>为什么使用四线制？有什么作用？</strong></p>
+<p><span style="color:#FF0000">为了消除和减小引线电阻对测量精度的影响</span></p>
+<ul>
+<li>消除引线电阻误差，提高测量精度</li>
+<li>适用于长距离与高精度测量</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h1 id="第四章-电路及接口设计"><a href="#第四章-电路及接口设计" class="headerlink" title="第四章 电路及接口设计"></a>第四章 电路及接口设计</h1><h2 id="运算放大器电路设计"><a href="#运算放大器电路设计" class="headerlink" title="运算放大器电路设计"></a>运算放大器电路设计</h2><h3 id="“理想”运算放大器"><a href="#“理想”运算放大器" class="headerlink" title="“理想”运算放大器"></a>“理想”运算放大器</h3><p>运算放大器的<strong>理想化条件</strong>通常有以下几点：</p>
+<ol>
+<li><p><strong>开环电压放大倍数（$A_{uo} \to \infty$）</strong>：</p>
+<ul>
+<li><p>理想运算放大器要求它的开环增益（即没有任何反馈的增益）无限大。</p>
+<ul>
+<li>运算放大器的<strong>开环增益</strong>就是输入信号与输出信号之比，通常是一个非常大的数值，理想情况下无穷大。</li>
+</ul>
+<p>开环增益的表达式为：<br>$$<br>A_{u_o}&#x3D;\frac{u_0}{u_d}<br>$$</p>
+<p>其中：</p>
+<ul>
+<li><p>$u_d$：输入电压信号（即运算放大器的正输入和负输入之间的电压差）</p>
+</li>
+<li><p>$u_o$：输出电压信号</p>
+<blockquote>
+<p><strong>虚短</strong><br>$$<br>u_d&#x3D;\frac {u_0}{A_{u0}}<br>$$<br>由于$A_{U0} \to \infty$且$u_0$为有限值，则$u_d&#x3D;0$<br>$$<br>u_+&#x3D;u_{-}<br>$$</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>开环增益越大，意味着即使输入信号很小，输出信号也会被放大得非常明显。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>开环输入电阻（$r_{id} \to \infty$）</strong>：</p>
+<ul>
+<li><p>理想的运算放大器要求其输入电阻无限大。这意味着输入端几乎不消耗电流，所有的输入电流都被输入端的电路系统吸收，不影响放大器的输入信号。</p>
+<blockquote>
+<p><strong>虚断</strong><br>$$<br>i_+&#x3D;i_{-}&#x3D;0<br>$$</p>
+</blockquote>
+</li>
+<li><p>在实际运算放大器中，输入电阻是非常高的（通常达到几兆欧），但由于技术限制不能无限大。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>开环输出电阻（$r_o \to 0$）</strong>：</p>
+<ul>
+<li>理想化运算放大器的输出电阻要求为零。这意味着理想放大器在输出端没有任何“阻抗”，输出信号不会受到负载影响，也不会因为负载电阻而减少功率。</li>
+<li>实际上，运算放大器的输出电阻是有限的（但非常小，通常在几欧姆至几十欧姆之间）。</li>
+</ul>
+</li>
+<li><p><strong>共模抑制比（$K_{CMRR} \to \infty$）</strong>：</p>
+<ul>
+<li>共模抑制比（CMRR, Common-Mode Rejection Ratio）是一个衡量运算放大器对共模信号（即两输入端同时接收到的相同信号）的抑制能力的参数。理想情况下，运算放大器应该能够完全抑制共模信号，CMRR趋近于无穷大。</li>
+<li>实际上，运算放大器对于共模信号的抑制是有限的，但好的运算放大器具有非常高的共模抑制比。</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>由于实际运算放大器的技术指标接近理想化条件，所以用理想运算放大器分析电路能够简化问题的复杂度</p>
+</blockquote>
+<h3 id="运算放大器的电压传输特性"><a href="#运算放大器的电压传输特性" class="headerlink" title="运算放大器的电压传输特性"></a>运算放大器的电压传输特性</h3><ul>
+<li>设输入电压 $u_d &#x3D; u_+ - u_-$，其中 $u_+$ 和 $u_-$ 分别为运算放大器的两个输入端电压。</li>
+<li>输出电压 $u_o$ 和输入 $u_d$ 之间的传输特性曲线如下图所示。</li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-05-12_20-44-27.png"></p>
+<ul>
+<li>近似特性和实际特性分别用不同的曲线表示：<ul>
+<li>近似特性：线性区域为主，开始接近饱和时，曲线逐渐饱和。</li>
+<li>实际特性：表现出一定的饱和电压，出现非线性区域。</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><strong>线性工作区</strong>：<ul>
+<li>$|u_d| &lt; U_{ds}$，在此区域，输出电压 $u_o &#x3D; A u_d$，即输出与输入呈线性关系。</li>
+</ul>
+</li>
+<li><strong>正向饱和区</strong>：<ul>
+<li>$u_d &gt; U_{ds}$，在此区域，输出电压达到最大饱和值 $u_o &#x3D; U_{sat}$</li>
+</ul>
+</li>
+<li><strong>负向饱和区</strong>：<ul>
+<li>$u_d &lt; -U_{ds}$，在此区域，输出电压达到最小饱和值 $u_o &#x3D; - U_{sat}$</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<ul>
+<li><p><strong>实际表现</strong>：<span style="color:#FF0000">工作在开环状态的运放</span>，任何微小的输入电压差 <code>(u_+ - u_- ≠ 0)</code> 都会使输出瞬间饱和（达到正电源电压 <code>+V_sat</code> 或负电源电压 <code>-V_sat</code>），无法进行线性放大。输出仅有两种状态：<br>$$<br> u_o&#x3D;\begin{cases}+V_\mathrm{sat}&amp;\mathrm{if<del>}u_+&gt;u_-\-V_\mathrm{sat}&amp;\mathrm{if</del>}u_+&lt;u_-&amp;\end{cases}<br>$$</p>
+</li>
+<li><p><strong>用途</strong>：<span style="color:#FF0000">构成电压比较器。</span></p>
+</li>
+</ul>
+</blockquote>
+<h3 id="反向比例器"><a href="#反向比例器" class="headerlink" title="反向比例器"></a>反向比例器</h3><p><strong><span style="color:#FF0000">反相端接输入，同相端接地</span></strong></p>
+<p>电路图示意图</p>
+<p><img src="/blog/image/1746757641996_%E7%9C%8B%E5%9B%BE%E7%8E%8B.jpg" alt="反向比例器电路图"></p>
+<ul>
+<li><p><strong>虚短</strong>：$u_+ &#x3D; u_- &#x3D; 0$</p>
+</li>
+<li><p><strong>电流分析</strong>：</p>
+<p>$$<br>i_1 &#x3D; \frac{u_i}{R_1}, \quad i_2 &#x3D; \frac{-u_o}{R_f}<br>$$</p>
+</li>
+<li><p><strong>虚断</strong>：$i_- &#x3D; 0$, 所以 $i_2 &#x3D; i_1$</p>
+</li>
+</ul>
+<p>因此，</p>
+<p>$$<br>u_o &#x3D; -\frac{R_f}{R_1} u_i<br>$$</p>
+<p><span style="color:#FF0000">（直接记忆）</span></p>
+<ol>
+<li><p>当 $R_1$ 和 $R_f$ 确定后，为使 $u_o$ 不超过饱和电压（即保证工作在线性区），对 $u_i$ 有一定限制。<span style="color:#FF0000">（在脉宽调制式功率放大级那块有用到饱和的例子）</span></p>
+</li>
+<li><p>运放不工作在开环状态（极不稳定，振荡在饱和区），都工作在闭环状态，输出电压由外电路决定。</p>
+</li>
+</ol>
+<h3 id="加法器"><a href="#加法器" class="headerlink" title="加法器"></a>加法器</h3><ul>
+<li>电路图示意图</li>
+</ul>
+<p><img src="/blog/image/1747877382020_%E7%9C%8B%E5%9B%BE%E7%8E%8B.jpg" alt="加法器电路图"></p>
+<ul>
+<li><strong>电路分析</strong></li>
+</ul>
+<p><strong>虚短</strong>（$u^- &#x3D; u^+$）<br><strong>虚断</strong>（$i^- &#x3D; 0$）</p>
+<p>所以：</p>
+<p>$$<br>\frac{u_{i1}}{R_1} + \frac{u_{i2}}{R_2} + \frac{u_{i3}}{R_3} &#x3D; \frac{-u_o}{R_f}<br>$$</p>
+<p>进一步解得：</p>
+<p>$$<br>u_o &#x3D; - R_f \left( \frac{u_{i1}}{R_1} + \frac{u_{i2}}{R_2} + \frac{u_{i3}}{R_3} \right)<br>$$</p>
+<ul>
+<li><strong>特殊情况</strong></li>
+</ul>
+<p>如果：$R_1 &#x3D; R_2 &#x3D; R_3 &#x3D; R_f$，则：</p>
+<p>$$<br>u_o &#x3D; - (u_1 + u_2 + u_3)<br>$$</p>
+<blockquote>
+<p>式中负号说明输出电压和输入电压反相。</p>
+</blockquote>
+<ul>
+<li><strong>比例加法器</strong></li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-05-22_09-32-28.png"><br>$$<br>y &#x3D; a_1 x_1 + a_2 x_2 + a_3 x_3<br>$$</p>
+<p>符号如右图：</p>
+<p>其中：</p>
+<ul>
+<li>$a_1 &#x3D; \frac{R_f}{R_1}$</li>
+<li>$a_2 &#x3D; \frac{R_f}{R_2}$</li>
+<li>$a_3 &#x3D; \frac{R_f}{R_3}$</li>
+</ul>
+<h3 id="减法器-加法器"><a href="#减法器-加法器" class="headerlink" title="减法器&#x2F;加法器"></a>减法器&#x2F;加法器</h3><ul>
+<li>电路图示意图</li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-05-22_09-39-47.png" alt="减法器电路图"></p>
+<ul>
+<li>电路分析</li>
+</ul>
+<p>对节点 1、2 分别列出节点电压方程：（并注意规则 1，$i^+ &#x3D; i^- &#x3D; 0$）</p>
+<p>由虚短知：$U_{n1}&#x3D;U_{n2}$</p>
+<p>由虚断知：$i_{+}&#x3D;i_{-}$<br>$$<br>\frac{U_{1}-U_{n1}}{R_{1}}&#x3D;\frac{U_{n1}-U_{o}}{R_{2}}<br>$$</p>
+<p>$$<br>\frac{U_{2}-U_{n2}}{R_{1}}&#x3D;\frac{U_{n2}}{R_{2}}<br>$$</p>
+<p>整理得<br>$$<br>\left( \frac{1}{R_1} + \frac{1}{R_2} \right) u_{n1} - \frac{u_1}{R_1} - \frac{u_0}{R_2} &#x3D; 0 \\<br>\left( \frac{1}{R_1} + \frac{1}{R_2} \right) u_{n2} - \frac{u_2}{R_1} &#x3D; 0<br>$$</p>
+<p>得</p>
+<p>$$<br>\frac{u_1}{R_1} + \frac{u_0}{R_2} &#x3D; \frac{u_2}{R_1}<br>$$</p>
+<p>整理后解得：</p>
+<p>$$<br>u_0 &#x3D; \frac{R_2}{R_1} (u_2 - u_1)<br>$$</p>
+<blockquote>
+<p><img src="/blog/image/Snipaste_2025-07-05_14-44-17.png"></p>
+<p><strong>两个要点</strong></p>
+<ul>
+<li>$\frac{R_f}{R_s}$</li>
+<li>同相端电压之和-反相端电压之和</li>
+</ul>
+</blockquote>
+<h3 id="积分器"><a href="#积分器" class="headerlink" title="积分器"></a>积分器</h3><ul>
+<li>电路图示意图</li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-05-22_09-52-15.png" alt="微分器电路图"></p>
+<ul>
+<li>电路分析</li>
+</ul>
+<p>由虚短和虚断知：</p>
+<p>$$<br>u^- &#x3D; 0, \quad i^- &#x3D; 0<br>$$</p>
+<p>$$<br>\frac {u_i}{R}&#x3D;-C \frac{du_0}{dt}<br>$$</p>
+<p>最终可得输出电压表达式：</p>
+<p>$$<br>u_0 &#x3D; - \frac {1}{RC }\int u_idt<br>$$</p>
+<h3 id="电感-电容的电流与电压关系"><a href="#电感-电容的电流与电压关系" class="headerlink" title="电感&#x2F;电容的电流与电压关系"></a>电感&#x2F;电容的电流与电压关系</h3><blockquote>
+<ul>
+<li><p>电感<br>$$<br>i(t) &#x3D; \frac{1}{L} \int u(t) dt \<br>u(t)&#x3D;L\frac{di(t)}{dt}<br>$$</p>
+</li>
+<li><p>电容</p>
+</li>
+</ul>
+<p>$$<br>i(t) &#x3D; C \frac{du(t)}{dt} \<br>u(t) &#x3D; \frac{1}{C} \int i(t) dt<br>$$</p>
+</blockquote>
+<h3 id="微分器"><a href="#微分器" class="headerlink" title="微分器"></a>微分器</h3><ul>
+<li>电路图示意图</li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-05-22_10-03-07.png" alt="微分器电路图"></p>
+<ul>
+<li>电路分析</li>
+</ul>
+<p>由虚短和虚断知：</p>
+<p>$$<br>u^- &#x3D; 0, \quad i^- &#x3D; 0<br>$$</p>
+<p>$$<br>C \frac{du_i}{dt} &#x3D; \frac{- u_0}{R}<br>$$</p>
+<p>最终可得输出电压表达式：</p>
+<p>$$<br>u_0 &#x3D; -RC \frac{du_i}{dt}<br>$$</p>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p>图所示为两级比例运算放大电路，求 $u_o$ 与 $u_i$ 的关系。</p>
+<ul>
+<li>电路图示意图</li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-05-22_10-07-09.png" alt="两级比例运放电路图"></p>
+<p>第一极放大器输出：</p>
+<p>$$<br>u_{o1} &#x3D; -\frac{R_f}{R_1} u_i<br>$$</p>
+<p>第二极运放输出：</p>
+<p>$$<br>u_{o2} &#x3D; -\frac{2R}{R} u_{o1}<br>$$</p>
+<p>代入 $u_{o1}$ 得：</p>
+<p>$$<br>u_{o2} &#x3D; -2 u_{o1}  &#x3D; \frac{2R_f}{R_1} u_i<br>$$</p>
+<p>最终输出：</p>
+<p>$$<br>u_o &#x3D; u_{o2} - u_{o1}&#x3D; \frac{3R_f}{R_1} u_i<br>$$</p>
+<hr>
+<p>如图所示，$A_1$、$A_2$ 为理想运算放大器，参数如电路图所示。<br>输入：$U_{i1} &#x3D; 1.1, \text{V}$，$U_{i2} &#x3D; 1, \text{V}$</p>
+<p><strong>试求：</strong> 接入 $U_{i1} &#x3D; 1.1, \text{V}$，$U_{i2} &#x3D; 1, \text{V}$ 后，输出电压 $U_o$ 由 $0, \text{V}$ 上升到 $10, \text{V}$ 所需的时间</p>
+<p><strong>电路图</strong></p>
+<p><img src="/blog/image/Snipaste_2025-05-22_10-34-00.png" alt="积分电路图"></p>
+<p><span style="color:#FF0000">（减法器+积分器）</span></p>
+<ul>
+<li>电路分析推导：</li>
+</ul>
+<p>中间运放 $A_1$ ：<br>$$<br>\frac {u_{i1}-u_1}{R_1}&#x3D;\frac {u_1-u_{o1}}{R_f}<br>$$</p>
+<p>$$<br>\frac {u_{i2}-u_1}{R_2}&#x3D;\frac {u_1}{R_3}<br>$$</p>
+<p>中间运放 $A_2$ ：<br>$$<br>\frac {u_{o1}}{R_4}&#x3D;-C \frac {du_0}{dt}<br>$$</p>
+<p>$$<br>U_{o1} &#x3D; \frac{R_3}{R_2 + R_3} \cdot \frac{R_1 + R_f}{R_1} U_{i2} - \frac{R_f}{R_1} U_{i1}&#x3D;0.2 \text{V}<br>$$</p>
+<p>$$<br>U_o &#x3D; -\frac{1}{R_4 C} \int_0^t U_{o1} , dt &#x3D; 10t\text{V} \cdot \text{s}^{-1}<br>$$</p>
+<p>$$<br>t &#x3D; \frac{U_o}{10, \text{V&#x2F;s}} &#x3D; \frac{10, \text{V}}{10, \text{V&#x2F;s}} &#x3D; 1\text{s}<br>$$</p>
+<p><strong>$U_o$ 从 0 V 上升到 10 V 需要 1 秒钟。</strong></p>
+<p><strong>电容单位换算规则</strong></p>
+<blockquote>
+<p>$$<br>1mF &#x3D; 10^{-3}F\<br>$$</p>
+<p>$$<br>1 \mu F &#x3D; 10^{-6}F \<br>$$</p>
+<p>$$<br>1nF&#x3D; 10^{-9}F \<br>$$</p>
+<p>$$<br>1pF &#x3D; 10^{-12}F\<br>$$</p>
+</blockquote>
+<p><strong>题目描述：</strong></p>
+<p>下图所示的电路中，设运算放大器 $A_1$，$D_1$、$D_2$ 均为理想元件，其中 $D_z &#x3D; 5,\text{V}$。  并设电路的初始状态为零。<br>当 $t &#x3D; 0$ 时，开关 $S$ 置于位置“1”；<br>当 $t &#x3D; 2,\text{s}$ 时，突然转换到位置“2”。</p>
+<p>试绘出输出电压 $U_o$ 的波形，并求出输出电压过零时间 $t_1$ 和开始限制时间 $t_2$。</p>
+<p><strong>电路图</strong></p>
+<p><img src="/blog/image/Snipaste_2025-05-22_10-53-31.png" alt="积分电路与开关控制"></p>
+<blockquote>
+<p>根据电容两端电压判断电流走向</p>
+<ul>
+<li>0-2-5 S：左零右负，电流向右，D截止</li>
+<li>5-7.5 S：左零右正，电流向左，$D_Z$截止，直到反向导通</li>
+</ul>
+</blockquote>
+<ul>
+<li>解题过程：</li>
+</ul>
+<p><strong>1. 阶段一：$0 &lt; t &lt; 2,\text{s}$，开关在位置 “1”</strong></p>
+<p>$$<br>U_o &#x3D; -\frac{1}{RC} \int_0^t U_i, dt &#x3D; -3t<br>$$</p>
+<p>当 $t &#x3D; 2,\text{s}$ 时：</p>
+<p>$$<br>U_o &#x3D; -6\text{V}<br>$$</p>
+<p><strong>2. 阶段二：$2,\text{s} &lt; t &lt; t_1$，开关切换到位置 “2”</strong></p>
+<p>此时电压源变为 $2,\text{V}$，且考虑初值 $U_o(2) &#x3D; -6,\text{V}$，积分器继续作用：</p>
+<p>$$<br>U_o &#x3D; -6-\frac{1}{RC} \int_2^t U_i  dt &#x3D; 2(t - 2) - 6<br>$$</p>
+<p>令 $U_o &#x3D; 0$，解得过零时间：</p>
+<p>$$<br>t_1 &#x3D; 5\text{s}<br>$$</p>
+<p><strong>3. 阶段三：积分到 $U_o &#x3D; 5,\text{V}$（钳位限制）</strong></p>
+<p>继续积分：</p>
+<p>$$<br>U_o &#x3D; 2(t - 2) - 6 &#x3D; 5<br>$$</p>
+<p>解得限制开始时间：</p>
+<p>$$<br>t_2 &#x3D; 7.5\text{s}<br>$$</p>
+<p>输出电压 $U_o$ 的波形图：</p>
+<ul>
+<li>$t&#x3D;0$ 到 $2,\text{s}$：$U_o$ 线性下降到 $-6\text{V}$</li>
+<li>$t&#x3D;2,\text{s}$ 到 $5,\text{s}$：$U_o$ 上升到 $0\text{V}$</li>
+<li>$t&#x3D;5,\text{s}$ 到 $7.5,\text{s}$：$U_o$ 上升到 $5\text{V}$</li>
+<li>$t\ge 7.5,\text{s}$：钳位，输出恒定 $5\text{V}$</li>
+</ul>
+<p><img src="/blog/image/IMG_0117.jpg"></p>
+<p>结论：</p>
+<ul>
+<li><strong>过零时间</strong>：$t_1 &#x3D; 5\text{s}$</li>
+<li><strong>开始限制时间</strong>：$t_2 &#x3D; 7.5\text{s}$</li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-07-07_08-01-56.png"></p>
+<p><img src="/blog/image/Snipaste_2025-07-07_08-51-43.png"></p>
+<p><img src="/blog/image/Snipaste_2025-07-07_10-17-13.png"></p>
+<p><img src="/blog/image/Snipaste_2025-07-07_10-17-23.png"></p>
+<p><img src="/blog/image/Snipaste_2025-07-07_10-17-30.png"></p>
+<p><img src="/blog/image/Snipaste_2025-07-07_10-17-36.png"></p>
+<p><img src="/blog/image/Snipaste_2025-07-07_10-28-36.png"></p>
+<h2 id="比较环节、比例、积分、微分等运放电路"><a href="#比较环节、比例、积分、微分等运放电路" class="headerlink" title="比较环节、比例、积分、微分等运放电路"></a>比较环节、比例、积分、微分等运放电路</h2><p><img src="/blog/image/Snipaste_2025-07-07_11-11-21.png"></p>
+<p>根据温度控制实验，试根据运放放大电路构建PI调节方式的温度控制电路，要求包括输入信号与反馈信号的<strong>比较环节控制电路</strong>，偏差信号的<strong>PI调节电路</strong>和<strong>信号增益放大电路</strong>？</p>
+<p><img src="/blog/image/%E5%9B%BE%E7%89%871.png"></p>
+<p><img src="/blog/image/Snipaste_2025-07-07_11-11-34.png"></p>
+<h2 id="高性能放大电路"><a href="#高性能放大电路" class="headerlink" title="高性能放大电路"></a>高性能放大电路</h2><p><img src="/blog/image/1231.jpg"></p>
+<p><img src="/blog/image/1233.jpg"></p>
+<p><img src="/blog/image/1234.jpg"></p>
+<p><img src="/blog/image/1232.jpg"></p>
+<h2 id="基本桥路放大器"><a href="#基本桥路放大器" class="headerlink" title="基本桥路放大器"></a>基本桥路放大器</h2><p>图4.14为基本桥路放大器</p>
+<ul>
+<li>用$R+\Delta R$代表<strong>传感器</strong>，</li>
+<li>$R$为规定的参考状态下传感器的阻值，</li>
+<li>$\Delta R$为偏离参考状态时传感器阻值的变量。</li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-05-23_16-15-41.png"></p>
+<h3 id="图4-14a（线性输出）"><a href="#图4-14a（线性输出）" class="headerlink" title="图4.14a（线性输出）"></a>图4.14a（线性输出）</h3><p>观察到<br>$$<br>u_+&#x3D;\frac{R}{R+R}U_R&#x3D;u_-<br>$$</p>
+<div>
+
+<p>$$<br>\frac{U_R-U_R&#x2F;2}{R}&#x3D; \frac{U_R&#x2F;2-U_0}{R+\Delta R}  \<br>U_o &#x3D; -\frac{\Delta R}{2R} U_R<br>$$</p>
+</div>
+
+
+
+<h3 id="图4-14b（非线性输出）"><a href="#图4-14b（非线性输出）" class="headerlink" title="图4.14b（非线性输出）"></a>图4.14b（非线性输出）</h3><div>
+
+<p>$$<br>u_+&#x3D;\frac{R+\Delta R}{2R}U_R&#x3D;u_- \<br>U_R-\frac{R+\Delta R}{2R}U_R&#x3D;\frac{R+\Delta R}{2R}U_R-U_0  \<br>U_o &#x3D;  \frac{\Delta R}{2R + \Delta R}U_R<br>$$</p>
+</div>
+
+
+
+<h3 id="两种电路结构对比"><a href="#两种电路结构对比" class="headerlink" title="两种电路结构对比"></a>两种电路结构对比</h3><table>
+<thead>
+<tr>
+<th><strong>特征</strong></th>
+<th><strong>图4.14a（传感器置于反馈支路）</strong></th>
+<th><strong>图4.14b（传感器接地）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>电路结构</strong></td>
+<td>传感器作为反馈电阻</td>
+<td>传感器接地，与固定电阻组成分压电路</td>
+</tr>
+<tr>
+<td><strong>输出电压公式</strong></td>
+<td>$U_o &#x3D; -\frac{\Delta R}{2R} U_R$</td>
+<td>$ U_o &#x3D; U_R \cdot \frac{\Delta R}{2R + \Delta R} $</td>
+</tr>
+<tr>
+<td><strong>线性性</strong></td>
+<td>随传感器电阻的增加，输出电压减小；$R$ 与 $U_o$ 成线性关系</td>
+<td>非线性关系</td>
+</tr>
+</tbody></table>
+<h3 id="关键设计优化"><a href="#关键设计优化" class="headerlink" title="关键设计优化"></a>关键设计优化</h3><p>运放负载能力保护（针对图4.14a）</p>
+<ol>
+<li><strong>问题</strong>：</li>
+</ol>
+<p>由于传感器的电流由参考电压$U_R$供给，因此图（ａ）电路流经传感器的电流受运放负载能力的限制，<span style="color:#FF0000">反馈电流 $I &#x3D; \frac{U_R&#x2F;2}{R}$ 可能超过运放最大输出电流 $I_{\text{max}}$。</span></p>
+<p><strong>而图(ｂ）电路则不受此限制</strong>  </p>
+<p><strong>解决方案</strong>：将反相输入端两臂电阻 $R$ 同时增大 $m$ 倍（即 $R \rightarrow mR$）：</p>
+<ul>
+<li>调整后电流：$I’ &#x3D; \frac{U_R&#x2F;2}{mR}$</li>
+</ul>
+<h2 id="三端固定式集成稳压电源"><a href="#三端固定式集成稳压电源" class="headerlink" title="三端固定式集成稳压电源"></a>三端固定式集成稳压电源</h2><h3 id="集成稳压电源的性能指标"><a href="#集成稳压电源的性能指标" class="headerlink" title="集成稳压电源的性能指标"></a>集成稳压电源的性能指标</h3><ul>
+<li><p>最大输出电流</p>
+</li>
+<li><p>输出电压</p>
+</li>
+<li><p>纹波电压</p>
+</li>
+<li><p>稳压系数</p>
+</li>
+<li><p>输出电阻</p>
+</li>
+</ul>
+<p><strong>三端固定式稳压集成电源的产品分类</strong></p>
+<ul>
+<li><p><strong>CW7800系列</strong>：输出电压为<strong>正极性</strong></p>
+</li>
+<li><p><strong>CW7900系列</strong>：输出电压为<strong>负极性</strong></p>
+</li>
+<li><p><strong>输出共 7 个档次电压</strong>：</p>
+</li>
+</ul>
+<p>$$<br>5\text{V},\ 6\text{V},\ 9\text{V},\ 12\text{V},\ 15\text{V},\ 18\text{V},\ 24\text{V}<br>$$</p>
+<ul>
+<li><strong>输出电流分为 3 个档次</strong>：</li>
+</ul>
+<p>$$<br>\text{H}:\ 1.5\text{A},\quad \text{L}:\ 0.1\text{A},\quad \text{M}:\ 0.5\text{A}<br>$$</p>
+<hr>
+<ul>
+<li><p><strong>LM78L05</strong>：输出电压 $+5\text{V}$，最大输出电流 $0.1\text{A}$</p>
+</li>
+<li><p><strong>CW7915</strong>：输出电压 $-15\text{V}$，最大输出电流 $1.5\text{A}$</p>
+</li>
+</ul>
+<h3 id="两种稳压电源的典型应用电路"><a href="#两种稳压电源的典型应用电路" class="headerlink" title="两种稳压电源的典型应用电路"></a>两种稳压电源的典型应用电路</h3><p><img src="/blog/image/1748049757448.jpg"></p>
+<ul>
+<li><p>其中输入端电容$ C_i$用以<strong>旁路高频干扰脉冲及改善纹波</strong>。</p>
+</li>
+<li><p>输出端所接电容$C_0$起<strong>改善瞬态响应特性、减小高频输出阻抗</strong>的作用。</p>
+</li>
+<li><p>一般在输出端无需接入大电解电容器。</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>78XX:1入，2出，3地</strong></p>
+<p><strong>79XX:1地，2出，3入</strong></p>
+<p>（两者都按照电平从高到低排列的）</p>
+</blockquote>
+<h2 id="集成稳压器"><a href="#集成稳压器" class="headerlink" title="集成稳压器"></a>集成稳压器</h2><p>图 4.19 所示为集成稳压器的实际应用电路。</p>
+<ul>
+<li>该电路使用 CW78XX 系列三端稳压器，将市电交流电压变换为稳定的直流输出，常用于嵌入式系统、小型电子设备供电。</li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-05-24_10-09-19.png"></p>
+<p><strong>电路结构说明</strong></p>
+<ul>
+<li><strong>T</strong>：变压器，将 220V 交流电降压；</li>
+<li><strong>整流桥</strong>：由四个二极管组成的桥式整流器，将交流电转换为脉动直流；</li>
+<li><strong>C</strong>：滤波电容，作用是平滑整流输出的电压；</li>
+<li><strong>$C_i$</strong>：输入旁路电容，减少输入纹波；</li>
+<li><strong>CW78XX</strong>：三端固定输出电压的集成稳压器，如 7805、7812 等；</li>
+<li><strong>$C_o$</strong>：输出端电容，用于改善负载瞬变响应；</li>
+<li><strong>$R_3$</strong>：负载电阻，模拟实际用电器负载。</li>
+</ul>
+<hr>
+<p><strong>稳压器正常工作时的输入电压范围</strong></p>
+<p>为了确保稳压器输出稳定电压，其输入电压 $U_i$ 必须满足以下范围：</p>
+<span>
+$$
+U_{omax} + (U_i - U_o) _{min} \leq U_i \leq U_{omin} + (U_i - U_o) _{max}
+$$
+
+</span>
+
+<p>其中：</p>
+<ul>
+<li>$U_{omax}$：最大输出电压；</li>
+<li>$U_{omin}$：最小输出电压；</li>
+<li>$(U_i - U_o)_{min}$：最小输入输出电压差，一般为 2V 左右；</li>
+<li>$(U_i - U_o)_{max}$：最大允许输入输出压差，通常由功耗决定。</li>
+</ul>
+<p><strong>说明</strong>：</p>
+<ul>
+<li>若 $U_i$ 过低，会导致输出掉压；</li>
+<li>若 $U_i$ 过高，会造成稳压器功耗增加，可能烧毁芯片。</li>
+</ul>
+<hr>
+<p><strong>最大输出电流限制</strong></p>
+<p>稳压器内部设有限流保护，输出电流需满足：</p>
+<p>$$<br>I_{cm} &lt; I_{omax}<br>$$</p>
+<p>其中：</p>
+<ul>
+<li>$I_{cm}$：负载实际工作电流；</li>
+<li>$I_{omax}$：稳压器规格书规定的最大输出电流，通常为 1A 或 1.5A。</li>
+</ul>
+<h2 id="改变输出电压极性的应用"><a href="#改变输出电压极性的应用" class="headerlink" title="改变输出电压极性的应用"></a>改变输出电压极性的应用</h2><p><img src="/blog/image/Snipaste_2025-07-05_19-40-40.png"></p>
+<ul>
+<li>7800：将输出端接地，接地端电位下降为<strong>负电平</strong>，成为<strong>负电压输出端</strong></li>
+<li>7900：将输出端接地，接地端电位上升为<strong>正电平</strong>，成为<strong>正电压输出端</strong></li>
+</ul>
+<h2 id="输出电压连续可调的应用"><a href="#输出电压连续可调的应用" class="headerlink" title="输出电压连续可调的应用"></a>输出电压连续可调的应用</h2><p><img src="/blog/image/Snipaste_2025-07-05_20-45-47.png"></p>
+<p><strong>图 4.21(a)：正极性连续可调电源（CW7805）</strong></p>
+<ul>
+<li>使用 CW7805 提供 5V 稳压基准；</li>
+<li>通过电位器 $R_w$ 调节其地引脚的等效参考电位；</li>
+<li>输出电压范围为：<strong>5V ~15V 连续可调</strong>；</li>
+<li>输出电流为 <strong>1A</strong>；</li>
+<li>输出电压计算公式为：</li>
+</ul>
+<p>$$<br>U_o &#x3D; U_{xx} + \left( \frac{U_{xx}}{R} + I_d \right) R_w<br>$$</p>
+<p>其中：</p>
+<ul>
+<li>$U_{xx}$：稳压器自身的输出参考电压（如 5V）；</li>
+<li>$I_d$：调整电流；</li>
+<li>$R_w$ 增大时，$U_o$ 上升。</li>
+</ul>
+<hr>
+<p><strong>图 4.21(b)：负极性连续可调电源（CW7800）</strong></p>
+<p><img src="/blog/image/Snipaste_2025-07-05_20-45-57.png"></p>
+<ul>
+<li>输入端加入额外负电源</li>
+<li>通过 2DW7 稳压管（6.2V）和电阻 $R_3$，提供负电压基准约 $-6\text{V}$；</li>
+<li>稳压器地端参考点下移，<strong>实现输出电压从 0V ~15V连续可调</strong>；</li>
+<li>若 $R_w &#x3D; 0$，则：</li>
+</ul>
+<p>$$<br>U_o &#x3D; U_{xx} - 6 &#x3D; -1\text{V}<br>$$</p>
+<blockquote>
+<ul>
+<li>图 4.21(a) 的最低输出电压为 $5\text{V}$；</li>
+<li>图 4.21(b) 可通过下移 GND 实现从 $0\text{V}$ 起调；</li>
+</ul>
+</blockquote>
+<h2 id="三极管基础知识"><a href="#三极管基础知识" class="headerlink" title="三极管基础知识"></a>三极管基础知识</h2><p><img src="/blog/image/Snipaste_2025-05-24_16-04-32.png"></p>
+<blockquote>
+<p>电路符号中其<strong>发射极箭头方向</strong>就是该类型管子<strong>发射极正向电流的方向</strong></p>
+</blockquote>
+<p><strong>三极管工作在放大状态的条件</strong></p>
+<p>三极管放大状态时的外部条件如图所示  </p>
+<p><img src="/blog/image/Snipaste_2025-05-24_16-13-40.png"></p>
+<p><strong>电流关系</strong></p>
+<p>无论是 NPN 型还是PNP 型三极管都满足发射极电流等于基极电流与集电极电流之和<br>$$<br>I_E&#x3D;I_B+I_C<br>$$<br><strong>三极管各电极的电流方向</strong>  </p>
+<p><img src="/blog/image/Snipaste_2025-05-24_16-20-37.png"></p>
+<blockquote>
+<p>如果将三极管看成节点, 三极管各电极间的电流关系应满足节点电流定律: <strong>流入三极管的电流之和等于流出三极管的电流之和</strong>  </p>
+</blockquote>
+<p>基极电流变化引起集电极电流变化, 但集电极与基极电流之比保持不变<br>$$<br>\beta&#x3D;\frac{I_C}{I_B}<br>$$</p>
+<h2 id="扩展输出电流电路"><a href="#扩展输出电流电路" class="headerlink" title="扩展输出电流电路"></a>扩展输出电流电路</h2><p>当所需输出电流超过 $1.5,\text{A}$ 时，可采用外接功率管的办法来扩展电流。CW7800 系列稳压块的外接扩流功率管<strong>只能采用 PNP 型管</strong>。</p>
+<p><img src="/blog/image/IMG_0128.jpg"></p>
+<p>电阻 $R$ 的阻值由外接功率管的 $U_{BE}$ 值和集成稳压块的输出电流 $I_{REG}$ 来决定，其表达式为：</p>
+<p>$$<br>R &#x3D; \frac{U_{BE}}{I_{REG} - \frac{1}{\beta} I_T}<br>$$</p>
+<p>其中：</p>
+<ul>
+<li>$I_{REG}$ 为流入集成稳压块的电流；</li>
+<li>$I_T$ 为流过外接功率管 VT 的<strong>集电极电流</strong>；</li>
+<li>$U_{BE}$ 为功率管的基极-发射极电压：<ul>
+<li>对于锗管取 $0.3,\text{V}$；</li>
+<li>对于硅管取 $0.7,\text{V}$；</li>
+</ul>
+</li>
+<li>$\beta$ 为三极管的电流放大倍数</li>
+<li>基极电流为 $I_b &#x3D; \dfrac{I_T}{\beta}$；</li>
+<li>$R$ 处的压降为 $U_{BE}$，用来判断何时功率管导通。</li>
+</ul>
+<p><strong>在使用三端固定式集成稳压块时应注意以下问题</strong>  </p>
+<ul>
+<li><strong>使用固定式三端集成稳压器时，管脚不能接错，公共端不得悬空。</strong></li>
+<li>当稳压器输出端使用大电容，且输出电压高于 ６Ｖ 时，应在<strong>输入、输出端跨接保护二极管</strong>，以防输入端短路时，输出电容通过稳压器进行放电使稳压器损坏。</li>
+<li>目前三端式大功率稳压器一般采用塑封和金属封装。 <strong>加散热器时耗散功率可达７.５～1５Ｗ 。</strong></li>
+<li>一般固定式集成稳压器的最大输入电压在 ３５～４０Ｖ 。 在使用时，<strong>整流电路输出电压的峰值不得超过此值。</strong></li>
+</ul>
+<h2 id="可调式集成稳压电源设计"><a href="#可调式集成稳压电源设计" class="headerlink" title="可调式集成稳压电源设计"></a>可调式集成稳压电源设计</h2><ul>
+<li>３１７ 系列稳压器输出连续可调的正电压，３３７ 系列稳压器输出连续可调的负电压，可调范围为 １.２～３７Ｖ ，最大输出电流$I_{o \max}&#x3D;1.5A$。</li>
+<li>稳压器内部含有过流、过热保护电路，具有安全可靠、性能优良、不易损坏、使用方便等优点。</li>
+<li>其电压调整率和电流调整率均优于用固定式集成稳压块构成的可调电压稳压电源</li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-07-06_08-36-02.png"><br>$$<br>U\text{。}&#x3D;\quad1.:25\Bigg[\begin{array}{cc}1+&amp;\frac{R_{\text{P}_1}}{R_1}\Bigg]\end{array}<br>$$</p>
+<ul>
+<li>1.25 是集成稳压块输出端与调整端之间的固有参考电压$U_{REF}$ ,此电压加于给定电阻$R_ 1$ 两端，将产生一个恒定电流通过输出电压调节电位器$R_\mathrm{Pl}$。</li>
+<li>电阻$R_1$常取值 120~ 240 ,$R_{P1}$一般使用精密电位器，</li>
+<li>与$R_{P1}$并联的电容器$C_2$可进一步减小输出电压的纹波。</li>
+<li>二极管 VD 的作用是防止输出端与地短路时$C_{2}$ 上的电压损坏稳压块。</li>
+</ul>
+<h2 id="稳压二极管"><a href="#稳压二极管" class="headerlink" title="稳压二极管"></a>稳压二极管</h2><p><img src="/blog/image/Snipaste_2025-05-25_09-51-04.png"></p>
+<p><strong>导通电压</strong>是稳压二极管在正向偏置下的阈值电压，即当正极电压高于负极（$V_P&gt;V_N$）时，二极管开始导通所需的最小电压。</p>
+<ul>
+<li>例如，硅材料稳压管的导通电压约为 <strong>0.7V</strong>，锗材料约为 <strong>0.3V</strong></li>
+</ul>
+<p><strong>稳压值</strong>（$V_Z$）是稳压二极管在反向击穿时维持的稳定电压，由PN结的掺杂浓度和结构设计决定。当反向电压达到 $V_Z$时，稳压管进入击穿区，电流大幅增加但电压基本恒定</p>
+<p><strong>导通电压与稳压值的对比与联系</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>参数</strong></th>
+<th><strong>导通电压（ $V_F$ ）</strong></th>
+<th><strong>稳压值（$V_Z$ ）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>工作状态</strong></td>
+<td>正向偏置（$V_P &gt; V_N $）</td>
+<td>反向偏置（$V_P &lt; V_N $）</td>
+</tr>
+<tr>
+<td><strong>典型值</strong></td>
+<td>硅管0.7V，锗管0.3V</td>
+<td>2V~200V（如5.1V、12V、24V等）</td>
+</tr>
+<tr>
+<td><strong>核心功能</strong></td>
+<td>不用于稳压，仅作为普通二极管导通</td>
+<td>稳定电压，用于电源、保护、限幅等</td>
+</tr>
+<tr>
+<td><strong>设计目标</strong></td>
+<td>正向导通时尽量降低压降</td>
+<td>反向击穿时维持电压稳定</td>
+</tr>
+</tbody></table>
+<p><img src="/blog/image/100873.jpg"></p>
+<p><img src="/blog/image/1747964224927.jpg"></p>
+<p><strong>例题</strong></p>
+<p><img src="/blog/image/1748049757394_%E7%9C%8B%E5%9B%BE%E7%8E%8B.jpg"></p>
+<div>
+
+
+<p>$$<br>I_2&#x3D;I_1+I_d \<br>I_1&#x3D;\frac {5}{R_1} \<br>6.2&#x3D;5+I_2R_2 \<br>$$</p>
+</div>
+
+<p>得到$R_1$和$R_2$有个比例关系，这时取定一个值确定另一个即可</p>
+<h2 id="电压比较器"><a href="#电压比较器" class="headerlink" title="电压比较器"></a>电压比较器</h2><p>电压比较器通常用来判断输入信号的相对大小，对信号幅度进行控制或根据输入信号的幅度决定输出信号的极性。 </p>
+<ul>
+<li>常用的电压比较器有三种：<strong>过零比较器</strong>、<strong>单限比较器</strong>和<strong>迟滞比较器</strong>（滞回比较器）。</li>
+</ul>
+<h3 id="过零比较器"><a href="#过零比较器" class="headerlink" title="过零比较器"></a>过零比较器</h3><p><span style="color:#FF0000">输入 接在反相端</span></p>
+<p><img src="/blog/image/Snipaste_2025-05-26_09-34-00.png"></p>
+<p>图4.24(a)所示电路是一个电压比较器，运放在该电路中处于<strong>开环状态</strong>工作。其基本组成包括：</p>
+<ul>
+<li><strong>$U_i$</strong>：输入电压信号；</li>
+<li><strong>$U_R$</strong>：参考电压。</li>
+</ul>
+<p>根据理想运放的特性，输出电压$U_o$的状态取决于$U_i$与$U_R$的比较结果：</p>
+<ul>
+<li>当 $U_i &lt; U_R$ 时，输出电压为：<br>$$<br>U_o &#x3D; +U_{om}<br>$$</li>
+<li>当 $U_i &gt; U_R$ 时，输出电压为：<br>$$<br>U_o &#x3D; -U_{om}<br>$$</li>
+</ul>
+<p>因此，可以通过输出电压$U_o$的<strong>极性</strong>判断输入电压$U_i$是否<strong>大于或小于参考电压$U_R$</strong>。</p>
+<hr>
+<p><strong>过零比较器</strong></p>
+<p>若将图4.24(a)中的同相端接地，即 $U_R &#x3D; 0$，则比较器成为<strong>过零比较器</strong>。</p>
+<ul>
+<li>输入信号 $U_i$ 从负值增加至正值时，在<strong>过零点</strong>，输出电压$U_o$发生<strong>极性变化</strong>，从 $+U_{om}$ 跳变到 $-U_{om}$。</li>
+<li>图4.24(b) 展示了输入 $U_i$ 与输出 $U_o$ 的关系曲线，即<strong>输入-输出特性曲线</strong>，呈现明显的跳变特性。</li>
+</ul>
+<hr>
+<p><strong>输出特性分析</strong></p>
+<ul>
+<li><p>$U_i$作用在同相端，反相输入端接地。其输出特性为：<br>$$<br>U_o &#x3D;<br>\begin{cases}<br>-U_{om}, &amp; U_i &lt; 0 \<br>+U_{om}, &amp; U_i &gt; 0<br>\end{cases}<br>$$<br>这种特性称为<strong>上行特性</strong>。</p>
+</li>
+<li><p>若反过来，则特性变为：<br>$$<br>U_o &#x3D;<br>\begin{cases}<br>+U_{om}, &amp; U_i &lt; 0 \<br>-U_{om}, &amp; U_i &gt; 0<br>\end{cases}<br>$$<br>此为<strong>下行特性</strong>。(上面图示)</p>
+</li>
+</ul>
+<hr>
+<h3 id="单限电压比较器"><a href="#单限电压比较器" class="headerlink" title="单限电压比较器"></a>单限电压比较器</h3><p>参考电压 $U_R \neq 0$ 的比较器称为单限电压比较器  </p>
+<p><img src="/blog/image/Snipaste_2025-05-26_09-47-25.png"></p>
+<h3 id="迟滞比较器（下行）"><a href="#迟滞比较器（下行）" class="headerlink" title="迟滞比较器（下行）"></a>迟滞比较器（下行）</h3><p>若在过零比较器或单限比较器电路中引入<strong>正反馈</strong>，比较器的输入-输出特性曲线便呈现<strong>迟滞回线形状</strong>，这类比较器称为<strong>迟滞比较器</strong>或<strong>滞回比较器</strong></p>
+<blockquote>
+<p>图中的$U_R$应该为$U_i$</p>
+</blockquote>
+<p><img src="/blog/image/Snipaste_2025-05-26_10-00-54.png"></p>
+<p>如图4.26(a)，通过电阻 $R_f$ 和 $R_F$ 构成正反馈通路，反馈信号作用于运放的<strong>同相端</strong>。反馈电压$U_f$由输出电压$U_o$分压得到：</p>
+<p>$$<br>U_f &#x3D; \frac{R_f}{R_f + R_F} U_o \tag{4-27}<br>$$</p>
+<p>此时有：</p>
+<p>$$<br>V^+ &#x3D; U_f &#x3D; \frac{R_f}{R_f + R_F} U_o<br>$$</p>
+<hr>
+<p><strong>迟滞现象分析</strong></p>
+<p>若当前输出电压为 $U_o &#x3D; +U_{om}$，要使其从正饱和值变为负饱和值（$-U_{om}$），则反相端电压必须<strong>高于</strong>正相端参考电压 $V^+$，即：</p>
+<p>$$<br>U_i &gt; V^+ &#x3D; \frac{R_f}{R_f + R_F} U_{om}<br>$$</p>
+<p>因此，称该电压为<strong>上阈值电压（Upper Threshold Voltage）</strong>，记作 $U_{TH1}$：</p>
+<p>$$<br>U_{TH1} &#x3D; \frac{R_f}{R_f + R_F} U_{om} \tag{4-28}<br>$$</p>
+<p>反之，若当前输出电压为 $U_o &#x3D; -U_{om}$，要使其由负变正，则反相端输入 $U_i$ 必须<strong>低于</strong>下列阈值：</p>
+<p>$$<br>U_i &lt; V^+ &#x3D; \frac{R_f}{R_f + R_F} (-U_{om})<br>$$</p>
+<p>即定义为<strong>下阈值电压（Lower Threshold Voltage）</strong>，记作 $U_{TH2}$：</p>
+<p>$$<br>U_{TH2} &#x3D; \frac{R_f}{R_f + R_F} (-U_{om}) \tag{4-29}<br>$$</p>
+<hr>
+<p><strong>特性曲线说明（图4.26(b)）</strong></p>
+<p>在图4.26(b)中，输出电压$U_o$与输入电压$U_i$的关系曲线呈<strong>迟滞回线</strong>特征，表现为：</p>
+<ul>
+<li>当 $U_i$ 从低变高并超过 $U_{TH1}$ 时，输出电压从 $+U_{om}$ 跳变到 $-U_{om}$；</li>
+<li>当 $U_i$ 从高变低并低于 $U_{TH2}$ 时，输出电压从 $-U_{om}$ 跳变到 $+U_{om}$；</li>
+</ul>
+<h3 id="迟滞比较器（接入参考电压-U-R-）（下行）"><a href="#迟滞比较器（接入参考电压-U-R-）（下行）" class="headerlink" title="迟滞比较器（接入参考电压$U_R$）（下行）"></a>迟滞比较器（接入参考电压$U_R$）（下行）</h3><p>相比基本迟滞比较器，<strong>将反馈电阻$R_f$通过电源$E_R$接地</strong>。此改动使得输入-输出特性曲线在<strong>水平方向（$U_i$轴）上偏移</strong>，即阈值电压位置发生了改变。该电路依然属于迟滞比较器，但其阈值不再关于零对称。</p>
+<p><img src="/blog/image/Snipaste_2025-05-26_10-16-55.png"></p>
+<p><strong>电压偏移分析</strong></p>
+<p>当电源 $E_R$ 单独作用于运放的同相输入端（$+$端）时，产生的偏置电压为：</p>
+<p>$$<br>V^{\prime} &#x3D; \frac{R_F}{R_f + R_F} E_R<br>$$</p>
+<p>当输出电压 $U_o$单独作用时</p>
+<p>$$<br>V^{\prime\prime} &#x3D; \frac{R_f}{R_f + R_F} U_o<br>$$</p>
+<p>因此，同相端最终的电位为：</p>
+<p>$$<br>V_+ &#x3D; V^{\prime} + V^{\prime\prime} &#x3D; \frac{R_f}{R_f + R_F} U_o + \frac{R_F}{R_f + R_F} E_R \tag{4-30}<br>$$</p>
+<hr>
+<p><strong>上阈值电压推导</strong></p>
+<p>当 $U_o &#x3D; +U_{om}$ 时，要使输出电压翻转为 $-U_{om}$，输入电压 $U_i$ 必须高于 $V_+$，因此有：</p>
+<p>$$<br>U_i &gt; U_{TH1} &#x3D; \frac{R_f}{R_f + R_F} U_{om} + \frac{R_F}{R_f + R_F} E_R \tag{4-31}<br>$$</p>
+<p><strong>下阈值电压推导</strong></p>
+<p>当 $U_o &#x3D; -U_{om}$ 时，要使输出跳变为正值 $+U_{om}$，此时$U_i$应满足：</p>
+<p>$$<br>U_i &lt;U_{TH2} &#x3D; \frac{R_F}{R_f + R_F} E_R + \frac{R_f}{R_f + R_F} (-U_{om})<br>$$</p>
+<hr>
+<p><strong>特性曲线分析</strong></p>
+<ul>
+<li>输出翻转点分别为 $U_{TH1}$ 和 $U_{TH2}$，其中 $U_{TH1} &gt; U_{TH2}$。</li>
+</ul>
+<h3 id="迟滞比较器（接入参考电压-U-R-）（上行）"><a href="#迟滞比较器（接入参考电压-U-R-）（上行）" class="headerlink" title="迟滞比较器（接入参考电压$U_R$）（上行）"></a>迟滞比较器（接入参考电压$U_R$）（上行）</h3><p><img src="/blog/image/Snipaste_2025-05-26_10-23-47.png"></p>
+<p>输入信号 $U_i$ 施加于运放的<strong>同相端</strong>，而反相端接参考电压 $E_R$，构成具有<strong>上行特性</strong>的迟滞比较器。</p>
+<p><strong>电压分析与偏置电位计算</strong></p>
+<p>在该结构中</p>
+<ul>
+<li><p>反相端的电位为 $V_- &#x3D; E_R$</p>
+</li>
+<li><p>同相端电位 $V_+$ 可通过叠加法求得：</p>
+</li>
+</ul>
+<p>$$<br>V_+ &#x3D; \frac{R_F}{R_f + R_F} U_i + \frac{R_f}{R_f + R_F} U_o<br>$$</p>
+<blockquote>
+<ul>
+<li><p>当 $V_+ &gt; V_-$ 时，输出电压 $U_o &#x3D; +U_{om}$；</p>
+</li>
+<li><p>当 $V_+ &lt; V_-$ 时，输出电压 $U_o &#x3D; -U_{om}$。</p>
+</li>
+</ul>
+</blockquote>
+<ol>
+<li>当 $U_o &#x3D; -U_{om}$ 时，要使其变为 $+U_{om}$，必须使 $V_+ &gt; V_-$，即：</li>
+</ol>
+<p>$$<br>\frac{R_F}{R_f + R_F} U_i + \frac{R_f}{R_f + R_F} (-U_{om}) &gt; E_R \tag{4-33}<br>$$</p>
+<p>由此推出</p>
+<p>$$<br>U_i &gt; \frac{R_f + R_F}{R_F} E_R + \frac{R_f}{R_F} U_{om} \tag{4-34}<br>$$</p>
+<p>才能使输出从 $-U_{om}$ 跳变至 $+U_{om}$。这一定义为<strong>上阈值电压</strong> $U_{TH1}$。</p>
+<p><strong>上阈值电压公式</strong><br>$$<br>U_{TH1} &#x3D; \frac{R_f + R_F}{R_F} E_R + \frac{R_f}{R_F} U_{om}<br>$$</p>
+<ol start="2">
+<li>当 $U_o &#x3D; +U_{om}$，要使其变为 $-U_{om}$，则必须使 $V_+ &lt; V _-$，即：</li>
+</ol>
+<p>$$<br>\frac{R_F}{R_f + R_F} U_i + \frac{R_f}{R_f + R_F} U_{om} &lt; E_R \tag{4-35}<br>$$</p>
+<p>由此得出，输入信号需满足：</p>
+<p>$$<br>U_i &lt; \frac{R_f + R_F}{R_F} E_R - \frac{R_f}{R_F} U_{om} \tag{4-36}<br>$$</p>
+<p>该值定义为<strong>下阈值电压</strong> $U_{TH2}$。<br>$$<br>U_{TH2}&#x3D;\frac{R_f + R_F}{R_F} E_R - \frac{R_f}{R_F} U_{om} \tag{4-36}<br>$$</p>
+<hr>
+<p><strong>特性曲线分析（图4.28(b)）</strong></p>
+<ul>
+<li>当 $U_i$ 增大并超过 $U_{TH1}$ 时，输出由 $-U_{om}$ 跳变至 $+U_{om}$；</li>
+<li>当 $U_i$ 减小并低于 $U_{TH2}$ 时，输出由 $+U_{om}$ 跳变至 $-U_{om}$；</li>
+<li>迟滞区间由 $U_{TH1}$ 和 $U_{TH2}$ 确定，特性为<strong>上行型迟滞回线</strong>。</li>
+</ul>
+<hr>
+<h3 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h3><p><img src="/blog/image/g45eg.jpg"></p>
+<blockquote>
+<p>图中的线应该往下移一点，比较器输出$+U_{om} \sim -U_{om}$</p>
+<p>$U_{om}&#x3D;10V$</p>
+<ul>
+<li><strong>这就是一个下行的迟滞比较器，抓住两个阈值电压即可解题</strong></li>
+</ul>
+</blockquote>
+<p><strong>例题</strong></p>
+<p><img src="/blog/image/1748049757362_%E7%9C%8B%E5%9B%BE%E7%8E%8B.jpg"></p>
+<h2 id="电压跟随器"><a href="#电压跟随器" class="headerlink" title="电压跟随器"></a>电压跟随器</h2><blockquote>
+<p><strong>电压跟随器（Voltage Follower）工作原理推导</strong></p>
+<hr>
+<p><strong>1. 电路结构</strong></p>
+<p>电压跟随器是一种将<strong>运算放大器输出端</strong>直接连接到其<strong>反相输入端（$-$）<strong>的特殊形式，输入信号加在</strong>同相端（$+$）</strong>。</p>
+<blockquote>
+<p><strong>记忆</strong>：<span style="color:#FF0000">同相输入，反相输出</span></p>
+</blockquote>
+<p>其结构特点是：</p>
+<ul>
+<li>$U_+ &#x3D; U_i$（输入端）</li>
+<li>$U_- &#x3D; U_o$（因为反相端与输出端直接相连）</li>
+</ul>
+<hr>
+<p><strong>2. 运算放大器基本关系式</strong></p>
+<p>理想运算放大器的基本输出关系为：</p>
+<p>$$<br>U_o &#x3D; A(U_+ - U_-)<br>$$</p>
+<p>其中：</p>
+<ul>
+<li>$U_o$：输出电压  </li>
+<li>$A$：开环增益（$A \to \infty$）  </li>
+<li>$U_+$：同向端电压  </li>
+<li>$U_-$：反相端电压</li>
+</ul>
+<hr>
+<p><strong>3. 引入负反馈分析</strong></p>
+<p>由于：</p>
+<ul>
+<li>$U_+ &#x3D; U_i$  </li>
+<li>$U_- &#x3D; U_o$</li>
+</ul>
+<p>将其代入上式：</p>
+<p>$$<br>U_o &#x3D; A(U_i - U_o)<br>$$</p>
+<p>整理得：</p>
+<p>$$<br>U_o + A U_o &#x3D; A U_i<br>$$</p>
+<p>$$<br>U_o (1 + A) &#x3D; A U_i<br>$$</p>
+<p>$$<br>U_o &#x3D; \frac{A}{1 + A} U_i<br>$$</p>
+<p>当 $A \to \infty$ 时：</p>
+<p>$$<br>\frac{A}{1 + A} \to 1<br>$$</p>
+<p>所以：</p>
+<p>$$<br>U_o \approx U_i<br>$$</p>
+<p>即输出电压等于输入电压。</p>
+<hr>
+<p><strong>4. 工作原理总结</strong></p>
+<p>电压跟随器依靠运放的高增益特性与强负反馈作用，迫使其输出电压自动调整到与输入电压一致，从而达到：</p>
+<p>$$<br>U_o \approx U_i<br>$$</p>
+<p>这种“紧随输入”的特性，就是电压跟随器名称的由来。</p>
+<hr>
+<p><img src="/blog/image/Snipaste_2025-06-30_09-27-45.png"></p>
+</blockquote>
+<h2 id="V-F电路设计"><a href="#V-F电路设计" class="headerlink" title="V&#x2F;F电路设计"></a>V&#x2F;F电路设计</h2><h3 id="V-F转换电路"><a href="#V-F转换电路" class="headerlink" title="V&#x2F;F转换电路"></a>V&#x2F;F转换电路</h3><p>$\bigstar$<strong>定义</strong><span style="color:#FF0000">（什么是V&#x2F;F转换）</span></p>
+<p>V&#x2F;F（电压&#x2F;频率）转换器能把<strong>输入信号电压转换成相应的频率信号</strong>，即它的<strong>输出信号频率与输入信号电压值成比例</strong>，故又称为电压控制（压控）振荡器（VCO）。</p>
+<p><strong>应用</strong></p>
+<p>在<u>调频（电压调频）</u>，<u>锁相</u>和<u>A&#x2F;D变换</u>等许多技术领域得到非常广泛的应用。</p>
+<p><strong>指标</strong></p>
+<ul>
+<li>额定工作频率和动态范围</li>
+<li>灵敏度或变换系数</li>
+<li>非线性误差</li>
+<li>灵敏度误差和温度系数等</li>
+</ul>
+<p><strong>最简信号频率输入通道结构</strong></p>
+<p><img src="/blog/image/Snipaste_2025-06-25_09-31-37.png"></p>
+<ul>
+<li>将被测量转换成与被测信号成比例的电压(或电流)脉冲频率(f)、周期(T)或周期数(N)。</li>
+</ul>
+<p>因此，前向通道只需将代表被测物理量的这些电压脉冲信号通过整形放大成TTL(Transister-Transister-Logic晶体管-晶体管逻辑电平)电平的频率、周期、周期数信号送入计算机应用系统中即可。为了防止噪声侵入，可经过光电耦合后送入。</p>
+<p><strong>V&#x2F;F转换信号频率输入通道结构</strong></p>
+<p><img src="/blog/image/Snipaste_2025-06-25_09-36-31.png"></p>
+<ul>
+<li><p>这种输入通道结构与一般A&#x2F;D转换器前向通道结构相似，只不过是将A&#x2F;D转换器改换成V&#x2F;F转换器</p>
+</li>
+<li><p>传感器一般都是模拟量小信号电流或电压输出，经过信号调节器调节成能满足V&#x2F;F转换器输入要求的大电压信号。</p>
+</li>
+<li><p>V&#x2F;F转换器把这些模拟输入电压转换成相应的TTL频率信号，经光电耦合后送入计算机。同样可以送入I&#x2F;O口、计数器输入端或中断源输入端上。</p>
+</li>
+<li><p>在这类通道中，信号调节器及其前端电路皆为模拟电路。</p>
+</li>
+</ul>
+<p><strong>R、L、C&#x2F;F转换信号频率输入通道结构</strong></p>
+<p><img src="/blog/image/Snipaste_2025-06-25_09-34-14.png"></p>
+<p>这种输入通道中的传感器都是R、L、C类传感器，如热敏电阻、光敏电阻、电感传感器，电容传感器等。</p>
+<p>把外界被测物理量变换成R、L、C的变化，这些敏感元件可称为参量变换器。将这些R、L、C参量接入R、L、C振荡电路或脉冲宽度调制器，则振荡电路输出的信号频率f或脉冲宽度调制器输出的信号周期T与相应的R、L、C成正比。</p>
+<p><span style="color:#FF0000">  <strong>$ \bigstar$ V&#x2F;F转换原理</strong></span></p>
+<p><strong>原理</strong>：利用过零比较器的工作原理，转换器产生<strong>频率</strong>正比于输入电压的<strong>脉冲序列</strong>，然后在固定的时间内对脉冲进行计数。</p>
+<p><strong>两种方法：</strong></p>
+<ul>
+<li>电荷平衡式V&#x2F;F转换器</li>
+<li>积分复原型</li>
+</ul>
+<h3 id="电荷平衡式V-F转换电路"><a href="#电荷平衡式V-F转换电路" class="headerlink" title="电荷平衡式V&#x2F;F转换电路"></a>电荷平衡式V&#x2F;F转换电路</h3><blockquote>
+<p>课本图做大概推导，PPT解释具体的电荷转移原理</p>
+</blockquote>
+<p><img src="/blog/image/Snipaste_2025-07-06_14-13-17.png"></p>
+<p><img src="/blog/image/Snipaste_2025-07-06_14-13-33.png"></p>
+<p><img src="/blog/image/Snipaste_2025-07-06_14-14-14.png"></p>
+<p><img src="/blog/image/Snipaste_2025-07-06_14-14-30.png"></p>
+<h3 id="积分复原型V-F转换电路"><a href="#积分复原型V-F转换电路" class="headerlink" title="积分复原型V&#x2F;F转换电路"></a>积分复原型V&#x2F;F转换电路</h3><ul>
+<li><p>电路包含积分器、电平检测器、积分复原开关</p>
+</li>
+<li><p><span style="color:#FF0000">积分复原开关</span>：当积分电容充电到<strong>下限值电平</strong>（图中$u_2$）时，电平检测器使积分复原开关导通，使电容迅速放电，积分器输出复原到<strong>上限阀值电压</strong>（图中$u_1$)，复原开关重新截止，积分器再次积分  </p>
+</li>
+<li><p>$u_i$越高$u_c$越快达到$u_p$电平，比较器翻转越快</p>
+</li>
+<li><blockquote>
+<p><strong>该电路精度低，适用于精度不高的场合</strong></p>
+</blockquote>
+</li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-07-06_14-15-07.png"></p>
+<h2 id="接口设计"><a href="#接口设计" class="headerlink" title="接口设计"></a>接口设计</h2><h3 id="接口分类"><a href="#接口分类" class="headerlink" title="接口分类"></a>接口分类</h3><p><span style="color:#FF0000">接口</span>**：**接口是指计算机系统中一个部件与另一些部件的相互连接。</p>
+<p><strong>接口分类</strong></p>
+<ul>
+<li><p>存储器接口</p>
+</li>
+<li><p>I&#x2F;O接口</p>
+</li>
+<li><p>总线接口（通用接口）</p>
+</li>
+</ul>
+<h3 id="电平转换"><a href="#电平转换" class="headerlink" title="电平转换"></a>电平转换</h3><ol>
+<li><p><span style="color:#FF0000">为什么要进行电平转换?</span><br>与计算机相连的其它功能单元各<u>自有各自的工作电平</u>， 需要一个<u>媒介</u>与这些功能单元电平之间进行相互转换。</p>
+</li>
+<li><p><strong>什么是TTL电平?</strong><br>TTL电平信号通常数据表示采用二进制规定，+5V等于逻辑”1”，0V等于逻辑”0”，这被称做TTL（晶体管-晶体管逻辑电平）信号系统，这是计算机处理控制的设备内部各部分之间通信的标准技术。</p>
+</li>
+<li><p><strong>TTL电平转换</strong></p>
+<ul>
+<li>TTL——继电器连接</li>
+<li>TTL——MOS电平转换</li>
+</ul>
+</li>
+</ol>
+<h3 id="TTL——继电器连接"><a href="#TTL——继电器连接" class="headerlink" title="TTL——继电器连接"></a>TTL——继电器连接</h3><ul>
+<li><p><strong>继电器</strong>：是一种电控控制器件。它具有控制系统（又称输入回路）和被控制系统（又称输出回路）之间的互动关系。通常应用于自动化的控制电路中，它实际上是用<strong>小电流去控制大电流运作的一种“自动开关”</strong>，故在电路中起着自动调节、安全保护、转换电路等作用。</p>
+</li>
+<li><p>TTL——继电器连接只适用于<strong>慢变信号</strong>，在TTL信号与继电器连接时往往要经过一个驱动级，用以提供继电器工作所必需的电流。</p>
+<p><span style="color:#FF0000">下图为继电器驱动电路</span></p>
+</li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-06-24_16-39-03.png"></p>
+<p><span style="color:#FF0000">图 4.44 及图 4.45 为计算机电平与交流电网之间的电平转换电路。</span></p>
+<ul>
+<li><p>图 4.44 中，合上开关，与 220V 电网接通，继电器吸合，在计算机输入端得到 TTL 低电平。</p>
+</li>
+<li><p>电路中的滤波器用以<strong>抑制干扰</strong>。</p>
+</li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-06-25_09-55-29.png"></p>
+<ul>
+<li>图 4.45 用一个 TTL 电平信号控制晶闸管（可控硅）整流电路的工作。来自计算机的输入为 TTL 高电平时，继电器闭合，其触点将晶闸管的控制级与控制电路接通，使得与晶闸管相连的负载 $R_L$ 上流过整流电流。</li>
+<li>若输入为 TTL 低电平则继电器触点断开，晶闸管控制级得不到相应的点火控制，晶闸管截止，负载上无电流。</li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-06-25_09-54-37.png"></p>
+<h3 id="例题-2"><a href="#例题-2" class="headerlink" title="例题"></a>例题</h3><p><img src="/blog/image/Snipaste_2025-07-08_20-29-26.png"></p>
+<p><img src="/blog/image/Snipaste_2025-07-08_20-29-45.png"></p>
+<h3 id="TTL-MOS电平转换"><a href="#TTL-MOS电平转换" class="headerlink" title="TTL-MOS电平转换"></a>TTL-MOS电平转换</h3><p>无论是 <u>TTL 电路驱动 CMOS</u>（Complementary Metal Oxide Semiconductor，互补金属氧化物半导体）电路还是 <u>COMS 电路驱动 TTL 电路</u>，<strong>驱动门</strong>必须为<strong>负载门</strong>提供合乎标准的高、低电平和足够的驱动电流</p>
+<ul>
+<li>MOS 器件中，除了采用 +5V 电源的 CMOS 器件能与 TTL 电路直接连接外，大部分 MOS 器件与 TTL 电路之间要经过电平转换连接。</li>
+<li>一般的 MOS 电路采用大约 <strong>15V</strong> 的电源电压。</li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-06-25_10-33-54.png"></p>
+<ol>
+<li><p>OC型MOS-TTL电平转换</p>
+<p>TTL电路的输出级采用集电极开路的电路（OC门）</p>
+</li>
+<li><p>一般型TTL-CMOS</p>
+<p>TTL电路的末级不是 ＯＣ 门，用一<strong>晶体管</strong>来完成电平转换</p>
+</li>
+</ol>
+<blockquote>
+<p>用 TTL 门可直接驱动 CMOS 门，而用 CMOS 门却只能驱动低功率肖特基门。</p>
+<p><strong>在用CMOS驱动标准TTL门时，要加一级晶体管作驱动级</strong>  </p>
+</blockquote>
+<p><strong>对于负逻辑（高电平 -12V，低电平 4V）的 MOS，也可用分立元件使它与 TTL 电路相连接。</strong></p>
+<ul>
+<li><p>晶体管T1实现电平移动，T2提供驱动</p>
+<p><img src="/blog/image/Snipaste_2025-06-25_10-44-09.png"></p>
+</li>
+</ul>
+<h3 id="光耦合器的技术特性与应用"><a href="#光耦合器的技术特性与应用" class="headerlink" title="光耦合器的技术特性与应用"></a>光耦合器的技术特性与应用</h3><ul>
+<li>光耦合器（optical coupler，英文缩写为OC），也称光电隔离器，简称<strong>光耦</strong>。光耦合器以光为媒介传输电信号，对输入、输出电信号有良好的隔离作用， 所以在各种电路中得到广泛应用。</li>
+<li>光耦合器一般由三部分组成：<strong>光的发射、光的接收及信号放大。</strong></li>
+<li>光耦合器的发光器件为二极管，光接收器为光敏二极管。当有电流通过发光二极管时，便形成一个光源，照射到光敏二极管表面上，使光敏二极管产生<u>集电极电流</u>。<strong>电流大小与光照的强弱（流过二极管电流的大小）成正比。</strong></li>
+<li>为了提高驱动能力，芯片输出级加了一只晶体管</li>
+</ul>
+<h4 id="光耦合器的主要优点"><a href="#光耦合器的主要优点" class="headerlink" title="光耦合器的主要优点"></a>光耦合器的主要优点</h4><ul>
+<li>信号单向传输，输入端与输出端完全实现了电气隔离；</li>
+<li>输出信号对输入端无影响，抗干扰能力强；</li>
+<li>工作稳定，无触点，使用寿命长，传输效率高。</li>
+</ul>
+<h4 id="光耦合器的主要应用"><a href="#光耦合器的主要应用" class="headerlink" title="光耦合器的主要应用"></a>光耦合器的主要应用</h4><ul>
+<li>广泛应用于电气绝缘、电平转换、驱动电路、开关电路、信号隔离、通讯设备及微机接口中。</li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-07-06_16-46-08.png"></p>
+<h3 id="继电器、接触器的功率接口"><a href="#继电器、接触器的功率接口" class="headerlink" title="继电器、接触器的功率接口"></a>继电器、接触器的功率接口</h3><ul>
+<li><p><strong>接触器</strong>：是指工业电中利用线圈流过电流产生磁场，使触头闭合，以达到控制负载的电器。</p>
+<ul>
+<li>其原理是当接触器的电磁线圈通电后，会产生很强的磁场，使铁心产生电磁吸力吸引衔铁，并带动触头动作，<span style="color:#FF0000">常闭触头断开</span>，<span style="color:#FF0000">常开触头闭合</span>；当线路断电时，电磁吸力消失，衔铁在弹簧的作用下释放，使触头复原，<span style="color:#FF0000">常闭触头闭合</span>，<span style="color:#FF0000">常开触头断开</span>。</li>
+</ul>
+</li>
+<li><p>继电器、接触器的<strong>供电</strong>系统分为<strong>直流电磁系统</strong>和<strong>交流电磁系统</strong>，工作电压也较高，因此从单片机输出的信号需要经过<strong>驱动</strong>电路进行<strong>转换</strong>，使输出的驱动电压能够适应继电器或接触器线圈的要求。</p>
+</li>
+<li><p>继电器、接触器动作时，对电源有一定的干扰，为了提高单片机系统的可靠性，在单片机和继电器、接触器之间都用<strong>光电耦合器</strong>隔离。 —些超小型的继电器，由于线圈工作电流较小，对电源的影响不大，也可以不加隔离电路。</p>
+</li>
+</ul>
+<h4 id="直流电磁式继电器功率接口"><a href="#直流电磁式继电器功率接口" class="headerlink" title="直流电磁式继电器功率接口"></a>直流电磁式继电器功率接口</h4><ul>
+<li>直流电磁式继电器、接触器一般用<strong>功率接口集成电路</strong>或<strong>晶体管</strong>驱动  </li>
+<li>常用的继电器大部分属于<strong>直流电磁式继电器</strong>，也称为<strong>直流继电器</strong>  </li>
+<li>一片SN75468可以驱动 ７ 个继电器，驱动电流可达500mA，输出端最大工作电压为100V</li>
+</ul>
+<p><span style="color:#FF0000">直流继电器接口电路图</span>（图要会画，工作原理要清楚）</p>
+<p><img src="/blog/image/Snipaste_2025-07-06_20-03-18.png"></p>
+<p><img src="/blog/image/Snipaste_2025-07-06_20-05-22.png"></p>
+<p><span style="color:#FF0000">工作原理</span>：</p>
+<ul>
+<li><p>单片机 <strong>P1.0 输出低电平</strong> 时，光电耦合器 TIL117 导通，为晶体管 9013 提供基极电流，9013 饱和导通，继电器线圈通电吸合；</p>
+</li>
+<li><p><strong>P1.0 输出高电平</strong> 时，光耦截止，9013 关断，线圈断电释放。（采用这种控制逻辑可以使继电器在上电复位或单片机受控复位时不吸合  ）</p>
+</li>
+<li><p>二极管 D 在断电瞬间吸收反向感应电动势，保护晶体管 9013</p>
+<blockquote>
+<p>二极管 Ｄ 的作用是保护晶体管 Ｔ </p>
+<p><strong>原理</strong>：</p>
+<ul>
+<li>当继电器 Ｊ 吸合时，二极管 Ｄ 截止，不影响电路工作</li>
+<li>当<strong>继电器释放</strong>时，线圈因电感特性产生 <strong>上负下正的反向感应电动势</strong>，其正端接晶体管 T 的集电极，与电源$V_c$叠加后易超过 T 的集电结反向耐压。此时 <strong>二极管 D 正向导通</strong>，为感应电流提供 <strong>续流回路</strong>，使线圈储能通过 D 缓慢释放，避免感应电压急剧升高，从而保护晶体管 T 免受高压损坏。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>记住二极管的方向，忘了现场推：导通时，继电器电流从上到下，突然断电，感应电动势抑制电流变化，产生从上到下的电流，感应电动势上负下正，二极管电流从下到上导通。</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p><strong>例题</strong></p>
+<p><img src="/blog/image/IMG_20250606_102808.jpg"></p>
+<p><img src="/blog/image/IMG_20250606_103337.jpg"></p>
+<p><strong>TTL输入 → 信号调理 → 隔离 → 功率驱动 → 电磁阀</strong></p>
+<p><strong>一、设计核心需求</strong></p>
+<ol>
+<li><p><strong>电气隔离</strong>：TTL 侧（5V）与电磁阀侧（24V、1A）不能直接电连接，需通过 “电→光→电” 转换隔离（光电耦合器是关键）。</p>
+</li>
+<li><p><strong>驱动能力</strong>：电磁阀工作电流 1A，TTL 电平（mA 级）无法直接驱动，需 <strong>功率放大电路</strong>（三极管）。</p>
+</li>
+<li><p><strong>感性负载保护</strong>：电磁阀是电感，断电时产生反向电动势，需 <strong>续流二极管</strong> 吸收能量，保护功率管</p>
+</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[&quot;TTL低电平&quot;] --&gt; B[&quot;U2反相 → 高电平&quot;]</span><br><span class="line">    B --&gt; C[&quot;U1发光二极管导通 → 发光&quot;]</span><br><span class="line">    C --&gt; D[&quot;U1光敏三极管导通&quot;]</span><br><span class="line">    D --&gt; E[&quot;T1基极获电流 → 饱和导通&quot;]</span><br><span class="line">    E --&gt; F[&quot;24V电源 → 电磁阀供电 → 工作&quot;]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[&quot;TTL高电平&quot;] --&gt; B[&quot;U2反相 → 低电平&quot;]</span><br><span class="line">    B --&gt; C[&quot;U1发光二极管熄灭&quot;]</span><br><span class="line">    C --&gt; D[&quot;U1光敏三极管截止&quot;]</span><br><span class="line">    D --&gt; E[&quot;T1基极无电流 → 截止&quot;]</span><br><span class="line">    E --&gt; F[&quot;电磁阀断电&quot;]</span><br><span class="line">    F --&gt; G[&quot;续流二极管吸收反向电动势 → 保护T1&quot;]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>元件</th>
+<th>名称</th>
+<th>核心作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>U2</td>
+<td>反相驱动器</td>
+<td>① 缓冲 TTL 输入信号，增强驱动能力；② 反相逻辑，匹配光电耦合器的触发逻辑。</td>
+</tr>
+<tr>
+<td>U1</td>
+<td>光电耦合器</td>
+<td>实现“电气隔离”：左侧电信号→光信号→右侧电信号，切断两侧电路的直接电连接。</td>
+</tr>
+<tr>
+<td>R1</td>
+<td>限流电阻（发光侧）</td>
+<td></td>
+</tr>
+<tr>
+<td>R2</td>
+<td>限流电阻（三极管基极）</td>
+<td></td>
+</tr>
+<tr>
+<td>T1</td>
+<td>功率三极管</td>
+<td>放大电流：将光电耦合器的微弱信号放大，驱动 1A 的电磁阀。</td>
+</tr>
+<tr>
+<td>续流二极管</td>
+<td>保护 T1</td>
+<td>吸收电磁阀断电时的反向电动势，保护 T1 不被击穿。</td>
+</tr>
+</tbody></table>
+</blockquote>
+<blockquote>
+<ol>
+<li><strong>隔离层</strong>：光电耦合器 U1 是 “隔离核心”，通过光信号传递，彻底切断两侧电连接。</li>
+<li><strong>驱动层</strong>：功率三极管 T1 负责 “大电流放大”，将微弱信号提升至 1A 驱动能力。</li>
+<li><strong>保护层</strong>：续流二极管应对感性负载的反向电动势</li>
+</ol>
+</blockquote>
+<h4 id="交流电磁式接触器的功率接口"><a href="#交流电磁式接触器的功率接口" class="headerlink" title="交流电磁式接触器的功率接口"></a>交流电磁式接触器的功率接口</h4><ul>
+<li><p>交流电磁式接触器由于线圈的工作<u>电压</u>要求是<u>交流电</u>，所以通常使用<u><strong>双向晶闸管</strong></u>驱动或使用一个<u>直流继电器</u>作为中间继电器控制。</p>
+</li>
+<li><p>晶闸管是<strong>晶体</strong>闸流管的简称，又可称做<strong>可控硅</strong>整流器，晶闸管是PNPN四层<strong>半导体</strong>结构，它有三个极：<strong>阳极、阴极和门极</strong>。</p>
+</li>
+<li><p>晶闸管具有硅整流<strong>器件</strong>的特性，能在高电压、大<strong>电流</strong>条件下工作，且其工作过程可以控制，被广泛应用用于可控整流、交流调压、等电子电路中。</p>
+</li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-07-06_21-17-06.png"></p>
+<p><img src="/blog/image/Snipaste_2025-07-06_21-17-31.png"></p>
+<p><strong>光电耦合器 Ｍ ＯＣ３０４１ 的作用：</strong></p>
+<ul>
+<li><p>触发双向晶闸管 ＫＳ </p>
+</li>
+<li><p>隔离单片机系统和接触器系统</p>
+</li>
+</ul>
+<p><span style="color:#FF0000">工作原理</span>：</p>
+<p>P1.0 输出<strong>低电平</strong>时，双向晶闸管KS 导通、接触器 C 吸合；</p>
+<p>P1.0 输出<strong>高电平</strong>时，双向晶闸管KS 关断、接触器 C 释放 。</p>
+<ul>
+<li>这种控制逻辑可以使得单片机复位时，晶闸管 ＫＳ 的状态为关断，不会引起 ＫＳ 误导通</li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>：光电耦合器 Ｍ ＯＣ３０４１ 内部带过零控制电路，使 KS 工作在 <strong>过零触发方式</strong> 。</p>
+</blockquote>
+<blockquote>
+<p><img src="/blog/image/IMG_20250606_103503.jpg"></p>
+<p><img src="/blog/image/IMG_20250606_103538.jpg"></p>
+<p>一、设计核心需求</p>
+<ol>
+<li><p><strong>电气隔离</strong>：5V TTL（直流小信号）与 220V 交流（高压强电）必须彻底隔离，防止高压串入控制电路。</p>
+</li>
+<li><p><strong>交流驱动</strong>：负载是 220V 交流电（正弦波，正负交替），需 <strong>双向导通的开关器件</strong>（应对交流正负半周）。</p>
+</li>
+<li><p><strong>信号匹配</strong>：TTL 电平需缓冲 &#x2F; 反相，匹配隔离器件的触发逻辑</p>
+</li>
+</ol>
+<p>  二、元件功能解析</p>
+<table>
+<thead>
+<tr>
+<th>元件符号</th>
+<th>名称</th>
+<th>核心作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>U2</td>
+<td>反相驱动器</td>
+<td>①缓冲TTL信号,增强驱动能力;②反相逻辑,匹配光控器件的触发电平。</td>
+</tr>
+<tr>
+<td>U1</td>
+<td>光控晶闸管（光电耦合器）</td>
+<td>实现“电气隔离”:将TTL侧电信号 → 光信号 → 电信号,触发交流侧的双向晶闸管。</td>
+</tr>
+<tr>
+<td>U3</td>
+<td>双向晶闸管</td>
+<td>作为交流开关:受U1触发后,双向导通220V交流电,控制加热炉通断。</td>
+</tr>
+<tr>
+<td>R1&#x2F;R2&#x2F;R3</td>
+<td>限流电阻</td>
+<td></td>
+</tr>
+</tbody></table>
+</blockquote>
+<blockquote>
+<p>三、设计逻辑的关键思考</p>
+<ol>
+<li><strong>为什么选双向晶闸管（U3）？</strong></li>
+</ol>
+<p>交流电压是 <strong>正弦波（正负交替）</strong>：</p>
+<ul>
+<li>普通三极管仅能 <strong>单向导通</strong>（应对直流），无法处理交流负半周；</li>
+<li>双向晶闸管可在 <strong>正负半周均触发导通</strong>，完美匹配交流负载的双向特性。</li>
+</ul>
+<ol start="2">
+<li><strong>为什么用 “光控” 实现隔离？</strong></li>
+</ol>
+<ul>
+<li><p>U1（光控晶闸管）或 “光电耦合器 + 晶闸管” 的组合，通过 <strong>“电→光→电” 的信号转换</strong>，彻底切断：</p>
+</li>
+<li><p>直流控制侧（5V，低电压）与交流高压侧（220V，强电）的直接电连接，实现电气隔离。</p>
+</li>
+</ul>
+<ol start="3">
+<li><strong>反相驱动器（U2）的意义？</strong></li>
+</ol>
+<ul>
+<li><strong>逻辑匹配</strong>：TTL 高电平可能与 U1 的触发逻辑冲突（如 U1 需低电平触发），反相器可调整电平逻辑。</li>
+<li><strong>驱动增强</strong>：TTL 信号驱动能力弱，反相器可增强带载能力，避免信号失真。</li>
+</ul>
+</blockquote>
+<h3 id="电光、电热型功率接口"><a href="#电光、电热型功率接口" class="headerlink" title="电光、电热型功率接口"></a>电光、电热型功率接口</h3><ul>
+<li>电光型功率接口主要用于各类<strong>照明</strong>以及<strong>闪光</strong>指示器等的驱动，电光型功率接口采用<strong>连续</strong>方式控制；</li>
+<li>电热型功率接口主要用于各种<strong>电炉和加热器</strong>等的驱动，电热型功率接口采用<strong>连续或断续</strong>方式控制。</li>
+</ul>
+<h4 id="电光、电子型器件"><a href="#电光、电子型器件" class="headerlink" title="电光、电子型器件"></a>电光、电子型器件</h4><ol>
+<li><p><strong>电光型</strong></p>
+<ul>
+<li>目前应用最广泛的电光源是<strong>白炽灯</strong>。白炽灯的<strong>发光原理</strong>是热辐射原理，利用电流通过钨丝，使钨丝温度升高，达到“白炽”的状态，从而辐射出光能。白炽灯调光时，通常采用<strong>连续控制</strong>，用双向晶闸管作为控制元件，调节双向晶闸管的控制角来控制白炽灯的亮度。</li>
+</ul>
+</li>
+<li><p><strong>电热型</strong></p>
+<ul>
+<li>电热器件是能把电能转化为热能的各类器件，常用的电热器件有：<strong>电阻丝电热器件</strong>、多孔玻璃态碳电热器件、电热膜；硅钼棒电热器件和PTC半导体电热器件。</li>
+</ul>
+</li>
+</ol>
+<h4 id="电光型功率接口"><a href="#电光型功率接口" class="headerlink" title="电光型功率接口"></a>电光型功率接口</h4><p><img src="/blog/image/Snipaste_2025-07-06_21-53-03.png"></p>
+<p><strong>工作原理：</strong></p>
+<p>MOC3021 由单片机 8031 的 P1.0 端经 7407 控制，</p>
+<ul>
+<li><p>P1.0 输出低电平时，双向晶闸管 KS 导通，白炽灯 L 发亮；</p>
+</li>
+<li><p>P1.0 输出高电平时，双向晶闸管 KS 关断，白炽灯 L 不亮。</p>
+</li>
+<li><blockquote>
+<p>这种控制逻辑可以使得单片机复位时，晶闸管 KS 的状态为关断，不会引起 KS 误导通。</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>电光型功率接口通常用<strong>晶闸管</strong>作为控制元件，配上<strong>过零检测</strong>电路后，可以调节输出的电压，控制电光器件的发光程度  </p>
+</blockquote>
+<h4 id="电热型功率接口"><a href="#电热型功率接口" class="headerlink" title="电热型功率接口"></a>电热型功率接口</h4><blockquote>
+<p><strong>电热型功率接口通常用继电器或晶闸管控制</strong>  </p>
+</blockquote>
+<p><img src="/blog/image/Snipaste_2025-07-07_07-39-02.png"></p>
+<ul>
+<li>电热器件由双向晶闸管 KS 控制，KS 由光电耦合器 4N25 和晶体管 9013 触发。采用直流脉冲触发。触发电压由变压器 B 的其中一个绕组$L_{2}$提供。经整流滤波后，直流电压为 12V ,触发电流可达 200m A 。</li>
+</ul>
+<p><span style="color:#FF0000">工作原理：</span></p>
+<ol>
+<li><strong>触发原理</strong></li>
+</ol>
+<p>单片机 8031 的 P1.0 端输出的触发信号经 7407 后，送到光电耦合器 4N25。</p>
+<ul>
+<li><p>P1.0端输出高电平时，4N25 没有电流输人，晶体管 T 截止，双向晶闸管 KS 关断， 电热器不加热。</p>
+</li>
+<li><p>当 P1. 0端输出低电平时，7407 输出低电平，4N25 导通 ,输出端的电流经晶体管 9013 放大后 ,双向晶闸管导通 ,电热器加热。</p>
+<blockquote>
+<p>电阻$R$ 3 的作用是限制触发电流，当双向晶闸管 KS 的功率较小时 ,$R$3 可由 30$\Omega$改为 100$\Omega_\circ$</p>
+</blockquote>
+<ol start="2">
+<li><strong>温度检测电路原理</strong></li>
+</ol>
+<p>温度检测电路由热电偶、运算放大器组成。</p>
+<ul>
+<li>热电偶产生的毫伏级电压经运算放大器变成 0~5V 的电压后，送到 A&#x2F;D 转换器输入端，经 A&#x2F;D 转换器变成反映温度的数字信号。</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li><strong>过零检测电路原理</strong></li>
+</ol>
+<ul>
+<li>过零检测电路由变压器 B 的其中一个绕组$L_{3}$和电容器$C_2$组成。$L_3$产生2.5V 的交流电压，通过$C_2$交连到 8031 的 INT1 和 INT0 端。<ul>
+<li>INT1 是过零检测端，它可对过零的上升信号检测而产生中断：</li>
+</ul>
+</li>
+<li>INT0 也是过零检测端，它可对过零的下降信号检测而产生中断。<ul>
+<li>把 INTl 和 INT 0 产生的中断综合处理，即可得到电源电压过零的时刻。</li>
+</ul>
+</li>
+</ul>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1/">机电一体化分析与建模</a></div><div class="post-share"><div class="social-share" data-image="/blog/image/20250505084723-2.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2025/05/08/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%8F%92%E5%80%BC%E6%B3%95/" title="数值分析-插值法"><img class="cover" src="/blog/image/hgud.jpeg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">数值分析-插值法</div></div><div class="info-2"><div class="info-item-1">此文章包含数值分析的插值法部分————————————————————————————————————————————————————————————————— 第二章 插值法插值法定义设函数 $y &#x3D; f(x)$ 在区间 $[a, b]$ 上有定义，且满足节点排列：$$ a \leq x_0 &lt; x_1 &lt; \cdots &lt; x_n \leq b $$ 已知在点 ${x_0, x_1, \ldots, x_n}$ 上的对应函数值 ${y_0, y_1, \ldots, y_n}$。 若存在一简单函数 $p(x)$，满足插值条件：$$ p(x_i) &#x3D; y_i \quad (i &#x3D; 0, 1, 2, \ldots, n) \tag{2.1} $$  （1）  则称：  $p(x)$ 为 $f(x)$ 的插值函数 ${x_0, x_1, \ldots, x_n}$ 为插值节点 包含节点的区间 $[a, b]$ 为插值区间 式 (1) 为插值条件 求插值函数的方法称为插值法   插值函数分类当 $p(x)$...</div></div></div></a><a class="pagination-related" href="/blog/2025/05/15/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91/" title="数值分析-函数逼近"><img class="cover" src="/blog/image/20250505084722.jpeg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">数值分析-函数逼近</div></div><div class="info-2"><div class="info-item-1">第三章 函数逼近范数与赋范线性空间设 $S$ 是实数域上的线性空间，$x \in S$，如果存在唯一实数 $||\cdot||$，满足以下条件：    正定性：$$||x|| \geq 0，\quad \text{当且仅当} \ x &#x3D; 0 \ \text{时，} \ ||x|| &#x3D; 0$$  齐次性：$$|| \alpha x || &#x3D; |\alpha| \cdot ||x||，\quad \alpha \in \mathbb{R}$$  三角不等式：$$||x + y|| \leq ||x|| + ||y||，\quad x, y \in S$$   则称 $||\cdot||$ 为线性空间 $S$ 上的范数，$S$ 与 $||\cdot||$ 一起称为赋范线性空间，记为 $X$。 常用范数定义 向量范数设 $x &#x3D; (x_1, \dots, x_n)^T \in \mathbb{R}^n$，定义以下三种常用范数：    ∞-范数（最大范数）：$$||x|| _ \infty &#x3D; \max_{1 \leq i \leq n}...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2025/06/29/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E4%BA%8C%EF%BC%89/" title="机电一体化分析与建模（二）"><img class="cover" src="/blog/image/20250505084723-2.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-06-29</div><div class="info-item-2">机电一体化分析与建模（二）</div></div><div class="info-2"><div class="info-item-1">第五章 微机测控系统设计 微机测控系统的硬件  按各部分在系统中的作用,该系统可分为  主机 输入输出通道：过程输入输出通道，又称过程通道。是微机与外部物理世界建立信息传递与转换的链接渠道 常规外部设备 接口电路：在过程通道与外部设备间，接口电路起着媒介作用，使主机与过程通道及外部设备之间的信息交换得以顺利实现 运行操作台 系统总线等   测控系统软件组成 软件通常分为两大类，一类是系统软件，另一类为应用软件  模拟量输入通道的一般组成 一般由信号调理电路、多路转换器、放大器和模／数转换器组成    显然，该通道中的核心是模&#x2F;数转换器，也就是A&#x2F;D转换器通常把模拟量输入通道称为A&#x2F;D通道  采样-保持器作用 &#x2F; 为什么使用采样-保持器 &#x2F;...</div></div></div></a><a class="pagination-related" href="/blog/2025/06/29/%E7%AC%AC%E4%BA%94%E7%AB%A0/" title="机电一体化分析与建模（二）"><img class="cover" src="/blog/image/20250505084723-2.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-06-29</div><div class="info-item-2">机电一体化分析与建模（二）</div></div><div class="info-2"><div class="info-item-1">第六章 电液伺服控制系统电液比例流量控制电液比例流量控制系统用电液比例流量阀来控制系统的速度，也称电液比例速度控制系统，是一种阀控比例系统。  电液比例速度调节有三种方式：    比例节流调速  比例容积调速  比例容积节流调速   闭环同步调速系统 采用两个电液比例调速阀实现闭环同步控制速度系统 系统结构框图描述： 主动液压缸：$1$ 随动液压缸：$2$ 位移传感器$L_1$、$L_2$输出：$U_1$、$U_2$ 电压比较差值：$\Delta U &#x3D; U_2 - U_1$ 放大器：$A_1$, $A_2$ 比例调速阀：$BQ(1)$, $BQ(2)$ 电流信号：$I_1$, $I_2$ 基准速度电压：$U_0$   工作过程：  当 $1$ 和 $2$ 双缸同步，则： $$U_1 &#x3D; U_2, \quad \Delta U &#x3D; U_2 - U_1 &#x3D; 0$$ 两缸速度相等。  当 $1$ 和 $2$ 不同步时，则： $$\Delta U &#x3D; U_2 - U_1 \neq 0$$ 若 $U_2 &gt; U_1$，即 2...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E7%BB%AA%E8%AE%BA"><span class="toc-number">1.</span> <span class="toc-text">第一章 绪论</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E8%87%AA%E5%8A%A8%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86"><span class="toc-number">2.</span> <span class="toc-text">第二章 自动控制系统基本知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9A%84%E6%8E%A7%E5%88%B6%E8%A7%84%E5%BE%8B%E5%8F%8A%E5%93%8D%E5%BA%94%E7%89%B9%E6%80%A7%EF%BC%88PID%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">控制器的控制规律及响应特性（PID）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E6%9C%BA%E7%94%B5%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E4%BC%A0%E6%84%9F%E5%99%A8%E6%8A%80%E6%9C%AF"><span class="toc-number">3.</span> <span class="toc-text">第三章 机电系统中的传感器技术</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E7%94%B5%E8%B7%AF%E5%8F%8A%E6%8E%A5%E5%8F%A3%E8%AE%BE%E8%AE%A1"><span class="toc-number">4.</span> <span class="toc-text">第四章 电路及接口设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E6%94%BE%E5%A4%A7%E5%99%A8%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1"><span class="toc-number">4.1.</span> <span class="toc-text">运算放大器电路设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E7%90%86%E6%83%B3%E2%80%9D%E8%BF%90%E7%AE%97%E6%94%BE%E5%A4%A7%E5%99%A8"><span class="toc-number">4.1.1.</span> <span class="toc-text">“理想”运算放大器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E6%94%BE%E5%A4%A7%E5%99%A8%E7%9A%84%E7%94%B5%E5%8E%8B%E4%BC%A0%E8%BE%93%E7%89%B9%E6%80%A7"><span class="toc-number">4.1.2.</span> <span class="toc-text">运算放大器的电压传输特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E6%AF%94%E4%BE%8B%E5%99%A8"><span class="toc-number">4.1.3.</span> <span class="toc-text">反向比例器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E6%B3%95%E5%99%A8"><span class="toc-number">4.1.4.</span> <span class="toc-text">加法器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%8F%E6%B3%95%E5%99%A8-%E5%8A%A0%E6%B3%95%E5%99%A8"><span class="toc-number">4.1.5.</span> <span class="toc-text">减法器&#x2F;加法器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%AF%E5%88%86%E5%99%A8"><span class="toc-number">4.1.6.</span> <span class="toc-text">积分器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E6%84%9F-%E7%94%B5%E5%AE%B9%E7%9A%84%E7%94%B5%E6%B5%81%E4%B8%8E%E7%94%B5%E5%8E%8B%E5%85%B3%E7%B3%BB"><span class="toc-number">4.1.7.</span> <span class="toc-text">电感&#x2F;电容的电流与电压关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AE%E5%88%86%E5%99%A8"><span class="toc-number">4.1.8.</span> <span class="toc-text">微分器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98"><span class="toc-number">4.1.9.</span> <span class="toc-text">例题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E7%8E%AF%E8%8A%82%E3%80%81%E6%AF%94%E4%BE%8B%E3%80%81%E7%A7%AF%E5%88%86%E3%80%81%E5%BE%AE%E5%88%86%E7%AD%89%E8%BF%90%E6%94%BE%E7%94%B5%E8%B7%AF"><span class="toc-number">4.2.</span> <span class="toc-text">比较环节、比例、积分、微分等运放电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E6%80%A7%E8%83%BD%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF"><span class="toc-number">4.3.</span> <span class="toc-text">高性能放大电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A1%A5%E8%B7%AF%E6%94%BE%E5%A4%A7%E5%99%A8"><span class="toc-number">4.4.</span> <span class="toc-text">基本桥路放大器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE4-14a%EF%BC%88%E7%BA%BF%E6%80%A7%E8%BE%93%E5%87%BA%EF%BC%89"><span class="toc-number">4.4.1.</span> <span class="toc-text">图4.14a（线性输出）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE4-14b%EF%BC%88%E9%9D%9E%E7%BA%BF%E6%80%A7%E8%BE%93%E5%87%BA%EF%BC%89"><span class="toc-number">4.4.2.</span> <span class="toc-text">图4.14b（非线性输出）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E7%94%B5%E8%B7%AF%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94"><span class="toc-number">4.4.3.</span> <span class="toc-text">两种电路结构对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E8%AE%BE%E8%AE%A1%E4%BC%98%E5%8C%96"><span class="toc-number">4.4.4.</span> <span class="toc-text">关键设计优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%AB%AF%E5%9B%BA%E5%AE%9A%E5%BC%8F%E9%9B%86%E6%88%90%E7%A8%B3%E5%8E%8B%E7%94%B5%E6%BA%90"><span class="toc-number">4.5.</span> <span class="toc-text">三端固定式集成稳压电源</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E6%88%90%E7%A8%B3%E5%8E%8B%E7%94%B5%E6%BA%90%E7%9A%84%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="toc-number">4.5.1.</span> <span class="toc-text">集成稳压电源的性能指标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E7%A8%B3%E5%8E%8B%E7%94%B5%E6%BA%90%E7%9A%84%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8%E7%94%B5%E8%B7%AF"><span class="toc-number">4.5.2.</span> <span class="toc-text">两种稳压电源的典型应用电路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E6%88%90%E7%A8%B3%E5%8E%8B%E5%99%A8"><span class="toc-number">4.6.</span> <span class="toc-text">集成稳压器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%B9%E5%8F%98%E8%BE%93%E5%87%BA%E7%94%B5%E5%8E%8B%E6%9E%81%E6%80%A7%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">4.7.</span> <span class="toc-text">改变输出电压极性的应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E7%94%B5%E5%8E%8B%E8%BF%9E%E7%BB%AD%E5%8F%AF%E8%B0%83%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">4.8.</span> <span class="toc-text">输出电压连续可调的应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E6%9E%81%E7%AE%A1%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">4.9.</span> <span class="toc-text">三极管基础知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E8%BE%93%E5%87%BA%E7%94%B5%E6%B5%81%E7%94%B5%E8%B7%AF"><span class="toc-number">4.10.</span> <span class="toc-text">扩展输出电流电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%B0%83%E5%BC%8F%E9%9B%86%E6%88%90%E7%A8%B3%E5%8E%8B%E7%94%B5%E6%BA%90%E8%AE%BE%E8%AE%A1"><span class="toc-number">4.11.</span> <span class="toc-text">可调式集成稳压电源设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%B3%E5%8E%8B%E4%BA%8C%E6%9E%81%E7%AE%A1"><span class="toc-number">4.12.</span> <span class="toc-text">稳压二极管</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B5%E5%8E%8B%E6%AF%94%E8%BE%83%E5%99%A8"><span class="toc-number">4.13.</span> <span class="toc-text">电压比较器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E9%9B%B6%E6%AF%94%E8%BE%83%E5%99%A8"><span class="toc-number">4.13.1.</span> <span class="toc-text">过零比较器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E9%99%90%E7%94%B5%E5%8E%8B%E6%AF%94%E8%BE%83%E5%99%A8"><span class="toc-number">4.13.2.</span> <span class="toc-text">单限电压比较器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9F%E6%BB%9E%E6%AF%94%E8%BE%83%E5%99%A8%EF%BC%88%E4%B8%8B%E8%A1%8C%EF%BC%89"><span class="toc-number">4.13.3.</span> <span class="toc-text">迟滞比较器（下行）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9F%E6%BB%9E%E6%AF%94%E8%BE%83%E5%99%A8%EF%BC%88%E6%8E%A5%E5%85%A5%E5%8F%82%E8%80%83%E7%94%B5%E5%8E%8B-U-R-%EF%BC%89%EF%BC%88%E4%B8%8B%E8%A1%8C%EF%BC%89"><span class="toc-number">4.13.4.</span> <span class="toc-text">迟滞比较器（接入参考电压$U_R$）（下行）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9F%E6%BB%9E%E6%AF%94%E8%BE%83%E5%99%A8%EF%BC%88%E6%8E%A5%E5%85%A5%E5%8F%82%E8%80%83%E7%94%B5%E5%8E%8B-U-R-%EF%BC%89%EF%BC%88%E4%B8%8A%E8%A1%8C%EF%BC%89"><span class="toc-number">4.13.5.</span> <span class="toc-text">迟滞比较器（接入参考电压$U_R$）（上行）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98-1"><span class="toc-number">4.13.6.</span> <span class="toc-text">例题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B5%E5%8E%8B%E8%B7%9F%E9%9A%8F%E5%99%A8"><span class="toc-number">4.14.</span> <span class="toc-text">电压跟随器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#V-F%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1"><span class="toc-number">4.15.</span> <span class="toc-text">V&#x2F;F电路设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#V-F%E8%BD%AC%E6%8D%A2%E7%94%B5%E8%B7%AF"><span class="toc-number">4.15.1.</span> <span class="toc-text">V&#x2F;F转换电路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E8%8D%B7%E5%B9%B3%E8%A1%A1%E5%BC%8FV-F%E8%BD%AC%E6%8D%A2%E7%94%B5%E8%B7%AF"><span class="toc-number">4.15.2.</span> <span class="toc-text">电荷平衡式V&#x2F;F转换电路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%AF%E5%88%86%E5%A4%8D%E5%8E%9F%E5%9E%8BV-F%E8%BD%AC%E6%8D%A2%E7%94%B5%E8%B7%AF"><span class="toc-number">4.15.3.</span> <span class="toc-text">积分复原型V&#x2F;F转换电路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E8%AE%BE%E8%AE%A1"><span class="toc-number">4.16.</span> <span class="toc-text">接口设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%88%86%E7%B1%BB"><span class="toc-number">4.16.1.</span> <span class="toc-text">接口分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E5%B9%B3%E8%BD%AC%E6%8D%A2"><span class="toc-number">4.16.2.</span> <span class="toc-text">电平转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TTL%E2%80%94%E2%80%94%E7%BB%A7%E7%94%B5%E5%99%A8%E8%BF%9E%E6%8E%A5"><span class="toc-number">4.16.3.</span> <span class="toc-text">TTL——继电器连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98-2"><span class="toc-number">4.16.4.</span> <span class="toc-text">例题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TTL-MOS%E7%94%B5%E5%B9%B3%E8%BD%AC%E6%8D%A2"><span class="toc-number">4.16.5.</span> <span class="toc-text">TTL-MOS电平转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%89%E8%80%A6%E5%90%88%E5%99%A8%E7%9A%84%E6%8A%80%E6%9C%AF%E7%89%B9%E6%80%A7%E4%B8%8E%E5%BA%94%E7%94%A8"><span class="toc-number">4.16.6.</span> <span class="toc-text">光耦合器的技术特性与应用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%89%E8%80%A6%E5%90%88%E5%99%A8%E7%9A%84%E4%B8%BB%E8%A6%81%E4%BC%98%E7%82%B9"><span class="toc-number">4.16.6.1.</span> <span class="toc-text">光耦合器的主要优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%89%E8%80%A6%E5%90%88%E5%99%A8%E7%9A%84%E4%B8%BB%E8%A6%81%E5%BA%94%E7%94%A8"><span class="toc-number">4.16.6.2.</span> <span class="toc-text">光耦合器的主要应用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%A7%E7%94%B5%E5%99%A8%E3%80%81%E6%8E%A5%E8%A7%A6%E5%99%A8%E7%9A%84%E5%8A%9F%E7%8E%87%E6%8E%A5%E5%8F%A3"><span class="toc-number">4.16.7.</span> <span class="toc-text">继电器、接触器的功率接口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E6%B5%81%E7%94%B5%E7%A3%81%E5%BC%8F%E7%BB%A7%E7%94%B5%E5%99%A8%E5%8A%9F%E7%8E%87%E6%8E%A5%E5%8F%A3"><span class="toc-number">4.16.7.1.</span> <span class="toc-text">直流电磁式继电器功率接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%A4%E6%B5%81%E7%94%B5%E7%A3%81%E5%BC%8F%E6%8E%A5%E8%A7%A6%E5%99%A8%E7%9A%84%E5%8A%9F%E7%8E%87%E6%8E%A5%E5%8F%A3"><span class="toc-number">4.16.7.2.</span> <span class="toc-text">交流电磁式接触器的功率接口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E5%85%89%E3%80%81%E7%94%B5%E7%83%AD%E5%9E%8B%E5%8A%9F%E7%8E%87%E6%8E%A5%E5%8F%A3"><span class="toc-number">4.16.8.</span> <span class="toc-text">电光、电热型功率接口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%B5%E5%85%89%E3%80%81%E7%94%B5%E5%AD%90%E5%9E%8B%E5%99%A8%E4%BB%B6"><span class="toc-number">4.16.8.1.</span> <span class="toc-text">电光、电子型器件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%B5%E5%85%89%E5%9E%8B%E5%8A%9F%E7%8E%87%E6%8E%A5%E5%8F%A3"><span class="toc-number">4.16.8.2.</span> <span class="toc-text">电光型功率接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%B5%E7%83%AD%E5%9E%8B%E5%8A%9F%E7%8E%87%E6%8E%A5%E5%8F%A3"><span class="toc-number">4.16.8.3.</span> <span class="toc-text">电热型功率接口</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/06/29/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E4%BA%8C%EF%BC%89/" title="机电一体化分析与建模（二）"><img src="/blog/image/20250505084723-2.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="机电一体化分析与建模（二）"/></a><div class="content"><a class="title" href="/blog/2025/06/29/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E4%BA%8C%EF%BC%89/" title="机电一体化分析与建模（二）">机电一体化分析与建模（二）</a><time datetime="2025-06-29T06:33:36.000Z" title="发表于 2025-06-29 14:33:36">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/06/29/%E7%AC%AC%E4%BA%94%E7%AB%A0/" title="机电一体化分析与建模（二）"><img src="/blog/image/20250505084723-2.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="机电一体化分析与建模（二）"/></a><div class="content"><a class="title" href="/blog/2025/06/29/%E7%AC%AC%E4%BA%94%E7%AB%A0/" title="机电一体化分析与建模（二）">机电一体化分析与建模（二）</a><time datetime="2025-06-29T06:33:36.000Z" title="发表于 2025-06-29 14:33:36">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/06/12/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%85%AC%E5%BC%8F%E8%AE%B0%E5%BF%86%E6%B1%87%E6%80%BB/" title="数值分析公式记忆汇总"><img src="/blog/image/hgud.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析公式记忆汇总"/></a><div class="content"><a class="title" href="/blog/2025/06/12/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%85%AC%E5%BC%8F%E8%AE%B0%E5%BF%86%E6%B1%87%E6%80%BB/" title="数值分析公式记忆汇总">数值分析公式记忆汇总</a><time datetime="2025-06-12T00:51:15.000Z" title="发表于 2025-06-12 08:51:15">2025-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/06/09/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-QR%E5%88%86%E8%A7%A3/" title="数值分析-QR分解"><img src="/blog/image/vhsuv.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-QR分解"/></a><div class="content"><a class="title" href="/blog/2025/06/09/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-QR%E5%88%86%E8%A7%A3/" title="数值分析-QR分解">数值分析-QR分解</a><time datetime="2025-06-09T10:36:09.000Z" title="发表于 2025-06-09 18:36:09">2025-06-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/05/15/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91/" title="数值分析-函数逼近"><img src="/blog/image/20250505084722.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-函数逼近"/></a><div class="content"><a class="title" href="/blog/2025/05/15/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91/" title="数值分析-函数逼近">数值分析-函数逼近</a><time datetime="2025-05-15T07:37:45.000Z" title="发表于 2025-05-15 15:37:45">2025-05-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script async data-pjax src="{&quot;site_uv&quot;:true,&quot;site_pv&quot;:true,&quot;page_pv&quot;:true}"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>

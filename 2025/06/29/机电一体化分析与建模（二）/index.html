@@ -1,0 +1,1342 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>机电一体化分析与建模（二） | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第五章 微机测控系统设计 微机测控系统的硬件  按各部分在系统中的作用,该系统可分为  主机 输入输出通道：过程输入输出通道，又称过程通道。是微机与外部物理世界建立信息传递与转换的链接渠道 常规外部设备 接口电路：在过程通道与外部设备间，接口电路起着媒介作用，使主机与过程通道及外部设备之间的信息交换得以顺利实现 运行操作台 系统总线等   测控系统软件组成 软件通常分为两大类，一类是系统软件，另一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机电一体化分析与建模（二）">
+<meta property="og:url" content="https://qieliqiean.github.io/blog/2025/06/29/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="且离且安的碎碎念">
+<meta property="og:description" content="第五章 微机测控系统设计 微机测控系统的硬件  按各部分在系统中的作用,该系统可分为  主机 输入输出通道：过程输入输出通道，又称过程通道。是微机与外部物理世界建立信息传递与转换的链接渠道 常规外部设备 接口电路：在过程通道与外部设备间，接口电路起着媒介作用，使主机与过程通道及外部设备之间的信息交换得以顺利实现 运行操作台 系统总线等   测控系统软件组成 软件通常分为两大类，一类是系统软件，另一">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qieliqiean.github.io/blog/image/20250505084723-2.jpeg">
+<meta property="article:published_time" content="2025-06-29T06:33:36.000Z">
+<meta property="article:modified_time" content="2025-07-09T11:23:06.478Z">
+<meta property="article:author" content="lian">
+<meta property="article:tag" content="机电一体化分析与建模">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qieliqiean.github.io/blog/image/20250505084723-2.jpeg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "机电一体化分析与建模（二）",
+  "url": "https://qieliqiean.github.io/blog/2025/06/29/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E4%BA%8C%EF%BC%89/",
+  "image": "https://qieliqiean.github.io/blog/image/20250505084723-2.jpeg",
+  "datePublished": "2025-06-29T06:33:36.000Z",
+  "dateModified": "2025-07-09T11:23:06.478Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "lian",
+      "url": "https://qieliqiean.github.io/blog/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/2025/06/29/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E4%BA%8C%EF%BC%89/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: {"path":"/blog/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '机电一体化分析与建模（二）',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/image/20250505084723-2.jpeg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">机电一体化分析与建模（二）</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">机电一体化分析与建模（二）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-06-29T06:33:36.000Z" title="发表于 2025-06-29 14:33:36">2025-06-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-07-09T11:23:06.478Z" title="更新于 2025-07-09 19:23:06">2025-07-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">14.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>48分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="第五章-微机测控系统设计"><a href="#第五章-微机测控系统设计" class="headerlink" title="第五章 微机测控系统设计"></a>第五章 微机测控系统设计</h1><ol>
+<li><strong>微机测控系统的硬件</strong></li>
+</ol>
+<p>按各部分在系统中的作用,该系统可分为</p>
+<ul>
+<li><strong>主机</strong></li>
+<li><strong>输入输出通道</strong>：过程输入输出通道，又称过程通道。是微机与外部物理世界建立信息传递与转换的<u>链接渠道</u></li>
+<li>常规外部设备</li>
+<li><strong>接口电路：在过程通道与外部设备间，接口电路起着媒介作用，使主机与过程通道及外部</strong><br><strong>设备之间的<u>信息交换</u>得以顺利实现</strong></li>
+<li>运行操作台</li>
+<li>系统总线等</li>
+</ul>
+<ol start="2">
+<li><p><strong>测控系统软件组成</strong></p>
+<p>软件通常分为两大类，一类是<u>系统软件</u>，另一类为<u>应用软件</u></p>
+</li>
+<li><p><strong>模拟量输入通道的一般组成</strong></p>
+<p>一般由<u>信号调理电路</u>、<u>多路转换器</u>、<u>放大器</u>和<u>模／数转换器</u>组成</p>
+</li>
+</ol>
+<p><img src="/blog/image/Snipaste_2025-06-29_14-52-43.png"></p>
+<p>显然，该通道中的<span style="color:#FF0000">核心</span>是模&#x2F;数转换器，也就是<strong>A&#x2F;D转换器</strong><br>通常把模拟量输入通道称为<strong>A&#x2F;D通道</strong></p>
+<blockquote>
+<p><strong>采样-保持器作用 &#x2F; 为什么使用采样-保持器 &#x2F; 采样-保持器原理？</strong></p>
+<p>当被测信号变化较快时,要求通道也能及时反应,而模<u>&#x2F;数转换需要一定的时间才能完成</u>｡</p>
+<p>如在转换过程中模拟输入发生显著变化,使得转换得到的数字量不能真正代表发出命令的那一瞬间所要转换的数据电平｡为了克服这一缺点,在模&#x2F;数转换器前面往往采用一个采样-保持器｡</p>
+<p>（<strong>PPT版</strong>：当某一通道进行A&#x2F;D转换时，由于A&#x2F;D转换需要一定的时间，如果输入信号变化较快，就会引起较大的转换误差。为了保证A&#x2F;D转换的精度，需要应用采样保持器。）</p>
+<p><strong>采样-保持器对变化的模拟信号进行快速“采样”,并在转换过程中“保持”该信号｡</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>放大器作用？</strong></p>
+<p>为使模&#x2F;数转换达到应有的<strong>精度</strong>,需将各路传感器来的信号放大到模&#x2F;数转换器所要求的输入电平值(如满度为10V或5V)</p>
+<ul>
+<li><p>当所用的传感器很多时,可多路共用一个放大器｡</p>
+</li>
+<li><p>如果各路信号要求的放大倍数不同,则可设计一个可编程的放大器,由计算机控制它的闭环增益｡</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>采样保持器和放大器背诵时都关于<strong>精度</strong></p>
+</blockquote>
+<h2 id="多路转换器"><a href="#多路转换器" class="headerlink" title="多路转换器"></a>多路转换器</h2><p><span style="color:#FF0000">多路转换器又称多路开关，利用它可将各个输入信号<strong>依次</strong>或<strong>随机</strong>地接到公用放大器或模／数转换器上  </span></p>
+<ul>
+<li>应用</li>
+</ul>
+<p>目前，计算机控制系统使用的多路开关种类很多，(<strong>多为集成多路电子开关</strong>)并具有不同的功能和用途。</p>
+<p>如集成电路芯片CD4051(双向、单端、8路)、CD4052(单向、双端、4路)、AD7506(单向、单端、16路)等。</p>
+<blockquote>
+<p><strong>双向</strong>:就是芯片既可以实现多到一的切换，也可以完成一到多的切换；</p>
+<p><strong>单向</strong>:只能完成多到一的切换。<br><strong>双端</strong>:是指芯片内的一对开关同时动作，从而完成<strong>差动输入信号</strong>的切换，以满足抑制共模干扰的需要。</p>
+</blockquote>
+<h3 id="CD4051结构原理"><a href="#CD4051结构原理" class="headerlink" title="CD4051结构原理"></a>CD4051结构原理</h3><p><img src="/blog/image/Snipaste_2025-06-29_15-51-48.png"></p>
+<ul>
+<li><p>CD4051就是一种单端8通道多路开关，它带有<strong>三个输入端A、B、C</strong>，和一个<strong>禁止输入端INH。</strong></p>
+</li>
+<li><p>从A、B、C输入的信号来选择8个通道中的一个。</p>
+</li>
+<li><p>当INH&#x3D;1时，通道断开，禁止模拟量输入；当INH&#x3D;0时，通道接通，允许模拟量输入，通过改变输入端C、B、A的值，就可以选通S0~S7中的一路通道。</p>
+</li>
+</ul>
+<p><strong>CD4051工作过程</strong></p>
+<ul>
+<li>INH输入为0时，译码器正常工作，此时若<br>C&#x3D;0, B&#x3D;0, A&#x3D;0, 译码器Y0端输出1，通道S0接通。<br>C&#x3D;0, B&#x3D;0, A&#x3D;1, 译码器Y1端输出1，通道S1接通。<br>C&#x3D;0, B&#x3D;1, A&#x3D;0, 译码器Y2端输出1，通道S2接通。<br>C&#x3D;0, B&#x3D;1, A&#x3D;1, 译码器Y3端输出1，通道S3接通。<br>C&#x3D;1, B&#x3D;0, A&#x3D;0, 译码器Y4端输出1，通道S4接通。<br>C&#x3D;1, B&#x3D;0, A&#x3D;1, 译码器Y5端输出1，通道S5接通。<br>C&#x3D;1, B&#x3D;1, A&#x3D;0, 译码器Y6端输出1，通道S6接通。<br>C&#x3D;1, B&#x3D;1, A&#x3D;1, 译码器Y7端输出1，通道S7接通。</li>
+</ul>
+<blockquote>
+<p><span style="color:#FF0000"><strong>多路开关注意事项</strong></span>(简答题)</p>
+<ul>
+<li><p>在自动数据采集中，应选用“<strong>先断后通</strong>”的多路开关，否则，就会发生<strong>两个通道短接</strong>的现象，严重时会损坏信号源或多路开关自身。  </p>
+</li>
+<li><p>然而，在程控增益放大器中，若用多路开关来改变集成运算放大器的反馈电阻，以改变放大器的增益，就不宜选用“先断后通”的多路开关。否则，放大器就会出现<strong>开环状态</strong>。放大器的开环增益极高，易破坏电路的正常工作，甚至损坏元器件，一般应予避免</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>应用场景</strong></th>
+<th>对多路开关的需求</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>普通信号通道切换</td>
+<td>需 “先断后通”（避免通道短路）</td>
+<td>通道短接，损坏信号源</td>
+</tr>
+<tr>
+<td>程控增益放大器</td>
+<td>需 “先通后断”（避免反馈断裂）</td>
+<td>反馈断裂会导致运放开环，损坏电路</td>
+</tr>
+</tbody></table>
+</blockquote>
+<blockquote>
+<p><strong>差动输入的CD4051</strong></p>
+<p><img src="/blog/image/Snipaste_2025-06-29_16-21-40.png"></p>
+<p><span style="color:#FF0000">备注</span>：</p>
+<ul>
+<li><p>$D_0D_1D_2D_3$与$Q_3Q_0Q_1Q_2$是一一对应的。</p>
+</li>
+<li><p>$$<br> D_0\leftrightarrow Q_3,D_1\leftrightarrow Q_0,D_2\leftrightarrow Q_1,D_3\leftrightarrow Q_2<br> $$</p>
+</li>
+</ul>
+<p> 例如CPU总线输出1100，$Q_3Q_0Q_1Q_2$为1100</p>
+<ul>
+<li><p>$Q_3$为1时：0号和1号的INH&#x3D;1，<strong>通道断开</strong>，$Q_3$经非门后，2号和3号的INH&#x3D;0，<strong>通道接通</strong></p>
+</li>
+<li><p>$Q_0 \quad Q_1 \quad Q_2$分别连接$A \quad B \quad C$</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>例题</strong></p>
+<p><img src="/blog/image/IMG_20250628_182022.jpg"></p>
+<p><img src="/blog/image/IMG_20250628_182102.jpg"></p>
+</blockquote>
+<h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p>（1）试设计虚线框内16通道差动输入CD4051电路图，设2号和3号CD4051芯片的<br>X1通道为差动输入第9通道</p>
+<p>（2）试分析CPU数据总线D0～D3数字位应输入信号值?</p>
+<p><img src="/blog/image/IMG_0197.jpg"></p>
+<h2 id="采样保持器"><a href="#采样保持器" class="headerlink" title="采样保持器"></a>采样保持器</h2><p><span style="color:#FF0000">当某一通道进行A&#x2F;D转换时，由于A&#x2F;D转换需要一定的时间，如果输入信号变化较快，就会引起较大的转换误差。为了保证A&#x2F;D转换的精度，需要应用采样保持器。</span></p>
+<h3 id="采样器常用术语"><a href="#采样器常用术语" class="headerlink" title="采样器常用术语"></a>采样器常用术语</h3><p>① 采样器（采样开关）：执行采样动作的装置。<br>② 采样时间（采样宽度 $\tau$）：采样开关每次闭合的时间。<br>③ 采样周期 $T$：采样开关每次通断的时间间隔。</p>
+<h3 id="采样-保持器原理"><a href="#采样-保持器原理" class="headerlink" title="采样-保持器原理"></a>采样-保持器原理</h3><p><strong>采样保持器在两次采样的间隔时间内，一直保持采样值不变直到下一个采样时刻。</strong></p>
+<p><strong>构成：</strong></p>
+<p>采样保持器由输入输 xz出放大器<strong>A1</strong>、<strong>A2</strong>和采样开关<strong>S</strong>、保持电容**$C_H$**等组成。</p>
+<p><span style="color:#FF0000">图要会画：①电压跟随器：同相端输入，反相端接输出②符号：</span></p>
+<p><img src="/blog/image/Snipaste_2025-06-30_08-35-22.png"></p>
+<p><strong>原理：</strong></p>
+<ol>
+<li><p>采样期间，开关S闭合，输入电压$V_{IN}$通过A1对$C_H$快速充电，输出电压$V_{OUT}$跟随$V_{IN}$变化；</p>
+</li>
+<li><p>保持期间，开关S断开，由于A2的输入阻抗很高，理想情况下电容CH将保持电压$V_{CH}$不变，因而输出电压$V_{OUT}$&#x3D;$V_{CH}$也保持恒定。</p>
+</li>
+</ol>
+<h3 id="两项指标"><a href="#两项指标" class="headerlink" title="两项指标"></a>两项指标</h3><ul>
+<li><strong>捕获时间</strong>定义: <u>跟随输入信号</u>到达所规定的的<u>百分比误差</u>之内需要的<strong>最小时间</strong>。</li>
+</ul>
+<p>捕获时间主要是<u>电容器充电时间常数</u>、<u>放大器摆率</u>及<u>建立时间</u>的函数。</p>
+<ul>
+<li><p><strong>电压下降率</strong>定义: 为<strong>保持阶段</strong>存储电容的<strong>放电速度</strong>。</p>
+<p>它是<u>电容的容量</u>、<u>漏电阻</u>、<u>缓冲放大器的输入电阻</u>及<u>开关的断开电阻</u>的函数。</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><strong>注摆率</strong>: <u>运算放大器输出电压的转换速率,</u> 它反映的是一个运算放大器在速度方面的指标, 表示<u>运放对信号变化速度的适应能力</u>, 单位有通常有V&#x2F;s, V&#x2F;ms和V&#x2F;µs三种。</li>
+</ul>
+<h3 id="转换精度"><a href="#转换精度" class="headerlink" title="转换精度"></a>转换精度</h3><p>A&#x2F;D转换器的转换精度可以用绝对误差和相对误差来表示。</p>
+<ul>
+<li><p><strong>绝对误差</strong>: 是指对应于一个给定数字量A&#x2F;D转换器的误差，其误差的大小由<strong>实际模拟量输入值和理论值之差</strong>来度量。绝对误差包括增益误差，零点误差和非线性误差等。</p>
+</li>
+<li><p><strong>相对误差</strong>: 指<strong>绝对误差与满刻度值之比</strong>，一般用百分数来表示，对A&#x2F;D转换器常用最低有效值的位数LSB (Least Significant Bit)) 来表示，$1 \mathrm{LSB} &#x3D; 1&#x2F;2^n$。</p>
+</li>
+</ul>
+<h3 id="模数转换器接口"><a href="#模数转换器接口" class="headerlink" title="模数转换器接口"></a>模数转换器接口</h3><p>集成A&#x2F;D转换芯片都具有如下功能引脚：<strong>数据输出</strong>、<strong>启动转换</strong>（输入）、<strong>转换结束</strong>（输出）。</p>
+<h4 id="连接A-D芯片时，注意事项"><a href="#连接A-D芯片时，注意事项" class="headerlink" title="连接A&#x2F;D芯片时，注意事项"></a>连接A&#x2F;D芯片时，注意事项</h4><p><span style="color:#FF0000">①  A&#x2F;D芯片能否与微处理机总线直接兼容：</span></p>
+<p>所谓直接兼容是指A&#x2F;D芯片的<u>数据输出线</u>可以直接挂在<u>CPU的数据总线</u>上。这不仅要求A&#x2F;D芯片的数据输出具有TTL电平，更重要的是要求A&#x2F;D芯片的数据输出寄存器具有可控的<strong>三态</strong>输出功能。（三态包含 <strong>高电平（逻辑 1）、低电平（逻辑 0）、高阻态（浮空态，记为 Z）</strong>）</p>
+<p><span style="color:#FF0000">②  启动A&#x2F;D转换的方式：</span></p>
+<p>A&#x2F;D转换电路需要外加启动转换信号才能开始工作，这一信号往往由CPU给出。一般有<u>脉冲启动信号及电平控制信号</u>两种形式。通常用CPU的$\overline{WR}$或$\overline{RD}$信号、地址译码器的输出信号等直接控制A&#x2F;D转换器的启动转换端。</p>
+<p><span style="color:#FF0000">③  转换结束信号的应用方式：</span></p>
+<p>A&#x2F;D转换结束时，A&#x2F;D芯片输出一个转换结束标志电平，通知CPU读取转换结果数据（即控制EOC端）。</p>
+<h2 id="8位A-D转换器与微机接口设计"><a href="#8位A-D转换器与微机接口设计" class="headerlink" title="8位A&#x2F;D转换器与微机接口设计"></a>8位A&#x2F;D转换器与微机接口设计</h2><h3 id="text-ADC0809-管脚"><a href="#text-ADC0809-管脚" class="headerlink" title="$$\text{ADC0809 管脚}$$"></a>$$\text{ADC0809 管脚}$$</h3><ul>
+<li><p><strong>EOC</strong>:转换结束信号。当 A&#x2F; D 转换完毕之后发出一个正脉冲，表示 A&#x2F; D 转换结束，此信号可用作 A&#x2F; D 转换是否结束的检测信号或中断申请信号(加一个反相器)。</p>
+</li>
+<li><p>OUTPUT ENABLE(<strong>OE</strong>):输出允许信号，当此信号被选中时，允许从A&#x2F;D 转换器锁存器中读取数字量，此信号即为 ADC0809 片选信号，高电平有效。</p>
+</li>
+</ul>
+<h3 id="text-ADC0809-转换器与微机接口硬件电路设计"><a href="#text-ADC0809-转换器与微机接口硬件电路设计" class="headerlink" title="$$\text{ADC0809 转换器与微机接口硬件电路设计}$$"></a>$$\text{ADC0809 转换器与微机接口硬件电路设计}$$</h3><p><img src="/blog/image/Snipaste_2025-06-30_10-40-44.png"></p>
+<blockquote>
+<p>可以把 <strong>ADC0809 与单片机的交互过程</strong> 拆解为 <strong>“启动转换→转换过程→读取结果”</strong> 三个阶段</p>
+<p>**一、阶段 1：启动转换（写操作，对应 **<code>P2.3 + WR</code><strong>低电平</strong>)</p>
+<ul>
+<li><p><code>P2.3</code>：单片机的<strong>片选信号</strong>（选中 ADC0809 芯片）。</p>
+</li>
+<li><p><code>WR</code>：单片机的<strong>写信号</strong>（表示当前是 “写操作”，向 ADC 发命令）。</p>
+</li>
+<li><p><code>ALE</code>（地址锁存允许）：把单片机地址总线中的 <code>C、B、A</code> 信号**（低 3 位，用于选择 ADC 的 8 个通道，如 <code>C=0,B=0,A=0</code> 选 <code>IN0</code> 通道）**锁存到 ADC 内部，避免地址变化影响通道选择。</p>
+</li>
+<li><p><code>START</code>（启动转换）：触发 ADC 开始工作。</p>
+</li>
+</ul>
+<p> <span style="color:#FF0000">硬件动作</span>：</p>
+<p> 当 <code>P2.3</code> 和 <code>WR</code> <strong>同时为低电平时</strong>：ADC0809 检测到这两个信号，使 <code>ALE</code> 和 <code>START</code> 有效。<code>ALE</code> 先锁存 <code>C、B、A</code>，选定要采集的模拟通道（比如温度传感器接 <code>IN3</code>，则 <code>C=0,B=1,A=1</code>）。<code>START</code> 随后产生<strong>下降沿</strong>（从高变低），正式启动 <strong>逐次逼近转换</strong>（ADC 的核心工作模式）。</p>
+<p><strong>二、阶段 2：转换过程（逐次逼近，</strong><code>EOC</code><strong>低电平</strong>）</p>
+<blockquote>
+<p>ADC 内部有一个 <strong>逐次逼近寄存器（SAR）</strong>，像 “猜数字游戏” 一样<strong>从最高位到最低位逐位尝试</strong></p>
+</blockquote>
+<ul>
+<li><p><code>START</code> 下降沿后，<code>EOC</code>（转换结束信号）立即<strong>变低电平</strong>（表示 “正在转换，忙！”）。</p>
+</li>
+<li><p>转换期间，<strong>模拟输入必须保持稳定</strong>（通常由采样保持器实现），否则比较结果会出错；比较器持续工作，不断调整 SAR 的值。</p>
+</li>
+</ul>
+<p>**三、阶段 3：读取结果（读操作，对应 **<code>P2.3 + RD</code><strong>低电平</strong>）</p>
+<ol>
+<li><strong>转换结束的信号通知</strong>：</li>
+</ol>
+<ul>
+<li><p>当 8 位都比较完成后，<code>EOC</code> <strong>变高电平</strong>（表示 “转换结束，数据 ready！”）。</p>
+</li>
+<li><p><code>EOC</code> 经反向器（非门）连接到单片机的 <code>P3.3</code>（外部中断引脚）(这里<code>p3.3</code>复用<code>INT1</code>引脚)，高电平的 <code>EOC</code> 会被反转为<strong>低电平</strong>，触发单片机中断（告诉 CPU：“数据好了，快来读！”）。</p>
+</li>
+</ul>
+<ol start="2">
+<li><strong>读取数据的硬件动作</strong>：&#xA;</li>
+</ol>
+<p>单片机响应中断后，使 <code>P2.3</code>（片选仍有效）和 <code>RD</code>（读信号，低电平）<strong>同时为低</strong>：</p>
+<ul>
+<li><p>这会触发 ADC0809 的 <code>OE</code><strong>（输出允许）</strong> 有效。</p>
+</li>
+<li><p>ADC 内部的锁存器将转换好的数字量（如 <code>0110 0100</code>）送到<strong>数据总线</strong>，单片机通过读操作将数据读入内存。</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;graph TD</span><br><span class="line">   A[&quot;单片机发出：P2.3+WR低电平&quot;] --&gt; B[&quot;启动脉冲START和地址锁存允许ALE有效：ADC锁存C/B/A&quot;]</span><br><span class="line">   B --&gt; C[&quot;在START下降沿的作用下开始逐次逼近+EOC变低电平&quot;]</span><br><span class="line">   C --&gt; D[&quot;转换完成，EOC变高，向单片机申请中断→P3.3=0&quot;]</span><br><span class="line">   D --&gt; E[&quot;单片机发出输出允许信号：P2.3+RD低电平&quot;] --&gt; F[&quot;OE高电平有效，允许从A/D转换器锁存器读取数字量&quot;]</span><br></pre></td></tr></table></figure>
+
+</blockquote>
+<p><strong>实现A&#x2F;D转换</strong>所需的软件设计方式不同，目前常用的控制方式有：</p>
+<p><strong>程序查询方式、定时采样方式、中断方式</strong></p>
+<h2 id="12位A-D转换器微机接口技术"><a href="#12位A-D转换器微机接口技术" class="headerlink" title="12位A&#x2F;D转换器微机接口技术"></a>12位A&#x2F;D转换器微机接口技术</h2><h3 id="内部寄存器控制输入管脚（-A-0-和-12-overline-8-）"><a href="#内部寄存器控制输入管脚（-A-0-和-12-overline-8-）" class="headerlink" title="内部寄存器控制输入管脚（$A_0$和$12&#x2F; \overline{8}$）"></a>内部寄存器控制输入管脚（$A_0$和$12&#x2F; \overline{8}$）</h3><ul>
+<li><p>$A_0($字节选择)和 12&#x2F;$\bar{8}($数字形式)输人端一起用来控制<strong>输出数据</strong>和<strong>转换脉冲</strong>。</p>
+</li>
+<li><p>当 12&#x2F;$\bar{8}$接高电平时，允许 12 位输出。当 12&#x2F;$\bar{8}$接低电平时，作为 8 位接口。在<br>这种状态下，当$A_0$被选中时一次只允许高 8 位和低 4 位输入。当$A_0$是低电平状态<br>时允许高 8 位输入，当$A_0$为高电平时允许低 4 位输人(高 8 位被禁止)。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong><code>12/8</code> 电平</strong></th>
+<th><strong><code>A₀</code> 电平</strong></th>
+<th><strong>输出有效位</strong></th>
+<th><strong>数据意义</strong></th>
+<th><strong>核心逻辑</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>高电平</strong></td>
+<td>任意（0&#x2F;1）</td>
+<td><em>D</em>11∼<em>D</em>0（12 位）</td>
+<td>完整 12 位转换结果</td>
+<td>12 位总线直接读取，<code>A₀</code> 此模式下无效</td>
+</tr>
+<tr>
+<td><strong>低电平</strong></td>
+<td><strong>低电平（0）</strong></td>
+<td><em>D</em>11∼<em>D</em>4（8 位）</td>
+<td>12 位结果的<strong>高 8 位</strong></td>
+<td>8 位总线 “第一次读”，获取高位数据</td>
+</tr>
+<tr>
+<td><strong>低电平</strong></td>
+<td><strong>高电平（1）</strong></td>
+<td><em>D</em>3∼<em>D</em>0（4 位，总线低 4 位补 0 成 8 位）</td>
+<td>12 位结果的<strong>低 4 位</strong>（扩展为 8 位）</td>
+<td>8 位总线 “第二次读”，获取低位数据（需与高 8 位拼接）</td>
+</tr>
+</tbody></table>
+<ol>
+<li><strong><code>12/8</code> 高→12 位并行出</strong>（适配 12 位总线，一步到位）；</li>
+<li><strong><code>12/8</code> 低 +<code>A₀</code> 低→读高 8 位</strong>（先抓高位，占总线前 8 位）；</li>
+<li><strong><code>12/8</code> 低 +<code>A₀</code> 高→读低 4 位</strong>（后补低位，总线低 4 位有效，高 4 位补 0）。</li>
+</ol>
+<blockquote>
+<p>要理解AD574 中 <strong><code>12/8</code> 和 <code>A₀</code> 引脚的功能</strong>，需结合 <strong>“12 位数据与 8 位总线的兼容性矛盾”</strong> 分析，拆解如下：  </p>
+<h3 id="一、12-8-引脚：决定数据输出模式（12-位并行-vs-8-位分时）"><a href="#一、12-8-引脚：决定数据输出模式（12-位并行-vs-8-位分时）" class="headerlink" title="一、12/8 引脚：决定数据输出模式（12 位并行 vs 8 位分时）"></a><strong>一、<code>12/8</code> 引脚：决定数据输出模式（12 位并行 vs 8 位分时）</strong></h3><p>AD574 是 <strong>12 位 ADC</strong>（可输出 0~4095 的数字量，对应 12 位二进制），但多数单片机是 <strong>8 位数据总线</strong>（一次只能传输 8 位）。<code>12/8</code> 引脚用于解决这个矛盾：  </p>
+<table>
+<thead>
+<tr>
+<th>12&#x2F;8</th>
+<th>功能</th>
+<th>数据输出方式</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>高电平</strong></td>
+<td>12 位并行输出模式</td>
+<td>12 位数据（<code>D₁₁~D₀</code>）同时输出</td>
+<td>具备 12 位总线的系统（如 DSP）</td>
+</tr>
+<tr>
+<td><strong>低电平</strong></td>
+<td>8 位分时输出模式</td>
+<td>12 位数据拆分为 <strong>高 8 位</strong>（<code>D₁₁~D₄</code>）和 <strong>低 4 位</strong>（<code>D₃~D₀</code>），分两次传输</td>
+<td>8 位单片机系统（如 8051）</td>
+</tr>
+</tbody></table>
+<h3 id="二、A₀-引脚：8-位模式下的“高低位切换开关”"><a href="#二、A₀-引脚：8-位模式下的“高低位切换开关”" class="headerlink" title="二、A₀ 引脚：8 位模式下的“高低位切换开关”"></a><strong>二、<code>A₀</code> 引脚：8 位模式下的“高低位切换开关”</strong></h3><p>当 <code>12/8</code> 接 <strong>低电平</strong>（8 位模式）时，<code>A₀</code> 用于控制 <strong>哪部分数据输出</strong>（高 8 位或低 4 位）：  </p>
+<h4 id="1-A₀-低电平：输出高-8-位（D₁₁-D₄）"><a href="#1-A₀-低电平：输出高-8-位（D₁₁-D₄）" class="headerlink" title="1. A₀ = 低电平：输出高 8 位（D₁₁~D₄）"></a>1. <strong><code>A₀ = 低电平</code>：输出高 8 位（<code>D₁₁~D₄</code>）</strong></h4><ul>
+<li>此时，AD574 将 12 位数据的 <strong>高 8 位</strong>（第 4<del>11 位，共 8 位）放到数据总线，**低 4 位（&#96;D₃</del>D₀&#96;）呈高阻态**（相当于“断开”，避免干扰总线）。</li>
+</ul>
+<h4 id="2-A₀-高电平：输出低-4-位（D₃-D₀）"><a href="#2-A₀-高电平：输出低-4-位（D₃-D₀）" class="headerlink" title="2. A₀ = 高电平：输出低 4 位（D₃~D₀）"></a>2. <strong><code>A₀ = 高电平</code>：输出低 4 位（<code>D₃~D₀</code>）</strong></h4><ul>
+<li>此时，AD574 将 12 位数据的 <strong>低 4 位</strong>（第 0<del>3 位）放到数据总线，**高 8 位（&#96;D₁₁</del>D₄&#96;）呈高阻态**。</li>
+</ul>
+<h3 id="三、实例演示：12-位数据如何拆分传输？"><a href="#三、实例演示：12-位数据如何拆分传输？" class="headerlink" title="三、实例演示：12 位数据如何拆分传输？"></a><strong>三、实例演示：12 位数据如何拆分传输？</strong></h3><p>假设 AD574 转换结果为 <strong>12 位二进制 <code>1001 0001 1010</code></strong>（十进制 2330，十六进制 <code>0x91A</code>）：  </p>
+<ul>
+<li><strong>高 8 位</strong>：<code>1001 0001</code>（<code>D₁₁~D₄</code>，对应 <code>0x91</code>）；  </li>
+<li><strong>低 4 位</strong>：<code>1010</code>（<code>D₃~D₀</code>，对应 <code>0x0A</code>）。</li>
+</ul>
+<h4 id="8-位单片机的读取流程："><a href="#8-位单片机的读取流程：" class="headerlink" title="8 位单片机的读取流程："></a>8 位单片机的读取流程：</h4><ol>
+<li><strong>第一步：读高 8 位</strong></li>
+</ol>
+<ul>
+<li>置 <code>A₀ = 低电平</code>，AD574 输出 <code>1001 0001</code>（<code>0x91</code>），单片机读取该值并暂存。</li>
+</ul>
+<ol start="2">
+<li><strong>第二步：读低 4 位</strong></li>
+</ol>
+<ul>
+<li>置 <code>A₀ = 高电平</code>，AD574 输出 <code>0000 1010</code>（低 4 位补 0 凑 8 位，即 <code>0x0A</code>），单片机读取该值。</li>
+</ul>
+<ol start="3">
+<li><strong>第三步：拼接数据</strong></li>
+</ol>
+<ul>
+<li>将高 8 位（<code>0x91</code>）左移 4 位，加上低 4 位（<code>0x0A</code>），得到完整 12 位数据 <code>0x91A</code>（<code>1001 0001 1010</code>）。</li>
+</ul>
+<p><code>A₀</code> 的“高&#x2F;低”控制，本质是 <strong>避免两次读取时的总线冲突</strong>（若高低位同时输出，会导致数据混乱甚至短路）。  </p>
+<p><strong>总结</strong>：<code>12/8</code> 决定“是否拆分 12 位数据”，<code>A₀</code> 决定“拆分后读高 8 位还是低 4 位”，两者配合让 AD574 灵活适配不同位数的 CPU 总线，是模拟→数字转换中 <strong>“硬件兼容性设计”的经典案例</strong>。</p>
+</blockquote>
+<blockquote>
+<p><strong>例题</strong></p>
+<p><strong>下列关于 AD574 中 12&#x2F;8 和 A₀ 引脚功能的描述，正确的有（   ）</strong><br>选项：<br>A. 当 12&#x2F;8 接高电平时，AD574 可直接输出 12 位并行数据，A₀ 引脚此模式下功能无效<br>B. 当 12&#x2F;8 接低电平、A₀ 接低电平时，数据总线输出 12 位结果的低 4 位（补 0 为 8 位）<br>C. 8 位接口模式下，A₀ 为高电平时，12 位结果的 高 8 位会被禁止输出（呈高阻态）<br>D. 若需适配 8 位单片机总线，应将 12&#x2F;8 接低电平，通过 A₀ 分两次读取高 8 位和低 4 位<br>答案解析：<br>✅ A：12&#x2F;8 高→12 位并行输出，A₀ 仅在 8 位模式生效，此模式下无意义。<br>❌ B：12&#x2F;8 低 +A₀ 低→输出 高 8 位（D₁₁<del>D₄），而非低 4 位（干扰项颠倒高低位）。<br>✅ C：A₀ 高→高 8 位（D₁₁</del>D₄）高阻（禁止），仅低 4 位（D₃~D₀，补 0 为 8 位）输出。<br>✅ D：8 位模式通过 12&#x2F;8 低 +A₀ 切换，分两次读取并拼接，适配 8 位总线。</p>
+<hr>
+<p><strong>简述 AD574 中 12&#x2F;8 和 A₀ 引脚的作用，并说明 8 位接口模式 下的工作逻辑。</strong><br>12&#x2F;8 引脚：<br>高电平：启用 12 位并行输出模式，12 位数据（D₁₁<del>D₀）同时上总线，适配 12 位宽系统。<br>低电平：启用 8 位分时模式，12 位数据拆分为 高 8 位（D₁₁</del>D₄） 和 低 4 位（D₃<del>D₀），分两次传输。<br>A₀ 引脚（仅 12&#x2F;8 低电平时有效）：<br>低电平：选通 高 8 位（D₁₁</del>D₄）输出，低 4 位呈高阻态。<br>高电平：选通 低 4 位（D₃~D₀，补 0 为 8 位）输出，高 8 位呈高阻态。<br>8 位模式流程：通过控制 A₀ 电平，分 “读高 8 位→读低 4 位” 两步获取数据，最终软件拼接为 12 位结果。</p>
+</blockquote>
+<p>对于 Ａ Ｄ５７４ 的输入端一般可接成<strong>单极性输入</strong>和<strong>双极性输入</strong>两种工作方式  </p>
+<h2 id="微机频率测量技术"><a href="#微机频率测量技术" class="headerlink" title="微机频率测量技术"></a>微机频率测量技术</h2><ul>
+<li><p><strong>频率量</strong>是相对来说比较<u>容易</u>实现<u>精密测量</u>的一种电量  </p>
+</li>
+<li><p>频率信号与计算机的接口也比电压信号更容易实现</p>
+</li>
+</ul>
+<h3 id="计数测频法（闸门时间法）"><a href="#计数测频法（闸门时间法）" class="headerlink" title="计数测频法（闸门时间法）"></a>计数测频法（闸门时间法）</h3><p>计数测频法的<strong>基本思想</strong>就是在某一选定的时间间隔内对被测信号进行<u>计数</u>，然后将<u>计数值</u>除以<u>时间间隔（时基）</u>就得到所测频率</p>
+<h4 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h4><p>被测信号经过一个可控闸门输给计数器，<span style="color:#FF0000">该闸门实际上就是一个<u>与门</u>或<u>与非门</u></span>，与门的另一输入端由微型计算机的一根输出线($P_1)$控制，<span style="color:#FF0000">当此线为“**高”**时，<u>闸门打开</u>，被测信号经闸门进入计数器使计数器计数；如此线为“<strong>低</strong>”则<u>闸门关闭</u> ,计数停止</span>。利用微机内部的定时器 ,可控制闸门按要求的时间间隔打开或关闭.从而实现频率测量。</p>
+<p><img src="/blog/image/Snipaste_2025-06-30_15-49-27.png"></p>
+<p>设所选的闸门开启时时间间隔为 $t$,在此间隔内计得的计数值为$N$ ,则测得的</p>
+<p>频率为</p>
+<p>$$<br>f:&#x3D;:N&#x2F;:t<br>$$</p>
+<p>选取$t&#x3D;$ 1s ,则$f&#x3D;N($Hz),如$t&#x3D;0.1$s,则$f&#x3D;10N($Hz)。</p>
+<h4 id="测频方法的误差分析"><a href="#测频方法的误差分析" class="headerlink" title="测频方法的误差分析"></a>测频方法的误差分析</h4><p>测频方法的误差主要有两类:</p>
+<ol>
+<li><strong>量化误差 (±1误差)</strong>: 将模拟量转化为数字量所产生的误差叫量化误差**。是由于用于计数的时标脉冲与控制主门的被测周期不同步而引起的**。</li>
+<li><strong>标准频率误差 (时基误差)</strong>: 电子计数器在测量时, 都是以晶振产生的各种时基和时标信号作为基准的, 晶体振荡器不稳定将引起误差。</li>
+</ol>
+<blockquote>
+<p><strong>±1误差原理</strong></p>
+<p>$\pm 1$误差在测频时，闸门的开启时刻与计数脉冲的时间关系是不相关的，所以它们在时间轴上的相对位置是随机的。这样，在相同的闸门开启时间内，计数器所计得的数却不一定相同，当闸门开启时间$T$接近甚至等于被测信号周期$T_x$的整数$N$倍时，此项误差为最大。</p>
+<ul>
+<li><p>$T_S$为计数器的闸门开启时间</p>
+</li>
+<li><p>$T_x$为被测信号周期</p>
+</li>
+<li><p>$\Delta t_1$为闸门开启时刻至第一个计数脉冲前的时间（<strong>假设计数脉冲前沿使计数器翻转计数</strong>） $0 \leq \Delta t_1 \leq T_x$</p>
+</li>
+<li><p>$\Delta t_2$为闸门关闭时刻至下一个计数脉冲前沿的时间   $0 \leq \Delta t_2 \leq T_x$</p>
+</li>
+<li><p>设计数值为$N$，计数值误差为$\Delta N$</p>
+</li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-06-30_16-58-28.png"></p>
+<p>为作图方便，图中$N$取6</p>
+<p>由图可见</p>
+<p>$$<br>T_S &#x3D; NT_{x} + \Delta t_{1} - \Delta t_{2} &#x3D; \left[ N + \frac{ \left( \Delta t_{1} - \Delta t_{2} \right) }{ T_{x} } \right] T_{x}<br>$$</p>
+<p>显然，计数器的计数值$N$为正整数，它通常不能准确地反映频率关系式，即$ N \neq f_{x} T_s $，这就造成了计数误差：</p>
+<p>$$<br>\Delta N &#x3D; f_{x} T_S-N   &#x3D; f_x\left[ N + \frac{ \left( \Delta t_{1} - \Delta t_{2} \right) }{ T_{x} } \right] T_{x}-N<br>$$</p>
+<p>得</p>
+<p>$$<br>\Delta N &#x3D; \frac{ \left( \Delta t_{1} - \Delta t_{2} \right) }{ T_{x} }<br>$$</p>
+<ol>
+<li>当$\Delta t_{1} &#x3D; \Delta t_{2}$时，$\Delta N &#x3D; 0$  </li>
+<li>当$\Delta t_{1} &#x3D; 0$，$\Delta t_{2} &#x3D; T_{x}$时，$\Delta N &#x3D; -1$  </li>
+<li>当$\Delta t_{1} &#x3D; T_{x}$，$\Delta t_{2} &#x3D; 0$时，$\Delta N &#x3D; 1$</li>
+</ol>
+<p><strong>即最大计数误差为$\pm 1$个数</strong></p>
+<p><span style="color:#FF0000">低频时，误差主要由±1误差引起</span></p>
+<ul>
+<li><p>由“±１”误差造成的计数误差是随被测频率变化的相对误差，该误差的影响随着被测频率的下降而急骤增大  </p>
+</li>
+<li><p>相对误差（误差占测量值的比例）定义为：</p>
+</li>
+<li><p>$$<br>\text{相对误差} E &#x3D; \frac{|\text{绝对误差}|}{\text{测量值}} &#x3D; \frac{|\Delta N|}{N}&#x3D;\frac{1}{N} &#x3D; \frac{1}{f_x \cdot T_s}<br>$$</p>
+</li>
+<li><p>当 $T_s$固定时，<strong>相对误差与被测频率 $f_x$ 成反比</strong>$(f_x \downarrow \Rightarrow \text{相对误差} \uparrow) $</p>
+</li>
+</ul>
+<p>以 $T_s &#x3D; 1,\text{秒}$ 为例，对比不同频率下的相对误差：</p>
+<table>
+<thead>
+<tr>
+<th>被测频率 f（Hz）</th>
+<th>闸门内脉冲数 $N &#x3D; f \cdot T_s$</th>
+<th>相对误差$ \dfrac{1}{N}$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1M</td>
+<td>1M</td>
+<td>$10^{-6}$</td>
+</tr>
+<tr>
+<td>100</td>
+<td>100</td>
+<td>1%</td>
+</tr>
+<tr>
+<td>10</td>
+<td>10</td>
+<td>10%</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>100%</td>
+</tr>
+</tbody></table>
+</blockquote>
+<ul>
+<li>对于闸门时间为 １ｓ 的情况，当频率超过 １Ｍ Ｈｚ 时，测量误差主要由时基误差来决定。 这一误差要比“±１”在低频时引起的误差小得多。</li>
+</ul>
+<p><img src="/blog/image/IMG_20250628_184645.jpg"></p>
+<h3 id="周期测量法"><a href="#周期测量法" class="headerlink" title="周期测量法"></a>周期测量法</h3><p><img src="/blog/image/Snipaste_2025-07-01_10-54-08.png"></p>
+<blockquote>
+<p>周期测量中，改用固定频率很高的参考脉冲**$f_{r}$作计数器的脉冲源**，而让**被测信号$f_{m}$**经放大整形后再经过一个门控双稳去控制闸门。</p>
+</blockquote>
+<p>其电路原理图如图5.18所示，在门控双稳输入B的两个下降沿之间（<span style="color:#FF0000">保证一个周期</span>），触发器输出高电平使闸门打开，计数器对$f_{r}$进行计数。闸门开启的时间就是被测信号的周期。</p>
+<p>门控双稳输出的下降沿表示一次计数完毕，此信号引入微型计算机通知它取走计数器的数值。</p>
+<blockquote>
+<p>**注意：**由于计数器不清零，与被测周期对应的数值应为两次相邻读数之差。如出现第三次读数小于前一次时，表明计数器已出现过满量程进位，<strong>应将第二次读数加上计数器的满量程值再相减</strong>。通过所获得的周期值，微型计算机很容易计算其倒数，即对应的频率值。</p>
+</blockquote>
+<ul>
+<li>计数器的计数结果为$N$</li>
+</ul>
+<p>$$<br>T_m&#x3D;NT_r \<br>f_m&#x3D;\frac {f_r}{N}<br>$$</p>
+<p>周期测量法中，“±1”所引起的相对误差为</p>
+<p>$$<br> E&#x3D;\frac {1}{T_{m}\cdot f_{r}}&#x3D;\frac {f_{m}}{f_{r}}<br>$$<br><span style="color:#FF0000">参考脉冲的频率越高则相对误差越小，并且相对误差与被测频率成正比，对低频测量，周期法有较高的精度，随着被测频率的增高，其相对误差逐渐增大  </span></p>
+<p><img src="/blog/image/IMG_20250628_185302.jpg"></p>
+<h3 id="多倍周期测量法"><a href="#多倍周期测量法" class="headerlink" title="多倍周期测量法"></a>多倍周期测量法</h3><p><span style="color:#FF0000">为了克服1KHZ附近误差大的缺点，可应用多倍周期测量法  </span></p>
+<p>多倍周期法的基本做法是利用微型计算机自动控制计数闸门开启 𝑚个被测信号周期的时间使得计数器在一次测量中得到的读数值接近满量程。</p>
+<p>当被测频率较高时,自动选取较大的 𝑚值,频率转低时,则选用较小的 𝑚值,保证每次得到的读数值都在满量程值附近,从而使得对各种被测频率误差都很小。</p>
+<p><img src="/blog/image/Snipaste_2025-07-01_14-44-29.png"></p>
+<ul>
+<li><p>计数器$CT_1$累计闸门开启时间内的<strong>参考脉冲数</strong>；</p>
+</li>
+<li><p>$CT_2$为<strong>周期数计数器</strong>，它对被测信号进行计数  </p>
+</li>
+<li><p>$CT_1$计数器的计数结果为$N$</p>
+</li>
+<li><p>$m$为被测信号周期数</p>
+</li>
+<li><p><strong>$f_{r}$为计数器的脉冲源</strong></p>
+</li>
+<li><p><strong>$f_{m}$为被测信号</strong></p>
+</li>
+</ul>
+<p>$$<br>mT_m&#x3D;NT_r \<br>f_m&#x3D;\frac {mf_r}{N}<br>$$</p>
+<blockquote>
+<p><span style="color:#FF0000">测量方法本质</span></p>
+<ul>
+<li><strong>计数法</strong>:是一种积分方法,在闸门时间内由计数器对被测信号进行脉冲累计。  低频误差的原因是指,在确定的闸门时间内,累计得到的脉冲数远小于计数器的满量程,致使“±1”引起的误差增大。</li>
+<li><strong>周期法</strong>:也是一种积分方法,只不过计数器累计的不是被测信号而是参考脉冲。  高频时,由于受被测信号周期控制的闸门开启时间过短,使得计数值也远小于计数器的满量程,造成相对误差增大。  </li>
+<li><strong>多倍周期法</strong>:是利用计算机自动控制计数闸门开启m个被测信号周期的时间,使得计数器在一次测量中得到的读数值接近满量程。当被测频率较高时,自动选取较大的m值,频率转低时,则选用较小的m值,保证每次得到的读数值都在满量程值附近,从而使得对各种被测频率</li>
+</ul>
+</blockquote>
+<h2 id="模拟量输出技术"><a href="#模拟量输出技术" class="headerlink" title="模拟量输出技术"></a>模拟量输出技术</h2><h3 id="模拟量输出通道的结构组成"><a href="#模拟量输出通道的结构组成" class="headerlink" title="模拟量输出通道的结构组成"></a>模拟量输出通道的结构组成</h3><ul>
+<li><p>模拟量输出通道的任务 —— 把计算机处理后的<span style="color:#FF0000">数字量信号</span>转换成<span style="color:#FF0000">模拟量（电压或电流信号）</span>，去驱动相应的执行器，从而达到控制的目的；</p>
+</li>
+<li><p>模拟量输出通道（D&#x2F;A通道或AO通道）构成： 一般是由<u>接口电路</u>（核心部分）、<span style="color:#FF00FF"><u>数&#x2F;模转换器</u>（简称D&#x2F;A或DAC）</span>和<u>电压&#x2F;电流变换器</u>等；</p>
+</li>
+</ul>
+<hr>
+<blockquote>
+<p>⚠️ <strong>注意：</strong> 并非所有的DAC的数据输入都能直接挂在微处理机数据总线上。</p>
+</blockquote>
+<blockquote>
+<p>🔍 <strong>原因：</strong> 实际应用中，转换后的模拟信号需要保持一段时间，便于测量或控制，而 CPU 在执行向外设给输出数据的指令时，数据在数据总线上的存在时间只维持一个时钟周期。因此，对于不带<strong>输入数据寄存器</strong>的 DAC 芯片，其<strong>数据输入端</strong>须经<strong>锁存器</strong>与 CPU 数据总线相连</p>
+</blockquote>
+<h3 id="不带输入数据寄存器的D-A转换器接口"><a href="#不带输入数据寄存器的D-A转换器接口" class="headerlink" title="不带输入数据寄存器的D&#x2F;A转换器接口"></a>不带输入数据寄存器的D&#x2F;A转换器接口</h3><p><img src="/blog/image/Snipaste_2025-07-01_15-45-39.png"></p>
+<ul>
+<li>LS273为<strong>数据锁存器</strong></li>
+<li>若图片中的D&#x2F;A转换器输出类型为电流输出，后接运放可实现<strong>电流-电压的转换</strong></li>
+</ul>
+<h3 id="微机总线兼容型D-A转换器接口"><a href="#微机总线兼容型D-A转换器接口" class="headerlink" title="微机总线兼容型D&#x2F;A转换器接口"></a>微机总线兼容型D&#x2F;A转换器接口</h3><ul>
+<li><p>微机总线兼容型 Ｄ／Ａ 转换器芯片内部带有<strong>输入数据寄存器</strong>  </p>
+</li>
+<li><p>拥有一个数据寄存器的叫<strong>单缓冲型</strong>，带有两个数据寄存器的叫<strong>双缓冲型</strong>  </p>
+</li>
+<li><p><span style="color:#FF0000"><strong>双缓冲型优点(简答)</strong> </span>：当一个数字量送入 DAC 进行转换输出同时，能输入下一个数字量，从而提高转换速度。</p>
+</li>
+</ul>
+<h3 id="原码、反码、补码、移码"><a href="#原码、反码、补码、移码" class="headerlink" title="原码、反码、补码、移码"></a>原码、反码、补码、移码</h3><h4 id="原码"><a href="#原码" class="headerlink" title="原码"></a>原码</h4><ul>
+<li>符号位（最高位）+ 数值位</li>
+<li><strong>规则</strong>：<code>0</code>表正，<code>1</code>表负，数值位为绝对值的二进制。</li>
+</ul>
+<h4 id="反码"><a href="#反码" class="headerlink" title="反码"></a>反码</h4><ul>
+<li><strong>规则</strong>：正数反码同原码；负数反码是符号位不变，数值位逐位取反。</li>
+</ul>
+<h4 id="补码"><a href="#补码" class="headerlink" title="补码"></a>补码</h4><ul>
+<li><strong>规则</strong>：正数补码同原码；负数补码是<strong>反码 + 1</strong>（符号位自动调整）。</li>
+</ul>
+<h4 id="偏移二进制码（移码）"><a href="#偏移二进制码（移码）" class="headerlink" title="偏移二进制码（移码）"></a>偏移二进制码（移码）</h4><p>$n$**(不包含符号位的真值位)**位二进制数$\pm D_i$的偏移二进制代码为<br>$$<br>D_m &#x3D; D_i + 2^n<br>$$</p>
+<blockquote>
+<p>$  D_i&#x3D;+110  $(十进制为+6)：$  D_m&#x3D; +110+1000&#x3D;1110(&#x3D;6+8&#x3D;14)  $ <span style="color:#FF0000">这里的移码没有符号位</span></p>
+<p>$  D_i&#x3D;-110  $(十进制为-6)：$  D_m&#x3D;-110+1000&#x3D;0010(&#x3D;-6+8&#x3D;2)  $ (-110原码为1110，反码为1001，补码为1010；1010+1000&#x3D;10010取4位)</p>
+</blockquote>
+<p><span style="color:rgb(116, 219, 38)"><strong>将补码的符号位取反</strong></span>（<strong>推荐</strong>）</p>
+<table>
+<thead>
+<tr>
+<th>真值 $D_i$</th>
+<th>原码(字节长度4位)&#xA;</th>
+<th>反码&#xA;</th>
+<th>补码&#xA;</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$+6$</td>
+<td><code>0110</code></td>
+<td><code>0110</code></td>
+<td><code>0110</code></td>
+</tr>
+<tr>
+<td>$-6$</td>
+<td><code>1110</code></td>
+<td><code>1001</code></td>
+<td><code>1010</code></td>
+</tr>
+<tr>
+<td>$+0$</td>
+<td><code>0000</code></td>
+<td><code>0000</code></td>
+<td><code>0000</code></td>
+</tr>
+<tr>
+<td>$-0$</td>
+<td><code>1000</code></td>
+<td><code>1111</code></td>
+<td><code>0000</code></td>
+</tr>
+<tr>
+<td>$-8$</td>
+<td>无&#xA;</td>
+<td>无&#xA;</td>
+<td><code>1000</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>例题</strong></p>
+<p>分别求+78和-78的原码、反码、补码、移码</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="center">+78</th>
+<th align="center">-78</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>原码（<strong>短除法</strong>）</td>
+<td align="center">01001110</td>
+<td align="center">11001110</td>
+</tr>
+<tr>
+<td>反码</td>
+<td align="center">01001110</td>
+<td align="center">10110001</td>
+</tr>
+<tr>
+<td>补码</td>
+<td align="center">01001110</td>
+<td align="center">10110010</td>
+</tr>
+<tr>
+<td>移码（<strong>补码符号位取反</strong>）</td>
+<td align="center">11001110</td>
+<td align="center">00110010</td>
+</tr>
+</tbody></table>
+</blockquote>
+<h3 id="权电阻型D-A转换器"><a href="#权电阻型D-A转换器" class="headerlink" title="权电阻型D&#x2F;A转换器"></a>权电阻型D&#x2F;A转换器</h3><table>
+<thead>
+<tr>
+<th align="center">$n$ 位二进制数</th>
+<th>$D_{n-1}$</th>
+<th>$D_{n-2}$</th>
+<th>$\cdots$</th>
+<th>$D_1$</th>
+<th>$D_0$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"></td>
+<td>最高位（MSB）</td>
+<td>⟵⟶</td>
+<td>⟵⟶</td>
+<td>⟵⟶</td>
+<td>最低位（LSB）</td>
+</tr>
+<tr>
+<td align="center"><strong>权</strong></td>
+<td>$2^{n-1}$</td>
+<td>$2^{n-2}$</td>
+<td>$\cdots$</td>
+<td>$2^1$</td>
+<td>$2^0$</td>
+</tr>
+</tbody></table>
+<p>转换为十进制数<br>$$<br>D_n &#x3D; D_{n-1} \cdot 2^{n-1} + D_{n-2} \cdot 2^{n-2} + \cdots + D_1 \cdot 2^1 + D_0 \cdot 2^0<br>$$<br><img src="/blog/image/Snipaste_2025-07-01_20-47-17.png"><br>$$<br>i_0&#x3D;\frac {U_{REF}}{R}D_0 \Rightarrow i_i&#x3D;\frac {U_{REF}}{\frac{R}{2^i}}D_i<br>$$</p>
+<p>$$<br>I_{REF}&#x3D;<br> \frac{ U_{REF}}{R} \sum_{i&#x3D;0}^{n-1} D_i , 2^i<br>$$</p>
+<p>$$<br>u_0&#x3D;-I_{REF}, R_f&#x3D; -\frac{R_f, U_{REF}}{R} \sum_{i&#x3D;0}^{n-1} D_i , 2^i \<br>\text{$D_i$ 取0或1}<br>$$</p>
+<blockquote>
+<p><strong>输出电压除了与输入的二进制数有关，还与运算放大器的反馈电阻$R_f$以及基准电压$U_{REF}$有关</strong></p>
+</blockquote>
+<h3 id="倒T型电阻网络D-A转换器"><a href="#倒T型电阻网络D-A转换器" class="headerlink" title="倒T型电阻网络D&#x2F;A转换器"></a>倒T型电阻网络D&#x2F;A转换器</h3><p><img src="/blog/image/20250702085853.png"></p>
+<h3 id="单极性输出的DAC转换器"><a href="#单极性输出的DAC转换器" class="headerlink" title="单极性输出的DAC转换器"></a>单极性输出的DAC转换器</h3><p><img src="/blog/image/IMG_20250628_191911.jpg"></p>
+<ul>
+<li><p>DAC0832自带反馈电阻，且$n&#x3D;8$</p>
+</li>
+<li><p>$$<br>V_{\mathrm{OUT}}&#x3D;-B\times\frac{V_{\mathrm{REF}}}{2^8} \<br>B&#x3D;D_{7}\times2^{7}+D_{6}\times2^{6}+\cdots+D_{1}\times2^{1}+D_{0}\times2^{0}<br>$$</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>几个注意事项</strong></p>
+<ul>
+<li>DAC是否自带反馈电阻</li>
+<li>DAC是几位芯片</li>
+<li>$V_{OUT}$电压是负数（由上面的电路决定的）</li>
+<li>上面的二进制数为无符号数</li>
+</ul>
+</blockquote>
+<h3 id="双极性输出的D-A转换器"><a href="#双极性输出的D-A转换器" class="headerlink" title="双极性输出的D&#x2F;A转换器"></a>双极性输出的D&#x2F;A转换器</h3><p><img src="/blog/image/20250702093204.png"></p>
+<hr>
+<p><span style="color:#FF0000">总结：</span></p>
+<p>构成双极性输出D&#x2F;A转换器的一般方法：</p>
+<ul>
+<li>只要在求和放大器的输入端接入一个偏移电流，使输入最高位为1而其他各位输入为0时的输出$v_{out2}&#x3D;0$，</li>
+<li>同时将输入的符号位反相后接到一般的D&#x2F;A转换器的输入，就得到了双极性输出的D&#x2F;A转换器。</li>
+</ul>
+<blockquote>
+<p>举例：DAC0832为8位芯片，取$V_{REF}&#x3D;2^7&#x3D;128V$，$V_{out2}:-128 \sim 127V$</p>
+<p>如果希望输出为120V，其原码为<strong>01111000</strong>，补码<strong>01111000</strong>，补码首位反相<strong>11111000</strong>，(<strong>这个就是DAC0832的输入量</strong>)$D_8&#x3D;248$，$\frac{248-128}{128} \cdot128&#x3D;120$</p>
+</blockquote>
+<p><img src="/blog/image/IMG_20250628_190618.jpg"></p>
+<blockquote>
+<p>右下角的条件其实就是为了保证输入数字量10000000时，$V_{out2}&#x3D;0$,这个不重要</p>
+</blockquote>
+<p>$$<br>v_{out1} &#x3D; -\frac{V_{\mathrm{REF}}}{2^n} D_n<br>$$</p>
+<p>$$<br>v_{out2} &#x3D; -2R(I_1 + I_2) \<br>&#x3D; -2R\left(\frac{V_{\mathrm{REF}}}{2R}+ \frac{v_{out1}}{R}  \right) \<br>&#x3D; \frac{V_{\mathrm{REF}}}{2^{n-1}} D_n - V_{\mathrm{REF}} \<br>&#x3D; \frac {D_n -2^{n-1}}{2^{n-1}} V_{\mathrm{REF}}<br>$$</p>
+<blockquote>
+<p>如果是DAC0832这种<strong>8</strong>位的芯片<br>$$<br>v_{out2} &#x3D;\frac {D_n -128}{128} V_{\mathrm{REF}}<br>$$</p>
+</blockquote>
+<blockquote>
+<p><strong>例题</strong></p>
+<p><img src="/blog/image/IMG_20250628_192000.jpg"><br>$$<br>D_n &#x3D; \left(1 + \frac{V_{out2}}{V_{\mathrm{ref}}} \right) \cdot 2^{n-1}<br>&#x3D; 128D &#x3D; 80H &#x3D; 10000000B<br>$$</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th><strong>数制</strong></th>
+<th>后缀</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>十进制</td>
+<td>D</td>
+<td></td>
+</tr>
+<tr>
+<td>二进制</td>
+<td>B</td>
+<td></td>
+</tr>
+<tr>
+<td>八进制</td>
+<td>o</td>
+<td></td>
+</tr>
+<tr>
+<td>十六进制</td>
+<td>H</td>
+<td>位值：A&#x3D;10，B&#x3D;11，C&#x3D;12，D&#x3D;13，E&#x3D;14，F&#x3D;15</td>
+</tr>
+</tbody></table>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th><strong>转换方向</strong></th>
+<th>方法核心</th>
+<th>关键逻辑</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>十六进制 → 十进制</td>
+<td>位权展开（$\sum \text{位值} \times 16^n$）</td>
+<td>基数 16 的幂次计算</td>
+</tr>
+</tbody></table>
+</blockquote>
+<p><strong>示例 1：1AH 转十进制</strong></p>
+<ul>
+<li>位分解：第 1 位（左）是 <code>1</code>，第 0 位（右）是 <code>A</code>（10）。</li>
+<li>位权计算：$1 \times 16^1 + 10 \times 16^0 &#x3D; 16 + 10 &#x3D; 26$</li>
+</ul>
+<p><strong>示例 2：FFH 转十进制</strong></p>
+<ul>
+<li>位分解：第 1 位是 <code>F</code>（15），第 0 位是 <code>F</code>（15）。</li>
+<li>位权计算：$15 \times 16^1 + 15 \times 16^0 &#x3D; 240 + 15 &#x3D; 255$</li>
+</ul>
+<h2 id="步进电机基本控制技术"><a href="#步进电机基本控制技术" class="headerlink" title="步进电机基本控制技术"></a>步进电机基本控制技术</h2><h3 id="步进电机结构与工作原理"><a href="#步进电机结构与工作原理" class="headerlink" title="步进电机结构与工作原理"></a>步进电机结构与工作原理</h3><p>步进电机是一种将<span style="color:#FF0000">电脉冲信号</span>转换成机械位移的机电执行元件。每当一个脉冲信号施加于电机的控制绕组时，其转轴就转过一个固定的角度（<span style="color:#FF0000">步距角</span>）。顺序连续地发给脉冲，则电机轴<span style="color:#FF0000">一步接一步地运转</span>。</p>
+<p><img src="/blog/image/Snipaste_2025-07-02_10-28-28.png"></p>
+<ul>
+<li><p>在实际应用中，<strong>脉冲分配回路</strong>有各种构成的办法。最常用的是环形分配器电路，现在渐渐已采用微型计算机取代旧式的环形分配器，功率放大电路的结构对步进电机的性能有着十分重要的作用。</p>
+</li>
+<li><p>功率放大电路有<strong>单电压</strong>、<strong>双电压</strong>、<strong>斩波型</strong>、<strong>调频调压型</strong>和<strong>细分型</strong>等型式的电路。</p>
+</li>
+</ul>
+<h3 id="驱动电源的组成"><a href="#驱动电源的组成" class="headerlink" title="驱动电源的组成"></a>驱动电源的组成</h3><p><img src="/blog/image/Snipaste_2025-07-02_10-49-45.png"></p>
+<p>步进电机的运行要求足够功率的电脉冲信号按一定的顺序分配到各相绕组。所以，与其它旋转电机不同的是步进电机的工作需要专门的驱动。</p>
+<ul>
+<li>步进电机的驱动包含<span style="color:#0000FF">脉冲分配（环行分配）</span>和<span style="color:#0000FF">功率放大</span>两部分。</li>
+</ul>
+<h3 id="步进电机功率放大电路"><a href="#步进电机功率放大电路" class="headerlink" title="步进电机功率放大电路"></a>步进电机功率放大电路</h3><p>步进电动机的功率驱动电路实际上是一种脉冲放大电路，使脉冲具有一定的功率驱动能力。</p>
+<h4 id="单电压驱动电路"><a href="#单电压驱动电路" class="headerlink" title="单电压驱动电路"></a>单电压驱动电路</h4><p><img src="/blog/image/Snipaste_2025-07-02_10-57-34.png"></p>
+<p>$$<br>T_d &#x3D; \frac{L}{R_L + R_C + R_d}<br>$$</p>
+<p>其中：</p>
+<ul>
+<li>$T_d$回路放电时间</li>
+<li>$L$ —— 是电动机绕组</li>
+</ul>
+<hr>
+<p><span style="color:#0000FF">两点改进：</span></p>
+<ol>
+<li><p>电阻 $R_C$ 两端<span style="color:#FF0000">并联电容 $C$</span>，是由于电容两端的电压不能突变，在绕组由<strong>截止到导通</strong>瞬间，电源电压全部降落到绕组上，使电流上升更快，所以，电容 $C$ 又称为<span style="color:#FF0000">加速电容</span>。</p>
+</li>
+<li><p>在续流二极管 $D$ 回路中<span style="color:#FF0000">串联了一个电阻 $R_D$</span>，对回路的放电时间 $T_d$ 有较大改善功能。续流二极管 $D$ 在晶体管 $T$ 截止时起<span style="color:#0000FF">续流和保护作用</span>，以防止晶体管截止瞬间绕组产生的反电动势对管子造成损坏。串联电阻也使电流下降更快，从而使绕组中电流脉冲的后沿变陡。</p>
+</li>
+</ol>
+<h4 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h4><p><strong>综合题</strong></p>
+<p>已知电动自行车系统构成结构简图如图所示，当该自行车以单片机作为控制器，并能实时进行速度控制时，<br>（1）试绘制自行车匀速运动的工作原理框图？<br>（2）若该轮毂电机采用单电压控制方式，试设计出单电压改进型功率放大电路，  并说明该改进型电路的优点？：</p>
+<p><img src="/blog/image/845883_003335729142_2.jpg"></p>
+<p><img src="/blog/image/Snipaste_2025-07-09_14-14-46.png"></p>
+<hr>
+<p>1、下图为遥控无人车结构简图。采用单片机作为主控制器，</p>
+<p>（1）试画出车轮驱动系统的速度闭环的工作原理框图？</p>
+<p>（2）设遥控无人车的 6-车轮驱动系统采用单电压基本型改进功率放大电路，<br>试画出该电路图并说明该电路改进后的特点？</p>
+<p><img src="/blog/image/Snipaste_2025-07-09_14-37-09.png"></p>
+<p><img src="/blog/image/Snipaste_2025-07-09_14-36-03.png"></p>
+<h4 id="高低压切换型驱动电路（双电压驱动电路）"><a href="#高低压切换型驱动电路（双电压驱动电路）" class="headerlink" title="高低压切换型驱动电路（双电压驱动电路）"></a>高低压切换型驱动电路（<span style="color:#FF0000">双电压驱动电路</span>）</h4><p><span style="color:#0000FF">驱动电路的基本思想</span>：</p>
+<p>无论电机的工作频率如何，在导通相的前沿用高电压供电，提高电流的前沿上升率；而在前沿过后用低压来维持绕组的电流。</p>
+<hr>
+<p><img src="/blog/image/Snipaste_2025-07-02_14-26-20.png"></p>
+<p><strong>元件说明：</strong></p>
+<ul>
+<li>$VT_1$：高压电源的开关管  </li>
+<li>$VT_2$：低压侧功率驱动管  </li>
+<li>$V_1$：续流二极管  </li>
+<li>$V_2$：钳位二极管  </li>
+<li>$L$：步进电机绕组电感  </li>
+<li>$R$：串联电阻</li>
+<li><strong>$U_{b1}$：步进控制信号</strong></li>
+<li><strong>$U_{b2}$：高压电源开关控制信号</strong></li>
+</ul>
+<hr>
+<p><strong>要求：</strong></p>
+<p><span style="color:#FF0000">一、</span> $U_{b1}$ 和 $U_{b2}$ 上升沿的上 升时刻一致；</p>
+<p><span style="color:#FF0000">二、</span> 有 $U_{b2}的脉宽 &lt; U_{b1}的脉宽$</p>
+<hr>
+<blockquote>
+<p> 高低压驱动线路的<strong>优点</strong>是：启动力矩大、突跳频率和工作频率高。<br><strong>缺点</strong>是：低频振荡加剧，大功率管的数量多用一倍，增加了驱动电路复杂度。</p>
+</blockquote>
+<blockquote>
+<p><span style="color:#FF0000">调频调压驱动电源的基本原理是：</span></p>
+<ul>
+<li>当步进电机在低频运行时，供电电压降低，当运行在高频段时，供电电压也升高，即供电电压随着步进电机转速的增加而升高。 </li>
+<li>这样既解决了低频振荡问题，也保证了高频运行时的输出转矩。</li>
+<li>实现调频调压控制的硬件电路可由软件配合适当硬件电路实现</li>
+<li>$U_{CP} $是步进控制脉冲信号，$U_{CT} $是开关调压信号。</li>
+</ul>
+</blockquote>
+<p><img src="/blog/image/Snipaste_2025-07-02_14-38-46.png"></p>
+<h2 id="直流电动机脉宽（PWM）调速系统"><a href="#直流电动机脉宽（PWM）调速系统" class="headerlink" title="直流电动机脉宽（PWM）调速系统"></a>直流电动机脉宽（PWM）调速系统</h2><h3 id="直流电动机的脉宽调制工作原理"><a href="#直流电动机的脉宽调制工作原理" class="headerlink" title="直流电动机的脉宽调制工作原理"></a>直流电动机的脉宽调制工作原理</h3><p><span style="color:#FF0000">PWM</span>（<span style="color:#FF0000">Pulse Width Modulation</span>）——利用<u>大功率晶体管的开关特性</u>来调制固定电压的<span style="color:#0000FF">直流电源</span>，按一个固定的<span style="color:#0000FF">频率</span>来<span style="color:#0000FF">接通</span>和<span style="color:#0000FF">断开</span>，并根据需要改变一个周期内<span style="color:#0000FF">接通</span>与<span style="color:#0000FF">断开</span>时间的<span style="color:#0000FF">长短</span>，通过改变直流电动机电枢上电压的<span style="color:#0000FF">占空比</span>来改变平均电压的大小，从而控制电动机的转速。</p>
+<hr>
+<p><img src="/blog/image/Snipaste_2025-07-03_08-36-27.png"></p>
+<p>周期为 $T$，导通时间为 $t_{\text{on}}$，关断时间为 $t_{\text{off}}$，满足：</p>
+<p>$$<br>T &#x3D; t_{\text{on}} + t_{\text{off}}<br>$$</p>
+<p>平均电压（有效控制量）为：</p>
+<p>$$<br>U_{as} &#x3D; U_s \cdot \frac{t_{\text{on}}}{T}<br>$$</p>
+<hr>
+<blockquote>
+<p>以晶体管的开关特性满足电机的周期通断</p>
+</blockquote>
+<p><strong>改变占空比的两种调制方法</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>脉冲宽度调制（PWM）</strong></th>
+<th><strong>脉冲频率调制（PFM）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>实现方式</strong></td>
+<td>固定 <strong>开关周期 T</strong>，改变 <strong>导通脉冲宽度$t_{on}$</strong></td>
+<td>固定 <strong>导通脉冲宽度</strong>，改变 <strong>开关周期 T</strong>（即改变频率 $f&#x3D;1&#x2F;T$)</td>
+</tr>
+<tr>
+<td><strong>关键特性</strong></td>
+<td>频率固定，仅脉宽变化。</td>
+<td>脉宽固定，仅频率变化。</td>
+</tr>
+<tr>
+<td><strong>缺陷</strong></td>
+<td></td>
+<td>若遇到 <strong>特定频率的机械谐振</strong>，会引发 <strong>系统振荡、音频啸叫声</strong></td>
+</tr>
+<tr>
+<td><strong>应用场景</strong></td>
+<td></td>
+<td>因谐振问题，<strong>伺服系统中不适用</strong></td>
+</tr>
+</tbody></table>
+<h3 id="直流电动机的调速方式"><a href="#直流电动机的调速方式" class="headerlink" title="直流电动机的调速方式"></a>直流电动机的调速方式</h3><p>直流速度控制系统常采用晶体管脉冲调制方式（<span style="color:#FF0000">PWM</span>）。</p>
+<p><span style="color:#FF0000">PWM</span>方式是在大功率开关晶体管的基极上，加上脉冲宽度可调的方波电压，控制开关管的导通时间 $t$，改变占空比，达到控制目的。</p>
+<p>图5.35 是直流<span style="color:#FF0000">PWM</span>系统原理框图。这是一个双闭环系统，有电流环和速度环。</p>
+<ul>
+<li>核心部分是<strong>脉冲功率放大器和脉宽调制器。</strong></li>
+</ul>
+<p><img src="/blog/image/Snipaste_2025-07-03_08-57-06.png"></p>
+<h4 id="脉冲功率放大器（PWM-系统主回路）"><a href="#脉冲功率放大器（PWM-系统主回路）" class="headerlink" title="脉冲功率放大器（ＰＷＭ 系统主回路）"></a>脉冲功率放大器（ＰＷＭ 系统主回路）</h4><p><img src="/blog/image/Snipaste_2025-07-03_09-21-51.png"></p>
+<ul>
+<li>$VT_1 \sim VT_4$ 为大功率晶体管；</li>
+<li>$VD_1 \sim VD_4$ 为续流二极管，用于保护 $VT_1 \sim VT_4$；</li>
+<li>$SM$ 为直流伺服电动机。</li>
+</ul>
+<p><span style="color:#FF0000">工作原理</span></p>
+<p><img src="/blog/../image/image-20250703095332404.png"></p>
+<p>4 个功率管分为<strong>两组基极电压</strong></p>
+<ul>
+<li><p>$U_{b1} &#x3D; U_{b4}$（同相）</p>
+</li>
+<li><p>$U_{b2} &#x3D; U_{b3} &#x3D; -U_{b1}$(反相，与前一组互补）</p>
+</li>
+</ul>
+<p><span style="color:#FF0000">当$0 \leq t \leq t_1$</span></p>
+<ul>
+<li><strong>基极电压</strong>：</li>
+</ul>
+<p>$U_{b1}、U_{b4}$为正（驱动 VT₁、VT₄导通）；$U_{b2}、U_{b3}$为负（ VT₂、VT₃截止）。</p>
+<ul>
+<li><strong>电流路径</strong>:（虚线 1）</li>
+<li><strong>电机电压</strong>：两端加正向电压 <strong>$U_{AB} &#x3D; U_s$</strong>，电枢电流 $i_a$沿正向（A→B）增大</li>
+</ul>
+<hr>
+<p><span style="color:#FF0000">$t_1 \leq t \leq T$</span></p>
+<ul>
+<li><p><strong>基极电压</strong>：$U_{b1}$、$U_{b4}$ 为负（$VT_1$、$VT_4$ 截止）；$U_{b2}$、$U_{b3}$ 为正（ $VT_2$、$VT_3$ 不能立即导通）。</p>
+</li>
+<li><p><strong>管子状态矛盾</strong>：$VT_1$、$VT_4$ 已截止，但 $VT_2$、$VT_3$ <span style="color:#FF0000">不能立即导通</span> —— 因为 <span style="color:#FF0000">电机电枢电感的反电动势</span> 阻碍电流突变：</p>
+<ul>
+<li>电感试图维持原电流方向（$A \rightarrow B$），产生 <span style="color:#FF0000">反向电动势</span>，迫使电流经 <span style="color:#FF0000">续流二极管 $VD_2$, $VD_3$</span> 形成回路。</li>
+</ul>
+</li>
+<li><p><strong>续流路径（虚线 2）</strong>：</p>
+<p>续流时，$VD_2$、$VD_3$ 的正向压降使 $VT_2$、$VT_3$ 承受 <span style="color:#FF0000">反向电压</span>，因此暂时无法导通。</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>负半周的两种发展（决定电机转向）</strong></p>
+</blockquote>
+<p><strong>① 续流未断（负半周时间短）</strong></p>
+<ul>
+<li><p><strong>条件</strong>：$t_1 \sim T$ 时间短（负半周窄），或续流电流 $i_a$ 大→续流未降至零，<span style="color:#FF0000">下一个正半周已到来</span>（$U_{b1}$、$U_{b4}$ 又变正）。</p>
+</li>
+<li><p><strong>结果</strong>：$VT_1$、$VT_4$ 再次导通，电流沿回路 1 重新上升，$i_a$ 在 <span style="color:#FF0000">正值附近波动</span>。（对应图 5.37 (b) 的 $i_a$ 波形）</p>
+</li>
+</ul>
+<p><strong>② 续流中断，电流反转（负半周时间长）</strong></p>
+<ul>
+<li><p><strong>条件</strong>：$t_1 \sim T$ 时间长（负半周宽），或续流电流 $i_a$ 小→续流降至零，此时 $U_{b2}$、$U_{b3}$ 的正电压驱动 $VT_2$、$VT_3$ 导通。</p>
+</li>
+<li><p><strong>反转电流路径（虚线 3）</strong>：<br>$$<br>+U_s \rightarrow VT_3 \rightarrow B \rightarrow SM \ (\text{电机}) \rightarrow A \rightarrow VT_2 \rightarrow \text{地}<br>$$</p>
+</li>
+</ul>
+<p>电流方向 <span style="color:#FF0000">反向（$B \rightarrow A$）</span>（对应图 5.37 (c) 的 $i_a$ 波形）。</p>
+<blockquote>
+<p><span style="color:#FF0000"><strong>转向与转速的控制逻辑</strong></span></p>
+<p>通过 <span style="color:#FF0000">正半周宽度 $t_1$</span> 和 <span style="color:#FF0000">负半周宽度 $T - t_1$</span> 的对比，决定电机的 <span style="color:#FF0000">转向和转速</span>：</p>
+<ol>
+<li><strong>正转</strong>：$t_1 &gt; T - t_1 \Rightarrow$ 电压平均值 $U_{AB} &gt; 0$，<strong>电机正转</strong>，正转转速随 $t_1$ 增大而升高（正脉冲越宽，平均电压越高）。</li>
+<li><strong>反转</strong>：$t_1 &lt; T - t_1 \Rightarrow$ 电压平均值 $U_{AB} &lt; 0$，<strong>电机反转</strong>，反转转速随 $T - t_1$ 增大而升高（负脉冲越宽，反向平均电压越高）。</li>
+<li><strong>停转</strong>：$t_1 &#x3D; T - t_1 \Rightarrow$ 正负脉冲对称，平均电压 $U_{AB} &#x3D; 0$，电机停止。</li>
+</ol>
+<blockquote>
+<p>在一个开关周期内，$AB$ 端的<strong>平均电压</strong>为：</p>
+<p>当 $0 \leq t &lt; t_1$ 时，$U_{AB} &#x3D; U_s$；</p>
+<p>当 $t_1 \leq t &lt;T $ 时，$U_{AB} &#x3D; -U_s$；<br>$$<br>U_{AB} &#x3D; \frac{t_1}{T} U_s - \frac{T - t_1}{T} U_s<br>$$</p>
+<p>$$<br>&#x3D; \left( \frac{2t_1}{T} - 1 \right) U_s<br>$$</p>
+<p>$$<br>&#x3D; \rho U_s<br>$$</p>
+<p>$$<br>U_{AB} &#x3D; \left( \frac{2t_1}{T} - 1 \right) U_s<br>$$</p>
+<p><strong>占空比</strong><br>$$<br>\rho &#x3D; \frac{2t_1}{T} - 1 \quad (-1 \leq \rho \leq 1)<br>$$</p>
+</blockquote>
+</blockquote>
+<h3 id="脉宽调制器（PWM系统控制回路）"><a href="#脉宽调制器（PWM系统控制回路）" class="headerlink" title="脉宽调制器（PWM系统控制回路）"></a>脉宽调制器（PWM系统控制回路）</h3><ul>
+<li><p>能将电压信号（代表速度）转换为脉冲宽度的调节变换装置称为<strong>脉宽调制器</strong>。</p>
+</li>
+<li><p>脉宽调制器的调制信号有两种：<strong>锯齿波和三角波</strong></p>
+</li>
+</ul>
+<p>脉宽调制器的<strong>优点</strong>如下：</p>
+<p>1）响应快。<br>2）电源利用率高。<br>3）动态特性好，响应频带宽。<br>4）稳速精度高。<br>5）损耗小。</p>
+<p><strong>缺点</strong>：功率晶体管承受高峰值电流的能力较差。</p>
+<p>脉宽调制的<strong>任务</strong>是将连续控制信号变成方波控制信号，加在主回路上功率晶体管的基极，作为输入信号，来控制直流电动机的转速和转矩。</p>
+<p><img src="/blog/image/Snipaste_2025-07-03_14-15-41.png"></p>
+<p> <strong>针对此图的补充</strong>：<span style="color:#FF0000">PWM</span> 晶体管功率放大器的工作原理是：三角波发生器产生对称三角波载波 $U_T$，与转速控制电压 $U_I$ 经过加法器叠加后，输入比较器与 0 电位比较，生成占空比随 $U_I$ 变化的 PWM 方波 $U_S$；</p>
+<p>该方波经功率放大器放大为驱动信号 $U_P$，借助 PWM 脉宽的平均电压特性调控伺服电动机转速，通过三角波对称性和控制滤波，实现“电压指令 → 脉宽调制 → 功率驱动 → 转速控制”的精准闭环。</p>
+<p>核心是利用载波与指令的融合，将模拟电压转换为脉宽信号，最终驱动电机运行。</p>
+<h2 id="放大电路中的反馈"><a href="#放大电路中的反馈" class="headerlink" title="放大电路中的反馈"></a>放大电路中的反馈</h2><p><img src="/blog/image/20250705085329.png"></p>
+<h1 id="第六章-电液伺服控制系统"><a href="#第六章-电液伺服控制系统" class="headerlink" title="第六章 电液伺服控制系统"></a>第六章 电液伺服控制系统</h1><h2 id="电液比例流量控制"><a href="#电液比例流量控制" class="headerlink" title="电液比例流量控制"></a>电液比例流量控制</h2><p><u>电液比例流量控制系统</u>用<u>电液比例流量阀</u>来控制<u>系统的速度</u>，也称电液比例速度控制系统，是一种阀控比例系统。</p>
+<p> <strong>电液比例速度调节</strong>有三种方式：  </p>
+<ul>
+<li><p>比例节流调速</p>
+</li>
+<li><p>比例容积调速</p>
+</li>
+<li><p>比例容积节流调速</p>
+</li>
+</ul>
+<h3 id="闭环同步调速系统"><a href="#闭环同步调速系统" class="headerlink" title="闭环同步调速系统"></a>闭环同步调速系统</h3><p><img src="/blog/image/Snipaste_2025-07-03_16-13-32.png"></p>
+<p><span style="color:#FF0000">采用两个电液比例调速阀实现闭环同步控制速度系统</span></p>
+<h4 id="系统结构框图描述："><a href="#系统结构框图描述：" class="headerlink" title="系统结构框图描述："></a>系统结构框图描述：</h4><ul>
+<li>主动液压缸：$1$</li>
+<li>随动液压缸：$2$</li>
+<li>位移传感器$L_1$、$L_2$输出：$U_1$、$U_2$</li>
+<li>电压比较差值：$\Delta U &#x3D; U_2 - U_1$</li>
+<li>放大器：$A_1$, $A_2$</li>
+<li>比例调速阀：$BQ(1)$, $BQ(2)$</li>
+<li>电流信号：$I_1$, $I_2$</li>
+<li>基准速度电压：$U_0$</li>
+</ul>
+<hr>
+<p><strong>工作过程</strong>：</p>
+<ol>
+<li><p>当 $1$ 和 $2$ 双缸同步，则：</p>
+<p>$$<br>U_1 &#x3D; U_2, \quad \Delta U &#x3D; U_2 - U_1 &#x3D; 0<br>$$</p>
+<p>两缸速度相等。</p>
+</li>
+<li><p>当 $1$ 和 $2$ 不同步时，则：</p>
+<p>$$<br>\Delta U &#x3D; U_2 - U_1 \neq 0<br>$$</p>
+<p>若 $U_2 &gt; U_1$，即 2 缸运行较快：</p>
+<ul>
+<li>此时 $U_0 - \Delta U$ 输入到 $A_2$ 放大器中。</li>
+<li>原速度信号 $U_0$ 不变，但 $A_2$ 输出的 $I_2$ 要相应减小。</li>
+<li>使得 $BQ_2$ 输出流量比例减小，导致 2 缸速度降低。</li>
+<li>当速度再次与缸1相等时，$\Delta U &#x3D; 0$，$I_2$ 恢复。</li>
+</ul>
+</li>
+</ol>
+<p>由于 $U_0$ 不变、$I_1$ 不变，因此缸1速度始终不变。</p>
+<blockquote>
+<p><strong>例题</strong></p>
+<p>下图是油缸闭环同步调速系统示意图，图中 $U_1$、$U_2$ 分别是油缸 1 和油缸 2 的速度输出信号，幅度为 $0,V \sim 5,V$。当两缸不同步时，则：$\Delta U &#x3D; U_1 - U_2 \ne 0$作为控制器输出，幅度为 $-5,V \sim 5,V$。</p>
+<p>$U_1$、$U_2$ 作为控制器输入，用运算放大器、电阻等元件设计该比例控制器的电路图。可不必标具体参数值。</p>
+<p><img src="/blog/../image/Snipaste_2025-07-03_16-13-32.png"></p>
+<p><strong>要求完成：</strong></p>
+<p>“输入 $U_1$ 与 输入 $U_2$” 构成减法关系。</p>
+<p><strong>说明</strong>：答案不唯一，电路图只要完成上述功能即可。</p>
+<p><img src="/blog/image/Snipaste_2025-07-03_17-02-39.png"></p>
+<p><img src="/blog/image/Snipaste_2025-07-09_09-41-34.png"></p>
+</blockquote>
+<h2 id="比例控制放大器主要电路的构成、原理及功能"><a href="#比例控制放大器主要电路的构成、原理及功能" class="headerlink" title="比例控制放大器主要电路的构成、原理及功能"></a>比例控制放大器主要电路的构成、原理及功能</h2><h3 id="电源电路"><a href="#电源电路" class="headerlink" title="电源电路"></a>电源电路</h3><p><span style="color:#0000FF">① 主要作用</span></p>
+<p>从标准电源中获得和分离出比例控制放大器正常工作所需的各种直流稳定电源，并且在电网电压、负载电流及环境温度允许范围内变化时，保证输出直流电压的稳定性。</p>
+<p><span style="color:#FF0000">✔</span> 同时，还兼具电源电压极性反接、过流、短路自保护自恢复等非熔断式保护功能，以保证比例控制放大器的工作可靠性。</p>
+<hr>
+<p><span style="color:#0000FF">② 构成</span></p>
+<p>包括<strong>滤波、稳压和过载保护</strong>等部分。</p>
+<h3 id="输入接口单元"><a href="#输入接口单元" class="headerlink" title="输入接口单元"></a>输入接口单元</h3><p>用来满足各种外设需要，增强适应性。（包括<u>模拟量接口</u>、<u>数字量接口</u>、<u>遥控接口</u>等）。</p>
+<h3 id="信号处理电路"><a href="#信号处理电路" class="headerlink" title="信号处理电路"></a>信号处理电路</h3><p>为适应各种不同控制对象和工况的要求， 比例控制放大器中还有各种信号处理电路，对输入信号进行相应的处理。</p>
+<p>最常见的有<u>斜坡信号发生器</u>，<u>阶跃函数发生器</u>，<u>双路平衡电路</u>，<u>初始电流设定电路</u>等。</p>
+<h4 id="斜坡信号发生器"><a href="#斜坡信号发生器" class="headerlink" title="斜坡信号发生器"></a><span style="color:#FF0000">斜坡信号发生器</span></h4><ul>
+<li><p>以一个设定值<strong>阶跃</strong>作输入信号，斜坡发生器产生一个线慢上升或下降的输出信号。</p>
+</li>
+<li><p>输出信号的<strong>变化速率</strong>可通过电位器调节。</p>
+</li>
+</ul>
+<p><span style="color:#FF0000">斜坡发生器的作用原理：</span><br>在输入阶跃信号情况下，由于电容C充电的阻滞现象，可使输出电压缓慢连续地变化。<br>调节电阻R能够改变输出电压的斜率，也就是决定电容C的充电速度。</p>
+<p><img src="/blog/image/Snipaste_2025-07-04_09-39-32.png"></p>
+<h4 id="阶跃函数发生器"><a href="#阶跃函数发生器" class="headerlink" title="阶跃函数发生器"></a>阶跃函数发生器</h4><p>阶跃函数发生器，在设定值电压<strong>大于</strong>一个较小的电压值 $u_i$ 时产生一个恒定的输出信号，其大小可由 $P_1, P_2$ 调节。当设定值电压<strong>小于</strong> $u_i$ 时，输出信号为零。</p>
+<p><img src="/blog/image/Snipaste_2025-07-04_10-05-37.png"></p>
+<h4 id="双路平衡电路"><a href="#双路平衡电路" class="headerlink" title="双路平衡电路"></a><span style="color:#FF0000">双路平衡电路</span></h4><p>在双路比例控制放大器中，为使两个比例电磁铁分别正常动作，且在两个比例电磁铁参数有所不同的情况下仍能得到对称的控制特性，常采用双路平衡电路，</p>
+<p>如图 6.18 所示。调节电位器 $P$，使 $B$ 路比例电磁铁控制通道的增益与 $A$ 路比例电磁铁控制通道的增益相同，同时使 $B$ 路控制信号反相，保证比例电磁铁 $A$ 和 $B$ 实现<strong>差动</strong>工作。</p>
+<p><img src="/blog/image/Snipaste_2025-07-04_10-27-41.png"></p>
+<h4 id="初始电流设定电路"><a href="#初始电流设定电路" class="headerlink" title="初始电流设定电路"></a>初始电流设定电路</h4><p>主要用于产生比例电磁铁的预激磁电流，调整比例阀的零位死区大小，或避开死区。 使比例阀在设定值输入时，从起始位置迅速启动  </p>
+<h4 id="颤振信号发生器"><a href="#颤振信号发生器" class="headerlink" title="颤振信号发生器"></a>颤振信号发生器</h4><p><span style="color:#FF0000">为降低比例电磁铁的摩擦滞环，往往采用在控制信号上叠加颤振信号的方法  </span></p>
+<p><img src="/blog/image/Snipaste_2025-07-04_14-27-46.png"></p>
+<ul>
+<li><span style="color:#FF0000">调节$R$可改变颤振信号频率，调节$R_1$可改变颤振信号的幅值  </span></li>
+<li>图中 $A_1$ 组成同相施密特触发器，$A_2$ 组成反相积分器。</li>
+<li>通过 $R_2$ 构成正反馈，形成自激振荡，由 $A_1$ 输出方波，$A_2$ 输出三角波，</li>
+<li>方波发生器由三角波触发，积分器 $A_2$ 对方波输出电压积分。</li>
+</ul>
+<p>为求出三角波的最大值，设方波电压为 $-V_z$，负的电压输入积分器，使它的输出电压为 $u_o$，<br>形成正的斜坡电压。利用叠加原理得：<br>$$<br>\frac{u_o-V_+}{ R_2} &#x3D; \frac{V_+-(-V_z)}{R_1}  \tag{6-1}<br>$$</p>
+<p>$$<br>V_+ &#x3D; \frac{R_1}{R_1 + R_2} u_o - \frac{R_2}{R_1 + R_2} V_z \tag{6-1}<br>$$</p>
+<p>因 $V_+ &#x3D; 0$ 时，由于比较器负端接地，$A_1$ 改变状态，所以$u_0$最大值出现在 $V_+ &#x3D; 0$ 时，</p>
+<blockquote>
+<p><span style="color:#FF0000">三角波电压 $u_0$的最大值为何出现在 $V_+ &#x3D; 0$的位置?</span></p>
+<ul>
+<li><strong>运放 A₁</strong>：输出 <strong>方波</strong>（幅度 $  \pm V_z  $），反相端接地（$  V_- &#x3D; 0  $），同相端 $  V_+  $ 接收两路反馈：</li>
+</ul>
+<p>支路 1：三角波 $  u_0  $（运放 A₂输出）经电阻 $  R_2  $ 连接到 $  V_+  $；</p>
+<p>支路 2：方波（A₁自身输出）经电阻 $  R_1  $ 连接到 $  V_+  $。</p>
+<ul>
+<li><strong>运放 A₂（积分器）</strong>：对方波积分，输出 **三角波 **（线性上升 &#x2F; 下降），再反馈到 A₁的同相端，形成闭环振荡。</li>
+</ul>
+<hr>
+<p>A1输出状态由 **同相端 与反相端 **的电位关系 决定：</p>
+<ul>
+<li><p>当 $  \boldsymbol{V_+ &gt; 0}  $：A₁输出 **正饱和电平 **</p>
+</li>
+<li><p>当 $  \boldsymbol{V_+ &lt; 0}  $：A₁输出 **负饱和电平 **</p>
+</li>
+<li><p>当 $  \boldsymbol{V_+ &#x3D; 0}  $：是状态切换的 <strong>临界点</strong>（从 “$  V_+ &lt; 0  $” 跳变到 “$  V_+ &gt; 0  $”，或反之）。</p>
+</li>
+<li><p>本质上是一种电压比较器</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li>A₁输出 **（负方波），A₂的积分器对 $-V_z$ 积分，使三角波 $  u_0  $ **线性上升（积分输入为负，输出反向增大，即从负向向正向上升）。</li>
+</ul>
+<p>$$<br>u_0&#x3D;-\frac{1}{RC} \int u_{o1} dt&#x3D;\frac{1}{RC} \int V_z dt<br>$$</p>
+<ul>
+<li><p>随着 $  u_0  $ 上升，支路 1 的反馈使 $  V_+  $ 逐渐升高。$V_+ &#x3D; \frac{R_1}{R_1 + R_2} u_o - \frac{R_2}{R_1 + R_2} V_z \tag{6-1}$</p>
+</li>
+<li><p>当 $  u_0  $ 上升到某一值时，$  V_+  $ 恰好等于 <strong>0</strong>：</p>
+</li>
+<li><p>此前，$  V_+ &lt; 0  $，A₁保持输出 $-V_z$，$  u_0  $ 持续上升；</p>
+</li>
+<li><p>当 $  V_+ &#x3D; 0  $ 瞬间，**继续上升的$u_0$ 会使 触发 A₁ **状态翻转（输出从 $-V_z$ 跳变为 $+V_z$）。</p>
+</li>
+<li><p>A₁输出跳变为 $+V_z$ 后，积分器的输入极性反转（从 “积分 $-V_z$” 变为 “积分 $+V_z$”），导致三角波 $  u_0  $ <strong>从上升转为下降</strong>。因此：</p>
+<ul>
+<li>$V_+&#x3D;0$是上升阶段的终点**，此时 $  u_0  $ 达到 **正向最大值</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>由式 (6-1) 得：<br>$$<br>u_{o\max} &#x3D; \frac{R_2}{R_1} V_z \tag{6-2}<br>$$</p>
+<p>同理，三角波的<strong>最低电压</strong>为：</p>
+<p>(方波电压为 $V_z$,  $V_+ &#x3D; \frac{R_1}{R_1 + R_2} u_o + \frac{R_2}{R_1 + R_2} V_z \tag{6-1}$  $V_+&#x3D;0$时有$u_{o\min}$ )<br>$$<br>u_{o\min} &#x3D; -\frac{R_2}{R_1} V_z<br>$$</p>
+<p><strong>最大振幅</strong>为：<br>$$<br>u_{o\max} - u_{o\min} &#x3D; 2 \frac{R_2}{R_1} V_z \tag{6-3}<br>$$<br><strong>可见，改变 $R_2$ 与 $R_1$ 的比值，可改变它的振幅</strong>。下面计算三角波的周期和频率。</p>
+<p>当 $t &#x3D; 0$ 时，设积分器的输入电压为 $-V_z$，则 $A_2$ 的输出电压为：</p>
+<p>$$<br>u_o(t) &#x3D; -\frac{1}{RC} \int_0^t (-V_z) , dt + u_o(t)\big|_{t&#x3D;0}<br>$$</p>
+<p>积分后得：</p>
+<p>$$<br>u_o(t) &#x3D; \frac{V_z}{RC} t - V_z \frac{R_2}{R_1} \tag{6-4}<br>$$</p>
+<p>当 $t &#x3D; \frac{T}{2}$ 时，方波发生器翻转，此时应有 $V_+ &#x3D; 0$，<br>$u_o\left[\frac{T}{2}\right] &#x3D; u_{o\max} &#x3D; \frac{R_2}{R_1} V_z$，将 $t &#x3D; \frac{T}{2}$ 代入式 (6-4)，得：</p>
+<p>$$<br>T &#x3D; \frac{4 R_2 RC}{R_1} \tag{6-5}<br>$$<br>振荡频率为：</p>
+<p>$$<br>f &#x3D; \frac{1}{T} &#x3D; \frac{R_1}{4RC R_2} \tag{6-6}<br>$$</p>
+<p>可见频率与幅值无关，改变 $R, C$ 或 $R_1&#x2F;R_2$ 均可改变频率。<br>然而，改变 $R_1 &#x2F; R_2$ 虽不影响方波的输出幅值，但会影响三角波的幅值。<br>方波的幅值由下式确定：<br>$$<br>u_{o1} &#x3D; 2(E_w + V_D) \tag{6-7}<br>$$</p>
+<h4 id="测量放大电路"><a href="#测量放大电路" class="headerlink" title="测量放大电路"></a>测量放大电路</h4><p>在位移电反馈比例控制放大器中，为了通过装在比例阀上的位移传感器构成电反馈闭环，往往附加有与传感器匹配的测量放大电路  </p>
+<h4 id="功率放大级"><a href="#功率放大级" class="headerlink" title="功率放大级"></a>功率放大级</h4><ul>
+<li><p>功率放大级主要由<u>信号放大</u>和<u>功率驱动电路</u>组成  </p>
+</li>
+<li><p>根据功率放大级工作原理的不同，比例控制放大器有<u>模拟式</u>和<u>开关式</u>之分  </p>
+</li>
+<li><p>模拟式功率放大级：这种功率放大级技术比较成熟，结构简单，稳态控制性能较好，但功耗较大  </p>
+</li>
+<li><p>开关式功率放大级有<u>脉宽调制、脉频调制、脉幅调制、脉码调制</u>等多种方式  ，以<strong>脉宽调制（ＰＷＭ ）式最为常用</strong>  </p>
+</li>
+<li><p><strong>脉宽调制功率放大级</strong>  ：由脉宽调制器、功率驱动电路、电流负反馈单元、电流调节器等组成</p>
+</li>
+</ul>
+<p><span style="color:#FF0000"><strong>脉宽调制式功率放大级</strong></span></p>
+<p><img src="/blog/image/Snipaste_2025-07-04_15-03-01.png"></p>
+<table>
+<thead>
+<tr>
+<th>运放</th>
+<th>角色</th>
+<th>核心贡献</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A₁</td>
+<td>电流调节器</td>
+<td>放大误差信号</td>
+</tr>
+<tr>
+<td>A₂</td>
+<td>比较器</td>
+<td>电压→脉冲信号</td>
+</tr>
+<tr>
+<td>A₃</td>
+<td>施密特触发器</td>
+<td>生成方波</td>
+</tr>
+<tr>
+<td>A₄</td>
+<td>反相积分器</td>
+<td>方波→三角波</td>
+</tr>
+<tr>
+<td>A₃+A₄</td>
+<td>三角波调制信号发生器</td>
+<td>生成三角波</td>
+</tr>
+<tr>
+<td>A₂+A₃+A₄</td>
+<td>脉宽调制器</td>
+<td><strong>将连续变化信号转换成脉宽调制信号</strong></td>
+</tr>
+<tr>
+<td>A₅</td>
+<td>差动电压放大器</td>
+<td>对电流采样信号进行综合、滤波和放大，构成电流负反馈</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>当输入电压 $u_i \leq 0$ 时，$A_1$ 正向饱和，$A_2$ 负向饱和，<strong>功率驱动电路各功放管截止</strong>，输出电流 $i &#x3D; 0$。</p>
+</li>
+<li><p>当 $u_i &gt; 0$ 时，$u_i$ 与反馈信号 $u_f$ 相比较，其差值经过电流调节器 $A_1$ 运算放大后输给脉宽调制器，<strong>脉宽调制器</strong><u>将电流调节器输出的连续信号转换成脉冲宽度与其大小成比例的脉冲信号</u>，该脉冲信号经过功率驱动电路功率放大，在比例电磁铁线圈两端产生与之同相的脉冲电压 $u_s$，当开关频率远高于三角电磁线圈的截止频率时，由于比例电磁铁线圈的惯性，在线圈上就可得到平均值与脉宽成比例的、带有交流纹波分量的直流电流  </p>
+</li>
+<li><p>与此同时，输出电流经过采样电阻 $R_f$ 检测，滤波及放大，反馈到输入端，构成输出电流平均值的闭环调节  。此闭环削弱了前向放大环节非线性，增益变化，负载阻抗变化以及电源电压波动对输出电流的影响。</p>
+</li>
+</ul>
+<blockquote>
+<p><span style="color:#FF0000">脉宽调制式功率放大级的工作原理为：</span></p>
+<ol>
+<li>当 $u_i \leq 0$ 时，$A_1$、$A_2$ 处于饱和状态，电磁铁电流 $i &#x3D; 0$；</li>
+<li>当 $u_i &gt; 0$ 时，$u_i$ 与反馈信号 $u_f$ 相比较，其差值经过电流调节器 $A_1$ 运算放大后输给由$A_2,A_3, A_4$ 构成的脉宽调制器，</li>
+<li><strong>脉宽调制器</strong><u>将电流调节器输出的连续信号转换成脉冲宽度与其大小成比例的脉冲信号</u>，该脉冲信号经过功率驱动电路功率放大，在比例电磁铁线圈两端产生与之同相的脉冲电压 $u_s$，当开关频率远高于三角电磁线圈的截止频率时，由于比例电磁铁线圈的惯性，在线圈上就可得到<u>平均值与脉宽成比例的、带有交流纹波分量的直流电流</u></li>
+<li>输出电流经过采样电阻 $R_f$ 检测，滤波及放大，反馈到输入端，构成输出电流平均值的闭环调节</li>
+</ol>
+</blockquote>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1/">机电一体化分析与建模</a></div><div class="post-share"><div class="social-share" data-image="/blog/image/20250505084723-2.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2025/06/12/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%85%AC%E5%BC%8F%E8%AE%B0%E5%BF%86%E6%B1%87%E6%80%BB/" title="数值分析公式记忆汇总"><img class="cover" src="/blog/image/hgud.jpeg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">数值分析公式记忆汇总</div></div><div class="info-2"><div class="info-item-1">拉格朗日插值两点一次插值（线性插值） 条件：2个节点 $(x_0, y_0)$ 和 $(x_1, y_1)$   多项式：$$L_1(x) &#x3D; \frac{x - x_1}{x_0 - x_1} y_0 + \frac{x - x_0}{x_1 - x_0} y_1$$ 等价形式：$$L_1(x) &#x3D; y_0 + \frac{y_1 - y_0}{x_1 - x_0}(x - x_0)$$  三点二次插值（抛物插值） 条件：3个节点 $(x_0, y_0)$，$(x_1, y_1)$，$(x_2, y_2)$多项式：$$L_2(x) &#x3D; \frac{(x - x_1)(x - x_2)}{(x_0 - x_1)(x_0 - x_2)} y_0 + \frac{(x - x_0)(x - x_2)}{(x_1 - x_0)(x_1 - x_2)} y_1 + \frac{(x - x_0)(x - x_1)}{(x_2 - x_0)(x_2 - x_1)} y_2$$  多个插值节点$$L_n(x)&#x3D; \sum_{i&#x3D;0}^n...</div></div></div></a><a class="pagination-related" href="/blog/2025/06/29/%E7%AC%AC%E4%BA%94%E7%AB%A0/" title="机电一体化分析与建模（二）"><img class="cover" src="/blog/image/20250505084723-2.jpeg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">机电一体化分析与建模（二）</div></div><div class="info-2"><div class="info-item-1">第六章 电液伺服控制系统电液比例流量控制电液比例流量控制系统用电液比例流量阀来控制系统的速度，也称电液比例速度控制系统，是一种阀控比例系统。  电液比例速度调节有三种方式：    比例节流调速  比例容积调速  比例容积节流调速   闭环同步调速系统 采用两个电液比例调速阀实现闭环同步控制速度系统 系统结构框图描述： 主动液压缸：$1$ 随动液压缸：$2$ 位移传感器$L_1$、$L_2$输出：$U_1$、$U_2$ 电压比较差值：$\Delta U &#x3D; U_2 - U_1$ 放大器：$A_1$, $A_2$ 比例调速阀：$BQ(1)$, $BQ(2)$ 电流信号：$I_1$, $I_2$ 基准速度电压：$U_0$   工作过程：  当 $1$ 和 $2$ 双缸同步，则： $$U_1 &#x3D; U_2, \quad \Delta U &#x3D; U_2 - U_1 &#x3D; 0$$ 两缸速度相等。  当 $1$ 和 $2$ 不同步时，则： $$\Delta U &#x3D; U_2 - U_1 \neq 0$$ 若 $U_2 &gt; U_1$，即 2...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2025/06/29/%E7%AC%AC%E4%BA%94%E7%AB%A0/" title="机电一体化分析与建模（二）"><img class="cover" src="/blog/image/20250505084723-2.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-06-29</div><div class="info-item-2">机电一体化分析与建模（二）</div></div><div class="info-2"><div class="info-item-1">第六章 电液伺服控制系统电液比例流量控制电液比例流量控制系统用电液比例流量阀来控制系统的速度，也称电液比例速度控制系统，是一种阀控比例系统。  电液比例速度调节有三种方式：    比例节流调速  比例容积调速  比例容积节流调速   闭环同步调速系统 采用两个电液比例调速阀实现闭环同步控制速度系统 系统结构框图描述： 主动液压缸：$1$ 随动液压缸：$2$ 位移传感器$L_1$、$L_2$输出：$U_1$、$U_2$ 电压比较差值：$\Delta U &#x3D; U_2 - U_1$ 放大器：$A_1$, $A_2$ 比例调速阀：$BQ(1)$, $BQ(2)$ 电流信号：$I_1$, $I_2$ 基准速度电压：$U_0$   工作过程：  当 $1$ 和 $2$ 双缸同步，则： $$U_1 &#x3D; U_2, \quad \Delta U &#x3D; U_2 - U_1 &#x3D; 0$$ 两缸速度相等。  当 $1$ 和 $2$ 不同步时，则： $$\Delta U &#x3D; U_2 - U_1 \neq 0$$ 若 $U_2 &gt; U_1$，即 2...</div></div></div></a><a class="pagination-related" href="/blog/2025/05/12/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E4%B8%80%EF%BC%89/" title="机电一体化分析与建模（1-4章）"><img class="cover" src="/blog/image/20250505084723-2.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-12</div><div class="info-item-2">机电一体化分析与建模（1-4章）</div></div><div class="info-2"><div class="info-item-1">第二章12 16题第三章3 7 8第四章8 11第五章19第六章9 第一章 绪论 机电系统：是机械电子系统的简称，是由机械系统和电气系统组成的，其核心是控制系统。  机电控制系统一般由7个部分组成：    放大器：是将比较得出的偏差信号进行放大，用来推动执行器去控制被控对象。 被控对象：是控制系统要操纵的对象。 机电控制系统的执行器：也称为执行元件或执行装置。  根据使用能量的不同，可以将执行装置大体分为电气式、液压式、气动式  液压式执行装置： a)    优点：液压驱动装置具有重量轻、惯性小、快速性好等优点； b)   缺点：液压元件易漏油，会污染环境，也有可能引起火灾；液压系统易受环境温度变化的影响 气动执行装置： a)    优点：是动作迅速、反应快、维护简单、成本低，同时由于空气黏度很小，压力损失小，节能高效，适用于远距离输送；工作环境适应性好 b)  ...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%BE%AE%E6%9C%BA%E6%B5%8B%E6%8E%A7%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.</span> <span class="toc-text">第五章 微机测控系统设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E8%B7%AF%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="toc-number">1.1.</span> <span class="toc-text">多路转换器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CD4051%E7%BB%93%E6%9E%84%E5%8E%9F%E7%90%86"><span class="toc-number">1.1.1.</span> <span class="toc-text">CD4051结构原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98"><span class="toc-number">1.1.2.</span> <span class="toc-text">例题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%87%E6%A0%B7%E4%BF%9D%E6%8C%81%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">采样保持器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%87%E6%A0%B7%E5%99%A8%E5%B8%B8%E7%94%A8%E6%9C%AF%E8%AF%AD"><span class="toc-number">1.2.1.</span> <span class="toc-text">采样器常用术语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%87%E6%A0%B7-%E4%BF%9D%E6%8C%81%E5%99%A8%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.2.</span> <span class="toc-text">采样-保持器原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E9%A1%B9%E6%8C%87%E6%A0%87"><span class="toc-number">1.2.3.</span> <span class="toc-text">两项指标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2%E7%B2%BE%E5%BA%A6"><span class="toc-number">1.2.4.</span> <span class="toc-text">转换精度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%95%B0%E8%BD%AC%E6%8D%A2%E5%99%A8%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.2.5.</span> <span class="toc-text">模数转换器接口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5A-D%E8%8A%AF%E7%89%87%E6%97%B6%EF%BC%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.2.5.1.</span> <span class="toc-text">连接A&#x2F;D芯片时，注意事项</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8%E4%BD%8DA-D%E8%BD%AC%E6%8D%A2%E5%99%A8%E4%B8%8E%E5%BE%AE%E6%9C%BA%E6%8E%A5%E5%8F%A3%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.3.</span> <span class="toc-text">8位A&#x2F;D转换器与微机接口设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#text-ADC0809-%E7%AE%A1%E8%84%9A"><span class="toc-number">1.3.1.</span> <span class="toc-text">$$\text{ADC0809 管脚}$$</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#text-ADC0809-%E8%BD%AC%E6%8D%A2%E5%99%A8%E4%B8%8E%E5%BE%AE%E6%9C%BA%E6%8E%A5%E5%8F%A3%E7%A1%AC%E4%BB%B6%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.3.2.</span> <span class="toc-text">$$\text{ADC0809 转换器与微机接口硬件电路设计}$$</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12%E4%BD%8DA-D%E8%BD%AC%E6%8D%A2%E5%99%A8%E5%BE%AE%E6%9C%BA%E6%8E%A5%E5%8F%A3%E6%8A%80%E6%9C%AF"><span class="toc-number">1.4.</span> <span class="toc-text">12位A&#x2F;D转换器微机接口技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E5%AF%84%E5%AD%98%E5%99%A8%E6%8E%A7%E5%88%B6%E8%BE%93%E5%85%A5%E7%AE%A1%E8%84%9A%EF%BC%88-A-0-%E5%92%8C-12-overline-8-%EF%BC%89"><span class="toc-number">1.4.1.</span> <span class="toc-text">内部寄存器控制输入管脚（$A_0$和$12&#x2F; \overline{8}$）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%8112-8-%E5%BC%95%E8%84%9A%EF%BC%9A%E5%86%B3%E5%AE%9A%E6%95%B0%E6%8D%AE%E8%BE%93%E5%87%BA%E6%A8%A1%E5%BC%8F%EF%BC%8812-%E4%BD%8D%E5%B9%B6%E8%A1%8C-vs-8-%E4%BD%8D%E5%88%86%E6%97%B6%EF%BC%89"><span class="toc-number">1.4.2.</span> <span class="toc-text">一、12&#x2F;8 引脚：决定数据输出模式（12 位并行 vs 8 位分时）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81A%E2%82%80-%E5%BC%95%E8%84%9A%EF%BC%9A8-%E4%BD%8D%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E2%80%9C%E9%AB%98%E4%BD%8E%E4%BD%8D%E5%88%87%E6%8D%A2%E5%BC%80%E5%85%B3%E2%80%9D"><span class="toc-number">1.4.3.</span> <span class="toc-text">二、A₀ 引脚：8 位模式下的“高低位切换开关”</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-A%E2%82%80-%E4%BD%8E%E7%94%B5%E5%B9%B3%EF%BC%9A%E8%BE%93%E5%87%BA%E9%AB%98-8-%E4%BD%8D%EF%BC%88D%E2%82%81%E2%82%81-D%E2%82%84%EF%BC%89"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">1. A₀ &#x3D; 低电平：输出高 8 位（D₁₁~D₄）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-A%E2%82%80-%E9%AB%98%E7%94%B5%E5%B9%B3%EF%BC%9A%E8%BE%93%E5%87%BA%E4%BD%8E-4-%E4%BD%8D%EF%BC%88D%E2%82%83-D%E2%82%80%EF%BC%89"><span class="toc-number">1.4.3.2.</span> <span class="toc-text">2. A₀ &#x3D; 高电平：输出低 4 位（D₃~D₀）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AE%9E%E4%BE%8B%E6%BC%94%E7%A4%BA%EF%BC%9A12-%E4%BD%8D%E6%95%B0%E6%8D%AE%E5%A6%82%E4%BD%95%E6%8B%86%E5%88%86%E4%BC%A0%E8%BE%93%EF%BC%9F"><span class="toc-number">1.4.4.</span> <span class="toc-text">三、实例演示：12 位数据如何拆分传输？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#8-%E4%BD%8D%E5%8D%95%E7%89%87%E6%9C%BA%E7%9A%84%E8%AF%BB%E5%8F%96%E6%B5%81%E7%A8%8B%EF%BC%9A"><span class="toc-number">1.4.4.1.</span> <span class="toc-text">8 位单片机的读取流程：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AE%E6%9C%BA%E9%A2%91%E7%8E%87%E6%B5%8B%E9%87%8F%E6%8A%80%E6%9C%AF"><span class="toc-number">1.5.</span> <span class="toc-text">微机频率测量技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E6%95%B0%E6%B5%8B%E9%A2%91%E6%B3%95%EF%BC%88%E9%97%B8%E9%97%A8%E6%97%B6%E9%97%B4%E6%B3%95%EF%BC%89"><span class="toc-number">1.5.1.</span> <span class="toc-text">计数测频法（闸门时间法）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8B%E9%A2%91%E6%96%B9%E6%B3%95%E7%9A%84%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">测频方法的误差分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%A8%E6%9C%9F%E6%B5%8B%E9%87%8F%E6%B3%95"><span class="toc-number">1.5.2.</span> <span class="toc-text">周期测量法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E5%80%8D%E5%91%A8%E6%9C%9F%E6%B5%8B%E9%87%8F%E6%B3%95"><span class="toc-number">1.5.3.</span> <span class="toc-text">多倍周期测量法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F%E9%87%8F%E8%BE%93%E5%87%BA%E6%8A%80%E6%9C%AF"><span class="toc-number">1.6.</span> <span class="toc-text">模拟量输出技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%8B%9F%E9%87%8F%E8%BE%93%E5%87%BA%E9%80%9A%E9%81%93%E7%9A%84%E7%BB%93%E6%9E%84%E7%BB%84%E6%88%90"><span class="toc-number">1.6.1.</span> <span class="toc-text">模拟量输出通道的结构组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%B8%A6%E8%BE%93%E5%85%A5%E6%95%B0%E6%8D%AE%E5%AF%84%E5%AD%98%E5%99%A8%E7%9A%84D-A%E8%BD%AC%E6%8D%A2%E5%99%A8%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.6.2.</span> <span class="toc-text">不带输入数据寄存器的D&#x2F;A转换器接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AE%E6%9C%BA%E6%80%BB%E7%BA%BF%E5%85%BC%E5%AE%B9%E5%9E%8BD-A%E8%BD%AC%E6%8D%A2%E5%99%A8%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.6.3.</span> <span class="toc-text">微机总线兼容型D&#x2F;A转换器接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%A0%81%E3%80%81%E5%8F%8D%E7%A0%81%E3%80%81%E8%A1%A5%E7%A0%81%E3%80%81%E7%A7%BB%E7%A0%81"><span class="toc-number">1.6.4.</span> <span class="toc-text">原码、反码、补码、移码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E7%A0%81"><span class="toc-number">1.6.4.1.</span> <span class="toc-text">原码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%A0%81"><span class="toc-number">1.6.4.2.</span> <span class="toc-text">反码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E7%A0%81"><span class="toc-number">1.6.4.3.</span> <span class="toc-text">补码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%81%8F%E7%A7%BB%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%A0%81%EF%BC%88%E7%A7%BB%E7%A0%81%EF%BC%89"><span class="toc-number">1.6.4.4.</span> <span class="toc-text">偏移二进制码（移码）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E7%94%B5%E9%98%BB%E5%9E%8BD-A%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="toc-number">1.6.5.</span> <span class="toc-text">权电阻型D&#x2F;A转换器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%80%92T%E5%9E%8B%E7%94%B5%E9%98%BB%E7%BD%91%E7%BB%9CD-A%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="toc-number">1.6.6.</span> <span class="toc-text">倒T型电阻网络D&#x2F;A转换器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E6%9E%81%E6%80%A7%E8%BE%93%E5%87%BA%E7%9A%84DAC%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="toc-number">1.6.7.</span> <span class="toc-text">单极性输出的DAC转换器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E6%9E%81%E6%80%A7%E8%BE%93%E5%87%BA%E7%9A%84D-A%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="toc-number">1.6.8.</span> <span class="toc-text">双极性输出的D&#x2F;A转换器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A5%E8%BF%9B%E7%94%B5%E6%9C%BA%E5%9F%BA%E6%9C%AC%E6%8E%A7%E5%88%B6%E6%8A%80%E6%9C%AF"><span class="toc-number">1.7.</span> <span class="toc-text">步进电机基本控制技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E8%BF%9B%E7%94%B5%E6%9C%BA%E7%BB%93%E6%9E%84%E4%B8%8E%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">1.7.1.</span> <span class="toc-text">步进电机结构与工作原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A9%B1%E5%8A%A8%E7%94%B5%E6%BA%90%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-number">1.7.2.</span> <span class="toc-text">驱动电源的组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E8%BF%9B%E7%94%B5%E6%9C%BA%E5%8A%9F%E7%8E%87%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF"><span class="toc-number">1.7.3.</span> <span class="toc-text">步进电机功率放大电路</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E7%94%B5%E5%8E%8B%E9%A9%B1%E5%8A%A8%E7%94%B5%E8%B7%AF"><span class="toc-number">1.7.3.1.</span> <span class="toc-text">单电压驱动电路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98-1"><span class="toc-number">1.7.3.2.</span> <span class="toc-text">例题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E4%BD%8E%E5%8E%8B%E5%88%87%E6%8D%A2%E5%9E%8B%E9%A9%B1%E5%8A%A8%E7%94%B5%E8%B7%AF%EF%BC%88%E5%8F%8C%E7%94%B5%E5%8E%8B%E9%A9%B1%E5%8A%A8%E7%94%B5%E8%B7%AF%EF%BC%89"><span class="toc-number">1.7.3.3.</span> <span class="toc-text">高低压切换型驱动电路（双电压驱动电路）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B4%E6%B5%81%E7%94%B5%E5%8A%A8%E6%9C%BA%E8%84%89%E5%AE%BD%EF%BC%88PWM%EF%BC%89%E8%B0%83%E9%80%9F%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.8.</span> <span class="toc-text">直流电动机脉宽（PWM）调速系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%B5%81%E7%94%B5%E5%8A%A8%E6%9C%BA%E7%9A%84%E8%84%89%E5%AE%BD%E8%B0%83%E5%88%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">1.8.1.</span> <span class="toc-text">直流电动机的脉宽调制工作原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%B5%81%E7%94%B5%E5%8A%A8%E6%9C%BA%E7%9A%84%E8%B0%83%E9%80%9F%E6%96%B9%E5%BC%8F"><span class="toc-number">1.8.2.</span> <span class="toc-text">直流电动机的调速方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%84%89%E5%86%B2%E5%8A%9F%E7%8E%87%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88PWM-%E7%B3%BB%E7%BB%9F%E4%B8%BB%E5%9B%9E%E8%B7%AF%EF%BC%89"><span class="toc-number">1.8.2.1.</span> <span class="toc-text">脉冲功率放大器（ＰＷＭ 系统主回路）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%84%89%E5%AE%BD%E8%B0%83%E5%88%B6%E5%99%A8%EF%BC%88PWM%E7%B3%BB%E7%BB%9F%E6%8E%A7%E5%88%B6%E5%9B%9E%E8%B7%AF%EF%BC%89"><span class="toc-number">1.8.3.</span> <span class="toc-text">脉宽调制器（PWM系统控制回路）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF%E4%B8%AD%E7%9A%84%E5%8F%8D%E9%A6%88"><span class="toc-number">1.9.</span> <span class="toc-text">放大电路中的反馈</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E7%94%B5%E6%B6%B2%E4%BC%BA%E6%9C%8D%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.</span> <span class="toc-text">第六章 电液伺服控制系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B5%E6%B6%B2%E6%AF%94%E4%BE%8B%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6"><span class="toc-number">2.1.</span> <span class="toc-text">电液比例流量控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AD%E7%8E%AF%E5%90%8C%E6%AD%A5%E8%B0%83%E9%80%9F%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.1.1.</span> <span class="toc-text">闭环同步调速系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84%E6%A1%86%E5%9B%BE%E6%8F%8F%E8%BF%B0%EF%BC%9A"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">系统结构框图描述：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%94%E4%BE%8B%E6%8E%A7%E5%88%B6%E6%94%BE%E5%A4%A7%E5%99%A8%E4%B8%BB%E8%A6%81%E7%94%B5%E8%B7%AF%E7%9A%84%E6%9E%84%E6%88%90%E3%80%81%E5%8E%9F%E7%90%86%E5%8F%8A%E5%8A%9F%E8%83%BD"><span class="toc-number">2.2.</span> <span class="toc-text">比例控制放大器主要电路的构成、原理及功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E6%BA%90%E7%94%B5%E8%B7%AF"><span class="toc-number">2.2.1.</span> <span class="toc-text">电源电路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E6%8E%A5%E5%8F%A3%E5%8D%95%E5%85%83"><span class="toc-number">2.2.2.</span> <span class="toc-text">输入接口单元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E7%94%B5%E8%B7%AF"><span class="toc-number">2.2.3.</span> <span class="toc-text">信号处理电路</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%9C%E5%9D%A1%E4%BF%A1%E5%8F%B7%E5%8F%91%E7%94%9F%E5%99%A8"><span class="toc-number">2.2.3.1.</span> <span class="toc-text">斜坡信号发生器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%98%B6%E8%B7%83%E5%87%BD%E6%95%B0%E5%8F%91%E7%94%9F%E5%99%A8"><span class="toc-number">2.2.3.2.</span> <span class="toc-text">阶跃函数发生器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8C%E8%B7%AF%E5%B9%B3%E8%A1%A1%E7%94%B5%E8%B7%AF"><span class="toc-number">2.2.3.3.</span> <span class="toc-text">双路平衡电路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E7%94%B5%E6%B5%81%E8%AE%BE%E5%AE%9A%E7%94%B5%E8%B7%AF"><span class="toc-number">2.2.3.4.</span> <span class="toc-text">初始电流设定电路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%A4%E6%8C%AF%E4%BF%A1%E5%8F%B7%E5%8F%91%E7%94%9F%E5%99%A8"><span class="toc-number">2.2.3.5.</span> <span class="toc-text">颤振信号发生器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8B%E9%87%8F%E6%94%BE%E5%A4%A7%E7%94%B5%E8%B7%AF"><span class="toc-number">2.2.3.6.</span> <span class="toc-text">测量放大电路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%9F%E7%8E%87%E6%94%BE%E5%A4%A7%E7%BA%A7"><span class="toc-number">2.2.3.7.</span> <span class="toc-text">功率放大级</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/06/29/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E4%BA%8C%EF%BC%89/" title="机电一体化分析与建模（二）"><img src="/blog/image/20250505084723-2.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="机电一体化分析与建模（二）"/></a><div class="content"><a class="title" href="/blog/2025/06/29/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E4%BA%8C%EF%BC%89/" title="机电一体化分析与建模（二）">机电一体化分析与建模（二）</a><time datetime="2025-06-29T06:33:36.000Z" title="发表于 2025-06-29 14:33:36">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/06/29/%E7%AC%AC%E4%BA%94%E7%AB%A0/" title="机电一体化分析与建模（二）"><img src="/blog/image/20250505084723-2.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="机电一体化分析与建模（二）"/></a><div class="content"><a class="title" href="/blog/2025/06/29/%E7%AC%AC%E4%BA%94%E7%AB%A0/" title="机电一体化分析与建模（二）">机电一体化分析与建模（二）</a><time datetime="2025-06-29T06:33:36.000Z" title="发表于 2025-06-29 14:33:36">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/06/12/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%85%AC%E5%BC%8F%E8%AE%B0%E5%BF%86%E6%B1%87%E6%80%BB/" title="数值分析公式记忆汇总"><img src="/blog/image/hgud.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析公式记忆汇总"/></a><div class="content"><a class="title" href="/blog/2025/06/12/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%85%AC%E5%BC%8F%E8%AE%B0%E5%BF%86%E6%B1%87%E6%80%BB/" title="数值分析公式记忆汇总">数值分析公式记忆汇总</a><time datetime="2025-06-12T00:51:15.000Z" title="发表于 2025-06-12 08:51:15">2025-06-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/06/09/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-QR%E5%88%86%E8%A7%A3/" title="数值分析-QR分解"><img src="/blog/image/vhsuv.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-QR分解"/></a><div class="content"><a class="title" href="/blog/2025/06/09/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-QR%E5%88%86%E8%A7%A3/" title="数值分析-QR分解">数值分析-QR分解</a><time datetime="2025-06-09T10:36:09.000Z" title="发表于 2025-06-09 18:36:09">2025-06-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/05/15/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91/" title="数值分析-函数逼近"><img src="/blog/image/20250505084722.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-函数逼近"/></a><div class="content"><a class="title" href="/blog/2025/05/15/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91/" title="数值分析-函数逼近">数值分析-函数逼近</a><time datetime="2025-05-15T07:37:45.000Z" title="发表于 2025-05-15 15:37:45">2025-05-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script async data-pjax src="{&quot;site_uv&quot;:true,&quot;site_pv&quot;:true,&quot;page_pv&quot;:true}"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
