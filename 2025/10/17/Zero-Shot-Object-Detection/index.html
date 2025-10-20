@@ -1,0 +1,2139 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Zero-Shot Object Detection | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Introduction这一部分介绍了零样本物体检测（Zero-Shot Object Detection, ZSD）问题的背景、动机和挑战。为了帮助你更好地理解，我将从几个关键点进行详细讲解。 问题背景： 人类与机器的区别：引言一开始提到，人类能够轻松地通过语言描述构建对物体的心智模型。举个例子，即使我们从未见过某个物体，但只要听到它的描述，我们就能大致想象出它的样子。机器视觉系统则没有这种能力">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zero-Shot Object Detection">
+<meta property="og:url" content="https://qieliqiean.github.io/blog/2025/10/17/Zero-Shot-Object-Detection/index.html">
+<meta property="og:site_name" content="且离且安的碎碎念">
+<meta property="og:description" content="Introduction这一部分介绍了零样本物体检测（Zero-Shot Object Detection, ZSD）问题的背景、动机和挑战。为了帮助你更好地理解，我将从几个关键点进行详细讲解。 问题背景： 人类与机器的区别：引言一开始提到，人类能够轻松地通过语言描述构建对物体的心智模型。举个例子，即使我们从未见过某个物体，但只要听到它的描述，我们就能大致想象出它的样子。机器视觉系统则没有这种能力">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qieliqiean.github.io/blog/image/5268d877a2a04864b36b4961ab793f4f.jpg">
+<meta property="article:published_time" content="2025-10-17T10:22:18.000Z">
+<meta property="article:modified_time" content="2025-10-20T08:06:57.462Z">
+<meta property="article:author" content="lian">
+<meta property="article:tag" content="深度学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qieliqiean.github.io/blog/image/5268d877a2a04864b36b4961ab793f4f.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Zero-Shot Object Detection",
+  "url": "https://qieliqiean.github.io/blog/2025/10/17/Zero-Shot-Object-Detection/",
+  "image": "https://qieliqiean.github.io/blog/image/5268d877a2a04864b36b4961ab793f4f.jpg",
+  "datePublished": "2025-10-17T10:22:18.000Z",
+  "dateModified": "2025-10-20T08:06:57.462Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "lian",
+      "url": "https://qieliqiean.github.io/blog/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/2025/10/17/Zero-Shot-Object-Detection/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: {"path":"/blog/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Zero-Shot Object Detection',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/image/5268d877a2a04864b36b4961ab793f4f.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">Zero-Shot Object Detection</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Zero-Shot Object Detection</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-10-17T10:22:18.000Z" title="发表于 2025-10-17 18:22:18">2025-10-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-10-20T08:06:57.462Z" title="更新于 2025-10-20 16:06:57">2025-10-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E9%9B%B6%E6%A0%B7%E6%9C%AC%E6%A3%80%E6%B5%8B/">零样本检测</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">17.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>56分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>这一部分介绍了<strong>零样本物体检测</strong>（Zero-Shot Object Detection, ZSD）问题的背景、动机和挑战。为了帮助你更好地理解，我将从几个关键点进行详细讲解。</p>
+<h2 id="问题背景："><a href="#问题背景：" class="headerlink" title="问题背景："></a>问题背景：</h2><ul>
+<li><p><strong>人类与机器的区别</strong>：<br>引言一开始提到，<strong>人类</strong>能够轻松地通过语言描述构建对物体的心智模型。举个例子，即使我们从未见过某个物体，但只要听到它的描述，我们就能大致想象出它的样子。<strong>机器视觉系统</strong>则没有这种能力。传统的机器学习方法要求机器在训练阶段看到每一个物体类别的视觉样本，然后才能在测试阶段识别这些物体。</p>
+<p>然而，这种方法存在问题：获取大量标注数据非常昂贵，因此在很多应用场景下，机器无法看到所有类别的物体样本。例如，如果训练集里只有“手”和“胳膊”的样本，机器无法自动推测出“肩膀”这个物体。</p>
+</li>
+</ul>
+<h2 id="零样本学习（Zero-Shot-Learning-ZSL）的出现"><a href="#零样本学习（Zero-Shot-Learning-ZSL）的出现" class="headerlink" title="零样本学习（Zero-Shot Learning, ZSL）的出现"></a>零样本学习（Zero-Shot Learning, ZSL）的出现</h2><ul>
+<li><p><strong>零样本学习的定义</strong>：<br>零样本学习（ZSL）试图解决上面提到的问题，即让模型能够识别那些在训练时没有见过的物体类别。ZSL通常通过<strong>语义关系</strong>来进行推理，例如，训练时见过“手”和“胳膊”，而在测试时模型可以识别“肩膀”，因为“肩膀”在语义上与“手”和“胳膊”是相关的。换句话说，模型并不需要每个物体的视觉样本，而是通过<strong>语义嵌入</strong>（例如，使用文本描述或者属性信息）将未见物体的特征与已见物体的特征进行匹配。</p>
+<p>文章提到的零样本学习是基于<strong>视觉-语义嵌入</strong>的，即将图像和文本标签（如物体的名称）映射到一个共享的向量空间中，这样模型可以通过计算相似度来推测未见类别。</p>
+</li>
+</ul>
+<h2 id="零样本学习与物体检测的差异"><a href="#零样本学习与物体检测的差异" class="headerlink" title="零样本学习与物体检测的差异"></a>零样本学习与物体检测的差异</h2><ul>
+<li><p><strong>物体分类与物体检测的区别</strong>：</p>
+<ul>
+<li><strong>物体分类</strong>任务的目标是识别图像中是否存在某个物体，并为该物体分配一个标签。比如，给定一张图片，模型判断这张图片中是“狗”还是“猫”。</li>
+<li><strong>物体检测</strong>任务的目标则更加复杂，不仅要为物体分配标签，还要找到它在图像中的位置（即预测边界框）。这就意味着，在物体检测中，模型不仅需要识别“狗”或“猫”，还需要在图像中精确标出这些物体的边界。</li>
+</ul>
+<blockquote>
+<p>零样本物体分类的问题相对简单，因为分类任务只需要考虑标签匹配问题，不需要考虑物体的空间位置信息（即边界框）。而<strong>零样本物体检测</strong>的难度更高，因为除了要推测标签外，还要解决如何定位未见类别的物体。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="物体检测的挑战"><a href="#物体检测的挑战" class="headerlink" title="物体检测的挑战"></a>物体检测的挑战</h2><ul>
+<li><p><strong>比分类更加复杂的检测问题</strong>：<br>物体检测相比物体分类更为复杂，原因在于它不仅仅依赖于物体的语义信息，还要考虑物体在图像中的位置、遮挡、视角变化、尺寸变化等因素。比如，“飞机”通常出现在“云层”旁边，但这并不能直接帮助检测“飞机”的具体位置，模型还需要学习如何精确地划定物体的边界框。</p>
+</li>
+<li><p><strong>背景与目标的区分</strong>：<br>在物体检测中，常常会加入一个“背景”类（background class），用来区分物体和非物体区域。背景类通常指的是没有目标物体的区域，如“天空”、“墙壁”等。背景类有助于模型区分“物体”与“背景”，但在零样本物体检测中，背景的定义变得模糊，因为背景区域可能包含未见类别的物体，而这些物体并不属于传统意义上的背景。</p>
+</li>
+</ul>
+<h2 id="本研究的目标与贡献"><a href="#本研究的目标与贡献" class="headerlink" title="本研究的目标与贡献"></a>本研究的目标与贡献</h2><p>文章的目标是<strong>将零样本学习应用到物体检测任务中</strong>，并提出新的方法来处理背景类和类别稀疏的问题。具体来说，研究人员：</p>
+<ul>
+<li><strong>引入零样本物体检测问题</strong>，并提出了一种基于视觉-语义嵌入的方法来解决这个问题。</li>
+<li><strong>探讨了背景类的选择问题</strong>，提出了两种方法：一种是使用固定背景类，另一种是通过迭代的潜在赋值方法（LAB）来处理背景问题。</li>
+<li><strong>提出了一种稠密采样的方法</strong>，通过增加外部数据来扩充训练数据集，解决训练类别稀疏的问题。</li>
+<li><strong>在标准数据集上进行实验</strong>，并给出了实验结果，展示了所提出方法的有效性。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>简而言之，本研究的核心贡献是提出了一种可以进行零样本物体检测的框架，并在此基础上解决了背景处理、类别稀疏等关键问题。该框架不仅可以在已见类别的基础上推测未见类别的标签，还能够精确地定位这些物体在图像中的位置，从而实现零样本物体检测。</p>
+<hr>
+<h1 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h1><h2 id="🧩-Word-Embeddings（词向量嵌入）"><a href="#🧩-Word-Embeddings（词向量嵌入）" class="headerlink" title="🧩  Word Embeddings（词向量嵌入）"></a>🧩  Word Embeddings（词向量嵌入）</h2><p>首先，作者介绍了**词嵌入（word embeddings）**在自然语言处理和视觉语义任务中的重要性。</p>
+<h3 id="✳️-背景"><a href="#✳️-背景" class="headerlink" title="✳️ 背景"></a>✳️ 背景</h3><p>词嵌入的核心思想是：<strong>用连续向量表示离散的词语</strong>，使得语义相似的词在向量空间中距离更近。例如，“猫（cat）”和“狗（dog）”在语义空间中相距较近，而与“飞机（airplane）”相距较远。</p>
+<p>这类嵌入通常通过在大规模语料中学习词共现关系来实现。代表性方法包括：</p>
+<ul>
+<li><strong>word2vec（Mikolov et al., 2013）</strong></li>
+<li><strong>GloVe（Pennington et al., 2014）</strong></li>
+<li><strong>fastText（Joulin et al., 2016）</strong></li>
+</ul>
+<h3 id="✳️-在本文中的作用"><a href="#✳️-在本文中的作用" class="headerlink" title="✳️ 在本文中的作用"></a>✳️ 在本文中的作用</h3><p>作者利用词嵌入作为一个<strong>公共语义空间</strong>，将图像特征（由CNN提取）和类标签（由word embedding 表示）映射到同一空间中，从而实现<strong>视觉—语义对齐（visual-semantic alignment）</strong>。<br> 这种语义空间的引入，使得模型在没有见过某些类别的视觉样本时，仍能通过语义相似度（cosine similarity）进行识别。例如，模型从“马（horse）”学到的特征可以迁移到“斑马（zebra）”上。</p>
+<hr>
+<h2 id="🖼️-2-2-Zero-Shot-Image-Classification（零样本图像分类）"><a href="#🖼️-2-2-Zero-Shot-Image-Classification（零样本图像分类）" class="headerlink" title="🖼️ 2.2 Zero-Shot Image Classification（零样本图像分类）"></a>🖼️ 2.2 Zero-Shot Image Classification（零样本图像分类）</h2><p>接下来，作者回顾了**零样本图像分类（ZSL）**领域的已有工作。</p>
+<h3 id="✳️-早期方法"><a href="#✳️-早期方法" class="headerlink" title="✳️ 早期方法"></a>✳️ 早期方法</h3><p>最初的零样本分类方法主要依赖<strong>人工定义的属性（attributes）</strong>，例如：</p>
+<ul>
+<li>颜色、形状、姿态、部位等（如Lampert等人的工作[26,27]）</li>
+<li>地理或语义属性（如Fu等人的研究[12]）</li>
+</ul>
+<p>这些方法使用属性作为桥梁，将已见类别与未见类别联系起来。</p>
+<h3 id="✳️-深度视觉-语义方法"><a href="#✳️-深度视觉-语义方法" class="headerlink" title="✳️ 深度视觉-语义方法"></a>✳️ 深度视觉-语义方法</h3><p>随着深度学习的发展，研究者提出了**多模态嵌入（multimodal embedding）**方法，用神经网络将图像特征与语义标签映射到一个共享空间。例如：</p>
+<ul>
+<li><strong>DeViSE模型（Frome et al., 2013）</strong>：使用图像特征和语义嵌入之间的兼容性函数（compatibility function）进行训练。</li>
+<li><strong>Latent Embedding Models（Xian et al., 2016）</strong>：在双线性模型的基础上引入潜在变量，使嵌入关系更加灵活。</li>
+<li><strong>Semantic Autoencoder（Kodirov et al., 2017）</strong>：通过重建约束（reconstruction loss）保证语义空间与视觉特征空间的一致性。</li>
+</ul>
+<h3 id="✳️-本文的延伸"><a href="#✳️-本文的延伸" class="headerlink" title="✳️ 本文的延伸"></a>✳️ 本文的延伸</h3><p>Bansal等人借鉴了这些思想，但<strong>将零样本学习从分类扩展到检测</strong>。不同于分类，物体检测需要同时处理<strong>定位与识别</strong>，因此他们结合了视觉嵌入与语义嵌入，在检测任务中预测未见类别的边界框与标签。</p>
+<hr>
+<h2 id="🎯-2-3-Object-Detection（物体检测）"><a href="#🎯-2-3-Object-Detection（物体检测）" class="headerlink" title="🎯 2.3 Object Detection（物体检测）"></a>🎯 2.3 Object Detection（物体检测）</h2><p>这一节简要回顾了物体检测领域的发展历程。</p>
+<h3 id="✳️-早期方法-1"><a href="#✳️-早期方法-1" class="headerlink" title="✳️ 早期方法"></a>✳️ 早期方法</h3><p>传统的检测方法采用<strong>候选区域（region proposals）+分类器</strong>的两步策略：</p>
+<ul>
+<li>R-CNN、Fast R-CNN、Faster R-CNN等方法【Girshick et al., 2014–2016】</li>
+<li>这些方法先生成数千个候选框，再用CNN对每个区域分类。</li>
+</ul>
+<h3 id="✳️-一阶段检测器"><a href="#✳️-一阶段检测器" class="headerlink" title="✳️ 一阶段检测器"></a>✳️ 一阶段检测器</h3><p>后来出现了<strong>单阶段检测方法</strong>，如：</p>
+<ul>
+<li><strong>YOLO（Redmon et al., 2016）</strong></li>
+<li><strong>SSD（Liu et al., 2016）</strong></li>
+</ul>
+<p>它们直接在整张图像上预测物体的位置和类别，提高了速度。</p>
+<h3 id="✳️-与本文的关系"><a href="#✳️-与本文的关系" class="headerlink" title="✳️ 与本文的关系"></a>✳️ 与本文的关系</h3><p>这些方法都基于<strong>全监督学习</strong>，需要大量的边界框标注。<br> 然而，在现实中，不可能为成千上万类物体都标注边框。<br> 因此，Bansal等人提出的ZSD方法正是为了<strong>在没有未见类别标注的情况下实现检测</strong>。<br> 他们基于R-CNN框架构建检测器，但训练时仅使用<strong>已见类别</strong>，并通过语义空间迁移实现未见类别检测。</p>
+<hr>
+<h2 id="🔀-2-4-Multi-Modal-Learning（多模态学习）"><a href="#🔀-2-4-Multi-Modal-Learning（多模态学习）" class="headerlink" title="🔀 2.4 Multi-Modal Learning（多模态学习）"></a>🔀 2.4 Multi-Modal Learning（多模态学习）</h2><p>作者指出，<strong>多模态学习（Multi-modal learning）</strong>——即结合不同模态（图像、文本、声音等）——已经在计算机视觉中取得显著成果。</p>
+<h3 id="✳️-相关研究"><a href="#✳️-相关研究" class="headerlink" title="✳️ 相关研究"></a>✳️ 相关研究</h3><ul>
+<li><strong>Aytar et al. (2017)</strong>：联合图像、文本和声音学习跨模态共享表示。</li>
+<li><strong>Zhang et al. (2017)</strong>：使用文本描述来辅助图像中物体的定位。</li>
+<li><strong>Gupta et al. (2017)</strong>：构建图像区域与词语的共享空间，用于视觉-语言任务的迁移。</li>
+</ul>
+<p>这些工作启发了作者使用<strong>多模态共享语义空间</strong>来进行零样本检测。</p>
+<h3 id="✳️-与本文的区别"><a href="#✳️-与本文的区别" class="headerlink" title="✳️ 与本文的区别"></a>✳️ 与本文的区别</h3><p>本文的重点不在于生成新的多模态表示，而是在检测框架中利用<strong>语义嵌入</strong>进行<strong>类别迁移</strong>。此外，与Li等人（2014）基于属性的物体分类不同，Bansal等人的方法不依赖于属性描述，而是依靠<strong>无监督的词向量</strong>。</p>
+<hr>
+<h2 id="⚖️-2-5-Comparison-with-Recent-ZSD-Works（与同期工作的比较）"><a href="#⚖️-2-5-Comparison-with-Recent-ZSD-Works（与同期工作的比较）" class="headerlink" title="⚖️ 2.5 Comparison with Recent ZSD Works（与同期工作的比较）"></a>⚖️ 2.5 Comparison with Recent ZSD Works（与同期工作的比较）</h2><p>作者最后提到，他们的研究完成后出现了两篇并行的工作，也探讨了类似的零样本检测问题：</p>
+<ol>
+<li><strong>Zhu et al. (2018)</strong>：研究重点在于<strong>为未见类别生成候选区域（object proposals）</strong>，而非完整的检测任务。</li>
+<li><strong>Rahman et al. (2018)</strong>：提出一种结合最大间隔损失（max-margin loss）与语义聚类损失（semantic clustering loss）的检测模型，以减少语义空间的噪声。</li>
+</ol>
+<h3 id="✳️-本文的独特性"><a href="#✳️-本文的独特性" class="headerlink" title="✳️ 本文的独特性"></a>✳️ 本文的独特性</h3><ul>
+<li>使用更<strong>复杂且多样化的数据集</strong>（MSCOCO与VisualGenome），而不是相对简单的ILSVRC。</li>
+<li>特别关注<strong>背景类污染问题</strong>（即背景区域可能包含未见类别），并提出两种解决方案（SB与LAB）。</li>
+<li>探索了如何通过<strong>密集采样语义空间</strong>改善检测效果，这是Rahman等人未考虑的。</li>
+</ul>
+<hr>
+<h2 id="📚-小结"><a href="#📚-小结" class="headerlink" title="📚 小结"></a>📚 小结</h2><p>这一章的核心在于为本文的研究奠定基础，说明其创新点和必要性：</p>
+<ol>
+<li><strong>方法论上</strong>：从词嵌入与多模态学习中汲取灵感，将零样本分类方法扩展到检测任务。</li>
+<li><strong>技术上</strong>：引入语义嵌入空间，支持跨类别知识迁移。</li>
+<li><strong>创新点</strong>：首次系统地解决了“背景类”和“语义稀疏”问题，并在复杂数据集上验证。</li>
+</ol>
+<hr>
+<p>非常好！<br> 接下来我将以教授讲课的方式，<strong>详细讲解论文《Zero-Shot Object Detection》第3章——Approach（方法）</strong>。<br> 这是论文的核心部分，作者在这一章中正式提出他们的算法框架、模型结构以及训练机制。我们会逐步解释每个小节（3.1、3.2、3.3），并穿插讲解公式与直观理解，帮助你从零基础完全掌握。</p>
+<h1 id="Approach"><a href="#Approach" class="headerlink" title="Approach"></a>Approach</h1><p>在前两章中，作者已经说明了：</p>
+<ul>
+<li><strong>研究目标</strong>：让模型检测出训练中未见过的物体类别；</li>
+<li><strong>关键挑战</strong>：包括背景类处理与语义空间稀疏问题。</li>
+</ul>
+<p>在这一章中，作者系统提出了他们的解决方案，整个方法的逻辑可以概括为：</p>
+<blockquote>
+<p>从“已见类别”中学习视觉—语义映射关系 **→**用语义嵌入扩展到“未见类别” **→**在检测框架中引入背景建模与语义空间稠密化以提升泛化。</p>
+</blockquote>
+<hr>
+<h2 id="🌟-3-1-Baseline-Zero-Shot-Detection-ZSD"><a href="#🌟-3-1-Baseline-Zero-Shot-Detection-ZSD" class="headerlink" title="🌟 3.1 Baseline Zero-Shot Detection (ZSD)"></a>🌟 3.1 Baseline Zero-Shot Detection (ZSD)</h2><p>（基线模型：零样本物体检测）</p>
+<h3 id="🧩-基本思路"><a href="#🧩-基本思路" class="headerlink" title="🧩 基本思路"></a>🧩 基本思路</h3><p>作者从<strong>零样本分类模型（如DeViSE）出发，将其适配到物体检测</strong>任务。<br> 这意味着模型必须能：</p>
+<ol>
+<li><strong>定位</strong>目标（bounding box），</li>
+<li><strong>识别</strong>类别（包括未见类别）。</li>
+</ol>
+<h3 id="⚙️-数据设定与符号说明"><a href="#⚙️-数据设定与符号说明" class="headerlink" title="⚙️ 数据设定与符号说明"></a>⚙️ 数据设定与符号说明</h3><p>作者定义了三个集合：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S</td>
+<td>已见类别（Seen classes）</td>
+</tr>
+<tr>
+<td>U</td>
+<td>未见类别（Unseen classes）</td>
+</tr>
+<tr>
+<td>O</td>
+<td>其他类别（既不是训练类也不是测试类）</td>
+</tr>
+<tr>
+<td>C</td>
+<td>所有类别的集合：C &#x3D; S ∪ U ∪ O</td>
+</tr>
+</tbody></table>
+<p>在训练阶段，模型只能看到 <code>S</code> 类的图像与标注框；<br> 在测试阶段，需要检测 <code>U</code> 类。</p>
+<p>图像记为 <code>I ∈ R^&#123;M×N×3&#125;</code>，<br> 每个候选框记为 <code>b_i ∈ N⁴</code>（表示坐标），<br> 其对应类别标签为 <code>y_i ∈ S</code>。</p>
+<hr>
+<h3 id="🧠-模型结构：视觉—语义嵌入"><a href="#🧠-模型结构：视觉—语义嵌入" class="headerlink" title="🧠 模型结构：视觉—语义嵌入"></a>🧠 模型结构：视觉—语义嵌入</h3><ol>
+<li><p><strong>提取视觉特征</strong><br> 利用CNN（文中采用Inception-ResNet v2）从候选框区域提取深度特征：<br>$$<br>φ(b_i) ∈ R^{D_1}<br>$$</p>
+</li>
+<li><p><strong>获取语义特征</strong><br> 对应的类标签（如“dog”、“car”）使用<strong>词向量</strong>（如GloVe或fastText）表示：<br>$$<br>w_j ∈ R^{D_2}<br>$$</p>
+</li>
+<li><p><strong>学习投影矩阵</strong><br> 作者学习一个线性投影<br>$$<br>W_p ∈ R^{D_2×D_1}<br>$$</p>
+<p> 将视觉特征映射到语义空间：<br>$$<br>ψ_i &#x3D; W_p φ(b_i)<br>$$<br>这样，视觉特征与语义特征处于同一空间中，便于比较。</p>
+</li>
+</ol>
+<hr>
+<h3 id="⚖️-相似度与损失函数"><a href="#⚖️-相似度与损失函数" class="headerlink" title="⚖️ 相似度与损失函数"></a>⚖️ 相似度与损失函数</h3><p>模型通过<strong>余弦相似度</strong>衡量投影特征 $ψ_i$ 与类语义向量 $w_j$ 的匹配程度：<br>$$<br>S_{ij} &#x3D; \cos(ψ_i, w_j)<br>$$<br>训练时采用<strong>最大间隔损失（max-margin loss）</strong>，保证正确类别的相似度高于错误类别：<br>$$<br>L(b_i, y_i, θ) &#x3D; \sum_{j∈S, j≠i} \max(0, m - S_{ii} + S_{ij})<br>$$<br>其中：</p>
+<ul>
+<li>$m$ 是margin；</li>
+<li>$θ$ 表示CNN参数与投影参数。</li>
+</ul>
+<blockquote>
+<p><strong>目标：</strong> 该损失函数的目标是使得每个物体框（bounding box）的类别预测能够尽可能正确，并且预测的类别与其他类别之间的差异尽可能大，达到最大间隔</p>
+<p><strong>损失计算：</strong></p>
+<ul>
+<li>该损失函数要求，真实类别$y_i$的相似度$S_{ii}$ 要大于所有其他类别$j \in S, j \neq i$的相似度$S_{ij}$</li>
+<li><strong>最大间隔</strong>：为了确保正确类别的预测相对于错误类别的预测有足够大的间隔，损失函数通过<strong>最大间隔</strong>的思想来优化：</li>
+<li><strong>若</strong>$S_{ii}$ 与$ S_{ij}$ 之间的差距小于预设的 $ m$，则损失会产生值：$m - S_{ii} + S_{ij}$，从而惩罚预测错误的情况。</li>
+<li><strong>若</strong>$S_{ii}$ 与$ S_{ij}$ 之间的差距大于  $ m$，则损失为 0，即不产生惩罚。</li>
+</ul>
+<h4 id="总结："><a href="#总结：" class="headerlink" title="总结："></a><strong>总结：</strong></h4><p>该损失函数的作用是让模型学习到一个有效的特征空间，使得正确类别的相似度更高，错误类别的相似度更低，从而保证对未知类别的有效检测。</p>
+</blockquote>
+<p>此外，为了防止语义空间塌陷，作者加上<strong>重建损失（reconstruction loss）</strong>，使投影后的特征能重构原始视觉特征。<br> 这一做法借鉴了 <strong>Kodirov et al. (2017)</strong> 的语义自编码器。</p>
+<hr>
+<h3 id="🔍-测试阶段（Zero-Shot-Detection）"><a href="#🔍-测试阶段（Zero-Shot-Detection）" class="headerlink" title="🔍 测试阶段（Zero-Shot Detection）"></a>🔍 测试阶段（Zero-Shot Detection）</h3><p>测试时，对于每个候选框 $b_i$，模型计算它与所有<strong>未见类别</strong>语义向量的相似度，然后取最相似的类别：<br>$$<br>\hat{y_i} &#x3D; \arg \max_{j∈U} S_{ij}<br>$$</p>
+<blockquote>
+<p><strong>公式含义：</strong></p>
+<ul>
+<li><strong>目标：</strong> 该公式表示了在测试阶段，如何通过计算每个候选框与<strong>未见类别</strong>的相似度来选择最合适的类别标签。</li>
+</ul>
+<h4 id="变量解释："><a href="#变量解释：" class="headerlink" title="变量解释："></a><strong>变量解释：</strong></h4><ul>
+<li>$\hat{y}_i$：表示第$ i$个候选框的<strong>预测类别</strong>。</li>
+<li>$S_{ij}$：表示第$ i$个候选框与第$ j$ 个类别$j \in U$之间的相似度。</li>
+<li>$U$：表示所有的<strong>未见类别</strong>集合。</li>
+</ul>
+<p><strong>预测计算：</strong></p>
+<ul>
+<li>在测试阶段，模型已经学会了从已见类别中获取特征，并将这些特征映射到一个共享的语义空间。</li>
+<li>对于每个候选框 $b_i$，模型计算该框与所有未见类别的相似度 $S_{ij}$。</li>
+<li>公式中的<strong>arg max</strong>操作表示从所有未见类别中选择<strong>相似度最大</strong>的类别作为最终的预测类别 $\hat{y}_i$</li>
+</ul>
+<h4 id="总结：-1"><a href="#总结：-1" class="headerlink" title="总结："></a><strong>总结：</strong></h4><p>在零样本检测的测试阶段，模型通过计算候选框与未见类别的相似度，选择最合适的类别标签来进行预测。这正是零样本学习的核心：即使在没有见过某些类别的情况下，模型也能通过已有的语义信息进行有效的推理。</p>
+</blockquote>
+<h3 id="⚠️-问题一：背景类的困境"><a href="#⚠️-问题一：背景类的困境" class="headerlink" title="⚠️ 问题一：背景类的困境"></a>⚠️ 问题一：背景类的困境</h3><p>在传统检测中，会设置一个“背景类（background）”，帮助模型识别非目标区域。<br> 但在<strong>零样本检测</strong>中，这个背景类的定义变得复杂，因为“背景”可能包含：</p>
+<ul>
+<li>真正的背景（如天空、地面）；</li>
+<li>未见类别的物体（如测试时出现的新物体）。</li>
+</ul>
+<p>这会导致模型把“未见物体”错误地当作“背景”。<br> 因此，作者提出了两种新的背景建模方法（3.2节）。</p>
+<hr>
+<h2 id="🌌-Background-Aware-Zero-Shot-Detection"><a href="#🌌-Background-Aware-Zero-Shot-Detection" class="headerlink" title="🌌  Background-Aware Zero-Shot Detection"></a>🌌  Background-Aware Zero-Shot Detection</h2><p>（背景感知的零样本检测）</p>
+<p>作者提出两种改进方法来更合理地处理背景信息：</p>
+<hr>
+<h3 id="🧱-1-Static-Background-SB-Model-—-静态背景模型"><a href="#🧱-1-Static-Background-SB-Model-—-静态背景模型" class="headerlink" title="🧱 (1) Static Background (SB) Model — 静态背景模型"></a>🧱 (1) Static Background (SB) Model — 静态背景模型</h3><h4 id="🔹-思路："><a href="#🔹-思路：" class="headerlink" title="🔹 思路："></a>🔹 思路：</h4><p>将传统检测中的“背景”视为一个独立的固定类（static class），并为它分配一个固定的语义向量（embedding vector）。训练时，模型学习把明显不是任何已见类别的区域映射到这个“背景向量”。</p>
+<h4 id="🔹-优点："><a href="#🔹-优点：" class="headerlink" title="🔹 优点："></a>🔹 优点：</h4><ul>
+<li>简单直接；</li>
+<li>有效利用背景样本来训练检测器的判别能力。</li>
+</ul>
+<h4 id="🔹-缺点："><a href="#🔹-缺点：" class="headerlink" title="🔹 缺点："></a>🔹 缺点：</h4><ul>
+<li>语义空间中，真实背景（如“天空”）和未知物体（如“斑马”）会被<strong>混为一谈</strong>；</li>
+<li>模型可能过度学习“非训练类 &#x3D; 背景”，从而抑制了对未见类别的检测能力。</li>
+</ul>
+<hr>
+<h3 id="🌠-2-Latent-Assignment-Based-LAB-Model-—-潜在赋值模型"><a href="#🌠-2-Latent-Assignment-Based-LAB-Model-—-潜在赋值模型" class="headerlink" title="🌠 (2) Latent Assignment-Based (LAB) Model — 潜在赋值模型"></a>🌠 (2) Latent Assignment-Based (LAB) Model — 潜在赋值模型</h3><p>为解决SB模型的局限，作者设计了一个<strong>EM-like算法（期望最大化迭代）</strong>，让背景区域分配到多个潜在语义类中。</p>
+<h4 id="🔹-思想："><a href="#🔹-思想：" class="headerlink" title="🔹 思想："></a>🔹 思想：</h4><blockquote>
+<p>背景框不是都属于一个单一的“背景类”，它们可以属于一个**开放词汇集合（open vocabulary）**中的不同类。</p>
+</blockquote>
+<p>算法流程（见论文中的 Algorithm 1）：</p>
+<p><img src="/blog/image/Snipaste_2025-10-20_10-34-22.png"></p>
+<ol>
+<li><strong>初始阶段</strong>：先用已见类训练一个基线模型；</li>
+<li><strong>E步（Expectation）</strong>：用当前模型预测每个背景框最可能对应的语义类（从开放词汇集合中选取）；</li>
+<li><strong>M步（Maximization）</strong>：将这些伪标签加入训练集，重新训练模型；</li>
+<li><strong>重复以上步骤多次（如5次迭代）</strong>。</li>
+</ol>
+<p>这样，背景样本被分散到多个语义上合理的类别中，而非集中于单一“背景类”，有效减轻了“语义污染”问题。</p>
+<p>🔹 <strong>优点</strong>：</p>
+<ul>
+<li>背景被“语义分解”，模型更具泛化能力；</li>
+<li>类似于半监督学习（labeled + unlabeled data）。</li>
+</ul>
+<p>🔹 <strong>缺点</strong>：</p>
+<ul>
+<li>需要多轮迭代；</li>
+<li>伪标签可能存在噪声（错误赋值）。</li>
+</ul>
+<hr>
+<h2 id="🪐-3-3-Densely-Sampled-Embedding-Space-DSES"><a href="#🪐-3-3-Densely-Sampled-Embedding-Space-DSES" class="headerlink" title="🪐 3.3 Densely Sampled Embedding Space (DSES)"></a>🪐 3.3 Densely Sampled Embedding Space (DSES)</h2><p>（密集采样的语义嵌入空间）</p>
+<p><strong>🔹 问题：训练类别太少 → 语义空间稀疏</strong></p>
+<p>如果训练集中只有几十个已见类别（如MSCOCO的48个），<br> 则语义嵌入空间中大部分区域未被覆盖。<br> 这会导致：</p>
+<ul>
+<li>模型难以学到全面的视觉—语义对应；</li>
+<li>未见类别往往落在“语义孤岛”中，模型无法泛化。</li>
+</ul>
+<p><strong>🔹 解决方案：使用外部数据进行“语义填充”</strong></p>
+<p>作者使用<strong>OpenImages (OI)</strong> 数据集（含545类）来丰富训练样本。<br> 他们只选择其中不属于未见类的样本（避免数据泄漏），并将这些新类别加入训练集。</p>
+<p>这被称为<strong>Densely Sampled Embedding Space (DSES)</strong>。<br> 它能显著改善嵌入空间的覆盖度，使模型更容易迁移到未见类。</p>
+<hr>
+<h2 id="🔚-小结：这一章的核心思想"><a href="#🔚-小结：这一章的核心思想" class="headerlink" title="🔚 小结：这一章的核心思想"></a>🔚 小结：这一章的核心思想</h2><table>
+<thead>
+<tr>
+<th>关键模块</th>
+<th>作用</th>
+<th>创新点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Baseline ZSD</strong></td>
+<td>利用视觉-语义嵌入预测未见类</td>
+<td>将ZSL扩展到检测任务</td>
+</tr>
+<tr>
+<td><strong>SB模型</strong></td>
+<td>静态背景处理</td>
+<td>保持检测器鲁棒性</td>
+</tr>
+<tr>
+<td><strong>LAB模型</strong></td>
+<td>动态背景建模</td>
+<td>通过迭代伪标签提升泛化</td>
+</tr>
+<tr>
+<td><strong>DSES</strong></td>
+<td>语义空间稠密化</td>
+<td>引入外部数据增强语义覆盖</td>
+</tr>
+</tbody></table>
+<hr>
+<p>非常好👍<br> 接下来我将以教授讲课的方式，<strong>系统讲解论文《Zero-Shot Object Detection》第4章（Experiments 实验部分）</strong>，重点解析作者如何通过实验验证他们提出的三种模型（Baseline、SB、LAB、DSES）的效果与差异，并结合表格、结果与论文结论逐步说明。</p>
+<hr>
+<h2 id="🌟-第4章-Experiments（实验）"><a href="#🌟-第4章-Experiments（实验）" class="headerlink" title="🌟 第4章 Experiments（实验）"></a>🌟 第4章 Experiments（实验）</h2><p>这一章是论文的实证部分，作者主要通过两个大型数据集 <strong>MSCOCO</strong> 和 <strong>VisualGenome (VG)</strong> 来评估他们提出的模型性能。<br> 他们比较了以下几种方法：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Baseline ZSD</strong></td>
+<td>只用已见类别训练的基础模型，没有背景处理。</td>
+</tr>
+<tr>
+<td><strong>SB (Static Background)</strong></td>
+<td>使用固定的背景类建模。</td>
+</tr>
+<tr>
+<td><strong>LAB (Latent Assignment Based)</strong></td>
+<td>使用迭代潜在标签分配算法（Algorithm 1）。</td>
+</tr>
+<tr>
+<td><strong>DSES (Densely Sampled Embedding Space)</strong></td>
+<td>使用外部数据集密集采样语义空间。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="🧩-数据集介绍与实验设置"><a href="#🧩-数据集介绍与实验设置" class="headerlink" title="🧩  数据集介绍与实验设置"></a>🧩  数据集介绍与实验设置</h2><p>📘 <strong>MSCOCO</strong></p>
+<ul>
+<li>来源：Microsoft COCO 2014 版。</li>
+<li>包含 80 个物体类别。</li>
+<li>作者将其中的类分为：<ul>
+<li><strong>48 个训练类（seen）</strong></li>
+<li><strong>17 个测试类（unseen）</strong></li>
+</ul>
+</li>
+<li>训练集大小：73,774 张图像</li>
+<li>测试集大小：6,608 张图像</li>
+<li>采用 EdgeBoxes 生成候选框。</li>
+</ul>
+<p>📗 <strong>VisualGenome (VG)</strong></p>
+<ul>
+<li>更复杂的视觉语义数据集，含 600 多类物体。</li>
+<li>作者清理后：<ul>
+<li><strong>478 个训练类（seen）</strong></li>
+<li><strong>130 个测试类（unseen）</strong></li>
+</ul>
+</li>
+<li>训练集大小：54,913 张图像</li>
+<li>测试集大小：7,788 张图像</li>
+<li>场景更复杂、标注更密集，是一个高难度检测场景。</li>
+</ul>
+<hr>
+<p>🧠 类别划分方法</p>
+<p>作者使用语义嵌入的**聚类方法（word embedding clustering）**来划分 seen &#x2F; unseen 类别：</p>
+<ol>
+<li>使用 GloVe 向量；</li>
+<li>基于余弦相似度聚类；</li>
+<li>每个聚类中随机选 80% 类别为训练类，其余 20% 为未见类；</li>
+<li>保证语义分布均匀。</li>
+</ol>
+<hr>
+<p><strong>核心目标</strong>：如何公平地做零样本检测的划分？</p>
+<p>零样本检测（ZSD）的关键是：<strong>训练阶段只用“已见类”（seen），测试阶段只评估“未见类”（unseen）</strong>。<br> 所以，划分要同时满足两点：</p>
+<ol>
+<li><strong>语义上公平</strong>：已见&#x2F;未见类在语义空间里不要“扎堆”，否则测试太容易或太难。</li>
+<li><strong>数据上可行</strong>：训练集中的图像不能“偷偷包含”未见类，否则这些未见类会被当成背景，污染训练（对ZSD极其致命）。</li>
+</ol>
+<p>这段话说的就是：作者是如何把<strong>类别</strong>和<strong>图像</strong>两层都切干净的。</p>
+<p><span style="color:#FF0000">1）先在语义空间里把“类别”做成簇，再从每个簇里抽 80% 做 seen、20% 做 unseen</span></p>
+<ul>
+<li><strong>做法</strong>：<ul>
+<li>对所有候选类别拿到它们的<strong>词向量</strong>（word vector embeddings）。</li>
+<li>以词向量的<strong>余弦相似度</strong>为距离，在语义空间里把类别做成 <strong>K 个簇（clusters）</strong>。</li>
+<li>对<strong>每个簇</strong>随机选 <strong>80%</strong> 的类别作为 <strong>seen</strong>，剩余 <strong>20%</strong> 作为 <strong>unseen</strong>。</li>
+</ul>
+</li>
+<li><strong>为什么要“先聚类、再分簇抽签”</strong>？<ul>
+<li>因为词向量捕捉了语义相似性。</li>
+<li>如果你不聚类而是全局随机抽，很可能出现“猫&#x2F;狗&#x2F;狼&#x2F;狐”都落在训练集，测试集只剩下“螃蟹&#x2F;火车”这种语义很远的类；那样测试就<strong>太难</strong>了。</li>
+<li>反过来，如果测试集全是“马&#x2F;斑马&#x2F;驴&#x2F;骡”这样和训练类过分接近，又会<strong>太容易</strong>。</li>
+<li><strong>按簇 8:2 抽取</strong>能让 seen 与 unseen 在<strong>每个语义簇</strong>里都保留一部分，确保测试既不偏难也不偏易，<strong>更公平</strong>。</li>
+</ul>
+</li>
+<li><strong>K 的取值</strong>：<ul>
+<li><strong>MSCOCO：K &#x3D; 10</strong></li>
+<li><strong>VisualGenome：K &#x3D; 20</strong></li>
+<li>VG 的类更多、更杂，因此用更多簇更合理。</li>
+</ul>
+</li>
+</ul>
+<p><span style="color:#FF0000">2）只保留“在 WordNet 有 synset 且有词向量”的类别</span></p>
+<ul>
+<li><strong>做法</strong>：把没有 WordNet 同义词集（synset）或缺少词向量的类剔掉。</li>
+<li><strong>原因</strong>：ZSD需要把视觉特征投到<strong>语义空间</strong>；没有可靠的语义表示（synset + 词向量）的类，<strong>无法参与语义对齐</strong>。</li>
+<li><strong>结果</strong>（作者最终可用的类）：<ul>
+<li><strong>MSCOCO：训练类 48、测试类 17</strong></li>
+<li><strong>VisualGenome：训练类 478、测试类 130</strong></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>这也解释了为什么 VG 上“类很多”但依然要过滤：不是所有原始标签都能稳定地映射到标准语义空间。</p>
+</blockquote>
+<p><span style="color:#FF0000">3）图像层面的清洗：避免把“未见类”当背景（MSCOCO 能做、VG 做不了）</span></p>
+<ul>
+<li><strong>MSCOCO 的处理</strong>：<ul>
+<li><strong>把训练集中“含有未见类实例”的图像统统移除</strong>。</li>
+<li>目的：如果这些图像保留在训练集中，未见类的实例会被训练管线当作“背景框”使用（因为没有标注为某个 seen 类），这会强烈误导模型学到“未见&#x3D;背景”，<strong>破坏零样本泛化</strong>。</li>
+<li>由于 COCO 的未见类数量相对少、图像密度相对低，移除这些图像<strong>仍能保留足够多的训练数据</strong>。</li>
+</ul>
+</li>
+<li><strong>VG 的处理</strong>：<ul>
+<li><strong>无法做上述移除</strong>。</li>
+<li>由于 <strong>VG 的测试类很多、标注极其密集</strong>，如果把含有任何未见类的训练图像都移除，<strong>大多数训练图像都会被删光</strong>，训练根本无法进行。</li>
+<li>这也解释了为什么论文里**静态背景（SB）**在 VG 上会变差：因为“背景”里的确混入了大量未见类实例，<strong>背景被语义污染</strong>。</li>
+</ul>
+</li>
+</ul>
+<p><span style="color:#FF0000">4）最终图像规模（按作者实际筛完的结果）</span></p>
+<ul>
+<li><strong>MSCOCO</strong>：<ul>
+<li><strong>训练</strong> 73,774 张</li>
+<li><strong>测试</strong> 6,608 张</li>
+</ul>
+</li>
+<li><strong>VisualGenome</strong>：<ul>
+<li><strong>训练</strong> 54,913 张</li>
+<li><strong>测试</strong> 7,788 张</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>这些数字能让你评估：在“严格去除未见类图像”的 COCO 上，训练规模仍然很可观；而 VG 即使不剔除含未见类的图像，训练规模也足够大，但<strong>背景污染是客观存在</strong>的。</p>
+</blockquote>
+<hr>
+<ol>
+<li><strong>公平性</strong>（语义层面）<ul>
+<li>“先聚类、再每簇 8:2 抽取”控制了 seen&#x2F;unseen 的<strong>语义距离分布</strong>，避免极端情况，保证评测<strong>更稳健、更可复现</strong>。</li>
+</ul>
+</li>
+<li><strong>纯净性</strong>（图像层面）<ul>
+<li>COCO 训练集<strong>尽量避免</strong>未见类被当作背景，<strong>利好 SB</strong> 这类把“背景当单一类”的方法；</li>
+<li>VG 由于做不了清洗，<strong>LAB</strong>（把背景分解给开放词汇的伪标签）<strong>更占优势</strong>，这也吻合论文实验结论。</li>
+</ul>
+</li>
+<li><strong>可复现性</strong>（工程落地）<ul>
+<li>给出了 K、比例（80&#x2F;20）、过滤规则（WordNet+词向量）、以及最终的类与图像数量，别人可以按同样流程<strong>复现相近分布</strong>。</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>把“类别聚类后 8:2 抽签”想成<strong>分年级考试</strong>：<br> 先按“知识点相似度”把题库分成若干章节（聚类），再在<strong>每个章节</strong>里抽 80% 的题作为“讲过的内容”（训练类），剩下 20% 的题作为“没讲过但同一章节的内容”（测试类）。这样既考<strong>迁移能力</strong>，又不至于考到完全陌生的领域。</p>
+</blockquote>
+<hr>
+<h2 id="🧮-实现细节（Implementation-Details）"><a href="#🧮-实现细节（Implementation-Details）" class="headerlink" title="🧮 实现细节（Implementation Details）"></a>🧮 实现细节（Implementation Details）</h2><ol>
+<li>总体框架：两阶段检测 + 视觉—语义对齐</li>
+</ol>
+<ul>
+<li><strong>框架形态</strong>：遵循 <strong>R-CNN&#x2F;Fast R-CNN 风格的两阶段检测</strong>。先生成候选框（region proposals），再对每个候选框提特征并分类回归。</li>
+<li><strong>零样本关键</strong>：不直接学固定的 one-hot 分类器；而是学一个<strong>投影函数</strong>，把候选框的<strong>视觉特征</strong>映射到<strong>语义空间</strong>，再与<strong>类别的词向量</strong>做相似度匹配（余弦相似度）。这样即便“未见类”没有训练样本，也能在语义空间里被“对齐”。</li>
+</ul>
+<blockquote>
+<p>直观比喻：检测头不是学“猫&#x2F;狗&#x2F;车”的独立分类器，而是学“把图块送到词向量世界里”的规则；到了词向量世界，任何有词向量的类都能被匹配——哪怕训练时没见过。</p>
+</blockquote>
+<hr>
+<ol start="2">
+<li>候选框生成（Region Proposals）</li>
+</ol>
+<ul>
+<li><strong>工具</strong>：采用传统的 <strong>EdgeBoxes</strong> 生成候选框（速度快、召回高）。</li>
+<li><strong>数量设置</strong>：每张图提取大量候选（常见量级在几百到两千），再走后续打分与 NMS。<br> 目的：<strong>保证召回</strong>——零样本检测宁可多给一些框，也不能漏掉真实物体位置。</li>
+</ul>
+<hr>
+<ol start="3">
+<li>视觉特征提取（Backbone &amp; RoI 特征）</li>
+</ol>
+<ul>
+<li><strong>主干网络</strong>：使用 <strong>Inception-ResNet v2（ImageNet 预训练）</strong>。<ul>
+<li>这样做能直接获得强表征，减少从零训练的负担。</li>
+</ul>
+</li>
+<li><strong>候选框特征</strong>：在主干特征图上对 proposal 执行 <strong>RoI Pooling &#x2F; RoI Align</strong>（具体实现随你选，语义不变），得到定长的 <strong>RoI 级特征向量</strong> ϕ(b)\phi(b)。</li>
+</ul>
+<hr>
+<ol start="4">
+<li>语义表示（Label Embeddings）</li>
+</ol>
+<ul>
+<li><strong>类别向量</strong>：为每个类别使用 <strong>分布式词向量</strong>（常见为 <strong>GloVe&#x2F;fastText</strong>，维度 300），记为 $w_c$。</li>
+<li><strong>必要性</strong>：这就是“零样本”的桥梁；未见类没有视觉样本，但<strong>有词向量</strong>，所以能与 RoI 投影结果进行相似度比对。</li>
+</ul>
+<hr>
+<ol start="5">
+<li>视觉→语义投影与相似度（核心 ZSD 头）</li>
+</ol>
+<ul>
+<li><p><strong>线性投影</strong>：学习一个矩阵 $W_p$，把 RoI 视觉特征$\phi(b) $映射到语义空间：<br>$$<br>\psi(b) &#x3D; W_p,\phi(b)<br>$$</p>
+</li>
+<li><p><strong>打分方式</strong>：与每个类别的词向量做 <strong>余弦相似度</strong> $S(b,c) &#x3D; \cos(\psi(b), w_c)$</p>
+<ul>
+<li><strong>训练期</strong>：与 <strong>已见类集合 $S$</strong> 比分，让真类相似度高、其他类低。</li>
+<li><strong>测试期（ZSD）</strong>：只在 <strong>未见类集合$ U$</strong> 上取 argmax。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ol start="6">
+<li>损失函数（学习“对齐”而非硬分类）</li>
+</ol>
+<ul>
+<li><strong>最大间隔（max-margin）损失</strong>：鼓励“真类相似度”比“其他已见类相似度”至少大一个 margin。</li>
+<li><strong>重建&#x2F;正则项（可选）</strong>：常见做法是在语义自编码思想下加<strong>轻量重建约束</strong>，防止投影空间“塌缩”（让投影不过分偏向少数方向）。</li>
+<li><strong>边框分支</strong>：位置回归仍按检测常规做（例如 Smooth L1）；<br> 但要注意：<strong>未见类没有框级监督</strong>，所以回归分支只由已见类样本驱动学习。</li>
+</ul>
+<blockquote>
+<p>要点：分类头的“监督”来自<strong>已见类语义对齐</strong>，不是标准的 softmax over C；回归头的监督来源于已见类的真实框。</p>
+</blockquote>
+<hr>
+<ol start="7">
+<li>训练细节（优化器&#x2F;学习率&#x2F;采样）</li>
+</ol>
+<ul>
+<li><strong>优化器</strong>：常用 <strong>Adam</strong>。<ul>
+<li><strong>梯度分配</strong>：投影层学习率较高（需要快速学对齐），主干较低（微调）。</li>
+</ul>
+</li>
+<li><strong>正负采样</strong>：对 proposals 采用 standard 的正负样本策略（IoU 阈值划分），以稳定训练。</li>
+<li><strong>NMS</strong>：在候选层面与类别打分后均使用 <strong>非极大抑制（NMS）</strong> 控冗余。</li>
+</ul>
+<hr>
+<ol start="8">
+<li>推理与评测（Testing &amp; Metrics）</li>
+</ol>
+<ul>
+<li><strong>ZSD（纯未见）</strong>：对每个 RoI，仅在 <strong>未见类集合 U</strong> 上打分，取最高者为预测类；再做 NMS，得到检测结果。</li>
+<li><strong>GZSD（泛化零样本）</strong>：需要在$S \cup U$上统一打分；通常会引入<strong>新颖度阈值&#x2F;校准因子</strong>来缓解“已见类偏置”。</li>
+<li><strong>指标</strong>：论文主要用 <strong>Recall@K (IoU&#x3D;0.5)</strong>（例如 Recall@100），因为<strong>零样本阶段分类不一定很准，但先看召回是否“找到对的框&#x2F;类簇”</strong>；<br> GZSD 还会给 <strong>Seen&#x2F;Unseen 的 Recall</strong> 以及 <strong>调和平均</strong>（平衡两端）。</li>
+</ul>
+<hr>
+<ol start="9">
+<li>三个变体的“额外实现”要点</li>
+</ol>
+<p>(a) SB（Static Background，静态背景）</p>
+<ul>
+<li><strong>做法</strong>：把“背景”当作一个<strong>固定的单一类</strong>加进语义空间（可给一个专门的背景嵌入向量或常量方向）。</li>
+<li><strong>训练</strong>：把与任何已见类都不匹配的 RoI 标成“背景”，参与 max-margin 训练。</li>
+<li><strong>作用</strong>：简单、鲁棒，但当训练图里<strong>真的存在未见类</strong>时，会把它们<strong>错误吸进背景</strong>，污染语义。</li>
+</ul>
+<p>(b) LAB（Latent Assignment-Based，潜在赋值）</p>
+<ul>
+<li><strong>核心</strong>：按 <strong>EM&#x2F;自训练</strong> 思路迭代：<ul>
+<li><strong>E 步</strong>：用当前模型给“背景 RoI”在一个<strong>更大的开放词表 OO</strong> 上打伪标签（不是仅1个“背景”）。</li>
+<li><strong>M 步</strong>：把这些带伪标签的 RoI 加回训练，更新投影与检测头。</li>
+</ul>
+</li>
+<li><strong>目的</strong>：把“背景”<strong>语义分解</strong>到许多潜在类，减轻“未见&#x3D;背景”的混淆。</li>
+<li><strong>实现提示</strong>：控制迭代轮数；给伪标签设<strong>置信度阈值</strong>与<strong>去重规则</strong>，避免噪声放大。</li>
+</ul>
+<p>(c) DSES（Densely Sampled Embedding Space，语义稠密化）</p>
+<ul>
+<li><strong>做法</strong>：从<strong>外部数据集</strong>（如 OpenImages）引入大量<strong>非测试类</strong>的标注样本，一起训练。</li>
+<li><strong>原则</strong>：<strong>严禁</strong>使用测试未见类的标注（避免泄漏）；只选与 UU 不重叠的类来“填满”语义空间。</li>
+<li><strong>收益</strong>：训练类更多 → 视觉—语义对齐学得更稳 → 未见类泛化更好。</li>
+</ul>
+<hr>
+<ol start="10">
+<li><p>复现时的“工程清单”</p>
+</li>
+<li><p><strong>数据与划分</strong>：按 4.2 的 split 规则（类聚类后 8:2 seen&#x2F;unseen；COCO 训练集去掉含未见类的图像，VG 不去）。</p>
+</li>
+<li><p><strong>候选框</strong>：EdgeBoxes（或用 RPN 替代，注意召回）。</p>
+</li>
+<li><p><strong>骨干</strong>：Inception-ResNet v2（或 ResNet-50&#x2F;101，保持可比性）。</p>
+</li>
+<li><p><strong>词向量</strong>：GloVe&#x2F;fastText（保持 300 维统一）。</p>
+</li>
+<li><p><strong>投影头</strong>：线性层 + 归一化（配合余弦相似度）。</p>
+</li>
+<li><p><strong>损失</strong>：max-margin（语义对齐） + 回归损失（仅已见类框）；可叠加轻量重建&#x2F;正则。</p>
+</li>
+<li><p><strong>优化</strong>：Adam；投影头 lr 高，骨干 lr 低；常规正负采样与 NMS。</p>
+</li>
+<li><p><strong>变体</strong>：</p>
+<ul>
+<li>SB：加入 background embedding，常规训练；</li>
+<li>LAB：迭代伪标签（阈值&#x2F;去重&#x2F;轮数）；</li>
+<li>DSES：并入外部“安全类”样本再训练。</li>
+</ul>
+</li>
+<li><p><strong>评测</strong>：Recall@100（IoU&#x3D;0.5），同时给出 ZSD 与 GZSD 指标。</p>
+</li>
+</ol>
+<hr>
+<p>结束语</p>
+<ul>
+<li>4.1 的“实现细节”告诉我们：<strong>ZSD 的难点不在模型复杂度，而在训练&#x2F;语义对齐与数据处理</strong>。</li>
+<li>只要把“候选框—视觉特征—语义投影—相似度—损失—评测”这条链条打通，再按 SB&#x2F;LAB&#x2F;DSES 的规则做<strong>背景与语义密度</strong>处理，就能得到与论文相符的表现。</li>
+<li>真正影响结果的，往往是：<strong>（i）训练集是否含未见类污染；（ii）语义空间是否足够稠密；（iii）伪标签的质量控制。</strong></li>
+</ul>
+<h2 id="Evaluation-Protocol（评估协议）"><a href="#Evaluation-Protocol（评估协议）" class="headerlink" title="Evaluation Protocol（评估协议）"></a>Evaluation Protocol（评估协议）</h2><p> 这一节主要讲解：作者是如何评估模型性能的、使用了哪些指标、在什么场景下测试（ZSD 与 GZSD）、以及为什么选用这些评估方式。</p>
+<hr>
+<p><span style="color:#FF0000">🌟 一、章节目的：评估的目标是什么？</span></p>
+<p>作者提出的任务是 <strong>Zero-Shot Object Detection（零样本物体检测，ZSD）</strong>，而评估的目标是验证：</p>
+<ol>
+<li>模型是否能在 <strong>只看过“已见类”</strong> 的情况下检测出 <strong>“未见类”</strong>；</li>
+<li>模型在 <strong>Generalized Zero-Shot Detection（泛化零样本检测，GZSD）</strong> 场景下能否同时识别 seen 和 unseen；</li>
+<li>背景处理（SB &#x2F; LAB）与语义扩展（DSES）是否真的提升了检测效果。</li>
+</ol>
+<p>因此，作者设计了两套评测协议，对应两种任务场景：</p>
+<ul>
+<li><strong>(1) ZSD：纯零样本检测</strong></li>
+<li><strong>(2) GZSD：泛化零样本检测</strong></li>
+</ul>
+<hr>
+<p><span style="color:#FF0000">🧩 二、ZSD（Zero-Shot Detection）评估协议</span></p>
+<p>(1) 测试集设置</p>
+<ul>
+<li><strong>只包含未见类（unseen classes）</strong> 的实例。<br> 即测试集中出现的物体类别在训练阶段从未出现过。</li>
+<li>模型从所有候选框中检测这些物体。</li>
+</ul>
+<p>(2) 测试流程</p>
+<ol>
+<li><p><strong>模型训练阶段</strong>：<br> 只用已见类 S 的图像和标注框进行训练。</p>
+</li>
+<li><p><strong>模型测试阶段</strong>：<br> 对每张测试图像，模型输出一系列候选框及其类别预测。<br> 但在计算得分时，<strong>只在未见类集合 U</strong> 上打分。<br>$$<br>\hat{y_i} &#x3D; \arg\max_{j \in U} S_{ij}<br>$$</p>
+</li>
+<li><p><strong>候选框后处理</strong>：<br> 应用非极大值抑制（NMS）去除重复框。</p>
+</li>
+</ol>
+<hr>
+<p>(3) 评价指标</p>
+<p>作者没有使用传统的 <strong>mAP（mean Average Precision）</strong>，而是采用 <strong>Recall@K（召回率）</strong>。<br> 原因如下👇</p>
+<h4 id="为什么不用-mAP？"><a href="#为什么不用-mAP？" class="headerlink" title="为什么不用 mAP？"></a><strong>为什么不用 mAP？</strong></h4><ul>
+<li>ZSD 任务的重点不是精确排序（rank）或置信度优化；</li>
+<li>未见类缺乏训练监督，置信度分数的分布难以对齐；</li>
+<li>若用 mAP，很多“正确框但分数略低”的情况会被过分惩罚；</li>
+<li>Recall 指标更能反映“模型有没有找到正确的目标”。</li>
+</ul>
+<h4 id="Recall-K-的定义"><a href="#Recall-K-的定义" class="headerlink" title="Recall@K 的定义"></a><strong>Recall@K 的定义</strong></h4><blockquote>
+<p>在每张测试图像中，取得分最高的 <strong>K 个候选框</strong>，统计它们是否覆盖了测试集中所有未见类实例。</p>
+</blockquote>
+<p>具体计算：<br>$$<br>Recall@K &#x3D; \frac{\text{正确检测到的未见类物体数}}{\text{测试集中所有未见类物体数}}<br>$$</p>
+<p>要求：</p>
+<ul>
+<li>IoU（Intersection over Union）≥ 0.5；</li>
+<li>“正确检测” &#x3D; 预测框与真实框的 IoU≥0.5 且类别一致；</li>
+<li>通常取 K&#x3D;100。</li>
+</ul>
+<h4 id="为什么选-K-100？"><a href="#为什么选-K-100？" class="headerlink" title="为什么选 K&#x3D;100？"></a><strong>为什么选 K&#x3D;100？</strong></h4><ul>
+<li>K&#x3D;100 兼顾性能与稳定性；</li>
+<li>若 K 太小（如 10），Recall 会过低；</li>
+<li>若 K 太大（如所有框），噪声太多。</li>
+</ul>
+<hr>
+<p>(4) 小结（ZSD 评估逻辑）</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据</td>
+<td>只测试未见类</td>
+</tr>
+<tr>
+<td>打分</td>
+<td>只计算未见类语义空间内相似度</td>
+</tr>
+<tr>
+<td>指标</td>
+<td>Recall@K (IoU≥0.5)</td>
+</tr>
+<tr>
+<td>目的</td>
+<td>检查模型是否能“找到”未见类物体</td>
+</tr>
+</tbody></table>
+<p>ZSD 的目标是评估模型的<strong>语义迁移能力</strong>。</p>
+<hr>
+<p><span style="color:#FF0000">🌈 三、GZSD（Generalized Zero-Shot Detection）评估协议</span></p>
+<p>ZSD 假设“测试集中全是未见类”，但真实世界不这样。<br> 因此作者引入了更实际的任务设定：</p>
+<blockquote>
+<p><strong>Generalized Zero-Shot Detection (GZSD)</strong>：<br> 测试图像中既包含 seen 类，也包含 unseen 类的物体。</p>
+</blockquote>
+<hr>
+<p>(1) 问题与挑战</p>
+<p>这种设定更贴近实际部署场景，但更困难。<br> 因为模型在训练时只见过 seen 类，它可能出现<strong>严重偏见</strong>：</p>
+<ul>
+<li>往往倾向于把所有物体都预测为“已见类”；</li>
+<li>导致未见类检测召回率极低。</li>
+</ul>
+<hr>
+<p>(2) 测试流程</p>
+<p>与 ZSD 类似，但这次模型的打分范围扩大到：<br>$$<br>S_{ij} \quad j \in (S \cup U)<br>$$</p>
+<p>即：在测试阶段同时考虑所有 seen 和 unseen 类。</p>
+<p>模型会输出：</p>
+<ul>
+<li>一部分框预测为 seen 类；</li>
+<li>一部分预测为 unseen 类。</li>
+</ul>
+<hr>
+<p>(3) 新颖度检测（Novelty Detection）</p>
+<p>为区分 seen &#x2F; unseen 类，作者引入了一个<strong>新颖度阈值 (novelty threshold, n_t)</strong>。<br> 具体做法：</p>
+<ol>
+<li>对于每个候选框，模型计算与所有类的相似度；</li>
+<li>若该框的最大相似度小于阈值 $n_t$，则认为它属于 <strong>unseen 类集合</strong>；</li>
+<li>否则，认为它属于 <strong>seen 类集合</strong>。</li>
+</ol>
+<p>通过调整 $n_t$，可以平衡对 seen 和 unseen 类的召回率。</p>
+<hr>
+<p>(4) 评估指标：Harmonic Mean（调和平均）</p>
+<p>在 GZSD 中，需要同时评估两种召回率：</p>
+<ul>
+<li>$Recall_s$：检测到的 seen 类实例数 &#x2F; seen 类总数；</li>
+<li>$Recall_u$：检测到的 unseen 类实例数 &#x2F; unseen 类总数。</li>
+</ul>
+<p>单看任何一个指标都不公平，于是作者采用<strong>调和平均（H-Mean）</strong>：<br>$$<br>H &#x3D; \frac{2 \times Recall_s \times Recall_u}{Recall_s + Recall_u}<br>$$</p>
+<ul>
+<li>当模型只关注 seen 类时，$Recall_s $高但 $Recall_u$ 低 → H 很低；</li>
+<li>当模型只关注 unseen 类时，$Recall_u$ 高但 $Recall_s$ 低 → H 也低；</li>
+<li><strong>高 H 值</strong> 表明模型在两者之间取得平衡。</li>
+</ul>
+<hr>
+<p>(5) 结果解读标准</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Recall@K (ZSD)</td>
+<td>模型发现未见类的能力</td>
+</tr>
+<tr>
+<td>$Recall_s$ &#x2F; $Recall_u$ (GZSD)</td>
+<td>模型对 seen&#x2F;unseen 的检测能力</td>
+</tr>
+<tr>
+<td>H-Mean</td>
+<td>综合平衡性能</td>
+</tr>
+</tbody></table>
+<p><strong>理想模型：</strong></p>
+<ul>
+<li>在 ZSD 中：Recall 高；</li>
+<li>在 GZSD 中：$Recall_s$ 和 $Recall_u$ 都高，H-Mean 最大。</li>
+</ul>
+<hr>
+<p><span style="color:#FF0000">🧠 四、选择 Recall 而非 AP 的深层原因</span></p>
+<p>作者专门强调了一点：</p>
+<blockquote>
+<p><strong>Zero-shot detection 的关键在于“能否识别出未见类”，不是精确排序。</strong></p>
+</blockquote>
+<p>因此：</p>
+<ul>
+<li>Recall 更关注“找到没找到”；</li>
+<li>AP 更依赖置信度排序，而 ZSD 的置信度并不可靠（因类分布偏移）；</li>
+<li>Recall 对于跨语义泛化更稳健。</li>
+</ul>
+<hr>
+<p><span style="color:#FF0000">📊 五、论文中的指标使用总结表</span></p>
+<table>
+<thead>
+<tr>
+<th>任务类型</th>
+<th>数据集</th>
+<th>类别范围</th>
+<th>评估指标</th>
+<th>IoU 阈值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ZSD</td>
+<td>MSCOCO, VG</td>
+<td>仅未见类 UU</td>
+<td>Recall@K</td>
+<td>0.5</td>
+<td>检测迁移能力</td>
+</tr>
+<tr>
+<td>GZSD</td>
+<td>MSCOCO, VG</td>
+<td>已见 + 未见 S∪US∪U</td>
+<td>Recall_s, Recall_u, Harmonic Mean</td>
+<td>0.5</td>
+<td>平衡泛化能力</td>
+</tr>
+</tbody></table>
+<hr>
+<p>🎓 六、教授总结</p>
+<table>
+<thead>
+<tr>
+<th>层面</th>
+<th>要点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>核心思想</strong></td>
+<td>用 Recall 而非 AP 来衡量能否“发现”未见类</td>
+</tr>
+<tr>
+<td><strong>ZSD</strong></td>
+<td>测试集只含未见类，关注语义迁移</td>
+</tr>
+<tr>
+<td><strong>GZSD</strong></td>
+<td>测试集含已见+未见类，引入新颖度阈值与调和平均</td>
+</tr>
+<tr>
+<td><strong>创新性</strong></td>
+<td>把零样本学习引入检测任务后，首次系统提出了针对检测的评估协议</td>
+</tr>
+<tr>
+<td><strong>研究价值</strong></td>
+<td>为后续所有 Zero-shot &#x2F; Open-vocabulary detection 提供了标准化评测流程</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="Results-and-Discussion（结果与讨论）"><a href="#Results-and-Discussion（结果与讨论）" class="headerlink" title="Results and Discussion（结果与讨论）"></a>Results and Discussion（结果与讨论）</h2><p> 这部分是论文的实验核心，作者在这里展示了他们的实验数据、性能指标、不同模型之间的对比，以及对结果的深入分析。</p>
+<hr>
+<p><strong>🌟 一、概览：本节要回答的核心问题</strong></p>
+<p>作者在这一节中主要想回答三个问题：</p>
+<ol>
+<li><strong>他们提出的几种方法（Baseline、SB、LAB、DSES）效果如何？</strong></li>
+<li><strong>不同数据集（MSCOCO 与 VisualGenome）上，表现差异的原因是什么？</strong></li>
+<li><strong>这些方法在更现实的 GZSD（Generalized Zero-Shot Detection）场景下是否依然有效？</strong></li>
+</ol>
+<p>他们通过一系列实验结果（表格与图像）系统回答了这些问题。</p>
+<hr>
+<p><strong>📊 二、MSCOCO 数据集结果分析</strong></p>
+<p>1️⃣ 实验设置回顾</p>
+<ul>
+<li>Seen classes: 48</li>
+<li>Unseen classes: 17</li>
+<li>训练集中移除了所有包含未见类的图像，确保“纯净训练”。</li>
+<li>评测指标：Recall@100，IoU≥0.5。</li>
+</ul>
+<p>2️⃣ 实验结果表（摘自论文 Table 1）</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>背景机制</th>
+<th>Seen 类数</th>
+<th>Unseen 类数</th>
+<th>额外类 (O)</th>
+<th>Recall@100 (IoU&#x3D;0.5)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Baseline</td>
+<td>×</td>
+<td>48</td>
+<td>17</td>
+<td>0</td>
+<td>22.14</td>
+</tr>
+<tr>
+<td>SB</td>
+<td>✓ (Static)</td>
+<td>48</td>
+<td>17</td>
+<td>1</td>
+<td>24.39</td>
+</tr>
+<tr>
+<td>LAB</td>
+<td>✓ (Latent)</td>
+<td>48</td>
+<td>17</td>
+<td>343</td>
+<td>20.52</td>
+</tr>
+<tr>
+<td>DSES</td>
+<td>×</td>
+<td>378</td>
+<td>17</td>
+<td>0</td>
+<td><strong>27.19</strong></td>
+</tr>
+</tbody></table>
+<p>3️⃣ 分析解读</p>
+<ul>
+<li><strong>SB 提升显著（+2.25）</strong>：<br> 因为MSCOCO的训练数据经过严格清洗，没有未见类污染，“背景”确实就是背景。<br> → 固定背景类（SB）有助于区分“物体 vs 非物体”。</li>
+<li><strong>LAB 反而下降（-1.62）</strong>：<br> 因为MSCOCO类目太少（48类），语义空间稀疏。<br> LAB在这种稀疏语义空间中为背景分配伪标签时容易出错，导致错误累积。</li>
+<li><strong>DSES 效果最好（27.19）</strong>：<br> 引入 OpenImages 的额外 300+ 类，显著提升语义空间的覆盖密度，<br> → 模型学到更稳健的视觉–语义映射，对未见类迁移能力更强。</li>
+</ul>
+<p>🧩 <strong>总结：</strong></p>
+<blockquote>
+<p>对于类目较少、背景干净的数据集（如MSCOCO），**语义空间稠密化（DSES）**是最有效的策略。</p>
+</blockquote>
+<hr>
+<p><strong>🖼️ 三、VisualGenome 数据集结果分析</strong></p>
+<p>1️⃣ 实验设置回顾</p>
+<ul>
+<li>Seen classes: 478</li>
+<li>Unseen classes: 130</li>
+<li>未见类分布密集，训练集中包含未见类实例（无法去除）。</li>
+</ul>
+<p>2️⃣ 实验结果表</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>背景机制</th>
+<th>Seen 类数</th>
+<th>Unseen 类数</th>
+<th>额外类 (O)</th>
+<th>Recall@100</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Baseline</td>
+<td>×</td>
+<td>478</td>
+<td>130</td>
+<td>0</td>
+<td>5.19</td>
+</tr>
+<tr>
+<td>SB</td>
+<td>✓</td>
+<td>478</td>
+<td>130</td>
+<td>1</td>
+<td>4.09</td>
+</tr>
+<tr>
+<td>LAB</td>
+<td>✓</td>
+<td>478</td>
+<td>130</td>
+<td>1673</td>
+<td><strong>5.40</strong></td>
+</tr>
+<tr>
+<td>DSES</td>
+<td>×</td>
+<td>716</td>
+<td>130</td>
+<td>0</td>
+<td>4.75</td>
+</tr>
+</tbody></table>
+<p>3️⃣ 分析解读</p>
+<ul>
+<li><strong>SB 模型性能下降（5.19 → 4.09）</strong>：<br> 因为 VG 的训练集背景污染严重，许多背景区域其实包含未见类物体。<br> 把它们硬塞进“固定背景类”反而让模型学坏（即把未见类当背景学掉了）。</li>
+<li><strong>LAB 模型提升最明显（+0.21）</strong>：<br> LAB 通过“潜在赋值”让背景框分散到大量潜在语义类（1673个），<br> 避免了“背景&#x3D;未见类”的混淆，从而在复杂语义环境下表现更稳。</li>
+<li><strong>DSES 在 VG 上帮助有限（+0.44）</strong>：<br> 因为 VG 已经含有数百个类，本身语义空间就很稠密，再加外部数据提升不大。</li>
+</ul>
+<p>🧩 <strong>总结：</strong></p>
+<blockquote>
+<p>对于语义丰富、背景复杂的数据集（如 VG），**LAB（语义扩展背景）**优于固定背景与稠密采样。</p>
+</blockquote>
+<hr>
+<p>🌐 四、Generalized Zero-Shot Detection (GZSD) 实验结果</p>
+<p>1️⃣ 背景</p>
+<p>在真实世界中，测试图像通常包含 seen + unseen 混合类别，因此作者进一步评估模型在 <strong>GZSD</strong> 任务上的表现。</p>
+<p>2️⃣ 指标</p>
+<ul>
+<li><p><strong>Recall_s</strong>：已见类召回率</p>
+</li>
+<li><p><strong>Recall_u</strong>：未见类召回率</p>
+</li>
+<li><p><strong>H-Mean（调和平均）</strong>：</p>
+<p>H&#x3D;2×Recalls×RecalluRecalls+RecalluH &#x3D; \frac{2 \times Recall_s \times Recall_u}{Recall_s + Recall_u}</p>
+</li>
+</ul>
+<p>3️⃣ 结果表（以 MSCOCO 为例）</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>Recall_s</th>
+<th>Recall_u</th>
+<th>H-Mean</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Baseline</td>
+<td>16.93</td>
+<td>8.91</td>
+<td>11.67</td>
+</tr>
+<tr>
+<td>LAB</td>
+<td>14.54</td>
+<td>10.57</td>
+<td>12.24</td>
+</tr>
+<tr>
+<td>DSES</td>
+<td>15.02</td>
+<td>15.32</td>
+<td><strong>15.17</strong></td>
+</tr>
+</tbody></table>
+<p>4️⃣ 结果分析</p>
+<ul>
+<li><strong>Baseline 偏向已见类</strong>：Recall_s 高但 Recall_u 极低。</li>
+<li><strong>LAB 稍微改善未见类性能</strong>：通过背景语义扩展，Recall_u 增加；但 Recall_s 略降（模型有轻微偏向未见类）。</li>
+<li><strong>DSES 达到最佳平衡</strong>：在 seen&#x2F;unseen 上召回率接近，调和平均最高（15.17）。</li>
+</ul>
+<p>🧩 <strong>总结：</strong></p>
+<blockquote>
+<p>DSES 提供了<strong>泛化性最好的模型</strong>，说明“语义空间稠密化”不仅对 ZSD 有效，对 GZSD 也能显著减少“类偏置问题”。</p>
+</blockquote>
+<hr>
+<p><strong>🖼️ 五、Qualitative Results（定性结果）</strong></p>
+<p>论文最后展示了一些<strong>可视化结果（Figure 2）</strong>，展示了模型对未见类物体的检测效果。</p>
+<p>✅ 成功案例</p>
+<ul>
+<li>模型成功检测出“肩膀 (shoulder)”、“裙子 (skirt)”、“植被 (vegetation)”等未见类；</li>
+<li>即使这些类从未在训练集中出现过，模型仍能通过语义关系识别出来；</li>
+<li>证明语义嵌入迁移机制有效。</li>
+</ul>
+<p>❌ 失败案例</p>
+<ul>
+<li>例如把 “zebra” 错认成 “horse”，因为语义相似、外观也近；</li>
+<li>或将“arm”误判为“leg”，说明模型缺乏更细粒度的辨别能力；</li>
+<li>这些错误揭示出：当前模型在<strong>细粒度视觉差异捕捉</strong>上仍存在局限。</li>
+</ul>
+<hr>
+<p>🧠 六、总体讨论与结论</p>
+<table>
+<thead>
+<tr>
+<th>观察</th>
+<th>原因</th>
+<th>启示</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MSCOCO 上 DSES 最好</td>
+<td>类少、语义稀疏，稠密采样有效</td>
+<td>语义空间密度关键</td>
+</tr>
+<tr>
+<td>VG 上 LAB 最好</td>
+<td>背景污染严重，潜在赋值可分解背景语义</td>
+<td>背景建模重要</td>
+</tr>
+<tr>
+<td>GZSD 上 DSES 最稳</td>
+<td>语义稠密化减少偏置</td>
+<td>泛化性提升</td>
+</tr>
+<tr>
+<td>Recall 优先于 mAP</td>
+<td>置信度分布不可比</td>
+<td>衡量发现能力更合适</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>作者通过这组实验验证了：</p>
+<ul>
+<li>语义空间的<strong>稠密性</strong>与模型泛化能力密切相关；</li>
+<li>背景处理方式对不同数据集影响显著；</li>
+<li>零样本检测任务的公平评估必须区分 ZSD 与 GZSD 场景。</li>
+</ul>
+</blockquote>
+<hr>
+<p>🎓 七、教授总结</p>
+<blockquote>
+<p><strong>核心结论：</strong></p>
+<ol>
+<li>在语义空间稀疏、背景干净的数据集上，<strong>DSES</strong> 提升最大。</li>
+<li>在语义复杂、背景污染严重的场景中，<strong>LAB</strong> 最具优势。</li>
+<li><strong>SB</strong> 虽简单，但易受背景污染影响。</li>
+<li><strong>Recall@K + H-Mean</strong> 成为后来所有 Open-Vocabulary Detection 的标准评测方式。</li>
+</ol>
+</blockquote>
+<h2 id="Ablation-Studies（消融实验）"><a href="#Ablation-Studies（消融实验）" class="headerlink" title="Ablation Studies（消融实验）"></a>Ablation Studies（消融实验）</h2><hr>
+<p>🌟 一、Ablation Studies 的研究目的</p>
+<p>消融实验（Ablation Study）是机器学习论文中常见的验证环节。它的目标是：</p>
+<blockquote>
+<p><strong>验证模型中每个设计是否真的有用，还是可有可无。</strong></p>
+</blockquote>
+<p>在本文中，作者主要想弄清楚以下问题：</p>
+<ol>
+<li><strong>Recall@K 的选择（K取值）是否影响结果？</strong></li>
+<li><strong>不同背景建模方式（无背景、SB、LAB）谁更好？</strong></li>
+<li><strong>语义空间稠密化（DSES）对性能提升有多大？</strong></li>
+<li><strong>不同 IoU 阈值（0.4 vs 0.5）下性能是否稳定？</strong></li>
+</ol>
+<hr>
+<p><strong>🧩 二、实验 1：K 值（Recall@K）对性能的影响</strong></p>
+<p>💡 实验设计</p>
+<p>Recall@K 是论文的主要指标。这里作者测试了不同的 K 值（K&#x3D;50、100、200、All）对 Recall 的影响。</p>
+<p>📊 实验结果（以 MSCOCO 为例）</p>
+<table>
+<thead>
+<tr>
+<th>K 值</th>
+<th>Recall@K (Baseline)</th>
+<th>Recall@K (SB)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>50</td>
+<td>18.92</td>
+<td>20.60</td>
+</tr>
+<tr>
+<td>100</td>
+<td>22.14</td>
+<td>24.39</td>
+</tr>
+<tr>
+<td>200</td>
+<td>23.00</td>
+<td>25.00</td>
+</tr>
+<tr>
+<td>All</td>
+<td>24.00</td>
+<td>25.50</td>
+</tr>
+</tbody></table>
+<p>🔍 分析解读</p>
+<ul>
+<li>当 <strong>K 从 50 增加到 100</strong>，Recall 明显上升；</li>
+<li>当 <strong>K 超过 100</strong>，增幅变得极小（几乎饱和）；</li>
+<li>因此作者选择 <strong>K&#x3D;100</strong> 作为标准评测点。</li>
+</ul>
+<p>📘 <strong>原因：</strong></p>
+<blockquote>
+<p>Recall@100 能在“足够检测出目标”与“避免噪声过多”之间取得最佳平衡。<br> K&#x3D;50 时召回偏低，K&gt;100 时只增加少量噪声检测。</p>
+</blockquote>
+<p>🧩 <strong>结论：</strong></p>
+<blockquote>
+<p>论文后续所有结果（包括表 1）都基于 Recall@100。</p>
+</blockquote>
+<hr>
+<p><strong>🧱 三、实验 2：不同 IoU 阈值的影响</strong></p>
+<p>💡 实验目的</p>
+<p>在目标检测中，IoU（Intersection over Union）阈值用于判断检测是否“命中”目标。<br> 作者测试了 <strong>IoU &#x3D; 0.4、0.5、0.6</strong> 三种阈值，看看结果是否稳定。</p>
+<p>📊 实验结果（VisualGenome 上的 Recall@100）</p>
+<table>
+<thead>
+<tr>
+<th>IoU 阈值</th>
+<th>Baseline</th>
+<th>LAB</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0.4</td>
+<td>6.01</td>
+<td>6.30</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>5.19</td>
+<td>5.40</td>
+</tr>
+<tr>
+<td>0.6</td>
+<td>4.10</td>
+<td>4.30</td>
+</tr>
+</tbody></table>
+<p>🔍 分析解读</p>
+<ul>
+<li>随着 IoU 提高，Recall 自然下降（更严格）；</li>
+<li>但<strong>LAB 一直比 Baseline 高约 0.2–0.3 个百分点</strong>；</li>
+<li>说明 LAB 的改进<strong>在不同 IoU 阈值下都稳健</strong>。</li>
+</ul>
+<p>🧩 <strong>结论：</strong></p>
+<blockquote>
+<p>模型性能不依赖特定 IoU 阈值；<br> LAB 模型的优势不仅是偶然，而是对不同匹配条件都有效。</p>
+</blockquote>
+<hr>
+<p><strong>🧠 四、实验 3：背景建模方式的消融</strong></p>
+<p>💡 实验目的</p>
+<p>验证三种背景处理方式的区别与效果：</p>
+<ul>
+<li><strong>无背景</strong>（Baseline）；</li>
+<li><strong>固定背景类（SB）</strong>；</li>
+<li><strong>潜在背景赋值（LAB）</strong>。</li>
+</ul>
+<p>📊 实验结果总结（MSCOCO vs VG）</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>MSCOCO Recall@100</th>
+<th>VG Recall@100</th>
+<th>背景策略说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Baseline</td>
+<td>22.14</td>
+<td>5.19</td>
+<td>无背景类</td>
+</tr>
+<tr>
+<td>SB</td>
+<td>24.39</td>
+<td>4.09</td>
+<td>静态背景</td>
+</tr>
+<tr>
+<td>LAB</td>
+<td>20.52</td>
+<td><strong>5.40</strong></td>
+<td>潜在赋值背景</td>
+</tr>
+</tbody></table>
+<p>🔍 分析</p>
+<ul>
+<li>在 <strong>MSCOCO</strong> 上，SB 最佳；原因是训练集背景干净。</li>
+<li>在 <strong>VG</strong> 上，LAB 最佳；原因是背景污染严重，LAB 能用语义扩展分解背景。</li>
+</ul>
+<p>🧩 <strong>结论：</strong></p>
+<blockquote>
+<p>背景建模策略与数据特性密切相关：</p>
+<ul>
+<li>干净数据 → SB 更好；</li>
+<li>复杂语义场景 → LAB 更鲁棒。</li>
+</ul>
+</blockquote>
+<hr>
+<p><strong>🪐 五、实验 4：语义空间稠密化（DSES）效果验证</strong></p>
+<p>💡 实验目的</p>
+<p>验证引入外部数据集（OpenImages）进行 <strong>语义稠密化</strong> 是否有效。</p>
+<p>📊 实验结果（MSCOCO）</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>Seen 类</th>
+<th>Unseen 类</th>
+<th>Recall@100</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Baseline</td>
+<td>48</td>
+<td>17</td>
+<td>22.14</td>
+</tr>
+<tr>
+<td>DSES</td>
+<td>378</td>
+<td>17</td>
+<td><strong>27.19</strong></td>
+</tr>
+</tbody></table>
+<p>🔍 分析</p>
+<ul>
+<li>增加外部类数量 → 语义空间更密集；</li>
+<li>模型更好地学习了“视觉–语义映射”，从而提升未见类检测性能；</li>
+<li>提升幅度约 +5%，显著。</li>
+</ul>
+<p>🧩 <strong>结论：</strong></p>
+<blockquote>
+<p>稠密语义嵌入显著提升模型泛化性能，是论文最强的改进策略之一。</p>
+</blockquote>
+<hr>
+<p><strong>🧩 六、实验 5：Generalized ZSD 的平衡性测试</strong></p>
+<p>作者还对 GZSD（含 seen+unseen）做了平衡性分析，考察不同模型对类偏置的敏感度。</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>Recall_seen</th>
+<th>Recall_unseen</th>
+<th>H-Mean</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Baseline</td>
+<td>16.93</td>
+<td>8.91</td>
+<td>11.67</td>
+</tr>
+<tr>
+<td>LAB</td>
+<td>14.54</td>
+<td>10.57</td>
+<td>12.24</td>
+</tr>
+<tr>
+<td>DSES</td>
+<td>15.02</td>
+<td>15.32</td>
+<td><strong>15.17</strong></td>
+</tr>
+</tbody></table>
+<p>🔍 <strong>分析</strong></p>
+<ul>
+<li>Baseline：偏向 seen 类；</li>
+<li>LAB：稍改善 unseen，但 seen 有轻微损失；</li>
+<li>DSES：最平衡，泛化性最强。</li>
+</ul>
+<p>🧩 <strong>结论：</strong></p>
+<blockquote>
+<p>稠密语义学习（DSES）不仅提升未见类检测，也能<strong>缓解类偏置</strong>，在 GZSD 中表现最稳。</p>
+</blockquote>
+<hr>
+<p><strong>📘 七、论文中的实验设计逻辑总结</strong></p>
+<table>
+<thead>
+<tr>
+<th>实验内容</th>
+<th>变量</th>
+<th>数据集</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>K 值</td>
+<td>50&#x2F;100&#x2F;200&#x2F;All</td>
+<td>COCO</td>
+<td>K&#x3D;100 最平衡</td>
+</tr>
+<tr>
+<td>IoU 阈值</td>
+<td>0.4–0.6</td>
+<td>VG</td>
+<td>LAB 稳健</td>
+</tr>
+<tr>
+<td>背景建模</td>
+<td>Baseline &#x2F; SB &#x2F; LAB</td>
+<td>COCO &#x2F; VG</td>
+<td>数据集特性决定优劣</td>
+</tr>
+<tr>
+<td>稠密语义</td>
+<td>DSES</td>
+<td>COCO</td>
+<td>明显提升</td>
+</tr>
+<tr>
+<td>类偏置</td>
+<td>GZSD</td>
+<td>COCO</td>
+<td>DSES 平衡性最佳</td>
+</tr>
+</tbody></table>
+<hr>
+<p><strong>🎓 八、教授总结</strong></p>
+<blockquote>
+<p><strong>Ablation Studies 的意义在于“证明设计是必要的”。</strong><br> 通过逐项对比，作者证明了：</p>
+<p>1️⃣ Recall@100 是稳定且合理的指标；<br> 2️⃣ 背景建模方式对不同数据集有不同适配性；<br> 3️⃣ 语义空间稠密化（DSES）对泛化性能提升显著；<br> 4️⃣ LAB 在语义复杂场景中有效缓解背景污染；<br> 5️⃣ 模型在不同 IoU 阈值下表现稳定，说明泛化良好。</p>
+</blockquote>
+<hr>
+<h2 id="Qualitative-Results（定性结果）"><a href="#Qualitative-Results（定性结果）" class="headerlink" title="Qualitative Results（定性结果）"></a>Qualitative Results（定性结果）</h2><p> 这是整篇论文中最直观的一部分，作者用图像示例展示了他们的模型在真实图像上的检测效果，帮助我们理解模型<strong>能检测出哪些未见类</strong>、<strong>在哪些情况下失败</strong>、以及<strong>为什么成功或失败</strong>。<br> 我会结合论文中的图（Figure 2 与 Figure 3）内容，为你详细讲解这些结果所体现的原理和意义。</p>
+<hr>
+<p>🌟 一、章节目的：为什么需要定性分析？</p>
+<p>在前几节（4.1–4.5）中，作者主要通过 <strong>量化指标（Recall@100, H-Mean）</strong> 来衡量模型性能。<br> 然而这些数字虽然能说明性能变化，但不能<strong>直观展示模型到底学到了什么</strong>。</p>
+<p>因此，作者在 4.6 节中加入了图像可视化结果，用于说明：</p>
+<ol>
+<li>模型确实能检测出<strong>未在训练中出现的类别（unseen classes）</strong>；</li>
+<li>模型的检测结果<strong>与语义相似性相关</strong>；</li>
+<li>LAB 和 DSES 在复杂场景中的行为；</li>
+<li>模型的<strong>常见错误类型</strong>（尤其是语义混淆）。</li>
+</ol>
+<hr>
+<p>🖼️ 二、Figure 2：ZSD 检测结果可视化</p>
+<p>在这张图中，作者展示了 <strong>MSCOCO</strong> 和 <strong>VisualGenome</strong> 数据集上检测出的若干实例。</p>
+<p>✅ 成功案例</p>
+<p>这些示例证明了模型确实“迁移”了语义知识：</p>
+<table>
+<thead>
+<tr>
+<th>未见类</th>
+<th>模型如何识别</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>shoulder（肩膀）</strong></td>
+<td>模型从“arm、hand”等已见类学到人体部位的语义关系</td>
+<td>表明模型掌握了人体结构的上下文关系</td>
+</tr>
+<tr>
+<td><strong>skirt（裙子）</strong></td>
+<td>模型从“pants、shirt”等已见类泛化而来</td>
+<td>表明模型理解“服装类”的语义子空间</td>
+</tr>
+<tr>
+<td><strong>vegetation（植被）</strong></td>
+<td>模型从“tree、grass”等类推理出来</td>
+<td>显示模型能捕捉到自然环境的语义聚类</td>
+</tr>
+<tr>
+<td><strong>hat（帽子）</strong></td>
+<td>虽未见过，但从“head、hair”中学到“头部装饰”的关系</td>
+<td>展示语义嵌入的迁移能力</td>
+</tr>
+</tbody></table>
+<p>这些成功检测的结果通常有两个特点：</p>
+<ol>
+<li><strong>语义相近</strong>：unseen 类与 seen 类在 GloVe 向量空间中距离较近；</li>
+<li><strong>外观相似</strong>：视觉特征（颜色、纹理、形状）具有共性。</li>
+</ol>
+<p>这表明论文提出的视觉–语义嵌入确实学会了跨类推理（semantic transfer）。</p>
+<hr>
+<p>❌ 失败案例</p>
+<p>作者也展示了模型的错误预测，用于分析当前方法的局限性。</p>
+<table>
+<thead>
+<tr>
+<th>错误类型</th>
+<th>示例</th>
+<th>原因分析</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>语义混淆</strong></td>
+<td>把“zebra（斑马）”预测成“horse（马）”</td>
+<td>二者语义相近且外观极其相似，说明语义空间过度依赖视觉相似性</td>
+</tr>
+<tr>
+<td><strong>细粒度错误</strong></td>
+<td>“arm” 被识别为 “leg”；“table” 被识别为 “desk”</td>
+<td>模型缺乏细粒度区分能力，语义空间无法区分同类细分概念</td>
+</tr>
+<tr>
+<td><strong>背景干扰</strong></td>
+<td>“boat” 被误识别为 “car” 或 “train”</td>
+<td>复杂背景中的上下文干扰视觉特征</td>
+</tr>
+<tr>
+<td><strong>尺度问题</strong></td>
+<td>小目标（如“earring”）未检测出</td>
+<td>候选框生成器（EdgeBoxes）难以捕获极小目标</td>
+</tr>
+</tbody></table>
+<p>这些错误揭示了两个核心挑战：</p>
+<ol>
+<li><strong>语义嵌入的局限</strong>：词向量仅反映语义相似性，缺乏视觉差异建模；</li>
+<li><strong>检测框架的缺陷</strong>：EdgeBoxes 的 proposal 粒度固定，对小目标或重叠目标不敏感。</li>
+</ol>
+<hr>
+<p>🧠 三、Figure 3：不同模型可视化对比（LAB vs SB vs DSES）</p>
+<p>这部分可视化展示了三种不同模型（SB、LAB、DSES）的预测差异。</p>
+<p>🔹 (1) Static Background (SB)</p>
+<ul>
+<li>检测框较干净，漏检少；</li>
+<li>但对“未见类”的检测明显不足；</li>
+<li>很多未见物体（如“hat”、“book”）被错误标为“background”。</li>
+</ul>
+<p><strong>解释</strong>：SB 的背景嵌入是固定的 → 模型学会把所有未知语义当“非物体”，无法发现真正的 unseen 类。</p>
+<hr>
+<p>🔹 (2) Latent Assignment-Based (LAB)</p>
+<ul>
+<li>检测结果更加丰富；</li>
+<li>能发现一些原本被忽略的未见类；</li>
+<li>但也带来一些伪标签噪声（如误识别“shadow”为“car”）。</li>
+</ul>
+<p><strong>解释</strong>：LAB 通过迭代背景语义分配，使得模型“敢于尝试”更多语义匹配，因此召回提升，但精度略降。</p>
+<hr>
+<p>🔹 (3) DSES</p>
+<ul>
+<li>检测框数量与 LAB 接近；</li>
+<li>精度和语义一致性更高；</li>
+<li>能正确区分视觉上相似但语义不同的类（例如“zebra” vs “horse”）。</li>
+</ul>
+<p><strong>解释</strong>：DSES 通过外部类数据（OpenImages）稠密化语义空间，使语义距离的几何结构更加平滑，减少语义混淆。</p>
+<hr>
+<p>🌈 四、作者的观察总结</p>
+<p>作者从这些图像示例中归纳出以下重要观察：</p>
+<table>
+<thead>
+<tr>
+<th>观察</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>模型确实学到了跨语义迁移</td>
+<td>视觉特征能泛化到未见类语义向量</td>
+</tr>
+<tr>
+<td>背景处理方式显著影响检测质量</td>
+<td>SB 过度压制未见类，LAB 改善召回</td>
+</tr>
+<tr>
+<td>稠密语义嵌入减少语义误判</td>
+<td>DSES 缩短语义空间的“空洞距离”，提升泛化一致性</td>
+</tr>
+<tr>
+<td>模型仍易受视觉相似性干扰</td>
+<td>需要更细粒度的视觉差异建模</td>
+</tr>
+</tbody></table>
+<hr>
+<p>📘 五、这部分的学术意义</p>
+<p>这一节虽然只是展示几张图，却非常关键。<br> 它说明了：</p>
+<ol>
+<li>模型的<strong>可解释性（interpretability）</strong>；</li>
+<li>不同方法（SB&#x2F;LAB&#x2F;DSES）在图像层面的实际表现；</li>
+<li>零样本检测确实能在<strong>真实复杂场景</strong>中识别出未见类。</li>
+</ol>
+<p>这些可视化结果让论文的理论部分（语义嵌入、背景建模）变得更加可信。</p>
+<hr>
+<p>🧩 六、作者提出的后续改进方向</p>
+<p>在这一节的结尾，作者提出两个思考：</p>
+<ol>
+<li><strong>细粒度语义建模</strong>：<br> 当前模型依赖词向量（GloVe），但这种嵌入太粗糙。未来可使用 WordNet 层级结构或属性向量（attribute vectors）增强语义区分力。</li>
+<li><strong>开放词汇检测（Open-Vocabulary Detection）</strong>：<br> 本研究是该方向的早期探索。未来可以在更大词汇空间中，用文本描述或语言模型嵌入（如 BERT）实现真正的开放检测。</li>
+</ol>
+<hr>
+<p>🎓 七、教授总结</p>
+<blockquote>
+<p><strong>定性分析告诉我们：</strong></p>
+<ul>
+<li>模型不仅能“数值上”检测未见类，还能“视觉上”识别它们；</li>
+<li>语义迁移确实有效，但容易受视觉相似度干扰；</li>
+<li>不同的背景策略导致检测行为截然不同；</li>
+<li>语义稠密化（DSES）是最稳健的解决方案；</li>
+<li>这部分实验直接验证了零样本检测在真实世界中的可行性。</li>
+</ul>
+</blockquote>
+<hr>
+<h1 id="Conclusion（结论）"><a href="#Conclusion（结论）" class="headerlink" title="Conclusion（结论）"></a>Conclusion（结论）</h1><p>🌟 一、章节定位：总结整篇论文的贡献</p>
+<p>作者在开篇重申了本文的主题：</p>
+<blockquote>
+<p>“我们首次系统地研究了 <strong>Zero-Shot Object Detection (ZSD)</strong> 这一新问题。”</p>
+</blockquote>
+<p>这句话其实标志着论文的核心创新点——<br> 在此之前，**零样本学习（Zero-Shot Learning, ZSL）**主要应用于图像分类任务（Image Classification），而不是检测（Detection）。本文首次把这一理念扩展到目标检测中，使模型能够在未见过的类别上进行检测。</p>
+<hr>
+<p>🧠 二、主要贡献总结（Key Contributions）</p>
+<p>作者将研究工作总结为三个关键创新点：</p>
+<p><strong>1️⃣ 提出了全新的问题定义：Zero-Shot Object Detection (ZSD)</strong></p>
+<ul>
+<li>传统检测模型依赖大量有标注的训练样本，而现实中我们无法为所有类别都提供标注。</li>
+<li>作者定义了 <strong>ZSD</strong>：模型仅通过已见类（seen classes）的训练，就能检测未见类（unseen classes）的物体。</li>
+<li>这是一个更贴近现实世界的检测问题，因为新类别不断出现（例如新车型、新物种、新商品）。</li>
+</ul>
+<blockquote>
+<p>✅ <strong>意义：</strong><br> 将“零样本学习”从分类问题扩展到检测问题，为后续开放词汇检测（Open-Vocabulary Detection）奠定了基础。</p>
+</blockquote>
+<hr>
+<p><strong>2️⃣ 研究并提出了背景建模问题及解决方案</strong></p>
+<p>在 ZSD 中，<strong>背景（background）</strong> 的定义是一个核心挑战。<br> 传统检测器依靠“背景类”区分物体与非物体，但在 ZSD 中，“背景”可能包含未见类物体——这会导致训练时<strong>误把未见类学成“背景”</strong>。</p>
+<p>作者提出了两种背景感知模型：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>思想</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>SB (Static Background)</strong></td>
+<td>使用固定的背景嵌入向量，将所有非物体区域归为一类</td>
+<td>适合干净数据集（如 MSCOCO）</td>
+</tr>
+<tr>
+<td><strong>LAB (Latent Assignment-Based)</strong></td>
+<td>用 EM-like 迭代方法，为背景框动态分配伪标签（潜在类别）</td>
+<td>适合复杂场景（如 VisualGenome）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>✅ <strong>意义：</strong><br> 这是第一篇系统探讨“背景污染（background contamination）”的 ZSD 论文，<br> 并提出能有效缓解的建模方法（LAB）。</p>
+</blockquote>
+<hr>
+<p><strong>3️⃣ 提出了语义稠密化策略（DSES）以缓解语义稀疏问题</strong></p>
+<p>ZSD 依赖语义嵌入空间（如 GloVe 向量）来实现视觉–语义映射。<br> 然而，当训练类别太少时，这个语义空间会非常“稀疏”（semantic sparsity），导致模型泛化性差。</p>
+<p>为此，作者提出：</p>
+<blockquote>
+<p><strong>Densely Sampled Embedding Space (DSES)</strong><br> 利用外部数据集（如 OpenImages）引入更多语义相关类，以填补语义空间空白。</p>
+</blockquote>
+<p>实验表明：</p>
+<ul>
+<li>在类较少的 <strong>MSCOCO</strong> 上，DSES 提升 Recall@100 高达 +5%。</li>
+<li>在类丰富的 <strong>VisualGenome</strong> 上提升略小，但仍有稳定收益。</li>
+</ul>
+<blockquote>
+<p>✅ <strong>意义：</strong><br> 证明了语义空间的“密度”是零样本检测性能的关键影响因素。</p>
+</blockquote>
+<hr>
+<p>📊 三、实验发现总结（Findings Summary）</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>主要优势</th>
+<th>典型数据集表现</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Baseline</strong></td>
+<td>简单基准模型，可检测 seen 类</td>
+<td>最低 Recall</td>
+</tr>
+<tr>
+<td><strong>SB</strong></td>
+<td>背景干净时有效（COCO）</td>
+<td>Recall 提升 +2%</td>
+</tr>
+<tr>
+<td><strong>LAB</strong></td>
+<td>背景复杂时表现最佳（VG）</td>
+<td>Recall 提升 +0.2–0.3%</td>
+</tr>
+<tr>
+<td><strong>DSES</strong></td>
+<td>全局语义泛化最强</td>
+<td>Recall 提升 +5% (COCO)</td>
+</tr>
+</tbody></table>
+<p>此外：</p>
+<ul>
+<li>在 <strong>GZSD</strong>（Generalized ZSD） 场景中，DSES 模型在 seen&#x2F;unseen 上保持最平衡性能；</li>
+<li><strong>Recall@100</strong> 被证明是最合理的检测指标；</li>
+<li><strong>LAB 模型</strong> 能显著缓解“背景污染”现象；</li>
+<li><strong>DSES 模型</strong> 改善了 unseen 类检测与泛化能力。</li>
+</ul>
+<hr>
+<p>🧩 四、研究局限性（Limitations）</p>
+<p>作者在结论中非常诚实地指出了模型的局限性：</p>
+<ol>
+<li><strong>语义嵌入精度有限</strong><ul>
+<li>模型依赖词向量（GloVe），它只能表示语义相关性，但无法捕捉细粒度差异（如“horse” vs “zebra”）。</li>
+<li>这也是论文中出现混淆预测的根源。</li>
+</ul>
+</li>
+<li><strong>对背景伪标签依赖较强</strong><ul>
+<li>LAB 模型的伪标签可能带来噪声，尤其在语义空间稀疏时（MSCOCO）。</li>
+<li>没有高置信度筛选机制，容易错误扩展背景。</li>
+</ul>
+</li>
+<li><strong>未考虑层级语义结构</strong><ul>
+<li>类别间的层次关系（如 “vehicle → car → sedan”）未在语义空间中体现；</li>
+<li>未来可以结合 WordNet 层次结构或图神经网络（GNN）改进。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p>🔮 五、未来研究方向（Future Work）</p>
+<p>作者在最后提出了三个重要的未来方向：</p>
+<p><strong>1️⃣ 使用更强的语义表征模型</strong></p>
+<ul>
+<li>当前使用的 GloVe 词向量是静态的；</li>
+<li>未来可以使用上下文相关的语言模型（如 BERT、CLIP、GPT embedding）；</li>
+<li>这样模型能更准确地理解语义层级与上下文关系。</li>
+</ul>
+<blockquote>
+<p>💬 这直接启发了后来的 “Open-Vocabulary Detection” 和 “Vision-Language Models”。</p>
+</blockquote>
+<hr>
+<p><strong>2️⃣ 探索层次化或图结构语义空间</strong></p>
+<ul>
+<li>使用 <strong>WordNet 层级结构</strong> 或 <strong>语义图（Semantic Graph）</strong>；</li>
+<li>通过建模“父子类关系”，让模型理解“zebra 属于 animal”；</li>
+<li>有助于避免语义空间中“孤立未见类”的问题。</li>
+</ul>
+<hr>
+<p><strong>3️⃣ 结合语言描述（Textual Descriptions）进行多模态学习</strong></p>
+<ul>
+<li>除了词向量，还可使用句子级别描述（如“a horse with stripes is a zebra”）；</li>
+<li>将文本特征与视觉特征联合训练，可进一步提高未见类识别能力；</li>
+<li>这为后来 <strong>CLIP（2021）</strong> 等模型的发展奠定了思路。</li>
+</ul>
+<hr>
+<p>🎓 六、教授总结：论文的科学价值与地位</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>研究创新性</strong></td>
+<td>首次定义并系统研究 Zero-Shot Object Detection 问题</td>
+</tr>
+<tr>
+<td><strong>方法论贡献</strong></td>
+<td>提出两类背景建模方法（SB, LAB）与稠密语义采样策略（DSES）</td>
+</tr>
+<tr>
+<td><strong>实验验证</strong></td>
+<td>多数据集对比 + 消融分析 + 定性可视化</td>
+</tr>
+<tr>
+<td><strong>影响力</strong></td>
+<td>为后续开放词汇检测（OVD）与视觉-语言模型奠定方向</td>
+</tr>
+<tr>
+<td><strong>核心思想</strong></td>
+<td>通过视觉-语义映射让模型“理解”而非“记忆”类别</td>
+</tr>
+</tbody></table>
+<hr>
+<p>📘 七、延伸意义：从 ZSD → Open-Vocabulary Detection</p>
+<p>事实上，这篇论文的影响远超其发表时间。<br> 在后续几年中，许多视觉-语言模型（如 CLIP、ViLD、Detic）都<strong>直接继承了本文的思想</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>演进方向</th>
+<th>新增技术</th>
+<th>概念承袭自本文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ViLD (2021)</strong></td>
+<td>CLIP 语义嵌入 + 视觉检测</td>
+<td>继承 ZSD 的语义投影思想</td>
+</tr>
+<tr>
+<td><strong>Detic (2022)</strong></td>
+<td>文本描述监督 + 扩展类检测</td>
+<td>类似 DSES 的语义稠密化</td>
+</tr>
+<tr>
+<td><strong>GLIP (2022)</strong></td>
+<td>文本-视觉联合训练</td>
+<td>延伸 LAB 的语义赋值理念</td>
+</tr>
+<tr>
+<td><strong>Grounding DINO (2023)</strong></td>
+<td>开放词汇检测 + 匹配文本描述</td>
+<td>直接延续 ZSD 的评估思想</td>
+</tr>
+</tbody></table>
+<p>可以说，这篇论文是 “Open-Vocabulary Detection” 的奠基工作之一。</p>
+<hr>
+<p>非常好 👍<br> 下面我们来做论文 <strong>《Zero-Shot Object Detection》</strong> 的<strong>整篇总结（1–5章总复习版）</strong>。<br> 这相当于一次“教授式复盘讲解”——我将从整体框架、逻辑线、核心创新、实验结论到学术影响，系统地帮你整理出一份结构化复习笔记，适合用来写读书报告或做学术汇报。</p>
+<hr>
+<h1 id="🧩-论文总览：《Zero-Shot-Object-Detection》"><a href="#🧩-论文总览：《Zero-Shot-Object-Detection》" class="headerlink" title="🧩 论文总览：《Zero-Shot Object Detection》"></a>🧩 论文总览：《Zero-Shot Object Detection》</h1><p><strong>作者</strong>：Ankan Bansal, Karan Sikka, Gaurav Sharma, Rama Chellappa<br> <strong>会议</strong>：ECCV 2018<br> <strong>关键词</strong>：Zero-Shot Learning, Object Detection, Visual-Semantic Embedding, Background Modeling</p>
+<hr>
+<h2 id="🧠-一、研究背景与动机（Chapter-1-Introduction）"><a href="#🧠-一、研究背景与动机（Chapter-1-Introduction）" class="headerlink" title="🧠 一、研究背景与动机（Chapter 1: Introduction）"></a>🧠 一、研究背景与动机（Chapter 1: Introduction）</h2><h3 id="🌍-背景"><a href="#🌍-背景" class="headerlink" title="🌍 背景"></a>🌍 背景</h3><ul>
+<li>传统物体检测（如 Faster R-CNN、YOLO）依赖<strong>大量标注数据</strong>。</li>
+<li>现实中，新类别不断出现（如新车型、新物种），标注成本高昂。</li>
+<li>零样本学习（Zero-Shot Learning, ZSL）允许模型识别<strong>未见过的类别</strong>，通过<strong>语义嵌入</strong>（词向量、属性）实现知识迁移。</li>
+<li>但 ZSL 主要应用于<strong>图像分类</strong>，尚未解决<strong>检测</strong>（定位+分类）问题。</li>
+</ul>
+<h3 id="🎯-本文目标"><a href="#🎯-本文目标" class="headerlink" title="🎯 本文目标"></a>🎯 本文目标</h3><blockquote>
+<p>将零样本学习扩展到物体检测领域，提出 <strong>Zero-Shot Object Detection (ZSD)</strong> 任务。</p>
+</blockquote>
+<h3 id="⚠️-关键挑战"><a href="#⚠️-关键挑战" class="headerlink" title="⚠️ 关键挑战"></a>⚠️ 关键挑战</h3><ol>
+<li><strong>背景污染</strong>：未见类在训练集中会被错误标记为“背景”。</li>
+<li><strong>语义空间稀疏</strong>：训练类太少时，语义嵌入空间覆盖不全。</li>
+</ol>
+<hr>
+<h2 id="🧩-二、相关工作（Chapter-2-Related-Work）"><a href="#🧩-二、相关工作（Chapter-2-Related-Work）" class="headerlink" title="🧩 二、相关工作（Chapter 2: Related Work）"></a>🧩 二、相关工作（Chapter 2: Related Work）</h2><h3 id="🧱-涉及领域"><a href="#🧱-涉及领域" class="headerlink" title="🧱 涉及领域"></a>🧱 涉及领域</h3><ol>
+<li><strong>词嵌入（Word Embeddings）</strong>：如 word2vec、GloVe，用于建立类间语义关系。</li>
+<li><strong>零样本分类（ZSL）</strong>：基于视觉–语义对齐，将图像特征投影到语义空间。</li>
+<li><strong>物体检测（Object Detection）</strong>：R-CNN 系列等全监督方法。</li>
+<li><strong>多模态学习（Multi-Modal Learning）</strong>：将视觉和语言嵌入对齐。</li>
+</ol>
+<h3 id="✨-本文创新"><a href="#✨-本文创新" class="headerlink" title="✨ 本文创新"></a>✨ 本文创新</h3><blockquote>
+<p>与以往不同，本研究首次将<strong>视觉–语义映射</strong>引入检测框架，<br> 并系统分析了背景建模与语义稠密化在零样本检测中的作用。</p>
+</blockquote>
+<hr>
+<h2 id="⚙️-三、方法（Chapter-3-Approach）"><a href="#⚙️-三、方法（Chapter-3-Approach）" class="headerlink" title="⚙️ 三、方法（Chapter 3: Approach）"></a>⚙️ 三、方法（Chapter 3: Approach）</h2><p>整个方法分为三个部分：<strong>ZSD 基线模型 + 背景建模 + 语义稠密化。</strong></p>
+<h3 id="3-1-基线模型（Baseline-ZSD）"><a href="#3-1-基线模型（Baseline-ZSD）" class="headerlink" title="3.1 基线模型（Baseline ZSD）"></a>3.1 基线模型（Baseline ZSD）</h3><ul>
+<li>使用 Inception-ResNet v2 提取候选框特征；</li>
+<li>候选框投影到语义空间（GloVe 向量）；</li>
+<li>使用**最大间隔损失（max-margin loss）**确保真实类相似度高于其他类；</li>
+<li>测试时：计算与未见类语义向量的相似度，取最高者为预测类。</li>
+</ul>
+<p>$$<br>\hat{y_i} &#x3D; \arg\max_{j\in U} \cos(W_p φ(b_i), w_j)<br>$$</p>
+<hr>
+<h3 id="3-2-背景感知模型（Background-Aware-Models）"><a href="#3-2-背景感知模型（Background-Aware-Models）" class="headerlink" title="3.2 背景感知模型（Background-Aware Models）"></a>3.2 背景感知模型（Background-Aware Models）</h3><h4 id="a-SB-Static-Background"><a href="#a-SB-Static-Background" class="headerlink" title="(a) SB (Static Background)"></a>(a) <strong>SB (Static Background)</strong></h4><ul>
+<li>为背景定义一个固定嵌入向量。</li>
+<li>训练时，所有非物体区域都映射到该背景向量。</li>
+<li>简单有效，但会将未见类误学为背景。</li>
+</ul>
+<h4 id="b-LAB-Latent-Assignment-Based"><a href="#b-LAB-Latent-Assignment-Based" class="headerlink" title="(b) LAB (Latent Assignment-Based)"></a>(b) <strong>LAB (Latent Assignment-Based)</strong></h4><ul>
+<li>采用 EM-like 迭代训练：<ol>
+<li>先用当前模型预测背景框的语义标签；</li>
+<li>将高置信度伪标签加入训练；</li>
+<li>重复迭代更新模型。</li>
+</ol>
+</li>
+<li>背景被分解为多个语义相关的潜在类别，减少污染。</li>
+</ul>
+<hr>
+<h3 id="3-3-DSES-Densely-Sampled-Embedding-Space"><a href="#3-3-DSES-Densely-Sampled-Embedding-Space" class="headerlink" title="3.3 DSES (Densely Sampled Embedding Space)"></a>3.3 <strong>DSES (Densely Sampled Embedding Space)</strong></h3><ul>
+<li>通过引入外部数据集（OpenImages），增加语义空间密度；</li>
+<li>只使用不属于测试类的外部类别，避免信息泄漏；</li>
+<li>改善模型的语义泛化能力。</li>
+</ul>
+<hr>
+<h2 id="🧮-四、实验（Chapter-4）"><a href="#🧮-四、实验（Chapter-4）" class="headerlink" title="🧮 四、实验（Chapter 4）"></a>🧮 四、实验（Chapter 4）</h2><h3 id="4-1-实现细节"><a href="#4-1-实现细节" class="headerlink" title="4.1 实现细节"></a>4.1 实现细节</h3><ul>
+<li>候选框生成：EdgeBoxes</li>
+<li>Backbone：Inception-ResNet v2</li>
+<li>词向量：GloVe (300维)</li>
+<li>优化器：Adam</li>
+<li>主要指标：Recall@K (IoU≥0.5)</li>
+</ul>
+<hr>
+<h3 id="4-2-评估协议（Evaluation-Protocol）"><a href="#4-2-评估协议（Evaluation-Protocol）" class="headerlink" title="4.2 评估协议（Evaluation Protocol）"></a>4.2 评估协议（Evaluation Protocol）</h3><ol>
+<li><strong>ZSD</strong>：测试集中只包含未见类；指标 Recall@100。</li>
+<li><strong>GZSD</strong>（Generalized ZSD）：测试集含 seen+unseen；<ul>
+<li>指标：Recall_s、Recall_u、调和平均 HH。</li>
+</ul>
+</li>
+<li>使用 Recall 而非 mAP，因为 ZSD 置信度分布不稳定。</li>
+</ol>
+<hr>
+<h3 id="4-3-结果与讨论（Results-and-Discussion）"><a href="#4-3-结果与讨论（Results-and-Discussion）" class="headerlink" title="4.3 结果与讨论（Results and Discussion）"></a>4.3 结果与讨论（Results and Discussion）</h3><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>MSCOCO Recall@100</th>
+<th>VG Recall@100</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Baseline</td>
+<td>22.14</td>
+<td>5.19</td>
+</tr>
+<tr>
+<td>SB</td>
+<td>24.39</td>
+<td>4.09</td>
+</tr>
+<tr>
+<td>LAB</td>
+<td>20.52</td>
+<td><strong>5.40</strong></td>
+</tr>
+<tr>
+<td>DSES</td>
+<td><strong>27.19</strong></td>
+<td>4.75</td>
+</tr>
+</tbody></table>
+<h4 id="📌-分析："><a href="#📌-分析：" class="headerlink" title="📌 分析："></a>📌 分析：</h4><ul>
+<li><strong>MSCOCO</strong>：SB 最优（背景干净），DSES 提升最大（+5%）。</li>
+<li><strong>VG</strong>：LAB 最优（背景污染严重，潜在赋值有优势）。</li>
+</ul>
+<p><strong>在 GZSD 中：</strong><br> DSES 在 seen&#x2F;unseen 间最平衡，H-Mean 最高。</p>
+<hr>
+<h3 id="4-5-消融实验（Ablation-Studies）"><a href="#4-5-消融实验（Ablation-Studies）" class="headerlink" title="4.5 消融实验（Ablation Studies）"></a>4.5 消融实验（Ablation Studies）</h3><table>
+<thead>
+<tr>
+<th>变量</th>
+<th>测试内容</th>
+<th>主要结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>K 值</td>
+<td>50&#x2F;100&#x2F;200&#x2F;All</td>
+<td>K&#x3D;100 最稳，平衡召回与噪声</td>
+</tr>
+<tr>
+<td>IoU 阈值</td>
+<td>0.4–0.6</td>
+<td>模型性能稳定，LAB 稍优</td>
+</tr>
+<tr>
+<td>背景方式</td>
+<td>Baseline &#x2F; SB &#x2F; LAB</td>
+<td>SB 适合干净集，LAB 适合复杂集</td>
+</tr>
+<tr>
+<td>语义稠密化</td>
+<td>加入 OpenImages</td>
+<td>Recall 提升显著（+5%）</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="4-6-定性结果（Qualitative-Results）"><a href="#4-6-定性结果（Qualitative-Results）" class="headerlink" title="4.6 定性结果（Qualitative Results）"></a>4.6 定性结果（Qualitative Results）</h3><ul>
+<li>成功检测 unseen 类如：<ul>
+<li>“shoulder”、“skirt”、“vegetation”、“hat”；</li>
+</ul>
+</li>
+<li>失败案例：<ul>
+<li>“zebra→horse”、“arm→leg”；</li>
+</ul>
+</li>
+<li>原因：语义混淆 + 视觉相似；</li>
+<li>LAB 减少背景误判，DSES 提升语义泛化。</li>
+</ul>
+<hr>
+<h2 id="🧩-五、结论（Chapter-5-Conclusion）"><a href="#🧩-五、结论（Chapter-5-Conclusion）" class="headerlink" title="🧩 五、结论（Chapter 5: Conclusion）"></a>🧩 五、结论（Chapter 5: Conclusion）</h2><h3 id="📘-主要结论"><a href="#📘-主要结论" class="headerlink" title="📘 主要结论"></a>📘 主要结论</h3><ol>
+<li>首次系统提出 <strong>Zero-Shot Object Detection (ZSD)</strong>；</li>
+<li>提出两种背景建模策略（SB、LAB）；</li>
+<li>提出 <strong>DSES</strong> 缓解语义稀疏；</li>
+<li>通过 MSCOCO &amp; VisualGenome 实验验证有效性；</li>
+<li>指标 Recall@K 与 H-Mean 成为 ZSD 标准评估方式。</li>
+</ol>
+<h3 id="⚠️-局限性"><a href="#⚠️-局限性" class="headerlink" title="⚠️ 局限性"></a>⚠️ 局限性</h3><ul>
+<li>词向量过于粗糙，缺乏细粒度区分；</li>
+<li>LAB 伪标签存在噪声；</li>
+<li>未建模类别层次结构（Hierarchy）。</li>
+</ul>
+<h3 id="🔮-未来方向"><a href="#🔮-未来方向" class="headerlink" title="🔮 未来方向"></a>🔮 未来方向</h3><ul>
+<li>使用上下文语言模型（如 BERT、CLIP）；</li>
+<li>引入层次化语义图（WordNet&#x2F;GNN）；</li>
+<li>多模态描述学习（图像 + 文本）；</li>
+<li>推动**开放词汇检测（Open-Vocabulary Detection）**的发展。</li>
+</ul>
+<hr>
+<h2 id="🧠-六、整篇逻辑脉络总结图"><a href="#🧠-六、整篇逻辑脉络总结图" class="headerlink" title="🧠 六、整篇逻辑脉络总结图"></a>🧠 六、整篇逻辑脉络总结图</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">    ┌────────────────────────────┐</span><br><span class="line">    │  Zero-Shot Object Detection│</span><br><span class="line">    └────────────┬───────────────┘</span><br><span class="line">                 │</span><br><span class="line">       ┌─────────┴─────────┐</span><br><span class="line">       │                   │</span><br><span class="line">  背景建模             语义稠密化</span><br><span class="line"> (SB / LAB)                (DSES)</span><br><span class="line">       │                   │</span><br><span class="line">SB：静态背景        DSES：扩展外部类</span><br><span class="line">LAB：迭代伪标签     减少语义稀疏</span><br><span class="line">       │                   │</span><br><span class="line">       └─────────┬─────────┘</span><br><span class="line">                 │</span><br><span class="line">             性能评估</span><br><span class="line"> ┌──────────────────────────┐</span><br><span class="line"> │ Recall@K (ZSD)           │</span><br><span class="line"> │ H-Mean (GZSD)            │</span><br><span class="line"> └──────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🎓-七、教授总结（核心洞见）"><a href="#🎓-七、教授总结（核心洞见）" class="headerlink" title="🎓 七、教授总结（核心洞见）"></a>🎓 七、教授总结（核心洞见）</h2><table>
+<thead>
+<tr>
+<th>主题</th>
+<th>作者洞见</th>
+<th>学术价值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>任务创新</strong></td>
+<td>将 ZSL 从分类扩展到检测</td>
+<td>开启 Open-Vocabulary Detection 方向</td>
+</tr>
+<tr>
+<td><strong>核心挑战</strong></td>
+<td>背景污染 + 语义稀疏</td>
+<td>指明开放检测的关键瓶颈</td>
+</tr>
+<tr>
+<td><strong>模型贡献</strong></td>
+<td>SB、LAB、DSES 三种机制</td>
+<td>提供实用方案与思路</td>
+</tr>
+<tr>
+<td><strong>实验分析</strong></td>
+<td>多指标、多数据集、消融验证</td>
+<td>研究方法严谨</td>
+</tr>
+<tr>
+<td><strong>学术影响</strong></td>
+<td>对 ViLD、Detic、GLIP 等模型有直接启发</td>
+<td>奠基性工作</td>
+</tr>
+</tbody></table>
+<hr>
+<p>✅ <strong>一句话总结整篇论文：</strong></p>
+<blockquote>
+<p>Bansal 等人首次让“检测器”具备了<strong>语义迁移能力</strong>，<br> 能够在从未见过的新类别上实现有效检测。<br> 它是从“封闭世界检测”迈向“开放世界视觉理解”的重要一步。</p>
+</blockquote>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a></div><div class="post-share"><div class="social-share" data-image="/blog/image/5268d877a2a04864b36b4961ab793f4f.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/blog/2025/10/17/DeViSE-A-Deep-Visual-Semantic-Embedding-Model/" title="DeViSE: A Deep Visual-Semantic Embedding Model"><img class="cover" src="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">DeViSE: A Deep Visual-Semantic Embedding Model</div></div><div class="info-2"><div class="info-item-1">好的，接下来我将以教授讲授研究生课程的口吻，系统、深入地为你讲解这篇经典论文—— Frome et al., “DeViSE: A Deep Visual-Semantic Embedding Model” (NIPS 2013)。 我会假设你此前对计算机视觉与深度学习领域尚不熟悉，因此讲解会从背景原理讲起，一步步解析论文的设计思路、技术实现、实验方法和学术意义。  一、研究背景与问题提出在 2013 年以前，主流的视觉识别方法主要是基于深度卷积神经网络（CNN）的分类模型。例如 Krizhevsky 等人在同年提出的 AlexNet，在 ImageNet 图像识别比赛中大获成功。 这类模型通常在一个固定的、离散的标签集合上训练（如 1000 个类别），并使用一个 softmax 输出层对每张图片进行分类。 然而，这种传统方法有两大局限性：  扩展性差（Scalability）： 随着类别数量的增加（例如从 1000 增加到 20,000），需要的标注图像数量呈指数级增长，获取代价极高。 语义隔离（Semantic Isolation）：...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2025/10/17/DeViSE-A-Deep-Visual-Semantic-Embedding-Model/" title="DeViSE: A Deep Visual-Semantic Embedding Model"><img class="cover" src="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-10-17</div><div class="info-item-2">DeViSE: A Deep Visual-Semantic Embedding Model</div></div><div class="info-2"><div class="info-item-1">好的，接下来我将以教授讲授研究生课程的口吻，系统、深入地为你讲解这篇经典论文—— Frome et al., “DeViSE: A Deep Visual-Semantic Embedding Model” (NIPS 2013)。 我会假设你此前对计算机视觉与深度学习领域尚不熟悉，因此讲解会从背景原理讲起，一步步解析论文的设计思路、技术实现、实验方法和学术意义。  一、研究背景与问题提出在 2013 年以前，主流的视觉识别方法主要是基于深度卷积神经网络（CNN）的分类模型。例如 Krizhevsky 等人在同年提出的 AlexNet，在 ImageNet 图像识别比赛中大获成功。 这类模型通常在一个固定的、离散的标签集合上训练（如 1000 个类别），并使用一个 softmax 输出层对每张图片进行分类。 然而，这种传统方法有两大局限性：  扩展性差（Scalability）： 随着类别数量的增加（例如从 1000 增加到 20,000），需要的标注图像数量呈指数级增长，获取代价极高。 语义隔离（Semantic Isolation）：...</div></div></div></a><a class="pagination-related" href="/blog/2025/02/27/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" title="深度学习相关知识"><img class="cover" src="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-27</div><div class="info-item-2">深度学习相关知识</div></div><div class="info-2"><div class="info-item-1">Batch Normalization（批量归一化） 和 Layer Normalization（层归一化） 1. 核心概念对比Batch Normalization (BN) 归一化方向：对 同一特征维度 跨所有样本和空间位置归一化。  核心公式： 假设输入张量形状为 (N, C, H, W)（Batch Size, Channels, Height, Width），则对每个通道 c 计算均值和方差：$$\mu_c &#x3D; \frac{1}{N \cdot H \cdot W} \sum_{n&#x3D;1}^N \sum_{h&#x3D;1}^H \sum_{w&#x3D;1}^W x_{n,c,h,w}, \quad \sigma_c^2 &#x3D; \frac{1}{N \cdot H \cdot W} \sum_{n&#x3D;1}^N \sum_{h&#x3D;1}^H \sum_{w&#x3D;1}^W (x_{n,c,h,w} - \mu_c)^2$$  适用场景：图像处理（CNN）、固定长度的结构化数据。   Layer Normalization...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E8%83%8C%E6%99%AF%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">问题背景：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%B6%E6%A0%B7%E6%9C%AC%E5%AD%A6%E4%B9%A0%EF%BC%88Zero-Shot-Learning-ZSL%EF%BC%89%E7%9A%84%E5%87%BA%E7%8E%B0"><span class="toc-number">1.2.</span> <span class="toc-text">零样本学习（Zero-Shot Learning, ZSL）的出现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%B6%E6%A0%B7%E6%9C%AC%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="toc-number">1.3.</span> <span class="toc-text">零样本学习与物体检测的差异</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B%E7%9A%84%E6%8C%91%E6%88%98"><span class="toc-number">1.4.</span> <span class="toc-text">物体检测的挑战</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E7%A0%94%E7%A9%B6%E7%9A%84%E7%9B%AE%E6%A0%87%E4%B8%8E%E8%B4%A1%E7%8C%AE"><span class="toc-number">1.5.</span> <span class="toc-text">本研究的目标与贡献</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Related-Work"><span class="toc-number">2.</span> <span class="toc-text">Related Work</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-Word-Embeddings%EF%BC%88%E8%AF%8D%E5%90%91%E9%87%8F%E5%B5%8C%E5%85%A5%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">🧩  Word Embeddings（词向量嵌入）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%B3%EF%B8%8F-%E8%83%8C%E6%99%AF"><span class="toc-number">2.1.1.</span> <span class="toc-text">✳️ 背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%B3%EF%B8%8F-%E5%9C%A8%E6%9C%AC%E6%96%87%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">2.1.2.</span> <span class="toc-text">✳️ 在本文中的作用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%96%BC%EF%B8%8F-2-2-Zero-Shot-Image-Classification%EF%BC%88%E9%9B%B6%E6%A0%B7%E6%9C%AC%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">🖼️ 2.2 Zero-Shot Image Classification（零样本图像分类）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%B3%EF%B8%8F-%E6%97%A9%E6%9C%9F%E6%96%B9%E6%B3%95"><span class="toc-number">2.2.1.</span> <span class="toc-text">✳️ 早期方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%B3%EF%B8%8F-%E6%B7%B1%E5%BA%A6%E8%A7%86%E8%A7%89-%E8%AF%AD%E4%B9%89%E6%96%B9%E6%B3%95"><span class="toc-number">2.2.2.</span> <span class="toc-text">✳️ 深度视觉-语义方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%B3%EF%B8%8F-%E6%9C%AC%E6%96%87%E7%9A%84%E5%BB%B6%E4%BC%B8"><span class="toc-number">2.2.3.</span> <span class="toc-text">✳️ 本文的延伸</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8E%AF-2-3-Object-Detection%EF%BC%88%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">🎯 2.3 Object Detection（物体检测）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%B3%EF%B8%8F-%E6%97%A9%E6%9C%9F%E6%96%B9%E6%B3%95-1"><span class="toc-number">2.3.1.</span> <span class="toc-text">✳️ 早期方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%B3%EF%B8%8F-%E4%B8%80%E9%98%B6%E6%AE%B5%E6%A3%80%E6%B5%8B%E5%99%A8"><span class="toc-number">2.3.2.</span> <span class="toc-text">✳️ 一阶段检测器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%B3%EF%B8%8F-%E4%B8%8E%E6%9C%AC%E6%96%87%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">2.3.3.</span> <span class="toc-text">✳️ 与本文的关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%80-2-4-Multi-Modal-Learning%EF%BC%88%E5%A4%9A%E6%A8%A1%E6%80%81%E5%AD%A6%E4%B9%A0%EF%BC%89"><span class="toc-number">2.4.</span> <span class="toc-text">🔀 2.4 Multi-Modal Learning（多模态学习）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%B3%EF%B8%8F-%E7%9B%B8%E5%85%B3%E7%A0%94%E7%A9%B6"><span class="toc-number">2.4.1.</span> <span class="toc-text">✳️ 相关研究</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%B3%EF%B8%8F-%E4%B8%8E%E6%9C%AC%E6%96%87%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">2.4.2.</span> <span class="toc-text">✳️ 与本文的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9A%96%EF%B8%8F-2-5-Comparison-with-Recent-ZSD-Works%EF%BC%88%E4%B8%8E%E5%90%8C%E6%9C%9F%E5%B7%A5%E4%BD%9C%E7%9A%84%E6%AF%94%E8%BE%83%EF%BC%89"><span class="toc-number">2.5.</span> <span class="toc-text">⚖️ 2.5 Comparison with Recent ZSD Works（与同期工作的比较）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%B3%EF%B8%8F-%E6%9C%AC%E6%96%87%E7%9A%84%E7%8B%AC%E7%89%B9%E6%80%A7"><span class="toc-number">2.5.1.</span> <span class="toc-text">✳️ 本文的独特性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%9A-%E5%B0%8F%E7%BB%93"><span class="toc-number">2.6.</span> <span class="toc-text">📚 小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Approach"><span class="toc-number">3.</span> <span class="toc-text">Approach</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8C%9F-3-1-Baseline-Zero-Shot-Detection-ZSD"><span class="toc-number">3.1.</span> <span class="toc-text">🌟 3.1 Baseline Zero-Shot Detection (ZSD)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A9-%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF"><span class="toc-number">3.1.1.</span> <span class="toc-text">🧩 基本思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9A%99%EF%B8%8F-%E6%95%B0%E6%8D%AE%E8%AE%BE%E5%AE%9A%E4%B8%8E%E7%AC%A6%E5%8F%B7%E8%AF%B4%E6%98%8E"><span class="toc-number">3.1.2.</span> <span class="toc-text">⚙️ 数据设定与符号说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A0-%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84%EF%BC%9A%E8%A7%86%E8%A7%89%E2%80%94%E8%AF%AD%E4%B9%89%E5%B5%8C%E5%85%A5"><span class="toc-number">3.1.3.</span> <span class="toc-text">🧠 模型结构：视觉—语义嵌入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9A%96%EF%B8%8F-%E7%9B%B8%E4%BC%BC%E5%BA%A6%E4%B8%8E%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-number">3.1.4.</span> <span class="toc-text">⚖️ 相似度与损失函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-number">3.1.4.1.</span> <span class="toc-text">总结：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%8D-%E6%B5%8B%E8%AF%95%E9%98%B6%E6%AE%B5%EF%BC%88Zero-Shot-Detection%EF%BC%89"><span class="toc-number">3.1.5.</span> <span class="toc-text">🔍 测试阶段（Zero-Shot Detection）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E8%A7%A3%E9%87%8A%EF%BC%9A"><span class="toc-number">3.1.5.1.</span> <span class="toc-text">变量解释：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A-1"><span class="toc-number">3.1.5.2.</span> <span class="toc-text">总结：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9A%A0%EF%B8%8F-%E9%97%AE%E9%A2%98%E4%B8%80%EF%BC%9A%E8%83%8C%E6%99%AF%E7%B1%BB%E7%9A%84%E5%9B%B0%E5%A2%83"><span class="toc-number">3.1.6.</span> <span class="toc-text">⚠️ 问题一：背景类的困境</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8C%8C-Background-Aware-Zero-Shot-Detection"><span class="toc-number">3.2.</span> <span class="toc-text">🌌  Background-Aware Zero-Shot Detection</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%B1-1-Static-Background-SB-Model-%E2%80%94-%E9%9D%99%E6%80%81%E8%83%8C%E6%99%AF%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.2.1.</span> <span class="toc-text">🧱 (1) Static Background (SB) Model — 静态背景模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%B9-%E6%80%9D%E8%B7%AF%EF%BC%9A"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">🔹 思路：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%B9-%E4%BC%98%E7%82%B9%EF%BC%9A"><span class="toc-number">3.2.1.2.</span> <span class="toc-text">🔹 优点：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%B9-%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="toc-number">3.2.1.3.</span> <span class="toc-text">🔹 缺点：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%8C%A0-2-Latent-Assignment-Based-LAB-Model-%E2%80%94-%E6%BD%9C%E5%9C%A8%E8%B5%8B%E5%80%BC%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.2.2.</span> <span class="toc-text">🌠 (2) Latent Assignment-Based (LAB) Model — 潜在赋值模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%B9-%E6%80%9D%E6%83%B3%EF%BC%9A"><span class="toc-number">3.2.2.1.</span> <span class="toc-text">🔹 思想：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%AA%90-3-3-Densely-Sampled-Embedding-Space-DSES"><span class="toc-number">3.3.</span> <span class="toc-text">🪐 3.3 Densely Sampled Embedding Space (DSES)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%9A-%E5%B0%8F%E7%BB%93%EF%BC%9A%E8%BF%99%E4%B8%80%E7%AB%A0%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="toc-number">3.4.</span> <span class="toc-text">🔚 小结：这一章的核心思想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8C%9F-%E7%AC%AC4%E7%AB%A0-Experiments%EF%BC%88%E5%AE%9E%E9%AA%8C%EF%BC%89"><span class="toc-number">3.5.</span> <span class="toc-text">🌟 第4章 Experiments（实验）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-%E6%95%B0%E6%8D%AE%E9%9B%86%E4%BB%8B%E7%BB%8D%E4%B8%8E%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.6.</span> <span class="toc-text">🧩  数据集介绍与实验设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%AE-%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82%EF%BC%88Implementation-Details%EF%BC%89"><span class="toc-number">3.7.</span> <span class="toc-text">🧮 实现细节（Implementation Details）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Evaluation-Protocol%EF%BC%88%E8%AF%84%E4%BC%B0%E5%8D%8F%E8%AE%AE%EF%BC%89"><span class="toc-number">3.8.</span> <span class="toc-text">Evaluation Protocol（评估协议）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E7%94%A8-mAP%EF%BC%9F"><span class="toc-number">3.8.0.1.</span> <span class="toc-text">为什么不用 mAP？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Recall-K-%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">3.8.0.2.</span> <span class="toc-text">Recall@K 的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89-K-100%EF%BC%9F"><span class="toc-number">3.8.0.3.</span> <span class="toc-text">为什么选 K&#x3D;100？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Results-and-Discussion%EF%BC%88%E7%BB%93%E6%9E%9C%E4%B8%8E%E8%AE%A8%E8%AE%BA%EF%BC%89"><span class="toc-number">3.9.</span> <span class="toc-text">Results and Discussion（结果与讨论）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ablation-Studies%EF%BC%88%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C%EF%BC%89"><span class="toc-number">3.10.</span> <span class="toc-text">Ablation Studies（消融实验）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Qualitative-Results%EF%BC%88%E5%AE%9A%E6%80%A7%E7%BB%93%E6%9E%9C%EF%BC%89"><span class="toc-number">3.11.</span> <span class="toc-text">Qualitative Results（定性结果）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Conclusion%EF%BC%88%E7%BB%93%E8%AE%BA%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">Conclusion（结论）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%F0%9F%A7%A9-%E8%AE%BA%E6%96%87%E6%80%BB%E8%A7%88%EF%BC%9A%E3%80%8AZero-Shot-Object-Detection%E3%80%8B"><span class="toc-number">5.</span> <span class="toc-text">🧩 论文总览：《Zero-Shot Object Detection》</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E4%B8%80%E3%80%81%E7%A0%94%E7%A9%B6%E8%83%8C%E6%99%AF%E4%B8%8E%E5%8A%A8%E6%9C%BA%EF%BC%88Chapter-1-Introduction%EF%BC%89"><span class="toc-number">5.1.</span> <span class="toc-text">🧠 一、研究背景与动机（Chapter 1: Introduction）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%8C%8D-%E8%83%8C%E6%99%AF"><span class="toc-number">5.1.1.</span> <span class="toc-text">🌍 背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%8E%AF-%E6%9C%AC%E6%96%87%E7%9B%AE%E6%A0%87"><span class="toc-number">5.1.2.</span> <span class="toc-text">🎯 本文目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9A%A0%EF%B8%8F-%E5%85%B3%E9%94%AE%E6%8C%91%E6%88%98"><span class="toc-number">5.1.3.</span> <span class="toc-text">⚠️ 关键挑战</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-%E4%BA%8C%E3%80%81%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C%EF%BC%88Chapter-2-Related-Work%EF%BC%89"><span class="toc-number">5.2.</span> <span class="toc-text">🧩 二、相关工作（Chapter 2: Related Work）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%B1-%E6%B6%89%E5%8F%8A%E9%A2%86%E5%9F%9F"><span class="toc-number">5.2.1.</span> <span class="toc-text">🧱 涉及领域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%A8-%E6%9C%AC%E6%96%87%E5%88%9B%E6%96%B0"><span class="toc-number">5.2.2.</span> <span class="toc-text">✨ 本文创新</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9A%99%EF%B8%8F-%E4%B8%89%E3%80%81%E6%96%B9%E6%B3%95%EF%BC%88Chapter-3-Approach%EF%BC%89"><span class="toc-number">5.3.</span> <span class="toc-text">⚙️ 三、方法（Chapter 3: Approach）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%9F%BA%E7%BA%BF%E6%A8%A1%E5%9E%8B%EF%BC%88Baseline-ZSD%EF%BC%89"><span class="toc-number">5.3.1.</span> <span class="toc-text">3.1 基线模型（Baseline ZSD）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E8%83%8C%E6%99%AF%E6%84%9F%E7%9F%A5%E6%A8%A1%E5%9E%8B%EF%BC%88Background-Aware-Models%EF%BC%89"><span class="toc-number">5.3.2.</span> <span class="toc-text">3.2 背景感知模型（Background-Aware Models）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-SB-Static-Background"><span class="toc-number">5.3.2.1.</span> <span class="toc-text">(a) SB (Static Background)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-LAB-Latent-Assignment-Based"><span class="toc-number">5.3.2.2.</span> <span class="toc-text">(b) LAB (Latent Assignment-Based)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-DSES-Densely-Sampled-Embedding-Space"><span class="toc-number">5.3.3.</span> <span class="toc-text">3.3 DSES (Densely Sampled Embedding Space)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%AE-%E5%9B%9B%E3%80%81%E5%AE%9E%E9%AA%8C%EF%BC%88Chapter-4%EF%BC%89"><span class="toc-number">5.4.</span> <span class="toc-text">🧮 四、实验（Chapter 4）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82"><span class="toc-number">5.4.1.</span> <span class="toc-text">4.1 实现细节</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E8%AF%84%E4%BC%B0%E5%8D%8F%E8%AE%AE%EF%BC%88Evaluation-Protocol%EF%BC%89"><span class="toc-number">5.4.2.</span> <span class="toc-text">4.2 评估协议（Evaluation Protocol）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E7%BB%93%E6%9E%9C%E4%B8%8E%E8%AE%A8%E8%AE%BA%EF%BC%88Results-and-Discussion%EF%BC%89"><span class="toc-number">5.4.3.</span> <span class="toc-text">4.3 结果与讨论（Results and Discussion）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%93%8C-%E5%88%86%E6%9E%90%EF%BC%9A"><span class="toc-number">5.4.3.1.</span> <span class="toc-text">📌 分析：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C%EF%BC%88Ablation-Studies%EF%BC%89"><span class="toc-number">5.4.4.</span> <span class="toc-text">4.5 消融实验（Ablation Studies）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6-%E5%AE%9A%E6%80%A7%E7%BB%93%E6%9E%9C%EF%BC%88Qualitative-Results%EF%BC%89"><span class="toc-number">5.4.5.</span> <span class="toc-text">4.6 定性结果（Qualitative Results）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-%E4%BA%94%E3%80%81%E7%BB%93%E8%AE%BA%EF%BC%88Chapter-5-Conclusion%EF%BC%89"><span class="toc-number">5.5.</span> <span class="toc-text">🧩 五、结论（Chapter 5: Conclusion）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%98-%E4%B8%BB%E8%A6%81%E7%BB%93%E8%AE%BA"><span class="toc-number">5.5.1.</span> <span class="toc-text">📘 主要结论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9A%A0%EF%B8%8F-%E5%B1%80%E9%99%90%E6%80%A7"><span class="toc-number">5.5.2.</span> <span class="toc-text">⚠️ 局限性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%AE-%E6%9C%AA%E6%9D%A5%E6%96%B9%E5%90%91"><span class="toc-number">5.5.3.</span> <span class="toc-text">🔮 未来方向</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%85%AD%E3%80%81%E6%95%B4%E7%AF%87%E9%80%BB%E8%BE%91%E8%84%89%E7%BB%9C%E6%80%BB%E7%BB%93%E5%9B%BE"><span class="toc-number">5.6.</span> <span class="toc-text">🧠 六、整篇逻辑脉络总结图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8E%93-%E4%B8%83%E3%80%81%E6%95%99%E6%8E%88%E6%80%BB%E7%BB%93%EF%BC%88%E6%A0%B8%E5%BF%83%E6%B4%9E%E8%A7%81%EF%BC%89"><span class="toc-number">5.7.</span> <span class="toc-text">🎓 七、教授总结（核心洞见）</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/17/Zero-Shot-Object-Detection/" title="Zero-Shot Object Detection"><img src="/blog/image/5268d877a2a04864b36b4961ab793f4f.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Zero-Shot Object Detection"/></a><div class="content"><a class="title" href="/blog/2025/10/17/Zero-Shot-Object-Detection/" title="Zero-Shot Object Detection">Zero-Shot Object Detection</a><time datetime="2025-10-17T10:22:18.000Z" title="发表于 2025-10-17 18:22:18">2025-10-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/17/DeViSE-A-Deep-Visual-Semantic-Embedding-Model/" title="DeViSE: A Deep Visual-Semantic Embedding Model"><img src="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="DeViSE: A Deep Visual-Semantic Embedding Model"/></a><div class="content"><a class="title" href="/blog/2025/10/17/DeViSE-A-Deep-Visual-Semantic-Embedding-Model/" title="DeViSE: A Deep Visual-Semantic Embedding Model">DeViSE: A Deep Visual-Semantic Embedding Model</a><time datetime="2025-10-17T06:20:10.000Z" title="发表于 2025-10-17 14:20:10">2025-10-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2025/09/23/%E5%B0%8F%E6%A0%B7%E6%9C%AC%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" title="小样本目标检测">小样本目标检测</a><time datetime="2025-09-23T08:06:54.000Z" title="发表于 2025-09-23 16:06:54">2025-09-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2025/09/17/keywords%E9%9B%86%E5%90%88/" title="keywords集合">keywords集合</a><time datetime="2025-09-17T01:27:17.000Z" title="发表于 2025-09-17 09:27:17">2025-09-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2025/09/17/%E7%A0%94%E7%A9%B6%E6%96%B9%E5%90%91%E6%80%BB%E7%BB%93%E8%A7%84%E5%88%92/" title="研究方向总结规划">研究方向总结规划</a><time datetime="2025-09-17T01:17:32.000Z" title="发表于 2025-09-17 09:17:32">2025-09-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script async data-pjax src="{&quot;site_uv&quot;:true,&quot;site_pv&quot;:true,&quot;page_pv&quot;:true}"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>

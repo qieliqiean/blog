@@ -1,0 +1,516 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>DeViSE: A Deep Visual-Semantic Embedding Model | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="好的，接下来我将以教授讲授研究生课程的口吻，系统、深入地为你讲解这篇经典论文—— Frome et al., “DeViSE: A Deep Visual-Semantic Embedding Model” (NIPS 2013)。 我会假设你此前对计算机视觉与深度学习领域尚不熟悉，因此讲解会从背景原理讲起，一步步解析论文的设计思路、技术实现、实验方法和学术意义。  一、研究背景与问题提出在 20">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DeViSE: A Deep Visual-Semantic Embedding Model">
+<meta property="og:url" content="https://qieliqiean.github.io/blog/2025/10/17/DeViSE-A-Deep-Visual-Semantic-Embedding-Model/index.html">
+<meta property="og:site_name" content="且离且安的碎碎念">
+<meta property="og:description" content="好的，接下来我将以教授讲授研究生课程的口吻，系统、深入地为你讲解这篇经典论文—— Frome et al., “DeViSE: A Deep Visual-Semantic Embedding Model” (NIPS 2013)。 我会假设你此前对计算机视觉与深度学习领域尚不熟悉，因此讲解会从背景原理讲起，一步步解析论文的设计思路、技术实现、实验方法和学术意义。  一、研究背景与问题提出在 20">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qieliqiean.github.io/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png">
+<meta property="article:published_time" content="2025-10-17T06:20:10.000Z">
+<meta property="article:modified_time" content="2025-10-17T08:54:22.763Z">
+<meta property="article:author" content="lian">
+<meta property="article:tag" content="深度学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qieliqiean.github.io/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "DeViSE: A Deep Visual-Semantic Embedding Model",
+  "url": "https://qieliqiean.github.io/blog/2025/10/17/DeViSE-A-Deep-Visual-Semantic-Embedding-Model/",
+  "image": "https://qieliqiean.github.io/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png",
+  "datePublished": "2025-10-17T06:20:10.000Z",
+  "dateModified": "2025-10-17T08:54:22.763Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "lian",
+      "url": "https://qieliqiean.github.io/blog/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/2025/10/17/DeViSE-A-Deep-Visual-Semantic-Embedding-Model/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: {"path":"/blog/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'DeViSE: A Deep Visual-Semantic Embedding Model',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/image/2aa2662f-d453-4a09-8890-87440bd087b8.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">DeViSE: A Deep Visual-Semantic Embedding Model</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">DeViSE: A Deep Visual-Semantic Embedding Model</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-10-17T06:20:10.000Z" title="发表于 2025-10-17 14:20:10">2025-10-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-10-17T08:54:22.763Z" title="更新于 2025-10-17 16:54:22">2025-10-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E9%9B%B6%E6%A0%B7%E6%9C%AC%E6%A3%80%E6%B5%8B/">零样本检测</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">3.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>好的，接下来我将以<strong>教授讲授研究生课程</strong>的口吻，系统、深入地为你讲解这篇经典论文——<br> <strong>Frome et al., “DeViSE: A Deep Visual-Semantic Embedding Model” (NIPS 2013)</strong>。<br> 我会假设你此前对计算机视觉与深度学习领域尚不熟悉，因此讲解会从背景原理讲起，一步步解析论文的设计思路、技术实现、实验方法和学术意义。</p>
+<hr>
+<h2 id="一、研究背景与问题提出"><a href="#一、研究背景与问题提出" class="headerlink" title="一、研究背景与问题提出"></a>一、研究背景与问题提出</h2><p>在 2013 年以前，主流的视觉识别方法主要是基于深度卷积神经网络（CNN）的分类模型。例如 Krizhevsky 等人在同年提出的 <strong>AlexNet</strong>，在 ImageNet 图像识别比赛中大获成功。<br> 这类模型通常在一个固定的、离散的标签集合上训练（如 1000 个类别），并使用一个 softmax 输出层对每张图片进行分类。</p>
+<p>然而，这种传统方法有两大局限性：</p>
+<ol>
+<li><strong>扩展性差（Scalability）</strong>：<br> 随着类别数量的增加（例如从 1000 增加到 20,000），需要的标注图像数量呈指数级增长，获取代价极高。</li>
+<li><strong>语义隔离（Semantic Isolation）</strong>：<br> 模型将每个标签视为互不相关的离散项（one-hot 向量），无法理解“狗”和“狼”之间的语义相似性，也无法将已学知识迁移到未见过的新类别。</li>
+</ol>
+<p>Frome 等人提出的 <strong>DeViSE 模型（Deep Visual-Semantic Embedding）</strong>，旨在突破这一局限。<br> 他们提出让<strong>图像特征空间</strong>与**语义空间（来自文本）**建立直接联系，从而实现两大目标：</p>
+<ul>
+<li><strong>语义合理的错误</strong>（Semantic errors）：模型即便识别错，也错得“有道理”。</li>
+<li><strong>零样本学习（Zero-shot learning）</strong>：模型能识别从未见过类别的图像。</li>
+</ul>
+<hr>
+<h2 id="二、核心思想：视觉–语义联合嵌入（Visual-Semantic-Embedding）"><a href="#二、核心思想：视觉–语义联合嵌入（Visual-Semantic-Embedding）" class="headerlink" title="二、核心思想：视觉–语义联合嵌入（Visual-Semantic Embedding）"></a>二、核心思想：视觉–语义联合嵌入（Visual-Semantic Embedding）</h2><p>DeViSE 的核心思想是：</p>
+<blockquote>
+<p>将图像与文字标签映射到同一个连续的向量空间中，使得相似的图像和语义上相似的标签在空间中距离更近。</p>
+</blockquote>
+<p>也就是说，它不是直接预测一个类别，而是学习一个<strong>映射函数</strong>：<br>$$<br>f_{image}: \text{Image} \rightarrow \mathbb{R}^d<br>$$</p>
+<p>$$<br>f_{text}: \text{Label} \rightarrow \mathbb{R}^d<br>$$</p>
+<p>最终，给定一张图片，模型输出的向量应尽量与正确标签的语义向量接近。</p>
+<hr>
+<h2 id="三、模型总体结构"><a href="#三、模型总体结构" class="headerlink" title="三、模型总体结构"></a>三、模型总体结构</h2><p>论文在**图 1（第 3 页）**中给出了总体结构图，可分为三部分：</p>
+<ol>
+<li><p><strong>语言模型（Language Model）</strong><br> 使用 <em>skip-gram</em>（word2vec）模型，将文字标签映射为稠密的向量表示。</p>
+<ul>
+<li>训练语料：维基百科（5.7 百万篇文章，5.4 十亿词）。</li>
+<li>词汇量：约 155,000 个单词和短语。</li>
+<li>向量维度：500 或 1000 维。</li>
+<li>相似词测试表明嵌入质量很好，例如 <em>tiger shark</em> 的近邻包括 <em>bull shark, blue shark, great white shark</em> 等。</li>
+</ul>
+</li>
+<li><p><strong>视觉模型（Visual Model）</strong><br> 基于当年 ImageNet 竞赛的冠军模型（即 AlexNet 架构），包括卷积层、归一化层、池化层和全连接层。<br> 最初训练目标是传统的 1000 类 softmax 分类。</p>
+</li>
+<li><p><strong>联合嵌入模型（Joint Embedding Model）</strong><br> 将上述两个模型结合：</p>
+<ul>
+<li>移除视觉模型的 softmax 层；</li>
+<li>添加一个线性投影层，将视觉特征（4096 维）映射到语义空间（500 或 1000 维）；</li>
+<li>训练目标是让图像输出向量与正确标签的词向量尽可能接近。</li>
+</ul>
+<blockquote>
+<p>下面把这张配图<strong>逐块</strong>讲清楚（它对应论文的 <em>Figure 1</em>，位于第 3 页）。</p>
+<p><img src="/blog/./image/Snipaste_2025-10-17_14-31-11.png"></p>
+</blockquote>
+<blockquote>
+<p>A 图（左半部分）：三种网络在一个框图里</p>
+<ol>
+<li>左：<strong>Traditional Visual Model（传统视觉模型）</strong></li>
+</ol>
+<ul>
+<li><strong>输入</strong>：image（图像）。</li>
+<li><strong>主干</strong>：紫色方块 <em>core visual model</em>（卷积+池化+全连接的 CNN 主干，AlexNet 一类架构）。</li>
+<li><strong>输出</strong>：顶端接一个 <em>softmax layer</em>（1000 类分类头），直接输出最可能的类别 id。</li>
+<li><strong>含义</strong>：这就是当时的标准做法——在固定、离散的 1-of-N 标签集合上做分类。</li>
+</ul>
+<ol start="2">
+<li>中：<strong>Deep Visual Semantic Embedding Model（DeViSE 联合嵌入模型）</strong></li>
+</ol>
+<ul>
+<li><strong>输入</strong>：同样是图像。</li>
+<li><strong>主干</strong>：同一个 <em>core visual model</em>（与左侧相同的 CNN 主干）。</li>
+<li><strong>变换层</strong>：在主干顶层接一个 <em>transformation</em>（线性投影层），把 4096 维视觉特征映射到<strong>语义空间</strong>（500&#x2F;1000 维）。</li>
+<li><strong>语义库</strong>：右侧灰色方块 <em>embedding vector lookup table</em> 存放<strong>每个文字标签</strong>的词向量（来自语言模型）。</li>
+<li><strong>相似度</strong>：顶部 <em>similarity metric</em> 表示用<strong>点积&#x2F;余弦</strong>等度量图像向量与<strong>正确标签</strong>词向量的接近程度；训练时用<strong>排序（hinge rank）损失</strong>，让“正确标签的相似度”比“任一负样本标签的相似度”高出一个边界（margin）。</li>
+<li><strong>参数初始化箭头（parameter initialization）</strong>：从左边传统视觉模型把主干参数迁移过来；从右边语言模型把<strong>词向量表</strong>迁移过来。DeViSE 以这两者为<strong>初始化</strong>再进行联合训练（先训投影层，再微调视觉主干）。</li>
+</ul>
+<blockquote>
+<p>直观理解：DeViSE 不再直接“选一个类”，而是把图像<strong>投到语义空间</strong>，去“找最相近的词向量”。这使得它能对<strong>未见过的类别</strong>做出合理预测（零样本），并在出错时更“语义接近”。</p>
+</blockquote>
+<ol start="3">
+<li>右：<strong>Skip-gram Language Model（skip-gram 语言模型）</strong></li>
+</ol>
+<ul>
+<li><strong>输入&#x2F;输出</strong>：底部 <em>source word</em>（中心词）→ 顶部 <em>nearby word</em>（上下文词），通过一个 <em>softmax layer</em> 预测“邻近词”。</li>
+<li><strong>中间</strong>：灰色方块 <em>embedding vector lookup table</em>，即<strong>词向量表</strong>（把词映成稠密向量）。</li>
+<li><strong>作用</strong>：在海量未标注文本上学到<strong>语义结构</strong>（语义近的词向量更相近），然后把这张向量表提供给中间的 DeViSE 模型使用。</li>
+</ul>
+<blockquote>
+<p>论文里具体做法是：用 Wikipedia 语料训练 skip-gram，得到 500&#x2F;1000 维词向量；DeViSE 再把视觉特征投到这个空间里，用排序损失贴近“正确标签”的词向量。</p>
+</blockquote>
+<hr>
+<p>B 图（右半部分）：t-SNE 可视化的一团“语义星系”</p>
+<ul>
+<li>右边大散点图是把<strong>ImageNet 1K 标签的词向量</strong>（由 skip-gram 学到）用 <strong>t-SNE</strong> 降到 2D 的可视化。</li>
+<li><strong>颜色与图例</strong>：右下角的图例列出了若干<strong>语义簇</strong>（比如 <em>reptiles</em> 爬行动物、<em>birds</em> 鸟类、<em>musical instruments</em> 乐器、<em>aquatic life</em> 水生生物、<em>insects</em> 昆虫、<em>clothing</em> 服饰、<em>animals</em> 动物、<em>food</em> 食物、<em>dogs</em> 犬类、<em>transportation</em> 交通工具）。你能看到这些类别在 2D 空间里形成<strong>清晰的簇团</strong>——这说明语言模型的词向量<strong>天然带有语义结构</strong>：语义相近的标签靠得更近。</li>
+<li><strong>意义</strong>：DeViSE 正是把图像<strong>映射到这张“语义地图”上</strong>。因此，当它遇到训练中<strong>从未见过</strong>的标签时，仍可根据“图像向量与哪个标签簇更近”去做<strong>零样本推断</strong>；同时，即便预测错，也更可能错在“邻近概念”上（例如把“海豚”错成“鲸”，而不是“茶壶”）。</li>
+</ul>
+<hr>
+<p><u>一图读懂的因果链</u></p>
+<ol>
+<li><strong>skip-gram</strong> 从文本里学到“语义地图”（词向量表）。</li>
+<li><strong>CNN 主干</strong> 从图像里学到“视觉表征”。</li>
+<li><strong>DeViSE</strong> 用一层线性投影把“视觉表征”送进“语义地图”，并用<strong>排序损失</strong>把“正确标签”拉近、“错误标签”推远。<br>→ 效果：<strong>与 softmax 持平的 Top-k 准确率</strong>，但<strong>语义更合理</strong>；并且具备<strong>零样本识别</strong>能力。</li>
+</ol>
+<blockquote>
+<p>这张图因此把论文的三件事同时讲清楚：传统视觉分类、语言侧的语义学习、以及二者如何在 DeViSE 中“对齐”为同一个嵌入空间（加上参数迁移的来龙去脉）。</p>
+</blockquote>
+</blockquote>
+</li>
+</ol>
+<hr>
+<h2 id="四、损失函数设计：排序损失（Ranking-Loss）"><a href="#四、损失函数设计：排序损失（Ranking-Loss）" class="headerlink" title="四、损失函数设计：排序损失（Ranking Loss）"></a>四、损失函数设计：排序损失（Ranking Loss）</h2><p>DeViSE 的关键创新之一是<strong>损失函数的选择</strong>。</p>
+<p>作者使用了一个<strong>基于点积的 Hinge Rank Loss</strong>：<br>$$<br>loss(image,label)&#x3D; \sum_{j \neq l a b e l}  \max (0,  margin - \vec{t}<em>{label} M  \vec{v}(image)+ \vec{t}</em>{j} M \vec{v}(image))<br>$$</p>
+<ol>
+<li>为何要这样设计损失</li>
+</ol>
+<ul>
+<li><p>目标是让<strong>图像向量</strong>和<strong>正确标签的词向量</strong>之间的<strong>相似度更高</strong>，且要<strong>高过所有错误标签</strong>的相似度一个固定的“安全边际”（margin）。</p>
+</li>
+<li><p>作者选择了<strong>点积相似度 + 排序（hinge rank）损失</strong>，而不是把图像向量直接回归到标签向量的 <strong>L2 损失</strong>；因为<strong>检索&#x2F;最近邻判别</strong>本质是<strong>排序问题</strong>，排序损失能直接优化“正确 &gt; 错误”的相对关系，实验证明它比 L2 准确率高出约一倍。</p>
+<ol start="2">
+<li>数学定义</li>
+</ol>
+<p>$$<br>\text { loss }(\text { image }, \text { label })&#x3D;\sum_{j \neq l a b e l} \max \left[0, \text { margin }-\vec{t}<em>{\text {label }} M \vec{v}(\text { image })+\vec{t}</em>{j} M \vec{v}(\text { image })\right]<br>$$</p>
+</li>
+<li><p>$ \vec{v}(\text { image }) $ ：视觉主干顶层的图像向量（列向量）。</p>
+</li>
+<li><p>M ：线性投影层，把 4096 维视觉特征映到语言嵌入空间（500&#x2F;1000维）。</p>
+</li>
+<li><p>$ \tilde{t}<em>{ \text { label }} $ 、 $ \tilde{t}</em>{j} $ ：单位范数的词向量（行向量），分别对应正确标签与负样本标签。单位化后，点积就等价于余弦相似度的线性缩放。</p>
+</li>
+<li><p>m ：margin ，固定为 0.1。</p>
+</li>
+<li><p>“$ \max (0, \cdot) $ ”就是 hinge ：若“正确比分错的高m”已满足，就不产生损失；否则就按违反的幅度累计惩罚。</p>
+</li>
+</ul>
+<blockquote>
+<p>直觉：</p>
+<p>对于每个负标签 j ，都要满足</p>
+<p>$$ \tilde{t}<em>{ \text { label }} M \vec{v}-\tilde{t}</em>{j} M \vec{v} \geq m $$</p>
+<p>不满足者就被“推远”，直到满足为止。</p>
+</blockquote>
+<hr>
+<ol start="3">
+<li>两个“工程化”随机化&#x2F;加速技巧</li>
+</ol>
+<p>作者为了高效、稳定地训练，做了两件事（都在截图段落中明确写出）：</p>
+<ol>
+<li><strong>负样本集合限制</strong>：只从“可能的图像标签集合”（而非整个词汇表）里采样负标签。</li>
+<li><strong>提前截断求和</strong>：一旦发现<strong>第一个</strong>违反 margin 的负样本，就<strong>停止</strong>继续累加后续的负样本损失（相当于一次只处理一个“困难负样本”）。</li>
+</ol>
+<p>这两个处理起到了类似<strong>在线难例挖掘（hard negative mining）与噪声对冲</strong>的效果：既加快训练，又让梯度更聚焦。</p>
+<hr>
+<ol start="4">
+<li>与 L2 损失的对比与原因</li>
+</ol>
+<ul>
+<li><strong>L2（回归）损失</strong>的目标是“把两者拉得尽量近”，却<strong>不关心</strong>是否有<strong>错误标签更近</strong>；因此在“最近邻&#x2F;检索”的评测中常常<strong>不对题</strong>。</li>
+<li><strong>排序（hinge）损失</strong>直接优化“正确要比任意错误<strong>更相似</strong>（且多 mm）”，与<strong>Top-k&#x2F;NN</strong>评测强相关，作者报告其<strong>准确率约为 L2 的两倍</strong>。</li>
+</ul>
+<hr>
+<ol start="5">
+<li>训练流程中的细节</li>
+</ol>
+<ul>
+<li><strong>阶段化训练</strong>：先<strong>冻结</strong>视觉主干与文本嵌入，只训练投影层 MM；再把梯度<strong>回传进视觉主干</strong>做<strong>微调（fine-tune）</strong>，这一步一般能带来 <strong>1–3%</strong> 的<strong>绝对提升</strong>。</li>
+<li><strong>优化器</strong>：分布式异步 SGD + <strong>Adagrad</strong>（为不同层自适应学习率，避免梯度尺度失衡）。</li>
+<li><strong>词向量约束</strong>：$\tilde{t}$ 向量<strong>单位化</strong>并<strong>保持固定</strong>（否则若同时更新词向量，需要同步继续训练语言模型以维持全局语义结构，作者在正文中选择固定它们）。</li>
+</ul>
+<hr>
+<ol start="6">
+<li>测试时如何“用”这个损失学到的模型</li>
+</ol>
+<ul>
+<li>对新图像，先用视觉主干 + MM 得到嵌入向量；</li>
+<li>再在<strong>标签词向量库</strong>中做<strong>最近邻搜索</strong>（可用树或哈希做近似 NN，加速到亚线性时间），取 Top-k 标签作为输出；</li>
+<li>评测需要时再把词&#x2F;短语映回 ImageNet synset 计分。</li>
+</ul>
+<hr>
+<ol start="7">
+<li>梯度与优化的直观理解（不写公式版）</li>
+</ol>
+<ul>
+<li>若某个负标签 j<strong>侵犯了 margin</strong>，梯度会推动参数：<ul>
+<li><strong>拉近</strong>图像向量与正确标签的点积；</li>
+<li><strong>拉远</strong>与该负标签的点积。</li>
+</ul>
+</li>
+<li>因为只处理“第一个违反者”，每步更新都聚焦在“最难的负样本”上，等价于<strong>针对当前最混淆的类别做对比学习</strong>。</li>
+<li>m&#x3D;0.1m&#x3D;0.1 作为<strong>单位范数</strong>向量的“尺度相对 margin”，经验上稳定有效；一般<strong>更大</strong>会难学、<strong>更小</strong>会约束不够。</li>
+</ul>
+<hr>
+<ol start="8">
+<li><p>小结（损失的三句话）</p>
+</li>
+<li><p><strong>形式</strong>：点积相似 + <strong>hinge 排序损失</strong>，要求“正确比分错的高 mm”。</p>
+</li>
+<li><p><strong>实现</strong>：限制负样本集合 + 首个违例即截断；先训 MM，再微调视觉主干；Adagrad 优化；词向量单位化并固定。</p>
+</li>
+<li><p><strong>效果</strong>：比 L2 更贴合“最近邻&#x2F;Top-k”评测，带来显著更高的准确率与更语义合理的结果。</p>
+</li>
+</ol>
+<hr>
+<h2 id="五、实验设计与结果"><a href="#五、实验设计与结果" class="headerlink" title="五、实验设计与结果"></a>五、实验设计与结果</h2><h3 id="1-数据集"><a href="#1-数据集" class="headerlink" title="1. 数据集"></a>1. 数据集</h3><p>使用 ImageNet ILSVRC 2012（1000 类别，120 万张训练图像）。</p>
+<h3 id="2-对比模型"><a href="#2-对比模型" class="headerlink" title="2. 对比模型"></a>2. 对比模型</h3><ul>
+<li><strong>Softmax baseline</strong>：标准 CNN + 1000 类 softmax。</li>
+<li><strong>Random embeddings</strong>：使用随机语义向量代替 word2vec 向量，以验证语义信息的作用。</li>
+</ul>
+<hr>
+<h3 id="3-结果一：常规分类性能（表-1，第-5-页）"><a href="#3-结果一：常规分类性能（表-1，第-5-页）" class="headerlink" title="3. 结果一：常规分类性能（表 1，第 5 页）"></a>3. 结果一：常规分类性能（表 1，第 5 页）</h3><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>维度</th>
+<th>Top-1</th>
+<th>Top-5</th>
+<th>Hierarchical P@5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Softmax</td>
+<td>N&#x2F;A</td>
+<td>55.6%</td>
+<td>78.5%</td>
+<td>0.342</td>
+</tr>
+<tr>
+<td>DeViSE (1000D)</td>
+<td>1000</td>
+<td>54.9%</td>
+<td>78.4%</td>
+<td><strong>0.351</strong></td>
+</tr>
+<tr>
+<td>Random</td>
+<td>1000</td>
+<td>50.5%</td>
+<td>74.2%</td>
+<td>0.318</td>
+</tr>
+</tbody></table>
+<p>解释：</p>
+<ul>
+<li>在传统指标（Top-1&#x2F;Top-5）上，DeViSE 与 Softmax 相当；</li>
+<li>在语义层级指标（Hierarchical precision）上，DeViSE 明显更优；</li>
+<li>这意味着 DeViSE 的错误“更合理”，即如果它错了，也往往错在语义邻近的类别上。</li>
+</ul>
+<hr>
+<h3 id="4-结果二：零样本学习（Zero-Shot-Learning）"><a href="#4-结果二：零样本学习（Zero-Shot-Learning）" class="headerlink" title="4. 结果二：零样本学习（Zero-Shot Learning）"></a>4. 结果二：零样本学习（Zero-Shot Learning）</h3><p><strong>实验方法：</strong></p>
+<ul>
+<li>从 ImageNet 2011 21K 中选取不在 2012 1K 中的标签作为“零样本”；</li>
+<li>测试模型在未见类别上的预测能力。</li>
+</ul>
+<p><strong>表 2 与图 2（第 6 页）</strong> 展示了多个例子：</p>
+<ul>
+<li>例如模型从未见过“telephoto lens”的图像，但能输出与镜头相关的标签；</li>
+<li>错误预测往往语义相近，而非荒谬结果。</li>
+</ul>
+<p><strong>量化结果（2-hop, 3-hop, 21K 零样本集）：</strong></p>
+<ul>
+<li>DeViSE-0（仅预测零样本标签）在最易任务上 Top-20 命中率为 36.4%；</li>
+<li>即使在最难的 21K 标签上，Top-20 命中率仍达 6%。</li>
+</ul>
+<p>相比之下，传统 softmax 在零样本情况下准确率为 0%。</p>
+<hr>
+<h3 id="5-结果三：层级精度比较（表-3，第-7-页）"><a href="#5-结果三：层级精度比较（表-3，第-7-页）" class="headerlink" title="5. 结果三：层级精度比较（表 3，第 7 页）"></a>5. 结果三：层级精度比较（表 3，第 7 页）</h3><ul>
+<li>在语义精度指标上，DeViSE 在大多数情况下明显优于 softmax；</li>
+<li>对更困难的任务（3-hop, 21K），相对提升最高可达 82%。</li>
+</ul>
+<hr>
+<h3 id="6-对比其他工作（表-4）"><a href="#6-对比其他工作（表-4）" class="headerlink" title="6. 对比其他工作（表 4）"></a>6. 对比其他工作（表 4）</h3><p>与 Mensink et al. (2012) 和 Rohrbach et al. (2011) 的零样本模型比较，DeViSE 即使不依赖人工语义层级（如 WordNet），表现仍相当或更优。这表明其语义学习是<strong>自发从文本数据中获得的</strong>。</p>
+<hr>
+<h2 id="六、结论与意义"><a href="#六、结论与意义" class="headerlink" title="六、结论与意义"></a>六、结论与意义</h2><p>论文在第 8 页总结了以下要点：</p>
+<ol>
+<li><strong>性能与传统模型持平</strong><br> DeViSE 在常规分类上不逊于当时最优 CNN。</li>
+<li><strong>语义合理的错误</strong><br> 模型的错误预测往往语义接近（如“虎鲨”错成“牛鲨”），而非随机。</li>
+<li><strong>零样本学习能力强</strong><br> 能识别数千个未见过的类别，仅依赖语言模型的语义信息。</li>
+<li><strong>可扩展性强</strong><br> 模型可轻松扩展到更大规模数据集（如上万类别），甚至可跨任务复用。</li>
+<li><strong>学术影响</strong><br> DeViSE 是后来众多视觉–语言模型（如 CLIP, ALIGN, BLIP）的早期理论基础，首次成功将<strong>图像与文本的语义空间对齐</strong>。</li>
+</ol>
+<hr>
+<h2 id="七、延伸理解"><a href="#七、延伸理解" class="headerlink" title="七、延伸理解"></a>七、延伸理解</h2><p>如果把 DeViSE 放在历史脉络中：</p>
+<table>
+<thead>
+<tr>
+<th>年份</th>
+<th>模型</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2013</td>
+<td><strong>DeViSE</strong></td>
+<td>CNN + word2vec 联合嵌入，零样本识别</td>
+</tr>
+<tr>
+<td>2015</td>
+<td>DeViSE 改进版 &#x2F; Convex combination</td>
+<td>改善训练稳定性</td>
+</tr>
+<tr>
+<td>2021</td>
+<td><strong>CLIP (OpenAI)</strong></td>
+<td>Transformer + 对比学习，通用视觉语言预训练</td>
+</tr>
+<tr>
+<td>2022+</td>
+<td>BLIP, Flamingo 等</td>
+<td>多模态大模型方向发展</td>
+</tr>
+</tbody></table>
+<p>可以说，DeViSE 是跨模态表示学习的奠基工作之一。</p>
+<hr>
+<h2 id="八、总结"><a href="#八、总结" class="headerlink" title="八、总结"></a>八、总结</h2><blockquote>
+<p><strong>一句话总结：</strong></p>
+<p>DeViSE 首次提出了一个可扩展的视觉–语义联合嵌入模型，通过将图像映射到由语言模型学习的语义空间，使计算机视觉系统具备了“理解文字语义”的能力，从而能识别未见过的新类别，并产生更合理的错误。</p>
+</blockquote>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a></div><div class="post-share"><div class="social-share" data-image="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2025/09/23/%E5%B0%8F%E6%A0%B7%E6%9C%AC%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" title="小样本目标检测"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">小样本目标检测</div></div><div class="info-2"><div class="info-item-1">名词概念 少样本对象检测 (Few-Shot Object Detection, FSOD): 每个新类别提供少量（比如1到10个）标注样本 。这是最主流的研究方向。  单样本对象定位 (One-Shot Object Localization, OSOL): 这是 FSOD 的一个特例，每个新类别只提供一个标注样本 。  零样本对象检测 (Zero-Shot Object Detection, ZSOD): 这是最极端的情况，新类别没有任何标注的图像样本 。那模型怎么学呢？它依赖于额外的信息，比如描述这些类别的语义属性（例如，描述“斑马”的词是“条纹”、“像马的动物”）   key words深度学习在低样本目标检测中的综述 A Survey of Deep Learning for Low-Shot Object Detection Additional Key Words and Phrases: Few-Shot Object Detection, One-Shot Object Detection, Zero-Shot Object detection,...</div></div></div></a><a class="pagination-related" href="/blog/2025/10/17/Zero-Shot-Object-Detection/" title="Zero-Shot Object Detection"><img class="cover" src="/blog/image/5268d877a2a04864b36b4961ab793f4f.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Zero-Shot Object Detection</div></div><div class="info-2"><div class="info-item-1">Introduction这一部分介绍了零样本物体检测（Zero-Shot Object Detection, ZSD）问题的背景、动机和挑战。为了帮助你更好地理解，我将从几个关键点进行详细讲解。 问题背景： 人类与机器的区别：引言一开始提到，人类能够轻松地通过语言描述构建对物体的心智模型。举个例子，即使我们从未见过某个物体，但只要听到它的描述，我们就能大致想象出它的样子。机器视觉系统则没有这种能力。传统的机器学习方法要求机器在训练阶段看到每一个物体类别的视觉样本，然后才能在测试阶段识别这些物体。 然而，这种方法存在问题：获取大量标注数据非常昂贵，因此在很多应用场景下，机器无法看到所有类别的物体样本。例如，如果训练集里只有“手”和“胳膊”的样本，机器无法自动推测出“肩膀”这个物体。   零样本学习（Zero-Shot Learning,...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2025/10/17/Zero-Shot-Object-Detection/" title="Zero-Shot Object Detection"><img class="cover" src="/blog/image/5268d877a2a04864b36b4961ab793f4f.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-10-17</div><div class="info-item-2">Zero-Shot Object Detection</div></div><div class="info-2"><div class="info-item-1">Introduction这一部分介绍了零样本物体检测（Zero-Shot Object Detection, ZSD）问题的背景、动机和挑战。为了帮助你更好地理解，我将从几个关键点进行详细讲解。 问题背景： 人类与机器的区别：引言一开始提到，人类能够轻松地通过语言描述构建对物体的心智模型。举个例子，即使我们从未见过某个物体，但只要听到它的描述，我们就能大致想象出它的样子。机器视觉系统则没有这种能力。传统的机器学习方法要求机器在训练阶段看到每一个物体类别的视觉样本，然后才能在测试阶段识别这些物体。 然而，这种方法存在问题：获取大量标注数据非常昂贵，因此在很多应用场景下，机器无法看到所有类别的物体样本。例如，如果训练集里只有“手”和“胳膊”的样本，机器无法自动推测出“肩膀”这个物体。   零样本学习（Zero-Shot Learning,...</div></div></div></a><a class="pagination-related" href="/blog/2025/02/27/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" title="深度学习相关知识"><img class="cover" src="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-27</div><div class="info-item-2">深度学习相关知识</div></div><div class="info-2"><div class="info-item-1">Batch Normalization（批量归一化） 和 Layer Normalization（层归一化） 1. 核心概念对比Batch Normalization (BN) 归一化方向：对 同一特征维度 跨所有样本和空间位置归一化。  核心公式： 假设输入张量形状为 (N, C, H, W)（Batch Size, Channels, Height, Width），则对每个通道 c 计算均值和方差：$$\mu_c &#x3D; \frac{1}{N \cdot H \cdot W} \sum_{n&#x3D;1}^N \sum_{h&#x3D;1}^H \sum_{w&#x3D;1}^W x_{n,c,h,w}, \quad \sigma_c^2 &#x3D; \frac{1}{N \cdot H \cdot W} \sum_{n&#x3D;1}^N \sum_{h&#x3D;1}^H \sum_{w&#x3D;1}^W (x_{n,c,h,w} - \mu_c)^2$$  适用场景：图像处理（CNN）、固定长度的结构化数据。   Layer Normalization...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%A0%94%E7%A9%B6%E8%83%8C%E6%99%AF%E4%B8%8E%E9%97%AE%E9%A2%98%E6%8F%90%E5%87%BA"><span class="toc-number">1.</span> <span class="toc-text">一、研究背景与问题提出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%EF%BC%9A%E8%A7%86%E8%A7%89%E2%80%93%E8%AF%AD%E4%B9%89%E8%81%94%E5%90%88%E5%B5%8C%E5%85%A5%EF%BC%88Visual-Semantic-Embedding%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">二、核心思想：视觉–语义联合嵌入（Visual-Semantic Embedding）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%A8%A1%E5%9E%8B%E6%80%BB%E4%BD%93%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">三、模型总体结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E8%AE%BE%E8%AE%A1%EF%BC%9A%E6%8E%92%E5%BA%8F%E6%8D%9F%E5%A4%B1%EF%BC%88Ranking-Loss%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">四、损失函数设计：排序损失（Ranking Loss）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%BB%93%E6%9E%9C"><span class="toc-number">5.</span> <span class="toc-text">五、实验设计与结果</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-number">5.1.</span> <span class="toc-text">1. 数据集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%AF%B9%E6%AF%94%E6%A8%A1%E5%9E%8B"><span class="toc-number">5.2.</span> <span class="toc-text">2. 对比模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BB%93%E6%9E%9C%E4%B8%80%EF%BC%9A%E5%B8%B8%E8%A7%84%E5%88%86%E7%B1%BB%E6%80%A7%E8%83%BD%EF%BC%88%E8%A1%A8-1%EF%BC%8C%E7%AC%AC-5-%E9%A1%B5%EF%BC%89"><span class="toc-number">5.3.</span> <span class="toc-text">3. 结果一：常规分类性能（表 1，第 5 页）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%BB%93%E6%9E%9C%E4%BA%8C%EF%BC%9A%E9%9B%B6%E6%A0%B7%E6%9C%AC%E5%AD%A6%E4%B9%A0%EF%BC%88Zero-Shot-Learning%EF%BC%89"><span class="toc-number">5.4.</span> <span class="toc-text">4. 结果二：零样本学习（Zero-Shot Learning）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%BB%93%E6%9E%9C%E4%B8%89%EF%BC%9A%E5%B1%82%E7%BA%A7%E7%B2%BE%E5%BA%A6%E6%AF%94%E8%BE%83%EF%BC%88%E8%A1%A8-3%EF%BC%8C%E7%AC%AC-7-%E9%A1%B5%EF%BC%89"><span class="toc-number">5.5.</span> <span class="toc-text">5. 结果三：层级精度比较（表 3，第 7 页）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%AF%B9%E6%AF%94%E5%85%B6%E4%BB%96%E5%B7%A5%E4%BD%9C%EF%BC%88%E8%A1%A8-4%EF%BC%89"><span class="toc-number">5.6.</span> <span class="toc-text">6. 对比其他工作（表 4）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E7%BB%93%E8%AE%BA%E4%B8%8E%E6%84%8F%E4%B9%89"><span class="toc-number">6.</span> <span class="toc-text">六、结论与意义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%BB%B6%E4%BC%B8%E7%90%86%E8%A7%A3"><span class="toc-number">7.</span> <span class="toc-text">七、延伸理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">八、总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/17/Zero-Shot-Object-Detection/" title="Zero-Shot Object Detection"><img src="/blog/image/5268d877a2a04864b36b4961ab793f4f.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Zero-Shot Object Detection"/></a><div class="content"><a class="title" href="/blog/2025/10/17/Zero-Shot-Object-Detection/" title="Zero-Shot Object Detection">Zero-Shot Object Detection</a><time datetime="2025-10-17T10:22:18.000Z" title="发表于 2025-10-17 18:22:18">2025-10-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/17/DeViSE-A-Deep-Visual-Semantic-Embedding-Model/" title="DeViSE: A Deep Visual-Semantic Embedding Model"><img src="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="DeViSE: A Deep Visual-Semantic Embedding Model"/></a><div class="content"><a class="title" href="/blog/2025/10/17/DeViSE-A-Deep-Visual-Semantic-Embedding-Model/" title="DeViSE: A Deep Visual-Semantic Embedding Model">DeViSE: A Deep Visual-Semantic Embedding Model</a><time datetime="2025-10-17T06:20:10.000Z" title="发表于 2025-10-17 14:20:10">2025-10-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2025/09/23/%E5%B0%8F%E6%A0%B7%E6%9C%AC%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" title="小样本目标检测">小样本目标检测</a><time datetime="2025-09-23T08:06:54.000Z" title="发表于 2025-09-23 16:06:54">2025-09-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2025/09/17/keywords%E9%9B%86%E5%90%88/" title="keywords集合">keywords集合</a><time datetime="2025-09-17T01:27:17.000Z" title="发表于 2025-09-17 09:27:17">2025-09-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2025/09/17/%E7%A0%94%E7%A9%B6%E6%96%B9%E5%90%91%E6%80%BB%E7%BB%93%E8%A7%84%E5%88%92/" title="研究方向总结规划">研究方向总结规划</a><time datetime="2025-09-17T01:17:32.000Z" title="发表于 2025-09-17 09:17:32">2025-09-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script async data-pjax src="{&quot;site_uv&quot;:true,&quot;site_pv&quot;:true,&quot;page_pv&quot;:true}"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
