@@ -1,0 +1,2162 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>论文阅读：Zero-Shot Detection | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="INTRODUCTION1）动机：检测要走向“长尾、开放世界” 在大规模应用里（想象自动驾驶、通用机器人、视频理解），不可能为每一个可能的目标类别都收集充足的“框+类别”标注。 传统检测（如 YOLOv2、Faster R-CNN）需要大量带框监督，这在规模化时不可持续。因此，研究界从零样本学习（ZSL）里借力：用语义（属性词、词向量、文本描述等）把“没见过的类”与“见过的类”连接起来，从而在训练">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文阅读：Zero-Shot Detection">
+<meta property="og:url" content="https://qieliqiean.github.io/blog/2025/10/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AZero-Shot-Detection/index.html">
+<meta property="og:site_name" content="且离且安的碎碎念">
+<meta property="og:description" content="INTRODUCTION1）动机：检测要走向“长尾、开放世界” 在大规模应用里（想象自动驾驶、通用机器人、视频理解），不可能为每一个可能的目标类别都收集充足的“框+类别”标注。 传统检测（如 YOLOv2、Faster R-CNN）需要大量带框监督，这在规模化时不可持续。因此，研究界从零样本学习（ZSL）里借力：用语义（属性词、词向量、文本描述等）把“没见过的类”与“见过的类”连接起来，从而在训练">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qieliqiean.github.io/blog/image/62aa03063f117eaad7c77592e3b98d7f05b0a86329e44a-TuUO3E.jpg">
+<meta property="article:published_time" content="2025-10-20T11:34:17.000Z">
+<meta property="article:modified_time" content="2025-10-22T11:07:07.174Z">
+<meta property="article:author" content="lian">
+<meta property="article:tag" content="零样本检测">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qieliqiean.github.io/blog/image/62aa03063f117eaad7c77592e3b98d7f05b0a86329e44a-TuUO3E.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "论文阅读：Zero-Shot Detection",
+  "url": "https://qieliqiean.github.io/blog/2025/10/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AZero-Shot-Detection/",
+  "image": "https://qieliqiean.github.io/blog/image/62aa03063f117eaad7c77592e3b98d7f05b0a86329e44a-TuUO3E.jpg",
+  "datePublished": "2025-10-20T11:34:17.000Z",
+  "dateModified": "2025-10-22T11:07:07.174Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "lian",
+      "url": "https://qieliqiean.github.io/blog/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/2025/10/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AZero-Shot-Detection/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: {"path":"/blog/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '论文阅读：Zero-Shot Detection',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">29</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/image/62aa03063f117eaad7c77592e3b98d7f05b0a86329e44a-TuUO3E.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">论文阅读：Zero-Shot Detection</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">论文阅读：Zero-Shot Detection</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-10-20T11:34:17.000Z" title="发表于 2025-10-20 19:34:17">2025-10-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-10-22T11:07:07.174Z" title="更新于 2025-10-22 19:07:07">2025-10-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">21.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>72分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h1><p><strong>1）动机：检测要走向“长尾、开放世界”</strong></p>
+<p>在大规模应用里（想象自动驾驶、通用机器人、视频理解），<strong>不可能</strong>为每一个可能的目标类别都收集充足的“框+类别”标注。</p>
+<p>传统检测（如 YOLOv2、Faster R-CNN）需要大量带框监督，这在规模化时不可持续。因此，研究界从<strong>零样本学习（ZSL）里借力：用语义</strong>（属性词、词向量、文本描述等）把“没见过的类”与“见过的类”连接起来，从而在<strong>训练时没见过</strong>某些类别、<strong>测试时要识别检测</strong>它们。</p>
+<ul>
+<li>不过，过往 ZSL 多是“分类”问题（图像里物体已被很好地裁出来，只需认类）。现实却是更难的“<strong>检测</strong>”：不仅要认，还要<strong>找</strong>（定位边界框）。这正是本文定义并要解决的<strong>零样本检测（ZSD）</strong>。</li>
+</ul>
+<hr>
+<p><strong>2）传统检测器在“未见类”上为什么会失手？</strong></p>
+<p>以 YOLOv2 为例，性能高的一个关键是：它在训练中学到一套<strong>非常判别的视觉特征</strong>，并通过“<strong>目标性（objectness）置信度</strong>”的损失把背景强力压下，只保留与“<strong>见过的类</strong>”相似的候选框。<br> 副作用来了：<strong>“未见类”往往被当作背景压掉</strong>。原因是这些类的视觉外观没有出现在训练中，检测器学到的“目标感”其实是围绕“见过类”的。因此一到开放世界，<strong>召回率（recall）大幅下降</strong>——框根本不报，后面的分类就无从谈起。</p>
+<hr>
+<p><strong>3）关键洞见：把“语义”灌进“视觉”的学习里</strong></p>
+<p>作者提出一个核心主张：<strong>想要召回未见类，必须让视觉特征在训练期就“感知到语义亲缘性”</strong>。<br> 做法不是测试时再去找语义，而是<strong>训练时把语义属性作为副任务</strong>，让网络的视觉通道在求解检测时，同时被语义相似性“牵引”。这样，测试时即便来了<strong>语义上接近</strong>（但训练没见过）的新物体，网络也倾向于给它<strong>较高的目标性</strong>，从而<strong>不把它压成背景</strong>。</p>
+<hr>
+<p><strong>4）方法总览：ZS-YOLO（在 YOLOv2 上“语义注入”）</strong></p>
+<p>ZS-YOLO 仍沿用 YOLOv2 的单阶段、端到端、高速框架，但加了两件事：</p>
+<ul>
+<li><strong>语义属性预测支路</strong>：每个候选框不仅预测位置，还预测一个<strong>属性向量</strong>（例如 Pascal VOC 用 64 维属性）。这一支路的损失会反向影响主干特征，使视觉表征更贴近语义结构。</li>
+<li><strong>多模态置信度预测</strong>：最终的“目标性置信度”<strong>不再只看视觉特征</strong>，而是把<u>视觉特征 + 语义属性预测 + 候选框几何（坐标&#x2F;尺寸）</u>拼在一起，再预测“这个框里是不是有前景目标”。</li>
+<li><strong>训练时，网络用一个多任务损失</strong>同时优化：定位损失（框的回归）、语义损失（前景框的属性要像其真值、背景框不要像任一见过类属性）、以及目标性损失（前景高、背景低）。<br> <strong>测试时一个重要点</strong>：模型<strong>不需要</strong>知道“未见类的语义向量”，也不需要外部语义库来运行检测——语义支路在测试阶段更像是<strong>帮助学到“有目标”的感觉</strong>，而非用来对齐到具体的未见类别名称；它提升的是**“报出前景”&#x2F;召回<strong>这一步。若你希望进一步给报出的框</strong>贴上类名**，那就可以<strong>在检测之后</strong>再接任一零样本识别器（最近邻到语义原型、或更强的 gZSL 分类器）去做分类。</li>
+</ul>
+<hr>
+<p><strong>5）为什么不做“检测器 + 零样本分类器”的简单级联？</strong></p>
+<p>直觉上，你也许会想：先用 YOLOv2 报框，再丢去零样本分类器就好了。作者指出：<em><em>这级联并不能解决“YOLOv2 不报未见框”<em>的问题。因为第一阶段就漏掉了</em></em>，后一阶段无框可分。问题的关键在</em><em>召回</em><em>，而不是最后一步的*<em>判类</em></em>。ZS-YOLO 正是通过把语义信号<strong>前置到目标性学习里</strong>，来“唤起”未见类的目标性，让它们首先<strong>被报出来</strong>。</p>
+<hr>
+<p>6）与识别任务（ZSL&#x2F;gZSL）的关系</p>
+<p>作者这篇工作<strong>聚焦检测</strong>（提出前景框），并说明<strong>完全可以</strong>在此基础上“外接”零样本识别模块，把未见前景进一步标类。之所以先聚焦检测：</p>
+<ul>
+<li>现实数据里，<strong>没标注的未见类</strong>广泛存在，<strong>检测的漏报</strong>是瓶颈；</li>
+<li>语义用于<strong>提升目标性与召回</strong>，这是当前数据条件下<strong>更紧迫也更可评估</strong>的一步。</li>
+</ul>
+<hr>
+<p>7）实验端给出的直观成效（作者在导论中已预告）</p>
+<p>作者在 VOC &#x2F; COCO 上报告：在<strong>高置信度</strong>阈值下（例如 0.9），未见类的<strong>召回率</strong>大幅提高（导论处举例：从 ~18.6% 提到 ~48.2%）；在 VOC 的 10&#x2F;10 拆分上，未见类**平均精度（AP）**也从 ~56.4% 提升到 ~60.1%。这些数字传达的要点是：<strong>我们需要的首先是“报得出来”</strong>，而语义注入正帮助网络把“没见过但语义相近”的目标看成“像目标”，不被当背景压掉。</p>
+<blockquote>
+<p>小结：ZS-YOLO把“语义—视觉融合”发生在<strong>训练期和目标性层面</strong>，从根上解决<strong>未见类被当背景</strong>的问题；这与事后再分类的级联方案不同。</p>
+</blockquote>
+<hr>
+<p>8）总结</p>
+<ol>
+<li>现实世界太大，给所有类画框不可能，所以要<strong>零样本检测</strong>。</li>
+<li>传统检测器在未见类上“<strong>不报框（召回低）</strong>”，因为它们把“陌生外观”当<strong>背景</strong>。</li>
+<li><strong>训练时引入语义属性并用于目标性预测</strong>，让视觉特征“会认亲”，从而<strong>提高未见类的召回与 AP</strong>；测试时不依赖未见类语义即可运行检测，若需贴标签，再接零样本识别器即可。</li>
+</ol>
+<h1 id="RELATED-WORK"><a href="#RELATED-WORK" class="headerlink" title="RELATED WORK"></a>RELATED WORK</h1><p>这一节的任务是梳理作者的研究背景，说明他们的工作与以往方法的区别与创新点。作者将这一节分成四个子部分（A–D），分别回顾了：</p>
+<ol>
+<li>目标检测（Object Detection）</li>
+<li>零样本识别（Zero-Shot Recognition）</li>
+<li>其他相关方法（Other Methods）</li>
+<li>同期研究（Concurrent Works）</li>
+</ol>
+<hr>
+<p><strong>A. Object Detection and Proposal</strong></p>
+<p><code>背景：现代检测方法的发展</code></p>
+<p>作者首先指出，深度学习推动了检测技术的飞速发展。</p>
+<ul>
+<li>像 <strong>YOLOv2 (Redmon &amp; Farhadi, 2016)</strong> 这样的单阶段（Single-shot）检测器具有<strong>高速度和较好精度</strong>，能在 50 FPS 以上实时检测。</li>
+<li>其结构是<strong>全卷积网络（fully convolutional network）</strong>，直接从特征图上预测目标框及其置信度。</li>
+</ul>
+<p>与 YOLOv2 对比：</p>
+<ul>
+<li><strong>Faster R-CNN (Ren et al., 2015)</strong>、<strong>R-FCN (Dai et al., 2016)</strong> 等属于“两阶段（Two-stage）检测器”：<ul>
+<li>第一阶段使用 <strong>Region Proposal Network (RPN)</strong> 生成候选框；</li>
+<li>第二阶段在这些候选区域上进行分类与框回归；</li>
+<li>但它们通常低于 30 FPS，速度慢得多。</li>
+</ul>
+</li>
+<li>YOLOv2 的高效性使它成为作者的首选基线。</li>
+</ul>
+<p><code>问题：传统检测器无法识别“未见类”</code></p>
+<p>作者指出，在<strong>大规模检测场景</strong>下（例如成百上千类目标），几乎不可能为每个类都提供足够的标注数据。<br> 这导致：</p>
+<ul>
+<li>传统检测器过度拟合在“见过的类”上；</li>
+<li><strong>对于未见类（unseen classes）</strong>，检测器会把它们的区域视作<strong>背景（background）</strong>；</li>
+<li>原因在于：训练过程中，模型被鼓励最大化检测精度，最小化假阳性，因此会压制所有“看起来不像训练类”的区域。</li>
+</ul>
+<p>这种“过度压背景”的机制虽然提高了已知类的精度，却导致模型在开放世界（open world）中<strong>召回率（recall）极低</strong>。</p>
+<p><code>对比：Proposal 方法虽能发现未知目标但精度低</code></p>
+<p>早期的 <strong>Region Proposal 方法（例如 Selective Search、Edge Boxes）</strong> 可以在无语义信息下提出许多候选区域，其中可能包含未见类目标。<br> 但这些方法：</p>
+<ul>
+<li>候选框数量庞大（上百&#x2F;上千），</li>
+<li>需要大量后处理（NMS、分类筛选），</li>
+<li><strong>假阳性率高、计算代价大</strong>。</li>
+</ul>
+<p>因此，作者的选择是：<br> <strong>保留 YOLOv2 的高效结构</strong>，但在网络中引入语义特征以解决“未见类检测”的问题。</p>
+<hr>
+<p><strong>B. Zero-Shot Recognition</strong></p>
+<p><code>传统 ZSL（Zero-Shot Learning）</code></p>
+<p>零样本学习旨在<strong>识别未见过的类别</strong>，通过建立<strong>视觉表示与语义表示的映射</strong>：</p>
+<ul>
+<li>常用的语义信息包括：属性（attributes）、词向量（word embeddings）、或文本描述。</li>
+<li>代表性工作：[Lampert et al., 2014] 的 Attribute-based ZSL，Zhang &amp; Saligrama (2015–2016) 的 Semantic Similarity Embedding。</li>
+</ul>
+<p><code>从封闭集到广义零样本学习（gZSL）</code></p>
+<p>传统 ZSL 仅在“未见类”上测试，但这在现实中不合理，因为测试集中<strong>既有 seen 类也有 unseen 类</strong>。<br> 于是提出了 <strong>广义零样本学习（Generalized ZSL, gZSL）</strong>：</p>
+<ul>
+<li>模型必须在<strong>已见 + 未见类混合场景</strong>中识别出所有目标；</li>
+<li>这更接近现实，但也更难。</li>
+</ul>
+<p><code>ZSD 与 ZSL 的关系</code></p>
+<p>ZSD（零样本检测）比 ZSL 更复杂：</p>
+<ul>
+<li>ZSL 假设目标已经被精确裁剪，只需识别类别；</li>
+<li>ZSD 还要<strong>定位</strong>这些目标。</li>
+</ul>
+<p>本文的思路是：</p>
+<ul>
+<li>先解决“发现目标框”这一检测问题（不关心类别名）；</li>
+<li>再可在检测后附加任何 ZSL 分类器来贴标签。</li>
+</ul>
+<p>因此，ZS-YOLO 主要关注<strong>检测阶段的召回问题</strong>，而非最终分类。</p>
+<hr>
+<p><strong>C. Other Methods</strong></p>
+<p>这一节讲述了与 ZSD 间接相关的其他研究方向，以及它们的局限性。</p>
+<ol>
+<li>弱监督定位（Weakly Supervised Localization）</li>
+</ol>
+<p>例如 [33]–[35] 等方法尝试<strong>在没有框标注的情况下</strong>定位物体，但它们仍依赖：</p>
+<ul>
+<li><strong>图像级标签（image-level labels）</strong>；</li>
+<li>而 ZSD 中，<strong>未见类连标签都没有</strong>。<br> 所以弱监督方法仍然假设我们知道“图片里有什么类”，而不是从完全未知中检测。</li>
+</ul>
+<ol start="2">
+<li>无监督目标发现（Unsupervised Object Discovery）</li>
+</ol>
+<p>这类方法（例如 [36]）试图在没有任何标注的情况下，通过聚类或重复模式发现“物体簇”。<br> 但：</p>
+<ul>
+<li>它们依赖于训练集中出现的冗余部件；</li>
+<li>缺乏<strong>语义迁移能力</strong>；</li>
+<li>无法发现<strong>训练中完全未出现过</strong>的新类别。</li>
+</ul>
+<p>相反，本文的 ZS-YOLO 能通过“语义属性迁移”从 seen 类泛化到 unseen 类。</p>
+<hr>
+<p><strong>D. Concurrent Works（同期工作）</strong></p>
+<p>作者提到，在他们论文的早期版本发布到 arXiv 时（2019 年），另有两篇工作几乎同时出现（[37], [38]）。<br> 这些工作也提出了“零样本检测”的概念，但与本文方法差异显著：</p>
+<table>
+<thead>
+<tr>
+<th>特征</th>
+<th>同期工作</th>
+<th>ZS-YOLO</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>候选框生成</td>
+<td>使用 <strong>预定义提议器</strong>（EdgeBoxes 或 RPN）</td>
+<td><strong>内建 YOLO 框架</strong>端到端生成候选框</td>
+</tr>
+<tr>
+<td>模型结构</td>
+<td><strong>两步法</strong>：Proposal → ZSR 分类</td>
+<td><strong>一步法</strong>：同时检测 + 学语义</td>
+</tr>
+<tr>
+<td>假设</td>
+<td>假设 Proposal 能捕获 unseen 对象</td>
+<td>认为传统 Proposal 会把 unseen 当背景</td>
+</tr>
+<tr>
+<td>运行效率</td>
+<td>两阶段，较慢</td>
+<td>单阶段，实时（fast &amp; scalable）</td>
+</tr>
+<tr>
+<td>实验设置</td>
+<td>仅 ZSD（只含未见类），单一划分</td>
+<td>评估 <strong>ZSD + GZSD</strong> 多划分，涵盖更广</td>
+</tr>
+<tr>
+<td>数据集</td>
+<td>ILSVRC 2017（多单目标图像）</td>
+<td>PASCAL VOC、MS COCO（更复杂场景）</td>
+</tr>
+</tbody></table>
+<p>作者强调：<br> 这些同时期研究<strong>假设已经能提到 unseen 类的框</strong>，但事实上 RPN 或 EdgeBoxes <strong>也会错过未见类</strong>。ZS-YOLO 的创新正是在于——<strong>连 Proposal 阶段也融合语义信息</strong>，不依赖外部生成器。</p>
+<hr>
+<p><strong>总结：本节的逻辑框架</strong></p>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th>核心思想</th>
+<th>ZS-YOLO 的创新点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A. Object Detection</td>
+<td>YOLOv2 等检测器高效但只学视觉模式，会忽视未见类</td>
+<td>将语义引入视觉检测结构</td>
+</tr>
+<tr>
+<td>B. Zero-Shot Recognition</td>
+<td>ZSL 解决“分类未见类”，但不处理“检测”</td>
+<td>从分类扩展到检测：ZSD</td>
+</tr>
+<tr>
+<td>C. Other Methods</td>
+<td>弱监督&#x2F;无监督方法仍依赖标签或统计冗余</td>
+<td>不依赖未见类标注，利用语义迁移</td>
+</tr>
+<tr>
+<td>D. Concurrent Works</td>
+<td>同期ZSD方法仍依赖RPN或EdgeBoxes</td>
+<td>首个端到端“语义感知”检测器</td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="METHODOLOGY"><a href="#METHODOLOGY" class="headerlink" title="METHODOLOGY"></a>METHODOLOGY</h1><h2 id="A-Problem-Definition"><a href="#A-Problem-Definition" class="headerlink" title="A. Problem Definition"></a>A. Problem Definition</h2><p> 这一节作者正式刻画了“零样本检测”（Zero-Shot Detection, ZSD）的数学定义，并明确指出自己方法的目标范围。下面我将按照论文原意分成四个逻辑层次来详细讲解。</p>
+<hr>
+<p><span style="color:#FF0000">🧩 一、研究问题的动机与范围</span></p>
+<p>作者首先指出，传统的<strong>目标检测</strong>假设训练集中包含所有类别的边界框标注。但在真实世界中，不可能为每个类别都提供大量标注。<br> 因此，<strong>Zero-Shot Detection (ZSD)</strong> 要解决的问题是：</p>
+<blockquote>
+<p><strong>如何在没有某类目标的任何训练样本的情况下，仍能检测出这些“未见类（unseen classes）”的物体。</strong></p>
+</blockquote>
+<p>检测任务包含两个要素：</p>
+<ol>
+<li><strong>定位（localization）</strong>：确定每个物体在图像中的位置（即预测边界框）；</li>
+<li><strong>识别（recognition）</strong>：判断这个框属于哪个类别。</li>
+</ol>
+<p>传统检测器如 YOLOv2 同时学习这两件事，但只针对“见过类（seen classes）”。ZSD 则要求模型能<strong>泛化</strong>到未见类上。</p>
+<hr>
+<p><span style="color:#FF0000">📘 二、形式化定义（Formal Definition）</span></p>
+<p>设训练集为：<br>$$<br>D^{tr} &#x3D; ( B_i, c_i, \mathbf{y_i})  _{i&#x3D;1}^N<br>$$<br>其中：</p>
+<ul>
+<li>$B_i &#x3D; (x_i, y_i, w_i, h_i)$：第 $i $个目标的边界框（位置和尺寸）；</li>
+<li>$c_i \in \mathcal{C}_{seen}$：该目标的类别标签，只来自<strong>已见类别集合</strong>；</li>
+<li>$\mathbf{y}_i \in \mathbb{R}^h$：该类别的<strong>语义表示向量</strong>（semantic representation），例如 64 维属性或 word2vec 向量。</li>
+</ul>
+<p>训练阶段模型只接触到 $\mathcal{C}_{seen}$ 类别。<br> 测试阶段，图像可能包含：</p>
+<ul>
+<li>来自$\mathcal{C}_{seen}$ 的物体；</li>
+<li>来自 <strong>未见类别集合</strong> $\mathcal{C}_{unseen}$ 的物体；</li>
+<li>或者两者混合。</li>
+</ul>
+<p>且这两个集合互不重叠：</p>
+<p>$\mathcal{C_{seen}} \cap \mathcal{C_{unseen}} &#x3D; \emptyset$</p>
+<p>任务目标：</p>
+<blockquote>
+<p>让检测器在测试阶段同时识别出 seen 与 unseen 类的所有前景物体（foreground objects），并为每个预测输出边界框。</p>
+</blockquote>
+<hr>
+<p><span style="color:#FF0000">📙 三、ZS-YOLO 的目标：解决“检测不到”的问题</span></p>
+<p>在定义问题之后，作者明确界定了自己的研究重点：</p>
+<ul>
+<li><p><strong>ZS-YOLO 并不试图直接给未见类命名</strong>（即不要求输出“这是什么类”），而是首先解决更基础的任务——</p>
+<blockquote>
+<p><strong>在图像中正确“检测出”所有前景目标（包括 unseen 类），不把它们错判为背景。</strong></p>
+</blockquote>
+</li>
+</ul>
+<p>为什么？</p>
+<ol>
+<li><strong>YOLOv2 的主要失败在于“漏检”，而不是“误分类”</strong>。<br> 它经常将 unseen 类误认为背景，导致 recall 极低。</li>
+<li>一旦能把 unseen 物体的框检测出来，分类问题就可以交给任何成熟的 ZSL 分类器来解决；</li>
+<li>更现实的场景中，我们往往<strong>不知道 unseen 类的语义列表</strong>（$\mathcal{C}_{unseen} $是未知的）。<br> 因此，ZS-YOLO 只专注于“检测任何前景目标”，不需要预定义 unseen 类的语义信息。</li>
+</ol>
+<p>换句话说：</p>
+<blockquote>
+<p>ZS-YOLO &#x3D; “让检测器先学会‘看见’未见之物”，而不是直接去“认出它是谁”。</p>
+</blockquote>
+<hr>
+<p><span style="color:#FF0000">🧠 四、ZS-YOLO 的任务设定与创新点总结</span></p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>传统 YOLOv2</th>
+<th>ZS-YOLO</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>训练类别</td>
+<td>仅 seen 类</td>
+<td>仅 seen 类（相同）</td>
+</tr>
+<tr>
+<td>训练信号</td>
+<td>视觉特征 + 目标性损失</td>
+<td>视觉特征 + <strong>语义属性损失</strong>（semantic guidance）</td>
+</tr>
+<tr>
+<td>测试输入</td>
+<td>图像</td>
+<td>图像（无需语义输入）</td>
+</tr>
+<tr>
+<td>输出</td>
+<td>见过类的框与标签</td>
+<td>所有前景目标的框（包含 unseen）</td>
+</tr>
+<tr>
+<td>unseen 类识别</td>
+<td>失败（被当背景）</td>
+<td>成功检测（语义迁移提升召回）</td>
+</tr>
+</tbody></table>
+<p><strong>核心创新点</strong>：</p>
+<ul>
+<li>把“语义属性”引入检测器的学习过程；</li>
+<li>不要求测试时提供 unseen 类语义；</li>
+<li>改善检测器的“目标性感知”能力，让它学会在视觉空间里反映语义相似性。</li>
+</ul>
+<hr>
+<p><span style="color:#FF0000">✨ 五、直观理解</span></p>
+<p>可以这么理解这个问题定义：</p>
+<blockquote>
+<p>传统 YOLOv2 的“objectness”概念是纯视觉的；<br> ZS-YOLO 想让这个“objectness”同时带有一点“语义的味道”——<br> 让模型明白“没见过的马”在语义上像“见过的狗”，因此也算“一个前景目标”。</p>
+</blockquote>
+<hr>
+<p><span style="color:#FF0000">小结：</span></p>
+<ol>
+<li><strong>ZSD 问题定义</strong>：在训练中仅有 seen 类，测试时需检测 seen + unseen 的物体位置；</li>
+<li><strong>ZS-YOLO 关注点</strong>：解决 unseen 类被误判为背景的问题；</li>
+<li><strong>方法约束</strong>：<ul>
+<li>不需要知道 unseen 类的语义原型；</li>
+<li>不输出 unseen 类的类别名；</li>
+<li>但能提高 unseen 类的检测召回；</li>
+</ul>
+</li>
+<li><strong>核心目标</strong>：提升检测器对“语义相关新类”的泛化能力。</li>
+</ol>
+<hr>
+<h2 id="B-ZS-YOLO-Network-Architecture"><a href="#B-ZS-YOLO-Network-Architecture" class="headerlink" title="B.ZS-YOLO Network Architecture"></a>B.ZS-YOLO Network Architecture</h2><p> 这是整篇论文的核心部分之一，作者在这里构建了一个融合“视觉特征 + 语义属性”的端到端检测框架，旨在让检测器不仅“看见”，还“理解”语义相似性。</p>
+<hr>
+<h3 id="🧩-一、总体结构概览"><a href="#🧩-一、总体结构概览" class="headerlink" title="🧩 一、总体结构概览"></a><span style="color:#FF0000">🧩 一、总体结构概览</span></h3><p>ZS-YOLO 的设计基于 <strong>YOLOv2</strong>（单阶段检测器），但在其基础上扩展了两个关键模块：</p>
+<ol>
+<li><strong>语义属性预测模块（Semantic Prediction Module）</strong>；</li>
+<li><strong>多模态置信度预测模块（Confidence Prediction Module）</strong>。</li>
+</ol>
+<p>整个网络包含四个主要部分（见 Fig. 2）：</p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>功能</th>
+<th>输出</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>(1) 特征提取模块 (Feature Extraction)</td>
+<td>提取图像的多尺度视觉特征</td>
+<td>特征张量 $T_F $(13×13×1024)</td>
+<td>使用 Darknet-19 结构</td>
+</tr>
+<tr>
+<td>(2) 目标定位模块 (Object Localization)</td>
+<td>预测边界框偏移量</td>
+<td>$T_L $(13×13×20)</td>
+<td>每个 cell 预测 5 个锚框，每个 4 参数</td>
+</tr>
+<tr>
+<td>(3) 语义预测模块 (Semantic Prediction)</td>
+<td>预测每个锚框的语义属性向量</td>
+<td>$T_S $(13×13×5h)</td>
+<td>例如 h&#x3D;64 (VOC 属性维度)</td>
+</tr>
+<tr>
+<td>(4) 置信度预测模块 (Confidence Prediction)</td>
+<td>判断该框是否包含前景目标</td>
+<td>$T_C $(13×13×5)</td>
+<td>输入是多模态融合 [TF,TL,TS][T_F,T_L,T_S]</td>
+</tr>
+</tbody></table>
+<p>网络整体是<strong>全卷积结构（Fully Convolutional Network）</strong>，因此支持端到端训练。</p>
+<hr>
+<h3 id="📘-二、-1-特征提取模块-Feature-Extraction"><a href="#📘-二、-1-特征提取模块-Feature-Extraction" class="headerlink" title="📘 二、(1) 特征提取模块 (Feature Extraction)"></a><span style="color:#FF0000">📘 二、(1) 特征提取模块 (Feature Extraction)</span></h3><ul>
+<li>主干网络采用 <strong>Darknet-19</strong>（YOLOv2 的 backbone）；</li>
+<li>输入图像被调整为 <strong>416×416</strong>；</li>
+<li>输出一个特征张量 $T_F$，大小为 <strong>13×13×1024</strong>；</li>
+<li>作者指出，这个 backbone 也可以替换为其他 CNN（ResNet、Inception、VGG 等），但他们保留 Darknet 是为了与 YOLOv2 对比公平。</li>
+</ul>
+<p><strong>Passthrough 层（跨层连接）</strong>：<br> Darknet-19 含有一个“passthrough layer”，它能把高分辨率浅层特征拼接到深层特征上，以保留小目标的信息——这对零样本检测特别重要，因为<strong>未见类往往出现在小物体或非典型外观</strong>中。</p>
+<hr>
+<h3 id="📙-三、-2-目标定位模块-Object-Localization"><a href="#📙-三、-2-目标定位模块-Object-Localization" class="headerlink" title="📙 三、(2) 目标定位模块 (Object Localization)"></a><span style="color:#FF0000">📙 三、(2) 目标定位模块 (Object Localization)</span></h3><blockquote>
+<ol>
+<li>网格与锚框：为什么输出是 13×13×20？</li>
+</ol>
+<ul>
+<li>输入图像被缩放到 <strong>416×416</strong>，主干网络步幅是 <strong>32</strong>，所以输出特征图是 <strong>13×13</strong>（&#x3D; 416 &#x2F; 32）。</li>
+<li>每个网格 cell（13×13 共 169 个）都“负责”预测若干个候选框。本文沿用 YOLOv2：<strong>每个 cell 有 5 个锚框（anchor）</strong>，它们的长宽比&#x2F;尺度预先聚类得到（称为先验）。</li>
+<li>对每个锚框，网络要预测 <strong>4 个偏移量</strong>：$(o_x,o_y,o_w,o_h)$。</li>
+<li>因而：每个 cell 输出 $5\times 4&#x3D;20$ 个数，整张特征图的定位输出张量</li>
+</ul>
+<p>$$<br> T_L \in \mathbb{R}^{13\times 13\times 20}.<br>$$</p>
+<blockquote>
+<p>小结：13×13 是网格数；“20”来自 5 个锚 × 每锚 4 个坐标参数。</p>
+</blockquote>
+<hr>
+<ol start="2">
+<li>这四个偏移量是“相对量”，如何变成真实框？</li>
+</ol>
+<p>文中的公式把<strong>相对参数</strong>变成<strong>图像坐标</strong>（或归一化坐标）：</p>
+<p>$$<br>\begin{aligned}<br>\hat x &amp;&#x3D; \sigma(o_x) + c_x, \<br>\hat y &amp;&#x3D; \sigma(o_y) + c_y, \<br>\hat w &amp;&#x3D; p_w , e^{o_w}, \<br>\hat h &amp;&#x3D; p_h , e^{o_h}.<br>\end{aligned}<br>$$</p>
+<p>含义逐个看：</p>
+<ul>
+<li>$c_x,c_y$：当前 <strong>cell 的整型网格坐标</strong>（范围 0…12）。它们确定了“第几格”。</li>
+<li>$\sigma(\cdot)$：Sigmoid，把中心偏移限制在 <strong>(0,1)</strong>。<br> 所以 $\sigma(o_x)$ 是“<strong>在本 cell 内的水平偏移</strong>”；加上 $c_x$ 就得到“<strong>在整个 13×13 网格平面上的中心坐标</strong>”。</li>
+<li>$p_w,p_h$：该锚框的<strong>先验宽高</strong>（和输入分辨率一致的单位，通常是像素尺度或等价的归一化值）。</li>
+<li>$e^{o_w}, e^{o_h}$：保证宽高为<strong>正数</strong>，且能按比例缩放先验（&gt;1 放大，&lt;1 缩小）。</li>
+</ul>
+<blockquote>
+<p>直观比喻：<br>先用 $c_x,c_y$ 选定“哪一格”，再用 $\sigma(o_x),\sigma(o_y)$ 在这一格的<strong>小方块里挪动中心点</strong>；宽高则在锚框尺寸 $p_w,p_h$ 的基础上用指数缩放。</p>
+</blockquote>
+<hr>
+<ol start="3">
+<li>从“网格坐标”到“像素坐标 &#x2F; 归一化坐标”</li>
+</ol>
+<ul>
+<li><strong>特征图步幅</strong> $s&#x3D;32$ 像素（从 416 下采样到 13）。</li>
+<li>若你想得到<strong>像素级中心</strong>（相对于 416×416 输入），可用：</li>
+</ul>
+<p>$$<br> x_{\text{px}} &#x3D; (\sigma(o_x)+c_x)\times s,\quad<br> y_{\text{px}} &#x3D; (\sigma(o_y)+c_y)\times s.<br>$$</p>
+<ul>
+<li><strong>宽高</strong>如果锚的 $p_w,p_h$ 就是按 416 标注的像素尺寸，则：</li>
+</ul>
+<p>$$<br> w_{\text{px}} &#x3D; p_w , e^{o_w},\quad<br> h_{\text{px}} &#x3D; p_h , e^{o_h}.<br>$$</p>
+<ul>
+<li>若希望 <strong>0–1 归一化坐标</strong>（相对整幅图）：</li>
+</ul>
+<p>$$<br> x_{(0\text{–}1)}&#x3D;\frac{\sigma(o_x)+c_x}{13},\<br> y_{(0\text{–}1)}&#x3D;\frac{\sigma(o_y)+c_y}{13},\<br> w_{(0\text{–}1)}&#x3D;\frac{p_w e^{o_w}}{416},\<br> h_{(0\text{–}1)}&#x3D;\frac{p_h e^{o_h}}{416}.<br>$$</p>
+<hr>
+<ol start="4">
+<li>为什么要用 Sigmoid 和指数？</li>
+</ol>
+<ul>
+<li><strong>Sigmoid 对中心偏移</strong>：<br> 把中心限制在 <strong>当前 cell 内部</strong>，训练更稳定；否则中心可能“跳格”，学习会抖。</li>
+<li><strong>指数对宽高</strong>：<br> 保证 $w,h&gt;0$，并让“相对缩放”对不同尺度都更平滑（乘法增益），有利于拟合多尺度目标。</li>
+</ul>
+<hr>
+<ol start="5">
+<li>一个完整的小算例（把数算到像素）</li>
+</ol>
+<p>假设：</p>
+<ul>
+<li>图像 416×416，步幅 $s&#x3D;32$，特征图 13×13。</li>
+<li>当前 cell 在第 $c_x&#x3D;7, c_y&#x3D;5$ 格。</li>
+<li>该 cell 的某个锚的先验 $p_w&#x3D;80, p_h&#x3D;40$（像素）。</li>
+<li>网络输出偏移：$o_x&#x3D;0.2,\ o_y&#x3D;-0.4,\ o_w&#x3D;0.1,\ o_h&#x3D;0.3$。</li>
+</ul>
+<p>计算：</p>
+<ul>
+<li>$\sigma(0.2)\approx 0.5498,\ \sigma(-0.4)\approx 0.4013$</li>
+<li><strong>中心（网格坐标）</strong>：<br> $\hat x&#x3D;0.5498+7&#x3D;7.5498,\ \ \hat y&#x3D;0.4013+5&#x3D;5.4013$</li>
+<li><strong>中心（像素）</strong>：<br> $x_{\text{px}}&#x3D;7.5498\times 32\approx 241.6,\ \ y_{\text{px}}&#x3D;5.4013\times 32\approx 172.8$</li>
+<li><strong>宽高（像素）</strong>：<br> $w_{\text{px}}&#x3D;80\times e^{0.1}\approx 80\times 1.105&#x3D;88.4$<br>$h_{\text{px}}&#x3D;40\times e^{0.3}\approx 40\times 1.350&#x3D;54.0$</li>
+<li>若要左上&#x2F;右下角：</li>
+</ul>
+<p>$$<br> x_1&#x3D;x_{\text{px}}-\tfrac{w}{2}\approx 197.4,\quad<br> y_1&#x3D;y_{\text{px}}-\tfrac{h}{2}\approx 145.8,\<br> x_2&#x3D;x_{\text{px}}+\tfrac{w}{2}\approx 285.8,\quad<br> y_2&#x3D;y_{\text{px}}+\tfrac{h}{2}\approx 199.8.<br>$$</p>
+<blockquote>
+<p>你可以把这组数直接画到 416×416 的图上，就得到预测框。</p>
+</blockquote>
+<hr>
+<ol start="6">
+<li>训练时“谁负责谁”：为什么只让一个锚学一个 GT？</li>
+</ol>
+<ul>
+<li>对于每个 <strong>GT 框</strong>，在它中心所在的 cell 内，选与 GT <strong>IoU 最大</strong>的那个锚作为“负责者”。</li>
+<li>这个锚的 $I^{\text{obj}}&#x3D;1$（负责回归该 GT 的坐标与其它相关输出）；同 cell 的另外 4 个锚则不负责这个 GT。</li>
+<li>这样可避免“多个锚重复学同一个 GT”，让训练稳定收敛。</li>
+</ul>
+<hr>
+<ol start="7">
+<li>常见困惑一览</li>
+</ol>
+<ul>
+<li><strong>$c_x,c_y$ 是像素吗？</strong> 不是，是 <strong>网格索引（0…12）</strong>。乘以步幅 32 才变像素。</li>
+<li><strong>锚的 $p_w,p_h$ 单位是什么？</strong> 通常以<strong>网络输入尺度的像素</strong>（如 416）定义。实现里读取 anchors 后，会在坐标变换时与 stride&#x2F;归一化配合使用。</li>
+<li><strong>预测到的 $\hat x,\hat y$ 会越出图像吗？</strong> 不会，Sigmoid + 网格加法天然把中心限制在整张图范围内。</li>
+<li><strong>为何不用线性预测宽高？</strong> 线性会出现负值或在大&#x2F;小尺度下梯度不均；指数缩放更稳定。</li>
+</ul>
+<hr>
+<ol start="8">
+<li>和后续损失怎么呼应？</li>
+</ol>
+<ul>
+<li>位置损失里用到 $\hat x,\hat y,\hat w,\hat h$ 与 GT 的差（对 $w,h$ 常用 $\sqrt{\cdot}$ 形式，进一步平衡大小目标的梯度）。</li>
+<li>这些梯度会反向传到 $o_x,o_y,o_w,o_h$，再到 backbone，促使网络学会“把锚 + 偏移”对齐到真实物体。</li>
+</ul>
+</blockquote>
+<hr>
+<h3 id="📗-四、-3-语义预测模块-Semantic-Prediction"><a href="#📗-四、-3-语义预测模块-Semantic-Prediction" class="headerlink" title="📗 四、(3) 语义预测模块 (Semantic Prediction)"></a><span style="color:#FF0000">📗 四、(3) 语义预测模块 (Semantic Prediction)</span></h3><p>这是 <strong>ZS-YOLO 的第一个创新点</strong>。</p>
+<p>任务：</p>
+<p>让每个预测框输出一个<strong>语义属性向量 $\hat{\mathbf{y}}\in \mathbb{R}^h$</strong>，例如：</p>
+<ul>
+<li>在 PASCAL VOC 中，$h&#x3D;64$；</li>
+<li>属性可能包括 “furry”（有毛发）、“has wheels”（有轮子）、“made of metal”（金属的）等。</li>
+</ul>
+<p>结构：</p>
+<ul>
+<li>使用 1×1 卷积层实现；</li>
+<li>输出张量大小：13×13×(5h)，即每个 cell 的 5 个锚框各输出一个 h 维语义向量；</li>
+<li>例如 VOC 中输出维度为 13×13×320。</li>
+</ul>
+<p>训练目标：</p>
+<ul>
+<li>对每个有物体的锚框，使预测的语义向量接近该类的语义原型；</li>
+<li>对背景锚框，使语义输出与任何 seen 类原型的相似度都很低；</li>
+<li>这将在后续损失函数部分（L_attr）中详细定义。</li>
+</ul>
+<p>直觉：</p>
+<p>这个模块让模型<strong>在视觉空间中学习语义关系</strong>。<br>例如，“狗”和“猫”虽然外观不同，但在语义空间中都带有 “furry” 等属性，因此检测器学到的特征会彼此靠近，从而：</p>
+<blockquote>
+<p>当测试时出现一只“猫”，即使模型没见过“猫”，也会因其语义与“狗”相似而给出较高的置信度。</p>
+</blockquote>
+<blockquote>
+<p><strong>补充</strong></p>
+<hr>
+<p>它具体在做什么？</p>
+<ol>
+<li>输出是什么？</li>
+</ol>
+<ul>
+<li>特征图大小是 <strong>13×13</strong>，每个 cell 提出 <strong>5 个候选框（anchor）</strong>。</li>
+<li>对<strong>每个候选框</strong>，语义头预测一个 <strong>h 维</strong>向量 $\hat{\mathbf y}\in\mathbb{R}^h$（比如 VOC 用 h&#x3D;64 的属性向量）。</li>
+<li>因而语义输出张量</li>
+</ul>
+<p>$$<br> T_S \in \mathbb{R}^{13\times 13\times (5h)}.<br>$$</p>
+<ul>
+<li>随后通过一个 <strong>1×1 卷积</strong>，卷积核数 &#x3D; $5h$（把通道拍平成所需维度），因此几乎不增加计算量。</li>
+</ul>
+<blockquote>
+<p>例：PASCAL VOC 用 [19] 提供的 <strong>64 维属性</strong>，故 $h&#x3D;64$。则 $T_S$ 的通道数为 $5\times64&#x3D;320$。</p>
+</blockquote>
+<ol start="2">
+<li>训练时怎么用？</li>
+</ol>
+<ul>
+<li>给<strong>前景正样本</strong>（负责某个 GT 的 anchor），我们希望 $\hat{\mathbf y}$ 与该类的<strong>语义原型</strong> $\mathbf y_c$ <strong>相似</strong>（通常用<strong>余弦相似</strong> &#x2F; $L_2$ 距离等）。</li>
+<li>给<strong>纯背景</strong>（明确不含目标的 anchor），希望 $\hat{\mathbf y}$ <strong>不像任何已见类</strong>的原型（把与所有 seen 类的最大相似度压低）。</li>
+</ul>
+<p>一个常见的写法（论文里等价思想）：</p>
+<p>$$<br>L_{\text{attr}}&#x3D;\sum_k<br>\lambda_{\text{obj}},I^{\text{obj}}<em>k\big(1-S(\hat{\mathbf y}<em>k,\mathbf y</em>{c(k)})\big)^2<br>+\lambda</em>{\text{noobj}},I^{\text{noobj}}<em>k\big(\max</em>{c\in\mathcal C_{\text{seen}}}S(\hat{\mathbf y}_k,\mathbf y_c)\big)^2,<br>$$</p>
+<p>其中 $S$ 是余弦相似；$I^{\text{obj}},I^{\text{noobj}}$ 指示该 anchor 是前景还是纯背景。</p>
+<blockquote>
+<p>小心点：背景项不是“像哪个类”，而是<strong>都不像</strong>；因此用“最大相似度”做一个“推远”约束。</p>
+</blockquote>
+<ol start="3">
+<li>为什么这能帮到未见类（unseen）？</li>
+</ol>
+<ul>
+<li><p>语义原型（属性&#x2F;词向量）把<strong>类与类的关系</strong>编码了：例如“狗”和“猫”都带 <strong>furry</strong>、<strong>has legs</strong> 等属性，语义上相近。</p>
+</li>
+<li><p>训练中，正样本被<strong>拉向其语义方向</strong>，背景被<strong>推离所有已见类语义方向</strong>；这些梯度会<strong>反传到共享主干特征</strong>。<br> ⇒ 主干学到的视觉表征不止是“像像素”，还会反映<strong>语义亲缘</strong>。</p>
+</li>
+<li><p>测试来一个<strong>没见过</strong>的“猫”，即便外观稍不同，它在语义空间可能仍靠近“狗&#x2F;狐狸”等 seen 类；于是：</p>
+</li>
+<li><p>语义头给出“像 seen 的语义”的 $\hat{\mathbf y}$；</p>
+</li>
+<li><p>随后 <strong>多模态置信度头</strong>（把 $T_F,T_L,T_S$ 一起看）会更愿意给<strong>高 objectness</strong>，从而<strong>不把它当背景</strong>。<br>⇒ 直接提升 <strong>召回率（recall）</strong>。</p>
+</li>
+</ul>
+<ol start="4">
+<li>测试阶段是否需要 unseen 的语义？</li>
+</ol>
+<ul>
+<li><strong>不需要。</strong> 这点很重要。语义头在测试时主要作为<strong>内部特征</strong>，供<strong>置信度头</strong>使用。</li>
+<li>如果你想给检测到的框<strong>贴类名</strong>，可以<strong>额外</strong>接一个零样本分类器（用 unseen 原型做最近邻等）——但这已是检测之后的可选步骤。</li>
+</ul>
+<hr>
+<p>和 YOLOv2 的关键差异</p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>YOLOv2</th>
+<th>ZS-YOLO（本文）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>输出</td>
+<td>位置 + 类别 + 目标性</td>
+<td>位置 + <strong>语义向量</strong> + 目标性</td>
+</tr>
+<tr>
+<td>目标性来源</td>
+<td>只看视觉特征</td>
+<td><strong>视觉 + 几何 + 语义</strong>（多模态）</td>
+</tr>
+<tr>
+<td>对 unseen 的处理</td>
+<td>容易当背景压掉</td>
+<td>语义牵引，使其被报为前景（召回↑）</td>
+</tr>
+</tbody></table>
+<hr>
+<p>一眼看懂的直觉图（文字版）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;特征 T_F ──► [1×1 conv → 5h 通道] ──► 语义向量  T_S(…×5h)</span><br><span class="line">                        │</span><br><span class="line">                        └─ 与类原型做相似度监督 → 反传进主干（视觉被语义“塑形”）</span><br><span class="line">&gt;T_F, T_L, T_S  ──► 置信度头 ──► objectness（更愿意“相信”语义上像 seen 的未知物体）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>常见疑问补充</p>
+<ul>
+<li><strong>h 取值从哪来？</strong> 由数据集提供的语义注释决定：属性向量（如 VOC-64）、或词向量&#x2F;句向量（可自选）。</li>
+<li><strong>归一化要不要做？</strong> 做！训练时通常对 $\hat{\mathbf y}$ 与 $\mathbf y_c$ 做 <strong>L2 归一化</strong> 再算余弦，更稳。</li>
+<li><strong>背景怎么判定？</strong> 论文沿用 YOLO 的责任分配：纯背景 cell&#x2F;anchor（没有任何 GT 覆盖且 IoU 小）进入背景分支的约束。</li>
+<li><strong>计算量会不会大很多？</strong> 几乎不会：只是多了个 <strong>1×1 conv（5h 个通道）</strong> 和一项损失；与主干比，开销很小。</li>
+</ul>
+<hr>
+<p>小结（一句话）</p>
+<p><strong>Semantic Prediction</strong> 让“每个候选框”都学会说一段“语义话”（h 维向量），并用这段话去<strong>塑形视觉特征</strong>与<strong>支撑目标性判断</strong>，结果是：<strong>未见类不再轻易被当背景</strong>，召回显著提升。</p>
+</blockquote>
+<hr>
+<h3 id="📕-五、-4-置信度预测模块-Confidence-Prediction"><a href="#📕-五、-4-置信度预测模块-Confidence-Prediction" class="headerlink" title="📕 五、(4) 置信度预测模块 (Confidence Prediction)"></a><span style="color:#FF0000">📕 五、(4) 置信度预测模块 (Confidence Prediction)</span></h3><p>好的，我会用中文为您详细解释 <strong>置信度预测模块</strong> 的内容。以下是根据您上传的图像内容做出的解析。</p>
+<p><strong>置信度预测模块的工作原理</strong></p>
+<ol>
+<li><strong>置信度预测的目标</strong></li>
+</ol>
+<ul>
+<li><strong>目标</strong>：模型的最终任务是为每个边界框（bounding box）预测一个置信度分数 $\hat{p}$，即预测这个框是否包含一个有效的目标。</li>
+<li>传统检测器（如 SSD 和 YOLOv2）直接从 CNN 特征图 $T_F$ 中预测置信度分数。然而，这种方法对 <strong>未见物体</strong>（即训练集之外的物体）通常会产生较低的置信度，因为这些未见物体在视觉上与 <strong>见过的物体</strong>有显著不同，导致 <strong>低召回率</strong>。</li>
+</ul>
+<ol start="2">
+<li><strong>ZS-YOLO 的解决方法</strong></li>
+</ol>
+<ul>
+<li>为了解决这个问题，ZS-YOLO 通过 <strong>结合视觉信息和语义信息</strong> 来预测置信度。具体来说，除了视觉特征 $T_F$ 外，还利用了 <strong>语义信息</strong>（比如物体的属性特征）来帮助置信度的预测。</li>
+<li>除此之外，<strong>边界框坐标</strong> 也被作为预测置信度的有效信息来源。因为 <strong>前景物体</strong> 通常位于图像的某些特定位置（例如图像中心而非角落），这些信息可以帮助提高预测的准确性。</li>
+</ul>
+<ol start="3">
+<li><strong>具体实现</strong></li>
+</ol>
+<ul>
+<li><p>ZS-YOLO 将以下三个模块的输出 <strong>连接</strong>（concat）成一个多模态输入张量：</p>
+<ol>
+<li><strong>$T_F$</strong>：视觉特征图（来自 CNN）</li>
+<li><strong>$T_L$</strong>：边界框坐标（例如，位置和尺寸信息）</li>
+<li><strong>$T_S$</strong>：语义特征（来自语义预测模块）</li>
+</ol>
+</li>
+<li><p>这三个张量的 <strong>形状</strong> 被合并成一个多模态输入张量，形状为 <strong>$13 \times 13 \times (1024 + 20 + 5h)$</strong>，其中：</p>
+<ul>
+<li>$1024$ 来自视觉特征图 $T_F$</li>
+<li>$20$ 来自边界框回归输出 $T_L$</li>
+<li>$5h$ 来自语义特征 $T_S$，其中 $h$ 是语义向量的维度。</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li><strong>卷积层处理</strong></li>
+</ol>
+<ul>
+<li><p>合并后的张量通过一个 <strong>1×1 卷积层</strong>（包含 5 个滤波器），输出一个 <strong>$13 \times 13 \times 5$</strong> 形状的张量 $T_C$，每个元素对应一个边界框的预测置信度分数 $\hat{p}$。</p>
+<ul>
+<li>也就是说，模型会为每个 <strong>13×13×5 &#x3D; 845</strong> 个边界框，预测一个置信度分数。</li>
+</ul>
+</li>
+</ul>
+<ol start="5">
+<li><strong>如何使用边界框坐标提高置信度</strong></li>
+</ol>
+<ul>
+<li>ZS-YOLO 还指出，<strong>边界框坐标</strong>（例如物体的中心位置）对预测置信度也有帮助。<strong>前景物体</strong>通常位于图像中心附近而不是角落，这些信息对于置信度的预测非常重要。</li>
+</ul>
+<hr>
+<p><strong>总结：ZS-YOLO 的置信度预测</strong></p>
+<ol>
+<li><strong>输入</strong>：模型结合了视觉特征 $T_F$、边界框信息 $T_L$、和语义特征 $T_S$。</li>
+<li><strong>卷积处理</strong>：将这三个张量合并后通过一个卷积层，生成一个 <strong>$13 \times 13 \times 5$</strong> 的张量 $T_C$，每个元素为一个边界框的置信度分数。</li>
+<li><strong>目标</strong>：最终，模型会为每个锚框（边界框候选区域）预测一个置信度值，表示该框是否包含有效的目标。</li>
+</ol>
+<p>这个方法使得 ZS-YOLO 在预测 <strong>未见类</strong>（即训练时未出现的类别）的物体时，能结合视觉和语义信息，更好地提升召回率。</p>
+<hr>
+<h3 id="🔍-六、网络特点与扩展性"><a href="#🔍-六、网络特点与扩展性" class="headerlink" title="🔍 六、网络特点与扩展性"></a><span style="color:#FF0000">🔍 六、网络特点与扩展性</span></h3><p>作者强调：</p>
+<ul>
+<li><p>ZS-YOLO 的框架<strong>不限于 YOLOv2</strong>；</p>
+</li>
+<li><p>也可以轻松迁移到其他单阶段检测器，如：</p>
+<ul>
+<li><strong>SSD (Single Shot MultiBox Detector)</strong>；</li>
+<li><strong>RetinaNet</strong>（带 Focal Loss）；</li>
+</ul>
+</li>
+<li><p>甚至可以视作一种“语义增强的 RPN”，嵌入到两阶段检测器（如 Faster-RCNN）中。</p>
+</li>
+</ul>
+<p>但他们选择 YOLOv2 作为主干，是因为它更简单且高效，便于验证语义模块的效果。</p>
+<hr>
+<h3 id="✨-七、整体流程总结（从输入到输出）"><a href="#✨-七、整体流程总结（从输入到输出）" class="headerlink" title="✨ 七、整体流程总结（从输入到输出）"></a><span style="color:#FF0000">✨ 七、整体流程总结（从输入到输出）</span></h3><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>输入&#x2F;输出</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1️⃣ 输入图像</td>
+<td>416×416</td>
+<td>进入 Darknet-19</td>
+</tr>
+<tr>
+<td>2️⃣ 提取视觉特征</td>
+<td>$T_F$ (13×13×1024)</td>
+<td>全卷积输出</td>
+</tr>
+<tr>
+<td>3️⃣ 预测框偏移量</td>
+<td>$T_L$ (13×13×20)</td>
+<td>位置回归</td>
+</tr>
+<tr>
+<td>4️⃣ 预测语义属性</td>
+<td>$T_S$ (13×13×5h)</td>
+<td>属性映射</td>
+</tr>
+<tr>
+<td>5️⃣ 多模态置信度预测</td>
+<td>$T_C$ (13×13×5)</td>
+<td>判断是否为前景</td>
+</tr>
+<tr>
+<td>6️⃣ 输出结果</td>
+<td>框 + 置信度</td>
+<td>若需识别，再交给 ZSL 分类器</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="🎯-八、创新点总结"><a href="#🎯-八、创新点总结" class="headerlink" title="🎯 八、创新点总结"></a><span style="color:#FF0000">🎯 八、创新点总结</span></h3><table>
+<thead>
+<tr>
+<th>模块</th>
+<th>创新点</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Semantic Prediction</td>
+<td>首次在检测器中加入语义属性预测</td>
+<td>让视觉特征“理解语义亲缘”，便于泛化</td>
+</tr>
+<tr>
+<td>Multi-modal Confidence</td>
+<td>利用视觉 + 语义 + 空间信息预测目标性</td>
+<td>提升 unseen 类召回</td>
+</tr>
+<tr>
+<td>End-to-end 设计</td>
+<td>不依赖外部 Proposal 或分类器</td>
+<td>实时高效，结构统一</td>
+</tr>
+</tbody></table>
+<h2 id="C-Zero-Shot-Detection-Losses"><a href="#C-Zero-Shot-Detection-Losses" class="headerlink" title="C. Zero-Shot Detection Losses"></a>C. Zero-Shot Detection Losses</h2><p>这部分是整篇论文的数学核心，作者在这里定义了 ZS-YOLO 的三项损失函数：定位损失 $L_{\text{loc}}$、语义损失 $L_{\text{attr}}$、以及置信度损失 $L_{\text{conf}}$。这三项共同训练网络，使其既能定位物体，又能学习语义相关性，并在未见类上保持较高的召回率。</p>
+<hr>
+<h3 id="1️⃣-整体目标函数"><a href="#1️⃣-整体目标函数" class="headerlink" title="1️⃣ 整体目标函数"></a>1️⃣ 整体目标函数</h3><p>网络的总损失定义为三项加权和：</p>
+<p>$$<br>L &#x3D; \lambda_{\text{loc}} L_{\text{loc}} + \lambda_{\text{attr}} L_{\text{attr}}  + \lambda_{\text{conf}} L_{\text{conf}}<br>$$</p>
+<p>其中 $\lambda_{\text{loc}},\lambda_{\text{attr}},\lambda_{\text{conf}}$ 是权重系数。<br>在论文实验中通常取值 1 : 1 : 1，保证三项任务（定位、语义、目标性）共同优化。</p>
+<hr>
+<h3 id="2️⃣-定位损失-L-text-loc"><a href="#2️⃣-定位损失-L-text-loc" class="headerlink" title="2️⃣ 定位损失 $L_{\text{loc}}$"></a>2️⃣ 定位损失 $L_{\text{loc}}$</h3><ul>
+<li>检测头把输入图像（缩放到 416×416）变成一个 <strong>13×13</strong> 的网格（因为步幅是 32），<br>每个网格 cell 里有 <strong>5 个锚框（anchor）</strong>。</li>
+<li>所以一张图一共会预测 <strong>13×13×5 &#x3D; 845</strong> 个候选框。公式里求和的上限 <strong>845</strong> 就来自这里。</li>
+</ul>
+<blockquote>
+<p>二、谁“负责”哪个真实框？— 指示量 $I_k^{\text{obj}}$</p>
+<p>作者不希望<strong>同一个真实物体</strong>被同一个 cell 里的多个锚重复学习，于是规定：</p>
+<blockquote>
+<p>只有 <strong>一个</strong> 预测框对某个真实框负责，它的指示量 $I_k^{\text{obj}}$ 设为 1，其余设为 0。</p>
+</blockquote>
+<p>判定“谁负责”的规则（两步）：</p>
+<ol>
+<li>真实框的<strong>中心点</strong>落在哪个 cell，就只在这个 cell 内挑“负责人”；</li>
+<li>在该 cell 的 5 个预测框里，<strong>与这个真实框 IoU 最高</strong>的那个被选为“负责人”。</li>
+</ol>
+<p>被选中的那个预测框 $k$ 的 $I_k^{\text{obj}}&#x3D;1$，其它同 cell 的锚都为 0。<br>好处：<strong>避免冗余</strong>、稳定训练。</p>
+</blockquote>
+<p><strong>目标</strong>：让预测框 $(\hat x,\hat y,\hat w,\hat h)$ 与真实框 $(x,y,w,h)$ 对齐。</p>
+<p><strong>形式</strong>（与 YOLOv2 一致）：<br>$$<br>L_{\text{loc}} &#x3D; \sum_{k&#x3D;1}^{M} I_k^{\text{obj}}<br>  \Big[<br>    (\hat x_k - x_k)^2<br>    + (\hat y_k - y_k)^2<br>    + (\sqrt{\hat w_k}-\sqrt{w_k})^2<br>    + (\sqrt{\hat h_k}-\sqrt{h_k})^2<br>  \Big]<br>$$</p>
+<p>含义一目了然：</p>
+<ul>
+<li>$(\hat x_k,\hat y_k,\hat w_k,\hat h_k)$：第 $k$ 个预测框的<strong>中心坐标与宽高</strong>；</li>
+<li>$(x_k,y_k,w_k,h_k)$：它负责的那个<strong>真实框</strong>的中心与宽高；</li>
+<li>$I_k^{\text{obj}}$ 保证<strong>只有负责人参与</strong>损失；</li>
+<li>误差度量用的是<strong>平方误差</strong>（越接近越好）。</li>
+</ul>
+<blockquote>
+<p>注意：$\hat x,\hat y$ 是中心坐标；$\hat w,\hat h$ 是宽高。它们来自网络输出的偏移量（经过 Sigmoid&#x2F;指数变换得到），你前面看过的那组变换就是把网络的相对量变成真实坐标。</p>
+</blockquote>
+<p>和训练流程如何配合？</p>
+<ol>
+<li><strong>前向</strong>：网络对 845 个锚输出偏移 → 解码成 $\hat x,\hat y,\hat w,\hat h$。</li>
+<li><strong>匹配</strong>：每个 GT 找到<strong>落点 cell</strong>，再在该 cell 的 5 个锚里选 <strong>IoU 最大</strong>者作为负责人；置 $I_k^{\text{obj}}&#x3D;1$。</li>
+<li><strong>计算损失</strong>：只对负责人计算式 (2) 的定位项。</li>
+<li><strong>反向传播</strong>：梯度只回传到负责的锚与主干特征，促使它把框“对齐”真实目标。</li>
+</ol>
+<p>一句话总结</p>
+<p><strong>定位损失</strong>只让“对这个 GT 负责的那个锚”来为坐标误差买单：<br>中心用普通平方误差，宽高用“开方后的平方误差”来平衡大小目标的学习难度。<br>这套设计既简单高效，又能稳定地把预测框<strong>拉</strong>到真实框上。</p>
+<hr>
+<h3 id="3️⃣-语义损失-L-text-attr"><a href="#3️⃣-语义损失-L-text-attr" class="headerlink" title="3️⃣ 语义损失 $L_{\text{attr}}$"></a>3️⃣ 语义损失 $L_{\text{attr}}$</h3><p><strong>目的</strong>：让网络在视觉特征中“感知语义”。</p>
+<p>1️⃣ 语义损失的目标</p>
+<p><strong>目标</strong>：通过学习 <strong>语义相似性</strong> 来提高未见类的召回率。</p>
+<ul>
+<li>对于<strong>前景物体</strong>（即在训练时见过的类别），模型的预测语义向量 $\hat{\mathbf{y}}_k$ 应该尽量接近该物体真实的语义原型 $\mathbf{y}_c$。</li>
+<li>对于<strong>背景</strong>或<strong>未见物体</strong>，模型应该尽量避免预测出与任何已见类别的语义相似的内容。</li>
+</ul>
+<p>2️⃣ 语义损失函数的定义</p>
+<p>语义损失的目的是最小化预测语义向量和真实语义之间的差异，公式如下：</p>
+<span>
+$$
+L_{\text{attr}} = \sum_{k=1}^{M} \Big[ \lambda_{\text{obj}} I_k^{\text{obj}} \left( 1 - S(\hat{\mathbf{y}_k}, \mathbf{y}_{c(k)}) \right)^2 + \lambda_{\text{noobj}} I_k^{\text{noobj}} \left( \max_{c \in \mathcal{C}_{\text{seen}}} S(\hat{\mathbf{y}_k}, \mathbf{y}_c) \right)^2
+\Big]
+$$
+
+</span>
+
+<p>3️⃣ 公式解析</p>
+<p>我们来逐项解析这个公式，理解每个部分的含义。</p>
+<p>(1) <strong>前景样本（$I_k^{\text{obj}} &#x3D; 1$）</strong></p>
+<p>对于 <strong>前景物体</strong>（即模型应该学习到的目标）：</p>
+<ul>
+<li><p>$I_k^{\text{obj}} &#x3D; 1$，意味着这个锚框负责一个真实物体；</p>
+</li>
+<li><p>目标是将预测的语义向量 $\hat{\mathbf{y}}_k$ 与真实的语义原型 $\mathbf{y}_c$ 的相似度尽量提高。这里使用 <strong>余弦相似度</strong> $S(\hat{\mathbf{y}}_k, \mathbf{y}_c)$，其定义为：</p>
+<p>$$<br>S(\hat{\mathbf{y}}_k, \mathbf{y}_c) &#x3D; \frac{\hat{\mathbf{y}}_k^\top \mathbf{y}_c}{|\hat{\mathbf{y}}_k| |\mathbf{y}_c|}<br>$$</p>
+<p>这个相似度值越大，表示两者的语义越接近。为了最小化损失函数，模型需要 <strong>拉近</strong> 预测的语义向量和真实标签之间的差距。</p>
+</li>
+<li><p>公式中的部分：</p>
+<span>
+$$
+\lambda_{\text{obj}} I_k^{\text{obj}} \left( 1 - S(\hat{\mathbf{y}}_k, \mathbf{y}_{c(k)}) \right)^2
+$$
+
+<p>是前景样本的损失项，<strong>拉近预测的语义向量与真实标签</strong>的语义相似度。损失越小，表示预测越准确。</p>
+</li>
+</ul>
+<p>(2) <strong>背景样本（$I_k^{\text{noobj}} &#x3D; 1$）</strong></p>
+<p>对于 <strong>背景样本</strong>（即不包含任何目标的区域），模型的任务是<strong>避免预测出与任何已见类的语义相似的内容</strong>。</p>
+<ul>
+<li><p>这里，背景框的语义预测应该尽量与 <strong>所有已见类别的语义原型</strong> 相差较远。为了避免过度“拉近”，我们用 <strong>最大相似度</strong> 来确保背景框的语义不会被误预测为任何已见类别的语义。</p>
+<p>$$<br>\max_{c \in \mathcal{C}_{\text{seen}}} S(\hat{\mathbf{y}}_k, \mathbf{y}_c)<br>$$</p>
+<p>该项计算的是预测语义 $\hat{\mathbf{y}}_k$ 与所有已见类别的语义原型 $\mathbf{y}_c$ 的最大余弦相似度。对于背景框，损失应该使这个最大值尽量接近 <strong>0</strong>，表示背景框的语义应该与任何见过的物体类相差甚远。</p>
+</li>
+<li><p>公式中的部分：</p>
+<p>$$<br>\lambda_{\text{noobj}} I_k^{\text{noobj}} \left( \max_{c \in \mathcal{C}_{\text{seen}}} S(\hat{\mathbf{y}}_k, \mathbf{y}_c) \right)^2<br>$$</p>
+</span>
+
+<p>是背景样本的损失项，目的是<strong>推远背景框的语义预测</strong>与所有已见类的语义原型，防止背景被误认为目标。</p>
+</li>
+</ul>
+<p>4️⃣ 损失的平衡与加权</p>
+<ul>
+<li><p><strong>$\lambda_{\text{obj}}$ 与 $\lambda_{\text{noobj}}$</strong>：<br>这两个超参数控制前景与背景的损失加权，确保 <strong>前景样本</strong>对损失的贡献更大。<br>在实际训练中，前景样本往往比背景样本少，因此需要通过加权来避免背景样本过多影响训练过程。</p>
+</li>
+<li><p><strong>背景项的推远</strong>：<br>背景框的语义预测被设计成与任何已见类别原型的<strong>最大相似度接近 0</strong>，防止错误分类。这种设计可以确保即使在 <strong>测试阶段</strong>遇到未见类别时，模型也不会轻易将其误判为见过的目标。</p>
+</li>
+</ul>
+<hr>
+<p>5️⃣ 语义损失如何影响模型</p>
+<ul>
+<li><p><strong>训练时</strong>：</p>
+<ul>
+<li>语义损失会通过梯度反向传播到网络的视觉特征提取部分（backbone），使模型学习到在视觉空间中，如何根据目标的 <strong>语义特征</strong> 来进行更有效的目标定位。</li>
+<li>语义向量的学习过程，不仅帮助模型识别<strong>已见类</strong>，还能有效地对 <strong>未见类</strong>进行召回。</li>
+</ul>
+</li>
+<li><p><strong>测试时</strong>：</p>
+<ul>
+<li>ZS-YOLO 的语义头并不依赖于未见类别的语义原型，而是通过<strong>训练时学到的语义空间结构</strong>，在看到未见物体时，依靠相似的语义特征来判断其是否是前景目标。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>6️⃣ 总结</p>
+<ul>
+<li><strong>前景的语义预测</strong>：通过与该类的语义原型拉近，确保模型能正确识别已见类别；</li>
+<li><strong>背景的语义预测</strong>：通过与所有已见类别的最大相似度最小化，确保背景不被误认为目标；</li>
+<li><strong>损失加权</strong>：$\lambda_{\text{obj}}$ 和 $\lambda_{\text{noobj}}$ 控制前景与背景对损失的贡献，以保证模型对前景的学习更加专注。</li>
+</ul>
+<hr>
+<h3 id="4️⃣-置信度损失-L-text-conf"><a href="#4️⃣-置信度损失-L-text-conf" class="headerlink" title="4️⃣ 置信度损失 $L_{\text{conf}}$"></a>4️⃣ 置信度损失 $L_{\text{conf}}$</h3><p>1️⃣ 置信度损失的目标</p>
+<p><strong>目标</strong>：判断候选框是否包含目标物体，即<strong>目标性预测（objectness prediction）</strong>。<br>对于每个候选框 $k$，ZS-YOLO 需要预测一个<strong>置信度分数</strong> $\hat{p}_k$，表示这个框是否为前景（目标物体）框。</p>
+<p>在传统的检测器（如 YOLOv2）中，置信度分数主要是基于视觉特征（$T_F$）来预测的。而在 <strong>零样本检测（ZSD）</strong> 中，ZS-YOLO 在此基础上<strong>加入了语义特征（$T_S$）和边界框信息（$T_L$</strong>），通过 <strong>多模态学习</strong>，提高对未见类的检测能力。</p>
+<p>2️⃣ 置信度损失函数</p>
+<p>置信度损失主要通过 <strong>均方误差（MSE）</strong> 或 <strong>二元交叉熵损失（BCE）</strong> 来计算预测的置信度与真实标签之间的差距。在 ZS-YOLO 中，模型同时考虑了 <strong>视觉特征</strong>、<strong>语义特征</strong> 和 <strong>边界框信息</strong>。</p>
+<p>ZSD 中的置信度损失的定义是：</p>
+<span>
+$$
+L_{\text{conf}} = \sum_{k=1}^{M} \Big[ \lambda_{\text{obj}} I_k^{\text{obj}} (\hat{p}_k - 1)^2 + \lambda_{\text{noobj}} I_k^{\text{noobj}} (\hat{p}_k - 0)^2 \Big]
+$$
+
+</s>
+
+<p>3️⃣ 公式解析</p>
+<p>(1) <strong>前景（目标物体）置信度预测</strong></p>
+<p>对于<strong>前景框</strong>（即包含目标的框），我们希望模型预测出高的置信度，即 $\hat{p}_k \approx 1$。</p>
+<ul>
+<li>$I_k^{\text{obj}} &#x3D; 1$：表示这个框是<strong>前景框</strong>，由网络来负责回归该框的目标性。</li>
+<li>$\hat{p}_k$：表示该框是否包含目标物体的置信度。</li>
+</ul>
+<p><strong>目标</strong>：最小化预测的置信度与真实标签之间的差异，使得 $\hat{p}_k \rightarrow 1$（前景框的置信度接近 1）。</p>
+<p>损失项为：</p>
+<p>$$<br>\lambda_{\text{obj}} I_k^{\text{obj}} (\hat{p}_k - 1)^2<br>$$</p>
+<p>其中，$\lambda_{\text{obj}}$ 是加权系数，控制前景样本对损失的贡献。</p>
+<p>(2) <strong>背景（非目标物体）置信度预测</strong></p>
+<p>对于<strong>背景框</strong>（即不包含目标物体的框），我们希望模型预测出低的置信度，即 $\hat{p}_k \approx 0$。</p>
+<ul>
+<li>$I_k^{\text{noobj}} &#x3D; 1$：表示这个框是<strong>背景框</strong>，模型不需要对其做目标性预测。</li>
+<li>$\hat{p}_k$：表示该框是否包含目标物体的置信度。</li>
+</ul>
+<p><strong>目标</strong>：最小化预测的置信度与真实标签之间的差异，使得 $\hat{p}_k \rightarrow 0$（背景框的置信度接近 0）。</p>
+<p>损失项为：</p>
+<p>$$<br>\lambda_{\text{noobj}} I_k^{\text{noobj}} (\hat{p}_k - 0)^2<br>$$</p>
+<p>其中，$\lambda_{\text{noobj}}$ 是加权系数，控制背景样本对损失的贡献。</p>
+<p>4️⃣ 置信度损失的作用与多模态融合</p>
+<p>在 ZS-YOLO 中，置信度损失不仅仅是根据视觉特征 $T_F$ 来判断框是否包含目标，还<strong>结合了语义信息 $T_S$ 和边界框信息 $T_L$</strong>，实现多模态的融合。具体来说：</p>
+<ul>
+<li><strong>视觉特征 $T_F$</strong> 提供了图像的外观信息；</li>
+<li><strong>语义特征 $T_S$</strong> 提供了语义相似性信息，尤其是在未见类的检测中，它能够提升对新目标的召回能力；</li>
+<li><strong>边界框 $T_L$</strong> 提供了候选框的位置信息，进一步帮助判断哪些框更可能包含前景。</li>
+</ul>
+<p>通过这种多模态学习，ZS-YOLO 在训练时能够 <strong>联合学习</strong> 这些特征，使得模型在遇到未见类时，仍能够做出较为准确的置信度预测，避免将未见类框误判为背景。</p>
+<p>5️⃣ 置信度损失如何与其他损失共同作用？</p>
+<p>在 ZS-YOLO 中，置信度损失与 <strong>目标定位损失（$L_{\text{loc}}$</strong>) 和 <strong>语义损失（$L_{\text{attr}}$</strong>) 一同优化，整体目标是让网络同时做到：</p>
+<ul>
+<li>精确定位（$L_{\text{loc}}$）；</li>
+<li>正确判定前景（$L_{\text{conf}}$）；</li>
+<li>学到语义相关性（$L_{\text{attr}}$）。</li>
+</ul>
+<p>6️⃣ 总结</p>
+<ul>
+<li><strong>前景框</strong>：置信度损失让模型预测出接近 <strong>1</strong> 的置信度值，表示这个框包含目标物体。</li>
+<li><strong>背景框</strong>：置信度损失让模型预测出接近 <strong>0</strong> 的置信度值，表示这个框不包含目标物体。</li>
+<li>通过结合视觉、语义、和位置特征，ZS-YOLO 能在检测任务中增强对未见类的召回能力，尤其是在判断目标框是否有效时，更加稳健。</li>
+</ul>
+<hr>
+<h3 id="5️⃣-三者协同的效果"><a href="#5️⃣-三者协同的效果" class="headerlink" title="5️⃣ 三者协同的效果"></a>5️⃣ 三者协同的效果</h3><table>
+<thead>
+<tr>
+<th>损失项</th>
+<th>学到的能力</th>
+<th>对 unseen 检测的贡献</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$L_{\text{loc}}$</td>
+<td>精确定位</td>
+<td>保证基础检测质量</td>
+</tr>
+<tr>
+<td>$L_{\text{attr}}$</td>
+<td>语义感知的视觉特征</td>
+<td>让 unseen 类被视为前景</td>
+</tr>
+<tr>
+<td>$L_{\text{conf}}$</td>
+<td>多模态目标性判断</td>
+<td>减少 unseen 漏检，提高召回</td>
+</tr>
+</tbody></table>
+<p>最终训练后，ZS-YOLO 在见类上保持高精度，同时在未见类上召回率大幅提升。论文中举例：在 VOC 10&#x2F;10 划分上，unseen 的 Recall 从 18.6% 提高到 48.2%。</p>
+<hr>
+<h3 id="6️⃣-总结要点"><a href="#6️⃣-总结要点" class="headerlink" title="6️⃣ 总结要点"></a>6️⃣ 总结要点</h3><ul>
+<li><p>ZS-YOLO 的核心思想是：<strong>在目标性学习阶段注入语义信息</strong>；</p>
+</li>
+<li><p>三项损失共同塑造网络：</p>
+<ul>
+<li>位置对齐；</li>
+<li>语义结构化；</li>
+<li>语义驱动的目标性；</li>
+</ul>
+</li>
+<li><p>最终使模型在没有任何未见类标注的情况下，也能检测出这些目标。</p>
+</li>
+</ul>
+<h2 id="D-Training-Details"><a href="#D-Training-Details" class="headerlink" title="D. Training Details"></a>D. Training Details</h2><h3 id="1️⃣-数据预处理和增强（Data-Preprocessing-and-Augmentation）"><a href="#1️⃣-数据预处理和增强（Data-Preprocessing-and-Augmentation）" class="headerlink" title="1️⃣ 数据预处理和增强（Data Preprocessing and Augmentation）"></a>1️⃣ 数据预处理和增强（Data Preprocessing and Augmentation）</h3><p><strong>数据预处理</strong>是模型训练的第一步，影响着模型的收敛性和最终性能。对于 ZS-YOLO，数据预处理和增强包括：</p>
+<ul>
+<li><p><strong>输入图像的缩放和归一化</strong>：</p>
+<ul>
+<li>所有图像都被统一缩放到 <strong>416×416</strong> 像素，以适配 YOLOv2 的网络结构（步幅为 32）。</li>
+<li>图像像素值被归一化到 <strong>[0, 1]</strong> 范围内，以加速训练并提升收敛速度。</li>
+</ul>
+</li>
+<li><p><strong>数据增强</strong>：</p>
+<ul>
+<li><strong>随机缩放</strong>：随机选择一个缩放比例，对图像进行缩放，并保持长宽比。</li>
+<li><strong>随机裁剪</strong>：通过随机裁剪图像的区域来增强模型的鲁棒性，减少过拟合。</li>
+<li><strong>随机翻转</strong>：水平翻转图像，增加多样性，帮助模型学习到更多的空间变换。</li>
+</ul>
+</li>
+<li><p><strong>目标框归一化</strong>：</p>
+<ul>
+<li>在 YOLO 中，所有的目标框是 <strong>相对于输入图像的归一化坐标</strong>，并且宽高为 <strong>0–1 之间</strong>。这样，模型的输出是相对于图像大小的比例，而不是绝对坐标。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2️⃣-损失函数加权（Loss-Weighting）"><a href="#2️⃣-损失函数加权（Loss-Weighting）" class="headerlink" title="2️⃣ 损失函数加权（Loss Weighting）"></a>2️⃣ 损失函数加权（Loss Weighting）</h3><ul>
+<li><p><strong>加权系数</strong>：文章中指出，三项损失（定位损失 $L_{\text{loc}}$，语义损失 $L_{\text{attr}}$，置信度损失 $L_{\text{conf}}$）的加权系数是通过实验确定的。常见的做法是让 <strong>定位损失</strong> 和 <strong>语义损失</strong> 的权重相等，并且它们的总损失和 <strong>置信度损失</strong> 权重设置为相同（$\lambda_{\text{loc}} &#x3D; \lambda_{\text{attr}} &#x3D; \lambda_{\text{conf}} &#x3D; 1.0$）。如果你希望针对你的任务调整这些系数，通常会根据验证集的表现进行调节。</p>
+</li>
+<li><p><strong>优化器</strong>：<br>训练使用 <strong>Adam optimizer</strong>，其优势在于能够根据每个参数的梯度自适应调整学习率，使得训练过程更加稳定。</p>
+</li>
+</ul>
+<h3 id="3️⃣-超参数和训练策略"><a href="#3️⃣-超参数和训练策略" class="headerlink" title="3️⃣ 超参数和训练策略"></a>3️⃣ 超参数和训练策略</h3><ul>
+<li><p><strong>学习率调度</strong>：<br>学习率是影响训练效果的重要超参数，通常设置为 <strong>初始学习率 $10^{-3}$</strong>，然后逐渐减小（例如每经过一定数量的训练步骤，学习率降低 10 倍）。在训练过程中，学习率会根据验证集的性能进行调整，以避免过拟合或震荡。</p>
+</li>
+<li><p><strong>批大小（Batch Size）</strong>：<br>在论文中，使用的批大小为 <strong>16</strong>，这是一个典型的值。较小的批大小有助于减轻内存压力，并且能够提供更多的噪声（有利于跳出局部最优解）。当然，批大小需要根据硬件资源（如显存）和训练效率进行调整。</p>
+</li>
+<li><p><strong>训练时长和迭代次数</strong>：<br>训练使用的 <strong>epoch 数</strong>通常设为 1000 次，训练迭代的总次数依赖于训练数据集的大小。每个 epoch 的训练数据会在网络中多次传递，以确保模型能够逐步收敛。</p>
+</li>
+</ul>
+<h3 id="4️⃣-零样本检测的特殊技巧（Special-Techniques-for-Zero-Shot-Detection）"><a href="#4️⃣-零样本检测的特殊技巧（Special-Techniques-for-Zero-Shot-Detection）" class="headerlink" title="4️⃣ 零样本检测的特殊技巧（Special Techniques for Zero-Shot Detection）"></a>4️⃣ 零样本检测的特殊技巧（Special Techniques for Zero-Shot Detection）</h3><ul>
+<li><p><strong>无监督学习方法的启发</strong>：<br>虽然 ZS-YOLO 是一个 <strong>有监督</strong> 方法，但它受到无监督学习方法启发。通过 <strong>使用语义信息</strong>，ZS-YOLO 在训练过程中能够处理未见类，在学习过程中即使没有标注数据，依然能够“看见”潜在的未见物体。具体来说，ZS-YOLO 在训练过程中学会了“如何关联视觉特征和语义特征”，以便在 <strong>测试阶段</strong>能够利用 <strong>语义迁移</strong> 来检测未见类。</p>
+</li>
+<li><p><strong>数据集划分</strong>：<br>为了进行零样本检测的实验，ZS-YOLO 在 <strong>PASCAL VOC</strong> 和 <strong>MS COCO</strong> 等标准数据集上进行训练和评估。特别是，对于零样本检测的评估，作者将数据集划分为 <strong>见过类</strong>（Seen Classes）和 <strong>未见类</strong>（Unseen Classes）。在这种情况下，模型只能接触到已标注的见过类数据，而未见类则在训练时没有任何标注数据。因此，测试集包含了已见类和未见类，模型需要在没有未见类标注的情况下，依然能够检测出这些物体。</p>
+</li>
+</ul>
+<h3 id="5️⃣-训练中的挑战和对策"><a href="#5️⃣-训练中的挑战和对策" class="headerlink" title="5️⃣ 训练中的挑战和对策"></a>5️⃣ 训练中的挑战和对策</h3><ul>
+<li><p><strong>类别不平衡问题</strong>：<br>在训练过程中，<strong>背景框</strong>通常远远多于<strong>前景框</strong>（即目标框）。为了解决这个问题，ZS-YOLO 在训练时通过 <strong>加权损失函数</strong> 使得前景框的损失占据更大的比重，从而平衡类别不平衡问题。</p>
+</li>
+<li><p><strong>处理未见类的技巧</strong>：<br>在训练过程中，尽管模型没有接触到未见类的标注数据，但它仍通过 <strong>语义属性</strong> 和 <strong>视觉特征的语义关联</strong> 来增强对未见类的感知能力。这样，在测试时，即使遇到从未见过的物体，模型依然能够根据其 <strong>语义相似性</strong> 来识别并定位这些物体。</p>
+</li>
+</ul>
+<h3 id="6️⃣-训练过程总结"><a href="#6️⃣-训练过程总结" class="headerlink" title="6️⃣ 训练过程总结"></a>6️⃣ 训练过程总结</h3><ul>
+<li><strong>总的来说</strong>，ZS-YOLO 在训练时通过结合 <strong>视觉特征</strong>、<strong>语义特征</strong> 和 <strong>空间位置信息</strong>，使得模型能够在 <strong>已见类和未见类</strong>之间进行有效的迁移和泛化。</li>
+<li><strong>超参数调节</strong>、<strong>损失函数加权</strong> 和 <strong>数据增强</strong>等策略，使得模型不仅能够精确检测见过类物体，还能在未见类检测中实现较高的召回率。</li>
+</ul>
+<hr>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p><strong>D. Training Details</strong> 这一节主要介绍了模型训练的<strong>数据预处理、损失函数加权、训练策略</strong>等细节。</p>
+<ul>
+<li>通过多模态学习和加权损失，ZS-YOLO 能够增强对未见物体的检测能力。</li>
+<li>数据增强、学习率调度等策略帮助模型稳定收敛，提高了训练效率。</li>
+</ul>
+<hr>
+<h1 id="EXPERIMENTS"><a href="#EXPERIMENTS" class="headerlink" title="EXPERIMENTS"></a>EXPERIMENTS</h1><h2 id="评估指标"><a href="#评估指标" class="headerlink" title="评估指标"></a>评估指标</h2><h3 id="1️⃣-评估指标：平均精度（Average-Precision-AP）"><a href="#1️⃣-评估指标：平均精度（Average-Precision-AP）" class="headerlink" title="1️⃣ 评估指标：平均精度（Average Precision, AP）"></a>1️⃣ 评估指标：平均精度（Average Precision, AP）</h3><ul>
+<li><p><strong>AP（平均精度）</strong> 是常用的目标检测性能度量指标，尤其是在 <strong>Pascal VOC</strong> 和 <strong>COCO</strong> 数据集中。</p>
+<ul>
+<li>计算方式：对于每个类别，计算出不同 <strong>召回率（Recall）</strong> 下的 <strong>精度（Precision）</strong>，然后对所有召回率值上的精度取平均，得到最终的 <strong>平均精度（AP）</strong>。</li>
+</ul>
+</li>
+</ul>
+<p>具体来说，<strong>精度（Precision）</strong> 和 <strong>召回率（Recall）</strong> 的计算方式如下：</p>
+<p>$$<br>\text{Precision} &#x3D; \frac{\text{True Positive (TP)}}{\text{Predicted}} \quad \text{(公式 6)}<br>$$</p>
+<p>$$<br>\text{Recall} &#x3D; \frac{\text{True Positive (TP)}}{\text{Ground Truth (GT)}} \quad \text{(公式 7)}<br>$$</p>
+<p>其中：</p>
+<ul>
+<li><strong>True Positive (TP)</strong> 是检测到的正确物体框；</li>
+<li><strong>Predicted</strong> 是所有预测出的框；</li>
+<li><strong>Ground Truth (GT)</strong> 是所有真实的目标框。</li>
+</ul>
+<p><strong>平均精度（AP）</strong> 是在多个召回率（从 0 到 1）下对精度进行平均。召回率的值分为 11 个等距点（例如 [0, 0.1, 0.2, …, 1]）：</p>
+<p>$$<br>AP &#x3D; \frac{1}{11} \sum_{r \in [0, 0.1, 0.2, \dots]} \text{Precision (Recall &#x3D; r)} \quad \text{(公式 8)}<br>$$</p>
+<p>这意味着，<strong>AP</strong> 是对 <strong>所有召回率点</strong>（从 0 到 1）精度的平均值，用来衡量检测器在不同召回率下的稳定性。</p>
+<blockquote>
+<p><span style="color:#FF0000">为什么召回率的范围是 “0 ~ 1”？</span></p>
+<p>因为召回率本质上是一个 <strong>比例</strong>，它表示：</p>
+<blockquote>
+<p>“模型找到了多少比例的真实目标”。</p>
+</blockquote>
+<p>举个例子👇：</p>
+<table>
+<thead>
+<tr>
+<th>检测情况</th>
+<th>检测到的目标数</th>
+<th>真实目标数</th>
+<th>召回率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>模型啥也没检测到</td>
+<td>0</td>
+<td>10</td>
+<td>0 &#x2F; 10 &#x3D; <strong>0.0</strong></td>
+</tr>
+<tr>
+<td>模型检测到一半</td>
+<td>5</td>
+<td>10</td>
+<td>5 &#x2F; 10 &#x3D; <strong>0.5</strong></td>
+</tr>
+<tr>
+<td>模型检测到全部目标</td>
+<td>10</td>
+<td>10</td>
+<td>10 &#x2F; 10 &#x3D; <strong>1.0</strong></td>
+</tr>
+</tbody></table>
+<p>所以：</p>
+<ul>
+<li>当召回率 &#x3D; <strong>0</strong> 时，模型一个目标都没找出来；</li>
+<li>当召回率 &#x3D; <strong>1</strong> 时，模型检测到了所有真实目标；</li>
+<li>介于中间（如 0.4, 0.7 等）表示检测到了部分目标。</li>
+</ul>
+<hr>
+<p><span style="color:#FF0000">为什么要从 0 到 1 取多个“召回率点”？</span></p>
+<p>在目标检测中，我们会不断调整<strong>置信度阈值（confidence threshold）</strong>，比如从高到低去判断“哪些检测结果算是目标”。</p>
+<ul>
+<li>当置信度阈值高 → 检测结果更“严格”，召回率低（只检测出很确定的目标）。</li>
+<li>当置信度阈值低 → 检测结果更“宽松”，召回率高（检测出更多目标，但可能带来误检）。</li>
+</ul>
+<p>这样一来，我们可以得到一系列不同召回率下的精度值：</p>
+<table>
+<thead>
+<tr>
+<th>召回率</th>
+<th>精度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>0.95</td>
+</tr>
+<tr>
+<td>0.2</td>
+<td>0.93</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>0.85</td>
+</tr>
+<tr>
+<td>0.8</td>
+<td>0.70</td>
+</tr>
+<tr>
+<td>1.0</td>
+<td>0.60</td>
+</tr>
+</tbody></table>
+<hr>
+<p><span style="color:#FF0000">为什么要在 11 个等距点（0.0, 0.1, 0.2, …, 1.0）上平均？</span></p>
+<p>因为每个召回率点都有对应的精度（Precision），<br>而 <strong>平均精度 AP</strong> 就是对这些点的精度取平均：<br>$$<br>AP &#x3D; \frac{1}{11} \sum_{r \in [0,0.1,0.2,\dots,1]} \text{Precision(Recall &#x3D; r)}<br>$$</p>
+<p>这就相当于看模型在整个召回率范围（0 到 1）上的整体表现，而不是只看某一个特定阈值。</p>
+<blockquote>
+<p>这样计算出来的 AP 更能反映模型的“整体稳定性”。</p>
+</blockquote>
+<hr>
+<p>一个<strong>具体数值例子 + 图示说明</strong>，一步步演示“召回率从 0 到 1”是怎么来的，以及 <strong>AP（平均精度）</strong> 是怎么计算出来的。</p>
+<p>🌟 示例场景</p>
+<p>假设我们有一个类别（比如 “dog”），真实标注（Ground Truth）中一共有 <strong>10 只狗</strong>。<br>模型检测出了若干框，每个框都有一个置信度分数（confidence），从高到低如下表：</p>
+<table>
+<thead>
+<tr>
+<th>检测框编号</th>
+<th>置信度</th>
+<th>是否检测正确（TP &#x2F; FP）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>0.98</td>
+<td>✅ TP</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.96</td>
+<td>✅ TP</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.90</td>
+<td>❌ FP</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.85</td>
+<td>✅ TP</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.82</td>
+<td>✅ TP</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0.75</td>
+<td>❌ FP</td>
+</tr>
+<tr>
+<td>7</td>
+<td>0.70</td>
+<td>✅ TP</td>
+</tr>
+<tr>
+<td>8</td>
+<td>0.60</td>
+<td>❌ FP</td>
+</tr>
+<tr>
+<td>9</td>
+<td>0.55</td>
+<td>✅ TP</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0.40</td>
+<td>✅ TP</td>
+</tr>
+</tbody></table>
+<p>🧮 Step 1：逐步计算 Precision 和 Recall</p>
+<p>我们按置信度从高到低逐个加入预测框，计算每一步的 <strong>Precision（精度）</strong> 和 <strong>Recall（召回率）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>检测总数</th>
+<th>TP 数</th>
+<th>Precision &#x3D; TP&#x2F;检测数</th>
+<th>Recall &#x3D; TP&#x2F;真实目标数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1.00</td>
+<td>0.10</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>1.00</td>
+<td>0.20</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td>0.67</td>
+<td>0.20</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>3</td>
+<td>0.75</td>
+<td>0.30</td>
+</tr>
+<tr>
+<td>5</td>
+<td>5</td>
+<td>4</td>
+<td>0.80</td>
+<td>0.40</td>
+</tr>
+<tr>
+<td>6</td>
+<td>6</td>
+<td>4</td>
+<td>0.67</td>
+<td>0.40</td>
+</tr>
+<tr>
+<td>7</td>
+<td>7</td>
+<td>5</td>
+<td>0.71</td>
+<td>0.50</td>
+</tr>
+<tr>
+<td>8</td>
+<td>8</td>
+<td>5</td>
+<td>0.63</td>
+<td>0.50</td>
+</tr>
+<tr>
+<td>9</td>
+<td>9</td>
+<td>6</td>
+<td>0.67</td>
+<td>0.60</td>
+</tr>
+<tr>
+<td>10</td>
+<td>10</td>
+<td>7</td>
+<td>0.70</td>
+<td>0.70</td>
+</tr>
+</tbody></table>
+<p>📈 Step 2：绘制 Precision-Recall 曲线</p>
+<p><img src="/blog/image/A-1.png"></p>
+<p>🧩 Step 3：在固定的 11 个召回率点上取精度</p>
+<p>标准 VOC 的做法是：</p>
+<blockquote>
+<p>在召回率 $r &#x3D; [0, 0.1, 0.2, …, 1.0]$ 上，对应每个 r，找到“≥r 时的最大精度”。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>召回率 (r)</th>
+<th>最大精度 Precision(≥r)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0.0</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>0.2</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td>0.75</td>
+</tr>
+<tr>
+<td>0.4</td>
+<td>0.80</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>0.71</td>
+</tr>
+<tr>
+<td>0.6</td>
+<td>0.67</td>
+</tr>
+<tr>
+<td>0.7</td>
+<td>0.70</td>
+</tr>
+<tr>
+<td>0.8</td>
+<td>0.00（还没检测到这么多目标）</td>
+</tr>
+<tr>
+<td>0.9</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td>1.0</td>
+<td>0.00</td>
+</tr>
+</tbody></table>
+<p>🧮 Step 4：计算 AP（平均精度）</p>
+<p>将上表中的精度值在 11 个点上求平均：</p>
+<p>$$<br>AP &#x3D; \frac{1}{11} (1.00 + 1.00 + 1.00 + 0.75 + 0.80 + 0.71 + 0.67 + 0.70 + 0 + 0 + 0)<br>$$</p>
+<p>$$<br>AP &#x3D; \frac{5.63}{11} &#x3D; 0.51<br>$$</p>
+<p>👉 <strong>所以最终 AP &#x3D; 0.51（51%）</strong></p>
+<p>🎯 Step 5：解释</p>
+<p>这个 AP &#x3D; 0.51 的意义是：</p>
+<blockquote>
+<p>模型在“召回率从 0 到 1”的整个范围内的<strong>平均检测精度为 51%</strong>。<br>换句话说，不论你把置信度阈值调得多高或多低，模型整体表现相当于一半的检测是准确的。</p>
+</blockquote>
+<hr>
+<p>🧠 总结</p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>召回率 (Recall)</strong></td>
+<td>找到多少真实目标，范围 0~1</td>
+</tr>
+<tr>
+<td><strong>精度 (Precision)</strong></td>
+<td>检测结果中有多少是正确的</td>
+</tr>
+<tr>
+<td><strong>AP</strong></td>
+<td>不同召回率下精度的平均值（表示整体性能）</td>
+</tr>
+<tr>
+<td><strong>0~1 的召回率范围</strong></td>
+<td>从“完全没检测到目标”到“检测到所有目标”的过程</td>
+</tr>
+</tbody></table>
+</blockquote>
+<h3 id="2️⃣-与-Pascal-VOC-标准-mAP-的不同"><a href="#2️⃣-与-Pascal-VOC-标准-mAP-的不同" class="headerlink" title="2️⃣ 与 Pascal VOC 标准 mAP 的不同"></a>2️⃣ 与 Pascal VOC 标准 mAP 的不同</h3><ul>
+<li>传统的 <strong>mAP（mean Average Precision）</strong> 通常是针对 <strong>每个类别</strong>计算的平均精度。而在 <strong>ZS-YOLO</strong> 中，由于我们并不对每个类进行独立分类，所以<strong>不计算类别级别的 AP</strong>，而是直接计算 <strong>所有类的平均精度</strong>。</li>
+<li><strong>原因</strong>：ZSD 任务的一个特点是我们不进行具体的类分类，只是在检测到目标时计算其置信度。因此，ZSD 任务使用了 <strong>整体的平均精度（AP）</strong>，而不是类别精度。</li>
+</ul>
+<h3 id="3️⃣-平均-F-Score-作为辅助度量"><a href="#3️⃣-平均-F-Score-作为辅助度量" class="headerlink" title="3️⃣ 平均 F-Score 作为辅助度量"></a>3️⃣ 平均 F-Score 作为辅助度量</h3><ul>
+<li>除了计算 AP 外，作者还使用了 <strong>F-score</strong> 作为辅助评估指标。</li>
+<li><strong>F-score</strong> 是 <strong>精度（Precision）</strong> 和 <strong>召回率（Recall）</strong> 的调和平均，定义为：</li>
+</ul>
+<p>$$<br>\text{F-score} &#x3D; \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}} \quad \text{(公式 9)}<br>$$</p>
+<ul>
+<li><p><strong>计算方法</strong>：</p>
+<ul>
+<li>对于每个 <strong>置信度阈值</strong>，计算精度和召回率，然后得出 <strong>F-score</strong>。</li>
+<li><strong>F-score</strong> 会在多个置信度阈值下计算，然后对这些 F-score 进行平均，得到 <strong>平均 F-score</strong>，这个值反映了模型在不同置信度阈值下的 <strong>整体表现</strong>。</li>
+</ul>
+</li>
+<li><p><strong>F-score 的作用</strong>：</p>
+<ul>
+<li>由于 F-score 综合了精度和召回率，因此它可以反映模型在不同置信度阈值下的 <strong>稳定性和鲁棒性</strong>。</li>
+<li>对于未见类，F-score 是一个非常有用的度量，因为它衡量了检测器在面对不确定或低置信度的预测时的表现。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4️⃣-AP-和-F-score-对未见类的关注"><a href="#4️⃣-AP-和-F-score-对未见类的关注" class="headerlink" title="4️⃣ AP 和 F-score 对未见类的关注"></a>4️⃣ AP 和 F-score 对未见类的关注</h3><ul>
+<li>由于 ZS-YOLO 主要关注 <strong>未见类（unseen classes）</strong> 的检测，因此<strong>特别计算了未见类的 AP</strong>，以便衡量模型在 <strong>未见类物体</strong>上的表现。</li>
+<li>这与标准的 mAP 不同，因为标准 mAP 更多地关注于 <strong>所有类别</strong>的整体表现，而 ZS-YOLO 更专注于 <strong>未见类别</strong> 的检测能力。</li>
+</ul>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><strong>AP（平均精度）</strong>：计算检测器在不同召回率下的精度，并对所有召回率下的精度求平均，得出 AP。</li>
+<li><strong>F-score</strong>：用于评估不同置信度阈值下模型的整体表现，它的平均值反映了模型在不同检测场景下的稳定性。</li>
+<li><strong>未见类的 AP 和 F-score</strong>：ZS-YOLO 特别关注未见类的检测性能，计算这些类的 AP 和 F-score。</li>
+</ul>
+<p>在 Zhu 等人（2020）的论文《Zero-Shot Detection》中，<strong>IV. EXPERIMENTS</strong> 的 <strong>A. Datasets and Settings</strong> 部分主要介绍了实验所用的数据集、类别划分方式、数据划分方案以及属性构建与转换方法。以下是对该部分的详细讲解：</p>
+<hr>
+<h2 id="A-Datasets-and-Settings"><a href="#A-Datasets-and-Settings" class="headerlink" title="A. Datasets and Settings"></a>A. Datasets and Settings</h2><h3 id="实验数据集概述"><a href="#实验数据集概述" class="headerlink" title="实验数据集概述"></a>实验数据集概述</h3><p>作者为了评估 <strong>ZS-YOLO（Zero-Shot YOLO）</strong> 模型的零样本检测性能，选用了两个主流目标检测数据集：</p>
+<ol>
+<li><p><strong>PASCAL VOC 2007 和 2012</strong></p>
+<ul>
+<li>共包含 <strong>20 个物体类别</strong>。</li>
+<li>每个类别都带有 <strong>64 维的语义属性（semantic attributes）</strong>，这些属性来源于 aPY 数据集（[19]），由手工标注的二进制实例级属性计算而来。</li>
+<li>为了获得稳定的语义表示，作者将实例级属性在类内取平均，得到类级属性向量。</li>
+</ul>
+</li>
+<li><p><strong>MS COCO 数据集</strong></p>
+<ul>
+<li>共 <strong>80 个类别</strong>，其中包含 PASCAL VOC 的全部 20 个类别。</li>
+<li>原始 COCO 属性集 [45] 仅覆盖 29 类，并且许多属性（如 <em>professional</em>、<em>friendly</em>）缺乏视觉意义，因此不适合用于视觉检测。</li>
+<li>因此，作者选择了另一种方式：利用 <strong>Word2Vec 词向量</strong> 替代属性描述，但对其进行了降维与对齐优化（详见下文）。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="见／未见类别划分"><a href="#见／未见类别划分" class="headerlink" title="见／未见类别划分"></a>见／未见类别划分</h3><ol>
+<li>PASCAL VOC 的划分策略</li>
+</ol>
+<p>由于 VOC 没有标准的 ZSD 划分，作者自定义了多个不同比例的划分：</p>
+<ul>
+<li><p><strong>15&#x2F;5、10&#x2F;10、5&#x2F;15</strong>（见类&#x2F;未见类）</p>
+</li>
+<li><p>在训练时，只使用包含见类目标的图像；测试时则构造三种场景：</p>
+<ul>
+<li><strong>Test-Seen</strong>：仅包含见类目标；</li>
+<li><strong>Test-Unseen</strong>：仅包含未见类目标；</li>
+<li><strong>Test-Mix</strong>：同时包含见类与未见类目标。</li>
+</ul>
+</li>
+</ul>
+<p>划分类别时，作者特意避免相似类别（如 dog 与 cat）同时作为未见类，以保证分布多样性。</p>
+<ol start="2">
+<li>MS COCO 的划分策略</li>
+</ol>
+<ul>
+<li><p>选取 20 个“未见类别”，保证语义多样性。</p>
+</li>
+<li><p>从剩余的类别中选择与这些未见类 <strong>语义最接近</strong>（在 Word2Vec 空间中）的 N 个作为“见类”，逐步增加 N（例如 20, 40, 60）以观察泛化性能随见类数量变化的趋势。</p>
+</li>
+<li><p>训练集仅使用包含见类目标的图像；测试集包括：</p>
+<ul>
+<li>只含见类的 <strong>Test-Seen</strong>；</li>
+<li>只含未见类的 <strong>Test-Unseen</strong>；</li>
+<li>同时含两者的 <strong>Test-Mix</strong>。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="属性表示与语义映射"><a href="#属性表示与语义映射" class="headerlink" title="属性表示与语义映射"></a>属性表示与语义映射</h3><ol>
+<li>类级属性（Class-Level Attributes）</li>
+</ol>
+<p>作者采用类级属性的原因包括：</p>
+<ol>
+<li><p>平均化后可减弱噪声与标注差异，提升训练稳定性；</p>
+</li>
+<li><p>测试阶段只能获得类级属性，而实例级属性无法提前获得；</p>
+</li>
+<li><p>VOC 的 aPY 属性标注不完全，部分实例无标签。</p>
+</li>
+<li><p>Word2Vec 特征降维与对齐</p>
+</li>
+</ol>
+<p>由于原始 Word2Vec 向量（300维）含噪声且与视觉空间弱相关，作者提出学习一个 <strong>线性变换矩阵 P</strong>：</p>
+<p>$$<br>\langle y_i, y_j \rangle \approx \langle P W_i, P W_j \rangle<br>$$</p>
+<p>其中 $y_i$ 为 VOC 属性向量，$W_i$ 为对应类的 Word2Vec 向量。<br>通过该变换，将 Word2Vec 向量映射至一个 25 维的新空间（称为 <strong>w2vR</strong>），使其在属性空间上与 VOC 相似度结构一致，从而提升语义一致性与视觉相关性。</p>
+<hr>
+<h3 id="数据集划分表"><a href="#数据集划分表" class="headerlink" title="数据集划分表"></a>数据集划分表</h3><p>论文中表 I 概述了各数据集的划分情况：</p>
+<table>
+<thead>
+<tr>
+<th align="left">数据集</th>
+<th align="left">训练集</th>
+<th align="left">测试集类型</th>
+<th align="left">测试集内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">VOC2007 &#x2F; VOC2012</td>
+<td align="left">train&#x2F;val（仅见类）</td>
+<td align="left">Test-Seen</td>
+<td align="left">test（仅见类）</td>
+</tr>
+<tr>
+<td align="left">VOC2007 &#x2F; VOC2012</td>
+<td align="left">train&#x2F;val（仅见类）</td>
+<td align="left">Test-Unseen</td>
+<td align="left">train&#x2F;val + test（仅未见类）</td>
+</tr>
+<tr>
+<td align="left">VOC2007 &#x2F; VOC2012</td>
+<td align="left">train&#x2F;val（仅见类）</td>
+<td align="left">Test-Mix</td>
+<td align="left">train&#x2F;val + test（见+未见）</td>
+</tr>
+<tr>
+<td align="left">MS COCO</td>
+<td align="left">train&#x2F;val（仅见类）</td>
+<td align="left">Test-Seen &#x2F; Unseen &#x2F; Mix</td>
+<td align="left">与 VOC 同逻辑</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>这一部分的关键贡献在于：</p>
+<ul>
+<li>构建了 <strong>新的 ZSD 数据集划分</strong>，首次系统性定义了不同的“见／未见”配置；</li>
+<li>引入 <strong>语义对齐变换 P</strong>，将噪声较大的词向量映射至属性一致空间；</li>
+<li>提供多种评测情境（Seen &#x2F; Unseen &#x2F; Mix），使得后续实验能全面分析模型在不同设定下的表现。</li>
+</ul>
+<hr>
+<h2 id="B-Zero-Shot-Detection-Evaluation"><a href="#B-Zero-Shot-Detection-Evaluation" class="headerlink" title="B. Zero-Shot Detection Evaluation"></a>B. Zero-Shot Detection Evaluation</h2><p>（零样本检测评估）</p>
+<h3 id="实验设计概述"><a href="#实验设计概述" class="headerlink" title="实验设计概述"></a>实验设计概述</h3><p>研究者通过对 <strong>PASCAL VOC</strong> 和 <strong>MS COCO</strong> 两个数据集上的多种“已见&#x2F;未见类别划分”进行对比实验，验证了 ZS-YOLO 的零样本检测能力。<br>他们定义了三种测试模式：</p>
+<ol>
+<li><strong>Test-Seen</strong>：仅包含训练中出现过的类别（已见类）。</li>
+<li><strong>Test-Unseen</strong>：仅包含训练集中未出现的类别（未见类）。</li>
+<li><strong>Test-Mix</strong>：同时包含已见类与未见类的混合场景。</li>
+</ol>
+<p>这些模式反映了不同的泛化难度：</p>
+<ul>
+<li><em>Test-Seen</em> 测试监督检测性能；</li>
+<li><em>Test-Unseen</em> 测试模型的零样本迁移能力；</li>
+<li><em>Test-Mix</em> 更贴近真实世界任务，因为实际图像中可能混合多种对象。</li>
+</ul>
+<hr>
+<h3 id="对比方法与评估指标"><a href="#对比方法与评估指标" class="headerlink" title="对比方法与评估指标"></a>对比方法与评估指标</h3><p>作者将 <strong>ZS-YOLO</strong> 与标准的 <strong>YOLOv2</strong> 模型进行了系统比较：</p>
+<ul>
+<li><strong>YOLOv2（基线）</strong>：完全监督训练，使用同样的训练分割（仅 seen 类别的标注框与标签）。在测试时，为公平比较，去除了 YOLOv2 的分类模块，只保留基于置信度分数的边框预测。</li>
+<li><strong>ZS-YOLO（提出方法）</strong>：在 YOLOv2 的基础上，增加了语义属性预测与联合置信度机制，通过多任务损失（定位、语义、置信度）联合优化。</li>
+</ul>
+<p>评估指标为：</p>
+<ul>
+<li><strong>AP（Average Precision）</strong>：平均精度；</li>
+<li><strong>F-score</strong>：综合考虑精度与召回率的调和平均。</li>
+</ul>
+<hr>
+<h3 id="实验结果与主要发现"><a href="#实验结果与主要发现" class="headerlink" title="实验结果与主要发现"></a>实验结果与主要发现</h3><p>表 II（论文第 8 页）展示了在不同数据集与划分下的性能比较：</p>
+<p><img src="/blog/image/A-2.PNG"></p>
+<p>(1) 未见类别检测性能显著提升</p>
+<p>ZS-YOLO 在 <strong>Test-Unseen</strong> 场景中始终显著优于 YOLOv2。<br>例如：</p>
+<ul>
+<li>PASCAL VOC (10&#x2F;10 split)：<strong>+3.7% AP 提升（56.4 → 60.1）</strong></li>
+<li>MS COCO (60&#x2F;20 split)：<strong>+8.9% AP 提升（34.9 → 43.8）</strong></li>
+</ul>
+<p>这说明加入语义特征后，模型能更好地识别视觉上未见过、但语义相近的目标。</p>
+<hr>
+<h3 id="性能提升原因分析"><a href="#性能提升原因分析" class="headerlink" title="性能提升原因分析"></a>性能提升原因分析</h3><p>作者指出主要的性能提升原因有两点：</p>
+<ol>
+<li><strong>ZS-YOLO 的置信度预测结合了视觉与语义信息</strong>，而 YOLOv2 仅基于视觉特征。<br>因此，ZS-YOLO 能避免将语义相似但视觉不同的未见目标（如“马”和“斑马”）误判为背景。</li>
+<li><strong>语义特征增强了模型的泛化能力</strong>。<br>当训练集中 seen 类别较少时，ZS-YOLO 能更好地利用语义联系来推断 unseen 类别。</li>
+</ol>
+<p>例如：</p>
+<ul>
+<li>在 <strong>MS COCO</strong> 上，YOLOv2 的表现随 seen 类别数的增减波动较大；</li>
+<li>而 ZS-YOLO 在 seen 类别数增加时性能持续提升（从 40.6% → 43.8%），说明语义信息在大规模训练下更有效。</li>
+</ul>
+<hr>
+<h3 id="召回率与可视化分析"><a href="#召回率与可视化分析" class="headerlink" title="召回率与可视化分析"></a>召回率与可视化分析</h3><p>图 3 展示了 PASCAL VOC 和 COCO 的 <strong>Precision-Recall 曲线</strong> 与 <strong>Recall 曲线</strong>。结果显示：</p>
+<p><img src="/blog/image/A-3.PNG"></p>
+<ul>
+<li>ZS-YOLO 在高置信度阈值下的召回率（Recall）显著优于 YOLOv2。<br>例如在 PASCAL VOC 5&#x2F;15 分割中：<ul>
+<li>当置信度阈值为 0.8 时，ZS-YOLO 能召回约 <strong>30% 未见对象</strong>；</li>
+<li>YOLOv2 仅能召回 <strong>20%</strong>。</li>
+</ul>
+</li>
+<li>这表明 ZS-YOLO 在高置信度下能捕获更多未见对象。</li>
+</ul>
+<hr>
+<h3 id="进一步分析：性能平衡与挑战"><a href="#进一步分析：性能平衡与挑战" class="headerlink" title="进一步分析：性能平衡与挑战"></a>进一步分析：性能平衡与挑战</h3><p>作者还指出：</p>
+<ul>
+<li>ZS-YOLO 在检测未见对象时提升了召回率，但在部分 seen 类别上略微降低了精度；</li>
+<li>对于 5&#x2F;15 split（少量 seen 类别），模型的精度略低，但 recall 明显提升；</li>
+<li>这种“召回提升 + 精度轻微下降”的平衡符合零样本学习的预期。</li>
+</ul>
+<p>总结来说：</p>
+<blockquote>
+<p><strong>ZS-YOLO 在未见类别检测上显著优于 YOLOv2，同时在已见类别上保持了稳定性能。</strong><br>它的核心改进在于语义特征的引入，使得检测器能够“跨类别泛化”，从而实现真正的零样本检测。</p>
+</blockquote>
+<hr>
+<h2 id="C-Ablative-Study-on-PASCAL-VOC"><a href="#C-Ablative-Study-on-PASCAL-VOC" class="headerlink" title="C. Ablative Study on PASCAL VOC"></a>C. Ablative Study on PASCAL VOC</h2><p><strong>目的</strong>：拆解 ZS-YOLO 的关键设计（语义预测、置信度输入的多模态融合、语义原型选择、语义维度规整、seen&#x2F;unseen 语义相关性、替代损失）对<strong>未见类检测性能</strong>的真实贡献。<br><strong>方法</strong>：在 <strong>PASCAL VOC 10&#x2F;10 split</strong>（亦涉及 5&#x2F;15 与扩展划分）上，逐一移除&#x2F;替换组件，比较 <strong>Test-Unseen &#x2F; Test-Seen &#x2F; Test-Mix</strong> 的 AP（以及在前文中辅助使用的 F-score）。</p>
+<blockquote>
+<p>该节的所有定量结果与结论主要集中在<strong>表 III—VI</strong>与<strong>图 5</strong>：见<strong>第 9 页（表 III&#x2F;IV&#x2F;V&#x2F;VI）<strong>与</strong>第 11 页（图 5）</strong>。</p>
+</blockquote>
+<hr>
+<p>语义预测与多模态置信度的作用（表 III，第 9 页）</p>
+<p><img src="/blog/image/A-4.png"></p>
+<p>作者把最终“<strong>置信度预测</strong>”的输入逐步改动，比较四种配置在 VOC 10&#x2F;10 split 上的 AP：</p>
+<ul>
+<li><strong>YOLOv2</strong>（仅视觉特征 TF）：Unseen 56.4 &#x2F; Seen 71.6 &#x2F; Mix 54.3</li>
+<li><strong>ZS-YOLO (visual)</strong>：<strong>移除语义预测分支</strong>，置信度只用 <strong>[TF, TL]</strong>（视觉特征 + 框位置）。Unseen <strong>57.2</strong> &#x2F; Seen 71.2 &#x2F; Mix 52.3</li>
+<li><strong>ZS-YOLO (semantic)</strong>：<strong>去掉视觉特征 TF</strong>，置信度只用 <strong>[TL, TS]</strong>（位置 + 语义预测向量）。Unseen <strong>57.0</strong> &#x2F; Seen 70.9 &#x2F; Mix 52.3</li>
+<li><strong>ZS-YOLO (full)</strong>：<strong>多模态融合</strong>，置信度用 <strong>[TF, TL, TS]</strong>。Unseen <strong>60.1（最高）</strong> &#x2F; Seen 71.0 &#x2F; Mix 53.9</li>
+</ul>
+<p><strong>要点解读</strong></p>
+<ol>
+<li><strong>多模态 &gt; 单模态</strong>：同时用<strong>视觉 + 语义 + 位置</strong>的信息预测“目标性置信度”，能显著提升<strong>未见类 AP</strong>（60.1 &gt; 57.x &gt; 56.4）。</li>
+<li><strong>仅语义也能超越 YOLOv2</strong>：ZS-YOLO(semantic) 在 Unseen 上仍优于 YOLOv2，说明<strong>语义信号本身</strong>就能缓解“把未见目标压成背景”的问题。</li>
+<li><strong>位置（TL）是有益的辅助</strong>：ZS-YOLO(visual) 相比 YOLOv2 也略升，提示位置信息对“目标性”判断有帮助，但不及引入语义带来的增益。</li>
+</ol>
+<hr>
+<p> 语义原型的选择：属性 &#x2F; word2vec &#x2F; one-hot &#x2F; 随机（表 IV，第 9 页）</p>
+<p><img src="/blog/image/A-6.png"></p>
+<p>在 VOC 10&#x2F;10 split 上比较不同<strong>语义原型</strong>作为训练时的语义监督（注意：测试时该模型对 unseen 的检测不依赖其语义标签）：</p>
+<ul>
+<li><strong>Attribute（属性向量）</strong>：Unseen AP <strong>60.1（最佳）</strong></li>
+<li><strong>word2vec（w2v）</strong>：Unseen AP 58.9</li>
+<li><strong>one-hot</strong>：Unseen AP 57.7</li>
+<li><strong>random（随机编码）</strong>：Unseen AP <strong>49.0（最差，低于 YOLOv2）</strong></li>
+</ul>
+<p><strong>要点解读</strong></p>
+<ol>
+<li><strong>“有语义”的原型才有效</strong>：属性 &#x2F; w2v 显著好于 one-hot 与随机，说明需要能反映<strong>语义相似性</strong>的连续原型空间。</li>
+<li><strong>随机编码会伤害泛化</strong>：random 甚至拖到 49.0，证明“无语义结构”的向量会误导网络。</li>
+<li><strong>one-hot 只含类别区分，不含相似度</strong>，因此弱于属性 &#x2F; w2v。</li>
+</ol>
+<hr>
+<p>语义维度规整（降噪）：w2v → w2vR（表 V，第 9 页）</p>
+<p><img src="/blog/image/A-7.PNG"></p>
+<p>作者提出把原始 300 维 w2v <strong>映射到低维 w2vR（25 维）</strong>，并<strong>保留与 VOC 属性空间相一致的相似度结构</strong>。在 VOC（10&#x2F;10）与 COCO（20&#x2F;20）上的对比显示：</p>
+<ul>
+<li>VOC：属性 60.1，<strong>w2v 58.9</strong>，<strong>w2vR 59.3（略高于 w2v）</strong></li>
+<li>COCO：属性 38.4，<strong>w2v 38.4</strong>，<strong>w2vR 40.6（显著更好）</strong></li>
+</ul>
+<p><strong>要点解读</strong></p>
+<ol>
+<li>原始 w2v <strong>噪声较大且与视觉空间偏离</strong>，直接学会收敛困难；</li>
+<li>通过对齐到“视觉相关”的属性相似度结构，<strong>w2vR</strong> 更“视觉语义化”，<strong>未见类 AP 提升</strong>更稳健（在 COCO 上尤其明显）。</li>
+</ol>
+<hr>
+<p> seen&#x2F;unseen 语义相关性（E 分数）的影响（表 VI，第 9 页；解释与示例第 11 页）</p>
+<p><img src="/blog/image/A-8.PNG"></p>
+<p>作者定义 split 的<strong>能量分数 E</strong> 来度量 unseen 与 seen 的<strong>最大语义相似度</strong>平均值：<br>$$<br>E&#x3D;\frac{1}{|C_{unseen}|}\sum_{a\in C_{unseen}}\max_{b\in C_{seen}}S(y_a,y_b)<br>$$</p>
+<p>在多组 VOC 划分（10&#x2F;10-1、10&#x2F;10-2、10&#x2F;10-3、5&#x2F;15-1、5&#x2F;15-2）上，<strong>E 越高，Unseen AP 越高</strong>。例如：</p>
+<ul>
+<li><strong>10&#x2F;10-1</strong>：<strong>E&#x3D;0.843 → Unseen AP&#x3D;60.1</strong></li>
+<li><strong>10&#x2F;10-3</strong>：<strong>E&#x3D;0.567 → Unseen AP&#x3D;39.3（显著下降）</strong></li>
+</ul>
+<p><strong>要点解读</strong></p>
+<ol>
+<li><strong>语义相近更易迁移</strong>：当 unseen 与 seen 的语义更“接壤”，ZS-YOLO 学到的语义-视觉对齐能更好泛化到未见类；</li>
+<li>若相关性低，则迁移更难，未见类 AP 大幅下滑。作者在第 11 页还给出具体类对（如 motorbike&#x2F;bicycle）在不同 split 的分布示例来直观说明这一点。</li>
+</ol>
+<hr>
+<p> 特征可视化（图 5，第 11 页）</p>
+<p><img src="/blog/image/A-5.PNG"></p>
+<p><strong>t-SNE 可视化</strong>对比了 <strong>YOLOv2 的视觉特征</strong> vs <strong>ZS-YOLO 学到的语义特征</strong>（在 Test-Mix 上）：</p>
+<ul>
+<li>在 ZS-YOLO 的语义空间里，<strong>前景（见&#x2F;未见）与背景更易分离</strong>，类簇结构更清晰；</li>
+<li>这印证了“<strong>语义预测作为旁路任务</strong>”能<strong>重塑特征空间</strong>，让“目标 vs 背景”与“语义相近类”更容易分辨，从而提高未见类召回。</li>
+</ul>
+<hr>
+<p> 其他损失：Focal Loss 的负面结果（第 11 页）</p>
+<p>作者尝试了 <strong>focal loss</strong>（常用于艰难样本挖掘），但观察到：</p>
+<ul>
+<li><strong>见类</strong>检测略有改善；</li>
+<li><strong>未见类</strong>检测<strong>下降更明显</strong>。<br><strong>解释</strong>：focal loss 进一步“偏爱”见类的区分信号，加剧了对未知分布的抑制，<strong>破坏了语义泛化的平衡</strong>。因此不适合作为本任务中的主损失替代。</li>
+</ul>
+<hr>
+<p>这节的关键信息小结（对应表&#x2F;图）</p>
+<ol>
+<li><strong>多模态置信度</strong>（视觉+语义+位置）是未见类提升的直接原因（<strong>表 III</strong>）。</li>
+<li><strong>属性 &#x2F; w2v &gt; one-hot &gt; 随机</strong>：原型必须携带可度量的语义相似性（<strong>表 IV</strong>）。</li>
+<li>**w2vR（语义降噪与对齐）**优于原始 w2v，尤其在 COCO 上提升明显（<strong>表 V</strong>）。</li>
+<li><strong>seen&#x2F;unseen 的语义相关性越高，未见类 AP 越高</strong>（<strong>表 VI</strong>）。</li>
+<li><strong>图 5</strong>：语义旁路任务让<strong>前景-背景更分离</strong>，支持“召回提升”的机制解释。</li>
+<li><strong>Focal loss 不适合</strong>零样本检测：会<strong>伤害未见类</strong>（第 11 页“Other Losses”段落）。</li>
+</ol>
+<hr>
+<p>一句话结论</p>
+<p><strong>ZS-YOLO 的“语义预测 + 多模态置信度”是未见类检测提升的根因</strong>；语义原型要“有意义且与视觉相关”，并且 seen&#x2F;unseen 需具备一定<strong>语义相关性</strong>；传统针对困难样本的 focal loss 在零样本检测里<strong>反而不利于泛化</strong>。上述结论均由 PASCAL VOC 的系统<strong>消融</strong>得到，并辅以 t-SNE 可视化验证。</p>
+<p>如果你想，我可以把这一节的<strong>所有表格（III–VI）<strong>做成一页精炼对照海报（含关键结论 + 机制示意），或把</strong>E 分数—性能</strong>做成更直观的散点&#x2F;条形图便于报告。</p>
+<h2 id="D-Semantic-Output-for-Zero-Shot-Recognition"><a href="#D-Semantic-Output-for-Zero-Shot-Recognition" class="headerlink" title="D. Semantic Output for Zero-Shot Recognition"></a>D. Semantic Output for Zero-Shot Recognition</h2><p>（语义输出在零样本识别中的作用）</p>
+<hr>
+<h3 id="一、章节背景与目的"><a href="#一、章节背景与目的" class="headerlink" title="一、章节背景与目的"></a>一、章节背景与目的</h3><p>在前面的消融实验（Section IV.C）中，作者主要分析了 ZS-YOLO 在目标检测（<strong>localization + detection</strong>）任务上的零样本能力；<br>而在本节 <strong>D. Semantic Output for Zero-Shot Recognition</strong> 中，作者进一步探讨如何利用 ZS-YOLO 的 <strong>语义输出层（semantic prediction head）</strong> 来直接执行 <strong>零样本识别（ZSR）</strong> 或更一般的 <strong>广义零样本识别（GZSL, Generalized Zero-Shot Learning）</strong> 任务。</p>
+<p>关键目的：</p>
+<ul>
+<li>验证 ZS-YOLO 的语义输出在纯识别任务上的表现；</li>
+<li>探究“检测误差”和“识别误差”对整体性能的相对影响；</li>
+<li>展示如何将检测模型与标准零样本分类器结合，实现 <strong>检测 + 识别 一体化</strong>。</li>
+</ul>
+<hr>
+<h3 id="二、任务定义与实验设置"><a href="#二、任务定义与实验设置" class="headerlink" title="二、任务定义与实验设置"></a>二、任务定义与实验设置</h3><p>作者在此部分采用 <strong>Generalized Zero-Shot Learning (gZSL)</strong> 框架来评估 ZS-YOLO 的语义输出能力。</p>
+<p>gZSL 测试设置：</p>
+<ol>
+<li><p>模型需同时识别 <strong>已见类（seen）</strong> 与 <strong>未见类（unseen）</strong>；</p>
+</li>
+<li><p>性能指标包括：</p>
+<ul>
+<li><strong>Mean Accuracy (mAcc)</strong>：平均分类准确率；</li>
+<li><strong>Mean Average Precision (mAP)</strong>：检测与识别整体性能；</li>
+</ul>
+</li>
+<li><p>数据集：<strong>PASCAL VOC 10&#x2F;10 split</strong>；</p>
+</li>
+<li><p>对比方法：</p>
+<ul>
+<li>ZS-YOLO + 最近邻（NN）分类器；</li>
+<li>ZS-YOLO + [4]（即 <em>Semantic Similarity Embedding</em> 方法）；</li>
+<li>YOLOv2 + [4]（传统检测器 + ZSR 模型）；</li>
+<li>baseline GZSL [4]（仅识别任务）。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="三、误差来源分析"><a href="#三、误差来源分析" class="headerlink" title="三、误差来源分析"></a>三、误差来源分析</h3><p>作者指出 gZSL 实验中的误差可分为两类：</p>
+<ol>
+<li><p><strong>识别误差（Recognition Error）</strong><br>当边界框（bounding boxes）<strong>已知</strong>时仍分类错误；<br>这一误差来源于语义空间匹配的不精确。</p>
+</li>
+<li><p><strong>检测 + 识别误差（Detection + Recognition Error）</strong><br>当模型需要<strong>同时检测和识别</strong>时，误差包含边界框定位与类别预测两部分。</p>
+</li>
+</ol>
+<p>在 PASCAL VOC 上，作者强调：</p>
+<blockquote>
+<p>GZSL 的识别任务本身就非常困难，基线准确率极低；<br>相比之下，检测误差只是一个较小的额外误差源。</p>
+</blockquote>
+<p>换言之，即便 ZS-YOLO 检测性能很好，如果底层语义识别能力差（如属性空间对齐不准），总体性能仍会受限。</p>
+<hr>
+<h3 id="四、语义输出的识别能力验证"><a href="#四、语义输出的识别能力验证" class="headerlink" title="四、语义输出的识别能力验证"></a>四、语义输出的识别能力验证</h3><p>作者利用 <strong>ZS-YOLO 的语义预测层输出（TS）</strong> 来进行识别任务。<br>具体做法如下：</p>
+<ul>
+<li><p>对每个检测出的 bounding box，ZS-YOLO 都生成一个语义向量；</p>
+</li>
+<li><p>该语义向量可直接与类别属性（ground-truth semantic prototypes）计算相似度；</p>
+</li>
+<li><p>采用：</p>
+<ul>
+<li><strong>NN（nearest neighbor）分类</strong>；</li>
+<li>或 <strong>[4] Semantic Similarity Embedding</strong> 作为替代分类器；</li>
+</ul>
+</li>
+<li><p>从而得到预测标签，实现“检测即识别”。</p>
+</li>
+</ul>
+<p>实验结果（见 Table VII）：</p>
+<table>
+<thead>
+<tr>
+<th>模型配置</th>
+<th>Unseen mAP (%)</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>YOLOv2 + [4]</td>
+<td>1.64</td>
+<td>传统检测器对未见类几乎完全失败</td>
+</tr>
+<tr>
+<td>ZS-YOLO + NN</td>
+<td>4.33</td>
+<td>使用语义输出的最近邻识别，显著提升</td>
+</tr>
+<tr>
+<td>ZS-YOLO + [4]</td>
+<td><strong>6.92</strong></td>
+<td>进一步提升识别效果，验证语义特征质量</td>
+</tr>
+<tr>
+<td>[4]（仅识别）</td>
+<td>极低（约数个百分点）</td>
+<td>GZSL 任务本身极难</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>结论：ZS-YOLO 的语义输出在零样本识别中表现出有效的可分辨性，比直接用 YOLOv2 特征强得多。</p>
+</blockquote>
+<hr>
+<h3 id="五、结果解读与细节分析"><a href="#五、结果解读与细节分析" class="headerlink" title="五、结果解读与细节分析"></a>五、结果解读与细节分析</h3><ol>
+<li>检测误差 vs 识别误差</li>
+</ol>
+<ul>
+<li>作者发现检测误差仅占总体误差的一小部分；</li>
+<li>主因仍是语义空间内的识别困难（尤其在 VOC 上）。</li>
+</ul>
+<ol start="2">
+<li>性能提升来源</li>
+</ol>
+<ul>
+<li><p>ZS-YOLO 的 <strong>语义预测任务</strong> 使得特征空间对齐；</p>
+</li>
+<li><p>通过 NN 或 embedding 匹配，模型能较好识别未见类；</p>
+</li>
+<li><p>例如：</p>
+<ul>
+<li>“ZS-YOLO + NN” 在 Test-Unseen 几乎所有类别上取得最高 AP；</li>
+<li>在 Test-Mix 上，ZS-YOLO 超越 YOLOv2 于所有未见类（除 cat）；</li>
+<li>“YOLOv2 + [4]” 在 visually similar 类别（如 bike&#x2F;motorbike）中仍完全失败，显示其无法迁移到语义邻近类别。</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>对照模型的解释</li>
+</ol>
+<ul>
+<li><strong>YOLOv2 + [4]</strong> 组合代表传统“检测+分类”两步法；<br>它容易将未见目标压制为背景；</li>
+<li><strong>ZS-YOLO + [4]</strong> 则通过语义输出弥合了视觉与语义间的差距；<br>因此在未见类识别（尤其是语义相似类）中表现更好。</li>
+</ul>
+<hr>
+<h3 id="六、结论与启示"><a href="#六、结论与启示" class="headerlink" title="六、结论与启示"></a>六、结论与启示</h3><table>
+<thead>
+<tr>
+<th>观察</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>✅ ZS-YOLO 的语义输出层具备“通用语义表征”功能</td>
+<td>它能直接被用作零样本识别的输入空间</td>
+</tr>
+<tr>
+<td>✅ 检测误差不是主要瓶颈</td>
+<td>核心问题在语义对齐与泛化</td>
+</tr>
+<tr>
+<td>✅ 一体化架构可同时服务检测与识别</td>
+<td>提高系统效率，减少特征冗余</td>
+</tr>
+<tr>
+<td>✅ NN 与嵌入式方法均能有效利用语义输出</td>
+<td>表明语义空间学习稳定且结构良好</td>
+</tr>
+<tr>
+<td>⚠️ VOC 的识别难度高</td>
+<td>导致整体 mAP 较低，但趋势仍明显</td>
+</tr>
+</tbody></table>
+<p>作者最后指出：</p>
+<blockquote>
+<p>本文重点在于“检测未见目标”，而非追求最优 ZSR 分类器。<br>若未来结合更强的识别模块（如 max-margin 损失或更先进的 ZSR 嵌入模型），<br>ZS-YOLO 的语义输出将能显著提升综合性能。</p>
+</blockquote>
+<hr>
+<h3 id="七、总结：ZS-YOLO-的统一视角"><a href="#七、总结：ZS-YOLO-的统一视角" class="headerlink" title="七、总结：ZS-YOLO 的统一视角"></a>七、总结：ZS-YOLO 的统一视角</h3><p>通过这一节，作者强调：</p>
+<ul>
+<li><strong>ZS-YOLO 不仅是检测器</strong>，还是一种<strong>通用的语义嵌入模型</strong>；</li>
+<li>其语义输出可直接复用到“零样本识别”或“广义零样本识别”；</li>
+<li>从结构上实现了视觉检测与语义理解的融合，为后续统一模型（如 open-vocabulary detection）奠定了基础。</li>
+</ul>
+<hr>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><h2 id="一、章节位置与核心目的"><a href="#一、章节位置与核心目的" class="headerlink" title="一、章节位置与核心目的"></a>一、章节位置与核心目的</h2><p>“V. Conclusion” 是整篇论文的收束部分，主要回答三个问题：</p>
+<ol>
+<li><strong>本文到底解决了什么？</strong></li>
+<li><strong>为什么它是新的、有效的？</strong></li>
+<li><strong>接下来可以怎么扩展？</strong></li>
+</ol>
+<p>Zhu 等人希望通过结论明确地把 ZS-YOLO 的贡献定位为：</p>
+<blockquote>
+<p>第一个<strong>端到端的零样本目标检测网络（Zero-Shot Detection, ZSD）</strong>，<br> 能够在无未见类样本的条件下，实现未见类别的<strong>目标检测与识别</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="二、主要贡献总结"><a href="#二、主要贡献总结" class="headerlink" title="二、主要贡献总结"></a>二、主要贡献总结</h2><h3 id="1-首次提出「零样本检测」（Zero-Shot-Detection-ZSD）的完整定义"><a href="#1-首次提出「零样本检测」（Zero-Shot-Detection-ZSD）的完整定义" class="headerlink" title="1. 首次提出「零样本检测」（Zero-Shot Detection, ZSD）的完整定义"></a>1. 首次提出「零样本检测」（Zero-Shot Detection, ZSD）的完整定义</h3><p>以往的工作几乎都聚焦在<strong>零样本识别（Zero-Shot Recognition, ZSR）</strong>，即给定已裁剪的目标图片，预测其类别。<br> 而 Zhu 等首次把问题拓展到“检测”层面：</p>
+<blockquote>
+<p>模型不仅要识别未见类，还要从整张图像中<strong>定位并区分目标</strong>。</p>
+</blockquote>
+<p>他们指出：</p>
+<blockquote>
+<p>传统检测器（如 YOLOv2、SSD）会将未见类的目标视为<strong>背景</strong>，导致召回率急剧下降；<br> 因此，必须设计能理解“语义相似性”的检测器结构。</p>
+</blockquote>
+<hr>
+<h3 id="2-提出-ZS-YOLO："><a href="#2-提出-ZS-YOLO：" class="headerlink" title="2. 提出 ZS-YOLO："></a>2. 提出 ZS-YOLO：</h3><p>一个融合语义学习的<strong>单阶段检测器（Single-Stage Detector）</strong>。</p>
+<p>核心创新点：</p>
+<ul>
+<li><strong>语义预测分支（Semantic Prediction Head）</strong>：<br> 让每个候选框输出语义向量（属性或 word2vec 表示），从而获得语义可解释的检测特征。</li>
+<li><strong>多模态置信度预测（Multi-modal Confidence Estimation）</strong>：<br> 将视觉特征（TF）、位置特征（TL）、语义特征（TS）拼接后预测“目标性置信度”；<br> 使模型学会利用语义信息判断目标性，而非仅依赖视觉相似度。</li>
+<li><strong>端到端联合训练</strong>：<br> 同时最小化定位损失、语义损失、置信度损失，令视觉空间与语义空间对齐。</li>
+</ul>
+<p>这些设计让 ZS-YOLO 在未见类上获得显著提升（例如在 VOC 10&#x2F;10 split 上 Unseen AP 从 56.4% → 60.1%）。</p>
+<hr>
+<h3 id="3-实验验证与现象总结"><a href="#3-实验验证与现象总结" class="headerlink" title="3. 实验验证与现象总结"></a>3. 实验验证与现象总结</h3><p>作者通过大量消融实验（第 IV 节）验证了：</p>
+<ul>
+<li>引入语义预测能提升未见类召回；</li>
+<li>语义原型必须携带语义结构；</li>
+<li>语义相似度高的 seen&#x2F;unseen 划分性能更好；</li>
+<li>t-SNE 可视化表明语义辅助任务使得前景与背景在特征空间中更易分离。</li>
+</ul>
+<p>他们还指出：</p>
+<blockquote>
+<p>仅替换检测 backbone 并不能带来零样本性能的提升，核心在于语义信号的引入。</p>
+</blockquote>
+<hr>
+<h2 id="三、论文的科学意义"><a href="#三、论文的科学意义" class="headerlink" title="三、论文的科学意义"></a>三、论文的科学意义</h2><h3 id="（1）填补检测领域的空白"><a href="#（1）填补检测领域的空白" class="headerlink" title="（1）填补检测领域的空白"></a>（1）填补检测领域的空白</h3><p>在此之前，零样本学习主要局限于分类任务。<br> ZS-YOLO 是<strong>首个端到端零样本检测系统</strong>，打破了“检测器必须有见类监督”的假设。</p>
+<h3 id="（2）建立视觉–语义联合空间的检测范式"><a href="#（2）建立视觉–语义联合空间的检测范式" class="headerlink" title="（2）建立视觉–语义联合空间的检测范式"></a>（2）建立视觉–语义联合空间的检测范式</h3><p>ZS-YOLO 的训练机制有效地将视觉与语义空间对齐，<br> 为后续的 <strong>Open-Vocabulary Detection（开放词汇检测）</strong> 奠定基础。<br> 后来的如 <strong>OVD、CLIP-DET、RegionCLIP</strong> 等工作，都继承了这一思想：</p>
+<blockquote>
+<p>通过语义嵌入统一检测与语言描述空间。</p>
+</blockquote>
+<h3 id="（3）实现「检测-识别」的统一框架"><a href="#（3）实现「检测-识别」的统一框架" class="headerlink" title="（3）实现「检测 + 识别」的统一框架"></a>（3）实现「检测 + 识别」的统一框架</h3><p>ZS-YOLO 的语义输出既可用于目标检测，也可直接用于零样本识别任务（如前节 D 所示）。<br> 这意味着一个网络即可同时执行：</p>
+<ul>
+<li>未见类检测；</li>
+<li>泛化识别（gZSL）。</li>
+</ul>
+<hr>
+<h2 id="四、局限与挑战"><a href="#四、局限与挑战" class="headerlink" title="四、局限与挑战"></a>四、局限与挑战</h2><p>作者在结尾坦诚指出两个限制：</p>
+<ol>
+<li><strong>语义相关性依赖性强</strong><br> 若 unseen 类与 seen 类语义距离过远（E 值低），性能急剧下降。<br> 模型仍难以“真正泛化”到语义孤立的新概念。</li>
+<li><strong>语义原型质量受限</strong><br> 属性或 word2vec 嵌入并不总能准确反映视觉特征相似性。<br> 语义空间噪声仍是零样本检测的瓶颈。</li>
+<li><strong>未完全解决 GZSL 偏置问题</strong><br> 模型在联合 seen&#x2F;unseen 测试时仍存在<strong>偏向 seen 类</strong>的现象，<br> 需要后续校准与更平衡的训练策略。</li>
+</ol>
+<hr>
+<h2 id="五、未来展望（作者提出的方向）"><a href="#五、未来展望（作者提出的方向）" class="headerlink" title="五、未来展望（作者提出的方向）"></a>五、未来展望（作者提出的方向）</h2><p>在结论部分末尾，作者提出三条未来研究方向：</p>
+<ol>
+<li><strong>语义空间优化与对齐</strong><ul>
+<li>改进语义嵌入（如降噪 w2vR、融合文本描述、利用上下文学习）；</li>
+<li>自适应地学习语义距离度量，而非固定余弦相似度。</li>
+</ul>
+</li>
+<li><strong>跨架构扩展</strong><ul>
+<li>将语义预测模块整合进更先进的检测框架（如 Faster R-CNN、RetinaNet、Mask R-CNN）；</li>
+<li>探索两阶段检测器或 transformer-based 架构的迁移。</li>
+</ul>
+</li>
+<li><strong>开放词汇与跨模态任务</strong><ul>
+<li>利用语义输出实现“<strong>开放类别检测</strong>”与“<strong>文本驱动目标识别</strong>”；</li>
+<li>为多模态视觉理解任务（VQA、Referring Expression、Scene Graph）提供检测基础。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="六、总结性评价"><a href="#六、总结性评价" class="headerlink" title="六、总结性评价"></a>六、总结性评价</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>ZS-YOLO 的创新</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>任务层面</strong></td>
+<td>从零样本识别 → 零样本检测（首次）</td>
+</tr>
+<tr>
+<td><strong>结构层面</strong></td>
+<td>在检测网络中引入语义预测分支</td>
+</tr>
+<tr>
+<td><strong>训练机制</strong></td>
+<td>端到端联合语义对齐、多模态置信度学习</td>
+</tr>
+<tr>
+<td><strong>结果表现</strong></td>
+<td>显著提升未见类检测性能</td>
+</tr>
+<tr>
+<td><strong>应用价值</strong></td>
+<td>为开放词汇检测与多模态学习奠基</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="七、我的延伸点评"><a href="#七、我的延伸点评" class="headerlink" title="七、我的延伸点评"></a>七、我的延伸点评</h2><p>从今天的视角（2025 年）回看，《Zero-Shot Detection》是**开放词汇检测（Open-Vocabulary Detection, OVD）**领域的重要起点之一。<br> ZS-YOLO 的“语义预测 + 多模态置信度”思想后来被 CLIP、ViLD、Detic 等工作进一步发展成：</p>
+<blockquote>
+<p>“用语言做标签，用语义空间做检测。”</p>
+</blockquote>
+<p>可以说，这篇论文为“<strong>让检测器理解语言</strong>”打开了大门。</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/%E9%9B%B6%E6%A0%B7%E6%9C%AC%E6%A3%80%E6%B5%8B/">零样本检测</a></div><div class="post-share"><div class="social-share" data-image="/blog/image/62aa03063f117eaad7c77592e3b98d7f05b0a86329e44a-TuUO3E.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/blog/2025/10/17/Zero-Shot-Object-Detection/" title="Zero-Shot Object Detection"><img class="cover" src="/blog/image/5268d877a2a04864b36b4961ab793f4f.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Zero-Shot Object Detection</div></div><div class="info-2"><div class="info-item-1">Introduction这一部分介绍了零样本物体检测（Zero-Shot Object Detection, ZSD）问题的背景、动机和挑战。为了帮助你更好地理解，我将从几个关键点进行详细讲解。 问题背景： 人类与机器的区别：引言一开始提到，人类能够轻松地通过语言描述构建对物体的心智模型。举个例子，即使我们从未见过某个物体，但只要听到它的描述，我们就能大致想象出它的样子。机器视觉系统则没有这种能力。传统的机器学习方法要求机器在训练阶段看到每一个物体类别的视觉样本，然后才能在测试阶段识别这些物体。 然而，这种方法存在问题：获取大量标注数据非常昂贵，因此在很多应用场景下，机器无法看到所有类别的物体样本。例如，如果训练集里只有“手”和“胳膊”的样本，机器无法自动推测出“肩膀”这个物体。   零样本学习（Zero-Shot Learning,...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">29</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#INTRODUCTION"><span class="toc-number">1.</span> <span class="toc-text">INTRODUCTION</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RELATED-WORK"><span class="toc-number">2.</span> <span class="toc-text">RELATED WORK</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#METHODOLOGY"><span class="toc-number">3.</span> <span class="toc-text">METHODOLOGY</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#A-Problem-Definition"><span class="toc-number">3.1.</span> <span class="toc-text">A. Problem Definition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#B-ZS-YOLO-Network-Architecture"><span class="toc-number">3.2.</span> <span class="toc-text">B.ZS-YOLO Network Architecture</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A9-%E4%B8%80%E3%80%81%E6%80%BB%E4%BD%93%E7%BB%93%E6%9E%84%E6%A6%82%E8%A7%88"><span class="toc-number">3.2.1.</span> <span class="toc-text">🧩 一、总体结构概览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%98-%E4%BA%8C%E3%80%81-1-%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96%E6%A8%A1%E5%9D%97-Feature-Extraction"><span class="toc-number">3.2.2.</span> <span class="toc-text">📘 二、(1) 特征提取模块 (Feature Extraction)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%99-%E4%B8%89%E3%80%81-2-%E7%9B%AE%E6%A0%87%E5%AE%9A%E4%BD%8D%E6%A8%A1%E5%9D%97-Object-Localization"><span class="toc-number">3.2.3.</span> <span class="toc-text">📙 三、(2) 目标定位模块 (Object Localization)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%97-%E5%9B%9B%E3%80%81-3-%E8%AF%AD%E4%B9%89%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9D%97-Semantic-Prediction"><span class="toc-number">3.2.4.</span> <span class="toc-text">📗 四、(3) 语义预测模块 (Semantic Prediction)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%95-%E4%BA%94%E3%80%81-4-%E7%BD%AE%E4%BF%A1%E5%BA%A6%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9D%97-Confidence-Prediction"><span class="toc-number">3.2.5.</span> <span class="toc-text">📕 五、(4) 置信度预测模块 (Confidence Prediction)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%8D-%E5%85%AD%E3%80%81%E7%BD%91%E7%BB%9C%E7%89%B9%E7%82%B9%E4%B8%8E%E6%89%A9%E5%B1%95%E6%80%A7"><span class="toc-number">3.2.6.</span> <span class="toc-text">🔍 六、网络特点与扩展性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%A8-%E4%B8%83%E3%80%81%E6%95%B4%E4%BD%93%E6%B5%81%E7%A8%8B%E6%80%BB%E7%BB%93%EF%BC%88%E4%BB%8E%E8%BE%93%E5%85%A5%E5%88%B0%E8%BE%93%E5%87%BA%EF%BC%89"><span class="toc-number">3.2.7.</span> <span class="toc-text">✨ 七、整体流程总结（从输入到输出）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%8E%AF-%E5%85%AB%E3%80%81%E5%88%9B%E6%96%B0%E7%82%B9%E6%80%BB%E7%BB%93"><span class="toc-number">3.2.8.</span> <span class="toc-text">🎯 八、创新点总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-Zero-Shot-Detection-Losses"><span class="toc-number">3.3.</span> <span class="toc-text">C. Zero-Shot Detection Losses</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%B8%8F%E2%83%A3-%E6%95%B4%E4%BD%93%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0"><span class="toc-number">3.3.1.</span> <span class="toc-text">1️⃣ 整体目标函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%B8%8F%E2%83%A3-%E5%AE%9A%E4%BD%8D%E6%8D%9F%E5%A4%B1-L-text-loc"><span class="toc-number">3.3.2.</span> <span class="toc-text">2️⃣ 定位损失 $L_{\text{loc}}$</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%B8%8F%E2%83%A3-%E8%AF%AD%E4%B9%89%E6%8D%9F%E5%A4%B1-L-text-attr"><span class="toc-number">3.3.3.</span> <span class="toc-text">3️⃣ 语义损失 $L_{\text{attr}}$</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%B8%8F%E2%83%A3-%E7%BD%AE%E4%BF%A1%E5%BA%A6%E6%8D%9F%E5%A4%B1-L-text-conf"><span class="toc-number">3.3.4.</span> <span class="toc-text">4️⃣ 置信度损失 $L_{\text{conf}}$</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%EF%B8%8F%E2%83%A3-%E4%B8%89%E8%80%85%E5%8D%8F%E5%90%8C%E7%9A%84%E6%95%88%E6%9E%9C"><span class="toc-number">3.3.5.</span> <span class="toc-text">5️⃣ 三者协同的效果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%EF%B8%8F%E2%83%A3-%E6%80%BB%E7%BB%93%E8%A6%81%E7%82%B9"><span class="toc-number">3.3.6.</span> <span class="toc-text">6️⃣ 总结要点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#D-Training-Details"><span class="toc-number">3.4.</span> <span class="toc-text">D. Training Details</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%B8%8F%E2%83%A3-%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86%E5%92%8C%E5%A2%9E%E5%BC%BA%EF%BC%88Data-Preprocessing-and-Augmentation%EF%BC%89"><span class="toc-number">3.4.1.</span> <span class="toc-text">1️⃣ 数据预处理和增强（Data Preprocessing and Augmentation）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%B8%8F%E2%83%A3-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%8A%A0%E6%9D%83%EF%BC%88Loss-Weighting%EF%BC%89"><span class="toc-number">3.4.2.</span> <span class="toc-text">2️⃣ 损失函数加权（Loss Weighting）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%B8%8F%E2%83%A3-%E8%B6%85%E5%8F%82%E6%95%B0%E5%92%8C%E8%AE%AD%E7%BB%83%E7%AD%96%E7%95%A5"><span class="toc-number">3.4.3.</span> <span class="toc-text">3️⃣ 超参数和训练策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%B8%8F%E2%83%A3-%E9%9B%B6%E6%A0%B7%E6%9C%AC%E6%A3%80%E6%B5%8B%E7%9A%84%E7%89%B9%E6%AE%8A%E6%8A%80%E5%B7%A7%EF%BC%88Special-Techniques-for-Zero-Shot-Detection%EF%BC%89"><span class="toc-number">3.4.4.</span> <span class="toc-text">4️⃣ 零样本检测的特殊技巧（Special Techniques for Zero-Shot Detection）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%EF%B8%8F%E2%83%A3-%E8%AE%AD%E7%BB%83%E4%B8%AD%E7%9A%84%E6%8C%91%E6%88%98%E5%92%8C%E5%AF%B9%E7%AD%96"><span class="toc-number">3.4.5.</span> <span class="toc-text">5️⃣ 训练中的挑战和对策</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%EF%B8%8F%E2%83%A3-%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B%E6%80%BB%E7%BB%93"><span class="toc-number">3.4.6.</span> <span class="toc-text">6️⃣ 训练过程总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">3.4.7.</span> <span class="toc-text">小结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#EXPERIMENTS"><span class="toc-number">4.</span> <span class="toc-text">EXPERIMENTS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-number">4.1.</span> <span class="toc-text">评估指标</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%B8%8F%E2%83%A3-%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87%EF%BC%9A%E5%B9%B3%E5%9D%87%E7%B2%BE%E5%BA%A6%EF%BC%88Average-Precision-AP%EF%BC%89"><span class="toc-number">4.1.1.</span> <span class="toc-text">1️⃣ 评估指标：平均精度（Average Precision, AP）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%B8%8F%E2%83%A3-%E4%B8%8E-Pascal-VOC-%E6%A0%87%E5%87%86-mAP-%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="toc-number">4.1.2.</span> <span class="toc-text">2️⃣ 与 Pascal VOC 标准 mAP 的不同</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%B8%8F%E2%83%A3-%E5%B9%B3%E5%9D%87-F-Score-%E4%BD%9C%E4%B8%BA%E8%BE%85%E5%8A%A9%E5%BA%A6%E9%87%8F"><span class="toc-number">4.1.3.</span> <span class="toc-text">3️⃣ 平均 F-Score 作为辅助度量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%EF%B8%8F%E2%83%A3-AP-%E5%92%8C-F-score-%E5%AF%B9%E6%9C%AA%E8%A7%81%E7%B1%BB%E7%9A%84%E5%85%B3%E6%B3%A8"><span class="toc-number">4.1.4.</span> <span class="toc-text">4️⃣ AP 和 F-score 对未见类的关注</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.1.5.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#A-Datasets-and-Settings"><span class="toc-number">4.2.</span> <span class="toc-text">A. Datasets and Settings</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE%E9%9B%86%E6%A6%82%E8%BF%B0"><span class="toc-number">4.2.1.</span> <span class="toc-text">实验数据集概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%81%EF%BC%8F%E6%9C%AA%E8%A7%81%E7%B1%BB%E5%88%AB%E5%88%92%E5%88%86"><span class="toc-number">4.2.2.</span> <span class="toc-text">见／未见类别划分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E8%A1%A8%E7%A4%BA%E4%B8%8E%E8%AF%AD%E4%B9%89%E6%98%A0%E5%B0%84"><span class="toc-number">4.2.3.</span> <span class="toc-text">属性表示与语义映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E5%88%92%E5%88%86%E8%A1%A8"><span class="toc-number">4.2.4.</span> <span class="toc-text">数据集划分表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="toc-number">4.2.5.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#B-Zero-Shot-Detection-Evaluation"><span class="toc-number">4.3.</span> <span class="toc-text">B. Zero-Shot Detection Evaluation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1%E6%A6%82%E8%BF%B0"><span class="toc-number">4.3.1.</span> <span class="toc-text">实验设计概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94%E6%96%B9%E6%B3%95%E4%B8%8E%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-number">4.3.2.</span> <span class="toc-text">对比方法与评估指标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C%E4%B8%8E%E4%B8%BB%E8%A6%81%E5%8F%91%E7%8E%B0"><span class="toc-number">4.3.3.</span> <span class="toc-text">实验结果与主要发现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E6%8F%90%E5%8D%87%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90"><span class="toc-number">4.3.4.</span> <span class="toc-text">性能提升原因分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AC%E5%9B%9E%E7%8E%87%E4%B8%8E%E5%8F%AF%E8%A7%86%E5%8C%96%E5%88%86%E6%9E%90"><span class="toc-number">4.3.5.</span> <span class="toc-text">召回率与可视化分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E5%88%86%E6%9E%90%EF%BC%9A%E6%80%A7%E8%83%BD%E5%B9%B3%E8%A1%A1%E4%B8%8E%E6%8C%91%E6%88%98"><span class="toc-number">4.3.6.</span> <span class="toc-text">进一步分析：性能平衡与挑战</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-Ablative-Study-on-PASCAL-VOC"><span class="toc-number">4.4.</span> <span class="toc-text">C. Ablative Study on PASCAL VOC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#D-Semantic-Output-for-Zero-Shot-Recognition"><span class="toc-number">4.5.</span> <span class="toc-text">D. Semantic Output for Zero-Shot Recognition</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%AB%A0%E8%8A%82%E8%83%8C%E6%99%AF%E4%B8%8E%E7%9B%AE%E7%9A%84"><span class="toc-number">4.5.1.</span> <span class="toc-text">一、章节背景与目的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BB%BB%E5%8A%A1%E5%AE%9A%E4%B9%89%E4%B8%8E%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE"><span class="toc-number">4.5.2.</span> <span class="toc-text">二、任务定义与实验设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%AF%AF%E5%B7%AE%E6%9D%A5%E6%BA%90%E5%88%86%E6%9E%90"><span class="toc-number">4.5.3.</span> <span class="toc-text">三、误差来源分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%AF%AD%E4%B9%89%E8%BE%93%E5%87%BA%E7%9A%84%E8%AF%86%E5%88%AB%E8%83%BD%E5%8A%9B%E9%AA%8C%E8%AF%81"><span class="toc-number">4.5.4.</span> <span class="toc-text">四、语义输出的识别能力验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%BB%93%E6%9E%9C%E8%A7%A3%E8%AF%BB%E4%B8%8E%E7%BB%86%E8%8A%82%E5%88%86%E6%9E%90"><span class="toc-number">4.5.5.</span> <span class="toc-text">五、结果解读与细节分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E7%BB%93%E8%AE%BA%E4%B8%8E%E5%90%AF%E7%A4%BA"><span class="toc-number">4.5.6.</span> <span class="toc-text">六、结论与启示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%80%BB%E7%BB%93%EF%BC%9AZS-YOLO-%E7%9A%84%E7%BB%9F%E4%B8%80%E8%A7%86%E8%A7%92"><span class="toc-number">4.5.7.</span> <span class="toc-text">七、总结：ZS-YOLO 的统一视角</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Conclusion"><span class="toc-number">5.</span> <span class="toc-text">Conclusion</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%AB%A0%E8%8A%82%E4%BD%8D%E7%BD%AE%E4%B8%8E%E6%A0%B8%E5%BF%83%E7%9B%AE%E7%9A%84"><span class="toc-number">5.1.</span> <span class="toc-text">一、章节位置与核心目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BB%E8%A6%81%E8%B4%A1%E7%8C%AE%E6%80%BB%E7%BB%93"><span class="toc-number">5.2.</span> <span class="toc-text">二、主要贡献总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%A6%96%E6%AC%A1%E6%8F%90%E5%87%BA%E3%80%8C%E9%9B%B6%E6%A0%B7%E6%9C%AC%E6%A3%80%E6%B5%8B%E3%80%8D%EF%BC%88Zero-Shot-Detection-ZSD%EF%BC%89%E7%9A%84%E5%AE%8C%E6%95%B4%E5%AE%9A%E4%B9%89"><span class="toc-number">5.2.1.</span> <span class="toc-text">1. 首次提出「零样本检测」（Zero-Shot Detection, ZSD）的完整定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%8F%90%E5%87%BA-ZS-YOLO%EF%BC%9A"><span class="toc-number">5.2.2.</span> <span class="toc-text">2. 提出 ZS-YOLO：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%AE%9E%E9%AA%8C%E9%AA%8C%E8%AF%81%E4%B8%8E%E7%8E%B0%E8%B1%A1%E6%80%BB%E7%BB%93"><span class="toc-number">5.2.3.</span> <span class="toc-text">3. 实验验证与现象总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%AE%BA%E6%96%87%E7%9A%84%E7%A7%91%E5%AD%A6%E6%84%8F%E4%B9%89"><span class="toc-number">5.3.</span> <span class="toc-text">三、论文的科学意义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%A1%AB%E8%A1%A5%E6%A3%80%E6%B5%8B%E9%A2%86%E5%9F%9F%E7%9A%84%E7%A9%BA%E7%99%BD"><span class="toc-number">5.3.1.</span> <span class="toc-text">（1）填补检测领域的空白</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E5%BB%BA%E7%AB%8B%E8%A7%86%E8%A7%89%E2%80%93%E8%AF%AD%E4%B9%89%E8%81%94%E5%90%88%E7%A9%BA%E9%97%B4%E7%9A%84%E6%A3%80%E6%B5%8B%E8%8C%83%E5%BC%8F"><span class="toc-number">5.3.2.</span> <span class="toc-text">（2）建立视觉–语义联合空间的检测范式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E5%AE%9E%E7%8E%B0%E3%80%8C%E6%A3%80%E6%B5%8B-%E8%AF%86%E5%88%AB%E3%80%8D%E7%9A%84%E7%BB%9F%E4%B8%80%E6%A1%86%E6%9E%B6"><span class="toc-number">5.3.3.</span> <span class="toc-text">（3）实现「检测 + 识别」的统一框架</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%B1%80%E9%99%90%E4%B8%8E%E6%8C%91%E6%88%98"><span class="toc-number">5.4.</span> <span class="toc-text">四、局限与挑战</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%9C%AA%E6%9D%A5%E5%B1%95%E6%9C%9B%EF%BC%88%E4%BD%9C%E8%80%85%E6%8F%90%E5%87%BA%E7%9A%84%E6%96%B9%E5%90%91%EF%BC%89"><span class="toc-number">5.5.</span> <span class="toc-text">五、未来展望（作者提出的方向）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%80%BB%E7%BB%93%E6%80%A7%E8%AF%84%E4%BB%B7"><span class="toc-number">5.6.</span> <span class="toc-text">六、总结性评价</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%88%91%E7%9A%84%E5%BB%B6%E4%BC%B8%E7%82%B9%E8%AF%84"><span class="toc-number">5.7.</span> <span class="toc-text">七、我的延伸点评</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AZero-Shot-Detection/" title="论文阅读：Zero-Shot Detection"><img src="/blog/image/62aa03063f117eaad7c77592e3b98d7f05b0a86329e44a-TuUO3E.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：Zero-Shot Detection"/></a><div class="content"><a class="title" href="/blog/2025/10/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AZero-Shot-Detection/" title="论文阅读：Zero-Shot Detection">论文阅读：Zero-Shot Detection</a><time datetime="2025-10-20T11:34:17.000Z" title="发表于 2025-10-20 19:34:17">2025-10-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/17/Zero-Shot-Object-Detection/" title="Zero-Shot Object Detection"><img src="/blog/image/5268d877a2a04864b36b4961ab793f4f.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Zero-Shot Object Detection"/></a><div class="content"><a class="title" href="/blog/2025/10/17/Zero-Shot-Object-Detection/" title="Zero-Shot Object Detection">Zero-Shot Object Detection</a><time datetime="2025-10-17T10:22:18.000Z" title="发表于 2025-10-17 18:22:18">2025-10-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/17/DeViSE-A-Deep-Visual-Semantic-Embedding-Model/" title="DeViSE: A Deep Visual-Semantic Embedding Model"><img src="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="DeViSE: A Deep Visual-Semantic Embedding Model"/></a><div class="content"><a class="title" href="/blog/2025/10/17/DeViSE-A-Deep-Visual-Semantic-Embedding-Model/" title="DeViSE: A Deep Visual-Semantic Embedding Model">DeViSE: A Deep Visual-Semantic Embedding Model</a><time datetime="2025-10-17T06:20:10.000Z" title="发表于 2025-10-17 14:20:10">2025-10-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2025/09/23/%E5%B0%8F%E6%A0%B7%E6%9C%AC%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" title="小样本目标检测">小样本目标检测</a><time datetime="2025-09-23T08:06:54.000Z" title="发表于 2025-09-23 16:06:54">2025-09-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2025/09/17/keywords%E9%9B%86%E5%90%88/" title="keywords集合">keywords集合</a><time datetime="2025-09-17T01:27:17.000Z" title="发表于 2025-09-17 09:27:17">2025-09-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script async data-pjax src="{&quot;site_uv&quot;:true,&quot;site_pv&quot;:true,&quot;page_pv&quot;:true}"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
