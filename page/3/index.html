@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="太平山上修真我，祖师堂中续香火">
+<meta property="og:type" content="website">
+<meta property="og:title" content="且离且安的碎碎念">
+<meta property="og:url" content="https://qieliqiean.github.io/blog/page/3/index.html">
+<meta property="og:site_name" content="且离且安的碎碎念">
+<meta property="og:description" content="太平山上修真我，祖师堂中续香火">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qieliqiean.github.io/blog/image/IMG_20250131_155849.jpg">
+<meta property="article:author" content="lian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qieliqiean.github.io/blog/image/IMG_20250131_155849.jpg"><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/page/3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: {"path":"/blog/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '且离且安的碎碎念',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(image/1363709.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">且离且安的碎碎念</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/blog/2025/08/31/%E8%AE%BA%E6%96%87-%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9ATowards-Large-Scale-Small-Object-Detection-Survey-and-Benchmarks2/" title="论文-小目标检测：Towards Large-Scale Small Object Detection:  Survey and Benchmarks2"><img class="post-bg" src="/blog/image/Date%EF%BC%9A20250817154337(1).jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文-小目标检测：Towards Large-Scale Small Object Detection:  Survey and Benchmarks2"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2025/08/31/%E8%AE%BA%E6%96%87-%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9ATowards-Large-Scale-Small-Object-Detection-Survey-and-Benchmarks2/" title="论文-小目标检测：Towards Large-Scale Small Object Detection:  Survey and Benchmarks2">论文-小目标检测：Towards Large-Scale Small Object Detection:  Survey and Benchmarks2</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-31T07:06:34.000Z" title="发表于 2025-08-31 15:06:34">2025-08-31</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-17T09:56:14.926Z" title="更新于 2026-01-17 17:56:14">2026-01-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/blog/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a></span></div><div class="content">学习笔记 (深度详尽版): 《迈向大规模小目标检测：综述与基准》 摘要 (Abstract) - 论文精髓  现状: 通用目标检测在标准基准上已取得巨大成功，但对于小目标的检测性能仍严重不足。 核心论点: 造成此瓶颈的关键原因有二：(1) 小目标自身固有的检测难度；(2) 缺乏一个专门为小目标检测设计的大规模、高质量基准来驱动研究。 本文贡献:  全面综述: 系统性地回顾了基于深度学习的小目标检测方法，并提出了一个包含六个类别的分类法。 构建新基准: 发布了两个大规模、高质量的小目标检测数据集——SODA-D (驾驶场景) 和 SODA-A (航空场景)。 深入评测: 在新数据集上对超过20种主流检测算法进行了全面的基准测试，分析了现有方法的瓶颈，并为未来研究指明了方向。   最终目标: 通过提供这份全面的综述和高质量的基准，推动小目标检测领域的发展。   一、 引言 (Introduction) - 问题的提出与工作的意义 1.1 背景：通用目标检测的成功与短板  成功: 在深度学习(CNN)的推动下，以Faster R-CNN, YOLO, RetinaNet,...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/blog/2025/08/31/%E8%AE%BA%E6%96%87-%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9ATowards-Large-Scale-Small-Object-Detection-Survey-and-Benchmarks/" title="论文-小目标检测：Towards Large-Scale Small Object Detection:  Survey and Benchmarks"><img class="post-bg" src="/blog/image/Date%EF%BC%9A20250817154338.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文-小目标检测：Towards Large-Scale Small Object Detection:  Survey and Benchmarks"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2025/08/31/%E8%AE%BA%E6%96%87-%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9ATowards-Large-Scale-Small-Object-Detection-Survey-and-Benchmarks/" title="论文-小目标检测：Towards Large-Scale Small Object Detection:  Survey and Benchmarks">论文-小目标检测：Towards Large-Scale Small Object Detection:  Survey and Benchmarks</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-31T06:55:56.000Z" title="发表于 2025-08-31 14:55:56">2025-08-31</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-17T09:56:14.917Z" title="更新于 2026-01-17 17:56:14">2026-01-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/blog/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a></span></div><div class="content">Towards Large-Scale Small Object Detection: Survey and Benchmarks 一、文章基础信息   期刊 / 年份：IEEE TRANSACTIONS ON PATTERN ANALYSIS AND MACHINE INTELLIGENCE (TPAMI)，2023 年 11 月   核心主题：小目标检测（Small Object Detection, SOD）的系统综述、两大专用大规模基准数据集（SODA）构建、主流算法评估   作者单位：西北工业大学自动化学院   开源资源：数据集与代码地址：https://shaunyuan22.github.io/SODA；补充材料地址：https://doi.org/10.1109/TPAMI.2023.3290594   二、摘要（核心浓缩） 1. 领域背景   深度卷积神经网络（DCNN）推动目标检测显著进步，但小目标检测（SOD）仍是计算机视觉公认难点—— 核心原因：小目标固有结构导致 “视觉外观差（细节模糊）” 和...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/blog/2025/08/27/A-Review-of-Optical-and-SAR-Image-Deep-Feature-Fusion-in-Semantic-Segmentation/" title="A Review of Optical and SAR Image Deep Feature Fusion in Semantic Segmentation">A Review of Optical and SAR Image Deep Feature Fusion in Semantic Segmentation</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-27T08:57:04.000Z" title="发表于 2025-08-27 16:57:04">2025-08-27</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-17T09:56:14.937Z" title="更新于 2026-01-17 17:56:14">2026-01-17</time></span></div><div class="content">好的，同学们，请坐。今天我们要一起深入探讨一篇非常有价值的综述性文献：《A Review of Optical and SAR Image Deep Feature Fusion in Semantic Segmentation》，即《光学与SAR影像在语义分割中的深度特征融合综述》。 我知道大家可能对遥感、合成孔径雷达（SAR）或者深度学习这些领域不甚了解，但这没关系。我会像上课一样，一步步地为大家拆解这篇文章的每一个概念、每一个细节。请随时在脑海里记下问题，我们争取在讲解结束时，让大家对这个领域有一个清晰、全面的认识。  第一部分：文献概述与核心概念解读 (引言 Introduction) 首先，我们来看标题。这篇论文的标题就包含了它的核心内容，我们来逐个剖析：   语义分割 (Semantic...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/blog/2025/08/07/%E8%87%AA%E7%84%B6%E8%BE%A9%E8%AF%81%E6%B3%95/" title="自然辩证法"><img class="post-bg" src="/blog/image/d4f0a9ce880411ebb6edd017c2d2eca2.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="自然辩证法"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2025/08/07/%E8%87%AA%E7%84%B6%E8%BE%A9%E8%AF%81%E6%B3%95/" title="自然辩证法">自然辩证法</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-07T08:23:25.000Z" title="发表于 2025-08-07 16:23:25">2025-08-07</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-17T09:52:36.219Z" title="更新于 2026-01-17 17:52:36">2026-01-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/%E8%87%AA%E7%84%B6%E8%BE%A9%E8%AF%81%E6%B3%95/">自然辩证法</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/blog/tags/%E8%87%AA%E7%84%B6%E8%BE%A9%E8%AF%81%E6%B3%95/">自然辩证法</a></span></div><div class="content"> 辩证唯物主义自然观的主要观点和特征？  定义：关于自然界及其与人类关系的总观点 主要观点：自然界是客观的、变化发展的物质世界；物质在其永恒的循环中按照规律运动；物质运动在量和质的方面都是不灭的，时间和空间是物质的固有属性和存在方式；人是自然界的一部分，意识和思维是人脑的机能；实践是人类有目的地认识和改造自然界的能动活动，是人类存在的本质和方式；人是自然界的一部分，“人靠自然界生活”，“人与自然是生命共同体”；“人与自然是一种共生关系，对自然的伤害最终会伤及人类自身”。 认识自然界要遵循客观性原则。 特征： ①实践性：主张自然界是人类社会实践的产物，实践对认识自然界起到决定作用 ②历史性：主张自然界的历史是人类生成的历史和自然界对人的生成的历史，认识自然界也是以实践为基础的过程 ③辩证性：以实践论为基础，实现唯物论和辩证法的统一、天然自然界和人工自然界的统一、人类史和自然史的统一、人与自然界关系上的能动性和受动性的统一 ④批判性：辩证唯物主义自然观批判众多旧观念和错误思想，引入自觉辩证法用于自然观和历史观...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/blog/2025/06/29/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E4%BA%8C%EF%BC%89/" title="机电一体化分析与建模（5-6章）"><img class="post-bg" src="/blog/./image/20250505084723-2.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="机电一体化分析与建模（5-6章）"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2025/06/29/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E4%BA%8C%EF%BC%89/" title="机电一体化分析与建模（5-6章）">机电一体化分析与建模（5-6章）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-06-29T06:33:36.000Z" title="发表于 2025-06-29 14:33:36">2025-06-29</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-17T09:12:18.969Z" title="更新于 2026-01-17 17:12:18">2026-01-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/blog/tags/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1/">机电一体化分析与建模</a></span></div><div class="content">第五章 微机测控系统设计  微机测控系统的硬件  按各部分在系统中的作用,该系统可分为  主机 输入输出通道：过程输入输出通道，又称过程通道。是微机与外部物理世界建立信息传递与转换的链接渠道 常规外部设备 接口电路：在过程通道与外部设备间，接口电路起着媒介作用，使主机与过程通道及外部 设备之间的信息交换得以顺利实现 运行操作台 系统总线等    测控系统软件组成 软件通常分为两大类，一类是系统软件，另一类为应用软件   模拟量输入通道的一般组成 一般由信号调理电路、多路转换器、放大器和模／数转换器组成    显然，该通道中的核心是模/数转换器，也就是A/D转换器 通常把模拟量输入通道称为A/D通道  采样-保持器作用 / 为什么使用采样-保持器 /...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/blog/2025/06/12/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%85%AC%E5%BC%8F%E8%AE%B0%E5%BF%86%E6%B1%87%E6%80%BB/" title="数值分析公式记忆汇总"><img class="post-bg" src="/blog/image/hgud.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析公式记忆汇总"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2025/06/12/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E5%85%AC%E5%BC%8F%E8%AE%B0%E5%BF%86%E6%B1%87%E6%80%BB/" title="数值分析公式记忆汇总"><i class="fas fa-thumbtack sticky"></i>数值分析公式记忆汇总</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-06-12T00:51:15.000Z" title="发表于 2025-06-12 08:51:15">2025-06-12</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-17T09:52:36.247Z" title="更新于 2026-01-17 17:52:36">2026-01-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/blog/tags/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">数值分析</a></span></div><div class="content">拉格朗日插值 两点一次插值（线性插值） 条件：2个节点                    #mjx-93a420b{         display:contents;         mjx-assistive-mml {           user-select: text !important;           clip: auto !important;           color: rgba(0,0,0,0);         }          mjx-container[jax="SVG"] {   direction: ltr; }  mjx-container[jax="SVG"] > svg {   overflow: visible;   min-height: 1px;   min-width: 1px; }  mjx-container[jax="SVG"] > svg a {   fill: blue;   stroke: blue; }  mjx-assistive-mml {   position: absolute...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/blog/2025/06/09/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-QR%E5%88%86%E8%A7%A3/" title="数值分析-QR分解"><img class="post-bg" src="/blog/image/vhsuv.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-QR分解"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2025/06/09/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-QR%E5%88%86%E8%A7%A3/" title="数值分析-QR分解">数值分析-QR分解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-06-09T10:36:09.000Z" title="发表于 2025-06-09 18:36:09">2025-06-09</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-17T07:39:10.564Z" title="更新于 2026-01-17 15:39:10">2026-01-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="content">QR分解 例题1  例题2  例题3   约化为对称三对角阵 例题1  例题2   </div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/blog/2025/05/15/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91/" title="数值分析-函数逼近"><img class="post-bg" src="/blog/image/20250505084722.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-函数逼近"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2025/05/15/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91/" title="数值分析-函数逼近">数值分析-函数逼近</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-05-15T07:37:45.000Z" title="发表于 2025-05-15 15:37:45">2025-05-15</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-17T10:05:16.678Z" title="更新于 2026-01-17 18:05:16">2026-01-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/blog/tags/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">数值分析</a></span></div><div class="content">第三章 函数逼近 范数与赋范线性空间 设                    #mjx-b482f98{         display:contents;         mjx-assistive-mml {           user-select: text !important;           clip: auto !important;           color: rgba(0,0,0,0);         }          mjx-container[jax="SVG"] {   direction: ltr; }  mjx-container[jax="SVG"] > svg {   overflow: visible;   min-height: 1px;   min-width: 1px; }  mjx-container[jax="SVG"] > svg a {   fill: blue;   stroke: blue; }  mjx-assistive-mml {   position: absolute !important;  ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/blog/2025/05/12/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E4%B8%80%EF%BC%89/" title="机电一体化分析与建模（1-4章）"><img class="post-bg" src="/blog/image/20250505084723-2.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="机电一体化分析与建模（1-4章）"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2025/05/12/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1%EF%BC%88%E4%B8%80%EF%BC%89/" title="机电一体化分析与建模（1-4章）">机电一体化分析与建模（1-4章）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-05-12T11:27:23.000Z" title="发表于 2025-05-12 19:27:23">2025-05-12</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-17T09:05:07.709Z" title="更新于 2026-01-17 17:05:07">2026-01-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/blog/tags/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1/">机电一体化分析与建模</a></span></div><div class="content">第二章12 16题 第三章3 7 8 第四章8 11 第五章19 第六章9 不定项选择题（20分） 简答题（20分，5题） 计算题（20分，4题） 设计题（20分，2题） 综合题（20分，2题） 第一章 绪论   机电系统：是机械电子系统的简称，是由机械系统和电气系统组成的，其核心是控制系统。   机电控制系统一般由7个部分组成：    放大器：是将比较得出的偏差信号进行放大，用来推动执行器去控制被控对象。 被控对象：是控制系统要操纵的对象。 机电控制系统的执行器：也称为执行元件或执行装置。  根据使用能量的不同，可以将执行装置大体分为电气式、液压式、气动式  液压式执行装置： a)    优点：液压驱动装置具有重量轻、惯性小、快速性好等优点； b)   缺点：液压元件易漏油，会污染环境，也有可能引起火灾；液压系统易受环境温度变化的影响 气动执行装置： a)    优点：是动作迅速、反应快、维护简单、成本低，同时由于空气黏度很小，压力损失小，节能高效，适用于远距离输送；工作环境适应性好 b)  ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/blog/2025/05/08/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%8F%92%E5%80%BC%E6%B3%95/" title="数值分析-插值法"><img class="post-bg" src="/blog/image/hgud.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="数值分析-插值法"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2025/05/08/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%8F%92%E5%80%BC%E6%B3%95/" title="数值分析-插值法">数值分析-插值法</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-05-08T00:50:35.000Z" title="发表于 2025-05-08 08:50:35">2025-05-08</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-17T07:41:30.504Z" title="更新于 2026-01-17 15:41:30">2026-01-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/blog/tags/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">数值分析</a></span></div><div class="content">此文章包含数值分析的插值法部分--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 第二章 插值法 插值法定义 设函数                    #mjx-994b515{         display:contents;         mjx-assistive-mml {           user-select: text !important;           clip: auto !important;           color: rgba(0,0,0,0);         }          mjx-container[jax="SVG"] {   direction:...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/blog/page/2/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/#content-inner">2</a><span class="page-number current">3</span><a class="page-number" href="/blog/page/4/#content-inner">4</a><a class="page-number" href="/blog/page/5/#content-inner">5</a><a class="extend next" rel="next" href="/blog/page/4/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2026/01/17/%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB%EF%BC%9Ayolo_world-models-necks-yolo_world_pafpn.py/" title="无标题">无标题</a><time datetime="2026-01-17T08:27:24.706Z" title="发表于 2026-01-17 16:27:24">2026-01-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2026/01/17/%E4%B8%AD%E8%BD%AC/%E7%A0%94%E7%A9%B6%E6%96%B9%E5%90%91%E6%95%B4%E7%90%86/" title="无标题">无标题</a><time datetime="2026-01-17T08:27:24.611Z" title="发表于 2026-01-17 16:27:24">2026-01-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2026/01/17/%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/" title="图片测试">图片测试</a><time datetime="2026-01-17T03:42:17.000Z" title="发表于 2026-01-17 11:42:17">2026-01-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A_gemini/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gemini"><img src="/blog/image/A1-2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gemini"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A_gemini/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gemini">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gemini</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A_gpt/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gpt"><img src="/blog/image/A1-2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gpt"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A_gpt/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gpt">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gpt</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/%E5%AD%A6%E4%B9%A0/"><span class="card-category-list-name">学习</span><span class="card-category-list-count">29</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/%E6%83%B3%E6%B3%95/"><span class="card-category-list-name">想法</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/%E8%87%AA%E7%84%B6%E8%BE%A9%E8%AF%81%E6%B3%95/"><span class="card-category-list-name">自然辩证法</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/%E9%9B%B6%E6%A0%B7%E6%9C%AC%E6%A3%80%E6%B5%8B/"><span class="card-category-list-name">零样本检测</span><span class="card-category-list-count">1</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/blog/tags/python/" style="font-size: 1.1em; color: #999">python</a> <a href="/blog/tags/Yolo-World/" style="font-size: 1.37em; color: #99a4b2">Yolo-World</a> <a href="/blog/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="font-size: 1.37em; color: #99a4b2">深度学习</a> <a href="/blog/tags/markdown%E8%AF%AD%E6%B3%95/" style="font-size: 1.1em; color: #999">markdown语法</a> <a href="/blog/tags/%E4%BA%95%E4%B8%AD%E6%9C%88/" style="font-size: 1.23em; color: #999ea6">井中月</a> <a href="/blog/tags/%E9%9B%B6%E6%A0%B7%E6%9C%AC%E6%A3%80%E6%B5%8B/" style="font-size: 1.23em; color: #999ea6">零样本检测</a> <a href="/blog/tags/%E7%AC%BC%E4%B8%AD%E9%9B%80/" style="font-size: 1.1em; color: #999">笼中雀</a> <a href="/blog/tags/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" style="font-size: 1.1em; color: #999">目标检测</a> <a href="/blog/tags/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/" style="font-size: 1.5em; color: #99a9bf">数值分析</a> <a href="/blog/tags/%E8%87%AA%E7%84%B6%E8%BE%A9%E8%AF%81%E6%B3%95/" style="font-size: 1.1em; color: #999">自然辩证法</a> <a href="/blog/tags/YOLO-UniOW/" style="font-size: 1.37em; color: #99a4b2">YOLO-UniOW</a> <a href="/blog/tags/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/" style="font-size: 1.1em; color: #999">开放词汇检测</a> <a href="/blog/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" style="font-size: 1.37em; color: #99a4b2">论文阅读</a> <a href="/blog/tags/%E6%9C%BA%E7%94%B5%E4%B8%80%E4%BD%93%E5%8C%96%E5%88%86%E6%9E%90%E4%B8%8E%E5%BB%BA%E6%A8%A1/" style="font-size: 1.23em; color: #999ea6">机电一体化分析与建模</a> <a href="/blog/tags/yolo/" style="font-size: 1.1em; color: #999">yolo</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      <a class="card-more-btn" href="/blog/archives/"
+            title="查看更多">
+            <i class="fas fa-angle-right"></i>
+          </a>
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2026/01/">
+            <span class="card-archive-list-date">
+              一月 2026
+            </span>
+            <span class="card-archive-list-count">6</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2025/12/">
+            <span class="card-archive-list-date">
+              十二月 2025
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2025/11/">
+            <span class="card-archive-list-date">
+              十一月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2025/10/">
+            <span class="card-archive-list-date">
+              十月 2025
+            </span>
+            <span class="card-archive-list-count">5</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2025/09/">
+            <span class="card-archive-list-date">
+              九月 2025
+            </span>
+            <span class="card-archive-list-count">3</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2025/08/">
+            <span class="card-archive-list-date">
+              八月 2025
+            </span>
+            <span class="card-archive-list-count">5</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2025/06/">
+            <span class="card-archive-list-date">
+              六月 2025
+            </span>
+            <span class="card-archive-list-count">3</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2025/05/">
+            <span class="card-archive-list-date">
+              五月 2025
+            </span>
+            <span class="card-archive-list-count">3</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">42</div></div><div class="webinfo-item"><div class="item-name">运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2025-01-26T20:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">1908k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-01-17T10:20:34.699Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: subtitleType => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  }
+}
+btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
+</script><script>function subtitleType () {
+  if (true) {
+    typedJSFn.init(["你一定要走，","走到灯火通明。"])
+  } else {
+    document.getElementById("subtitle").textContent = "你一定要走，"
+  }
+}
+typedJSFn.run(subtitleType)</script></div><script async data-pjax src="{&quot;site_uv&quot;:true,&quot;site_pv&quot;:true,&quot;page_pv&quot;:true}"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>

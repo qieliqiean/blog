@@ -1,0 +1,2126 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>代码解读：yolo_world-models-detectors-yolo_world.py | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="yolo_world yolo_world&#x2F;models&#x2F;detectors&#x2F;yolo_world.py 这份分析将结合 YOLO-World 论文（Cheng et al., 2024）的核心概念，逐行解读 yolo_world&#x2F;models&#x2F;detectors&#x2F;yolo_world.py 代码。 这份代码实现了论文中提出的 YOLO-World 架构，核心亮点在于它如何处理 “图像-文本” 的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码解读：yolo_world-models-detectors-yolo_world.py">
+<meta property="og:url" content="https://qieliqiean.github.io/blog/2025/12/18/%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB%EF%BC%9Ayolo_world-models-detectors-yolo_world.py/index.html">
+<meta property="og:site_name" content="且离且安的碎碎念">
+<meta property="og:description" content="yolo_world yolo_world&#x2F;models&#x2F;detectors&#x2F;yolo_world.py 这份分析将结合 YOLO-World 论文（Cheng et al., 2024）的核心概念，逐行解读 yolo_world&#x2F;models&#x2F;detectors&#x2F;yolo_world.py 代码。 这份代码实现了论文中提出的 YOLO-World 架构，核心亮点在于它如何处理 “图像-文本” 的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qieliqiean.github.io/blog/image/q4SynOBjcxn5gA6.jpeg">
+<meta property="article:published_time" content="2025-12-18T02:04:06.000Z">
+<meta property="article:modified_time" content="2026-01-16T07:21:43.281Z">
+<meta property="article:author" content="lian">
+<meta property="article:tag" content="Yolo-World">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qieliqiean.github.io/blog/image/q4SynOBjcxn5gA6.jpeg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "代码解读：yolo_world-models-detectors-yolo_world.py",
+  "url": "https://qieliqiean.github.io/blog/2025/12/18/%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB%EF%BC%9Ayolo_world-models-detectors-yolo_world.py/",
+  "image": "https://qieliqiean.github.io/blog/image/q4SynOBjcxn5gA6.jpeg",
+  "datePublished": "2025-12-18T02:04:06.000Z",
+  "dateModified": "2026-01-16T07:21:43.281Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "lian",
+      "url": "https://qieliqiean.github.io/blog/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/2025/12/18/%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB%EF%BC%9Ayolo_world-models-detectors-yolo_world.py/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: {"path":"/blog/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '代码解读：yolo_world-models-detectors-yolo_world.py',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/image/q4SynOBjcxn5gA6.jpeg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">代码解读：yolo_world-models-detectors-yolo_world.py</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">代码解读：yolo_world-models-detectors-yolo_world.py</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-12-18T02:04:06.000Z" title="发表于 2025-12-18 10:04:06">2025-12-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-16T07:21:43.281Z" title="更新于 2026-01-16 15:21:43">2026-01-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">13.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>54分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="yolo-world">yolo_world</h1>
+<h2 id="yolo-world-models-detectors-yolo-world-py">yolo_world/models/detectors/yolo_world.py</h2>
+<p>这份分析将结合 <strong>YOLO-World 论文</strong>（<em>Cheng et al., 2024</em>）的核心概念，逐行解读 <code>yolo_world/models/detectors/yolo_world.py</code> 代码。</p>
+<p>这份代码实现了论文中提出的 <strong>YOLO-World</strong> 架构，核心亮点在于它如何处理 <strong>“图像-文本”</strong> 的多模态输入，以及如何通过 <strong>“重参数化（Reparameterization）”</strong> 实现实时推理。</p>
+<hr>
+<h3 id="class-YOLOWorldDetector-YOLODetector">class YOLOWorldDetector(YOLODetector)</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@MODELS.register_module()</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">YOLOWorldDetector</span>(<span class="title class_ inherited__">YOLODetector</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Implementation of YOLOW Series&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,</span></span><br><span class="line"><span class="params">                 *args,</span></span><br><span class="line"><span class="params">                 mm_neck: <span class="built_in">bool</span> = <span class="literal">False</span>,</span></span><br><span class="line"><span class="params">                 num_train_classes=<span class="number">80</span>,</span></span><br><span class="line"><span class="params">                 num_test_classes=<span class="number">80</span>,</span></span><br><span class="line"><span class="params">                 **kwargs</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="variable language_">self</span>.mm_neck = mm_neck</span><br><span class="line">        <span class="variable language_">self</span>.num_train_classes = num_train_classes</span><br><span class="line">        <span class="variable language_">self</span>.num_test_classes = num_test_classes</span><br><span class="line">        <span class="built_in">super</span>().__init__(*args, **kwargs)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><strong><code>mm_neck=True</code></strong>: 这是对应论文核心组件 <strong>RepVL-PAN (Vision-Language Path Aggregation Network)</strong> 的开关。论文中提到，RepVL-PAN 旨在连接视觉和语言特征，实现更好的视觉-语义表示 。如果为 <code>True</code>，则会进行图文特征融合。</p>
+</li>
+<li>
+<p><strong><code>num_train_classes</code> / <code>num_test_classes</code></strong>: 传统 YOLO 有固定的类别数（如 COCO 的 80 类）。YOLO-World 是开放词汇检测器，类别数是动态的。这里保留参数是为了兼容传统训练框架，但在实际运行中，类别数由输入的 Text Prompts 决定 。</p>
+</li>
+<li>
+<p><code>*args</code> 和 <code>**kwargs</code> 允许在初始化 <code>YOLOWorldDetector</code> 对象时，可以接受额外的未明确列出的参数，这些参数会传递给父类 <code>YOLODetector</code> 的 <code>__init__</code> 方法。</p>
+<p>比如，在初始化时，你可以传入 <code>args</code> 中的一些位置参数（如模型的超参数），或者 <code>kwargs</code> 中的一些关键字参数（如配置文件的路径等），这些都可以动态传递。</p>
+</li>
+<li>
+<p><code>-&gt; None</code> 表明这个 <code>__init__</code> 初始化函数没有返回值。它只是用来初始化类的实例，因此在执行完毕后不会返回任何值（即返回 <code>None</code>）。</p>
+</li>
+</ul>
+<h4 id="def-loss">def loss():</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">loss</span>(<span class="params">self, batch_inputs: Tensor,</span></span><br><span class="line"><span class="params">         batch_data_samples: SampleList</span>) -&gt; <span class="type">Union</span>[<span class="built_in">dict</span>, <span class="built_in">list</span>]:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Calculate losses from a batch of inputs and data samples.&quot;&quot;&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># [关键点 1] 设置训练时的类别数</span></span><br><span class="line">    <span class="variable language_">self</span>.bbox_head.num_classes = <span class="variable language_">self</span>.num_train_classes</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># [关键点 2] 提取特征 (多模态)</span></span><br><span class="line">    img_feats, txt_feats, txt_masks = <span class="variable language_">self</span>.extract_feat(</span><br><span class="line">        batch_inputs, batch_data_samples)</span><br><span class="line">        </span><br><span class="line">    <span class="comment"># [关键点 3] 计算损失</span></span><br><span class="line">    losses = <span class="variable language_">self</span>.bbox_head.loss(img_feats, txt_feats, txt_masks,</span><br><span class="line">                                 batch_data_samples)</span><br><span class="line">    <span class="keyword">return</span> losses</span><br></pre></td></tr></table></figure>
+<p>当成一个<strong>多模态检测模型</strong>（图片 + 文本类别描述）在做两件事：</p>
+<ul>
+<li><code>loss(...)</code>：训练时算损失（让模型学会）</li>
+<li><code>predict(...)</code>：测试/推理时出预测（让模型给结果）</li>
+</ul>
+<p>我会顺着代码从上到下解释。</p>
+<hr>
+<p><strong>一、<code>loss()</code>：训练时怎么算损失</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">loss</span>(<span class="params">self, batch_inputs: Tensor,</span></span><br><span class="line"><span class="params">         batch_data_samples: SampleList</span>) -&gt; <span class="type">Union</span>[<span class="built_in">dict</span>, <span class="built_in">list</span>]:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Calculate losses from a batch of inputs and data samples.&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>定义一个方法叫 <code>loss</code></li>
+<li><code>batch_inputs</code>: 一批输入，通常是 <strong>图片张量</strong>（比如 shape 类似 <code>[B, C, H, W]</code>）</li>
+<li><code>batch_data_samples</code>: 一批样本的“结构化信息”，一般包含：
+<ul>
+<li>标注框（gt bboxes）</li>
+<li>gt 类别</li>
+<li>可能还有文本提示/类别名等</li>
+</ul>
+</li>
+<li>返回：损失，通常是个 <code>dict</code>（比如 <code>&#123;loss_cls:..., loss_bbox:...&#125;</code>），有些框架也允许 list</li>
+</ul>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># [关键点 1] 设置训练时的类别数</span></span><br><span class="line"><span class="variable language_">self</span>.bbox_head.num_classes = <span class="variable language_">self</span>.num_train_classes</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>self.bbox_head</code>：检测头（head），负责把特征变成“分类+回归”的输出，并计算 loss / predict</li>
+<li><code>num_classes</code>：head 里会用它来决定输出维度（分类 logits 的通道数等）</li>
+<li><code>self.num_train_classes</code>：训练阶段固定的类别数（比如 COCO 的 80 类）</li>
+<li>这句的意思：<strong>训练时把 head 的类别数强行设成训练集的类别数</strong>，保证输出维度和训练标注一致。</li>
+</ul>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># [关键点 2] 提取特征 (多模态)</span></span><br><span class="line">img_feats, txt_feats, txt_masks = <span class="variable language_">self</span>.extract_feat(</span><br><span class="line">    batch_inputs, batch_data_samples)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>调 <code>extract_feat</code> 提取特征</p>
+</li>
+<li>
+<p>这里返回三个东西：</p>
+<ul>
+<li><code>img_feats</code>：图片特征（可能是 backbone+neck 输出的多层特征）</li>
+<li><code>txt_feats</code>：文本特征（比如每个类别的文本 embedding / prompt embedding）</li>
+<li><code>txt_masks</code>：文本 mask（告诉模型哪些 token 是有效的，哪些是 padding；或哪些文本条目有效）</li>
+</ul>
+</li>
+<li>
+<p>多模态就是：<strong>图片特征 + 文本特征一起用</strong>（常见于 open-vocabulary detection / grounding）</p>
+</li>
+</ul>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># [关键点 3] 计算损失</span></span><br><span class="line">losses = <span class="variable language_">self</span>.bbox_head.loss(img_feats, txt_feats, txt_masks,</span><br><span class="line">                             batch_data_samples)</span><br><span class="line"><span class="keyword">return</span> losses</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>把特征和样本信息交给 <code>bbox_head.loss(...)</code></p>
+</li>
+<li>
+<p>head 内部会：</p>
+<ul>
+<li>做前向（分类/回归）</li>
+<li>用 <code>batch_data_samples</code> 里的 GT 计算 loss（分类损失、回归损失、IoU损失等）</li>
+</ul>
+</li>
+<li>
+<p>返回 <code>losses</code></p>
+</li>
+</ul>
+<hr>
+<h4 id="def-predict">def predict():</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">predict</span>(<span class="params">self,</span></span><br><span class="line"><span class="params">            batch_inputs: Tensor,</span></span><br><span class="line"><span class="params">            batch_data_samples: SampleList,</span></span><br><span class="line"><span class="params">            rescale: <span class="built_in">bool</span> = <span class="literal">True</span></span>) -&gt; SampleList:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Predict results from a batch of inputs and data samples...&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>定义预测函数</li>
+<li><code>rescale=True</code>：是否把预测框从网络输入尺度映射回原图尺度（常见参数）</li>
+</ul>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># [关键点 1] 提取特征</span></span><br><span class="line">img_feats, txt_feats, txt_masks = <span class="variable language_">self</span>.extract_feat(</span><br><span class="line">    batch_inputs, batch_data_samples)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>同样先提取图片/文本特征和 mask</li>
+<li>推理时仍需要文本特征（因为类别可能来自文本）</li>
+</ul>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># [关键点 2] 动态设定类别数 (核心!)</span></span><br><span class="line"><span class="comment"># self.bbox_head.num_classes = self.num_test_classes  &lt;-- 原本的静态逻辑被注释掉了</span></span><br><span class="line"><span class="variable language_">self</span>.bbox_head.num_classes = txt_feats[<span class="number">0</span>].shape[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<p>这段是代码里<strong>最关键也最容易困惑的地方</strong>。</p>
+<ul>
+<li>
+<p>原本设计可能是：测试时类别数固定为 <code>self.num_test_classes</code></p>
+</li>
+<li>
+<p>但现在把它注释了，改成动态：</p>
+<ul>
+<li><code>txt_feats[0]</code>：取第一份文本特征（很多实现里 txt_feats 可能是 list/tuple）</li>
+<li><code>.shape[0]</code>：取第 0 维长度</li>
+</ul>
+</li>
+<li>
+<p>大白话：<strong>“我现在有多少条文本类别描述/文本embedding，我就当成有多少个类别。”</strong></p>
+</li>
+</ul>
+<p>举例：</p>
+<ul>
+<li>如果你在推理时传入 3 条文本（“cat”“dog”“car”），那 <code>shape[0]=3</code> → head 输出 3 类</li>
+<li>如果你传入 65 条文本类别，输出就变 65 类</li>
+</ul>
+<p>这就是典型的 <strong>open-vocabulary / 动态类别集推理</strong>：测试时类别不是固定的，而是由文本输入决定。</p>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># [关键点 3] 进行预测</span></span><br><span class="line">results_list = <span class="variable language_">self</span>.bbox_head.predict(img_feats,</span><br><span class="line">                                      txt_feats,</span><br><span class="line">                                      txt_masks,</span><br><span class="line">                                      batch_data_samples,</span><br><span class="line">                                      rescale=rescale)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>调 head 的 <code>predict</code></li>
+<li>它会输出 <code>results_list</code>：每张图的检测结果列表（框、分数、类别 id 等）</li>
+</ul>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">batch_data_samples = <span class="variable language_">self</span>.add_pred_to_datasample(</span><br><span class="line">    batch_data_samples, results_list)</span><br><span class="line"><span class="keyword">return</span> batch_data_samples</span><br></pre></td></tr></table></figure>
+<ul>
+<li>把预测结果塞回 <code>batch_data_samples</code> 里（框架习惯：数据样本对象里同时装输入信息和输出预测）</li>
+<li>返回带预测的 samples</li>
+</ul>
+<hr>
+<p>最该抓住的“整体逻辑”</p>
+<ul>
+<li>
+<p><code>extract_feat(...)</code> 产出：<strong>图片特征 + 文本特征</strong></p>
+</li>
+<li>
+<p><code>bbox_head</code> 做两件事：</p>
+<ul>
+<li><code>loss(...)</code>：训练时用 GT 算损失 → 类别数固定为训练集类别</li>
+<li><code>predict(...)</code>：推理时出结果 → 类别数改成“你输入了多少条文本类别”</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>下面继续按“逐行 + 大白话”讲解。整体上这段代码在做一件事：</p>
+<blockquote>
+<p><strong>把“文本（类别描述）”编码成文本特征 txt_feats，然后和图片特征 img_feats 一起送进检测头 bbox_head。</strong>
+并且它支持好几种方式拿到 texts（从缓存、从 batch_data_samples 里、从 list 的 sample 里…）。</p>
+</blockquote>
+<hr>
+<h4 id="def-reparameterize">def reparameterize():</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">reparameterize</span>(<span class="params">self, texts: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">str</span>]]</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="comment"># encode text embeddings into the detector</span></span><br><span class="line">    <span class="variable language_">self</span>.texts = texts</span><br><span class="line">    <span class="variable language_">self</span>.text_feats, <span class="literal">None</span> = <span class="variable language_">self</span>.backbone.forward_text(texts)</span><br></pre></td></tr></table></figure>
+<p><strong>通俗理解：</strong> 想象你要去考试（推理/预测）。如果你每次遇到一道题，都要现翻书去查公式（把文本转成向量），那太慢了。 这个函数的作用就是**“考前划重点”<strong>。它提前把这一次任务要检测的物体名字（比如“人”、“车”）查好，转换成机器能懂的数字（特征向量），然后</strong>存**在脑子（内存）里。这样考试时直接用，不用再算了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">reparameterize</span>(<span class="params">self, texts: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">str</span>]]</span>) -&gt; <span class="literal">None</span>:</span><br></pre></td></tr></table></figure>
+<ul>
+<li>定义函数：输入 <code>texts</code></li>
+<li><code>texts: List[List[str]]</code>: 这是一个<strong>类型提示</strong>，告诉读代码的人，<code>texts</code> 应该是“列表的列表”。外层列表代表一批数据，内层列表是具体的单词。比如 <code>[[&quot;cat&quot;, &quot;dog&quot;]]</code>。</li>
+<li><code>-&gt; None</code>: 表示这个函数<strong>没有返回值</strong>。它只做事（修改内部变量），不产出结果给外面。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># encode text embeddings into the detector</span></span><br><span class="line"><span class="comment">#把文本编码成特征向量，存入检测器内部</span></span><br><span class="line"><span class="variable language_">self</span>.texts = texts</span><br></pre></td></tr></table></figure>
+<ul>
+<li>把传进来的这些文本（比如 <code>[&quot;cat&quot;, &quot;dog&quot;]</code>），<strong>保存</strong>到模型自己的口袋里（属性 <code>self.texts</code>），以备后用</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">self</span>.text_feats, <span class="literal">None</span> = <span class="variable language_">self</span>.backbone.forward_text(texts)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>self.backbone</code>: 模型通常分几部分，<strong>Backbone（骨干）</strong> 是负责提取特征的“大脑”。</p>
+</li>
+<li>
+<p><code>.forward_text(texts)</code>: 命令大脑执行“读文字”的操作。它把人类语言（<code>texts</code>）转换成计算机懂的<strong>特征向量</strong>（一堆数字）。</p>
+</li>
+<li>
+<p><code>self.text_feats, None = ...</code>: 这一步叫<strong>解包 (Unpacking)</strong>。</p>
+<ul>
+<li>
+<p><code>forward_text</code> 函数原本返回两个结果：<code>(特征, 掩码)</code>。</p>
+</li>
+<li>
+<p>我们把第一个结果（特征）存进 <code>self.text_feats</code>（这就是我们要缓存的“重点”）。</p>
+</li>
+<li>
+<p>第二个结果我们不需要，所以用 <code>None</code> 或者 <code>_</code> 来接收（表示丢弃或忽略）。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>一句话总结 reparameterize：</strong></p>
+<blockquote>
+<p>先把 texts 编成 <code>text_feats</code> 存起来，之后就能“只跑图像分支”而不用每次重复算文本。</p>
+</blockquote>
+<hr>
+<h4 id="def-forward">def _forward():</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">_forward</span>(<span class="params"></span></span><br><span class="line"><span class="params">        self,</span></span><br><span class="line"><span class="params">        batch_inputs: Tensor,</span></span><br><span class="line"><span class="params">        batch_data_samples: OptSampleList = <span class="literal">None</span></span>) -&gt; <span class="type">Tuple</span>[<span class="type">List</span>[Tensor]]:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Network forward process...&quot;&quot;&quot;</span></span><br><span class="line">    img_feats, txt_feats, txt_masks = <span class="variable language_">self</span>.extract_feat(</span><br><span class="line">        batch_inputs, batch_data_samples)</span><br><span class="line">    results = <span class="variable language_">self</span>.bbox_head.forward(img_feats, txt_feats, txt_masks)</span><br><span class="line">    <span class="keyword">return</span> results</span><br></pre></td></tr></table></figure>
+<p><strong>通俗理解：</strong> 这是模型的**“内部流水线”**。 不管你是要训练模型（学习），还是测试模型（考试），只要数据流进来，就会走这条路。它的任务是：<strong>拿图片和文本 -&gt; 提取特征 -&gt; 算出初步的预测结果</strong>。它不负责最后把框画在图上（那是后处理的事），它只负责算出原始的数学分数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">_forward</span>(<span class="params"></span></span><br><span class="line"><span class="params">        self,</span></span><br><span class="line"><span class="params">        batch_inputs: Tensor,</span></span><br><span class="line"><span class="params">        batch_data_samples: OptSampleList = <span class="literal">None</span></span>) -&gt; <span class="type">Tuple</span>[<span class="type">List</span>[Tensor]]:</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>_forward</code> 通常是框架内部用的“裸前向”</li>
+<li><code>batch_inputs</code>: 这里指的是<strong>输入的图片</strong>。类型是 <code>Tensor</code>（张量）。</li>
+<li><code>batch_data_samples</code>: 这是<strong>元数据</strong>，包含了图片原本的大小、文件名，最重要的还有<strong>文本提示词</strong>。</li>
+<li>返回：<code>Tuple[List[Tensor]]</code>（写法有点别扭，但大意是：返回 head 的原始输出张量列表/元组）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;Network forward process. Usually includes backbone, neck and head</span></span><br><span class="line"><span class="string">forward without any post-processing.</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>注释说明：只跑 backbone/neck/head，不做 NMS、阈值过滤这类后处理</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">img_feats, txt_feats, txt_masks = <span class="variable language_">self</span>.extract_feat(</span><br><span class="line">    batch_inputs, batch_data_samples)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>img_feats</code>: <strong>图像特征</strong>（图片里有什么，形状纹理等）。</li>
+<li><code>txt_feats</code>: <strong>文本特征</strong>（文字的意思）。</li>
+<li><code>txt_masks</code>: <strong>文本掩码</strong>（处理长短不一的句子用的，告诉电脑哪些位置是字，哪些是凑数的空白）。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">results = <span class="variable language_">self</span>.bbox_head.forward(img_feats, txt_feats, txt_masks)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这里是检测头（Bounding Box Head）。它拿着图像特征和文本特征，开始做<strong>对比计算</strong>：图片里的这块特征，和文字里的“猫”的特征像不像？</li>
+<li>检测头只做 forward，输出 raw results（比如分类 logits、bbox 回归、objectness 等）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> results</span><br></pre></td></tr></table></figure>
+<ul>
+<li>返回 raw outputs</li>
+</ul>
+<hr>
+<h4 id="def-extract-feat">def extract_feat():</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">extract_feat</span>(<span class="params"></span></span><br><span class="line"><span class="params">        self, batch_inputs: Tensor,</span></span><br><span class="line"><span class="params">        batch_data_samples: SampleList</span>) -&gt; <span class="type">Tuple</span>[<span class="type">Tuple</span>[Tensor], Tensor]:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Extract features.&quot;&quot;&quot;</span></span><br><span class="line">    txt_feats = <span class="literal">None</span>  <span class="comment"># 1. 先初始化一个空变量</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># --- 2. 下面这一大段 if-elif-else 是在找：文本在哪里？ ---</span></span><br><span class="line">    <span class="keyword">if</span> batch_data_samples <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="comment"># 情况A：没给元数据，说明是极速模式，直接用存好的</span></span><br><span class="line">        texts = <span class="variable language_">self</span>.texts</span><br><span class="line">        txt_feats = <span class="variable language_">self</span>.text_feats</span><br><span class="line">    <span class="keyword">elif</span> <span class="built_in">isinstance</span>(batch_data_samples, <span class="built_in">dict</span>) <span class="keyword">and</span> <span class="string">&#x27;texts&#x27;</span> <span class="keyword">in</span> batch_data_samples:</span><br><span class="line">        <span class="comment"># 情况B：给的是字典（通常是训练时），从字典里取文本</span></span><br><span class="line">        texts = batch_data_samples[<span class="string">&#x27;texts&#x27;</span>]</span><br><span class="line">    <span class="keyword">elif</span> <span class="built_in">isinstance</span>(batch_data_samples, <span class="built_in">list</span>) <span class="keyword">and</span> <span class="built_in">hasattr</span>(batch_data_samples[<span class="number">0</span>], <span class="string">&#x27;texts&#x27;</span>):</span><br><span class="line">        <span class="comment"># 情况C：给的是列表（通常是推理时），遍历列表取文本</span></span><br><span class="line">        texts = [data_sample.texts <span class="keyword">for</span> data_sample <span class="keyword">in</span> batch_data_samples]</span><br><span class="line">    <span class="keyword">elif</span> <span class="built_in">hasattr</span>(<span class="variable language_">self</span>, <span class="string">&#x27;text_feats&#x27;</span>):</span><br><span class="line">        <span class="comment"># 情况D：都不满足，但在自己身上找到了存好的特征，那就用存好的</span></span><br><span class="line">        texts = <span class="variable language_">self</span>.texts</span><br><span class="line">        txt_feats = <span class="variable language_">self</span>.text_feats</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># 情况E：既没给文本，也没存过，那没法干活了，报错</span></span><br><span class="line">        <span class="keyword">raise</span> TypeError(<span class="string">&#x27;batch_data_samples should be dict or list.&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># --- 3. 开始根据拿到的东西干活 ---</span></span><br><span class="line">    <span class="keyword">if</span> txt_feats <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="comment"># 路径1：文本特征已经有了（之前存好的，或者刚才取出来的）</span></span><br><span class="line">        <span class="comment"># 那么，只需要让骨干网络去“看图片”就行了，省去读文字的时间！</span></span><br><span class="line">        img_feats = <span class="variable language_">self</span>.backbone.forward_image(batch_inputs)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># 路径2：没有现成的文本特征</span></span><br><span class="line">        <span class="comment"># 那么，骨干网络要辛苦点，既要“看图片”，又要“读文字”</span></span><br><span class="line">        img_feats, (txt_feats, txt_masks) = <span class="variable language_">self</span>.backbone(batch_inputs, texts)</span><br><span class="line">        </span><br><span class="line">    <span class="comment"># --- 4. 融合阶段 (Neck) ---</span></span><br><span class="line">    <span class="keyword">if</span> <span class="variable language_">self</span>.with_neck: <span class="comment"># 如果模型配置了 Neck (颈部)</span></span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.mm_neck: <span class="comment"># 这是一个多模态 Neck (Multi-Modal)</span></span><br><span class="line">            <span class="comment"># 把图像特征和文本特征混在一起处理（比如让图像去关注文字提到的物体）</span></span><br><span class="line">            img_feats = <span class="variable language_">self</span>.neck(img_feats, txt_feats)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 普通 Neck，只处理图像</span></span><br><span class="line">            img_feats = <span class="variable language_">self</span>.neck(img_feats)</span><br><span class="line">            </span><br><span class="line">    <span class="comment"># 5. 交货</span></span><br><span class="line">    <span class="keyword">return</span> img_feats, txt_feats, txt_masks</span><br></pre></td></tr></table></figure>
+<p><strong>通俗理解：</strong> 这是**“大管家”<strong>的逻辑。它非常智能，会根据你给的东西不同，决定怎么干活。 它的核心任务是：搞定特征提取。 最重要的是它会判断：</strong>“我是要从头开始算文本特征，还是直接用之前存好的？”** 这就是为什么 YOLO-World 速度快的原因。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">extract_feat</span>(<span class="params"></span></span><br><span class="line"><span class="params">        self, batch_inputs: Tensor,</span></span><br><span class="line"><span class="params">        batch_data_samples: SampleList</span>) -&gt; <span class="type">Tuple</span>[<span class="type">Tuple</span>[Tensor], Tensor]:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Extract features.&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>输入：图片 + batch_data_samples（可能是 None / dict / list）</li>
+<li>返回：代码最后实际返回的是 <code>(img_feats, txt_feats, txt_masks)</code>
+这里的类型标注写得不完整/不严谨（它没把 txt_masks 也写进去），但我们按实际代码理解。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">txt_feats = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>先把 <code>txt_feats</code> 设成 None：表示“默认还没有缓存好的文本特征”</li>
+</ul>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> batch_data_samples <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">    texts = <span class="variable language_">self</span>.texts</span><br><span class="line">    txt_feats = <span class="variable language_">self</span>.text_feats</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果没传 <code>batch_data_samples</code>：
+<ul>
+<li>texts 用之前 <code>reparameterize</code> 缓存的 <code>self.texts</code></li>
+<li>txt_feats 也用缓存的 <code>self.text_feats</code></li>
+</ul>
+</li>
+<li>这意味着：<strong>文本特征已算好，后面可以只跑图像</strong>（省时间）</li>
+</ul>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">elif</span> <span class="built_in">isinstance</span>(batch_data_samples,</span><br><span class="line">                <span class="built_in">dict</span>) <span class="keyword">and</span> <span class="string">&#x27;texts&#x27;</span> <span class="keyword">in</span> batch_data_samples:</span><br><span class="line">    texts = batch_data_samples[<span class="string">&#x27;texts&#x27;</span>]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>isinstance(variable, type)</code>:</p>
+<ul>
+<li>这是 Python 用来<strong>检查类型</strong>的。比如 <code>isinstance(a, dict)</code> 就是问：变量 <code>a</code> 是不是一个字典？</li>
+<li>这段逻辑就是为了兼容各种不同的输入格式（训练时、测试时、导出模型时输入格式都不太一样）。</li>
+</ul>
+</blockquote>
+<ul>
+<li>如果 <code>batch_data_samples</code> 是个 dict，并且里面有 <code>'texts'</code>,那就用它提供的 texts</li>
+<li>注意：这里只设置 <code>texts</code>，没设置 <code>txt_feats</code>，所以 txt_feats 还是 None → 后面会重新算文本特征</li>
+</ul>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">elif</span> <span class="built_in">isinstance</span>(batch_data_samples, <span class="built_in">list</span>) <span class="keyword">and</span> <span class="built_in">hasattr</span>(</span><br><span class="line">        batch_data_samples[<span class="number">0</span>], <span class="string">&#x27;texts&#x27;</span>):</span><br><span class="line">    texts = [data_sample.texts <span class="keyword">for</span> data_sample <span class="keyword">in</span> batch_data_samples]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="built_in">hasattr</span>(<span class="built_in">object</span>, name)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>参数</strong>：</li>
+<li><code>object</code>：要检查的对象（可以是类实例、模块、类等）。</li>
+<li><code>name</code>：属性名的字符串（例如 <code>'method_name'</code> 或 <code>'variable_name'</code>）。</li>
+<li><strong>返回值</strong>：</li>
+<li>如果对象具有该属性，返回 <code>True</code>。</li>
+<li>如果对象不具有该属性，返回 <code>False</code>。</li>
+</ul>
+</blockquote>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">hasattr</span>(batch_data_samples[<span class="number">0</span>], <span class="string">&#x27;texts&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>通俗解释</strong>： 光确定是箱子还不够，万一箱子里装的是空瓶子呢？我们得拿<strong>第一个</strong>样品（<code>batch_data_samples[0]</code>）出来检查一下。 这行代码是在问：<strong>“拿着这第一个样品，看它身上有没有贴着‘texts’（文本/说明书）这个标签？”</strong></p>
+<ul>
+<li><code>hasattr</code> = <strong>Has Attribute</strong>（拥有属性）。</li>
+<li><code>'texts'</code>：这是我们在 Config 文件里约定好的，专门用来存放“提示词”（比如 &quot;cat&quot;, &quot;dog&quot;）的地方。</li>
+<li>如果第一个样品有这个标签，我们就默认这一箱子货都有。</li>
+</ul>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">texts = [data_sample.texts <span class="keyword">for</span> data_sample <span class="keyword">in</span> batch_data_samples]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><strong>通俗解释</strong>： 既然确定了这箱货里每个样品都有说明书，现在要把它们<strong>统统收集起来</strong>，汇总成一本大的“总说明书”。 这个写法叫<strong>列表推导式（List Comprehension）</strong>，是 Python 的一种“偷懒”写法。</p>
+<p>如果不偷懒，它的“笨办法”写法是这样的：</p>
+<p>Python</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">texts = [] <span class="comment"># 1. 先准备一个空篮子</span></span><br><span class="line"><span class="keyword">for</span> data_sample <span class="keyword">in</span> batch_data_samples: <span class="comment"># 2. 从箱子里挨个拿样品</span></span><br><span class="line">    text = data_sample.texts       <span class="comment"># 3. 把样品身上的“说明书”撕下来</span></span><br><span class="line">    texts.append(text)             <span class="comment"># 4. 扔进篮子里</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>结果</strong>：执行完这句话后，<code>texts</code> 变成了一个包含了这一批次所有图片对应提示词的列表。比如：<code>[[&quot;a running dog&quot;], [&quot;a red car&quot;], ...]</code>。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">elif</span> <span class="built_in">hasattr</span>(<span class="variable language_">self</span>, <span class="string">&#x27;text_feats&#x27;</span>):</span><br><span class="line">    texts = <span class="variable language_">self</span>.texts</span><br><span class="line">    txt_feats = <span class="variable language_">self</span>.text_feats</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果上面几种都不满足，但模型对象里已经有 <code>self.text_feats</code></li>
+<li>那就兜底用缓存的 texts/text_feats</li>
+<li>这也是一种“尽量复用已编码文本”的逻辑</li>
+</ul>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">raise</span> TypeError(<span class="string">&#x27;batch_data_samples should be dict or list.&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>都不符合就报错：你传的 batch_data_samples 类型不对</li>
+</ul>
+<hr>
+<p><strong>决定走哪条</strong> backbone 路径：只跑图像 or 图文一起跑</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> txt_feats <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">    <span class="comment"># forward image only</span></span><br><span class="line">    img_feats = <span class="variable language_">self</span>.backbone.forward_image(batch_inputs)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果 <code>txt_feats</code> 不是 None：说明文本特征已经缓存好了</li>
+<li>文本特征直接复用，不再重复编码</li>
+<li><code>self.backbone.forward_image(batch_inputs)</code>: 注意这里调用的函数叫 <code>forward_image</code>。意思是<strong>只算图片</strong>。这是 YOLO-World <strong>推理速度快</strong>的秘诀。因为它假设你之前已经运行过 <code>reparameterize</code> 把文本特征算好存进 <code>txt_feats</code> 了。</li>
+</ul>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    img_feats, (txt_feats,</span><br><span class="line">                txt_masks) = <span class="variable language_">self</span>.backbone(batch_inputs, texts)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>否则：说明 txt_feats 还没有，需要 backbone 同时处理图片和文本</li>
+<li><code>self.backbone(batch_inputs, texts)</code> 返回两部分：
+<ul>
+<li><code>img_feats</code></li>
+<li><code>(txt_feats, txt_masks)</code>：文本特征和 mask</li>
+</ul>
+</li>
+<li>也就是说：<strong>这条路径会重新编码文本</strong>。</li>
+</ul>
+<hr>
+<p>neck：是否存在、是否多模态融合</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="variable language_">self</span>.with_neck:</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果模型配置里带 neck（比如 FPN）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="variable language_">self</span>.mm_neck:</span><br><span class="line">    img_feats = <span class="variable language_">self</span>.neck(img_feats, txt_feats)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果这是一个“多模态 neck”（mm_neck=True）</li>
+<li>neck 需要同时输入 img_feats 和 txt_feats 来做融合（比如 cross-attention 或条件调制之类）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    img_feats = <span class="variable language_">self</span>.neck(img_feats)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>普通 neck：只处理图像特征，不管文本</li>
+</ul>
+<hr>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> img_feats, txt_feats, txt_masks</span><br></pre></td></tr></table></figure>
+<ul>
+<li>返回三件套给 head 用</li>
+</ul>
+<hr>
+<h4 id="总结">总结</h4>
+<p>这段代码定义了 <strong><code>YOLOWorldDetector</code></strong> 类，它是 YOLO-World 的核心检测器实现。它继承自 <code>YOLODetector</code>，并增加了对<strong>多模态（图像+文本）输入</strong>的支持以及**动态类别（Open-Vocabulary）**的处理能力。</p>
+<p>以下是对各个关键部分的总结：</p>
+<ol>
+<li>初始化 (<code>__init__</code>)</li>
+</ol>
+<ul>
+<li><strong>核心开关 <code>mm_neck</code></strong>：控制是否启用 <strong>RepVL-PAN</strong>（视觉-语言路径聚合网络）。如果设为 <code>True</code>，模型会在 Neck 阶段进行图像特征和文本特征的深度融合，这是 YOLO-World 理解语义的关键。</li>
+<li><strong>类别设置</strong>：虽然保留了 <code>num_train_classes</code> 和 <code>num_test_classes</code> 参数，但这更多是为了兼容旧框架。在实际运行中，YOLO-World 的类别数是动态的，取决于输入的文本提示词数量。</li>
+</ul>
+<ol start="2">
+<li>特征提取大管家 (<code>extract_feat</code>)</li>
+</ol>
+<p>这是连接数据输入、骨干网络（Backbone）和颈部网络（Neck）的枢纽，逻辑非常灵活：</p>
+<ul>
+<li><strong>文本来源判断</strong>：它能智能地从多种输入格式中找到文本提示词（Prompts）：
+<ul>
+<li>从训练数据字典中取（Online Training）。</li>
+<li>从推理数据列表中取。</li>
+<li>或者直接使用模型内部缓存的 <code>self.text_feats</code>（Offline Inference / 重参数化模式）。</li>
+</ul>
+</li>
+<li><strong>加速逻辑</strong>：
+<ul>
+<li><strong>极速模式</strong>：如果检测到了缓存的文本特征（<code>txt_feats</code> 非空），它只运行 Backbone 的图像部分 (<code>forward_image</code>)，跳过繁重的文本编码计算。</li>
+<li><strong>完整模式</strong>：如果没有缓存，它会同时运行图像和文本编码。</li>
+</ul>
+</li>
+<li><strong>特征融合</strong>：如果启用了 <code>mm_neck</code>，它会将提取出的图像特征和文本特征送入 Neck 进行交互融合，让图像特征“对齐”文本语义。</li>
+</ul>
+<ol start="3">
+<li>训练逻辑 (<code>loss</code>)</li>
+</ol>
+<ul>
+<li><strong>流程</strong>：<code>提取特征</code> -&gt; <code>计算损失</code>。</li>
+<li><strong>固定类别空间</strong>：在训练阶段，类别空间通常是固定的或由当前 Batch 采样决定的（Online Vocabulary），用于计算区域-文本对比损失。</li>
+</ul>
+<ol start="4">
+<li>推理逻辑 (<code>predict</code>) —— <strong>开放词汇的核心</strong></li>
+</ol>
+<ul>
+<li><strong>动态类别数</strong>：这是 YOLO-World 最具特色的地方。代码显式地将 <code>self.bbox_head.num_classes</code> 设置为 <code>txt_feats[0].shape[0]</code>。
+<ul>
+<li>这意味着模型<strong>不需要重新训练</strong>就能适应任意数量的类别。你给它 5 个提示词，它就是 5 类检测器；给 100 个，就是 100 类检测器。</li>
+</ul>
+</li>
+<li><strong>预测</strong>：基于提取的特征，计算图像区域与这些动态类别文本嵌入之间的相似度，输出检测框。</li>
+</ul>
+<ol start="5">
+<li>重参数化 (<code>reparameterize</code>) —— <strong>提速的关键</strong></li>
+</ol>
+<ul>
+<li><strong>预计算</strong>：这个方法允许用户提前输入一组固定的提示词（如 [&quot;person&quot;, &quot;car&quot;]）。</li>
+<li><strong>缓存</strong>：它调用 Backbone 一次性算出这些词的文本特征，并永久保存在 <code>self.text_feats</code> 中。</li>
+<li><strong>效果</strong>：之后的推理过程（<code>predict</code> -&gt; <code>extract_feat</code>）就会直接使用这些缓存特征，不再运行文本编码器，从而实现类似传统 YOLO 的推理速度（Real-Time）。</li>
+</ul>
+<p>这个类通过 <strong><code>extract_feat</code></strong> 灵活管理多模态输入，通过 <strong><code>predict</code></strong> 中的动态类别设置实现了<strong>开放词汇检测</strong>，并通过 <strong><code>reparameterize</code></strong> 实现了<strong>推理加速</strong>，完美对应了论文提出的 &quot;Prompt-then-Detect&quot; 范式。</p>
+<h3 id="class-SimpleYOLOWorldDetector-YOLODetector">class SimpleYOLOWorldDetector(YOLODetector)</h3>
+<p><strong>通俗定位：</strong> 如果说 <code>YOLOWorldDetector</code> 是一个**“全能型选手”<strong>（既能实时处理新文字，又能看图），那么 <code>SimpleYOLOWorldDetector</code> 就是一个</strong>“专用型选手”<strong>。它通常用于</strong>已经确定了词汇表**（比如只检测固定的 80 类）的场景，或者用于<strong>Prompt Tuning</strong>（提示词微调）的研究。它不再需要一个庞大的 CLIP 文本编码器实时在线，而是直接把<strong>文本特征向量（Embeddings）</strong> 存放在自己身上。</p>
+<h4 id="def-init">def <strong>init</strong></h4>
+<p><strong>参数定义</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,</span></span><br><span class="line"><span class="params">             *args,</span></span><br><span class="line"><span class="params">             mm_neck: <span class="built_in">bool</span> = <span class="literal">False</span>,         <span class="comment"># 是否开启多模态颈部（图文融合）</span></span></span><br><span class="line"><span class="params">             num_train_classes=<span class="number">80</span>,          <span class="comment"># 训练时的类别数</span></span></span><br><span class="line"><span class="params">             num_test_classes=<span class="number">80</span>,           <span class="comment"># 测试时的类别数</span></span></span><br><span class="line"><span class="params">             prompt_dim=<span class="number">512</span>,                <span class="comment"># [新参数] 文本向量的长度（例如 CLIP 输出是 512 维）</span></span></span><br><span class="line"><span class="params">             num_prompts=<span class="number">80</span>,                <span class="comment"># [新参数] 提示词（类别）的数量</span></span></span><br><span class="line"><span class="params">             embedding_path=<span class="string">&#x27;&#x27;</span>,             <span class="comment"># [新参数] 预计算好的文本特征文件路径（.npy文件）</span></span></span><br><span class="line"><span class="params">             reparameterized=<span class="literal">False</span>,         <span class="comment"># [新参数] 是否已经是重参数化模式</span></span></span><br><span class="line"><span class="params">             freeze_prompt=<span class="literal">False</span>,           <span class="comment"># [新参数] 是否冻结提示词（不参与训练更新）</span></span></span><br><span class="line"><span class="params">             use_mlp_adapter=<span class="literal">False</span>,         <span class="comment"># [新参数] 是否使用 MLP 适配器来微调特征</span></span></span><br><span class="line"><span class="params">             **kwargs</span>) -&gt; <span class="literal">None</span>:</span><br></pre></td></tr></table></figure>
+<p><strong>关键差异</strong>：相比之前的 <code>YOLOWorldDetector</code>，这里多了一堆关于 <strong>Prompt（提示词）</strong> 和 <strong>Embedding（嵌入特征）</strong> 的参数。因为这个类不再依赖外部的 Text Encoder，它要自己管理文本特征。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">num_train_classes=<span class="number">80</span>,          <span class="comment"># 训练时的类别数</span></span><br><span class="line">num_test_classes=<span class="number">80</span>,           <span class="comment"># 测试时的类别数</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>num_train_classes=80</code>
+训练时 head 的类别数（后面 <code>loss()</code> 会设：<code>self.bbox_head.num_classes = self.num_training_classes</code>）</li>
+<li><code>num_test_classes=80</code>
+推理/测试时 head 的类别数（后面 <code>predict()</code> 会设：<code>self.bbox_head.num_classes = self.num_test_classes</code>）</li>
+</ul>
+<blockquote>
+<p>这两个分开是为了支持 <strong>训练和测试类别数不同</strong>（例如开放词表检测：训练80类，测试可能换成不同数量的类）。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">prompt_dim=<span class="number">512</span>,                <span class="comment"># [新参数] 文本向量的长度（例如 CLIP 输出是 512 维）</span></span><br><span class="line">num_prompts=<span class="number">80</span>,                <span class="comment"># [新参数] 提示词（类别）的数量</span></span><br><span class="line">embedding_path=<span class="string">&#x27;&#x27;</span>,             <span class="comment"># [新参数] 预计算好的文本特征文件路径（.npy文件）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>文本 prompt / embedding 相关</p>
+<ul>
+<li><code>prompt_dim=512</code>：每个 prompt 向量的维度（文本特征维度）</li>
+<li><code>num_prompts=80</code>：prompt 的数量（通常≈类别数，但不一定必须相等）</li>
+<li><code>embedding_path=''</code>：如果给了路径，就从 <code>.npy</code> 加载 prompt embedding；否则随机初始化</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">reparameterized=<span class="literal">False</span>,         <span class="comment"># [新参数] 是否已经是重参数化模式</span></span><br><span class="line">freeze_prompt=<span class="literal">False</span>,           <span class="comment"># [新参数] 是否冻结提示词（不参与训练更新）</span></span><br><span class="line">use_mlp_adapter=<span class="literal">False</span>,         <span class="comment"># [新参数] 是否使用 MLP 适配器来微调特征</span></span><br><span class="line">**kwargs) -&gt; <span class="literal">None</span>:</span><br></pre></td></tr></table></figure>
+<p>结构模式与训练策略</p>
+<ul>
+<li><code>reparameterized=False</code>
+是否进入“重参数化/纯视觉化”的模式：
+<ul>
+<li><code>True</code>：不再显式使用 <code>txt_feats</code>（后面你会看到 <code>extract_feat</code> 返回 <code>txt_feats=None</code>，head 也只吃 <code>img_feats</code>）</li>
+<li><code>False</code>：正常 YOLO-World 路线：显式构造 <code>txt_feats</code> 并喂给 head/neck</li>
+</ul>
+</li>
+<li><code>freeze_prompt=False</code>
+是否冻结 prompt embedding 的梯度（不训练 embedding）</li>
+<li><code>use_mlp_adapter=False</code>
+是否在 prompt embedding 上加一个 MLP adapter 做特征调整（类似轻量可学习映射）</li>
+</ul>
+<p><strong>属性保存与父类初始化</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">self</span>.mm_neck = mm_neck</span><br><span class="line"><span class="variable language_">self</span>.num_training_classes = num_train_classes</span><br><span class="line"><span class="variable language_">self</span>.num_test_classes = num_test_classes</span><br><span class="line"><span class="variable language_">self</span>.prompt_dim = prompt_dim</span><br><span class="line"><span class="variable language_">self</span>.num_prompts = num_prompts</span><br><span class="line"><span class="variable language_">self</span>.reparameterized = reparameterized</span><br><span class="line"><span class="variable language_">self</span>.freeze_prompt = freeze_prompt</span><br><span class="line"><span class="variable language_">self</span>.use_mlp_adapter = use_mlp_adapter</span><br><span class="line"></span><br><span class="line"><span class="comment"># 调用父类 (YOLODetector) 的初始化，建立 Backbone, Neck, Head 等基础结构</span></span><br><span class="line"><span class="built_in">super</span>().__init__(*args, **kwargs) </span><br></pre></td></tr></table></figure>
+<ul>
+<li>这部分主要是“例行公事”，把传入的参数存到 <code>self</code> 里，方便后面用。</li>
+</ul>
+<hr>
+<p><strong>核心逻辑：加载或初始化文本嵌入 (Embeddings)</strong></p>
+<p>这段代码是 <code>SimpleYOLOWorldDetector</code> 的灵魂。它决定了模型怎么获得“文字知识”。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 只有在【不是】重参数化模式下，才需要单独维护 embeddings。</span></span><br><span class="line"><span class="comment"># 如果是 reparameterized=True，说明文本特征已经融合进网络权重里了，这里就不用管了。</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> <span class="variable language_">self</span>.reparameterized:</span><br></pre></td></tr></table></figure>
+<p><strong>分支 A</strong>：从文件加载预计算的特征（“带小抄”）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="built_in">len</span>(embedding_path) &gt; <span class="number">0</span>:</span><br><span class="line">    <span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">    <span class="comment"># 1. np.load: 读取 .npy 文件（这是一个预先算好的矩阵，形状是 [num_prompts, prompt_dim]）</span></span><br><span class="line">    <span class="comment"># 2. torch.from_numpy(...).float(): 转成 PyTorch 的 Tensor</span></span><br><span class="line">    <span class="comment"># 3. nn.Parameter: 把它变成模型的“参数”。</span></span><br><span class="line">    <span class="comment">#    这意味着它会被注册到模型里，保存模型时会带上它，训练时也可以更新它。</span></span><br><span class="line">    <span class="variable language_">self</span>.embeddings = torch.nn.Parameter(</span><br><span class="line">        torch.from_numpy(np.load(embedding_path)).<span class="built_in">float</span>())</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>场景</strong>：你已经用 CLIP 把 &quot;cat&quot;, &quot;dog&quot; 等 80 个词算好了特征，存在硬盘上了。这里直接读进来。这样模型一启动就知道这 80 个词长什么样。</li>
+</ul>
+<p><strong>分支 B</strong>：随机初始化（“瞎猜”）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="comment"># random init</span></span><br><span class="line">    <span class="comment"># 1. torch.randn: 生成符合正态分布的随机数</span></span><br><span class="line">    <span class="comment"># 2. nn.functional.normalize: 做归一化（把向量长度变为 1），这对对比学习很重要。</span></span><br><span class="line">    embeddings = nn.functional.normalize(</span><br><span class="line">        torch.randn((num_prompts, prompt_dim)), dim=-<span class="number">1</span>)</span><br><span class="line">    <span class="comment"># 3. 同样包装成可学习的 Parameter</span></span><br><span class="line">    <span class="variable language_">self</span>.embeddings = nn.Parameter(embeddings)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>场景</strong>：做 <strong>Prompt Tuning</strong>（提示词微调）时，我们可能不需要具体的单词，而是随机生成一组向量，让模型自己在训练中去寻找“最佳的提示词特征”。</li>
+</ul>
+<p><strong>控制是否训练提示词 (<code>freeze_prompt</code>)</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="variable language_">self</span>.freeze_prompt:</span><br><span class="line">    <span class="variable language_">self</span>.embeddings.requires_grad = <span class="literal">False</span>  <span class="comment"># 冻结：只读，不许改</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="variable language_">self</span>.embeddings.requires_grad = <span class="literal">True</span>   <span class="comment"># 解冻：允许通过反向传播修改它</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>False</code> (冻结)</strong>：当你加载了 CLIP 的标准特征（如 &quot;person&quot; 的标准向量），且不想破坏它时使用。</li>
+<li><strong><code>True</code> (解冻)</strong>：当你希望模型能微调这些文本特征，让它们更适应当前的图片任务时使用。</li>
+</ul>
+<p><strong>MLP 适配器 (<code>use_mlp_adapter</code>)</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> use_mlp_adapter:</span><br><span class="line">    <span class="comment"># 这是一个简单的 2 层神经网络：Linear -&gt; ReLU -&gt; Linear</span></span><br><span class="line">    <span class="comment"># 它的作用是给 embeddings 再做一次“精修”。</span></span><br><span class="line">    <span class="variable language_">self</span>.adapter = nn.Sequential(</span><br><span class="line">        nn.Linear(prompt_dim, prompt_dim * <span class="number">2</span>), </span><br><span class="line">        nn.ReLU(<span class="literal">True</span>),</span><br><span class="line">        nn.Linear(prompt_dim * <span class="number">2</span>, prompt_dim))</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="variable language_">self</span>.adapter = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>通俗理解</strong>：
+<ul>
+<li>如果 <code>embeddings</code> 是原材料（生肉），<code>adapter</code> 就是一个简单的烹饪工序（煎一下）。</li>
+<li>有时候直接用 CLIP 的特征（生肉）效果不够好，加一个可学习的 <code>adapter</code>（烹饪）能让特征更好地适配检测任务。</li>
+<li>这个 Adapter 会把特征维度先放大 2 倍，再缩回去，增加非线性变换能力。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>总结</strong></p>
+<p>这个初始化函数主要做了一件事：<strong>建立一个内置的“词汇表” (self.embeddings)</strong>。</p>
+<p>与 <code>YOLOWorldDetector</code>（每次都要靠外部 Text Encoder 现算）不同，<code>SimpleYOLOWorldDetector</code> 把词汇表<strong>随身携带</strong>。</p>
+<ol>
+<li>它要么从硬盘读（预计算好的），要么自己随机生成。</li>
+<li>它还能决定这个词汇表是<strong>写死的</strong>（Frozen）还是<strong>可学习的</strong>（Learnable）。</li>
+<li>它甚至能给这个词汇表配一个<strong>翻译官</strong>（Adapter）来优化特征。</li>
+</ol>
+<p>这使得它非常适合<strong>固定类别</strong>的高效训练，或者探索<strong>Prompt Tuning</strong>（只训练提示词，不动模型其他部分）等学术研究。</p>
+<h4 id="def-loss-2">def loss</h4>
+<p><strong>通俗理解：</strong>
+这是一个模型的 <code>loss()</code> 方法：
+它接收一批输入 <code>batch_inputs</code>（通常是图像张量）和一批标注/样本信息 <code>batch_data_samples</code>，先提取图像特征和文本特征，然后根据 <code>self.reparameterized</code> 的开关，选择不同的方式调用 <code>bbox_head.loss(...)</code> 来计算训练损失，最后返回损失字典（或列表）。</p>
+<p>1. <strong>函数定义与输入</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">loss</span>(<span class="params">self, batch_inputs: Tensor,</span></span><br><span class="line"><span class="params">         batch_data_samples: SampleList</span>) -&gt; <span class="type">Union</span>[<span class="built_in">dict</span>, <span class="built_in">list</span>]:</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>def loss(...)</code></strong>: 定义了训练时的入口函数。</li>
+<li><code>batch_inputs: Tensor</code>：一批输入张量，常见是 <code>[N, C, H, W]</code> 的图像 batch（也可能包含多尺度/多模态，但类型标注先说是 Tensor）。</li>
+<li><code>batch_data_samples: SampleList</code>：一个“样本列表”，里面通常包含每张图像的 GT 标注（框、类别、mask 等）以及额外的元信息（图像尺寸、缩放等）。</li>
+<li><code>-&gt; Union[dict, list]</code>：返回值可能是：
+<ul>
+<li><code>dict</code>：常见情况，形如 <code>&#123;'loss_cls': ..., 'loss_bbox': ...&#125;</code></li>
+<li><code>list</code>：某些实现可能返回多个 loss 项的列表（例如多阶段、多层输出时）。</li>
+</ul>
+</li>
+</ul>
+<p><strong>2. 设置考试范围（类别数）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;Calculate losses from a batch of inputs and data samples.&quot;&quot;&quot;</span></span><br><span class="line"><span class="variable language_">self</span>.bbox_head.num_classes = <span class="variable language_">self</span>.num_training_classes</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>self.bbox_head</code>：检测头（bounding box head），负责分类+回归并计算 loss。</li>
+<li>这一行把 head 的 <code>num_classes</code> 改成 <code>self.num_training_classes</code>。</li>
+<li>典型用途：
+<ul>
+<li>训练时用的类别数可能和推理/预训练时不同（例如开放词表、增量类别、或训练子集）。</li>
+<li>通过在 <code>loss()</code> 里设置，确保每个 batch/每次前向计算 loss 的时候 head 的类别数是“训练配置”的那个。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>潜台词：<code>bbox_head.loss()</code> 内部会依赖 <code>num_classes</code> 来构建分类 logits、label 映射、或 loss 的 shape。</p>
+</blockquote>
+<p><strong>3. 提取特征（审题）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">img_feats, txt_feats = <span class="variable language_">self</span>.extract_feat(batch_inputs,</span><br><span class="line">                                         batch_data_samples)</span><br></pre></td></tr></table></figure>
+<p><code>self.extract_feat(...)</code>：特征提取函数。</p>
+<p>返回两个东西：</p>
+<ul>
+<li><code>img_feats</code>：图像特征（可能是 backbone/neck 输出的多尺度特征，比如 FPN 的 list[Tensor]）。</li>
+<li><code>txt_feats</code>：文本特征（例如类别名称的文本 embedding、prompt embedding，或由 samples 中携带的文本信息编码出来的特征）。</li>
+</ul>
+<p>为什么要把 <code>batch_data_samples</code> 也传进去？</p>
+<ul>
+<li>有些模型的文本侧信息来自样本（比如每个 batch 的类名集合、caption、或 open-vocabulary 的描述文本），需要从 <code>batch_data_samples</code> 取出来再编码。</li>
+</ul>
+<p><strong>4. 分情况计算分数（核心逻辑）</strong></p>
+<p>这里有一个非常关键的 <code>if-else</code> 判断，处理两种完全不同的模型状态。</p>
+<p><strong>情况 A：重参数化模式（Reparameterized）—— “合体模式”</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="variable language_">self</span>.reparameterized:</span><br><span class="line">    losses = <span class="variable language_">self</span>.bbox_head.loss(img_feats, batch_data_samples)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>场景</strong>：
+当 <code>reparameterized=True</code> 时，说明文本特征（那些单词向量）已经**“甚至融合进了卷积层的权重里”**。模型现在的结构和普通的 YOLO 一模一样，不再需要外挂文本向量了。</li>
+<li><strong>动作</strong>：
+<ul>
+<li>调用 <code>self.bbox_head.loss</code> 时，<strong>只传了图片特征 (<code>img_feats</code>)</strong>，没传文本特征。</li>
+<li>因为文本信息已经“长”在 Head 的参数里了，它自己知道要把“猫”归为第几类，不需要你再给它文本特征做对比。</li>
+</ul>
+</li>
+</ul>
+<p><strong>情况 B：普通模式（Dual Mode）—— 图像特征 + 文本特征一起算 loss</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    losses = <span class="variable language_">self</span>.bbox_head.loss(img_feats, txt_feats,</span><br><span class="line">                                 batch_data_samples)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>场景</strong>：
+这是训练时的默认状态。图像特征和文本特征是<strong>分开</strong>的两个东西。</li>
+<li><strong>动作</strong>：
+<ul>
+<li>调用 <code>self.bbox_head.loss</code> 时，<strong>同时传入了图片特征 (<code>img_feats</code>) 和文本特征 (<code>txt_feats</code>)</strong>。</li>
+<li>这时候，Head 内部会做一个“连连看”的操作：计算图片里的某个框，和这 80 个文本向量里的哪一个最像（相似度最高）。</li>
+<li>这个过程叫 <strong>Contrastive Learning（对比学习）</strong>。</li>
+</ul>
+</li>
+</ul>
+<p><strong>5. 交卷（返回损失）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> losses</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>losses</code> 一般是 <code>dict</code>：训练框架会把它们汇总、加权、记录日志、反向传播。</p>
+<p>也可能是 <code>list</code>：视 <code>bbox_head.loss()</code> 的实现而定。</p>
+</li>
+</ul>
+<hr>
+<p><strong>总结</strong></p>
+<p>这个函数非常简洁，它的核心职责就是**“适配”**：</p>
+<ol>
+<li><strong>适配类别数</strong>：确保 Head 知道是在训练集的范围内工作。</li>
+<li><strong>适配模型状态</strong>：
+<ul>
+<li>如果模型已经**“进化”**（重参数化）成了纯视觉模型，就按纯视觉的方式算分（不传文本）。</li>
+<li>如果模型还是**“图文分离”**的状态，就按图文匹配的方式算分（传入文本）。</li>
+</ul>
+</li>
+</ol>
+<p>这再次体现了 YOLO-World 的灵活性：既能像 CLIP 一样玩图文对齐，又能像 YOLO 一样玩纯视觉检测。</p>
+<blockquote>
+<p>角度 A：这是“检测头接口统一 + 结构可切换”</p>
+<ul>
+<li><code>reparameterized=True</code>：训练/部署时用简化结构（更快/更干净的输入接口）。</li>
+<li><code>reparameterized=False</code>：训练或实验阶段保留显式文本分支（更灵活）。</li>
+</ul>
+<p>角度 B：这是“开放词表/多模态检测”的典型流程</p>
+<ul>
+<li>先 <code>extract_feat</code> 得到图像特征和文本特征</li>
+<li>head 里用二者计算分类 logits（比如相似度），再算 detection losses</li>
+<li>若已重参数化，则文本侧被固化进 head 参数（不再需要每步输入）</li>
+</ul>
+</blockquote>
+<h4 id="def-predict-2">def predict</h4>
+<p><strong>通俗理解：</strong></p>
+<p>这是模型的 <strong>推理接口 <code>predict()</code></strong>。
+它在 <strong>不计算 loss</strong> 的情况下，对一批输入做前向推理：</p>
+<ol>
+<li>提取图像/文本特征</li>
+<li>将检测头的类别数切换为 <strong>测试类别数</strong></li>
+<li>根据是否 <code>reparameterized</code>，选择不同的 <code>bbox_head.predict()</code> 调用方式</li>
+<li>将预测结果写回 <code>batch_data_samples</code></li>
+<li>返回带有预测结果的 samples</li>
+</ol>
+<p>1. <strong>函数定义与输入</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">predict</span>(<span class="params">self,</span></span><br><span class="line"><span class="params">            batch_inputs: Tensor,</span></span><br><span class="line"><span class="params">            batch_data_samples: SampleList,</span></span><br><span class="line"><span class="params">            rescale: <span class="built_in">bool</span> = <span class="literal">True</span></span>) -&gt; SampleList:</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>def predict(...)</code></strong>: 定义推理入口函数。</li>
+<li><strong><code>batch_inputs</code></strong>: 通常是 Tensor 格式的图像数据。</li>
+<li><code>batch_data_samples: SampleList</code>：
+<ul>
+<li>推理时通常只包含元信息（图像尺寸、缩放比例等）</li>
+<li><strong>没有 GT 标注</strong></li>
+</ul>
+</li>
+<li><strong><code>rescale: bool = True</code></strong>: <strong>“是否还原坐标”</strong>。如果为 True，输出的框坐标会变回原图大小（比如 1920x1080）；如果为 False，输出的就是模型内部使用的相对坐标（比如 0~640）。</li>
+<li>返回值：<code>SampleList</code>
+<ul>
+<li>每个 sample 中会新增预测结果（bbox、label、score 等）</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Predict results from a batch of inputs and data samples with post-</span></span><br><span class="line"><span class="string">processing.</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>说明这是**带后处理（post-processing）**的预测：</p>
+<ul>
+<li>解码 bbox</li>
+<li>NMS</li>
+<li>尺度恢复（rescale）</li>
+</ul>
+<p><strong>2. 提取特征（审题）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">img_feats, txt_feats = <span class="variable language_">self</span>.extract_feat(batch_inputs,</span><br><span class="line">                                         batch_data_samples)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>解释</strong>：</li>
+<li>和 <code>loss()</code> 中完全一致：
+<ul>
+<li><code>img_feats</code>：图像特征（backbone / neck 输出）</li>
+<li><code>txt_feats</code>：文本特征（类别文本 embedding / prompt）</li>
+<li>推理阶段依然可能需要文本特征（开放词表检测）</li>
+</ul>
+</li>
+</ul>
+<p><strong>3. 设定考试范围（关键差异点）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">self</span>.bbox_head.num_classes = <span class="variable language_">self</span>.num_test_classes</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><strong>与训练的时候有区别</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#训练</span></span><br><span class="line"><span class="variable language_">self</span>.bbox_head.num_classes = <span class="variable language_">self</span>.num_training_classes</span><br><span class="line"><span class="comment">#推理</span></span><br><span class="line"><span class="variable language_">self</span>.bbox_head.num_classes = <span class="variable language_">self</span>.num_test_classes</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>测试时可能：</p>
+<ul>
+<li>类别数 &gt; 训练类别数（开放词表 / zero-shot）</li>
+<li>类别集合不同（不同 benchmark）</li>
+</ul>
+<p><code>bbox_head.predict()</code> 内部：</p>
+<ul>
+<li>会根据 <code>num_classes</code> 决定分类 logits 的维度</li>
+<li>决定 label 的取值范围</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>与标准版 YOLO-World 的巨大区别</strong>：</p>
+<ul>
+<li><strong>标准版 (<code>YOLOWorldDetector</code>)</strong>：类别数是<strong>动态</strong>的，取决于你这次输入了几个单词 (<code>txt_feats[0].shape[0]</code>)。</li>
+<li><strong>简化版 (<code>SimpleYOLOWorldDetector</code>)</strong>：类别数是<strong>固定</strong>的 (<code>self.num_test_classes</code>)。因为这个类通常用于固定场景（比如就是在 COCO 的 80 类上跑），所以它直接写死了。</li>
+</ul>
+</li>
+</ul>
+<p><strong>reparameterized 分支（推理简化版）</strong></p>
+<p>这里再次出现了 <code>reparameterized</code> 的分叉路口，这对应模型是否“进化”完成。</p>
+<p><strong>情况 A：重参数化模式（Reparameterized）—— “直觉答题”</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="variable language_">self</span>.reparameterized:</span><br><span class="line">    results_list = <span class="variable language_">self</span>.bbox_head.predict(img_feats,</span><br><span class="line">                                          batch_data_samples,</span><br><span class="line">                                          rescale=rescale)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>场景</strong>：
+模型已经完成了重参数化（<code>reparameterized=True</code>）。此时，文本特征已经融合进了网络的权重里，模型变成了一个<strong>纯视觉检测器</strong>。</li>
+<li><strong>动作</strong>：
+<ul>
+<li><code>self.bbox_head.predict</code> <strong>只接收 <code>img_feats</code></strong>。</li>
+<li>就像一个做题做熟练的人，看到图直接就能反应出结果，不需要再去翻书对比文字特征了。这是速度最快的模式。</li>
+<li><code>rescale=rescale</code>：控制 bbox 是否映射回原图尺度</li>
+</ul>
+</li>
+</ul>
+<p><strong>情况 B：普通模式（Dual Mode）—— “对比答题”</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    results_list = <span class="variable language_">self</span>.bbox_head.predict(img_feats,</span><br><span class="line">                                          txt_feats,</span><br><span class="line">                                          batch_data_samples,</span><br><span class="line">                                          rescale=rescale)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>场景</strong>：
+模型还处于图文分离的状态。</li>
+<li><strong>动作</strong>：
+<ul>
+<li><code>self.bbox_head.predict</code> <strong>同时接收 <code>img_feats</code> 和 <code>txt_feats</code></strong>。</li>
+<li>它可以动态地计算当前图片里的物体特征，和那固定的 80 个文本向量的相似度。</li>
+</ul>
+</li>
+</ul>
+<p><strong>将预测结果写回 DataSample</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">batch_data_samples = <span class="variable language_">self</span>.add_pred_to_datasample(</span><br><span class="line">    batch_data_samples, results_list)</span><br><span class="line"><span class="keyword">return</span> batch_data_samples</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><strong><code>results_list</code></strong>: 这里面是纯粹的数学结果（一堆框的坐标 <code>[x1, y1, x2, y2]</code> 和对应的得分、类别ID）。</p>
+</li>
+<li>
+<p><strong><code>add_pred_to_datasample</code></strong>: 这是一个打包函数。它把这些枯燥的数据，整齐地填回到 <code>batch_data_samples</code> 这个对象里，标记为 <code>pred_instances</code>（预测实例）。</p>
+</li>
+<li>
+<p><strong><code>return</code></strong>: 返回的是：</p>
+<ul>
+<li><strong>原始 samples + 预测结果</strong></li>
+</ul>
+<p>这是 MMDetection / MMEngine 风格的标准输出格式</p>
+</li>
+</ul>
+<p><strong>和 <code>loss()</code> 的对照理解</strong></p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>对比点</th>
+<th>loss()</th>
+<th>predict()</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是否用 GT</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>num_classes</td>
+<td><code>num_training_classes</code></td>
+<td><code>num_test_classes</code></td>
+</tr>
+<tr>
+<td>是否算 loss</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>bbox_head 接口</td>
+<td><code>.loss()</code></td>
+<td><code>.predict()</code></td>
+</tr>
+<tr>
+<td>是否后处理</td>
+<td>否</td>
+<td>是（NMS / rescale）</td>
+</tr>
+<tr>
+<td>输出</td>
+<td>loss dict/list</td>
+<td>SampleList（带预测）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="def-forward-2">def forward</h4>
+<p>1. <strong>函数定义与输入</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">_forward</span>(<span class="params"></span></span><br><span class="line"><span class="params">        self,</span></span><br><span class="line"><span class="params">        batch_inputs: Tensor,</span></span><br><span class="line"><span class="params">        batch_data_samples: OptSampleList = <span class="literal">None</span></span>) -&gt; <span class="type">Tuple</span>[<span class="type">List</span>[Tensor]]:</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>def _forward(...)</code></strong>: 定义函数。注意前面的下划线 <code>_</code>，在 Python 习惯里通常表示这是一个“内部函数”<strong>或者</strong>“底层函数”，一般不需要用户直接调用，而是给框架调用的。</li>
+<li><strong><code>batch_inputs</code></strong>: <strong>“原材料”</strong>（图片）。一堆 Tensor 格式的数字，代表输入的图片。</li>
+<li><strong><code>batch_data_samples</code></strong>: <strong>“辅助信息”</strong>。这里设为 <code>None</code> 是默认值，但在 <code>SimpleYOLOWorldDetector</code> 里其实不太依赖它，因为文本特征已经在 <code>__init__</code> 里存好了。</li>
+<li><strong><code>-&gt; Tuple[List[Tensor]]</code></strong>: 返回值。是一个元组，里面装着列表，列表里是 Tensor。简单说，就是<strong>一堆原始的数学数组</strong>（还没解码成框、没 NMS）。</li>
+</ul>
+<p><strong>2. 文档说明</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;Network forward process. Usually includes backbone, neck and head</span></span><br><span class="line"><span class="string">forward without any post-processing.</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>解释</strong>：这段注释明确说了，这个过程包含 <strong>Backbone（大脑）</strong> -&gt; <strong>Neck（脖子）</strong> -&gt; <strong>Head（手）</strong> 的全套动作，但<strong>不包含</strong>后处理（Post-processing）。</li>
+</ul>
+<p><strong>3. 提取特征（准备食材）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">img_feats, txt_feats = <span class="variable language_">self</span>.extract_feat(batch_inputs,</span><br><span class="line">                                         batch_data_samples)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>解释</strong>：
+依然是调用“大管家” <code>extract_feat</code>。
+<ul>
+<li><strong><code>img_feats</code></strong>：算出图片的特征。</li>
+<li><strong><code>txt_feats</code></strong>：拿出预先存好的文本特征（Embeddings）。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>注意：SimpleYOLOWorldDetector 的 <code>extract_feat</code> 里，图像是 <code>self.backbone(batch_inputs, None)</code> 得到的；文本可能是 <code>self.embeddings</code> 构造出来的（如果没 reparameterized）。</li>
+</ul>
+<p><strong>4. 分情况计算（核心计算）</strong></p>
+<p>这里又一次出现了那个熟悉的 <code>reparameterized</code> 判断。</p>
+<p><strong>情况 A：重参数化模式（Reparameterized）—— “极速模式”</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="variable language_">self</span>.reparameterized:</span><br><span class="line">    results = <span class="variable language_">self</span>.bbox_head.forward(img_feats)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果 <code>reparameterized=True</code>：
+<ul>
+<li>head 的 forward 只吃图像特征 <code>img_feats</code></li>
+<li>说明文本信息不需要显式传入（可能已经被固化/融合进模型结构或权重）</li>
+</ul>
+</li>
+</ul>
+<p><strong>情况 B：普通模式（Dual Mode）—— “对比模式”</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    results = <span class="variable language_">self</span>.bbox_head.forward(img_feats, txt_feats)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>否则（<code>reparameterized=False</code>）：
+<ul>
+<li>head 需要 <strong>图像特征 + 文本特征</strong> 一起 forward</li>
+<li>典型就是“多模态分类/开放词表分类”：用 <code>txt_feats</code> 当作类别原型/提示去做匹配或调制</li>
+</ul>
+</li>
+</ul>
+<p><strong>5. 返回原始结果</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> results</span><br></pre></td></tr></table></figure>
+<ul>
+<li>返回 <code>results</code>：这是 head 的<strong>原始输出</strong>（比如不同尺度上的分类/回归输出张量）。</li>
+<li>和 <code>predict()</code> 不同：这里<strong>不会</strong>把结果解码成最终 bbox，也<strong>不会</strong>做 NMS，也不会写回 <code>batch_data_samples</code>。</li>
+</ul>
+<h4 id="def-extract-feat-2">def extract_feat</h4>
+<p><strong>1. 函数定义与输入</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">extract_feat</span>(<span class="params"></span></span><br><span class="line"><span class="params">        self, batch_inputs: Tensor,</span></span><br><span class="line"><span class="params">        batch_data_samples: SampleList</span>) -&gt; <span class="type">Tuple</span>[<span class="type">Tuple</span>[Tensor], Tensor]:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Extract features.&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>batch_inputs</code></strong>: 输入的图片数据（一批）。</li>
+<li><strong><code>batch_data_samples</code></strong>: 元数据（这里其实用不到，但为了接口统一保留了）。</li>
+<li><strong>返回值</strong>: 返回一个元组 <code>(图像特征, 文本特征)</code>。</li>
+</ul>
+<p><strong>2. 提取图像特征（只做图）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># only image features</span></span><br><span class="line">img_feats, _ = <span class="variable language_">self</span>.backbone(batch_inputs, <span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>通俗解释</strong>：
+告诉骨干网络（Backbone）：<strong>“只管看图，别管字。”</strong></li>
+<li><strong>细节</strong>：
+<ul>
+<li><code>self.backbone(batch_inputs, None)</code>: 第二个参数传了 <code>None</code>。</li>
+<li>在标准版 <code>YOLOWorldDetector</code> 里，这里通常传的是文本。但在这里，因为 <code>SimpleYOLOWorldDetector</code> 不依赖骨干网络里的 CLIP 编码器，所以直接传空，让骨干网络只跑图像分支（Darknet），省去了文本计算的开销。</li>
+<li><code>_</code>: 用下划线接收第二个返回值（通常是文本特征），因为这里传了 <code>None</code>，所以返回的也是空，直接忽略。</li>
+</ul>
+</li>
+</ul>
+<p><strong>3. 准备文本特征（核心逻辑）</strong></p>
+<p>这里处理那个“自带的调料包”(<code>self.embeddings</code>)。</p>
+<p><strong>情况 A：未重参数化（图文分离模式）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> <span class="variable language_">self</span>.reparameterized:</span><br><span class="line">    <span class="comment"># use embeddings</span></span><br><span class="line">    txt_feats = <span class="variable language_">self</span>.embeddings[<span class="literal">None</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>self.embeddings</code></strong>: 这是我们在 <code>__init__</code> 里存好的 80 个类别向量，形状是 <code>[80, 512]</code>（假设 80 类，维度 512）。</li>
+<li><strong><code>[None]</code> (增加维度)</strong>: 这是一个 NumPy/PyTorch 的切片技巧，作用是<strong>增加一个维度</strong>。
+<ul>
+<li>变成 <code>[1, 80, 512]</code>。</li>
+<li><strong>为什么？</strong> 因为图片是按批次（Batch）进来的（比如一次 16 张），文本特征也得跟它对齐，假装它是第 1 张图的文本特征。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><code>[None]</code> 是 PyTorch 张量索引的一种简洁语法，用于在张量的指定位置添加一个新的维度（维度大小为 1）。这相当于调用<code> torch.unsqueeze(self.embeddings, dim=0)</code>，即在第 0 维（最前面）添加一个“批次”维度（batch dimension）。</p>
+</blockquote>
+<p><strong>3.1 适配器微调（可选）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="variable language_">self</span>.adapter <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">    txt_feats = <span class="variable language_">self</span>.adapter(txt_feats) + txt_feats</span><br><span class="line">    txt_feats = nn.functional.normalize(txt_feats, dim=-<span class="number">1</span>, p=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>self.adapter(txt_feats) + txt_feats</code></strong>:
+<ul>
+<li>如果配置了适配器（Adapter），就让特征通过一个小的神经网络（Linear-ReLU-Linear）进行“精修”。</li>
+<li><code>+ txt_feats</code> 是 <strong>残差连接（Residual Connection）</strong>，意思是：在保留原汁原味的基础上，加一点点修饰。防止修坏了。</li>
+</ul>
+</li>
+<li><strong><code>normalize</code></strong>:
+<ul>
+<li>归一化。把向量的长度统一变成 1。这是对比学习（计算相似度）的标准动作，防止因为向量长短不一影响判断。</li>
+</ul>
+</li>
+</ul>
+<p><strong>3.2 复制分发</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">txt_feats = txt_feats.repeat(img_feats[<span class="number">0</span>].shape[<span class="number">0</span>], <span class="number">1</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>通俗解释</strong>：
+这行代码的作用是对文本特征张量<code>txt_feats</code>进行维度重复，使其批量大小（batch size）与图像特征的批量大小保持一致，确保后续计算时维度兼容</li>
+</ul>
+<p>在<code>SimpleYOLOWorldDetector</code>的<code>extract_feat</code>方法中，当<code>self.reparameterized=False</code>时，代码会使用预定义的文本嵌入（<code>self.embeddings</code>）生成文本特征<code>txt_feats</code>：</p>
+<ul>
+<li><code>self.embeddings</code>的形状为 <code>(num_prompts, prompt_dim)</code>，其中<code>num_prompts</code>是文本提示的数量（如类别数），<code>prompt_dim</code>是每个文本提示的特征维度。</li>
+<li>通过<code>self.embeddings[None]</code>操作，会在最前面增加一个维度（批量维度），此时<code>txt_feats</code>的形状变为 <code>(1, num_prompts, prompt_dim)</code>（<code>1</code>表示初始批量大小为 1）。</li>
+<li>若使用了<code>adapter</code>（适配器），<code>txt_feats</code>经过处理后形状仍保持 <code>(1, num_prompts, prompt_dim)</code>（适配器不改变批量和提示数量维度）。</li>
+</ul>
+<p>代码中<code>txt_feats.repeat(img_feats[0].shape[0], 1, 1)</code>的核心是<code>torch.Tensor.repeat</code>方法，其参数表示每个维度的重复次数：</p>
+<ul>
+<li>
+<p>第一个参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img_feats[0].shape[0]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img_feats</span><br></pre></td></tr></table></figure>
+<p>是图像特征列表（通常包含多个层级的特征图），</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img_feats[0]</span><br></pre></td></tr></table></figure>
+<p>是第一个层级的特征图，其形状为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(batch_size, channels, height, width)</span><br></pre></td></tr></table></figure>
+<p>，因此</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img_feats[0].shape[0]</span><br></pre></td></tr></table></figure>
+<p>表示当前输入的图像批量大小（即一次处理的图像数量）。</p>
+</li>
+<li>
+<p>第二个参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1</span><br></pre></td></tr></table></figure>
+<p>表示文本提示数量维度（</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">num_prompts</span><br></pre></td></tr></table></figure>
+<p>）不重复，保持原大小。</p>
+</li>
+<li>
+<p>第三个参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1</span><br></pre></td></tr></table></figure>
+<p>表示文本特征维度（</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">prompt_dim</span><br></pre></td></tr></table></figure>
+<p>）不重复，保持原大小。</p>
+</li>
+<li>
+<p>重复前：<code>txt_feats</code>形状为 <code>(1, num_prompts, prompt_dim)</code>（批量大小为 1）。</p>
+</li>
+<li>
+<p>重复后：<code>txt_feats</code>形状为 <code>(batch_size, num_prompts, prompt_dim)</code>（批量大小与图像特征一致）。</p>
+</li>
+</ul>
+<p><strong>情况 B：重参数化（极速模式）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    txt_feats = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>解释</strong>：
+如果已经重参数化，文本特征已经融合进卷积层了，不需要显式的文本向量了。直接设为 <code>None</code>。</li>
+</ul>
+<p><strong>4. 颈部融合 (Neck)</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="variable language_">self</span>.with_neck:</span><br><span class="line">    <span class="keyword">if</span> <span class="variable language_">self</span>.mm_neck:</span><br><span class="line">        img_feats = <span class="variable language_">self</span>.neck(img_feats, txt_feats)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        img_feats = <span class="variable language_">self</span>.neck(img_feats)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>self.neck(img_feats, txt_feats)</code></strong>:
+<ul>
+<li>即使是 Simple 版本，如果我们开了 <code>mm_neck=True</code>（未重参数化时），依然会进行<strong>图文融合</strong>。</li>
+<li>刚才准备好的 16 份文本特征 (<code>txt_feats</code>) 会被送进 Neck，指导 16 张图片的特征 (<code>img_feats</code>) 进行增强。</li>
+<li>比如：文本里有“猫”，Neck 就会让图片特征里“像猫”的区域变亮。</li>
+</ul>
+</li>
+</ul>
+<p><strong>5. 返回结果</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> img_feats, txt_feats</span><br></pre></td></tr></table></figure>
+<ul>
+<li>返回处理好的图像特征（可能融合过文本）和文本特征。</li>
+</ul>
+<hr>
+<h2 id="这段代码的核心思想（你要记住的-3-件事）">这段代码的核心思想（你要记住的 3 件事）</h2>
+<ol>
+<li><code>reparameterize()</code>：把文本先编码缓存 → 推理更快</li>
+<li><code>extract_feat()</code>：根据 batch_data_samples 的形式，决定 texts 从哪来</li>
+<li>若已有 <code>txt_feats</code> 缓存 → <code>forward_image</code>（只跑图像）；否则 backbone 同时处理图文并产出 <code>txt_masks</code></li>
+</ol>
+<hr>
+<p>如果你把 <code>self.backbone.forward_text()</code> / <code>self.backbone(batch_inputs, texts)</code> 的返回 shape（比如打印 <code>txt_feats.shape</code>、<code>txt_masks.shape</code>）贴一下，我还能进一步解释：</p>
+<ul>
+<li><code>txt_feats[0].shape[0]</code> 为啥等于类别数</li>
+<li><code>txt_masks</code> 具体 mask 的维度到底对应 token 还是对应类别条目</li>
+</ul>
+<hr>
+<h3 id="2-特征提取核心逻辑-extract-feat">2. 特征提取核心逻辑 (<code>extract_feat</code>)</h3>
+<p>这是整个代码的灵魂，对应论文图 3 (Figure 3) 的整体架构 。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">extract_feat</span>(<span class="params"></span></span><br><span class="line"><span class="params">        self, batch_inputs: Tensor,</span></span><br><span class="line"><span class="params">        batch_data_samples: SampleList</span>) -&gt; <span class="type">Tuple</span>[<span class="type">Tuple</span>[Tensor], Tensor]:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Extract features.&quot;&quot;&quot;</span></span><br><span class="line">    txt_feats = <span class="literal">None</span></span><br><span class="line">    <span class="comment"># ----------------- A. 获取文本输入 (Text Prompts) -----------------</span></span><br><span class="line">    <span class="keyword">if</span> batch_data_samples <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="comment"># 情况 1: 推理模式且已重参数化 (Prompt-then-Detect)</span></span><br><span class="line">        texts = <span class="variable language_">self</span>.texts</span><br><span class="line">        txt_feats = <span class="variable language_">self</span>.text_feats</span><br><span class="line">    <span class="keyword">elif</span> <span class="built_in">isinstance</span>(batch_data_samples, <span class="built_in">dict</span>) <span class="keyword">and</span> <span class="string">&#x27;texts&#x27;</span> <span class="keyword">in</span> batch_data_samples:</span><br><span class="line">        <span class="comment"># 情况 2: 训练模式 (Online Vocabulary)</span></span><br><span class="line">        texts = batch_data_samples[<span class="string">&#x27;texts&#x27;</span>]</span><br><span class="line">    <span class="comment"># ... (省略部分数据解包代码)</span></span><br><span class="line">    <span class="keyword">elif</span> <span class="built_in">hasattr</span>(<span class="variable language_">self</span>, <span class="string">&#x27;text_feats&#x27;</span>):</span><br><span class="line">         <span class="comment"># 情况 3: 已缓存特征</span></span><br><span class="line">        texts = <span class="variable language_">self</span>.texts</span><br><span class="line">        txt_feats = <span class="variable language_">self</span>.text_feats</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>论文对应</strong>：
+<ul>
+<li><strong>情况 2 (Online Vocabulary)</strong>：对应论文 3.2 节提到的 <strong>&quot;Training with Online Vocabulary&quot;</strong>。在训练时，每个 Batch 会随机采样名词构成一个在线词汇表 。</li>
+<li><strong>情况 1 &amp; 3 (Offline Vocabulary)</strong>：对应论文 3.2 节提到的 <strong>&quot;Inference with Offline Vocabulary&quot;</strong>。用户定义好 Prompts 后，模型将其编码并缓存，推理时无需重复编码 。</li>
+</ul>
+</li>
+</ul>
+<!-- end list -->
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ----------------- B. 骨干网络前向传播 (Backbone) -----------------</span></span><br><span class="line"><span class="keyword">if</span> txt_feats <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">    <span class="comment"># 路径 1: 文本特征已存在 (Fast Mode / Re-parameterized)</span></span><br><span class="line">    <span class="comment"># 仅计算图像特征</span></span><br><span class="line">    img_feats = <span class="variable language_">self</span>.backbone.forward_image(batch_inputs)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="comment"># 路径 2: 同时计算图像和文本 (Full Mode)</span></span><br><span class="line">    <span class="comment"># 对应 Figure 3 左侧: Image Encoder + Text Encoder</span></span><br><span class="line">    img_feats, (txt_feats, txt_masks) = <span class="variable language_">self</span>.backbone(batch_inputs, texts)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>论文对应</strong>：
+<ul>
+<li><strong><code>self.backbone</code></strong>: 实际上是一个 <strong>MultiModalYOLOBackbone</strong>（见配置文件）。</li>
+<li><strong>路径 2</strong>: 对应论文图 3，同时包含 <strong>YOLO Backbone</strong> (Darknet) 和 <strong>Text Encoder</strong> (CLIP) 。CLIP 提取文本嵌入 
+    <span id="mjx-5b94f8e">
+      <style>
+      #mjx-5b94f8e{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.09ex;" xmlns="http://www.w3.org/2000/svg" width="10.743ex" height="2.04ex" role="img" focusable="false" viewBox="0 -861.5 4748.6 901.5" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D44A" d="M436 683Q450 683 486 682T553 680Q604 680 638 681T677 682Q695 682 695 674Q695 670 692 659Q687 641 683 639T661 637Q636 636 621 632T600 624T597 615Q597 603 613 377T629 138L631 141Q633 144 637 151T649 170T666 200T690 241T720 295T759 362Q863 546 877 572T892 604Q892 619 873 628T831 637Q817 637 817 647Q817 650 819 660Q823 676 825 679T839 682Q842 682 856 682T895 682T949 681Q1015 681 1034 683Q1048 683 1048 672Q1048 666 1045 655T1038 640T1028 637Q1006 637 988 631T958 617T939 600T927 584L923 578L754 282Q586 -14 585 -15Q579 -22 561 -22Q546 -22 542 -17Q539 -14 523 229T506 480L494 462Q472 425 366 239Q222 -13 220 -15T215 -19Q210 -22 197 -22Q178 -22 176 -15Q176 -12 154 304T131 622Q129 631 121 633T82 637H58Q51 644 51 648Q52 671 64 683H76Q118 680 176 680Q301 680 313 683H323Q329 677 329 674T327 656Q322 641 318 637H297Q236 634 232 620Q262 160 266 136L501 550L499 587Q496 629 489 632Q483 636 447 637Q428 637 422 639T416 648Q416 650 418 660Q419 664 420 669T421 676T424 680T428 682T436 683Z"></path></g><g data-mml-node="mo" transform="translate(1325.8,0)"><path data-c="2208" d="M84 250Q84 372 166 450T360 539Q361 539 377 539T419 540T469 540H568Q583 532 583 520Q583 511 570 501L466 500Q355 499 329 494Q280 482 242 458T183 409T147 354T129 306T124 272V270H568Q583 262 583 250T568 230H124V228Q124 207 134 177T167 112T231 48T328 7Q355 1 466 0H570Q583 -10 583 -20Q583 -32 568 -40H471Q464 -40 446 -40T417 -41Q262 -41 172 45Q84 127 84 250Z"></path></g><g data-mml-node="msup" transform="translate(2270.6,0)"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="211D" d="M17 665Q17 672 28 683H221Q415 681 439 677Q461 673 481 667T516 654T544 639T566 623T584 607T597 592T607 578T614 565T618 554L621 548Q626 530 626 497Q626 447 613 419Q578 348 473 326L455 321Q462 310 473 292T517 226T578 141T637 72T686 35Q705 30 705 16Q705 7 693 -1H510Q503 6 404 159L306 310H268V183Q270 67 271 59Q274 42 291 38Q295 37 319 35Q344 35 353 28Q362 17 353 3L346 -1H28Q16 5 16 16Q16 35 55 35Q96 38 101 52Q106 60 106 341T101 632Q95 645 55 648Q17 648 17 665ZM241 35Q238 42 237 45T235 78T233 163T233 337V621L237 635L244 648H133Q136 641 137 638T139 603T141 517T141 341Q141 131 140 89T134 37Q133 36 133 35H241ZM457 496Q457 540 449 570T425 615T400 634T377 643Q374 643 339 648Q300 648 281 635Q271 628 270 610T268 481V346H284Q327 346 375 352Q421 364 439 392T457 496ZM492 537T492 496T488 427T478 389T469 371T464 361Q464 360 465 360Q469 360 497 370Q593 400 593 495Q593 592 477 630L457 637L461 626Q474 611 488 561Q492 537 492 496ZM464 243Q411 317 410 317Q404 317 401 315Q384 315 370 312H346L526 35H619L606 50Q553 109 464 243Z"></path></g></g><g data-mml-node="TeXAtom" transform="translate(755,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D436" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q484 659 454 652T382 628T299 572T226 479Q194 422 175 346T156 222Q156 108 232 58Q280 24 350 24Q441 24 512 92T606 240Q610 253 612 255T628 257Q648 257 648 248Q648 243 647 239Q618 132 523 55T319 -22Q206 -22 128 53T50 252Z"></path></g><g data-mml-node="mo" transform="translate(760,0)"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g><g data-mml-node="mi" transform="translate(1538,0)"><path data-c="1D437" d="M287 628Q287 635 230 637Q207 637 200 638T193 647Q193 655 197 667T204 682Q206 683 403 683Q570 682 590 682T630 676Q702 659 752 597T803 431Q803 275 696 151T444 3L430 1L236 0H125H72Q48 0 41 2T33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM703 469Q703 507 692 537T666 584T629 613T590 629T555 636Q553 636 541 636T512 636T479 637H436Q392 637 386 627Q384 623 313 339T242 52Q242 48 253 48T330 47Q335 47 349 47T373 46Q499 46 581 128Q617 164 640 212T683 339T703 469Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>W</mi><mo>∈</mo><msup><mrow data-mjx-texclass="ORD"><mi mathvariant="double-struck">R</mi></mrow><mrow data-mjx-texclass="ORD"><mi>C</mi><mo>×</mo><mi>D</mi></mrow></msup></math></mjx-assistive-mml></mjx-container>
+    </span>
+   。</li>
+<li><strong>路径 1</strong>: 对应论文图 2(c) 的 <strong>Prompt-then-Detect</strong> 范式。当文本编码为 Offline Vocabulary 后，推理阶段只运行图像部分，实现了高效推理 。</li>
+</ul>
+</li>
+</ul>
+<!-- end list -->
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ----------------- C. 颈部网络融合 (Neck / RepVL-PAN) -----------------</span></span><br><span class="line"><span class="keyword">if</span> <span class="variable language_">self</span>.with_neck:</span><br><span class="line">    <span class="keyword">if</span> <span class="variable language_">self</span>.mm_neck:</span><br><span class="line">        <span class="comment"># 多模态融合: RepVL-PAN</span></span><br><span class="line">        img_feats = <span class="variable language_">self</span>.neck(img_feats, txt_feats)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        img_feats = <span class="variable language_">self</span>.neck(img_feats)</span><br><span class="line"><span class="keyword">return</span> img_feats, txt_feats, txt_masks</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>论文对应</strong>：
+<ul>
+<li><strong><code>self.neck(img_feats, txt_feats)</code></strong>: 这行代码实现了论文 3.3 节的 <strong>RepVL-PAN</strong>。</li>
+<li>它利用 <strong>Text-guided CSPLayer</strong> 将文本信息注入到多尺度图像特征 
+    <span id="mjx-12c0d84">
+      <style>
+      #mjx-12c0d84{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="11.595ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 5125 1000" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="7B" d="M434 -231Q434 -244 428 -250H410Q281 -250 230 -184Q225 -177 222 -172T217 -161T213 -148T211 -133T210 -111T209 -84T209 -47T209 0Q209 21 209 53Q208 142 204 153Q203 154 203 155Q189 191 153 211T82 231Q71 231 68 234T65 250T68 266T82 269Q116 269 152 289T203 345Q208 356 208 377T209 529V579Q209 634 215 656T244 698Q270 724 324 740Q361 748 377 749Q379 749 390 749T408 750H428Q434 744 434 732Q434 719 431 716Q429 713 415 713Q362 710 332 689T296 647Q291 634 291 499V417Q291 370 288 353T271 314Q240 271 184 255L170 250L184 245Q202 239 220 230T262 196T290 137Q291 131 291 1Q291 -134 296 -147Q306 -174 339 -192T415 -213Q429 -213 431 -216Q434 -219 434 -231Z"></path></g><g data-mml-node="msub" transform="translate(500,0)"><g data-mml-node="mi"><path data-c="1D443" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path></g><g data-mml-node="mn" transform="translate(675,-150) scale(0.707)"><path data-c="33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path></g></g><g data-mml-node="mo" transform="translate(1578.6,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="msub" transform="translate(2023.2,0)"><g data-mml-node="mi"><path data-c="1D443" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path></g><g data-mml-node="mn" transform="translate(675,-150) scale(0.707)"><path data-c="34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z"></path></g></g><g data-mml-node="mo" transform="translate(3101.8,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="msub" transform="translate(3546.4,0)"><g data-mml-node="mi"><path data-c="1D443" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path></g><g data-mml-node="mn" transform="translate(675,-150) scale(0.707)"><path data-c="35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path></g></g><g data-mml-node="mo" transform="translate(4625,0)"><path data-c="7D" d="M65 731Q65 745 68 747T88 750Q171 750 216 725T279 670Q288 649 289 635T291 501Q292 362 293 357Q306 312 345 291T417 269Q428 269 431 266T434 250T431 234T417 231Q380 231 345 210T298 157Q293 143 292 121T291 -28V-79Q291 -134 285 -156T256 -198Q202 -250 89 -250Q71 -250 68 -247T65 -230Q65 -224 65 -223T66 -218T69 -214T77 -213Q91 -213 108 -210T146 -200T183 -177T207 -139Q208 -134 209 3L210 139Q223 196 280 230Q315 247 330 250Q305 257 280 270Q225 304 212 352L210 362L209 498Q208 635 207 640Q195 680 154 696T77 713Q68 713 67 716T65 731Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo fence="false" stretchy="false">{</mo><msub><mi>P</mi><mn>3</mn></msub><mo>,</mo><msub><mi>P</mi><mn>4</mn></msub><mo>,</mo><msub><mi>P</mi><mn>5</mn></msub><mo fence="false" stretchy="false">}</mo></math></mjx-assistive-mml></mjx-container>
+    </span>
+   中 。</li>
+<li>同时也可能包含 <strong>Image-Pooling Attention</strong> 来增强文本特征 。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="3-重参数化-reparameterize">3. 重参数化 (<code>reparameterize</code>)</h3>
+<p>这是实现论文标题中 &quot;Real-Time&quot; 的关键操作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">reparameterize</span>(<span class="params">self, texts: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">str</span>]]</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="comment"># encode text embeddings into the detector</span></span><br><span class="line">    <span class="variable language_">self</span>.texts = texts</span><br><span class="line">    <span class="variable language_">self</span>.text_feats, <span class="literal">None</span> = <span class="variable language_">self</span>.backbone.forward_text(texts)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>论文对应</strong>：
+<ul>
+<li>对应论文图 2(c) 中的 <strong>&quot;Re-parameterize&quot;</strong> 箭头 。</li>
+<li>对应论文 3.2 节：在推理阶段，用户生成一系列 Prompts（如 &quot;person&quot;, &quot;car&quot;），这些 Prompts 被编码成 <strong>Offline Vocabulary</strong> (<code>self.text_feats</code>) 。</li>
+<li>一旦执行了这个函数，后续的 <code>extract_feat</code> 就会直接使用缓存的 <code>self.text_feats</code>，避免了繁重的 CLIP 文本编码计算，从而加速推理。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="4-损失计算-loss">4. 损失计算 (<code>loss</code>)</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">loss</span>(<span class="params">self, batch_inputs: Tensor,</span></span><br><span class="line"><span class="params">         batch_data_samples: SampleList</span>) -&gt; <span class="type">Union</span>[<span class="built_in">dict</span>, <span class="built_in">list</span>]:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Calculate losses from a batch of inputs and data samples.&quot;&quot;&quot;</span></span><br><span class="line">    <span class="variable language_">self</span>.bbox_head.num_classes = <span class="variable language_">self</span>.num_train_classes</span><br><span class="line">    img_feats, txt_feats, txt_masks = <span class="variable language_">self</span>.extract_feat(</span><br><span class="line">        batch_inputs, batch_data_samples)</span><br><span class="line">    losses = <span class="variable language_">self</span>.bbox_head.loss(img_feats, txt_feats, txt_masks,</span><br><span class="line">                                 batch_data_samples)</span><br><span class="line">    <span class="keyword">return</span> losses</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>论文对应</strong>：
+<ul>
+<li><strong><code>self.bbox_head.loss</code></strong>: 对应论文 3.4 节的 <strong>Region-Text Contrastive Loss</strong>。</li>
+<li>论文提出了一种区域-文本对比损失 
+    <span id="mjx-27a36d4">
+      <style>
+      #mjx-27a36d4{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="4.177ex" height="1.952ex" role="img" focusable="false" viewBox="0 -705 1846.4 862.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="4C" d="M62 -22T47 -22T32 -11Q32 -1 56 24T83 55Q113 96 138 172T180 320T234 473T323 609Q364 649 419 677T531 705Q559 705 578 696T604 671T615 645T618 623V611Q618 582 615 571T598 548Q581 531 558 520T518 509Q503 509 503 520Q503 523 505 536T507 560Q507 590 494 610T452 630Q423 630 410 617Q367 578 333 492T271 301T233 170Q211 123 204 112L198 103L224 102Q281 102 369 79T509 52H523Q535 64 544 87T579 128Q616 152 641 152Q656 152 656 142Q656 101 588 40T433 -22Q381 -22 289 1T156 28L141 29L131 20Q111 0 87 -11Z"></path></g></g><g data-mml-node="TeXAtom" transform="translate(723,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path></g><g data-mml-node="mi" transform="translate(433,0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(918,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mrow data-mjx-texclass="ORD"><mi data-mjx-variant="-tex-calligraphic" mathvariant="script">L</mi></mrow><mrow data-mjx-texclass="ORD"><mi>c</mi><mi>o</mi><mi>n</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
+    </span>
+  ，通过计算对象-文本相似度来进行匹配 。</li>
+<li>这里的 Head 接收 <code>img_feats</code> (来自 RepVL-PAN) 和 <code>txt_feats</code> (来自 Text Encoder) 来计算这个对比损失。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="5-推理预测-predict">5. 推理预测 (<code>predict</code>)</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">predict</span>(<span class="params">self,</span></span><br><span class="line"><span class="params">            batch_inputs: Tensor,</span></span><br><span class="line"><span class="params">            batch_data_samples: SampleList,</span></span><br><span class="line"><span class="params">            rescale: <span class="built_in">bool</span> = <span class="literal">True</span></span>) -&gt; SampleList:</span><br><span class="line">    <span class="comment"># ... (特征提取)</span></span><br><span class="line">    img_feats, txt_feats, txt_masks = <span class="variable language_">self</span>.extract_feat(</span><br><span class="line">        batch_inputs, batch_data_samples)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 动态设置类别数</span></span><br><span class="line">    <span class="variable language_">self</span>.bbox_head.num_classes = txt_feats[<span class="number">0</span>].shape[<span class="number">0</span>]</span><br><span class="line">    results_list = <span class="variable language_">self</span>.bbox_head.predict(img_feats,</span><br><span class="line">                                          txt_feats,</span><br><span class="line">                                          <span class="comment"># ...</span></span><br><span class="line">                                          )</span><br><span class="line">    <span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>论文对应</strong>：
+<ul>
+<li><strong><code>self.bbox_head.num_classes = txt_feats[0].shape[0]</code></strong>: 这体现了 <strong>Open-Vocabulary</strong> 的特性。类别数不是固定的 80，而是等于当前输入的 Text Prompts 的数量（即 
+    <span id="mjx-f550e15">
+      <style>
+      #mjx-f550e15{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.05ex;" xmlns="http://www.w3.org/2000/svg" width="1.719ex" height="1.645ex" role="img" focusable="false" viewBox="0 -705 760 727" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D436" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q484 659 454 652T382 628T299 572T226 479Q194 422 175 346T156 222Q156 108 232 58Q280 24 350 24Q441 24 512 92T606 240Q610 253 612 255T628 257Q648 257 648 248Q648 243 647 239Q618 132 523 55T319 -22Q206 -22 128 53T50 252Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math></mjx-assistive-mml></mjx-container>
+    </span>
+  ）。</li>
+<li>如果是 Zero-shot 推理，这里的 Prompts 就是 LVIS 的 1203 个类别名 ；如果是用户自定义推理，就是用户输入的几个单词。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="6-SimpleYOLOWorldDetector-类">6. <code>SimpleYOLOWorldDetector</code> 类</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@MODELS.register_module()</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SimpleYOLOWorldDetector</span>(<span class="title class_ inherited__">YOLODetector</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Implementation of YOLO World Series&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,</span></span><br><span class="line"><span class="params">                 <span class="comment"># ...</span></span></span><br><span class="line"><span class="params">                 reparameterized=<span class="literal">False</span>,</span></span><br><span class="line"><span class="params">                 <span class="comment"># ...</span></span></span><br><span class="line"><span class="params">                 **kwargs</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> <span class="variable language_">self</span>.reparameterized:</span><br><span class="line">            <span class="comment"># 加载预计算的 embeddings</span></span><br><span class="line">            <span class="variable language_">self</span>.embeddings = torch.nn.Parameter(...)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>论文对应</strong>：
+<ul>
+<li>这对应论文附录 A.1 <strong>&quot;Re-parameterization for RepVL-PAN&quot;</strong> 。</li>
+<li>在极端部署情况下（如嵌入式设备），我们可以将文本嵌入 
+    <span id="mjx-3a0d059">
+      <style>
+      #mjx-3a0d059{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.05ex;" xmlns="http://www.w3.org/2000/svg" width="2.371ex" height="1.595ex" role="img" focusable="false" viewBox="0 -683 1048 705" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D44A" d="M436 683Q450 683 486 682T553 680Q604 680 638 681T677 682Q695 682 695 674Q695 670 692 659Q687 641 683 639T661 637Q636 636 621 632T600 624T597 615Q597 603 613 377T629 138L631 141Q633 144 637 151T649 170T666 200T690 241T720 295T759 362Q863 546 877 572T892 604Q892 619 873 628T831 637Q817 637 817 647Q817 650 819 660Q823 676 825 679T839 682Q842 682 856 682T895 682T949 681Q1015 681 1034 683Q1048 683 1048 672Q1048 666 1045 655T1038 640T1028 637Q1006 637 988 631T958 617T939 600T927 584L923 578L754 282Q586 -14 585 -15Q579 -22 561 -22Q546 -22 542 -17Q539 -14 523 229T506 480L494 462Q472 425 366 239Q222 -13 220 -15T215 -19Q210 -22 197 -22Q178 -22 176 -15Q176 -12 154 304T131 622Q129 631 121 633T82 637H58Q51 644 51 648Q52 671 64 683H76Q118 680 176 680Q301 680 313 683H323Q329 677 329 674T327 656Q322 641 318 637H297Q236 634 232 620Q262 160 266 136L501 550L499 587Q496 629 489 632Q483 636 447 637Q428 637 422 639T416 648Q416 650 418 660Q419 664 420 669T421 676T424 680T428 682T436 683Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>W</mi></math></mjx-assistive-mml></mjx-container>
+    </span>
+   彻底重参数化进 1x1 卷积层的权重中（Eq. 4）。</li>
+<li>在这个类中，<code>self.embeddings</code> 充当了固定的权重。这使得模型在没有任何文本编码器的情况下也能运行，彻底变成了一个针对特定词汇表优化的轻量级检测器 。</li>
+</ul>
+</li>
+</ul>
+<h3 id="总结-2">总结</h3>
+<p>这份代码完美地映射了 <strong>YOLO-World</strong> 的核心思想：</p>
+<ol>
+<li><strong>Online Training</strong>: <code>extract_feat</code> 处理动态文本输入，训练 Text Encoder 和 RepVL-PAN。</li>
+<li><strong>Offline Inference</strong>: <code>reparameterize</code> 方法实现了 &quot;Prompt-then-Detect&quot; 范式，预计算文本特征。</li>
+<li><strong>Vision-Language Fusion</strong>: <code>self.neck</code> (RepVL-PAN) 是连接图文特征的桥梁。</li>
+</ol>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/Yolo-World/">Yolo-World</a></div><div class="post-share"><div class="social-share" data-image="/blog/image/q4SynOBjcxn5gA6.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2025/12/18/python%E8%AF%AD%E6%B3%95%E5%8F%8A%E5%87%BD%E6%95%B0%E7%A7%AF%E7%B4%AF/" title="python语法及函数积累"><img class="cover" src="/blog/image/q4SynOBjcxn5gA6.jpeg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">python语法及函数积累</div></div><div class="info-2"><div class="info-item-1">isinstance isinstance(variable, type):  这是 Python 用来检查类型的。比如 isinstance(a, dict) 就是问：变量 a 是不是一个字典？ 这段逻辑就是为了兼容各种不同的输入格式（训练时、测试时、导出模型时输入格式都不太一样）。  1234567891011121314151617def extract_feat(        self, batch_inputs: Tensor,        batch_data_samples: SampleList) -&gt; Tuple[Tuple[Tensor], Tensor]:    &quot;&quot;&quot;Extract features.&quot;&quot;&quot;    txt_feats = None  # 1. 先初始化一个空变量        # --- 2. 下面这一大段 if-elif-else 是在找：文本在哪里？ ---    if batch_data_samples is None:        #...</div></div></div></a><a class="pagination-related" href="/blog/2026/01/14/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A_gemini/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gemini"><img class="cover" src="/blog/image/A1-2.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gemini</div></div><div class="info-2"><div class="info-item-1">YOLO-UniOW：通用开放世界目标检测评估指标的深度解析与教学报告 1. 绪论：从封闭世界到通用开放世界的评估范式转变 作为计算机视觉领域的教育者，引导学生理解 YOLO-UniOW 这样前沿工作的核心，不仅在于解析其网络架构（如 Adaptive Decision Learning 或 Wildcard Learning），更在于透彻理解其评估体系。在传统的“封闭世界”（Closed-Set）检测任务中，我们习惯了使用 mAP（Mean Average Precision）作为唯一的衡量标准。然而，YOLO-UniOW 提出并解决的是**通用开放世界目标检测（Universal Open-World Object Detection, Uni-OWD）**问题 1。这一范式的转变要求评估指标必须从单一的“准确性”维度，扩展到“泛化性”、“发现能力”、“记忆稳定性”和“推理效率”等多个维度。 本报告将基于 YOLO-UniOW 的论文实验章节（Section 4. Experiments）及项目代码库（特别是...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2025/12/01/%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB%EF%BC%9Ayolo_world-models-dense_heads-yolo_world_head.py/" title="代码解读：yolo_world-models-dense_heads-yolo_world_head.py"><img class="cover" src="/blog/image/A1-2.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-12-01</div><div class="info-item-2">代码解读：yolo_world-models-dense_heads-yolo_world_head.py</div></div><div class="info-2"><div class="info-item-1">class ContrastiveHead(BaseModule) 总结 ContrastiveHead的作用  把每个位置的图像特征向量 x[:, :, h, w] 与每个文本类别向量 w[:, k, :] 做点积相似度，得到该位置对每个类别的 logit。 在论文语言里，这就是 region-text matching / text contrastive head。  ContrastiveHead.forward(x, w) 的输入输出与形状 输入   x: Tensor：来自检测头分类分支的 图像 embedding 特征图 (来自 Neck 网络（RepVL-PAN）输出的图像特征图) 形状：[B, C, H, W]  B：batch size C：embed_dims（不是 num_classes！） H, W：当前特征层分辨率（例如 P3/P4/P5 对应不同尺度）     w: Tensor：文本 encoder（CLIP text encoder 等）输出的 文本 embedding（一批“在线词表/离线词表”） (来自文本编码器（如...</div></div></div></a><a class="pagination-related" href="/blog/2025/10/24/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AYOLO-World-Real-Time-Open-Vocabulary-Object-Detection/" title="论文阅读：YOLO-World: Real-Time Open-Vocabulary Object Detection"><img class="cover" src="/blog/image/A1-2.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-10-24</div><div class="info-item-2">论文阅读：YOLO-World: Real-Time Open-Vocabulary Object Detection</div></div><div class="info-2"><div class="info-item-1">1 Introduction 1. 这节在回答什么问题？  现实动机：传统检测器（例如在 COCO 上训练的模型）只能识别固定词表中的类别（COCO 只有80类）。一旦训练好的类别被定死，模型就无法识别不在词表里的目标，这在开放场景里很受限。作者先明确了这个“固定词表的天花板”问题。 需求与挑战：我们需要的是开放词汇检测（Open-Vocabulary Detection, OVD）——用户能用任意词或短语描述要找的东西，模型也能定位出来。可是在现实中，很多开词汇方法又慢又难部署，尤其是在边缘设备上。  2. 过往方法做了什么、哪里不够？   两条主线：  利用大语言/视觉语言模型的词汇知识蒸馏（比如把 BERT 的知识蒸到检测器里），但这类方法受限于训练数据与词汇的多样性不足（例如 OV-COCO 只有48个基类），泛化有限。 把检测重塑成区域级的视觉-语言预训练（region-level VLP），用大规模图文/grounding数据把检测器的词表扩起来。这方向有效，但工程代价高：经常用很重的主干（如...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#yolo-world"><span class="toc-text">yolo_world</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#yolo-world-models-detectors-yolo-world-py"><span class="toc-text">yolo_world&#x2F;models&#x2F;detectors&#x2F;yolo_world.py</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#class-YOLOWorldDetector-YOLODetector"><span class="toc-text">class YOLOWorldDetector(YOLODetector)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#def-loss"><span class="toc-text">def loss():</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#def-predict"><span class="toc-text">def predict():</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#def-reparameterize"><span class="toc-text">def reparameterize():</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#def-forward"><span class="toc-text">def _forward():</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#def-extract-feat"><span class="toc-text">def extract_feat():</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#class-SimpleYOLOWorldDetector-YOLODetector"><span class="toc-text">class SimpleYOLOWorldDetector(YOLODetector)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#def-init"><span class="toc-text">def init</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#def-loss-2"><span class="toc-text">def loss</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#def-predict-2"><span class="toc-text">def predict</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#def-forward-2"><span class="toc-text">def forward</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#def-extract-feat-2"><span class="toc-text">def extract_feat</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E6%AE%B5%E4%BB%A3%E7%A0%81%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%EF%BC%88%E4%BD%A0%E8%A6%81%E8%AE%B0%E4%BD%8F%E7%9A%84-3-%E4%BB%B6%E4%BA%8B%EF%BC%89"><span class="toc-text">这段代码的核心思想（你要记住的 3 件事）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96%E6%A0%B8%E5%BF%83%E9%80%BB%E8%BE%91-extract-feat"><span class="toc-text">2. 特征提取核心逻辑 (extract_feat)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%87%8D%E5%8F%82%E6%95%B0%E5%8C%96-reparameterize"><span class="toc-text">3. 重参数化 (reparameterize)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%8D%9F%E5%A4%B1%E8%AE%A1%E7%AE%97-loss"><span class="toc-text">4. 损失计算 (loss)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%8E%A8%E7%90%86%E9%A2%84%E6%B5%8B-predict"><span class="toc-text">5. 推理预测 (predict)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-SimpleYOLOWorldDetector-%E7%B1%BB"><span class="toc-text">6. SimpleYOLOWorldDetector 类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-2"><span class="toc-text">总结</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2026/01/17/%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB%EF%BC%9Ayolo_world-models-necks-yolo_world_pafpn.py/" title="无标题">无标题</a><time datetime="2026-01-17T08:27:24.706Z" title="发表于 2026-01-17 16:27:24">2026-01-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2026/01/17/%E4%B8%AD%E8%BD%AC/%E7%A0%94%E7%A9%B6%E6%96%B9%E5%90%91%E6%95%B4%E7%90%86/" title="无标题">无标题</a><time datetime="2026-01-17T08:27:24.611Z" title="发表于 2026-01-17 16:27:24">2026-01-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2026/01/17/%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/" title="图片测试">图片测试</a><time datetime="2026-01-17T03:42:17.000Z" title="发表于 2026-01-17 11:42:17">2026-01-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A_gemini/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gemini"><img src="/blog/image/A1-2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gemini"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A_gemini/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gemini">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gemini</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A_gpt/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gpt"><img src="/blog/image/A1-2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gpt"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A_gpt/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gpt">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gpt</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'qieliqiean/blog',
+      'data-repo-id': 'R_kgDONvpdYw',
+      'data-category-id': 'DIC_kwDONvpdY84C1DqB',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !true) {
+    if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><script async data-pjax src="{&quot;site_uv&quot;:true,&quot;site_pv&quot;:true,&quot;page_pv&quot;:true}"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
