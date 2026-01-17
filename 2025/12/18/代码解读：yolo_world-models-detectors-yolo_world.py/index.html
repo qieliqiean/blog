@@ -26,7 +26,7 @@
       "url": "https://qieliqiean.github.io/blog/"
     }
   ]
-}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/2025/12/18/%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB%EF%BC%9Ayolo_world-models-detectors-yolo_world.py/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/2025/12/18/%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB%EF%BC%9Ayolo_world-models-detectors-yolo_world.py/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
     (() => {
       
     const saveToLocal = {
@@ -116,7 +116,17 @@
     detectApple()
   
     })()
-  </script><script>const GLOBAL_CONFIG = {
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6b5d1303d19816191830cd73eccfdb1e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
   root: '/blog/',
   algolia: undefined,
   localSearch: {"path":"/blog/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
@@ -1130,9 +1140,9 @@
 <ul>
 <li><strong><code>self.backbone</code></strong>: 实际上是一个 <strong>MultiModalYOLOBackbone</strong>（见配置文件）。</li>
 <li><strong>路径 2</strong>: 对应论文图 3，同时包含 <strong>YOLO Backbone</strong> (Darknet) 和 <strong>Text Encoder</strong> (CLIP) 。CLIP 提取文本嵌入 
-    <span id="mjx-5b94f8e">
+    <span id="mjx-4f461d2">
       <style>
-      #mjx-5b94f8e{
+      #mjx-4f461d2{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1302,9 +1312,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li><strong><code>self.neck(img_feats, txt_feats)</code></strong>: 这行代码实现了论文 3.3 节的 <strong>RepVL-PAN</strong>。</li>
 <li>它利用 <strong>Text-guided CSPLayer</strong> 将文本信息注入到多尺度图像特征 
-    <span id="mjx-12c0d84">
+    <span id="mjx-b8ad594">
       <style>
-      #mjx-12c0d84{
+      #mjx-b8ad594{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1488,9 +1498,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li><strong><code>self.bbox_head.loss</code></strong>: 对应论文 3.4 节的 <strong>Region-Text Contrastive Loss</strong>。</li>
 <li>论文提出了一种区域-文本对比损失 
-    <span id="mjx-27a36d4">
+    <span id="mjx-18381aa">
       <style>
-      #mjx-27a36d4{
+      #mjx-18381aa{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1660,9 +1670,9 @@ g[data-mml-node="xypic"] path {
 <li><strong>论文对应</strong>：
 <ul>
 <li><strong><code>self.bbox_head.num_classes = txt_feats[0].shape[0]</code></strong>: 这体现了 <strong>Open-Vocabulary</strong> 的特性。类别数不是固定的 80，而是等于当前输入的 Text Prompts 的数量（即 
-    <span id="mjx-f550e15">
+    <span id="mjx-378ba0f">
       <style>
-      #mjx-f550e15{
+      #mjx-378ba0f{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1833,9 +1843,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>这对应论文附录 A.1 <strong>&quot;Re-parameterization for RepVL-PAN&quot;</strong> 。</li>
 <li>在极端部署情况下（如嵌入式设备），我们可以将文本嵌入 
-    <span id="mjx-3a0d059">
+    <span id="mjx-9e20301">
       <style>
-      #mjx-3a0d059{
+      #mjx-9e20301{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2123,4 +2133,4 @@ g[data-mml-node="xypic"] path {
   } else {
     window.loadOtherComment = loadGiscus
   }
-})()</script></div><script async data-pjax src="{&quot;site_uv&quot;:true,&quot;site_pv&quot;:true,&quot;page_pv&quot;:true}"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
+})()</script></div><script async data-pjax src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>

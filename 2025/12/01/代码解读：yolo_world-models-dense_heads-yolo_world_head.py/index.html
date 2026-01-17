@@ -26,7 +26,7 @@
       "url": "https://qieliqiean.github.io/blog/"
     }
   ]
-}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/2025/12/01/%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB%EF%BC%9Ayolo_world-models-dense_heads-yolo_world_head.py/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/2025/12/01/%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB%EF%BC%9Ayolo_world-models-dense_heads-yolo_world_head.py/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
     (() => {
       
     const saveToLocal = {
@@ -116,7 +116,17 @@
     detectApple()
   
     })()
-  </script><script>const GLOBAL_CONFIG = {
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6b5d1303d19816191830cd73eccfdb1e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
   root: '/blog/',
   algolia: undefined,
   localSearch: {"path":"/blog/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
@@ -290,9 +300,9 @@
 <li><strong><code>torch.zeros([])</code></strong>：这会创建一个全为零的张量，<code>[]</code>表示这个张量没有任何维度，也就是一个标量（scalar）。简单来说，它就是一个值为零的数。</li>
 <li><strong><code>nn.Parameter()</code></strong>：<code>nn.Parameter</code>是PyTorch中的一个类，它是<code>Tensor</code>的子类。将张量封装成<code>nn.Parameter</code>后，PyTorch会将它视为模型的可学习参数（trainable parameter）。这样，<code>self.bias</code>就会成为该模型的参数之一，在训练过程中会自动计算梯度。</li>
 <li>最终会加到所有类别、所有空间位置的 logit 上：
-    <span id="mjx-5045dd4">
+    <span id="mjx-a2895e">
       <style>
-      #mjx-5045dd4{
+      #mjx-a2895e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -451,9 +461,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" display="true" style="position: relative;"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="16.887ex" height="2.4ex" role="img" focusable="false" viewBox="0 -811 7464.1 1061" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g><g data-mml-node="mo" transform="translate(746.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mi" transform="translate(1802.6,0)"><path data-c="1D6FC" d="M34 156Q34 270 120 356T309 442Q379 442 421 402T478 304Q484 275 485 237V208Q534 282 560 374Q564 388 566 390T582 393Q603 393 603 385Q603 376 594 346T558 261T497 161L486 147L487 123Q489 67 495 47T514 26Q528 28 540 37T557 60Q559 67 562 68T577 70Q597 70 597 62Q597 56 591 43Q579 19 556 5T512 -10H505Q438 -10 414 62L411 69L400 61Q390 53 370 41T325 18T267 -2T203 -11Q124 -11 79 39T34 156ZM208 26Q257 26 306 47T379 90L403 112Q401 255 396 290Q382 405 304 405Q235 405 183 332Q156 292 139 224T121 120Q121 71 146 49T208 26Z"></path></g><g data-mml-node="mo" transform="translate(2664.8,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="mo" transform="translate(3165,0)"><path data-c="27E8" d="M333 -232Q332 -239 327 -244T313 -250Q303 -250 296 -240Q293 -233 202 6T110 250T201 494T296 740Q299 745 306 749L309 750Q312 750 313 750Q331 750 333 732Q333 727 243 489Q152 252 152 250T243 11Q333 -227 333 -232Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(3554,0)"><g data-mml-node="mover"><g data-mml-node="mi"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mo" transform="translate(313.8,16) translate(-250 0)"><path data-c="5E" d="M112 560L249 694L257 686Q387 562 387 560L361 531Q359 532 303 581L250 627L195 580Q182 569 169 557T148 538L140 532Q138 530 125 546L112 560Z"></path></g></g></g><g data-mml-node="mo" transform="translate(4126,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(4570.7,0)"><g data-mml-node="mover"><g data-mml-node="mi"><path data-c="1D464" d="M580 385Q580 406 599 424T641 443Q659 443 674 425T690 368Q690 339 671 253Q656 197 644 161T609 80T554 12T482 -11Q438 -11 404 5T355 48Q354 47 352 44Q311 -11 252 -11Q226 -11 202 -5T155 14T118 53T104 116Q104 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Q21 293 29 315T52 366T96 418T161 441Q204 441 227 416T250 358Q250 340 217 250T184 111Q184 65 205 46T258 26Q301 26 334 87L339 96V119Q339 122 339 128T340 136T341 143T342 152T345 165T348 182T354 206T362 238T373 281Q402 395 406 404Q419 431 449 431Q468 431 475 421T483 402Q483 389 454 274T422 142Q420 131 420 107V100Q420 85 423 71T442 42T487 26Q558 26 600 148Q609 171 620 213T632 273Q632 306 619 325T593 357T580 385Z"></path></g><g data-mml-node="mo" transform="translate(441.3,17) translate(-250 0)"><path data-c="5E" d="M112 560L249 694L257 686Q387 562 387 560L361 531Q359 532 303 581L250 627L195 580Q182 569 169 557T148 538L140 532Q138 530 125 546L112 560Z"></path></g></g></g><g data-mml-node="mo" transform="translate(5286.7,0)"><path data-c="27E9" d="M55 732Q56 739 61 744T75 750Q85 750 92 740Q95 733 186 494T278 250T187 6T92 -240Q85 -250 75 -250Q67 -250 62 -245T55 -232Q55 -227 145 11Q236 248 236 250T145 489Q55 727 55 732Z"></path></g><g data-mml-node="mo" transform="translate(5897.9,0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="mi" transform="translate(6898.1,0)"><path data-c="1D6FD" d="M29 -194Q23 -188 23 -186Q23 -183 102 134T186 465Q208 533 243 584T309 658Q365 705 429 705H431Q493 705 533 667T573 570Q573 465 469 396L482 383Q533 332 533 252Q533 139 448 65T257 -10Q227 -10 203 -2T165 17T143 40T131 59T126 65L62 -188Q60 -194 42 -194H29ZM353 431Q392 431 427 419L432 422Q436 426 439 429T449 439T461 453T472 471T484 495T493 524T501 560Q503 569 503 593Q503 611 502 616Q487 667 426 667Q384 667 347 643T286 582T247 514T224 455Q219 439 186 308T152 168Q151 163 151 147Q151 99 173 68Q204 26 260 26Q302 26 349 51T425 137Q441 171 449 214T457 279Q457 337 422 372Q380 358 347 358H337Q258 358 258 389Q258 396 261 403Q275 431 353 431Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>s</mi><mo>=</mo><mi>α</mi><mo>⋅</mo><mo fence="false" stretchy="false">⟨</mo><mrow data-mjx-texclass="ORD"><mover><mi>x</mi><mo stretchy="false">^</mo></mover></mrow><mo>,</mo><mrow data-mjx-texclass="ORD"><mover><mi>w</mi><mo stretchy="false">^</mo></mover></mrow><mo fence="false" stretchy="false">⟩</mo><mo>+</mo><mi>β</mi></math></mjx-assistive-mml></mjx-container>
     </span>
   这里的 (
-    <span id="mjx-16a448d">
+    <span id="mjx-193ae97">
       <style>
-      #mjx-16a448d{
+      #mjx-193ae97{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -756,9 +766,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>这行代码先对 <code>x</code> 进行 <strong>缩放</strong>（乘以指数化后的 <code>logit_scale</code>），然后再加上一个 <strong>偏置项 <code>bias</code></strong>，调整最终的输出。</p>
 
-    <span id="mjx-78f8f32">
+    <span id="mjx-fae7adf">
       <style>
-      #mjx-78f8f32{
+      #mjx-fae7adf{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1063,9 +1073,9 @@ g[data-mml-node="xypic"] path {
 </ul>
 <blockquote>
 <p><strong>核心知识点：</strong> 这里不再是去计算两个变量的相似度，而是直接定义了一个 <strong>
-    <span id="mjx-059f03b">
+    <span id="mjx-42e0f33">
       <style>
-      #mjx-059f03b{
+      #mjx-42e0f33{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1225,9 +1235,9 @@ g[data-mml-node="xypic"] path {
     </span>
    卷积层</strong>。</p>
 <p><strong>为什么要用卷积？</strong> 在数学上，图像特征与文本向量的“点积（乘法）”操作，其实等价于一个 
-    <span id="mjx-04434a3">
+    <span id="mjx-bc701dc">
       <style>
-      #mjx-04434a3{
+      #mjx-bc701dc{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1934,9 +1944,9 @@ g[data-mml-node="xypic"] path {
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;a.shape = [n]</span><br><span class="line">&gt;b.shape = [n]</span><br><span class="line">&gt;a.matmul(b) → 标量</span><br></pre></td></tr></table></figure>
 <p>结果是：</p>
 
-    <span id="mjx-c2bb18c">
+    <span id="mjx-e3bb92e">
       <style>
-      #mjx-c2bb18c{
+      #mjx-e3bb92e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2758,9 +2768,9 @@ g[data-mml-node="xypic"] path {
 </ul>
 <blockquote>
 <p>假设输入图片是 
-    <span id="mjx-9e00ce3">
+    <span id="mjx-702c36d">
       <style>
-      #mjx-9e00ce3{
+      #mjx-702c36d{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2998,9 +3008,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p><strong>形状变化</strong>：从三组数据合并成一个形状为 <strong><code>[所有总点数, 3]</code></strong> 的大 Tensor（比如 
-    <span id="mjx-79a1cff">
+    <span id="mjx-daef115">
       <style>
-      #mjx-79a1cff{
+      #mjx-daef115{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3593,9 +3603,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li><code>bs</code>：batch size</li>
 <li><code>N</code>：所有层拼起来的点总数（
-    <span id="mjx-1b98e14">
+    <span id="mjx-2200b3">
       <style>
-      #mjx-1b98e14{
+      #mjx-2200b3{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3786,9 +3796,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li><code>bs</code>：batch size</li>
 <li><code>N</code>：所有层拼起来的点总数（
-    <span id="mjx-0941f08">
+    <span id="mjx-015e761">
       <style>
-      #mjx-0941f08{
+      #mjx-015e761{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4632,9 +4642,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>我们算的 <code>loss_cls</code> 是 <strong>“每个正样本（或分数单位）的平均 Loss”</strong>。</li>
 <li>公式大约是：
-    <span id="mjx-6e74173">
+    <span id="mjx-e25e079">
       <style>
-      #mjx-6e74173{
+      #mjx-e25e079{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4799,9 +4809,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>当多卡训练时，PyTorch DDP 会在反向传播结束时，把所有显卡的梯度加起来，然后<strong>除以 <code>world_size</code>（取平均）</strong>。</li>
 <li>
-    <span id="mjx-0fc050c">
+    <span id="mjx-865dc4c">
       <style>
-      #mjx-0fc050c{
+      #mjx-865dc4c{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4965,9 +4975,9 @@ g[data-mml-node="xypic"] path {
 <li><strong>为什么要乘？</strong>
 <ul>
 <li>如果我们直接返回 
-    <span id="mjx-9044d6e">
+    <span id="mjx-20d0c6f">
       <style>
-      #mjx-9044d6e{
+      #mjx-20d0c6f{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5126,9 +5136,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="4.997ex" height="1.902ex" role="img" focusable="false" viewBox="0 -683 2208.6 840.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="TeXAtom" transform="translate(714,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g><g data-mml-node="mi" transform="translate(298,0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(783,0)"><path data-c="1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path></g><g data-mml-node="mi" transform="translate(1216,0)"><path data-c="1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g><g data-mml-node="mi" transform="translate(1745,0)"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>L</mi><mrow data-mjx-texclass="ORD"><mi>l</mi><mi>o</mi><mi>c</mi><mi>a</mi><mi>l</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   ，那么不同显卡因为正样本数量（
-    <span id="mjx-1af009b">
+    <span id="mjx-6a46fee">
       <style>
-      #mjx-1af009b{
+      #mjx-6a46fee{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6009,9 +6019,9 @@ g[data-mml-node="xypic"] path {
 </li>
 </ul>
 
-    <span id="mjx-9e41248">
+    <span id="mjx-b9f813f">
       <style>
-      #mjx-9e41248{
+      #mjx-b9f813f{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6274,9 +6284,9 @@ g[data-mml-node="xypic"] path {
 <p><strong>来源</strong>：预处理时，把原图 <code>1080</code> 缩小到 <code>640</code>，缩放因子就是 <code>640 / 1080 ≈ 0.5925926</code>。</p>
 <p><strong>关键作用</strong>：稍后我们要把预测框的坐标 <strong>除以</strong> 这个因子，才能从 640 还原回 1080。</p>
 
-    <span id="mjx-0abdad7">
+    <span id="mjx-5c2d45c">
       <style>
-      #mjx-0abdad7{
+      #mjx-5c2d45c{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6814,4 +6824,4 @@ g[data-mml-node="xypic"] path {
   } else {
     window.loadOtherComment = loadGiscus
   }
-})()</script></div><script async data-pjax src="{&quot;site_uv&quot;:true,&quot;site_pv&quot;:true,&quot;page_pv&quot;:true}"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
+})()</script></div><script async data-pjax src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
