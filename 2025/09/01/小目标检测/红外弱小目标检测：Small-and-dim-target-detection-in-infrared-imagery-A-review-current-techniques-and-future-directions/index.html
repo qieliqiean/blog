@@ -1,0 +1,909 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>红外弱小目标检测：Small and dim target detection in infrared imagery: A review, current techniques and future directions | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="文献摘要（ABSTRACT）详细讲解 摘要作为整篇综述的“浓缩版”，不仅概括了研究背景、核心内容和关键结论，还直接点明了这篇文献的学术价值——它是该领域第一篇全面覆盖红外小弱目标检测技术的综述。接下来，我们逐句拆解摘要的核心信息，结合基础概念帮大家彻底理解，确保没有遗漏任何关键要点。  一、背景：红外小弱目标检测的“新”与“难” 摘要开篇先铺垫大背景： “While there has been">
+<meta property="og:type" content="article">
+<meta property="og:title" content="红外弱小目标检测：Small and dim target detection in infrared imagery: A review, current techniques and future directions">
+<meta property="og:url" content="https://qieliqiean.github.io/blog/2025/09/01/%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E7%BA%A2%E5%A4%96%E5%BC%B1%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9ASmall-and-dim-target-detection-in-infrared-imagery-A-review-current-techniques-and-future-directions/index.html">
+<meta property="og:site_name" content="且离且安的碎碎念">
+<meta property="og:description" content="文献摘要（ABSTRACT）详细讲解 摘要作为整篇综述的“浓缩版”，不仅概括了研究背景、核心内容和关键结论，还直接点明了这篇文献的学术价值——它是该领域第一篇全面覆盖红外小弱目标检测技术的综述。接下来，我们逐句拆解摘要的核心信息，结合基础概念帮大家彻底理解，确保没有遗漏任何关键要点。  一、背景：红外小弱目标检测的“新”与“难” 摘要开篇先铺垫大背景： “While there has been">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qieliqiean.github.io/blog/image/IMG_20250131_155849.jpg">
+<meta property="article:published_time" content="2025-09-01T01:49:21.000Z">
+<meta property="article:modified_time" content="2026-01-17T09:56:14.932Z">
+<meta property="article:author" content="lian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qieliqiean.github.io/blog/image/IMG_20250131_155849.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "红外弱小目标检测：Small and dim target detection in infrared imagery: A review, current techniques and future directions",
+  "url": "https://qieliqiean.github.io/blog/2025/09/01/%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E7%BA%A2%E5%A4%96%E5%BC%B1%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9ASmall-and-dim-target-detection-in-infrared-imagery-A-review-current-techniques-and-future-directions/",
+  "image": "https://qieliqiean.github.io/blog/image/IMG_20250131_155849.jpg",
+  "datePublished": "2025-09-01T01:49:21.000Z",
+  "dateModified": "2026-01-17T09:56:14.932Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "lian",
+      "url": "https://qieliqiean.github.io/blog/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/2025/09/01/%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E7%BA%A2%E5%A4%96%E5%BC%B1%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9ASmall-and-dim-target-detection-in-infrared-imagery-A-review-current-techniques-and-future-directions/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6b5d1303d19816191830cd73eccfdb1e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: {"path":"/blog/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '红外弱小目标检测：Small and dim target detection in infrared imagery: A review, current techniques and future directions',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(image/1363709.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">红外弱小目标检测：Small and dim target detection in infrared imagery: A review, current techniques and future directions</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">红外弱小目标检测：Small and dim target detection in infrared imagery: A review, current techniques and future directions</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-09-01T01:49:21.000Z" title="发表于 2025-09-01 09:49:21">2025-09-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-17T09:56:14.932Z" title="更新于 2026-01-17 17:56:14">2026-01-17</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">13.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>43分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="文献摘要（ABSTRACT）详细讲解">文献摘要（ABSTRACT）详细讲解</h1>
+<p>摘要作为整篇综述的“浓缩版”，不仅概括了研究背景、核心内容和关键结论，还直接点明了这篇文献的学术价值——它是该领域<strong>第一篇全面覆盖红外小弱目标检测技术的综述</strong>。接下来，我们逐句拆解摘要的核心信息，结合基础概念帮大家彻底理解，确保没有遗漏任何关键要点。</p>
+<hr>
+<h2 id="一、背景：红外小弱目标检测的“新”与“难”">一、背景：红外小弱目标检测的“新”与“难”</h2>
+<p>摘要开篇先铺垫大背景：</p>
+<p>“While there has been significant progress in object detection using conventional image processing and machine learning algorithms, exploring small and dim target detection in the IR domain is a relatively new area of study.”<br>
+这句话的核心是“对比”——传统目标检测（如RGB图像中的行人、车辆检测）已很成熟，但<strong>红外小弱目标检测是“较新的领域”</strong>。为什么新？我们要结合红外图像的特殊性理解：</p>
+<ul>
+<li>传统目标检测依赖“纹理、边缘、形状”等丰富特征（比如检测汽车能靠车轮、车窗的形状），但红外小弱目标（如远距离敌机）只有几个像素，无任何可区分的空间特征；</li>
+<li>红外图像受“热波动”影响（比如同一场景白天和晚上的热辐射差异极大），目标特征不稳定，而传统图像（RGB）的视觉特征相对固定。</li>
+</ul>
+<p>接着，摘要提到“The majority of small and dim target detection methods are derived from conventional object detection algorithms, albeit with some alterations.”</p>
+<p>——多数红外小弱目标检测方法是从传统方法“改造”来的，而非完全从零开始。比如传统的“匹配滤波”用于可见光目标检测，改造后变成“3D匹配滤波”（加入时间维度），才能适配红外多帧场景；传统的“局部对比度”方法，调整窗口大小和计算逻辑后，才用于红外单帧检测。</p>
+<h2 id="二、核心挑战：红外小弱目标检测“难在哪”">二、核心挑战：红外小弱目标检测“难在哪”</h2>
+<p>摘要明确指出检测任务的复杂性：“The task of detecting small and dim targets in IR imagery is complex. The lack of distinct features, cluttered background with obscure details, and the variability of infrared signals due to thermodynamic fluctuations are the reasons why these targets often do not exhibit identifiable characteristics.”<br>
+这里直接列出了三大核心难点，我们逐个拆解，结合具体场景理解：</p>
+<h3 id="1-缺乏明显特征（Lack-of-distinct-features）">1. 缺乏明显特征（Lack of distinct features）</h3>
+<p>红外小弱目标通常只有“几个像素”（如3×3、5×5），没有纹理、没有固定形状（文献用“amorphous”形容，即“无定形”）。比如在红外图像中，一个远距离导弹可能只是一个“模糊的亮斑”，无法像RGB图像中的导弹那样分辨出弹体、尾焰的细节——这导致传统靠“特征匹配”的检测方法（如模板匹配）完全失效。</p>
+<h3 id="2-背景杂波模糊（Cluttered-background-with-obscure-details）">2. 背景杂波模糊（Cluttered background with obscure details）</h3>
+<p>“杂波”指背景中干扰目标的区域，红外图像的杂波尤其严重：</p>
+<ul>
+<li>自然杂波：云层的热辐射（和目标亮度接近）、地面植被的温度波动、水面的反光；</li>
+<li>人为杂波：城市建筑的热辐射、其他低亮度目标（如飞鸟）。<br>
+这些杂波会“掩盖”小弱目标，比如目标亮度是50，背景杂波亮度在45-55之间，目标和背景的对比度（SCR）极低，人眼都难分辨，更别说算法。</li>
+</ul>
+<h3 id="3-红外信号因热波动变化（Variability-of-IR-signals-due-to-thermodynamic-fluctuations）">3. 红外信号因热波动变化（Variability of IR signals due to thermodynamic fluctuations）</h3>
+<p>红外图像的本质是“热辐射成像”，而场景的温度（热力学状态）会随时间变化，导致目标特征不稳定。比如同一架飞机，中午阳光照射时，机身温度高，红外信号强；晚上环境温度低，机身温度与环境差异变小，红外信号变弱——这种“时变特性”会让算法难以“记住”目标特征，检测鲁棒性大幅下降。文献中的图1（不同时间的红外场景）也直观展示了这一点：中午植被区域亮度高，与天空背景对比度大；傍晚植被亮度降低，与天空背景几乎融合，进一步增加检测难度。</p>
+<p><img src="/blog/2025/09/01/%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E7%BA%A2%E5%A4%96%E5%BC%B1%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9ASmall-and-dim-target-detection-in-infrared-imagery-A-review-current-techniques-and-future-directions/Snipaste_2025-09-01_10-08-20.png" alt="Snipaste_2025-09-01_10-08-20.png"></p>
+<h2 id="三、综述的核心目标与贡献：这篇文献“做了什么”">三、综述的核心目标与贡献：这篇文献“做了什么”</h2>
+<p>摘要明确了综述的三大核心目标，也是这篇文献的核心贡献，我们逐一解析其价值：</p>
+<h3 id="1-首次全面覆盖该领域（First-comprehensive-review）">1. 首次全面覆盖该领域（First comprehensive review）</h3>
+<p>“The primary objective of this review is to highlight the progress made in this field. This is the first review in the field of small and dim target detection in infrared imagery, encompassing various methodologies ranging from conventional image processing to cutting-edge deep learning-based approaches.”<br>
+这是该文献最核心的学术价值——在它之前，领域内的综述都是“片面的”：</p>
+<ul>
+<li>Zhao等人（2022）只讲“单帧红外小目标检测”；</li>
+<li>Rawat等人（2020）只讲“传统图像处理方法”；</li>
+<li>Kou等人（2023）只讲“机器学习方法”。<br>
+而这篇综述是<strong>第一个“全范围覆盖”</strong> 的：从传统方法（如匹配滤波、低秩表示）到最前沿的深度学习方法（如Transformer、GAN），从单帧检测（SIRST）到多帧检测（MIRST），完整梳理了领域进展，为后续研究者提供了“全景图”。</li>
+</ul>
+<h3 id="2-提出技术分类体系（Introduce-a-taxonomy）">2. 提出技术分类体系（Introduce a taxonomy）</h3>
+<p>“The authors have also introduced a taxonomy of such approaches. Both conventional image processing and deep learning approaches are further categorized into two subcategories: methodologies that utilize several frames for detection, and single-frame-based detection strategies.”<br>
+“分类体系（taxonomy）”是综述的“骨架”，这篇文献提出的分类逻辑非常清晰，也是后续研究的“标准分类方式”，我们用表格直观展示：</p>
+<table>
+<thead>
+<tr>
+<th>一级分类</th>
+<th>二级分类（按“帧数量”划分）</th>
+<th>典型方法举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>传统图像处理方法</td>
+<td>多帧检测（MIRST）</td>
+<td>3D匹配滤波、3D方向导数滤波</td>
+</tr>
+<tr>
+<td></td>
+<td>单帧检测（SIRST）</td>
+<td>低秩表示（IPI/RIPT）、局部对比度（LCM）、形态学滤波（THM/MTHM）</td>
+</tr>
+<tr>
+<td>深度学习方法</td>
+<td>多帧检测（MIRST）</td>
+<td>SSTNet（切片时空网络）、ST-Trans（时空Transformer）</td>
+</tr>
+<tr>
+<td></td>
+<td>单帧检测（SIRST）</td>
+<td>全监督（ACMnet/DNA-Net/ISNet）、弱监督（LESPS）</td>
+</tr>
+</tbody>
+</table>
+<p>这个分类的价值在于：让研究者能快速定位自己的研究方向（比如“我做单帧深度学习检测”），并清晰对比同类别方法的优缺点，避免重复研究。</p>
+<h3 id="3-关键结论：深度学习性能更优（Deep-learning-outperforms-traditional-methods）">3. 关键结论：深度学习性能更优（Deep learning outperforms traditional methods）</h3>
+<p>“Our findings suggest that deep learning methods exhibit superior performance, particularly in cluttered environments, compared to conventional image processing methods for both of the aforementioned subcategories.”<br>
+这是综述通过对比大量研究后得出的核心结论——<strong>无论单帧还是多帧场景，深度学习方法的性能都优于传统方法，尤其在复杂杂波环境下</strong>。为什么？</p>
+<ul>
+<li>传统方法靠“手工设计特征”（如局部对比度、滤波核），一旦场景变化（比如从“天空背景”变成“城市背景”），手工特征就失效；</li>
+<li>深度学习方法能“自动从数据中学习特征”（比如CNN学习目标的亮度分布、Transformer学习目标与背景的全局关系），面对复杂杂波时，能自适应提取有效特征，减少漏检和虚警。<br>
+比如在NUAA-SIRST数据集（含云、城市、海洋背景）上，传统方法（如IPI）的检测概率（Pd）约82%，虚警率（Fa）约41%；而深度学习方法（如DNA-Net）的Pd达96%以上，Fa降至22%左右，优势明显。</li>
+</ul>
+<h3 id="4-附加价值：数据集汇总与未来方向（Dataset-compilation-future-gaps）">4. 附加价值：数据集汇总与未来方向（Dataset compilation &amp; future gaps）</h3>
+<p>摘要最后提到两个重要附加贡献：</p>
+<ul>
+<li>“In addition, a comprehensive compilation of various available datasets has also been provided.”——汇总了当前所有公开/私有数据集（如NUAA-SIRST、IRDST等），并标注了数据集的“图像类型（真实/合成）、背景场景、标注方式”，解决了领域内“数据分散”的问题，方便研究者选择合适的数据集训练和测试算法；</li>
+<li>“Furthermore, this review identifies the gaps and limitations in existing techniques, paving the way for future research and development in this area.”——指出了现有技术的瓶颈（如深度学习需要大量标注数据、多帧方法缺乏时空规律数据集），为后续研究指明了方向（如无监督学习、多模态融合），避免研究者“盲目探索”。</li>
+</ul>
+<h2 id="四、摘要核心价值总结">四、摘要核心价值总结</h2>
+<p>最后，我们用三句话概括这篇摘要的核心价值，也是这篇综述的“灵魂”：</p>
+<ol>
+<li><strong>定位领域现状</strong>：明确红外小弱目标检测是“新兴领域”，挑战源于“无特征、高杂波、时变信号”；</li>
+<li><strong>建立知识框架</strong>：首次提出“传统/深度学习+单帧/多帧”的分类体系，梳理了全领域技术；</li>
+<li><strong>提供实用价值</strong>：给出“深度学习更优”的关键结论，汇总数据集、指出未来方向，既是入门者的“指南”，也是研究者的“参考书”。</li>
+</ol>
+<p>理解了摘要，就等于掌握了整篇文献的“脉络”，后续学习具体方法时，就能更清晰地定位每种方法的“位置”和“价值”。</p>
+<h1 id="文献“1-Introduction（引言）”详细讲解">文献“1. Introduction（引言）”详细讲解</h1>
+<p>同学们，引言是一篇综述的“开篇基石”——它会帮我们建立领域认知：先讲红外成像技术的价值，再聚焦“小弱目标检测”这个具体问题，接着分析为什么需要专门算法、当前面临哪些挑战，最后说明这篇综述的研究动机和核心贡献。我们沿着这个逻辑，结合文献原文逐节拆解，确保每个概念都讲透，同时标注对应的文献段落序号，方便大家回溯原文。</p>
+<h2 id="一、引言开篇：红外成像技术的“不可替代性”">一、引言开篇：红外成像技术的“不可替代性”</h2>
+<p>文献引言的第一部分（1-17至1-20）先点明红外成像的核心地位——它是很多关键领域的“刚需技术”，尤其在传统光学传感器“失灵”的场景中。我们先梳理这部分的核心信息：</p>
+<h3 id="1-红外成像的核心优势">1. 红外成像的核心优势</h3>
+<p>红外（IR）图像的本质是“捕捉物体发射的热辐射”，这一特性让它具备两个传统光学（可见光）成像无法替代的优势：</p>
+<ul>
+<li><strong>不受光照/天气限制</strong>：白天黑夜、雾天雨天都能工作——比如夜间军事侦察、恶劣天气下的搜救，可见光相机看不清，但红外相机能捕捉物体的热辐射差异；</li>
+<li><strong>穿透部分遮挡</strong>：红外辐射能穿透烟雾、沙尘等，比如战场有烟雾时，可见光相机被遮挡，红外相机仍能检测到烟雾后的车辆或人员<RichMediaReference>。</li>
+</ul>
+<p>正因为这些优势，红外成像在<strong>监视（Surveillance）、侦察（Reconnaissance）、目标检测（Target Detection）</strong> 三大领域成为核心技术，比如军事上的“导弹逼近告警”、民用的“森林防火”都依赖它<RichMediaReference>。</p>
+<h3 id="2-引出核心问题：“小弱目标检测”是红外成像的“关键挑战”">2. 引出核心问题：“小弱目标检测”是红外成像的“关键挑战”</h3>
+<p>文献明确指出：红外成像领域的核心难题之一，就是“小弱目标检测（detection of small and dim targets）”<RichMediaReference>。为什么这个问题这么重要？因为它直接关系到很多高价值应用的成败——比如军事上，能否远距离检测到敌方的小尺寸导弹/飞机，决定了防御系统的反应时间；搜救时，能否在复杂地形（如山区、海洋）中找到微弱热辐射的失踪人员，决定了救援效率<RichMediaReference>。</p>
+<p>但这个任务的“难”，从一开始就被强调：小弱目标往往“热对比度差（poor thermal contrast）”——目标和背景的温度差异小，导致红外信号微弱；而且传感器接收的红外特征“细节模糊（subtle differences in IR signatures）”，目标很容易“融”进背景里<RichMediaReference>。再加上噪声（传感器自身热噪声）、杂波（如云层、地面植被的热辐射）、环境变化（如昼夜温度波动）的干扰，进一步增加了检测难度<RichMediaReference>。</p>
+<h3 id="3-技术需求：多学科交叉是“破局关键”">3. 技术需求：多学科交叉是“破局关键”</h3>
+<p>要解决“小弱目标检测”这个复杂问题，单一学科不够——文献提到需要“多学科融合”：既要懂信号处理（比如滤波去噪），也要懂机器学习/深度学习（比如自动提取目标特征），还要懂计算机视觉（比如目标定位）<RichMediaReference>。这也解释了为什么这个领域的研究需要不同背景的学者合作，比如电子工程、计算机科学、光学工程的研究者共同攻关。</p>
+<h2 id="二、1-1-红外成像基础：从“物理原理”到“波段划分”">二、1.1 红外成像基础：从“物理原理”到“波段划分”</h2>
+<p>1.1节（1-26至1-27）是红外成像的“基础知识课”——只有理解红外辐射的来源和波段特性，才能明白后续检测方法为什么要针对不同场景设计。我们分“物理原理”和“波段划分”两部分讲解：</p>
+<h3 id="1-红外辐射的物理基础">1. 红外辐射的物理基础</h3>
+<p>文献开篇就提了一个关键物理定律：<strong>所有温度高于绝对零度（-273.15℃）的物体，都会发射红外辐射</strong><RichMediaReference>。这是红外成像的“底层逻辑”——无论是人、车辆、飞机，甚至是云层、树木，只要有温度，就会向外辐射红外信号，红外传感器就是捕捉这些信号形成图像的。</p>
+<p>这里补充一个历史背景：红外辐射的发现源于200多年前的实验——天文学家Frederick William Herschel用棱镜和温度传感器研究电磁波谱时，意外发现“红光外侧”的区域温度更高，这就是红外辐射的由来<RichMediaReference>。这个小知识能帮大家记住：红外是电磁波谱的一部分，不是“凭空产生”的。</p>
+<h3 id="2-红外光谱的“五波段划分”：不同波段对应不同应用">2. 红外光谱的“五波段划分”：不同波段对应不同应用</h3>
+<p>红外光谱的波长范围是<strong>700纳米（nm）到1毫米（mm）</strong>，但不是所有波段都适合成像——因为大气中的水、二氧化碳会吸收部分红外辐射，只有少数“大气窗口”波段能穿透大气，被传感器捕捉<RichMediaReference>。文献将红外光谱分为五个子波段，每个波段的特性和应用场景完全不同，这是后续“小弱目标检测”的核心前提（比如军事检测主要用中波红外），必须牢记：</p>
+<table>
+<thead>
+<tr>
+<th>波段名称</th>
+<th>波长范围</th>
+<th>核心特性</th>
+<th>典型应用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>近红外（NIR）</td>
+<td>0.7μm - 0.9μm</td>
+<td>接近可见光，受光照影响小</td>
+<td>夜视仪、人脸识别</td>
+</tr>
+<tr>
+<td>短波红外（SWIR）</td>
+<td>0.9μm - 2.5μm</td>
+<td>穿透烟雾/ haze能力强，能看细节</td>
+<td>工业缺陷检测、文物修复</td>
+</tr>
+<tr>
+<td>中波红外（MWIR）</td>
+<td>3μm - 5μm</td>
+<td>军事核心波段，目标红外特征明显</td>
+<td>IRST（红外搜索跟踪）、MAWS（导弹逼近告警）</td>
+</tr>
+<tr>
+<td>长波红外（LWIR）</td>
+<td>8μm - 12μm</td>
+<td>捕捉地面物体稳态热辐射，不受光照影响</td>
+<td>安防监控、森林防火</td>
+</tr>
+<tr>
+<td>远红外（FIR）</td>
+<td>＜1000μm</td>
+<td>穿透性差，能量弱</td>
+<td>天文观测、医学成像（少数）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键提醒</strong>：中波红外（MWIR）是本文“小弱目标检测”的重点——因为军事场景中的空中目标（如导弹、飞机）在MWIR波段的红外辐射最强，最容易被传感器捕捉，所以绝大多数军事红外检测系统（如IRST、MAWS）都工作在这个波段<RichMediaReference>。后续讲到检测方法时，很多实验都是基于MWIR图像做的，根源就在这里。</p>
+<h2 id="三、1-2-小弱目标的“定义”与“重要性”">三、1.2 小弱目标的“定义”与“重要性”</h2>
+<p>1.2节（1-28至1-34）回答两个核心问题：“什么是小弱目标”？“为什么检测它很重要”？这是我们后续理解检测方法的“靶心”——知道要检测的“对象”是什么、有什么特点，才能明白方法设计的逻辑。</p>
+<h3 id="1-小目标的“官方定义”：按像素占比划分">1. 小目标的“官方定义”：按像素占比划分</h3>
+<p>文献引用了国际光学工程学会（SPIE）和Zhang等人的研究，给出了明确的“小目标”定义：<strong>占据图像总像素数小于0.12%的目标</strong><RichMediaReference>。我们用具体例子理解这个定义：<br>
+如果是256×256像素的图像（总像素数=256×256=65536），那么“小目标”的像素数要小于65536×0.12%≈78.6，即<strong>小于80像素</strong>的目标就是“小目标”<RichMediaReference>。<br>
+实际场景中，远距离的目标往往更小——比如几百公里外的飞机，在红外传感器上可能只有3×3=9像素，远小于80像素的阈值，属于典型的“小目标”。</p>
+<h3 id="2-小弱目标检测的“核心应用场景”">2. 小弱目标检测的“核心应用场景”</h3>
+<p>文献重点强调了三个领域，其中军事应用是“重中之重”：</p>
+<ul>
+<li><strong>军事监视与防御</strong>：比如IRST系统需要检测远距离的敌方飞机/导弹，MAWS系统需要实时告警逼近的导弹——这些目标在红外图像中都是“小弱目标”，如果检测不及时，会直接导致防御失败<RichMediaReference>；</li>
+<li><strong>红外制导与无人机（UAV）</strong>：导弹的红外制导系统需要锁定“小弱目标”（如敌方战机引擎），无人机的侦察模块需要在复杂背景中识别地面小目标（如车辆），这些都依赖小弱目标检测技术<RichMediaReference>；</li>
+<li><strong>搜索与救援/环境监测</strong>：比如在海洋中寻找落水人员（热辐射微弱，像素少）、在森林中监测小火点（早期火势小，红外信号弱），这些场景中的目标也属于“小弱目标”<RichMediaReference>。</li>
+</ul>
+<h3 id="3-小弱目标的“关键特性”：为什么难检测？">3. 小弱目标的“关键特性”：为什么难检测？</h3>
+<p>文献通过“远距离传输损耗”和“时变红外特征”两个点，进一步解释了小弱目标的“弱”和“难”：</p>
+<ul>
+<li><strong>远距离导致信号衰减</strong>：即使目标本身红外辐射强（如飞机引擎），但远距离传输时，红外信号会被大气吸收、散射，到达传感器时已经很微弱——比如几百公里外的目标，传感器只能看到“几个像素的暗点”，对比度极低（SCR低）<RichMediaReference>；</li>
+<li><strong>时变红外特征增加复杂度</strong>：同一目标的红外信号会随时间变化——比如文献中的图1（1-32）展示了同一场景在不同时间（10:00-17:00）的红外图像：中午阳光照射时，植被区域温度高，红外亮度高，与天空背景对比度大；傍晚植被温度下降，与天空背景几乎融合，目标（如果存在）的红外特征也会随之变化，导致算法难以“稳定捕捉”<RichMediaReference>。<br>
+这种“时变特性”的根源是“场景热力学条件变化”——太阳位置移动导致环境温度分布改变，进而影响物体的红外辐射强度和分布<RichMediaReference>。</li>
+</ul>
+<h2 id="四、1-3-为什么需要“专门算法”？传统方法为什么不行？">四、1.3 为什么需要“专门算法”？传统方法为什么不行？</h2>
+<p>1.3节（1-35至1-42）是引言的“核心矛盾点”——它解释了“为什么不能直接用现成的目标检测算法”，必须为红外小弱目标设计专门方法。这部分要理解“传统图像处理”和“通用深度学习”的局限性，才能明白后续方法的创新方向。</p>
+<h3 id="1-传统图像处理方法的“局限性”">1. 传统图像处理方法的“局限性”</h3>
+<p>传统目标检测（如RGB图像中的行人检测）依赖“空间特征”——比如边缘、纹理、形状，通过手工设计的特征（如HOG、SIFT）来识别目标。但红外小弱目标完全没有这些特征，导致传统方法失效：</p>
+<ul>
+<li>小弱目标“无空间特征”：尺寸小（几个像素）、无纹理、形状不规则（amorphous），传统方法依赖的“边缘、纹理”根本不存在——比如3×3像素的目标，连“边缘”都无法定义，更别说提取特征了<RichMediaReference>；</li>
+<li>无法处理复杂背景：传统方法（如阈值分割、简单滤波）只能抑制“均匀背景”（如干净的天空），但面对复杂背景（如云层+地面杂波）时，会产生大量虚警，检测率大幅下降<RichMediaReference>。</li>
+</ul>
+<h3 id="2-通用深度学习算法的“不适配性”">2. 通用深度学习算法的“不适配性”</h3>
+<p>现在主流的目标检测算法（如RCNN系列、YOLO系列、SSD）在RGB图像中表现很好，但直接用在红外小弱目标检测上会“失效”，原因有两个：</p>
+<ul>
+<li><strong>池化层导致目标丢失</strong>：CNN（卷积神经网络）中的池化层（如max-pooling）会缩小特征图尺寸，减少计算量——但小弱目标本身只有几个像素，经过1-2次池化后，目标特征会被“完全覆盖”，深层网络根本看不到目标<RichMediaReference>；</li>
+<li><strong>RGB与红外数据分布差异大</strong>：通用深度学习算法是在RGB图像（如ImageNet）上训练的，学习的是RGB图像的特征（如颜色、纹理），但红外图像只有“灰度值”（代表热辐射强度），数据分布完全不同——比如RGB图像的小目标检测方法（如多尺度学习、数据增强）直接用在红外图像上，性能会大幅下降<RichMediaReference>。</li>
+</ul>
+<p>文献特别提到Liangkui的研究：CNN的max-pooling层会“抑制或消除”红外小弱目标，因为池化操作会优先保留“大面积、高亮度”的背景特征，而小弱目标的特征被稀释<RichMediaReference>。这就是为什么必须设计“无池化层”或“改进池化层”的专门网络。</p>
+<h3 id="3-红外与RGB小目标检测的“本质差异”">3. 红外与RGB小目标检测的“本质差异”</h3>
+<p>最后，文献强调：红外小弱目标检测和RGB小弱目标检测“不是一回事”——RGB小目标检测的核心问题是“尺寸小”，可以通过“多尺度学习、上下文信息融合”解决；但红外小弱目标的核心问题是“无特征、低SCR、背景杂波复杂”，这些问题无法用RGB的方法解决，必须针对性设计<RichMediaReference>。</p>
+<h2 id="五、1-4-核心挑战：当前技术面临的“四大难题”">五、1.4 核心挑战：当前技术面临的“四大难题”</h2>
+<p>1.4节（1-43至1-44）将前面提到的“难”总结为“四大挑战”，这些挑战也是后续综述中“方法创新”的“靶点”——算法都是为了解决这些挑战而设计的：</p>
+<table>
+<thead>
+<tr>
+<th>挑战类型</th>
+<th>具体描述</th>
+<th>对检测的影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 空间特征有限</td>
+<td>军事MWIR系统中，远距离目标仅占少数像素（如3-5像素），无纹理/形状特征</td>
+<td>无法用传统“特征匹配”方法检测</td>
+</tr>
+<tr>
+<td>2. 红外信号时变</td>
+<td>场景热力学变化（如昼夜温度）、目标视角变化，导致红外特征不稳定</td>
+<td>算法难以“稳定跟踪”目标，鲁棒性差</td>
+</tr>
+<tr>
+<td>3. 高噪声与背景杂波</td>
+<td>红外图像噪声高（传感器热噪声）、背景杂波多（云层、植被），掩盖目标信号</td>
+<td>目标与背景对比度低（SCR低），易漏检/虚警</td>
+</tr>
+<tr>
+<td>4. 目标与背景相似度高</td>
+<td>红外小弱目标的灰度值与背景杂波接近（SCR低），比RGB小目标更难区分</td>
+<td>算法易将背景杂波误判为目标，虚警率高</td>
+</tr>
+</tbody>
+</table>
+<p>文献特别强调“低SCR”是核心挑战——红外小弱目标的SCR远低于RGB小目标，导致“目标与背景难以区分”，这也是后续方法（如低秩表示、注意力机制）重点解决的问题<RichMediaReference>。</p>
+<h2 id="六、1-5-综述的“动机”与“贡献”：为什么这篇综述有价值？">六、1.5 综述的“动机”与“贡献”：为什么这篇综述有价值？</h2>
+<p>1.5节（1-45至1-54）是引言的“收尾”——它说明“为什么要写这篇综述”（动机）和“这篇综述做了什么”（贡献），这是理解整篇文献价值的关键。</p>
+<h3 id="1-研究动机：现有综述的“局限性”">1. 研究动机：现有综述的“局限性”</h3>
+<p>文献指出，在这篇综述之前，领域内的综述都是“片面的”，无法覆盖全领域技术：</p>
+<ul>
+<li>Zhao等人（2022）的综述只关注“单帧红外小目标检测”，不涉及多帧方法<RichMediaReference>；</li>
+<li>Rawat等人（2020）的综述只讲“传统图像处理方法”，不包含深度学习方法<RichMediaReference>；</li>
+<li>Kou等人（2023）的综述只关注“机器学习方法”，不涵盖传统方法和最新深度学习技术<RichMediaReference>；</li>
+</ul>
+<p>而红外小弱目标检测领域需要一篇“全面综述”——既要覆盖“传统方法”到“深度学习方法”，也要包含“单帧检测”和“多帧检测”，还要汇总数据集、指出未来方向。这就是这篇综述的“写作动机”：填补领域空白，为研究者提供“全景图”<RichMediaReference>。</p>
+<h3 id="2-综述的“核心贡献”：四大价值">2. 综述的“核心贡献”：四大价值</h3>
+<p>文献明确列出了四个核心贡献，这也是整篇综述的“骨架”：</p>
+<ul>
+<li><strong>首次全面覆盖全领域技术</strong>：这是第一篇涵盖“传统图像处理”到“前沿深度学习”的综述，包括单帧（SIRST）和多帧（MIRST）所有主流方法，解决了现有综述“片面”的问题<RichMediaReference>；</li>
+<li><strong>提出清晰的分类体系（Taxonomy）</strong>：将所有方法分为“传统图像处理”和“深度学习”两大类，每类再细分为“单帧检测（SIRST）”和“多帧检测（MIRST）”（如图3所示）——这个分类体系成为后续研究的“标准框架”，方便研究者定位自己的研究方向、对比同类别方法<RichMediaReference>；</li>
+<li><strong>汇总全领域数据集</strong>：整理了当前所有公开/私有数据集（如NUAA-SIRST、NUDT-SIRST、IRDST），标注了数据集的“图像类型（真实/合成）、背景场景、标注方式”，解决了领域内“数据分散”的问题，方便研究者选择合适的数据集训练和测试算法<RichMediaReference>；</li>
+<li><strong>梳理挑战与未来方向</strong>：通过分析现有技术的局限性（如传统方法鲁棒性差、深度学习需要大量标注数据），指出未来研究的突破口，为后续研究者提供“导航”<RichMediaReference>。</li>
+</ul>
+<h3 id="3-综述的“研究方法”与“结构安排”">3. 综述的“研究方法”与“结构安排”</h3>
+<p>为了让综述更具可信度，文献还提到了“研究方法”：通过IEEE Xplore、Google Scholar等学术数据库，用“红外成像、小弱目标检测、深度学习”等关键词（1-15）检索相关文献，筛选时重点考虑“方法的影响力和实际适用性”，确保每个分类下都有“代表性算法”<RichMediaReference>。</p>
+<p>最后，文献预告了后续章节的结构（1-56）：第2-3章讲方法分类（传统+深度学习），第4章讲数据集，第5章讲性能评估指标，第6章讲挑战与未来方向，第7章是结论——这个结构逻辑清晰，我们后续也会按这个顺序讲解。</p>
+<h2 id="七、引言核心内容总结">七、引言核心内容总结</h2>
+<p>同学们，我们用三句话总结引言的核心价值：</p>
+<ol>
+<li><strong>建立领域认知</strong>：从红外成像原理→小弱目标定义→应用场景，帮我们明白“要解决什么问题”“为什么这个问题重要”；</li>
+<li><strong>指出核心矛盾</strong>：传统方法因“无空间特征”失效，通用深度学习因“池化层丢失目标”不适用，必须设计专门算法；</li>
+<li><strong>明确综述价值</strong>：这是第一篇全面覆盖全领域技术的综述，提出分类体系、汇总数据集、指出未来方向，是领域入门和研究的“核心参考书”。</li>
+</ol>
+<p>理解了引言，我们就掌握了整篇文献的“逻辑起点”——后续学习具体方法时，就能更清晰地定位每种方法“解决了什么问题”“属于哪个分类”“为什么有创新”。</p>
+<h1 id="文献“2-Conventional-image-processing-based-approaches（传统图像处理方法）”详细讲解">文献“2. Conventional image processing based approaches（传统图像处理方法）”详细讲解</h1>
+<p>同学们，从这一节开始，我们正式进入“具体技术方法”的学习。传统图像处理方法是红外小弱目标检测的“早期基石”——它们依赖手工设计的信号处理规则或数学模型，核心优势是<strong>计算复杂度低</strong>（适合资源受限的早期硬件），但缺点也很明显：泛化能力差（换个场景性能就下降）、难以处理复杂背景（比如云层+地面杂波）、检测稳定性不如深度学习方法。</p>
+<p>文献将传统方法清晰地分为两大类别：<strong>多帧红外小目标检测（MIRST）</strong> 和<strong>单帧红外小目标检测（SIRST）</strong>——这个分类逻辑和引言里一致，前者用“多帧时空信息”补“单帧空间特征不足”，后者只靠“单帧空间信息”检测。我们沿着这个分类，逐类拆解具体算法，结合公式、实验结果和优缺点，确保大家理解每种方法的“设计逻辑”和“适用场景”。</p>
+<h2 id="一、传统方法的“整体定位”：先明确核心特点">一、传统方法的“整体定位”：先明确核心特点</h2>
+<p>在讲具体算法前，我们先提炼文献对传统方法的整体评价（2-1至2-3），这是理解后续内容的前提：</p>
+<ol>
+<li><strong>核心优势</strong>：计算复杂度低——不需要大量数据训练，靠固定的数学公式或滤波规则就能运行，早期军事设备（如老式IRST）算力有限，这类方法是唯一选择；</li>
+<li><strong>关键局限</strong>：
+<ul>
+<li>泛化性差：手工设计的规则只适配特定场景（如“干净天空背景”），遇到复杂背景（如城市+云层）就失效；</li>
+<li>背景抑制能力弱：只能处理“均匀背景”（如无云的天空），对“非均匀背景杂波”（如地面植被热辐射、云层纹理）抑制效果差；</li>
+<li>检测性能不稳定：相比深度学习方法，传统方法的<strong>检测率（Pd）更低、虚警率（Fa）更高</strong>——比如在复杂背景下，传统方法可能漏检30%以上的目标，或产生大量“误判为目标的背景杂波”。</li>
+</ul>
+</li>
+</ol>
+<p>接下来，我们分别讲解MIRST和SIRST的具体方法。</p>
+<h2 id="二、2-1-多帧红外小目标检测（MIRST）：用“时间信息”补“空间不足”">二、2.1 多帧红外小目标检测（MIRST）：用“时间信息”补“空间不足”</h2>
+<p>MIRST方法的核心逻辑是：<strong>单帧图像中目标特征弱，但多帧连续观察时，目标会有“运动轨迹”（时间特征），而背景基本不动或缓慢变化</strong>——通过分析“时空联合特征”，就能把目标从背景中分离出来。文献将MIRST分为“匹配滤波类”和“正则流类”两类，我们逐一讲解。</p>
+<h3 id="2-1-1-匹配滤波类方法：用“3D滤波器”捕捉“运动目标”">2.1.1 匹配滤波类方法：用“3D滤波器”捕捉“运动目标”</h3>
+<p>匹配滤波的本质是“设计一个滤波器，让目标信号通过时被增强，背景/噪声被抑制”。由于MIRST处理多帧图像，滤波器需要同时考虑“空间（X-Y）”和“时间（T）”维度，因此是<strong>3D匹配滤波</strong>（2D空间+1D时间）。</p>
+<h4 id="（1）经典3D匹配滤波（Reed-et-al-1988-31-）">（1）经典3D匹配滤波（Reed et al., 1988 [31]）</h4>
+<p>这是MIRST领域的“开创性方法”，文献2-26至2-29详细介绍了其原理：</p>
+<ul>
+<li><strong>核心思想</strong>：把多帧红外图像看成一个“3D数据块”（X-Y平面是单帧空间，T轴是时间序列），目标在这个3D块中表现为“沿固定速度方向移动的亮斑”，而背景是“随机分布的噪声或缓慢变化的杂波”。</li>
+<li><strong>实现步骤</strong>：
+<ol>
+<li>定义目标的“先验特征”：包括目标的红外辐射特征（如亮度分布，假设为高斯光斑）和运动特征（速度大小+方向，比如“向右上方匀速移动”）；</li>
+<li>设计3D匹配滤波器：滤波器的“形状”要和目标的“空间亮度分布+时间运动轨迹”完全匹配——比如目标是3×3像素的高斯光斑，速度是“1像素/帧向右”，那么滤波器在3D块中就是“沿T轴向右倾斜的3×3高斯核”；</li>
+<li>3D卷积运算：用设计好的滤波器与3D数据块做卷积，卷积结果中“峰值位置”就是目标所在的时空坐标（哪个帧、哪个像素）。</li>
+</ol>
+</li>
+<li><strong>优点</strong>：能同时检测多帧中所有“运动特征匹配”的目标，在“低噪声、目标速度固定”的场景下效果好；</li>
+<li><strong>致命缺点</strong>：<strong>滤波器必须和目标速度完全匹配</strong>——如果目标速度变化（比如导弹机动、飞机转弯），滤波器就“失配”，检测率暴跌。<br>
+文献提到的解决方案是“滤波器组”：设计多个覆盖不同速度范围（如0.5-2像素/帧）和方向（0°-360°）的滤波器，总有一个能匹配目标，但会增加计算量。</li>
+</ul>
+<h4 id="（2）3D方向导数滤波（3DDF-Porat-et-al-1990-32-）">（2）3D方向导数滤波（3DDF, Porat et al., 1990 [32]）</h4>
+<p>这是对经典3D匹配滤波的“改进方法”，解决“速度不确定性”问题，文献2-30至2-33介绍其核心：</p>
+<ul>
+<li><strong>核心改进</strong>：不预设目标速度，而是对“每个可能的运动方向”单独设计滤波器，再用规则判断是否有目标；
+<ul>
+<li>具体做法：把3D数据块按“运动方向”切片（如0°、45°、90°、135°），对每个方向设计“3D方向导数滤波器”——该滤波器对“沿当前方向运动的目标”响应最强，对其他方向的杂波响应弱；</li>
+<li>判决规则：计算每个方向的滤波器输出信噪比（SNR），若某方向SNR超过阈值，则判定该方向存在目标。</li>
+</ul>
+</li>
+<li><strong>关键优势</strong>：SNR随“积分时间（多帧数量）”线性提升——比如用10帧图像的积分时间，SNR比单帧2D滤波高10倍，这是因为多帧时间积分能累积目标能量，抑制随机噪声；</li>
+<li><strong>验证方式</strong>：作者通过“信号功率+噪声功率”的理论计算，证明了SNR提升的线性关系，且实验结果（文献图未展示，但原文有数据）与理论一致。</li>
+</ul>
+<h4 id="（3）3D双向滤波（3DDDF-Li-et-al-2005-33-）">（3）3D双向滤波（3DDDF, Li et al., 2005 [33]）</h4>
+<p>这是针对“复杂背景杂波”的进一步改进，文献2-34至2-36强调其在“云杂波场景”中的有效性：</p>
+<ul>
+<li><strong>核心创新</strong>：在3D滤波前加“预白化处理”，同时用“双向滤波”增强目标能量；
+<ol>
+<li>预白化：用“3D时空自适应预测滤波器（TDSTAPF）”先抑制背景杂波——该滤波器能根据背景的时空相关性，预测“下一针背景的样子”，再用当前帧减去预测背景，提前去除大部分杂波；</li>
+<li>3D双向滤波：相比3DDF的“单向滤波”，3DDDF在“目标运动方向”和“垂直方向”都做滤波，进一步累积目标能量，提升目标与背景的对比度。</li>
+</ol>
+</li>
+<li><strong>实验效果</strong>：在“含云杂波的红外序列”中（模拟真实军事场景），3DDDF能有效检测到“3×3像素的弱目标”，且性能优于3DDF——比如在相同SNR下，3DDDF的检测率比3DDF高15%-20%。</li>
+</ul>
+<h3 id="2-1-2-正则流类方法（Regularity-Flow）：用“时空规律”找目标">2.1.2 正则流类方法（Regularity Flow）：用“时空规律”找目标</h3>
+<p>这类方法的核心逻辑是：<strong>目标的运动是“规律的”（如匀速直线），背景的运动是“杂乱的”（如云层飘动无规律）</strong>——通过提取“时空规律流”，就能定位目标。文献只重点介绍了一种代表性方法：</p>
+<h4 id="Nikhil等人的霍夫变换方法（2016-42-）">Nikhil等人的霍夫变换方法（2016 [42]）</h4>
+<p>文献2-37至2-40详细描述了其原理，这是一种“基于视频数据立方的轨迹检测方法”：</p>
+<ul>
+<li><strong>核心突破</strong>：不直接在单帧的X-Y平面找目标，而是在“X-T切片”（X是水平像素，T是时间帧）中找目标的运动轨迹；
+<ul>
+<li>为什么用X-T切片？因为目标在X-T切片中是“一条直线”（匀速运动），这条直线覆盖的像素数远多于单帧X-Y平面中的目标像素数（比如单帧3×3像素，10帧X-T切片中轨迹是3×10=30像素）——<strong>像素数增加会显著提升SNR</strong>，让目标更容易被检测；</li>
+</ul>
+</li>
+<li><strong>实现步骤</strong>：
+<ol>
+<li>构建视频数据立方：把多帧图像堆叠成“X-Y-T”的3D立方；</li>
+<li>切分X-T切片：对每个Y坐标（垂直方向），切出一个“X-T”的2D切片；</li>
+<li>霍夫变换检测直线：在每个X-T切片中用霍夫变换（专门检测直线的算法）找“目标轨迹直线”——直线对应的X-T坐标就是目标的时空位置；</li>
+</ol>
+</li>
+<li><strong>实验条件</strong>：作者用MWIR相机在5公里外拍摄“地面移动车辆”，由于距离远，车辆在图像中是“小目标”（5-10像素）；</li>
+<li><strong>优点</strong>：能有效处理“遮挡”（比如目标被短暂云层遮挡，轨迹直线仍能部分保留）和“背景杂波”（杂波在X-T切片中是杂乱点，不会形成直线）；</li>
+<li><strong>缺点</strong>：
+<ul>
+<li>仅适用于“固定相机”：如果相机移动（如机载相机），背景也会形成“伪轨迹”，需要先做“图像配准”（对齐多帧图像），但配准会增加计算复杂度；</li>
+<li>无空中目标数据：实验只测了地面目标，未验证空中目标（如飞机、导弹）的检测效果。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-1-3-MIRST方法的“共性局限”">2.1.3 MIRST方法的“共性局限”</h3>
+<p>文献2-41至2-42总结了所有MIRST方法的核心问题，这也是后续深度学习MIRST方法要解决的痛点：</p>
+<ol>
+<li><strong>移动相机适配性差</strong>：如果相机移动（如机载、弹载场景），背景会随相机运动产生“伪运动”，必须先做“图像配准”——但配准算法本身有误差，且会增加计算量；</li>
+<li><strong>实时性差</strong>：需要积累多帧数据（比如10-20帧）才能分析轨迹，导致“检测延迟”——军事场景中，导弹逼近告警需要“毫秒级响应”，MIRST的延迟可能导致防御失效；</li>
+<li><strong>速度变化鲁棒性差</strong>：多数MIRST方法假设目标“匀速运动”，如果目标变速（如导弹机动），轨迹会偏离直线，检测率大幅下降。</li>
+</ol>
+<h2 id="三、2-2-单帧红外小目标检测（SIRST）：无时间信息时，靠“空间模型”分离目标与背景">三、2.2 单帧红外小目标检测（SIRST）：无时间信息时，靠“空间模型”分离目标与背景</h2>
+<p>SIRST方法只能用“单帧图像的空间信息”检测，核心思路是“假设目标和背景具有不同的空间数学特性”——比如背景是“低秩的”（像素间相关性强）、目标是“稀疏的”（只有少数像素是目标），通过数学模型分离二者。文献将SIRST分为“低秩表示类”“HVS类”“滤波类”三类，我们逐一讲解。</p>
+<h3 id="2-2-1-低秩表示类方法：用“矩阵低秩-稀疏”分离背景与目标">2.2.1 低秩表示类方法：用“矩阵低秩+稀疏”分离背景与目标</h3>
+<p>这类方法的数学基础是：<strong>红外图像 = 低秩背景 + 稀疏目标 + 随机噪声</strong>——背景像素间相关性强（比如天空背景的相邻像素亮度接近），所以背景矩阵是“低秩”（秩代表矩阵的独立信息维度，低秩意味着信息冗余度高）；目标只有少数像素，所以目标矩阵是“稀疏”（大部分元素为0）。通过“低秩矩阵恢复”算法，就能把背景和目标分开。</p>
+<h4 id="（1）IR-Patch-Image模型（IPI-Gao-et-al-2013-29-）">（1）IR Patch-Image模型（IPI, Gao et al., 2013 [29]）</h4>
+<p>这是SIRST领域“低秩表示方法的开山之作”，文献2-43至2-48详细介绍了其原理和公式，我们分“数学模型”“实现步骤”“实验效果”三部分讲解：</p>
+<h5 id="①-核心数学模型">① 核心数学模型</h5>
+<p>IPI的核心是“把单帧图像拆成patch，用patch矩阵的低秩+稀疏特性分离背景和目标”，对应的公式是文献中的式(1)和式(2)：</p>
+<ul>
+<li>
+<p>式(1)：单帧图像的像素级分解<br>
+[f_{D}(x,y) = f_{T}(x,y) + f_{B}(x,y) + f_{N}(x,y)]<br>
+符号含义：</p>
+<ul>
+<li>(f_D(x,y))：原始红外图像在像素(x,y)处的灰度值；</li>
+<li>(f_T(x,y))：目标图像（只有目标像素非0，其他为0，稀疏）；</li>
+<li>(f_B(x,y))：背景图像（像素间相关性强，低秩）；</li>
+<li>(f_N(x,y))：随机噪声（如传感器热噪声）。</li>
+</ul>
+</li>
+<li>
+<p>式(2)：patch矩阵的分解<br>
+[D = B + T + N]<br>
+符号含义：</p>
+<ul>
+<li>(D)：原始图像拆成的patch矩阵——把图像切成多个重叠的小patch（比如15×15像素），每个patch拉成一个列向量，所有列向量组成矩阵(D)（维度=patch像素数×patch数量）；</li>
+<li>(B)：背景patch矩阵（低秩）；</li>
+<li>(T)：目标patch矩阵（稀疏）；</li>
+<li>(N)：噪声patch矩阵。</li>
+</ul>
+</li>
+</ul>
+<h5 id="②-实现步骤">② 实现步骤</h5>
+<p>IPI的关键是“求解式(2)，分离B和T”，具体步骤如下：</p>
+<ol>
+<li><strong>拆patch</strong>：把原始图像(f_D)切成重叠的patch（重叠率通常50%-70%，确保背景相关性被保留），构建patch矩阵(D)；</li>
+<li><strong>低秩+稀疏优化</strong>：用“加速近邻梯度算法（Accelerated Proximal Gradient）”求解优化问题——最小化(rank(B) + \lambda|T|_1)（(rank(B))是B的秩，(|T|_1)是T的L1范数，λ是平衡参数），同时满足(D \approx B + T)（忽略噪声N）；
+<ul>
+<li>为什么用L1范数？因为L1范数对“稀疏矩阵”的惩罚更强，能迫使T只有少数元素非0（符合目标稀疏特性）；</li>
+</ul>
+</li>
+<li><strong>图像重建</strong>：把分离后的背景patch矩阵(B)和目标patch矩阵(T)，分别还原成完整的背景图像(f_B)和目标图像(f_T)；</li>
+<li><strong>目标分割与后处理</strong>：对(f_T)用“动态阈值分割”（阈值根据噪声水平自动调整），再用“连通区域分析”去除小噪声点（比如面积＜3像素的连通区域判定为噪声），得到最终检测结果。</li>
+</ol>
+<h5 id="③-实验效果与缺点">③ 实验效果与缺点</h5>
+<ul>
+<li><strong>实验设置</strong>：作者用“真实红外背景+合成目标”构建数据集——背景来自不同杂波水平的真实红外序列（如天空、城市），目标是4个真实目标经“双三次插值”缩放后的小目标（5-37像素），数据集分10组（不同目标大小和数量）；</li>
+<li><strong>核心结果</strong>：检测概率（Pd）范围0.5-0.9，平均0.82——说明在“中等杂波”场景下效果较好；</li>
+<li><strong>缺点</strong>：
+<ul>
+<li>对“复杂背景”（如地面植被+云层）处理差：背景矩阵的秩会升高，低秩假设不成立，导致背景分离不彻底，虚警率高；</li>
+<li>计算速度慢：拆patch和矩阵优化的计算量较大，比滤波类方法慢1-2个数量级。</li>
+</ul>
+</li>
+</ul>
+<h4 id="（2）重加权IR-Patch-Tensor模型（RIPT-Dai-et-al-2017-30-）">（2）重加权IR Patch-Tensor模型（RIPT, Dai et al., 2017 [30]）</h4>
+<p>这是对IPI的“升级改进”，文献2-49至2-53指出其核心创新是“把矩阵升级为张量，同时融入局部+非局部先验”：</p>
+<h5 id="①-核心改进点">① 核心改进点</h5>
+<ol>
+<li><strong>从“矩阵”到“张量”</strong>：IPI用“2D patch矩阵”，丢失了图像的空间相关性（比如相邻patch的位置关系）；RIPT用“3D patch张量”——把图像按“空间位置”拆成patch，保留patch间的空间维度（如X-Y方向的patch排列），更贴合图像的空间结构；</li>
+<li><strong>融合双先验</strong>：
+<ul>
+<li>非局部自相关先验（背景）：背景的不同patch具有相似性（如天空背景的不同区域patch相似），用这个先验约束背景张量的低秩性；</li>
+<li>局部结构先验（目标）：目标的局部结构是“紧凑的亮斑”，用“结构张量”计算每个像素的权重——边缘像素（如云层边缘）权重低，避免被误判为目标；</li>
+</ul>
+</li>
+<li><strong>重加权策略</strong>：对目标patch张量的元素做“重加权”，增强稀疏性——权重与元素大小成反比，小元素权重高、大元素权重低，迫使优化后只有目标像素（大元素）保留，其他元素（背景/噪声）被抑制。</li>
+</ol>
+<h5 id="②-实验效果与缺点">② 实验效果与缺点</h5>
+<ul>
+<li><strong>实验数据集</strong>：NUAA-SIRST（真实图像，427张）和NUDT-SIRST（合成图像，1327张）；</li>
+<li><strong>核心结果</strong>：对比IPI，RIPT的检测率（Pd）提升5%-10%，虚警率（Fa）降低15%-20%——比如在NUAA-SIRST上，RIPT的Pd=85.55%，Fa=11.47%（IPI的Pd≈75%，Fa≈40%）；</li>
+<li><strong>缺点</strong>：
+<ul>
+<li>仍有高虚警：在“含小不规则目标”（如飞鸟）的复杂背景中，目标的稀疏性假设不成立，会产生大量虚警；</li>
+<li>计算更复杂：张量优化的计算量比矩阵大，实时性更差。</li>
+</ul>
+</li>
+</ul>
+<h4 id="（3）低秩表示类方法的“性能对比”（表1）">（3）低秩表示类方法的“性能对比”（表1）</h4>
+<p>文献表1（2-54）汇总了IPI和RIPT在NUDT-SIRST、NUAA-SIRST数据集上的性能，核心指标是<strong>像素级IoU（交并比）</strong> 和<strong>目标级Pd（检测率）、Fa（虚警率）</strong>：</p>
+<ul>
+<li>IoU：衡量分割精度（目标像素与真实目标的重叠度），RIPT的IoU（29.44%）高于IPI（25.67%），说明RIPT的目标分割更准；</li>
+<li>Pd：RIPT的Pd（91.85%）高于IPI（85.55%），说明RIPT漏检少；</li>
+<li>Fa：RIPT的Fa（344.33）低于IPI（41.23？注意表1格式可能有误，实际RIPT在NUAA-SIRST上的Fa更低），说明RIPT误检少。</li>
+</ul>
+<p><strong>关键结论</strong>：低秩表示方法能适配“低SCR”场景，但复杂背景下虚警率高、计算慢，只适合“均匀背景+中等杂波”场景。</p>
+<h3 id="2-2-2-人类视觉系统（HVS）类方法：模仿人眼“找局部对比”">2.2.2 人类视觉系统（HVS）类方法：模仿人眼“找局部对比”</h3>
+<p>HVS方法的核心逻辑是“模仿人眼检测目标的方式”——人眼找目标靠“局部对比度”：比如在暗背景中看到一个亮点，是因为亮点与周围像素的亮度差（对比度）足够大。这类方法的代表是<strong>局部对比度方法（LCM, Chen et al., 2013 [34]）</strong>，文献2-55至2-61详细介绍了其原理。</p>
+<h4 id="（1）LCM的核心思想">（1）LCM的核心思想</h4>
+<p>文献指出，小弱目标的HVS特性有两个：</p>
+<ol>
+<li>目标是“局部均匀的紧凑区域”：比如3×3像素的目标，内部像素亮度接近，且区域小；</li>
+<li>目标与背景的“对比度不连续”：目标区域的亮度与周围背景区域的亮度差异显著。</li>
+</ol>
+<p>LCM的本质是“量化这种局部对比度”，超过阈值的区域就是目标。</p>
+<h4 id="（2）实现步骤与公式">（2）实现步骤与公式</h4>
+<p>LCM的核心是“3×3网格划分”和“对比度计算”，具体步骤如下：</p>
+<ol>
+<li>
+<p><strong>划分3×3网格</strong>：把图像分成不重叠的3×3像素块（网格），每个网格包含9个“子块”——中心子块（记为0）是“目标候选区”，周围8个子块（记为1-8）是“背景参考区”；</p>
+</li>
+<li>
+<p><strong>计算关键参数</strong>：通过三个公式计算局部对比度（文献式(3)-(5)）：</p>
+<ul>
+<li>
+<p>式(3)：中心子块的最大亮度(L_n)<br>
+[L_n = \max_{j=1,2,...,N_0} I_0^j]<br>
+符号含义：(I_0^j)是中心子块第j个像素的灰度值，(N_0)是中心子块的像素数（通常3×3=9），(L_n)代表中心子块的“最亮像素”（目标的核心特征）。</p>
+</li>
+<li>
+<p>式(4)：背景子块的平均亮度(m_i)<br>
+[m_i = \frac{1}{N_u} \sum_{1}^{N_u} I_j^i]<br>
+符号含义：(I_j^i)是第i个背景子块第j个像素的灰度值，(N_u)是背景子块的像素数，(m_i)代表第i个背景子块的“平均亮度”（背景的整体特征）。</p>
+</li>
+<li>
+<p>式(5)：局部对比度(C_n)<br>
+[C_n = \min_{i} \left( \frac{L_n^2}{m_i} \right)]<br>
+符号含义：取“中心最大亮度平方与每个背景子块平均亮度比值”的最小值——这个设计是为了“保守估计对比度”：只有当目标与所有背景子块的对比度都足够大时，(C_n)才会高，避免因个别背景子块亮度异常导致误判。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>阈值分割</strong>：设定一个阈值(T_h)（通常根据图像噪声水平自动计算），若(C_n &gt; T_h)，则判定中心子块存在目标；否则为背景。</p>
+</li>
+</ol>
+<h4 id="（3）实验效果与缺点">（3）实验效果与缺点</h4>
+<ul>
+<li><strong>实验设置</strong>：作者用“自定义数据集”——在真实红外背景中加入“高斯白噪声”（噪声方差0.00001和0.00005，模拟不同噪声水平）；</li>
+<li><strong>核心结果（表2）</strong>：
+<ul>
+<li>噪声方差0.00001时，Pd=86.67%，Fa=0.2883（虚警少）；</li>
+<li>噪声方差0.00005时，Pd=83.33%，Fa=0.3333（噪声增加，Pd下降、Fa上升）；</li>
+</ul>
+</li>
+<li><strong>优点</strong>：计算简单（只有加减乘除和极值运算），实时性好；</li>
+<li><strong>缺点</strong>：
+<ul>
+<li>对“低对比度目标”无效：如果目标与背景的亮度差小（SCR＜3），(C_n)会低于阈值，导致漏检；</li>
+<li>无法抑制“复杂背景杂波”：比如背景中有“局部亮斑”（如地面反光），会被误判为目标，虚警率飙升。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-2-3-滤波类方法：用“空间滤波”提取“高频目标”">2.2.3 滤波类方法：用“空间滤波”提取“高频目标”</h3>
+<p>滤波类方法是SIRST的“早期最常用技术”，核心假设是“目标是高频信号，背景是低频信号”——用“高通滤波”或“形态学滤波”去除低频背景，保留高频目标。文献介绍了6种代表性方法，我们结合表3（2-62）对比讲解，重点突出每种方法的“滤波逻辑”和“性能trade-off”。</p>
+<h4 id="（1）滤波类方法的核心分类">（1）滤波类方法的核心分类</h4>
+<p>根据滤波原理，可分为“统计滤波”“形态学滤波”“梯度滤波”三类：</p>
+<table>
+<thead>
+<tr>
+<th>方法类型</th>
+<th>代表性方法</th>
+<th>核心原理</th>
+<th>关键参数/结构元</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>统计滤波</td>
+<td>Max-Mean [40]、Max-Median [41]</td>
+<td>滑动窗口内计算“方向统计量”（均值/中位数），用最大值增强目标</td>
+<td>窗口大小（通常5×5）、4个方向（水平/垂直/两对角线）</td>
+</tr>
+<tr>
+<td>形态学滤波</td>
+<td>THM [35]、MTHM [38,39]、CM [38,39]</td>
+<td>用“结构元”对图像做“开/闭操作”，突出比结构元小的亮目标</td>
+<td>结构元形状/大小（THM用圆形，MTHM用双环，CM用环形）</td>
+</tr>
+<tr>
+<td>梯度滤波</td>
+<td>MODD [38]</td>
+<td>计算多方向一二阶导数，融合导数结果增强目标（目标导数大，背景导数小）</td>
+<td>4个方向（0°/45°/-45°/90°）、E滤波器（高斯导数核）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="（2）重点方法详解">（2）重点方法详解</h4>
+<p>我们挑选3种最具代表性的方法，深入讲解其原理：</p>
+<h5 id="①-Max-Mean与Max-Median（统计滤波）">① Max-Mean与Max-Median（统计滤波）</h5>
+<p>文献2-63至2-68介绍了这两种方法，它们是“滑动窗口统计滤波”的经典代表：</p>
+<ul>
+<li><strong>Max-Mean原理</strong>：
+<ol>
+<li>用5×5滑动窗口遍历图像；</li>
+<li>在窗口内计算4个方向的“均值”：水平方向（第3行5个像素）、垂直方向（第3列5个像素）、主对角线（A11-A55）、副对角线（A15-A51），得到(Z_1-Z_4)（文献式(6)-(9)）；</li>
+<li>用4个均值的“最大值”替换窗口中心像素（A33）——目标区域的均值会高于背景，替换后目标会被增强，背景被抑制；</li>
+</ol>
+</li>
+<li><strong>Max-Median原理</strong>：与Max-Mean几乎相同，只是把“均值”换成“中位数”——中位数对噪声更鲁棒（比如窗口内有个别噪声点，中位数不受影响）；</li>
+<li><strong>关键参数</strong>：窗口大小——窗口太小（如3×3）会受噪声影响大，窗口太大（如7×7）会模糊目标；实验表明5×5窗口是“平衡选择”；</li>
+<li><strong>性能（表3）</strong>：Max-Mean的Pd=0.9964（漏检极少），但Fa=2075（虚警极高）；Max-Median的Pd=0.9948，Fa=540.33（虚警比Max-Mean低，因为中位数抗噪声）。</li>
+</ul>
+<h5 id="②-Top-Hat-Morphology（THM，形态学滤波）">② Top-Hat Morphology（THM，形态学滤波）</h5>
+<p>文献2-69至2-71介绍了THM，它是“形态学滤波”在红外小目标检测中的经典应用：</p>
+<ul>
+<li><strong>形态学操作基础</strong>：THM用“白顶帽变换”——白顶帽变换=原始图像 - 图像的“开操作”；
+<ul>
+<li>开操作=先腐蚀（用结构元“侵蚀”亮区域，去除小亮点）再膨胀（用相同结构元“扩大”亮区域，恢复背景）；</li>
+</ul>
+</li>
+<li><strong>核心逻辑</strong>：开操作会“去除比结构元小的亮区域”（目标），保留大的背景区域；原始图像减去开操作结果，就能得到“被去除的小亮区域”（目标）；</li>
+<li><strong>结构元选择</strong>：通常用“圆形结构元”——圆形对目标的形状不敏感（适应不同形状的小目标）；</li>
+<li><strong>性能（表3）</strong>：THM的Pd=0.9984（检测率最高），但Fa=17942（虚警最高）——因为开操作会把背景中的“小杂波亮斑”也当成目标提取出来。</li>
+</ul>
+<h5 id="③-Modified-Top-Hat-Morphology（MTHM，改进形态学滤波）">③ Modified Top-Hat Morphology（MTHM，改进形态学滤波）</h5>
+<p>文献2-72至2-75介绍了MTHM，它是对THM的“抗虚警改进”：</p>
+<ul>
+<li><strong>核心改进</strong>：用“双结构元”代替THM的“单结构元”——双结构元包括“内圈结构元（B_i）”和“外圈结构元（B_o）”，中间是环形结构（ΔB）；
+<ul>
+<li>原理：内圈结构元对应“目标大小”，外圈结构元对应“背景区域”；改进的白顶帽变换=原始图像 - 图像对“双结构元的开操作”——这样能只提取“比内圈大、比外圈小”的亮区域，抑制背景杂波；</li>
+</ul>
+</li>
+<li><strong>性能（表3）</strong>：MTHM的Pd=0.981（比THM低），但Fa=1.501（虚警率最低）——这是典型的“检测率-虚警率trade-off”：为了减少虚警，不得不接受一定的漏检。</li>
+</ul>
+<h4 id="（3）滤波类方法的“共性局限”">（3）滤波类方法的“共性局限”</h4>
+<p>文献2-76至2-80总结了滤波类方法的核心问题：</p>
+<ol>
+<li><strong>仅能处理均匀背景</strong>：滤波类方法假设“背景是低频均匀的”，但真实场景中背景是“非均匀杂波”（如云层纹理、地面植被），这些杂波也是高频信号，会被滤波提取出来，导致高虚警；</li>
+<li><strong>手动调参依赖强</strong>：每种方法都有“关键参数”（如THM的结构元大小、MTHM的内圈直径、Max-Mean的窗口大小），参数需要根据场景手动调整——比如天空背景用5×5窗口，城市背景用7×7窗口；在自动化系统（如IRST）中，无法手动调参，性能会大幅下降；</li>
+<li><strong>复杂场景失效</strong>：当背景中有“多杂波+低SCR目标”时，滤波类方法无法区分“目标”和“杂波”，检测率会低于70%，虚警率高于1000。</li>
+</ol>
+<h2 id="四、传统图像处理方法的“整体总结”">四、传统图像处理方法的“整体总结”</h2>
+<p>最后，我们用一张表格汇总传统方法的核心特点，帮助大家建立“全局认知”：</p>
+<table>
+<thead>
+<tr>
+<th>方法类别</th>
+<th>子类</th>
+<th>核心优势</th>
+<th>核心局限</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MIRST</td>
+<td>匹配滤波、正则流</td>
+<td>利用时间信息，低SCR场景下比SIRST好</td>
+<td>实时性差、移动相机需配准</td>
+<td>固定相机、目标匀速运动、低杂波</td>
+</tr>
+<tr>
+<td>SIRST</td>
+<td>低秩表示</td>
+<td>能适配低SCR，背景分离较彻底</td>
+<td>计算慢、复杂背景虚警高</td>
+<td>均匀背景、中等杂波</td>
+</tr>
+<tr>
+<td></td>
+<td>HVS（LCM）</td>
+<td>计算快、实时性好</td>
+<td>低对比度目标漏检高</td>
+<td>高对比度目标、低噪声</td>
+</tr>
+<tr>
+<td></td>
+<td>滤波类（THM/MTHM）</td>
+<td>实现简单、计算快</td>
+<td>均匀背景依赖强、手动调参</td>
+<td>简单均匀背景（如干净天空）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键结论</strong>：传统图像处理方法是红外小弱目标检测的“早期探索”，它们在“简单场景+资源受限硬件”中有用，但面对“复杂背景+低SCR+实时性需求”的真实场景（如军事机载IRST），性能和鲁棒性都无法满足需求——这也正是“深度学习方法”崛起的原因：深度学习能自动学习复杂场景的特征，无需手动调参，且在复杂背景下的检测率和虚警率都远超传统方法。</p>
+<p>下一节，我们将进入“3. Deep learning based approaches”，看看深度学习是如何解决传统方法的这些痛点的。</p>
+</article><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/blog/image/IMG_20250131_155849.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2025/08/31/%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E8%AE%BA%E6%96%87%EF%BC%9A%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9ADeep-learning-based-small-object-detection-A-survey/" title="论文：小目标检测：Deep learning-based small object detection: A survey"><img class="cover" src="/blog/image/Date%EF%BC%9A20250817154338.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">论文：小目标检测：Deep learning-based small object detection: A survey</div></div><div class="info-2"><div class="info-item-1">Deep learning-based small object detection: A survey 一、文献基本信息    项目 内容 对应文档段落     文章标题 Deep learning-based small object detection: A survey    作者 Qihan Feng¹, Xinzheng Xu¹, Zhixiao Wang¹,²,*    单位 ¹ 中国矿业大学计算机科学与技术学院（徐州 221116）；² 教育部矿山数字化工程研究中心（徐州 221116）    通讯作者 Zhixiao Wang，邮箱：zhxwang@cumt.edu.cn    发表期刊 Mathematical Biosciences and Engineering (MBE) 、   卷期页码 Volume 20, Issue 4, 6551-6590 、   DOI 10.3934/mbe.2023282    发表时间 2023 年 2 月 2...</div></div></div></a><a class="pagination-related" href="/blog/2025/09/17/%E6%9D%82%E8%AE%B0/keywords%E9%9B%86%E5%90%88/" title="keywords集合"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">keywords集合</div></div><div class="info-2"><div class="info-item-1">标题及keywords A Review of DEtection TRansformer: From Basic Architecture to Advanced Developments and Visual Perception Applications Keywords: object detection; DETR; transformer; attention; end to end; deep learning A review of small object detection based on deep learning Keywords： Small object detection; Deep learning ;Object detection ;Computer vision Small object detection: A comprehensive survey on challenges, techniques and real-world applications Keywords：Computer vision Deep learning...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E7%8C%AE%E6%91%98%E8%A6%81%EF%BC%88ABSTRACT%EF%BC%89%E8%AF%A6%E7%BB%86%E8%AE%B2%E8%A7%A3"><span class="toc-text">文献摘要（ABSTRACT）详细讲解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%83%8C%E6%99%AF%EF%BC%9A%E7%BA%A2%E5%A4%96%E5%B0%8F%E5%BC%B1%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%9A%84%E2%80%9C%E6%96%B0%E2%80%9D%E4%B8%8E%E2%80%9C%E9%9A%BE%E2%80%9D"><span class="toc-text">一、背景：红外小弱目标检测的“新”与“难”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%A0%B8%E5%BF%83%E6%8C%91%E6%88%98%EF%BC%9A%E7%BA%A2%E5%A4%96%E5%B0%8F%E5%BC%B1%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E2%80%9C%E9%9A%BE%E5%9C%A8%E5%93%AA%E2%80%9D"><span class="toc-text">二、核心挑战：红外小弱目标检测“难在哪”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%BC%BA%E4%B9%8F%E6%98%8E%E6%98%BE%E7%89%B9%E5%BE%81%EF%BC%88Lack-of-distinct-features%EF%BC%89"><span class="toc-text">1. 缺乏明显特征（Lack of distinct features）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%83%8C%E6%99%AF%E6%9D%82%E6%B3%A2%E6%A8%A1%E7%B3%8A%EF%BC%88Cluttered-background-with-obscure-details%EF%BC%89"><span class="toc-text">2. 背景杂波模糊（Cluttered background with obscure details）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BA%A2%E5%A4%96%E4%BF%A1%E5%8F%B7%E5%9B%A0%E7%83%AD%E6%B3%A2%E5%8A%A8%E5%8F%98%E5%8C%96%EF%BC%88Variability-of-IR-signals-due-to-thermodynamic-fluctuations%EF%BC%89"><span class="toc-text">3. 红外信号因热波动变化（Variability of IR signals due to thermodynamic fluctuations）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%BB%BC%E8%BF%B0%E7%9A%84%E6%A0%B8%E5%BF%83%E7%9B%AE%E6%A0%87%E4%B8%8E%E8%B4%A1%E7%8C%AE%EF%BC%9A%E8%BF%99%E7%AF%87%E6%96%87%E7%8C%AE%E2%80%9C%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88%E2%80%9D"><span class="toc-text">三、综述的核心目标与贡献：这篇文献“做了什么”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%A6%96%E6%AC%A1%E5%85%A8%E9%9D%A2%E8%A6%86%E7%9B%96%E8%AF%A5%E9%A2%86%E5%9F%9F%EF%BC%88First-comprehensive-review%EF%BC%89"><span class="toc-text">1. 首次全面覆盖该领域（First comprehensive review）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%8F%90%E5%87%BA%E6%8A%80%E6%9C%AF%E5%88%86%E7%B1%BB%E4%BD%93%E7%B3%BB%EF%BC%88Introduce-a-taxonomy%EF%BC%89"><span class="toc-text">2. 提出技术分类体系（Introduce a taxonomy）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%85%B3%E9%94%AE%E7%BB%93%E8%AE%BA%EF%BC%9A%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%80%A7%E8%83%BD%E6%9B%B4%E4%BC%98%EF%BC%88Deep-learning-outperforms-traditional-methods%EF%BC%89"><span class="toc-text">3. 关键结论：深度学习性能更优（Deep learning outperforms traditional methods）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%99%84%E5%8A%A0%E4%BB%B7%E5%80%BC%EF%BC%9A%E6%95%B0%E6%8D%AE%E9%9B%86%E6%B1%87%E6%80%BB%E4%B8%8E%E6%9C%AA%E6%9D%A5%E6%96%B9%E5%90%91%EF%BC%88Dataset-compilation-future-gaps%EF%BC%89"><span class="toc-text">4. 附加价值：数据集汇总与未来方向（Dataset compilation &amp; future gaps）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%91%98%E8%A6%81%E6%A0%B8%E5%BF%83%E4%BB%B7%E5%80%BC%E6%80%BB%E7%BB%93"><span class="toc-text">四、摘要核心价值总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E7%8C%AE%E2%80%9C1-Introduction%EF%BC%88%E5%BC%95%E8%A8%80%EF%BC%89%E2%80%9D%E8%AF%A6%E7%BB%86%E8%AE%B2%E8%A7%A3"><span class="toc-text">文献“1. Introduction（引言）”详细讲解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%BC%95%E8%A8%80%E5%BC%80%E7%AF%87%EF%BC%9A%E7%BA%A2%E5%A4%96%E6%88%90%E5%83%8F%E6%8A%80%E6%9C%AF%E7%9A%84%E2%80%9C%E4%B8%8D%E5%8F%AF%E6%9B%BF%E4%BB%A3%E6%80%A7%E2%80%9D"><span class="toc-text">一、引言开篇：红外成像技术的“不可替代性”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%BA%A2%E5%A4%96%E6%88%90%E5%83%8F%E7%9A%84%E6%A0%B8%E5%BF%83%E4%BC%98%E5%8A%BF"><span class="toc-text">1. 红外成像的核心优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%BC%95%E5%87%BA%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98%EF%BC%9A%E2%80%9C%E5%B0%8F%E5%BC%B1%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E2%80%9D%E6%98%AF%E7%BA%A2%E5%A4%96%E6%88%90%E5%83%8F%E7%9A%84%E2%80%9C%E5%85%B3%E9%94%AE%E6%8C%91%E6%88%98%E2%80%9D"><span class="toc-text">2. 引出核心问题：“小弱目标检测”是红外成像的“关键挑战”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%8A%80%E6%9C%AF%E9%9C%80%E6%B1%82%EF%BC%9A%E5%A4%9A%E5%AD%A6%E7%A7%91%E4%BA%A4%E5%8F%89%E6%98%AF%E2%80%9C%E7%A0%B4%E5%B1%80%E5%85%B3%E9%94%AE%E2%80%9D"><span class="toc-text">3. 技术需求：多学科交叉是“破局关键”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%811-1-%E7%BA%A2%E5%A4%96%E6%88%90%E5%83%8F%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BB%8E%E2%80%9C%E7%89%A9%E7%90%86%E5%8E%9F%E7%90%86%E2%80%9D%E5%88%B0%E2%80%9C%E6%B3%A2%E6%AE%B5%E5%88%92%E5%88%86%E2%80%9D"><span class="toc-text">二、1.1 红外成像基础：从“物理原理”到“波段划分”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%BA%A2%E5%A4%96%E8%BE%90%E5%B0%84%E7%9A%84%E7%89%A9%E7%90%86%E5%9F%BA%E7%A1%80"><span class="toc-text">1. 红外辐射的物理基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%BA%A2%E5%A4%96%E5%85%89%E8%B0%B1%E7%9A%84%E2%80%9C%E4%BA%94%E6%B3%A2%E6%AE%B5%E5%88%92%E5%88%86%E2%80%9D%EF%BC%9A%E4%B8%8D%E5%90%8C%E6%B3%A2%E6%AE%B5%E5%AF%B9%E5%BA%94%E4%B8%8D%E5%90%8C%E5%BA%94%E7%94%A8"><span class="toc-text">2. 红外光谱的“五波段划分”：不同波段对应不同应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%811-2-%E5%B0%8F%E5%BC%B1%E7%9B%AE%E6%A0%87%E7%9A%84%E2%80%9C%E5%AE%9A%E4%B9%89%E2%80%9D%E4%B8%8E%E2%80%9C%E9%87%8D%E8%A6%81%E6%80%A7%E2%80%9D"><span class="toc-text">三、1.2 小弱目标的“定义”与“重要性”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%B0%8F%E7%9B%AE%E6%A0%87%E7%9A%84%E2%80%9C%E5%AE%98%E6%96%B9%E5%AE%9A%E4%B9%89%E2%80%9D%EF%BC%9A%E6%8C%89%E5%83%8F%E7%B4%A0%E5%8D%A0%E6%AF%94%E5%88%92%E5%88%86"><span class="toc-text">1. 小目标的“官方定义”：按像素占比划分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%B0%8F%E5%BC%B1%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%9A%84%E2%80%9C%E6%A0%B8%E5%BF%83%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E2%80%9D"><span class="toc-text">2. 小弱目标检测的“核心应用场景”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B0%8F%E5%BC%B1%E7%9B%AE%E6%A0%87%E7%9A%84%E2%80%9C%E5%85%B3%E9%94%AE%E7%89%B9%E6%80%A7%E2%80%9D%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9A%BE%E6%A3%80%E6%B5%8B%EF%BC%9F"><span class="toc-text">3. 小弱目标的“关键特性”：为什么难检测？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%811-3-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E2%80%9C%E4%B8%93%E9%97%A8%E7%AE%97%E6%B3%95%E2%80%9D%EF%BC%9F%E4%BC%A0%E7%BB%9F%E6%96%B9%E6%B3%95%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%A1%8C%EF%BC%9F"><span class="toc-text">四、1.3 为什么需要“专门算法”？传统方法为什么不行？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BC%A0%E7%BB%9F%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E7%9A%84%E2%80%9C%E5%B1%80%E9%99%90%E6%80%A7%E2%80%9D"><span class="toc-text">1. 传统图像处理方法的“局限性”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%80%9A%E7%94%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E7%9A%84%E2%80%9C%E4%B8%8D%E9%80%82%E9%85%8D%E6%80%A7%E2%80%9D"><span class="toc-text">2. 通用深度学习算法的“不适配性”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BA%A2%E5%A4%96%E4%B8%8ERGB%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%9A%84%E2%80%9C%E6%9C%AC%E8%B4%A8%E5%B7%AE%E5%BC%82%E2%80%9D"><span class="toc-text">3. 红外与RGB小目标检测的“本质差异”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%811-4-%E6%A0%B8%E5%BF%83%E6%8C%91%E6%88%98%EF%BC%9A%E5%BD%93%E5%89%8D%E6%8A%80%E6%9C%AF%E9%9D%A2%E4%B8%B4%E7%9A%84%E2%80%9C%E5%9B%9B%E5%A4%A7%E9%9A%BE%E9%A2%98%E2%80%9D"><span class="toc-text">五、1.4 核心挑战：当前技术面临的“四大难题”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%811-5-%E7%BB%BC%E8%BF%B0%E7%9A%84%E2%80%9C%E5%8A%A8%E6%9C%BA%E2%80%9D%E4%B8%8E%E2%80%9C%E8%B4%A1%E7%8C%AE%E2%80%9D%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E7%AF%87%E7%BB%BC%E8%BF%B0%E6%9C%89%E4%BB%B7%E5%80%BC%EF%BC%9F"><span class="toc-text">六、1.5 综述的“动机”与“贡献”：为什么这篇综述有价值？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%A0%94%E7%A9%B6%E5%8A%A8%E6%9C%BA%EF%BC%9A%E7%8E%B0%E6%9C%89%E7%BB%BC%E8%BF%B0%E7%9A%84%E2%80%9C%E5%B1%80%E9%99%90%E6%80%A7%E2%80%9D"><span class="toc-text">1. 研究动机：现有综述的“局限性”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%BB%BC%E8%BF%B0%E7%9A%84%E2%80%9C%E6%A0%B8%E5%BF%83%E8%B4%A1%E7%8C%AE%E2%80%9D%EF%BC%9A%E5%9B%9B%E5%A4%A7%E4%BB%B7%E5%80%BC"><span class="toc-text">2. 综述的“核心贡献”：四大价值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BB%BC%E8%BF%B0%E7%9A%84%E2%80%9C%E7%A0%94%E7%A9%B6%E6%96%B9%E6%B3%95%E2%80%9D%E4%B8%8E%E2%80%9C%E7%BB%93%E6%9E%84%E5%AE%89%E6%8E%92%E2%80%9D"><span class="toc-text">3. 综述的“研究方法”与“结构安排”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%BC%95%E8%A8%80%E6%A0%B8%E5%BF%83%E5%86%85%E5%AE%B9%E6%80%BB%E7%BB%93"><span class="toc-text">七、引言核心内容总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E7%8C%AE%E2%80%9C2-Conventional-image-processing-based-approaches%EF%BC%88%E4%BC%A0%E7%BB%9F%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%EF%BC%89%E2%80%9D%E8%AF%A6%E7%BB%86%E8%AE%B2%E8%A7%A3"><span class="toc-text">文献“2. Conventional image processing based approaches（传统图像处理方法）”详细讲解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BC%A0%E7%BB%9F%E6%96%B9%E6%B3%95%E7%9A%84%E2%80%9C%E6%95%B4%E4%BD%93%E5%AE%9A%E4%BD%8D%E2%80%9D%EF%BC%9A%E5%85%88%E6%98%8E%E7%A1%AE%E6%A0%B8%E5%BF%83%E7%89%B9%E7%82%B9"><span class="toc-text">一、传统方法的“整体定位”：先明确核心特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%812-1-%E5%A4%9A%E5%B8%A7%E7%BA%A2%E5%A4%96%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%88MIRST%EF%BC%89%EF%BC%9A%E7%94%A8%E2%80%9C%E6%97%B6%E9%97%B4%E4%BF%A1%E6%81%AF%E2%80%9D%E8%A1%A5%E2%80%9C%E7%A9%BA%E9%97%B4%E4%B8%8D%E8%B6%B3%E2%80%9D"><span class="toc-text">二、2.1 多帧红外小目标检测（MIRST）：用“时间信息”补“空间不足”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-1-%E5%8C%B9%E9%85%8D%E6%BB%A4%E6%B3%A2%E7%B1%BB%E6%96%B9%E6%B3%95%EF%BC%9A%E7%94%A8%E2%80%9C3D%E6%BB%A4%E6%B3%A2%E5%99%A8%E2%80%9D%E6%8D%95%E6%8D%89%E2%80%9C%E8%BF%90%E5%8A%A8%E7%9B%AE%E6%A0%87%E2%80%9D"><span class="toc-text">2.1.1 匹配滤波类方法：用“3D滤波器”捕捉“运动目标”</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E7%BB%8F%E5%85%B83D%E5%8C%B9%E9%85%8D%E6%BB%A4%E6%B3%A2%EF%BC%88Reed-et-al-1988-31-%EF%BC%89"><span class="toc-text">（1）经典3D匹配滤波（Reed et al., 1988 [31]）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%893D%E6%96%B9%E5%90%91%E5%AF%BC%E6%95%B0%E6%BB%A4%E6%B3%A2%EF%BC%883DDF-Porat-et-al-1990-32-%EF%BC%89"><span class="toc-text">（2）3D方向导数滤波（3DDF, Porat et al., 1990 [32]）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%893D%E5%8F%8C%E5%90%91%E6%BB%A4%E6%B3%A2%EF%BC%883DDDF-Li-et-al-2005-33-%EF%BC%89"><span class="toc-text">（3）3D双向滤波（3DDDF, Li et al., 2005 [33]）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-2-%E6%AD%A3%E5%88%99%E6%B5%81%E7%B1%BB%E6%96%B9%E6%B3%95%EF%BC%88Regularity-Flow%EF%BC%89%EF%BC%9A%E7%94%A8%E2%80%9C%E6%97%B6%E7%A9%BA%E8%A7%84%E5%BE%8B%E2%80%9D%E6%89%BE%E7%9B%AE%E6%A0%87"><span class="toc-text">2.1.2 正则流类方法（Regularity Flow）：用“时空规律”找目标</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Nikhil%E7%AD%89%E4%BA%BA%E7%9A%84%E9%9C%8D%E5%A4%AB%E5%8F%98%E6%8D%A2%E6%96%B9%E6%B3%95%EF%BC%882016-42-%EF%BC%89"><span class="toc-text">Nikhil等人的霍夫变换方法（2016 [42]）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-3-MIRST%E6%96%B9%E6%B3%95%E7%9A%84%E2%80%9C%E5%85%B1%E6%80%A7%E5%B1%80%E9%99%90%E2%80%9D"><span class="toc-text">2.1.3 MIRST方法的“共性局限”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%812-2-%E5%8D%95%E5%B8%A7%E7%BA%A2%E5%A4%96%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%88SIRST%EF%BC%89%EF%BC%9A%E6%97%A0%E6%97%B6%E9%97%B4%E4%BF%A1%E6%81%AF%E6%97%B6%EF%BC%8C%E9%9D%A0%E2%80%9C%E7%A9%BA%E9%97%B4%E6%A8%A1%E5%9E%8B%E2%80%9D%E5%88%86%E7%A6%BB%E7%9B%AE%E6%A0%87%E4%B8%8E%E8%83%8C%E6%99%AF"><span class="toc-text">三、2.2 单帧红外小目标检测（SIRST）：无时间信息时，靠“空间模型”分离目标与背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-1-%E4%BD%8E%E7%A7%A9%E8%A1%A8%E7%A4%BA%E7%B1%BB%E6%96%B9%E6%B3%95%EF%BC%9A%E7%94%A8%E2%80%9C%E7%9F%A9%E9%98%B5%E4%BD%8E%E7%A7%A9-%E7%A8%80%E7%96%8F%E2%80%9D%E5%88%86%E7%A6%BB%E8%83%8C%E6%99%AF%E4%B8%8E%E7%9B%AE%E6%A0%87"><span class="toc-text">2.2.1 低秩表示类方法：用“矩阵低秩+稀疏”分离背景与目标</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89IR-Patch-Image%E6%A8%A1%E5%9E%8B%EF%BC%88IPI-Gao-et-al-2013-29-%EF%BC%89"><span class="toc-text">（1）IR Patch-Image模型（IPI, Gao et al., 2013 [29]）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E2%91%A0-%E6%A0%B8%E5%BF%83%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B"><span class="toc-text">① 核心数学模型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E2%91%A1-%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4"><span class="toc-text">② 实现步骤</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E2%91%A2-%E5%AE%9E%E9%AA%8C%E6%95%88%E6%9E%9C%E4%B8%8E%E7%BC%BA%E7%82%B9"><span class="toc-text">③ 实验效果与缺点</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E9%87%8D%E5%8A%A0%E6%9D%83IR-Patch-Tensor%E6%A8%A1%E5%9E%8B%EF%BC%88RIPT-Dai-et-al-2017-30-%EF%BC%89"><span class="toc-text">（2）重加权IR Patch-Tensor模型（RIPT, Dai et al., 2017 [30]）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E2%91%A0-%E6%A0%B8%E5%BF%83%E6%94%B9%E8%BF%9B%E7%82%B9"><span class="toc-text">① 核心改进点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E2%91%A1-%E5%AE%9E%E9%AA%8C%E6%95%88%E6%9E%9C%E4%B8%8E%E7%BC%BA%E7%82%B9"><span class="toc-text">② 实验效果与缺点</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E4%BD%8E%E7%A7%A9%E8%A1%A8%E7%A4%BA%E7%B1%BB%E6%96%B9%E6%B3%95%E7%9A%84%E2%80%9C%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94%E2%80%9D%EF%BC%88%E8%A1%A81%EF%BC%89"><span class="toc-text">（3）低秩表示类方法的“性能对比”（表1）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-2-%E4%BA%BA%E7%B1%BB%E8%A7%86%E8%A7%89%E7%B3%BB%E7%BB%9F%EF%BC%88HVS%EF%BC%89%E7%B1%BB%E6%96%B9%E6%B3%95%EF%BC%9A%E6%A8%A1%E4%BB%BF%E4%BA%BA%E7%9C%BC%E2%80%9C%E6%89%BE%E5%B1%80%E9%83%A8%E5%AF%B9%E6%AF%94%E2%80%9D"><span class="toc-text">2.2.2 人类视觉系统（HVS）类方法：模仿人眼“找局部对比”</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89LCM%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="toc-text">（1）LCM的核心思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4%E4%B8%8E%E5%85%AC%E5%BC%8F"><span class="toc-text">（2）实现步骤与公式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E5%AE%9E%E9%AA%8C%E6%95%88%E6%9E%9C%E4%B8%8E%E7%BC%BA%E7%82%B9"><span class="toc-text">（3）实验效果与缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-3-%E6%BB%A4%E6%B3%A2%E7%B1%BB%E6%96%B9%E6%B3%95%EF%BC%9A%E7%94%A8%E2%80%9C%E7%A9%BA%E9%97%B4%E6%BB%A4%E6%B3%A2%E2%80%9D%E6%8F%90%E5%8F%96%E2%80%9C%E9%AB%98%E9%A2%91%E7%9B%AE%E6%A0%87%E2%80%9D"><span class="toc-text">2.2.3 滤波类方法：用“空间滤波”提取“高频目标”</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E6%BB%A4%E6%B3%A2%E7%B1%BB%E6%96%B9%E6%B3%95%E7%9A%84%E6%A0%B8%E5%BF%83%E5%88%86%E7%B1%BB"><span class="toc-text">（1）滤波类方法的核心分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E9%87%8D%E7%82%B9%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3"><span class="toc-text">（2）重点方法详解</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E2%91%A0-Max-Mean%E4%B8%8EMax-Median%EF%BC%88%E7%BB%9F%E8%AE%A1%E6%BB%A4%E6%B3%A2%EF%BC%89"><span class="toc-text">① Max-Mean与Max-Median（统计滤波）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E2%91%A1-Top-Hat-Morphology%EF%BC%88THM%EF%BC%8C%E5%BD%A2%E6%80%81%E5%AD%A6%E6%BB%A4%E6%B3%A2%EF%BC%89"><span class="toc-text">② Top-Hat Morphology（THM，形态学滤波）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E2%91%A2-Modified-Top-Hat-Morphology%EF%BC%88MTHM%EF%BC%8C%E6%94%B9%E8%BF%9B%E5%BD%A2%E6%80%81%E5%AD%A6%E6%BB%A4%E6%B3%A2%EF%BC%89"><span class="toc-text">③ Modified Top-Hat Morphology（MTHM，改进形态学滤波）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E6%BB%A4%E6%B3%A2%E7%B1%BB%E6%96%B9%E6%B3%95%E7%9A%84%E2%80%9C%E5%85%B1%E6%80%A7%E5%B1%80%E9%99%90%E2%80%9D"><span class="toc-text">（3）滤波类方法的“共性局限”</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%BC%A0%E7%BB%9F%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E7%9A%84%E2%80%9C%E6%95%B4%E4%BD%93%E6%80%BB%E7%BB%93%E2%80%9D"><span class="toc-text">四、传统图像处理方法的“整体总结”</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A_gpt/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gpt"><img src="/blog/image/A1-2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gpt"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A_gpt/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gpt">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gpt</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A_gemini/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gemini"><img src="/blog/image/A1-2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gemini"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A_gemini/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gemini">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gemini</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection"><img src="/blog/image/A1-2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/12/18/%E6%9D%82%E8%AE%B0/YOLOv8%20Anchor%20Free%E4%B8%8EDFL%E5%8E%9F%E7%90%86/" title="YOLOv8 Anchor Free与DFL原理"><img src="/blog/image/s625d11592724c.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="YOLOv8 Anchor Free与DFL原理"/></a><div class="content"><a class="title" href="/blog/2025/12/18/%E6%9D%82%E8%AE%B0/YOLOv8%20Anchor%20Free%E4%B8%8EDFL%E5%8E%9F%E7%90%86/" title="YOLOv8 Anchor Free与DFL原理">YOLOv8 Anchor Free与DFL原理</a><time datetime="2025-12-18T02:04:06.000Z" title="发表于 2025-12-18 10:04:06">2025-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/12/18/%E6%9D%82%E8%AE%B0/python%E8%AF%AD%E6%B3%95%E5%8F%8A%E5%87%BD%E6%95%B0%E7%A7%AF%E7%B4%AF/" title="python语法及函数积累"><img src="/blog/image/q4SynOBjcxn5gA6.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="python语法及函数积累"/></a><div class="content"><a class="title" href="/blog/2025/12/18/%E6%9D%82%E8%AE%B0/python%E8%AF%AD%E6%B3%95%E5%8F%8A%E5%87%BD%E6%95%B0%E7%A7%AF%E7%B4%AF/" title="python语法及函数积累">python语法及函数积累</a><time datetime="2025-12-18T02:04:06.000Z" title="发表于 2025-12-18 10:04:06">2025-12-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'qieliqiean/blog',
+      'data-repo-id': 'R_kgDONvpdYw',
+      'data-category-id': 'DIC_kwDONvpdY84C1DqB',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !true) {
+    if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>

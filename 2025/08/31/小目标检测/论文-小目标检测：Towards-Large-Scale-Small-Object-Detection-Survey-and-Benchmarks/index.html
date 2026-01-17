@@ -1,0 +1,1313 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>论文-小目标检测：Towards Large-Scale Small Object Detection:  Survey and Benchmarks | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Towards Large-Scale Small Object Detection: Survey and Benchmarks 一、文章基础信息   期刊 &#x2F; 年份：IEEE TRANSACTIONS ON PATTERN ANALYSIS AND MACHINE INTELLIGENCE (TPAMI)，2023 年 11 月   核心主题：小目标检测（Small Object Detect">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文-小目标检测：Towards Large-Scale Small Object Detection:  Survey and Benchmarks">
+<meta property="og:url" content="https://qieliqiean.github.io/blog/2025/08/31/%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E8%AE%BA%E6%96%87-%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9ATowards-Large-Scale-Small-Object-Detection-Survey-and-Benchmarks/index.html">
+<meta property="og:site_name" content="且离且安的碎碎念">
+<meta property="og:description" content="Towards Large-Scale Small Object Detection: Survey and Benchmarks 一、文章基础信息   期刊 &#x2F; 年份：IEEE TRANSACTIONS ON PATTERN ANALYSIS AND MACHINE INTELLIGENCE (TPAMI)，2023 年 11 月   核心主题：小目标检测（Small Object Detect">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qieliqiean.github.io/blog/image/Date%EF%BC%9A20250817154338.jpg">
+<meta property="article:published_time" content="2025-08-31T06:55:56.000Z">
+<meta property="article:modified_time" content="2026-01-17T09:56:14.917Z">
+<meta property="article:author" content="lian">
+<meta property="article:tag" content="论文阅读">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qieliqiean.github.io/blog/image/Date%EF%BC%9A20250817154338.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "论文-小目标检测：Towards Large-Scale Small Object Detection:  Survey and Benchmarks",
+  "url": "https://qieliqiean.github.io/blog/2025/08/31/%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E8%AE%BA%E6%96%87-%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9ATowards-Large-Scale-Small-Object-Detection-Survey-and-Benchmarks/",
+  "image": "https://qieliqiean.github.io/blog/image/Date%EF%BC%9A20250817154338.jpg",
+  "datePublished": "2025-08-31T06:55:56.000Z",
+  "dateModified": "2026-01-17T09:56:14.917Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "lian",
+      "url": "https://qieliqiean.github.io/blog/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/2025/08/31/%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E8%AE%BA%E6%96%87-%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9ATowards-Large-Scale-Small-Object-Detection-Survey-and-Benchmarks/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6b5d1303d19816191830cd73eccfdb1e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: {"path":"/blog/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '论文-小目标检测：Towards Large-Scale Small Object Detection:  Survey and Benchmarks',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/image/Date：20250817154338.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">论文-小目标检测：Towards Large-Scale Small Object Detection:  Survey and Benchmarks</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">论文-小目标检测：Towards Large-Scale Small Object Detection:  Survey and Benchmarks</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-31T06:55:56.000Z" title="发表于 2025-08-31 14:55:56">2025-08-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-17T09:56:14.917Z" title="更新于 2026-01-17 17:56:14">2026-01-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>17分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Towards-Large-Scale-Small-Object-Detection-Survey-and-Benchmarks">Towards Large-Scale Small Object Detection: Survey and Benchmarks</h1>
+<h2 id="一、文章基础信息">一、文章基础信息</h2>
+<ul>
+<li>
+<p><strong>期刊 / 年份</strong>：IEEE TRANSACTIONS ON PATTERN ANALYSIS AND MACHINE INTELLIGENCE (TPAMI)，2023 年 11 月</p>
+</li>
+<li>
+<p><strong>核心主题</strong>：小目标检测（Small Object Detection, SOD）的系统综述、两大专用大规模基准数据集（SODA）构建、主流算法评估</p>
+</li>
+<li>
+<p><strong>作者单位</strong>：西北工业大学自动化学院</p>
+</li>
+<li>
+<p><strong>开源资源</strong>：数据集与代码地址：<a target="_blank" rel="noopener" href="https://shaunyuan22.github.io/SODA%EF%BC%9B%E8%A1%A5%E5%85%85%E6%9D%90%E6%96%99%E5%9C%B0%E5%9D%80%EF%BC%9Ahttps://doi.org/10.1109/TPAMI.2023.3290594">https://shaunyuan22.github.io/SODA；补充材料地址：https://doi.org/10.1109/TPAMI.2023.3290594</a></p>
+</li>
+</ul>
+<h2 id="二、摘要（核心浓缩）">二、摘要（核心浓缩）</h2>
+<h3 id="1-领域背景">1. 领域背景</h3>
+<ul>
+<li>
+<p>深度卷积神经网络（DCNN）推动目标检测显著进步，但<strong>小目标检测（SOD）仍是计算机视觉公认难点</strong>—— 核心原因：小目标固有结构导致 “视觉外观差（细节模糊）” 和 “特征噪声多（易与背景混淆）”。</p>
+</li>
+<li>
+<p>关键瓶颈：缺乏用于评估 SOD 方法的<strong>大规模专用基准数据集</strong>。</p>
+</li>
+</ul>
+<h3 id="2-核心工作">2. 核心工作</h3>
+<ol>
+<li>
+<p><strong>系统综述 SOD</strong>：全面梳理深度学习时代的 SOD 算法，建立分类体系。</p>
+</li>
+<li>
+<p><strong>构建 SODA 数据集</strong>：推出两大场景专用大规模数据集：</p>
+</li>
+</ol>
+<ul>
+<li>
+<ul>
+<li><strong>SODA-D（驾驶场景）</strong>：24828 张高质量交通图像，278433 个实例（9 类别：人、骑手、自行车、摩托车、汽车、交通标志、红绿灯、交通摄像头、警示锥）。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li><strong>SODA-A（航拍场景）</strong>：2513 张高分辨率航拍图像，872069 个实例（9 类别：飞机、直升机、小车、大车、船、集装箱、储罐、游泳池、风车）。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>特点：首个专为<strong>多类别 SOD</strong>设计的大规模基准，标注详尽（细分小目标等级、忽略区域）。</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><strong>评估主流算法</strong>：在 SODA 上测试主流检测方法，提供性能基准。</li>
+</ol>
+<h3 id="3-研究意义">3. 研究意义</h3>
+<p>填补 “多类别 SOD 大规模基准” 空白，推动 SOD 领域技术突破。</p>
+<h2 id="三、引言（研究背景与动机）">三、引言（研究背景与动机）</h2>
+<h3 id="1-目标检测与-SOD-的定位">1. 目标检测与 SOD 的定位</h3>
+<ul>
+<li>
+<p><strong>目标检测任务</strong>：对图像 / 视频中的目标进行 “分类 + 定位”，是计算机视觉核心任务。</p>
+</li>
+<li>
+<p><strong>SOD 定位</strong>：目标检测的子领域，聚焦 “小尺寸目标”（按 COCO 定义：面积≤1024 像素），应用场景包括：监控行人检测、无人机航拍分析、自动驾驶交通标志识别。</p>
+</li>
+<li>
+<p><strong>发展差距</strong>：通用目标检测进步显著（如 Faster R-CNN、YOLO），但 SOD 性能滞后 —— 例：顶级检测器 DyHead 在 COCO 测试集上，小目标 mAP 仅 28.3%，中 / 大目标分别为 50.3%/57.5%。</p>
+</li>
+</ul>
+<h3 id="2-SOD-的两大核心瓶颈">2. SOD 的两大核心瓶颈</h3>
+<table>
+<thead>
+<tr>
+<th>瓶颈类型</th>
+<th>具体表现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>技术瓶颈</td>
+<td>小目标特征质量差：下采样导致信息丢失，卷积过程中特征被背景 / 大目标污染</td>
+</tr>
+<tr>
+<td>数据瓶颈</td>
+<td>缺乏大规模 SOD 专用数据集：现有数据集或规模小、或单类别、或小目标分布不均</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-现有数据集的局限性">3. 现有数据集的局限性</h3>
+<ul>
+<li>
+<p>专为 SOD 设计的数据集：规模小（如 SOD 仅 4925 张图、TinyPerson 仅 1610 张图）、单类别（如 TinyPerson 仅行人）。</p>
+</li>
+<li>
+<p>含小目标的通用数据集：单类别（如 WiderFace 仅人脸）、小目标集中少数类别（如 DOTA 小目标以 “小车” 为主）。</p>
+</li>
+</ul>
+<h3 id="4-研究动机">4. 研究动机</h3>
+<p>受通用目标检测数据集（PASCAL VOC、COCO）推动领域发展的启发，提出核心问题：<strong>能否构建 “多类别、大规模、标注详尽” 的 SOD 专用数据集？</strong> 以支撑 SOD 模型训练与公平评估。</p>
+<h3 id="5-文章核心贡献">5. 文章核心贡献</h3>
+<ol>
+<li>
+<p>首次系统综述深度学习时代的 SOD 算法，分为 6 大类并分析优缺点。</p>
+</li>
+<li>
+<p>构建 SODA-D/SODA-A 两大大规模 SOD 基准数据集。</p>
+</li>
+<li>
+<p>在 SODA 上评估主流算法，提供定量 / 定性分析，指导后续研究。</p>
+</li>
+</ol>
+<h3 id="6-文章结构">6. 文章结构</h3>
+<ul>
+<li>第 II 章：SOD 算法综述；第 III 章：SOD 相关数据集综述；第 IV 章：SODA 数据集构建；第 V 章：实验与结果分析；第 VI 章：结论与展望。</li>
+</ul>
+<h2 id="四、小目标检测综述（II-REVIEW-ON-SMALL-OBJECT-DETECTION）">四、小目标检测综述（II. REVIEW ON SMALL OBJECT DETECTION）</h2>
+<h3 id="1-SOD-的四大核心挑战">1. SOD 的四大核心挑战</h3>
+<h4 id="（1）信息丢失（Information-Loss）">（1）信息丢失（Information Loss）</h4>
+<ul>
+<li>
+<p>原因：通用 CNN 特征提取器（ResNet、ResNeXt）通过下采样减少计算量，导致小目标（如 20×20 像素）特征被稀释 —— 例：32×32 目标经 5 次下采样后仅剩 1×1 特征点，关键信息丢失。</p>
+</li>
+<li>
+<p>影响：检测头无法从抽象特征中识别小目标。</p>
+</li>
+</ul>
+<h4 id="（2）噪声特征表示（Noisy-Feature-Representation）">（2）噪声特征表示（Noisy Feature Representation）</h4>
+<ul>
+<li>
+<p>原因：① 小目标视觉细节少，特征区分度低；② 卷积过程中，小目标特征易与背景（如路面、天空）或其他目标特征混淆。</p>
+</li>
+<li>
+<p>影响：网络无法学习 “判别性特征”，易误判背景为小目标。</p>
+</li>
+</ul>
+<h4 id="（3）边界框扰动容忍度低（Low-Tolerance-for-Bounding-Box-Perturbation）">（3）边界框扰动容忍度低（Low Tolerance for Bounding Box Perturbation）</h4>
+<ul>
+<li>
+<p>现象：小目标定位偏差对 IoU（交并比）影响极大（文献 Fig. 1）：</p>
+</li>
+<li>
+<ul>
+<li>小目标（20×20）：偏差 6 像素→IoU 从 100%→32.5%；偏差 12 像素→IoU→8.7%。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>中目标（40×40）：偏差 6 像素→IoU→56.6%；大目标（70×70）→IoU→71.8%。</li>
+</ul>
+</li>
+<li>
+<p>影响：定位轻微偏差即判定为检测失败，增加回归任务难度。</p>
+</li>
+</ul>
+<h4 id="（4）训练样本不足（Inadequate-Samples-for-Training）">（4）训练样本不足（Inadequate Samples for Training）</h4>
+<ul>
+<li>
+<p>原因：① 小目标在图像中占比小，与先验框（Anchor）重叠率低；② 传统标签分配（如 IoU&gt;0.5 为正样本）对小目标严苛，大量小目标被误判为负样本。</p>
+</li>
+<li>
+<p>影响：网络缺乏足够正样本学习小目标特征，分类 / 回归性能差。</p>
+</li>
+</ul>
+<h3 id="2-六大类-SOD-算法（按技术思路分类）">2. 六大类 SOD 算法（按技术思路分类）</h3>
+<h4 id="（1）样本导向方法（Sample-Oriented-Methods）——-解决-“样本不足”">（1）样本导向方法（Sample-Oriented Methods）—— 解决 “样本不足”</h4>
+<ul>
+<li>
+<p><strong>核心思想</strong>：增加小目标样本数量或优化样本选择规则。</p>
+</li>
+<li>
+<p>子方向 1：数据增强策略</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>代表方法</th>
+<th>核心逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kisantal (2019)</td>
+<td>复制图像中已有的小目标，随机旋转 / 缩放后粘贴到其他位置</td>
+</tr>
+<tr>
+<td>RRNet (2019)</td>
+<td>分割图引导粘贴位置（避免遮挡），对粘贴目标做尺度适配</td>
+</tr>
+<tr>
+<td>DS-GAN (2023)</td>
+<td>GAN 生成视觉真实的小目标样本，结合分割 / 图像修复技术</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<ul>
+<li>优缺点：优点→快速增加样本；缺点→生成样本迁移性差，GAN 易造伪纹理。</li>
+</ul>
+</li>
+<li>
+<p>子方向 2：优化标签分配</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>代表方法</th>
+<th>核心逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S³FD (2017)</td>
+<td>尺度补偿匹配：降低小目标与 Anchor 的 IoU 阈值，设计小尺度 Anchor</td>
+</tr>
+<tr>
+<td>DotD (2021)</td>
+<td>用 “边界框中心距离” 替代 IoU，距离近即判定为正样本</td>
+</tr>
+<tr>
+<td>RFLA (2022)</td>
+<td>高斯感受野匹配：计算特征点感受野与小目标的相似度，相似度高为正样本</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<ul>
+<li>优缺点：优点→适配小目标低重叠特性；缺点→易引入低质量正样本。</li>
+</ul>
+</li>
+</ul>
+<h4 id="（2）尺度感知方法（Scale-Aware-Methods）——-解决-“信息丢失与尺度差异”">（2）尺度感知方法（Scale-Aware Methods）—— 解决 “信息丢失与尺度差异”</h4>
+<ul>
+<li>
+<p><strong>核心思想</strong>：小目标需高分辨率特征，大目标需高层语义特征，通过 “分尺度处理” 或 “跨尺度融合” 优化。</p>
+</li>
+<li>
+<p>子方向 1：尺度专用检测器</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>代表方法</th>
+<th>核心逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FPN (2017)</td>
+<td>特征金字塔：低层（高分辨率）检测小目标，高层（低分辨率）检测大目标，跨层传特征</td>
+</tr>
+<tr>
+<td>TridentNet (2019)</td>
+<td>多分支架构：不同分支用不同空洞卷积率调整感受野，分别适配小 / 中 / 大目标</td>
+</tr>
+<tr>
+<td>SNIP (2018)</td>
+<td>尺度归一化训练：仅保留目标尺度在合理范围的样本，让分支专注学对应尺度</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<ul>
+<li>优缺点：优点→分工明确；缺点→多分支增加计算量，尺度划分靠经验。</li>
+</ul>
+</li>
+<li>
+<p>子方向 2：分层特征融合</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>代表方法</th>
+<th>核心逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PANet (2018)</td>
+<td>双向特征融合：高层→低层传语义，低层→高层传细节</td>
+</tr>
+<tr>
+<td>BiFPN (2020)</td>
+<td>加权双向融合：去掉冗余路径，对小目标相关特征分配高权重</td>
+</tr>
+<tr>
+<td>StairNet (2018)</td>
+<td>反卷积上采样：放大低层特征后与高层融合，保留细节</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<ul>
+<li>优缺点：优点→弥补小目标语义不足；缺点→融合易污染特征，策略设计复杂。</li>
+</ul>
+</li>
+</ul>
+<h4 id="（3）注意力方法（Attention-Based-Methods）——-解决-“噪声特征”">（3）注意力方法（Attention-Based Methods）—— 解决 “噪声特征”</h4>
+<ul>
+<li>
+<p><strong>核心思想</strong>：模仿人类视觉聚焦机制，通过注意力模块 “突出小目标区域，抑制背景噪声”。</p>
+</li>
+<li>
+<p>代表方法：</p>
+</li>
+<li>
+<ul>
+<li>CBAM (2018)：通道注意力（突出小目标关键通道）+ 空间注意力（突出小目标区域）。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>SCRDet (2019)：像素 + 通道双注意力，适配航拍小目标。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>FBR-Net (2021)：层级注意力，平衡特征金字塔各层重要性。</li>
+</ul>
+</li>
+<li>
+<p>优缺点：优点→灵活性高，可嵌入任意架构；缺点→增加计算量，无监督注意力易关注无关区域。</p>
+</li>
+</ul>
+<h4 id="（4）特征模仿方法（Feature-Imitation-Methods）——-解决-“特征质量差”">（4）特征模仿方法（Feature-Imitation Methods）—— 解决 “特征质量差”</h4>
+<ul>
+<li>
+<p><strong>核心思想</strong>：让小目标特征 “模仿” 大目标特征（大目标特征质量高），缩小小目标与大目标的特征差距。</p>
+</li>
+<li>
+<p>子方向 1：相似度学习（如 Self-Mimic Learning (2020)：用损失约束小行人特征向大行人特征靠近）。</p>
+</li>
+<li>
+<p>子方向 2：超分辨率重建（如 SOD-MTGAN (2018)：GAN 对小目标 RoI 做超分辨率，恢复细节）。</p>
+</li>
+<li>
+<p>优缺点：优点→根源提升特征质量；缺点→超分辨率增加计算量，GAN 易造伪纹理。</p>
+</li>
+</ul>
+<h4 id="（5）上下文建模方法（Context-Modeling-Methods）——-解决-“信息不足”">（5）上下文建模方法（Context-Modeling Methods）—— 解决 “信息不足”</h4>
+<ul>
+<li>
+<p><strong>核心思想</strong>：利用 “上下文信息”（小目标周围环境、其他目标关联）辅助检测，例：路边杆子→推测有交通摄像头。</p>
+</li>
+<li>
+<p>代表方法：</p>
+</li>
+<li>
+<ul>
+<li>PyramidBox (2018)：用 “人脸上下文”（头发、周围人脸）检测小脸。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>IONet (2016)：RNN 捕捉全局上下文（如航拍道路分布）辅助定位小车。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>CAB Net (2022)：金字塔空洞卷积捕捉多尺度上下文。</li>
+</ul>
+</li>
+<li>
+<p>优缺点：优点→适配极小小目标；缺点→上下文区域选择靠经验，易引入干扰。</p>
+</li>
+</ul>
+<h4 id="（6）聚焦检测方法（Focus-and-Detect-Methods）——-解决-“高分辨率效率低”">（6）聚焦检测方法（Focus-and-Detect Methods）—— 解决 “高分辨率效率低”</h4>
+<ul>
+<li>
+<p><strong>核心思想</strong>：高分辨率图像中小目标分散，先 “筛选有目标区域”，再高分辨率检测，减少计算量。</p>
+</li>
+<li>
+<p>代表方法：</p>
+</li>
+<li>
+<ul>
+<li>ClusDet (2019)：小目标聚类成簇，仅对簇区域检测。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>F&amp;D (2022)：聚焦网络预测候选区域，裁剪放大后检测。</li>
+</ul>
+</li>
+<li>
+<p>优缺点：优点→提升效率与精度；缺点→需额外训练聚焦模块，易漏检小目标区域。</p>
+</li>
+</ul>
+<h2 id="五、SOD-相关数据集综述（III-REVIEW-OF-DATASETS-FOR-SMALL-OBJECT-DETECTION）">五、SOD 相关数据集综述（III. REVIEW OF DATASETS FOR SMALL OBJECT DETECTION）</h2>
+<h3 id="1-主流-SOD-相关数据集梳理">1. 主流 SOD 相关数据集梳理</h3>
+<table>
+<thead>
+<tr>
+<th>数据集</th>
+<th>场景 / 任务</th>
+<th>规模（图像 / 实例）</th>
+<th>小目标特点</th>
+<th>局限性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>COCO (2014)</td>
+<td>通用自然场景</td>
+<td>123K/886K</td>
+<td>30% 实例为小目标（≤1024 像素）</td>
+<td>非 SOD 专用，部分类别小目标少</td>
+</tr>
+<tr>
+<td>WiderFace (2016)</td>
+<td>人脸检测</td>
+<td>32.2K/39.37K</td>
+<td>50% 为小人脸（10-50 像素）</td>
+<td>单类别，场景局限</td>
+</tr>
+<tr>
+<td>TinyPerson (2020)</td>
+<td>极小行人检测</td>
+<td>1.6K/7.25K</td>
+<td>目标极小，含 ignore 标注</td>
+<td>规模小，单场景（海边）+ 单类别</td>
+</tr>
+<tr>
+<td>TT100K (2016)</td>
+<td>交通标志检测</td>
+<td>100K/30K</td>
+<td>80% 实例 &lt; 图像面积 0.1%</td>
+<td>单类别，长尾分布</td>
+</tr>
+<tr>
+<td>VisDrone (2021)</td>
+<td>无人机交通场景</td>
+<td>18.9K/2.5M</td>
+<td>高空视角目标小，含遮挡</td>
+<td>水平框标注旋转目标，类别不均衡</td>
+</tr>
+<tr>
+<td>DOTA (2022)</td>
+<td>遥感航拍</td>
+<td>11.2K/1.79M</td>
+<td>超 11 万极小小目标</td>
+<td>小目标集中 “小车” 类，分辨率不均</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-现有数据集共性不足">2. 现有数据集共性不足</h3>
+<ol>
+<li>
+<p><strong>规模不足</strong>：图像 / 实例数量少，无法支撑 DCNN 训练。</p>
+</li>
+<li>
+<p><strong>类别单一 / 不均衡</strong>：单类别或小目标集中少数类别，无法适配多类别 SOD。</p>
+</li>
+<li>
+<p><strong>标注问题</strong>：航拍场景用水平框（OBB 更精准），缺乏 ignore 标注（引入噪声）。</p>
+</li>
+<li>
+<p><strong>场景局限</strong>：单一场景，泛化能力差。</p>
+</li>
+</ol>
+<h3 id="3-SOD-评估指标（Average-Precision-AP）">3. SOD 评估指标（Average Precision, AP）</h3>
+<h4 id="（1）基础概念">（1）基础概念</h4>
+<ul>
+<li>
+<p><strong>TP（真阳性）</strong>：预测框与 GT 框 IoU≥阈值，类别一致。</p>
+</li>
+<li>
+<p><strong>FP（假阳性）</strong>：IoU 不达标或类别错误或重复检测。</p>
+</li>
+<li>
+<p><strong>FN（假阴性）</strong>：GT 未被检测到。</p>
+</li>
+</ul>
+<h4 id="（2）AP-计算范式">（2）AP 计算范式</h4>
+<table>
+<thead>
+<tr>
+<th>范式</th>
+<th>计算逻辑</th>
+<th>优势 / 局限</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VOC 范式（2007）</td>
+<td>单一 IoU 阈值（0.5），计算 Precision-Recall 曲线下面积</td>
+<td>局限→仅关注低定位精度，无法区分高定位算法</td>
+</tr>
+<tr>
+<td>COCO 范式（2014）</td>
+<td>10 个 IoU 阈值（0.5-0.95，步长 0.05），取 AP 平均值；分面积计算 AP（AP_S/AP_M/AP_L）</td>
+<td>优势→鼓励高定位精度，适配 SOD “低容忍度” 需求，现为 SOD 评估黄金标准</td>
+</tr>
+</tbody>
+</table>
+<h4 id="（3）SOD-核心评估指标">（3）SOD 核心评估指标</h4>
+<ul>
+<li><strong>AP</strong>：综合性能；<strong>AP₅₀/AP₇₅</strong>：低 / 高定位精度需求；<strong>APₑS/APᵣS/APgS</strong>：极小小 / 相对小 / 一般小目标性能。</li>
+</ul>
+<h2 id="六、SODA-基准数据集（IV-BENCHMARKS）">六、SODA 基准数据集（IV. BENCHMARKS）</h2>
+<h3 id="1-基础设计：小目标定义与数据来源">1. 基础设计：小目标定义与数据来源</h3>
+<h4 id="（1）小目标分类标准（按像素面积）">（1）小目标分类标准（按像素面积）</h4>
+<table>
+<thead>
+<tr>
+<th>目标类型</th>
+<th>面积范围（像素）</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>极小小目标（eS）</td>
+<td>(0, 144]</td>
+<td>10×10 交通摄像头</td>
+</tr>
+<tr>
+<td>相对小目标（rS）</td>
+<td>(144, 400]</td>
+<td>20×20 交通标志</td>
+</tr>
+<tr>
+<td>一般小目标（gS）</td>
+<td>(400, 1024]</td>
+<td>30×30 摩托车</td>
+</tr>
+<tr>
+<td>正常目标（N）</td>
+<td>(1024, 2000]</td>
+<td>40×40 行人</td>
+</tr>
+<tr>
+<td>忽略目标（Ignore）</td>
+<td>&gt;2000</td>
+<td>大卡车（不参与评估）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="（2）数据来源">（2）数据来源</h4>
+<table>
+<thead>
+<tr>
+<th>数据集</th>
+<th>数据来源</th>
+<th>图像数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SODA-D</td>
+<td>① MVD 数据集（25K 张街景图）；② 自拍摄（6 个城市车载 / 手机拍摄）；③ 网络爬取</td>
+<td>24828</td>
+</tr>
+<tr>
+<td>SODA-A</td>
+<td>Google Earth（全球数百城市，专家筛选含密集 / 稀疏小目标的场景）</td>
+<td>2513</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-标注规则与数据集分割">2. 标注规则与数据集分割</h3>
+<h4 id="（1）标注细节">（1）标注细节</h4>
+<table>
+<thead>
+<tr>
+<th>数据集</th>
+<th>类别数量</th>
+<th>标注方式</th>
+<th>忽略区域标注规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SODA-D</td>
+<td>9</td>
+<td>水平框（HBB）</td>
+<td>① 面积 &gt; 2000 像素；② 极小 / 严重遮挡无法识别</td>
+</tr>
+<tr>
+<td>SODA-A</td>
+<td>9</td>
+<td>有向框（OBB）</td>
+<td>同 SODA-D（适配航拍旋转目标）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="（2）数据集分割比例">（2）数据集分割比例</h4>
+<table>
+<thead>
+<tr>
+<th>数据集</th>
+<th>训练集比例</th>
+<th>验证集比例</th>
+<th>测试集比例</th>
+<th>总实例数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SODA-D</td>
+<td>50%</td>
+<td>20%</td>
+<td>30%</td>
+<td>278433</td>
+</tr>
+<tr>
+<td>SODA-A</td>
+<td>40%</td>
+<td>25%</td>
+<td>35%</td>
+<td>872069</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-SODA-核心统计特征">3. SODA 核心统计特征</h3>
+<h4 id="（1）SODA-D（驾驶场景）">（1）SODA-D（驾驶场景）</h4>
+<ul>
+<li>
+<p><strong>小目标占比</strong>：71%（eS 25834 个、rS 71064 个、gS 102066 个）。</p>
+</li>
+<li>
+<p><strong>独特优势</strong>：</p>
+</li>
+<li>
+<ul>
+<li>高分辨率：平均 3407×2470 像素（远高于 TT100K 的 2048×2048）。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>场景多样性：覆盖晴天 / 雨天 / 夜晚、城市 / 高速 / 乡村。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>忽略区域多：153976 个（提升评估准确性）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="（2）SODA-A（航拍场景）">（2）SODA-A（航拍场景）</h4>
+<ul>
+<li>
+<p><strong>小目标占比</strong>：95%（eS 304900 个、rS 363738 个、gS 168874 个）。</p>
+</li>
+<li>
+<p><strong>独特优势</strong>：</p>
+</li>
+<li>
+<ul>
+<li>超高分辨率：平均 4761×2777 像素（远高于 AI-TOD 的 800×800）。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>密度差异大：单图实例数 1~11134 个（平均 347 个，是 DOTA 的 2 倍）。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>朝向任意：倾斜角分布于(-\pi/2)~(\pi/2)（适配旋转目标）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-SODA-与现有数据集的对比优势">4. SODA 与现有数据集的对比优势</h3>
+<h4 id="（1）SODA-D-vs-驾驶场景数据集（TT100K、EuroCity-Persons）">（1）SODA-D vs 驾驶场景数据集（TT100K、EuroCity Persons）</h4>
+<table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th>SODA-D</th>
+<th>TT100K</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>eS 级小目标数量</td>
+<td>25834 个</td>
+<td>71 个</td>
+</tr>
+<tr>
+<td>类别数</td>
+<td>9 类（多类别 SOD）</td>
+<td>1 类（仅交通标志）</td>
+</tr>
+<tr>
+<td>平均分辨率</td>
+<td>3407×2470</td>
+<td>2048×2048</td>
+</tr>
+<tr>
+<td>忽略区域标注</td>
+<td>有</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+<h4 id="（2）SODA-A-vs-航拍场景数据集（AI-TOD、DOTA）">（2）SODA-A vs 航拍场景数据集（AI-TOD、DOTA）</h4>
+<table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th>SODA-A</th>
+<th>AI-TOD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>小目标类别均衡性</td>
+<td>9 类均匀（除直升机外均 &gt; 10000 个）</td>
+<td>88% 为车辆</td>
+</tr>
+<tr>
+<td>平均分辨率</td>
+<td>4761×2777</td>
+<td>800×800</td>
+</tr>
+<tr>
+<td>标注方式</td>
+<td>OBB（适配旋转）</td>
+<td>HBB（定位偏差大）</td>
+</tr>
+<tr>
+<td>单图实例数范围</td>
+<td>1~11134 个</td>
+<td>&lt;200 个</td>
+</tr>
+</tbody>
+</table>
+<h2 id="七、实验部分（V-EXPERIMENTS）">七、实验部分（V. EXPERIMENTS）</h2>
+<h3 id="1-实验设计基础">1. 实验设计基础</h3>
+<h4 id="（1）评估协议">（1）评估协议</h4>
+<ul>
+<li>
+<p>核心指标：AP（0.5-0.95）、AP₅₀、AP₇₅、APₑS/APᵣS/APgS/AP_N。</p>
+</li>
+<li>
+<p>规则：仅统计非 Ignore 目标，NMS 去重（IoU=0.5），置信度 &gt; 0.3 的预测框参与计算。</p>
+</li>
+</ul>
+<h4 id="（2）实现细节">（2）实现细节</h4>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>具体设置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>工具库</td>
+<td>SODA-D→mmdetection；SODA-A→mmrotate</td>
+</tr>
+<tr>
+<td>硬件</td>
+<td>4×NVIDIA RTX 3090 GPU</td>
+</tr>
+<tr>
+<td>图像处理</td>
+<td>裁剪为 800×800 patch（步长 650），resize 至 1200×1200</td>
+</tr>
+<tr>
+<td>训练参数</td>
+<td>batch size：SODA-D=8、SODA-A=4；默认 12 epoch；仅水平翻转增强</td>
+</tr>
+<tr>
+<td>基础 backbone</td>
+<td>ResNet-50（后续测试 Swin-T、ConvNext-T 等）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-SODA-D-实验结果（驾驶场景）">2. SODA-D 实验结果（驾驶场景）</h3>
+<h4 id="（1）主流算法整体性能排名（Top-5）">（1）主流算法整体性能排名（Top 5）</h4>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>AP</th>
+<th>AP₅₀</th>
+<th>AP₇₅</th>
+<th>APₑS</th>
+<th>核心优势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cascade R-CNN</td>
+<td>31.2%</td>
+<td>59.9%</td>
+<td>27.8%</td>
+<td>14.1%</td>
+<td>级联回归优化定位，适配 SOD 低容忍度</td>
+</tr>
+<tr>
+<td>RFLA（Faster R-CNN 改进）</td>
+<td>29.7%</td>
+<td>60.2%</td>
+<td>25.2%</td>
+<td>13.2%</td>
+<td>高斯感受野标签分配，增加小目标正样本</td>
+</tr>
+<tr>
+<td>Faster R-CNN</td>
+<td>28.9%</td>
+<td>59.7%</td>
+<td>24.2%</td>
+<td>13.9%</td>
+<td>候选区域精准定位小目标</td>
+</tr>
+<tr>
+<td>RetinaNet</td>
+<td>28.2%</td>
+<td>57.6%</td>
+<td>23.7%</td>
+<td>11.9%</td>
+<td>一阶段效率高，但小目标正样本不足</td>
+</tr>
+<tr>
+<td>RepPoints</td>
+<td>28.0%</td>
+<td>55.6%</td>
+<td>24.7%</td>
+<td>10.1%</td>
+<td>点表示对小目标适配性差</td>
+</tr>
+</tbody>
+</table>
+<h4 id="（2）关键结论">（2）关键结论</h4>
+<ul>
+<li>
+<p><strong>范式优劣</strong>：two-stage 算法（Cascade R-CNN、Faster R-CNN）&gt; one-stage &gt; anchor-free（FCOS、CenterNet）&gt; query-based（Deformable DETR）。</p>
+</li>
+<li>
+<p><strong>backbone 影响</strong>：Swin-T、ConvNext-T 优于传统 CNN（ResNet-50/101）—— 例：Faster R-CNN 用 ConvNext-T 的 AP=31.9%（ResNet-50 为 28.9%）。</p>
+</li>
+<li>
+<p><strong>类别难度</strong>：rider（16%）、bicycle（12%）、traffic-camera（14%）AP 最低（样本少 + 尺寸小）。</p>
+</li>
+</ul>
+<h3 id="3-SODA-A-实验结果（航拍场景）">3. SODA-A 实验结果（航拍场景）</h3>
+<h4 id="（1）主流旋转算法整体性能排名（Top-5）">（1）主流旋转算法整体性能排名（Top 5）</h4>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>AP</th>
+<th>AP₅₀</th>
+<th>AP₇₅</th>
+<th>APₑS</th>
+<th>核心优势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RoI Transformer</td>
+<td>36.0%</td>
+<td>73.0%</td>
+<td>30.1%</td>
+<td>13.5%</td>
+<td>旋转 RoI 生成器，精准匹配旋转小目标</td>
+</tr>
+<tr>
+<td>Oriented R-CNN</td>
+<td>34.4%</td>
+<td>70.7%</td>
+<td>28.6%</td>
+<td>12.5%</td>
+<td>旋转 RPN 生成高质量候选区域，参数增量小</td>
+</tr>
+<tr>
+<td>Rotated Faster R-CNN</td>
+<td>32.5%</td>
+<td>70.1%</td>
+<td>24.3%</td>
+<td>11.9%</td>
+<td>旋转 RoI 适配航拍目标，基线算法</td>
+</tr>
+<tr>
+<td>DHRec</td>
+<td>30.1%</td>
+<td>68.8%</td>
+<td>19.8%</td>
+<td>10.6%</td>
+<td>双水平矩形编码旋转目标，解决不连续性问题</td>
+</tr>
+<tr>
+<td>DODet</td>
+<td>31.6%</td>
+<td>68.1%</td>
+<td>23.4%</td>
+<td>11.3%</td>
+<td>用宽高比 / 面积表示旋转目标，适配部分场景</td>
+</tr>
+</tbody>
+</table>
+<h4 id="（2）关键结论-2">（2）关键结论</h4>
+<ul>
+<li>
+<p><strong>旋转适配性</strong>：带 “旋转候选区域生成” 的算法（RoI Transformer、Oriented R-CNN）性能最优。</p>
+</li>
+<li>
+<p><strong>backbone 特殊性</strong>：Swin-T 对 RPN-based 算法有益（如 Rotated Faster R-CNN AP 从 32.5%→33.6%），但对 RPN-free 算法有害（如 Rotated RetinaNet AP 从 26.8%→23.3%）。</p>
+</li>
+<li>
+<p><strong>类别难度</strong>：helicopter（8-21%）、large-vehicle（2-26%）AP 最低（样本少 + 细长旋转目标）。</p>
+</li>
+</ul>
+<h3 id="4-跨场景通用结论">4. 跨场景通用结论</h3>
+<ol>
+<li>
+<p>two-stage 算法是当前 SOD 最优选择，核心优势是 “候选区域精准定位”。</p>
+</li>
+<li>
+<p>极小小目标（eS）是最大难点，所有算法 APₑS 均 &lt; 15%。</p>
+</li>
+<li>
+<p>新型 backbone（Swin-T、ConvNext-T）比传统深层 CNN 更适配 SOD。</p>
+</li>
+</ol>
+<h2 id="八、结论与展望（VI-CONCLUSION-AND-OUTLOOK）">八、结论与展望（VI. CONCLUSION AND OUTLOOK）</h2>
+<h3 id="1-研究总结">1. 研究总结</h3>
+<ul>
+<li>
+<p><strong>综述贡献</strong>：首次系统梳理深度学习时代 SOD 算法，建立 6 大类分类体系。</p>
+</li>
+<li>
+<p><strong>数据集贡献</strong>：构建 SODA-D/SODA-A 两大大规模 SOD 基准，填补多类别 SOD 数据集空白。</p>
+</li>
+<li>
+<p><strong>实验贡献</strong>：在 SODA 上评估主流算法，提供定量 / 定性分析，明确 SOD 核心难点。</p>
+</li>
+</ul>
+<h3 id="2-未来研究方向">2. 未来研究方向</h3>
+<h4 id="（1）小目标专用特征提取器">（1）小目标专用特征提取器</h4>
+<ul>
+<li>
+<p>现有问题：传统 CNN 下采样丢失信息，计算量与细节保留失衡。</p>
+</li>
+<li>
+<p>突破点：低下采样率架构（空洞卷积）、多尺度特征对齐、轻量化设计。</p>
+</li>
+</ul>
+<h4 id="（2）改进特征金字塔分层表示">（2）改进特征金字塔分层表示</h4>
+<ul>
+<li>
+<p>现有问题：FPN 尺度分配靠经验，低分辨率层检测效率低。</p>
+</li>
+<li>
+<p>突破点：自适应尺度分配、跨层特征蒸馏、动态特征选择。</p>
+</li>
+</ul>
+<h4 id="（3）优化小目标标签分配策略">（3）优化小目标标签分配策略</h4>
+<ul>
+<li>
+<p>现有问题：重叠率 / 分布 - based 策略无法满足极小小目标需求。</p>
+</li>
+<li>
+<p>突破点：多因素融合匹配（尺寸 + 距离 + 上下文）、动态阈值调整、正样本质量筛选。</p>
+</li>
+</ul>
+<h4 id="（4）SOD-专用评估指标">（4）SOD 专用评估指标</h4>
+<ul>
+<li>
+<p>现有问题：COCO AP 对小目标严苛，忽视场景需求差异。</p>
+</li>
+<li>
+<p>突破点：动态 IoU 阈值（按目标尺寸调整）、召回率加权 AP、极小小目标专项指标。</p>
+</li>
+</ul>
+<h2 id="九、关键术语表">九、关键术语表</h2>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>英文全称</th>
+<th>核心定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SOD</td>
+<td>Small Object Detection</td>
+<td>小目标检测，聚焦面积≤1024 像素的目标</td>
+</tr>
+<tr>
+<td>AP</td>
+<td>Average Precision</td>
+<td>平均精度，衡量检测算法综合性能，COCO 范式下为 0.5-0.95 IoU 阈值的 AP 平均值</td>
+</tr>
+<tr>
+<td>IoU</td>
+<td>Intersection over Union</td>
+<td>交并比，衡量预测框与 GT 框的重叠程度，1 为完美匹配，0 为无重叠</td>
+</tr>
+<tr>
+<td>eS/rS/gS</td>
+<td>extremely Small/relatively Small/generally Small</td>
+<td>SODA 中对小目标的细分：面积≤144/144-400/400-1024 像素</td>
+</tr>
+<tr>
+<td>FPN</td>
+<td>Feature Pyramid Network</td>
+<td>特征金字塔网络，通过跨层特征融合，适配多尺度目标检测</td>
+</tr>
+<tr>
+<td>OBB/HBB</td>
+<td>Oriented Bounding Box/Horizontal Bounding Box</td>
+<td>有向框 / 水平框，OBB 适配旋转目标（如航拍），HBB 适配正朝向目标（如驾驶）</td>
+</tr>
+<tr>
+<td>NMS</td>
+<td>Non-Maximum Suppression</td>
+<td>非极大值抑制，剔除重复的预测框，保留置信度最高的框</td>
+</tr>
+</tbody>
+</table>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a></div><div class="post-share"><div class="social-share" data-image="/blog/image/Date%EF%BC%9A20250817154338.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2025/08/27/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/A-Review-of-Optical-and-SAR-Image-Deep-Feature-Fusion-in-Semantic-Segmentation/" title="A Review of Optical and SAR Image Deep Feature Fusion in Semantic Segmentation"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">A Review of Optical and SAR Image Deep Feature Fusion in Semantic Segmentation</div></div><div class="info-2"><div class="info-item-1">好的，同学们，请坐。今天我们要一起深入探讨一篇非常有价值的综述性文献：《A Review of Optical and SAR Image Deep Feature Fusion in Semantic Segmentation》，即《光学与SAR影像在语义分割中的深度特征融合综述》。 我知道大家可能对遥感、合成孔径雷达（SAR）或者深度学习这些领域不甚了解，但这没关系。我会像上课一样，一步步地为大家拆解这篇文章的每一个概念、每一个细节。请随时在脑海里记下问题，我们争取在讲解结束时，让大家对这个领域有一个清晰、全面的认识。  第一部分：文献概述与核心概念解读 (引言 Introduction) 首先，我们来看标题。这篇论文的标题就包含了它的核心内容，我们来逐个剖析：   语义分割 (Semantic...</div></div></div></a><a class="pagination-related" href="/blog/2025/08/31/%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E8%AE%BA%E6%96%87-%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9ATowards-Large-Scale-Small-Object-Detection-Survey-and-Benchmarks2/" title="论文-小目标检测：Towards Large-Scale Small Object Detection:  Survey and Benchmarks2"><img class="cover" src="/blog/image/Date%EF%BC%9A20250817154337(1).jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">论文-小目标检测：Towards Large-Scale Small Object Detection:  Survey and Benchmarks2</div></div><div class="info-2"><div class="info-item-1">学习笔记 (深度详尽版): 《迈向大规模小目标检测：综述与基准》 摘要 (Abstract) - 论文精髓  现状: 通用目标检测在标准基准上已取得巨大成功，但对于小目标的检测性能仍严重不足。 核心论点: 造成此瓶颈的关键原因有二：(1) 小目标自身固有的检测难度；(2) 缺乏一个专门为小目标检测设计的大规模、高质量基准来驱动研究。 本文贡献:  全面综述: 系统性地回顾了基于深度学习的小目标检测方法，并提出了一个包含六个类别的分类法。 构建新基准: 发布了两个大规模、高质量的小目标检测数据集——SODA-D (驾驶场景) 和 SODA-A (航空场景)。 深入评测: 在新数据集上对超过20种主流检测算法进行了全面的基准测试，分析了现有方法的瓶颈，并为未来研究指明了方向。   最终目标: 通过提供这份全面的综述和高质量的基准，推动小目标检测领域的发展。   一、 引言 (Introduction) - 问题的提出与工作的意义 1.1 背景：通用目标检测的成功与短板  成功: 在深度学习(CNN)的推动下，以Faster R-CNN, YOLO, RetinaNet,...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2025/08/31/%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E8%AE%BA%E6%96%87%EF%BC%9A%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9ADeep-learning-based-small-object-detection-A-survey/" title="论文：小目标检测：Deep learning-based small object detection: A survey"><img class="cover" src="/blog/image/Date%EF%BC%9A20250817154338.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-31</div><div class="info-item-2">论文：小目标检测：Deep learning-based small object detection: A survey</div></div><div class="info-2"><div class="info-item-1">Deep learning-based small object detection: A survey 一、文献基本信息    项目 内容 对应文档段落     文章标题 Deep learning-based small object detection: A survey    作者 Qihan Feng¹, Xinzheng Xu¹, Zhixiao Wang¹,²,*    单位 ¹ 中国矿业大学计算机科学与技术学院（徐州 221116）；² 教育部矿山数字化工程研究中心（徐州 221116）    通讯作者 Zhixiao Wang，邮箱：zhxwang@cumt.edu.cn    发表期刊 Mathematical Biosciences and Engineering (MBE) 、   卷期页码 Volume 20, Issue 4, 6551-6590 、   DOI 10.3934/mbe.2023282    发表时间 2023 年 2 月 2...</div></div></div></a><a class="pagination-related" href="/blog/2025/08/31/%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/%E8%AE%BA%E6%96%87-%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9ATowards-Large-Scale-Small-Object-Detection-Survey-and-Benchmarks2/" title="论文-小目标检测：Towards Large-Scale Small Object Detection:  Survey and Benchmarks2"><img class="cover" src="/blog/image/Date%EF%BC%9A20250817154337(1).jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-31</div><div class="info-item-2">论文-小目标检测：Towards Large-Scale Small Object Detection:  Survey and Benchmarks2</div></div><div class="info-2"><div class="info-item-1">学习笔记 (深度详尽版): 《迈向大规模小目标检测：综述与基准》 摘要 (Abstract) - 论文精髓  现状: 通用目标检测在标准基准上已取得巨大成功，但对于小目标的检测性能仍严重不足。 核心论点: 造成此瓶颈的关键原因有二：(1) 小目标自身固有的检测难度；(2) 缺乏一个专门为小目标检测设计的大规模、高质量基准来驱动研究。 本文贡献:  全面综述: 系统性地回顾了基于深度学习的小目标检测方法，并提出了一个包含六个类别的分类法。 构建新基准: 发布了两个大规模、高质量的小目标检测数据集——SODA-D (驾驶场景) 和 SODA-A (航空场景)。 深入评测: 在新数据集上对超过20种主流检测算法进行了全面的基准测试，分析了现有方法的瓶颈，并为未来研究指明了方向。   最终目标: 通过提供这份全面的综述和高质量的基准，推动小目标检测领域的发展。   一、 引言 (Introduction) - 问题的提出与工作的意义 1.1 背景：通用目标检测的成功与短板  成功: 在深度学习(CNN)的推动下，以Faster R-CNN, YOLO, RetinaNet,...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Towards-Large-Scale-Small-Object-Detection-Survey-and-Benchmarks"><span class="toc-text">Towards Large-Scale Small Object Detection: Survey and Benchmarks</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%96%87%E7%AB%A0%E5%9F%BA%E7%A1%80%E4%BF%A1%E6%81%AF"><span class="toc-text">一、文章基础信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%91%98%E8%A6%81%EF%BC%88%E6%A0%B8%E5%BF%83%E6%B5%93%E7%BC%A9%EF%BC%89"><span class="toc-text">二、摘要（核心浓缩）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%A2%86%E5%9F%9F%E8%83%8C%E6%99%AF"><span class="toc-text">1. 领域背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%A0%B8%E5%BF%83%E5%B7%A5%E4%BD%9C"><span class="toc-text">2. 核心工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%A0%94%E7%A9%B6%E6%84%8F%E4%B9%89"><span class="toc-text">3. 研究意义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%BC%95%E8%A8%80%EF%BC%88%E7%A0%94%E7%A9%B6%E8%83%8C%E6%99%AF%E4%B8%8E%E5%8A%A8%E6%9C%BA%EF%BC%89"><span class="toc-text">三、引言（研究背景与动机）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%B8%8E-SOD-%E7%9A%84%E5%AE%9A%E4%BD%8D"><span class="toc-text">1. 目标检测与 SOD 的定位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-SOD-%E7%9A%84%E4%B8%A4%E5%A4%A7%E6%A0%B8%E5%BF%83%E7%93%B6%E9%A2%88"><span class="toc-text">2. SOD 的两大核心瓶颈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%8E%B0%E6%9C%89%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="toc-text">3. 现有数据集的局限性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%A0%94%E7%A9%B6%E5%8A%A8%E6%9C%BA"><span class="toc-text">4. 研究动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%96%87%E7%AB%A0%E6%A0%B8%E5%BF%83%E8%B4%A1%E7%8C%AE"><span class="toc-text">5. 文章核心贡献</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%96%87%E7%AB%A0%E7%BB%93%E6%9E%84"><span class="toc-text">6. 文章结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%BB%BC%E8%BF%B0%EF%BC%88II-REVIEW-ON-SMALL-OBJECT-DETECTION%EF%BC%89"><span class="toc-text">四、小目标检测综述（II. REVIEW ON SMALL OBJECT DETECTION）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-SOD-%E7%9A%84%E5%9B%9B%E5%A4%A7%E6%A0%B8%E5%BF%83%E6%8C%91%E6%88%98"><span class="toc-text">1. SOD 的四大核心挑战</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E4%BF%A1%E6%81%AF%E4%B8%A2%E5%A4%B1%EF%BC%88Information-Loss%EF%BC%89"><span class="toc-text">（1）信息丢失（Information Loss）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E5%99%AA%E5%A3%B0%E7%89%B9%E5%BE%81%E8%A1%A8%E7%A4%BA%EF%BC%88Noisy-Feature-Representation%EF%BC%89"><span class="toc-text">（2）噪声特征表示（Noisy Feature Representation）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E8%BE%B9%E7%95%8C%E6%A1%86%E6%89%B0%E5%8A%A8%E5%AE%B9%E5%BF%8D%E5%BA%A6%E4%BD%8E%EF%BC%88Low-Tolerance-for-Bounding-Box-Perturbation%EF%BC%89"><span class="toc-text">（3）边界框扰动容忍度低（Low Tolerance for Bounding Box Perturbation）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%884%EF%BC%89%E8%AE%AD%E7%BB%83%E6%A0%B7%E6%9C%AC%E4%B8%8D%E8%B6%B3%EF%BC%88Inadequate-Samples-for-Training%EF%BC%89"><span class="toc-text">（4）训练样本不足（Inadequate Samples for Training）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%85%AD%E5%A4%A7%E7%B1%BB-SOD-%E7%AE%97%E6%B3%95%EF%BC%88%E6%8C%89%E6%8A%80%E6%9C%AF%E6%80%9D%E8%B7%AF%E5%88%86%E7%B1%BB%EF%BC%89"><span class="toc-text">2. 六大类 SOD 算法（按技术思路分类）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E6%A0%B7%E6%9C%AC%E5%AF%BC%E5%90%91%E6%96%B9%E6%B3%95%EF%BC%88Sample-Oriented-Methods%EF%BC%89%E2%80%94%E2%80%94-%E8%A7%A3%E5%86%B3-%E2%80%9C%E6%A0%B7%E6%9C%AC%E4%B8%8D%E8%B6%B3%E2%80%9D"><span class="toc-text">（1）样本导向方法（Sample-Oriented Methods）—— 解决 “样本不足”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E5%B0%BA%E5%BA%A6%E6%84%9F%E7%9F%A5%E6%96%B9%E6%B3%95%EF%BC%88Scale-Aware-Methods%EF%BC%89%E2%80%94%E2%80%94-%E8%A7%A3%E5%86%B3-%E2%80%9C%E4%BF%A1%E6%81%AF%E4%B8%A2%E5%A4%B1%E4%B8%8E%E5%B0%BA%E5%BA%A6%E5%B7%AE%E5%BC%82%E2%80%9D"><span class="toc-text">（2）尺度感知方法（Scale-Aware Methods）—— 解决 “信息丢失与尺度差异”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%96%B9%E6%B3%95%EF%BC%88Attention-Based-Methods%EF%BC%89%E2%80%94%E2%80%94-%E8%A7%A3%E5%86%B3-%E2%80%9C%E5%99%AA%E5%A3%B0%E7%89%B9%E5%BE%81%E2%80%9D"><span class="toc-text">（3）注意力方法（Attention-Based Methods）—— 解决 “噪声特征”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%884%EF%BC%89%E7%89%B9%E5%BE%81%E6%A8%A1%E4%BB%BF%E6%96%B9%E6%B3%95%EF%BC%88Feature-Imitation-Methods%EF%BC%89%E2%80%94%E2%80%94-%E8%A7%A3%E5%86%B3-%E2%80%9C%E7%89%B9%E5%BE%81%E8%B4%A8%E9%87%8F%E5%B7%AE%E2%80%9D"><span class="toc-text">（4）特征模仿方法（Feature-Imitation Methods）—— 解决 “特征质量差”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%885%EF%BC%89%E4%B8%8A%E4%B8%8B%E6%96%87%E5%BB%BA%E6%A8%A1%E6%96%B9%E6%B3%95%EF%BC%88Context-Modeling-Methods%EF%BC%89%E2%80%94%E2%80%94-%E8%A7%A3%E5%86%B3-%E2%80%9C%E4%BF%A1%E6%81%AF%E4%B8%8D%E8%B6%B3%E2%80%9D"><span class="toc-text">（5）上下文建模方法（Context-Modeling Methods）—— 解决 “信息不足”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%886%EF%BC%89%E8%81%9A%E7%84%A6%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%EF%BC%88Focus-and-Detect-Methods%EF%BC%89%E2%80%94%E2%80%94-%E8%A7%A3%E5%86%B3-%E2%80%9C%E9%AB%98%E5%88%86%E8%BE%A8%E7%8E%87%E6%95%88%E7%8E%87%E4%BD%8E%E2%80%9D"><span class="toc-text">（6）聚焦检测方法（Focus-and-Detect Methods）—— 解决 “高分辨率效率低”</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81SOD-%E7%9B%B8%E5%85%B3%E6%95%B0%E6%8D%AE%E9%9B%86%E7%BB%BC%E8%BF%B0%EF%BC%88III-REVIEW-OF-DATASETS-FOR-SMALL-OBJECT-DETECTION%EF%BC%89"><span class="toc-text">五、SOD 相关数据集综述（III. REVIEW OF DATASETS FOR SMALL OBJECT DETECTION）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%BB%E6%B5%81-SOD-%E7%9B%B8%E5%85%B3%E6%95%B0%E6%8D%AE%E9%9B%86%E6%A2%B3%E7%90%86"><span class="toc-text">1. 主流 SOD 相关数据集梳理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%8E%B0%E6%9C%89%E6%95%B0%E6%8D%AE%E9%9B%86%E5%85%B1%E6%80%A7%E4%B8%8D%E8%B6%B3"><span class="toc-text">2. 现有数据集共性不足</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-SOD-%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87%EF%BC%88Average-Precision-AP%EF%BC%89"><span class="toc-text">3. SOD 评估指标（Average Precision, AP）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="toc-text">（1）基础概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89AP-%E8%AE%A1%E7%AE%97%E8%8C%83%E5%BC%8F"><span class="toc-text">（2）AP 计算范式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%89SOD-%E6%A0%B8%E5%BF%83%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-text">（3）SOD 核心评估指标</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81SODA-%E5%9F%BA%E5%87%86%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%88IV-BENCHMARKS%EF%BC%89"><span class="toc-text">六、SODA 基准数据集（IV. BENCHMARKS）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%9F%BA%E7%A1%80%E8%AE%BE%E8%AE%A1%EF%BC%9A%E5%B0%8F%E7%9B%AE%E6%A0%87%E5%AE%9A%E4%B9%89%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%9D%A5%E6%BA%90"><span class="toc-text">1. 基础设计：小目标定义与数据来源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%B0%8F%E7%9B%AE%E6%A0%87%E5%88%86%E7%B1%BB%E6%A0%87%E5%87%86%EF%BC%88%E6%8C%89%E5%83%8F%E7%B4%A0%E9%9D%A2%E7%A7%AF%EF%BC%89"><span class="toc-text">（1）小目标分类标准（按像素面积）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%95%B0%E6%8D%AE%E6%9D%A5%E6%BA%90"><span class="toc-text">（2）数据来源</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%A0%87%E6%B3%A8%E8%A7%84%E5%88%99%E4%B8%8E%E6%95%B0%E6%8D%AE%E9%9B%86%E5%88%86%E5%89%B2"><span class="toc-text">2. 标注规则与数据集分割</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E6%A0%87%E6%B3%A8%E7%BB%86%E8%8A%82"><span class="toc-text">（1）标注细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%95%B0%E6%8D%AE%E9%9B%86%E5%88%86%E5%89%B2%E6%AF%94%E4%BE%8B"><span class="toc-text">（2）数据集分割比例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-SODA-%E6%A0%B8%E5%BF%83%E7%BB%9F%E8%AE%A1%E7%89%B9%E5%BE%81"><span class="toc-text">3. SODA 核心统计特征</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89SODA-D%EF%BC%88%E9%A9%BE%E9%A9%B6%E5%9C%BA%E6%99%AF%EF%BC%89"><span class="toc-text">（1）SODA-D（驾驶场景）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89SODA-A%EF%BC%88%E8%88%AA%E6%8B%8D%E5%9C%BA%E6%99%AF%EF%BC%89"><span class="toc-text">（2）SODA-A（航拍场景）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-SODA-%E4%B8%8E%E7%8E%B0%E6%9C%89%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E5%AF%B9%E6%AF%94%E4%BC%98%E5%8A%BF"><span class="toc-text">4. SODA 与现有数据集的对比优势</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89SODA-D-vs-%E9%A9%BE%E9%A9%B6%E5%9C%BA%E6%99%AF%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%88TT100K%E3%80%81EuroCity-Persons%EF%BC%89"><span class="toc-text">（1）SODA-D vs 驾驶场景数据集（TT100K、EuroCity Persons）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89SODA-A-vs-%E8%88%AA%E6%8B%8D%E5%9C%BA%E6%99%AF%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%88AI-TOD%E3%80%81DOTA%EF%BC%89"><span class="toc-text">（2）SODA-A vs 航拍场景数据集（AI-TOD、DOTA）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%AE%9E%E9%AA%8C%E9%83%A8%E5%88%86%EF%BC%88V-EXPERIMENTS%EF%BC%89"><span class="toc-text">七、实验部分（V. EXPERIMENTS）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80"><span class="toc-text">1. 实验设计基础</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E8%AF%84%E4%BC%B0%E5%8D%8F%E8%AE%AE"><span class="toc-text">（1）评估协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82"><span class="toc-text">（2）实现细节</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-SODA-D-%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C%EF%BC%88%E9%A9%BE%E9%A9%B6%E5%9C%BA%E6%99%AF%EF%BC%89"><span class="toc-text">2. SODA-D 实验结果（驾驶场景）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E4%B8%BB%E6%B5%81%E7%AE%97%E6%B3%95%E6%95%B4%E4%BD%93%E6%80%A7%E8%83%BD%E6%8E%92%E5%90%8D%EF%BC%88Top-5%EF%BC%89"><span class="toc-text">（1）主流算法整体性能排名（Top 5）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E5%85%B3%E9%94%AE%E7%BB%93%E8%AE%BA"><span class="toc-text">（2）关键结论</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-SODA-A-%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C%EF%BC%88%E8%88%AA%E6%8B%8D%E5%9C%BA%E6%99%AF%EF%BC%89"><span class="toc-text">3. SODA-A 实验结果（航拍场景）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E4%B8%BB%E6%B5%81%E6%97%8B%E8%BD%AC%E7%AE%97%E6%B3%95%E6%95%B4%E4%BD%93%E6%80%A7%E8%83%BD%E6%8E%92%E5%90%8D%EF%BC%88Top-5%EF%BC%89"><span class="toc-text">（1）主流旋转算法整体性能排名（Top 5）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E5%85%B3%E9%94%AE%E7%BB%93%E8%AE%BA-2"><span class="toc-text">（2）关键结论</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%B7%A8%E5%9C%BA%E6%99%AF%E9%80%9A%E7%94%A8%E7%BB%93%E8%AE%BA"><span class="toc-text">4. 跨场景通用结论</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E7%BB%93%E8%AE%BA%E4%B8%8E%E5%B1%95%E6%9C%9B%EF%BC%88VI-CONCLUSION-AND-OUTLOOK%EF%BC%89"><span class="toc-text">八、结论与展望（VI. CONCLUSION AND OUTLOOK）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%A0%94%E7%A9%B6%E6%80%BB%E7%BB%93"><span class="toc-text">1. 研究总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9C%AA%E6%9D%A5%E7%A0%94%E7%A9%B6%E6%96%B9%E5%90%91"><span class="toc-text">2. 未来研究方向</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%B0%8F%E7%9B%AE%E6%A0%87%E4%B8%93%E7%94%A8%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96%E5%99%A8"><span class="toc-text">（1）小目标专用特征提取器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%94%B9%E8%BF%9B%E7%89%B9%E5%BE%81%E9%87%91%E5%AD%97%E5%A1%94%E5%88%86%E5%B1%82%E8%A1%A8%E7%A4%BA"><span class="toc-text">（2）改进特征金字塔分层表示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E4%BC%98%E5%8C%96%E5%B0%8F%E7%9B%AE%E6%A0%87%E6%A0%87%E7%AD%BE%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5"><span class="toc-text">（3）优化小目标标签分配策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%884%EF%BC%89SOD-%E4%B8%93%E7%94%A8%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-text">（4）SOD 专用评估指标</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%85%B3%E9%94%AE%E6%9C%AF%E8%AF%AD%E8%A1%A8"><span class="toc-text">九、关键术语表</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A_gpt/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gpt"><img src="/blog/image/A1-2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gpt"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A_gpt/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gpt">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gpt</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A_gemini/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gemini"><img src="/blog/image/A1-2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gemini"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A_gemini/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gemini">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection-指标解释-gemini</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection"><img src="/blog/image/A1-2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/12/18/%E6%9D%82%E8%AE%B0/YOLOv8%20Anchor%20Free%E4%B8%8EDFL%E5%8E%9F%E7%90%86/" title="YOLOv8 Anchor Free与DFL原理"><img src="/blog/image/s625d11592724c.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="YOLOv8 Anchor Free与DFL原理"/></a><div class="content"><a class="title" href="/blog/2025/12/18/%E6%9D%82%E8%AE%B0/YOLOv8%20Anchor%20Free%E4%B8%8EDFL%E5%8E%9F%E7%90%86/" title="YOLOv8 Anchor Free与DFL原理">YOLOv8 Anchor Free与DFL原理</a><time datetime="2025-12-18T02:04:06.000Z" title="发表于 2025-12-18 10:04:06">2025-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/12/18/%E6%9D%82%E8%AE%B0/python%E8%AF%AD%E6%B3%95%E5%8F%8A%E5%87%BD%E6%95%B0%E7%A7%AF%E7%B4%AF/" title="python语法及函数积累"><img src="/blog/image/q4SynOBjcxn5gA6.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="python语法及函数积累"/></a><div class="content"><a class="title" href="/blog/2025/12/18/%E6%9D%82%E8%AE%B0/python%E8%AF%AD%E6%B3%95%E5%8F%8A%E5%87%BD%E6%95%B0%E7%A7%AF%E7%B4%AF/" title="python语法及函数积累">python语法及函数积累</a><time datetime="2025-12-18T02:04:06.000Z" title="发表于 2025-12-18 10:04:06">2025-12-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'qieliqiean/blog',
+      'data-repo-id': 'R_kgDONvpdYw',
+      'data-category-id': 'DIC_kwDONvpdY84C1DqB',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !true) {
+    if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
