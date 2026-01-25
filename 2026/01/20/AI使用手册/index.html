@@ -1,0 +1,688 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>AI使用手册 | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="codex Codex 命令精简速查表 CLI 终端命令 以下列出 Codex CLI 在终端中常用的命令及其用途，每条附有用途说明和示例：    命令 简要说明 示例     codex (无子命令) 启动交互式 Codex 会话（可选地直接附带提示）。启动后可在终端与 Codex 聊天，Codex 将读取当前目录内容并生成方案。 codex &quot;解释这个代码库&quot; – 在终端快">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI使用手册">
+<meta property="og:url" content="https://qieliqiean.github.io/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/index.html">
+<meta property="og:site_name" content="且离且安的碎碎念">
+<meta property="og:description" content="codex Codex 命令精简速查表 CLI 终端命令 以下列出 Codex CLI 在终端中常用的命令及其用途，每条附有用途说明和示例：    命令 简要说明 示例     codex (无子命令) 启动交互式 Codex 会话（可选地直接附带提示）。启动后可在终端与 Codex 聊天，Codex 将读取当前目录内容并生成方案。 codex &quot;解释这个代码库&quot; – 在终端快">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qieliqiean.github.io/blog/image/cover/13.jpg">
+<meta property="article:published_time" content="2026-01-20T01:21:48.000Z">
+<meta property="article:modified_time" content="2026-01-20T03:20:07.175Z">
+<meta property="article:author" content="lian">
+<meta property="article:tag" content="AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qieliqiean.github.io/blog/image/cover/13.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "AI使用手册",
+  "url": "https://qieliqiean.github.io/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/",
+  "image": "https://qieliqiean.github.io/blog/image/cover/13.jpg",
+  "datePublished": "2026-01-20T01:21:48.000Z",
+  "dateModified": "2026-01-20T03:20:07.175Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "lian",
+      "url": "https://qieliqiean.github.io/blog/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6b5d1303d19816191830cd73eccfdb1e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: {"path":"/blog/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'AI使用手册',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/image/cover/13.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">AI使用手册</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">AI使用手册</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-01-20T01:21:48.000Z" title="发表于 2026-01-20 09:21:48">2026-01-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-20T03:20:07.175Z" title="更新于 2026-01-20 11:20:07">2026-01-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">5.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>18分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="codex">codex</h1>
+<h2 id="Codex-命令精简速查表">Codex 命令精简速查表</h2>
+<h3 id="CLI-终端命令">CLI 终端命令</h3>
+<p>以下列出 Codex CLI 在终端中常用的命令及其用途，每条附有用途说明和示例：</p>
+<table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>简要说明</strong></th>
+<th><strong>示例</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>codex</code> <em>(无子命令)</em></td>
+<td>启动交互式 Codex 会话（可选地直接附带提示）。启动后可在终端与 Codex 聊天，Codex 将读取当前目录内容并生成方案。</td>
+<td><code>codex &quot;解释这个代码库&quot;</code> – 在终端快速询问一个问题，Codex 读取项目并直接给出答案。</td>
+</tr>
+<tr>
+<td><code>codex run &quot;&lt;指令&gt;&quot;</code></td>
+<td>以一次性方式执行给定指令（可选地附带文件上下文），直接在终端输出结果。适合无需持续对话的单次请求。</td>
+<td><code>codex run &quot;总结此文件内容&quot;</code> <code>--file README.md</code> – 附带文件进行总结，让 Codex 读取 <em><a target="_blank" rel="noopener" href="http://README.md">README.md</a></em> 并输出概要。</td>
+</tr>
+<tr>
+<td><code>codex edit &lt;文件&gt; &quot;&lt;说明&gt;&quot;</code></td>
+<td>让 Codex 对指定文件进行修改。Codex 将读取文件内容，依据说明生成改动方案并直接编辑文件（需相应权限）。适用于让 AI 优化或修复代码片段。</td>
+<td><code>codex edit src/Login.tsx &quot;添加表单验证&quot;</code> – 让 Codex 在 <em>Login.tsx</em> 文件中添加表单验证逻辑。</td>
+</tr>
+<tr>
+<td><code>codex resume [&lt;ID&gt; 或 --last]</code></td>
+<td>恢复之前的对话会话，延续先前上下文继续工作。不加参数将列出最近会话供选择，<code>--last</code> 直接打开上次会话，亦可指定会话 ID 精确恢复。</td>
+<td><code>codex resume</code> – 列出最近会话并选择恢复 <code>codex resume --last</code> – 恢复最新一次会话。</td>
+</tr>
+<tr>
+<td><code>codex login [--token &lt;密钥&gt;]</code></td>
+<td>登陆 Codex 开发者账户。首次使用需通过浏览器 OAuth 或提供 API 密钥完成认证。<code>--token</code> 选项可使用 API Key 登录，省去浏览器流程。登录成功后可使用 <code>codex whoami</code> 查看当前账户信息。</td>
+<td><code>codex login --token sk-...</code> – 使用 OpenAI API 密钥登录。不带参数运行 <code>codex login</code> 则会启动浏览器进行 ChatGPT 账号认证。</td>
+</tr>
+<tr>
+<td><code>codex exec &quot;&lt;指令&gt;&quot;</code></td>
+<td>非交互模式执行 Codex 指令，以脚本方式运行并将结果打印到标准输出。可用于将 Codex 集成到自动化流程中。支持附加 <code>--json</code> 输出机器可读结果。</td>
+<td><code>codex exec &quot;修复 CI 中的失败测试&quot;</code> – 非交互地让 Codex 执行修复任务，完成后直接输出修复结果。</td>
+</tr>
+<tr>
+<td><code>codex history</code></td>
+<td>查看近期 Codex 执行历史或会话列表，便于回顾先前生成的内容和操作记录。</td>
+<td><code>codex history</code> – 在终端列出最近使用 Codex 生成的历史记录，包含每次会话或指令的摘要。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="VS-Code-插件典型功能">VS Code 插件典型功能</h3>
+<p>在 VS Code 中安装 Codex 插件后，可通过以下功能与 Codex 交互，实现聊天、自动补全等集成开发体验：</p>
+<table>
+<thead>
+<tr>
+<th><strong>功能/界面操作</strong></th>
+<th><strong>简要说明</strong></th>
+<th><strong>示例/触发方式</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Codex 聊天面板</strong></td>
+<td>在 VS Code 侧边栏打开 Codex 聊天窗口，与 AI 以对话方式互动。支持从当前打开的文件获取上下文，使回答更贴合代码环境。用户可以在此输入需求，实时查看 Codex 回复并预览代码更改。</td>
+<td>VS Code 命令面板中选择“Open Codex Panel”或使用已绑定快捷键打开聊天面板。打开后即可输入问题，如 <em>“如何优化此函数？”</em> Codex 将结合当前项目给出建议。</td>
+</tr>
+<tr>
+<td><strong>内联代码补全</strong></td>
+<td>Codex 在代码编辑器中提供类似 Copilot 的自动补全建议，帮助开发者以实时方式编写代码。根据已输入的上下文（如函数签名或注释），Codex 会实时预测后续代码。开发者可按 <kbd>Tab</kbd> 或相应快捷键接受建议，加速编码过程。</td>
+<td>在代码中键入注释 <em>“// TODO: 验证输入”</em> 后暂停，Codex 可能会自动弹出建议代码。例如它可能补全一段输入验证逻辑，按 <kbd>Tab</kbd> 插入该片段。</td>
+</tr>
+<tr>
+<td><strong>文件/选区引用</strong></td>
+<td>将当前编辑的文件或选中代码片段添加到 Codex 上下文，便于 AI 理解问题所涉及的代码。这可以通过在聊天提示中使用 <em>@文件名</em> 引用，或使用 VS Code 提供的命令将选区/文件添加到对话线程来实现。</td>
+<td>1）在对话中输入:<code>请参考 @utils.py 实现上述功能</code>，Codex 将读取 <em><a target="_blank" rel="noopener" href="http://utils.py">utils.py</a></em> 内容再回答。 2）选中代码片段后，在命令面板选择“Codex: Add Selection to Thread”，将该片段作为上下文发给 Codex。</td>
+</tr>
+<tr>
+<td><strong>一键代码操作</strong></td>
+<td>通过 VS Code 插件的右键菜单或命令面板，触发特定的 Codex 自动化编码任务。插件内置了常用操作，如“<strong>Fix Selected Code</strong>”（自动修复选中的代码问题）、“<strong>Generate Unit Test</strong>”（为当前代码生成单元测试）等，将手动步骤交给 AI 完成。</td>
+<td>在代码中选中一段存在问题的函数，实现以下操作：右键菜单选择“Codex: Fix Selected Code”，Codex 将理解选中内容并直接给出修改建议，然后在终端面板显示 diff 供用户审查并应用。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Slash-指令速查（CLI-会话中）">Slash 指令速查（CLI 会话中）</h3>
+<p>在 Codex 交互式会话中，可使用“/”触发内置指令，以快速控制会话行为或获取特定功能。下表按名称列出常用 Slash 指令及适用场景：</p>
+<table>
+<thead>
+<tr>
+<th><strong>指令</strong></th>
+<th><strong>说明</strong></th>
+<th><strong>适用场景</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/model</code></td>
+<td>切换当前对话使用的模型及推理深度。可选较快的通用模型或更深度的推理模型（如 <code>gpt-4.1</code>）。</td>
+<td>需要在速度和推理能力间调整，例如复杂任务前切换更强模型。</td>
+</tr>
+<tr>
+<td><code>/approvals</code></td>
+<td>设置 Codex 操作的授权模式（Auto/Read-only/Full）。可动态放宽或收紧 Codex 执行修改和运行代码的权限。</td>
+<td>根据当前信任程度调整，让 Codex 在安全模式下提建议或自动应用改动。</td>
+</tr>
+<tr>
+<td><code>/new</code></td>
+<td>开启一个新的对话线程。在不退出 CLI 的情况下重置对话上下文，开始处理一个全新问题。</td>
+<td>需要在同一项目中就不同任务与 Codex 重新对话时使用。</td>
+</tr>
+<tr>
+<td><code>/init</code></td>
+<td>生成初始化的 <strong><a target="_blank" rel="noopener" href="http://AGENTS.md">AGENTS.md</a></strong> 指南文件。该文件用于向 Codex 提供项目背景、风格指南和约束。</td>
+<td>初次在新项目目录使用 Codex 时，快速创建指导文件帮助 AI 理解项目规范。</td>
+</tr>
+<tr>
+<td><code>/compact</code></td>
+<td>压缩对话上下文。Codex 会总结当前可见的对话内容，从而释放 token 容量以继续长对话。</td>
+<td>当对话轮数很多接近模型上下文长度限制时，使用此命令缓解上下文超长问题。</td>
+</tr>
+<tr>
+<td><code>/diff</code></td>
+<td>显示 Codex 所做的代码改动差异（Git diff）。包括未被 Git 追踪的文件变更。</td>
+<td>在允许 Codex 编辑代码后查看具体改动，再决定是否接受更改。</td>
+</tr>
+<tr>
+<td><code>/mention</code></td>
+<td>将指定文件或目录附加到对话上下文中。使 Codex 接下来可以访问该文件内容进行分析。</td>
+<td>需要 Codex 关注某个文件（如日志或源码）时使用，在提问前先 <code>/mention 路径</code> 引入文件内容。</td>
+</tr>
+<tr>
+<td><code>/status</code></td>
+<td>显示当前会话的状态信息：包括所用模型、权限模式、可写目录列表以及剩余上下文窗口大小等。</td>
+<td>确认当前配置或检查 token 消耗情况时使用，确保后续操作有足够上下文容量。</td>
+</tr>
+<tr>
+<td><code>/resume</code></td>
+<td>从会话列表中恢复先前保存的对话。可继续之前未完成的任务，对话历史和上下文都会保留。</td>
+<td>需延续昨日讨论的话题或任务时使用，避免从头提供背景。</td>
+</tr>
+<tr>
+<td><code>/fork</code></td>
+<td>将当前或指定的历史对话分叉为新线程。保留原对话记录的同时开启新分支，以便尝试不同的解决思路。</td>
+<td>面临一个问题的多种解法时，可以 fork 会话分别探索，而不会丢失原方案。</td>
+</tr>
+<tr>
+<td><code>/review</code></td>
+<td>让 Codex 审查当前工作区的代码改动并给出反馈。可选择不同范围（如对比主分支、未提交更改、指定 commit）进行代码审阅。</td>
+<td>提交代码前希望静态检查潜在问题时使用，例如运行 <code>/review uncommitted</code> 查看所有尚未提交改动的风险提示。</td>
+</tr>
+<tr>
+<td><code>/quit</code> (<code>/exit</code>)</td>
+<td>退出 Codex CLI 会话。两者作用相同。</td>
+<td>完成所有任务后退出交互环境时使用。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="特定场景下常用命令推荐">特定场景下常用命令推荐</h3>
+<h4 id="代码修改场景">代码修改场景</h4>
+<p>当利用 Codex 进行代码重构、调试修复等任务时，可组合使用以下命令以提高效率：</p>
+<table>
+<thead>
+<tr>
+<th><strong>命令/功能</strong></th>
+<th><strong>推荐用法</strong></th>
+<th><strong>示例</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Read-Only 模式</strong></td>
+<td>首次让 Codex 提出代码修改建议时，建议将授权模式设为只读（<code>/approvals</code> 选择 <strong>Read Only</strong>）。此模式下 Codex 只能提出修改方案而不会直接改动代码，方便开发者先行审查。</td>
+<td>触发 CodeX 重构函数时先保持 Read-Only 模式，观察 Codex 给出的修改计划是否合理，再决定是否应用。</td>
+</tr>
+<tr>
+<td><strong>/diff 查看改动</strong></td>
+<td>在 Codex 给出修改并申请执行后，使用 <code>/diff</code> 查看具体的代码差异。通过 diff 可以直观了解 Codex 将进行的改动内容，确保符合预期再批准。</td>
+<td><em>Codex</em>: “我已完成修改，是否应用更改？” <em>用户</em>: 输入 <code>/diff</code> 查看具体代码改动，再决定是否让 Codex 执行。</td>
+</tr>
+<tr>
+<td><strong>切换 Auto 模式</strong></td>
+<td>如果对 Codex 建议的改动已审核通过，可通过 <code>/approvals</code> 将模式切换为 Auto，让 Codex 自动应用修改。Auto 模式允许 Codex 在工作区内直接编辑文件和运行命令。</td>
+<td>在确认重构方案可行后，切换到 Auto 模式，Codex 将自动执行代码改动并运行相关构建或测试以验证结果。</td>
+</tr>
+<tr>
+<td><strong>/review 代码审查</strong></td>
+<td>在完成一轮修改后，使用 <code>/review</code> 让 Codex 对当前项目改动进行审查。Codex 会检查代码质量、潜在错误和改进点，并反馈总结报告。</td>
+<td>完成修复后运行 <code>/review</code>，Codex 可能指出变量命名不一致或潜在边缘情况遗漏等问题，帮助进一步完善代码。</td>
+</tr>
+<tr>
+<td><strong>/mention 聚焦文件</strong></td>
+<td>在让 Codex 审查或修改时，可用 <code>/mention 文件路径</code> 将特定文件纳入上下文焦点。这可令 Codex 将注意力限定在相关文件，避免干扰其他无关部分。</td>
+<td>在调试特定模块时，先 <code>/mention src/utils.js</code>，接着提问 “请检查此文件中的潜在问题”，Codex 将只分析 <em>utils.js</em> 内容。</td>
+</tr>
+<tr>
+<td><strong>分叉会话</strong></td>
+<td>当对代码修改有多种方案犹豫不决时，可使用 <code>/fork</code> 将当前对话复制为新线程进行平行探索。这样可以分别查看不同方案的效果，而原始对话内容仍保留备查。</td>
+<td>在尝试不同算法优化思路时，先 fork 会话A为会话B，在B中让 Codex 实现替代方案，同时保留A以比较两种方案性能。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="论文分析场景">论文分析场景</h4>
+<p>当借助 Codex 阅读和分析学术论文或长文档时，建议使用以下命令组合以更好地处理长文本：</p>
+<table>
+<thead>
+<tr>
+<th><strong>命令/功能</strong></th>
+<th><strong>推荐用法</strong></th>
+<th><strong>示例</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>文件内容导入</strong></td>
+<td>将论文文本导入 Codex 上下文：若论文以文本文件形式存在，可在对话开始时使用 <code>/mention 文件路径</code> 附加全文，使 Codex 能阅读全文内容；或者直接使用 CLI 命令附带文件，比如 <code>codex run &quot;总结这篇论文&quot; --file paper.txt</code>。</td>
+<td>使用 <code>codex run &quot;请总结这篇论文的结论&quot; --file paper.txt</code>，Codex 将读取 <em>paper.txt</em> 并输出中文摘要，方便快速了解论文结论。</td>
+</tr>
+<tr>
+<td><strong>/model 切换模型</strong></td>
+<td>针对复杂的学术分析场景，可使用 <code>/model</code> 切换到更强大的模型（例如 GPT-4 系列）。高级模型具备更长的上下文和更强的推理能力，适合深入理解长篇论文和复杂内容。</td>
+<td>在提问 <em>“这篇论文的方法论有哪些局限？”</em> 前，先 <code>/model gpt-4.1</code> 切换模型，以获得更详尽严谨的分析回答。</td>
+</tr>
+<tr>
+<td><strong>/compact 压缩上下文</strong></td>
+<td>若对话内容变得冗长且接近模型上下文长度限制，使用 <code>/compact</code> 压缩上下文。Codex 会总结当前讨论要点，以释放空间继续深入讨论。</td>
+<td>与 Codex 连续讨论论文细节十余轮后对话变长，这时输入 <code>/compact</code>，Codex 将整理要点，使后续交流不受上下文长度限制。</td>
+</tr>
+<tr>
+<td><strong>分支讨论</strong></td>
+<td>面对论文的不同部分或观点，可通过 <code>/fork</code> 分支出新的对话线程分别讨论。这有助于分别深入研究不同章节内容，而不会把多主题混杂在一个对话中。</td>
+<td>分析论文时，可将关于“实验结果解读”的提问与“理论推导细节”的提问放在两个 fork 出的会话中分别进行，使讨论更有条理。</td>
+</tr>
+<tr>
+<td><strong>/status 查看状态</strong></td>
+<td>在长文档分析过程中，随时使用 <code>/status</code> 查看当前模型、已用 token 数等状态。特别是大论文可能耗费大量上下文，检查 token 用量有助于决定何时需要压缩或终止对话。</td>
+<td>输入 <code>/status</code> 可看到例如“剩余上下文容量：约 2000 tokens”等信息，提醒用户及时采取 <code>/compact</code> 等措施确保分析顺利进行。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="OpenCode">OpenCode</h1>
+<h2 id="OpenCode-CLI-常用命令">OpenCode CLI 常用命令</h2>
+<table>
+<thead>
+<tr>
+<th>命令/操作</th>
+<th>说明</th>
+<th>示例/用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>启动 OpenCode CLI</strong></td>
+<td>进入项目目录后运行 <code>opencode</code> 启动交互界面。可使用 CLI 执行与模型对话、代码分析和生成等操作。</td>
+<td><code>cd myproject/ &amp;&amp; opencode</code> 启动 OpenCode，到终端 TUI 界面开始对话。</td>
+</tr>
+<tr>
+<td><strong>/init</strong></td>
+<td>初始化项目，扫描代码生成项目说明文件 <strong><a target="_blank" rel="noopener" href="http://AGENTS.md">AGENTS.md</a></strong>。该文件总结项目结构和约定，有助于 AI 理解代码（建议纳入版本管理）。</td>
+<td>启动 OpenCode 后输入 <code>/init</code> 让 AI 分析当前仓库，生成 <a target="_blank" rel="noopener" href="http://AGENTS.md">AGENTS.md</a> 描述各模块职责。</td>
+</tr>
+<tr>
+<td><strong>模式切换 (Plan/Build)</strong></td>
+<td><strong>Plan 模式</strong>为只读分析模式，不自动改代码；<strong>Build 模式</strong>为可写模式，允许编辑文件和执行命令。按下 <code>Tab</code> 键可在两种模式之间切换。通常阅读代码用 Plan 模式，确认方案后再切换回 Build 模式实施修改。</td>
+<td>例如，在 Plan 模式下让 AI 审阅代码不会修改文件；确认修改思路后按 <code>Tab</code> 切换到 Build 模式执行更改。</td>
+</tr>
+<tr>
+<td><strong>文件引用 (@)</strong></td>
+<td>在对话中引用项目文件或代码片段，提供完整上下文供 AI 理解。语法：<code>@相对路径#L开始-L结束</code> 可以引用特定行范围。引用越充分，AI 解答越准确。</td>
+<td>询问函数作用时，可输入例如：<code>请解释 @src/utils/parse.py#L10-L30 的逻辑</code>，让 AI 基于引用代码给出解释。</td>
+</tr>
+<tr>
+<td><strong>撤销/重做修改</strong></td>
+<td>使用 <code>/undo</code> 撤销上一次由 AI 执行的代码改动，恢复修改前状态；使用 <code>/redo</code> 重做刚撤销的改动。方便在 AI 修复代码出错时回退或重apply更改。</td>
+<td>在 Build 模式应用修复后发现问题，输入 <code>/undo</code> 撤销该改动；若误撤销则 <code>/redo</code> 恢复之。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="OpenCode-VS-Code-插件功能">OpenCode VS Code 插件功能</h2>
+<table>
+<thead>
+<tr>
+<th>功能/操作</th>
+<th>说明与用法</th>
+<th>快捷键/触发</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>终端集成与快速启动</strong></td>
+<td>在 VS Code 内打开或聚焦一个 OpenCode 终端会话，在编辑器中直接使用 OpenCode。</td>
+<td><strong>打开/聚焦终端</strong>：Mac 下按 <code>Cmd+Esc</code>，Windows/Linux 下按 <code>Ctrl+Esc</code>；<strong>新建终端会话</strong>：按 <code>Cmd+Shift+Esc</code>（Win/Linux <code>Ctrl+Shift+Esc</code>） 强制创建新会话。</td>
+</tr>
+<tr>
+<td><strong>文件引用与上下文嵌入</strong></td>
+<td>插件可根据当前编辑器状态自动生成 <code>@文件路径#行号</code> 引用，提供代码上下文给 OpenCode。 选中代码后使用引用命令，会插入带行号范围的文件引用标记，AI 将基于引用内容理解问题。</td>
+<td>在编辑器中选中一段代码，按 <strong><code>Cmd+Option+K</code></strong>（Win/Linux 下 <code>Alt+Ctrl+K</code>）即可插入当前文件及选区的引用标记到对话输入。</td>
+</tr>
+<tr>
+<td><strong>智能聊天面板</strong></td>
+<td>插件在侧边栏提供 OpenCode 聊天面板，可直接与 AI 对话。 与终端界面同步，支持上下文持续和多轮对话。适合在编写代码时随时提问 AI 或让 AI 解释选中的代码。</td>
+<td>在 VS Code 侧边栏打开 <strong>OpenCode 面板</strong>，输入自然语言提问或命令，即可收到 AI 对答。（也可通过 VS Code 命令面板搜索 OpenCode 命令打开面板）。</td>
+</tr>
+<tr>
+<td><strong>代码解释与重构</strong></td>
+<td>支持右键菜单调用 OpenCode 对所选代码片段进行操作。如“解释此段代码”、“重构/优化此代码”等。 插件会将选中代码发送给 AI 并在聊天面板显示解释或重构建议，帮助理解代码意图或改进代码实现。</td>
+<td><strong>代码选择后右键</strong>，选择 OpenCode 提供的操作（如“Explain with OpenCode”或“Refactor with OpenCode”），即可在聊天面板查看 AI 给出的讲解或重构方案。</td>
+</tr>
+<tr>
+<td><strong>语义导航与问题定位</strong></td>
+<td>利用 AI 对项目的理解进行代码导航。可通过提问让 AI 查找某功能或变量的定义、引用位置，辅助定位问题根因。插件结合 OpenCode 的搜索工具（如 <code>glob</code>/<code>grep</code>）自动扫描项目代码，实现“按语义跳转”。</td>
+<td>例如，在聊天中询问“函数<code>calculateTotal</code>在哪里定义？”插件将触发 AI 的文件搜索工具定位定义位置；再询问调用处，AI 可列出相关引用，点击结果即可在编辑器中打开对应文件行。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Slash-指令速查（交互式命令）">Slash 指令速查（交互式命令）</h2>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>作用</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>/init</strong></td>
+<td>分析当前项目并生成 <code>AGENTS.md</code> 项目说明文件。帮助 AI 理解工程结构、模块职责和编码规范。</td>
+<td><code>/init</code> – 初始化项目后，自动打开生成的 <a target="_blank" rel="noopener" href="http://AGENTS.md">AGENTS.md</a> 查看项目结构概要。</td>
+</tr>
+<tr>
+<td><strong>/connect</strong></td>
+<td>连接模型提供商，配置 API Key 等凭据。执行命令后可选择 Anthropic、OpenAI 等模型并输入密钥，完成后续对话所需的模型授权。</td>
+<td><code>/connect</code> – 选择 <em>OpenAI</em> 并粘贴 API Key，配置完成后即可调用对应模型回答问题。</td>
+</tr>
+<tr>
+<td><strong>/models</strong></td>
+<td>列出可用的模型列表，或快速切换当前对话使用的 AI 模型。方便针对不同任务选择速度或精度合适的模型。</td>
+<td><code>/models</code> – 打开模型选择列表，切换为 <code>claude-4-5</code> 模型以提高代码理解能力。</td>
+</tr>
+<tr>
+<td><strong>/undo</strong></td>
+<td>撤销上一次 AI 执行的文件修改操作。会将受影响文件恢复到修改前的状态，便于快速回退错误修改。</td>
+<td><code>/undo</code> – 如果 AI 修复导致新错误，立即撤销该更改恢复原代码。</td>
+</tr>
+<tr>
+<td><strong>/redo</strong></td>
+<td>重做最近一次被撤销的修改。用于还原刚才撤销的更改（如果发现撤销不当），无需重新让 AI 生成。</td>
+<td><code>/redo</code> – 不小心撤销了正确修改？用此命令重做撤销，恢复 AI 提交的更改。</td>
+</tr>
+<tr>
+<td><strong>/share</strong></td>
+<td>生成当前对话的分享链接或文件，以便将对话内容发送给他人查看。分享记录包括用户提问和 AI 答复，便于协作调试。</td>
+<td><code>/share</code> – 获得一个会话URL，将其发送给同事共同审阅 AI 给出的代码修改建议。</td>
+</tr>
+<tr>
+<td><strong>/reset</strong></td>
+<td>重置会话，将对话上下文清空并开始一个全新会话。相当于打开了新的对话窗口，常用于长对话后的上下文清理或快速重新开始。</td>
+<td><code>/reset</code> – 当前话题偏离太多时，重置会话再重新提问，以免早前无关上下文干扰新回答。</td>
+</tr>
+<tr>
+<td><strong>/clear</strong></td>
+<td>清除当前对话的消息历史，但保留已加载的文件/项目上下文。适用于希望在不重新连接文件的情况下，让对话从空白对话记录开始。</td>
+<td><code>/clear</code> – 清空聊天记录后继续提问，让 AI 忽略之前的对话，只基于已有代码上下文回答。</td>
+</tr>
+<tr>
+<td><strong>/focus</strong></td>
+<td>专注模式：聚焦特定文件或范围的上下文，排除无关内容干扰。通过限制 AI 所考虑的上下文范围，提升大项目中某模块分析的准确性。<br/><em>(注：功能类似通过只引用相关文件来“聚焦”上下文，实际可结合 /drop 等命令实现)</em></td>
+<td>输入 <code>/focus src/module/</code>，让 AI 仅关注 <em>src/module/</em> 目录下代码进行分析。（需确保未聚焦部分已通过 /drop 移出上下文。）</td>
+</tr>
+<tr>
+<td><strong>/context</strong></td>
+<td>上下文检查：列出当前对话中纳入的文件、内容片段及其令牌占用情况，帮助用户了解会话上下文规模。可用于排查某文件是否已加载或判断是否需要精简上下文。</td>
+<td><code>/context</code> – 查看当前会话包含的文件列表和各自 token 用量，判断是否需要使用 /drop 移除某些文件以减小上下文。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="按任务场景推荐的命令组合">按任务场景推荐的命令组合</h2>
+<table>
+<thead>
+<tr>
+<th>任务场景</th>
+<th>推荐命令/功能组合与用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>理解大型项目结构与模块职责</strong></td>
+<td><strong>初始化分析</strong>：使用 <code>/init</code> 生成 <a target="_blank" rel="noopener" href="http://AGENTS.md">AGENTS.md</a> 项目概览。阅读该文件了解模块划分和职责。<strong>上下文阅读</strong>：切换到 <em>Plan 模式</em> 深入代码浏览（确保不改动）。在提问时引用相关文件（<code>@文件路径</code>）让 AI 基于源码回答。逐层阅读关键模块代码，并让 AI 总结各模块接口和相互关系，以快速掌握大型代码库脉络。</td>
+</tr>
+<tr>
+<td><strong>详细解释复杂代码段并可视化逻辑</strong></td>
+<td><strong>上下文提供</strong>：选取复杂函数或算法代码，利用 <code>@文件#行号</code> 引用整个代码段供 AI 分析。进入 Plan 模式，让 AI <strong>逐步讲解</strong>代码含义和执行流程，必要时要求给出伪代码或流程图以辅助理解。（可提示 AI 使用 Mermaid 语法绘制流程图。）<strong>交互追问</strong>：针对难懂的部分连续提问，深入每步细节。通过 AI 的分解讲解和可视化，理清复杂流程逻辑。</td>
+</tr>
+<tr>
+<td><strong>定位并修复代码中的具体问题</strong></td>
+<td><strong>问题定位</strong>：在 Plan 模式下描述观察到的错误现象，让 AI 推测可能原因。若需定位源头，可让 AI 使用内置搜索工具（如 <code>grep</code>）在代码中查找相关字符串或模式（例如查找异常消息出处或命名不一致之处）。<strong>分析修改</strong>：找到可疑代码后，引入相关文件上下文并询问修复建议。确认方案后切换到 Build 模式让 AI 应用修复。<strong>验证与回退</strong>：运行项目测试（可让 AI 调用 <code>bash</code> 执行测试命令）验证问题是否解决；若修复不当，利用 <code>/undo</code> 撤销更改重新尝试。</td>
+</tr>
+</tbody>
+</table>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/AI/">AI</a></div><div class="post-share"><div class="social-share" data-image="/blog/image/cover/13.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E4%B8%AD%E8%BD%AC/" title=""><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2"></div></div><div class="info-2"><div class="info-item-1">下面给你一版 更偏“强自动化（脚本 + 状态机）” 的论文讲解 Skill V0（可直接落地到 Claude Code 的 .claude/skills/）。核心思想是：  Claude 负责写作与解释（自然语言、图解、梳理） 脚本负责确定性/可重复的“结构化工作”： 解析 PDF → 抽取目录/图表 caption → 生成任务队列 → 维护 state.json → 自动拼装 4 个最终 md 状态机强约束“每次只推进一个小节”：脚本在 state.json 里只允许一个 in_progress，没 done 之前 next 永远不会跳到下一节。  这套设计完全符合 Claude Skills 官方推荐的方式：把“复杂逻辑写成脚本并执行”，脚本可以 执行但不需要读入上下文，只有脚本输出会占用 token；也推荐把大内容拆到辅助文件（progressive disclosure），并用 allowed-tools 控制工具范围。(Claude Code)  1) 目录结构（Skill 本体） 建议放在 项目级，便于随 repo 共享：(Claude...</div></div></div></a><a class="pagination-related" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读"><img class="cover" src="/blog/image/cover/9.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">【WeDetect】论文阅读</div></div><div class="info-2"><div class="info-item-1">Abstract Abstract.1 本小节概论 这篇论文在做一件事：让“开放词表目标检测”（你给一句文本，模型就去图里找对应目标）变得又快又强。 作者观察到：很多“快”的开放词表检测器都走一种思路——把检测当成“检索”：  图像里每个候选区域（region/box）提一个向量（embedding） 文本提示（比如 “dog”“red car”）也提一个向量 最后用相似度匹配（比如点积）来决定哪个框最像这个词  于是作者把这套“检索哲学”彻底做到底，做成一个家族 WeDetect，不仅能做检测，还能做：  实时开放词表检测（WeDetect）：不靠复杂跨模态融合层，也能做到 SOTA + 快 通用候选框生成 + 历史数据回溯检索（WeDetect-Uni）：先把海量图片的“候选框向量”缓存起来，以后搜任何物体都很快 把大模型当分类器做REC（WeDetect-Ref）：处理复杂指代表达（“左边穿7号球衣的那个人”）时，不用慢吞吞的逐词生成，而是一把并行判别   Abstract.2 关键概念/符号表    概念/术语 解释     Open-vocabulary Object...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#codex"><span class="toc-text">codex</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Codex-%E5%91%BD%E4%BB%A4%E7%B2%BE%E7%AE%80%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="toc-text">Codex 命令精简速查表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CLI-%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4"><span class="toc-text">CLI 终端命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VS-Code-%E6%8F%92%E4%BB%B6%E5%85%B8%E5%9E%8B%E5%8A%9F%E8%83%BD"><span class="toc-text">VS Code 插件典型功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Slash-%E6%8C%87%E4%BB%A4%E9%80%9F%E6%9F%A5%EF%BC%88CLI-%E4%BC%9A%E8%AF%9D%E4%B8%AD%EF%BC%89"><span class="toc-text">Slash 指令速查（CLI 会话中）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%AE%9A%E5%9C%BA%E6%99%AF%E4%B8%8B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%8E%A8%E8%8D%90"><span class="toc-text">特定场景下常用命令推荐</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E4%BF%AE%E6%94%B9%E5%9C%BA%E6%99%AF"><span class="toc-text">代码修改场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E5%88%86%E6%9E%90%E5%9C%BA%E6%99%AF"><span class="toc-text">论文分析场景</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenCode"><span class="toc-text">OpenCode</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenCode-CLI-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-text">OpenCode CLI 常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenCode-VS-Code-%E6%8F%92%E4%BB%B6%E5%8A%9F%E8%83%BD"><span class="toc-text">OpenCode VS Code 插件功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Slash-%E6%8C%87%E4%BB%A4%E9%80%9F%E6%9F%A5%EF%BC%88%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%91%BD%E4%BB%A4%EF%BC%89"><span class="toc-text">Slash 指令速查（交互式命令）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E4%BB%BB%E5%8A%A1%E5%9C%BA%E6%99%AF%E6%8E%A8%E8%8D%90%E7%9A%84%E5%91%BD%E4%BB%A4%E7%BB%84%E5%90%88"><span class="toc-text">按任务场景推荐的命令组合</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读"><img src="/blog/image/cover/9.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【WeDetect】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读">【WeDetect】论文阅读</a><time datetime="2026-01-21T01:41:58.000Z" title="发表于 2026-01-21 09:41:58">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册"><img src="/blog/image/cover/13.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="AI使用手册"/></a><div class="content"><a class="title" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册">AI使用手册</a><time datetime="2026-01-20T01:21:48.000Z" title="发表于 2026-01-20 09:21:48">2026-01-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E4%B8%AD%E8%BD%AC/" title="无标题">无标题</a><time datetime="2026-01-19T08:29:47.530Z" title="发表于 2026-01-19 16:29:47">2026-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读"><img src="/blog/image/cover/2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【OV-DQUO】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读">【OV-DQUO】论文阅读</a><time datetime="2026-01-19T07:59:50.000Z" title="发表于 2026-01-19 15:59:50">2026-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释"><img src="/blog/image/cover/6.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="YOLO-UniOW-指标解释"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释">YOLO-UniOW-指标解释</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><script src="/blog/true"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'qieliqiean/blog',
+      'data-repo-id': 'R_kgDONvpdYw',
+      'data-category-id': 'DIC_kwDONvpdY84C1DqB',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !true) {
+    if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
