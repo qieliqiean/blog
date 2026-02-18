@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>YOLO-UniOW-指标解释 | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="GEMINI YOLO-UniOW：通用开放世界目标检测评估指标的深度解析与教学报告 1. 绪论：从封闭世界到通用开放世界的评估范式转变 作为计算机视觉领域的教育者，引导学生理解 YOLO-UniOW 这样前沿工作的核心，不仅在于解析其网络架构（如 Adaptive Decision Learning 或 Wildcard Learning），更在于透彻理解其评估体系。在传统的“封闭世界”（Clo">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>YOLO-UniOW-指标解释 | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#fdfcf8"><meta name="description" content="系列文章   &#x2F;   开放词汇检测 &#x2F; YOLO-UniOW  🔗GEMINI YOLO-UniOW：通用开放世界目标检测评估指标的深度解析与教学报告 🔗1. 绪论：从封闭世界到通用开放世界的评估范式转变 作为计算机视觉领域的教育者，引导学生理解 YOLO-UniOW 这样前沿工作的核心，不仅在于解析其网络架构（如 Adaptive Decision Learning 或 Wildcar">
 <meta property="og:type" content="article">
 <meta property="og:title" content="YOLO-UniOW-指标解释">
 <meta property="og:url" content="https://qieliqiean.github.io/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/index.html">
 <meta property="og:site_name" content="且离且安的碎碎念">
-<meta property="og:description" content="GEMINI YOLO-UniOW：通用开放世界目标检测评估指标的深度解析与教学报告 1. 绪论：从封闭世界到通用开放世界的评估范式转变 作为计算机视觉领域的教育者，引导学生理解 YOLO-UniOW 这样前沿工作的核心，不仅在于解析其网络架构（如 Adaptive Decision Learning 或 Wildcard Learning），更在于透彻理解其评估体系。在传统的“封闭世界”（Clo">
+<meta property="og:description" content="系列文章   &#x2F;   开放词汇检测 &#x2F; YOLO-UniOW  🔗GEMINI YOLO-UniOW：通用开放世界目标检测评估指标的深度解析与教学报告 🔗1. 绪论：从封闭世界到通用开放世界的评估范式转变 作为计算机视觉领域的教育者，引导学生理解 YOLO-UniOW 这样前沿工作的核心，不仅在于解析其网络架构（如 Adaptive Decision Learning 或 Wildcar">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qieliqiean.github.io/blog/image/cover/6.jpeg">
 <meta property="article:published_time" content="2026-01-14T01:44:34.000Z">
-<meta property="article:modified_time" content="2026-01-20T01:10:22.491Z">
+<meta property="article:modified_time" content="2026-02-18T11:59:46.440Z">
 <meta property="article:author" content="lian">
 <meta property="article:tag" content="YOLO-UniOW">
 <meta name="twitter:card" content="summary">
@@ -18,7 +18,7 @@
   "url": "https://qieliqiean.github.io/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/",
   "image": "https://qieliqiean.github.io/blog/image/cover/6.jpeg",
   "datePublished": "2026-01-14T01:44:34.000Z",
-  "dateModified": "2026-01-20T01:10:22.491Z",
+  "dateModified": "2026-02-18T11:59:46.440Z",
   "author": [
     {
       "@type": "Person",
@@ -84,13 +84,13 @@
       const activateDarkMode = () => {
         document.documentElement.setAttribute('data-theme', 'dark')
         if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a')
         }
       }
       const activateLightMode = () => {
         document.documentElement.setAttribute('data-theme', 'light')
         if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fdfcf8')
         }
       }
 
@@ -99,7 +99,25 @@
 
       const theme = saveToLocal.get('theme')
     
-          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
         
       
       const asideStatus = saveToLocal.get('aside-status')
@@ -129,7 +147,7 @@ btf.addGlobalFn('pjaxComplete', () => {
 </script><script>const GLOBAL_CONFIG = {
   root: '/blog/',
   algolia: undefined,
-  localSearch: {"path":"/blog/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  localSearch: {"path":"/blog/search.xml","preload":false,"top_n_per_article":3,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
   translate: undefined,
   highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
   copy: {
@@ -161,20 +179,25 @@ btf.addGlobalFn('pjaxComplete', () => {
   isAnchor: false,
   percent: {
     toc: true,
-    rightside: false,
+    rightside: true,
   },
-  autoDarkmode: false
+  autoDarkmode: true
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
   title: 'YOLO-UniOW-指标解释',
   isHighlightShrink: false,
   isToc: true,
   pageType: 'post'
-}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/image/cover/6.jpeg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">YOLO-UniOW-指标解释</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">YOLO-UniOW-指标解释</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-20T01:10:22.491Z" title="更新于 2026-01-20 09:10:22">2026-01-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">18.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>97分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="GEMINI">GEMINI</h1>
+}</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=LXGW+WenKai:wght@400;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/blog/css/custom.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/blog/easter-egg/"><i class="fa-fw fas fa-egg"></i><span> 彩蛋</span></a></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/image/cover/6.jpeg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">YOLO-UniOW-指标解释</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/blog/easter-egg/"><i class="fa-fw fas fa-egg"></i><span> 彩蛋</span></a></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">YOLO-UniOW-指标解释</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-02-18T11:59:46.440Z" title="更新于 2026-02-18 19:59:46">2026-02-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">18.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>98分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><nav class="series-breadcrumb" aria-label="系列导航">
+  <a href="/blog/series/">系列文章</a>
+  <span class="series-breadcrumb__sep">/</span>
+  <a href="/blog/series/5byA5pS-6K-N5rGH5qOA5rWLIC8gWU9MTy1VbmlPVw/">开放词汇检测 / YOLO-UniOW</a>
+</nav>
+<h1 id="GEMINI"><a class="header-anchor" href="#GEMINI">🔗</a>GEMINI</h1>
 <p>YOLO-UniOW：通用开放世界目标检测评估指标的深度解析与教学报告</p>
-<h2 id="1-绪论：从封闭世界到通用开放世界的评估范式转变">1. 绪论：从封闭世界到通用开放世界的评估范式转变</h2>
+<h2 id="1-绪论：从封闭世界到通用开放世界的评估范式转变"><a class="header-anchor" href="#1-绪论：从封闭世界到通用开放世界的评估范式转变">🔗</a>1. 绪论：从封闭世界到通用开放世界的评估范式转变</h2>
 <p>作为计算机视觉领域的教育者，引导学生理解 YOLO-UniOW 这样前沿工作的核心，不仅在于解析其网络架构（如 Adaptive Decision Learning 或 Wildcard Learning），更在于透彻理解其<strong>评估体系</strong>。在传统的“封闭世界”（Closed-Set）检测任务中，我们习惯了使用 mAP（Mean Average Precision）作为唯一的衡量标准。然而，YOLO-UniOW 提出并解决的是**通用开放世界目标检测（Universal Open-World Object Detection, Uni-OWD）**问题 1。这一范式的转变要求评估指标必须从单一的“准确性”维度，扩展到“泛化性”、“发现能力”、“记忆稳定性”和“推理效率”等多个维度。</p>
 <p>本报告将基于 YOLO-UniOW 的论文实验章节（Section 4. Experiments）及项目代码库（特别是 <code>yolo_world/metrics/ow_metric.py</code>），为学生提供一份详尽的指标指南。我们将逐一拆解表 1（Table 1）中的 LVIS 开放词汇评估指标（AP, APr, APc, APf, FPS, FPSf）和表 2（Table 2）中的开放世界评估指标（U-Recall, A-OSE, WI, PK, CK, Both），揭示它们背后的数学定义、代码实现逻辑以及它们所评估的模型能力边界。</p>
-<h3 id="1-1-为什么需要两套完全不同的评估体系？">1.1 为什么需要两套完全不同的评估体系？</h3>
+<h3 id="1-1-为什么需要两套完全不同的评估体系？"><a class="header-anchor" href="#1-1-为什么需要两套完全不同的评估体系？">🔗</a>1.1 为什么需要两套完全不同的评估体系？</h3>
 <p>在深入细节之前，我们需要建立一个宏观的认知：YOLO-UniOW 同时在两个截然不同的“战场”上进行测试，这直接导致了 Table 1 和 Table 2 指标的差异。</p>
 <ol>
 <li><strong>战场一：开放词汇检测（Open-Vocabulary Detection, OVD）</strong>。
@@ -196,13 +219,13 @@ btf.addGlobalFn('pjaxComplete', () => {
 </ol>
 <p>接下来的章节，我们将以“庖丁解牛”的方式，深入这两个战场的每一个原子指标。</p>
 <hr>
-<h2 id="2-基础理论：目标检测评估的基石">2. 基础理论：目标检测评估的基石</h2>
+<h2 id="2-基础理论：目标检测评估的基石"><a class="header-anchor" href="#2-基础理论：目标检测评估的基石">🔗</a>2. 基础理论：目标检测评估的基石</h2>
 <p>在解析 YOLO-UniOW 的高级指标前，必须复习构建这些指标的数学基石：IoU、混淆矩阵与 AP 计算。这些是理解后续 APr 或 PK 等复杂指标的先决条件。</p>
-<h3 id="2-1-交并比（Intersection-over-Union-IoU）">2.1 交并比（Intersection over Union, IoU）</h3>
+<h3 id="2-1-交并比（Intersection-over-Union-IoU）"><a class="header-anchor" href="#2-1-交并比（Intersection-over-Union-IoU）">🔗</a>2.1 交并比（Intersection over Union, IoU）</h3>
 <p>IoU 是衡量预测框（Predicted Box, 
-    <span id="mjx-ab01039">
+    <span id="mjx-1a3ba85">
       <style>
-      #mjx-ab01039{
+      #mjx-1a3ba85{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -361,9 +384,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.65ex;" xmlns="http://www.w3.org/2000/svg" width="2.71ex" height="2.195ex" role="img" focusable="false" viewBox="0 -683 1197.7 970.2" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D435" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></g><g data-mml-node="mi" transform="translate(792,-150) scale(0.707)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>B</mi><mi>p</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   ）与真实框（Ground Truth, 
-    <span id="mjx-4afa615">
+    <span id="mjx-1615288">
       <style>
-      #mjx-4afa615{
+      #mjx-1615288{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -523,9 +546,9 @@ g[data-mml-node="xypic"] path {
     </span>
   ）几何重合度的核心量度：</p>
 
-    <span id="mjx-307e60f">
+    <span id="mjx-207176e">
       <style>
-      #mjx-307e60f{
+      #mjx-207176e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -684,9 +707,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" display="true" style="position: relative;"><svg style="vertical-align: -2.274ex;" xmlns="http://www.w3.org/2000/svg" width="22.607ex" height="5.679ex" role="img" focusable="false" viewBox="0 -1505 9992.2 2509.9" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mtext"><path data-c="49" d="M328 0Q307 3 180 3T32 0H21V46H43Q92 46 106 49T126 60Q128 63 128 342Q128 620 126 623Q122 628 118 630T96 635T43 637H21V683H32Q53 680 180 680T328 683H339V637H317Q268 637 254 634T234 623Q232 620 232 342Q232 63 234 60Q238 55 242 53T264 48T317 46H339V0H328Z"></path><path data-c="6F" d="M28 214Q28 309 93 378T250 448Q340 448 405 380T471 215Q471 120 407 55T250 -10Q153 -10 91 57T28 214ZM250 30Q372 30 372 193V225V250Q372 272 371 288T364 326T348 362T317 390T268 410Q263 411 252 411Q222 411 195 399Q152 377 139 338T126 246V226Q126 130 145 91Q177 30 250 30Z" transform="translate(361,0)"></path><path data-c="55" d="M128 622Q121 629 117 631T101 634T58 637H25V683H36Q57 680 180 680Q315 680 324 683H335V637H302Q262 636 251 634T233 622L232 418V291Q232 189 240 145T280 67Q325 24 389 24Q454 24 506 64T571 183Q575 206 575 410V598Q569 608 565 613T541 627T489 637H472V683H481Q496 680 598 680T715 683H724V637H707Q634 633 622 598L621 399Q620 194 617 180Q617 179 615 171Q595 83 531 31T389 -22Q304 -22 226 33T130 192Q129 201 128 412V622Z" transform="translate(861,0)"></path></g><g data-mml-node="mo" transform="translate(1888.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mfrac" transform="translate(2944.6,0)"><g data-mml-node="mrow" transform="translate(220,755)"><g data-mml-node="mtext"><path data-c="41" d="M255 0Q240 3 140 3Q48 3 39 0H32V46H47Q119 49 139 88Q140 91 192 245T295 553T348 708Q351 716 366 716H376Q396 715 400 709Q402 707 508 390L617 67Q624 54 636 51T687 46H717V0H708Q699 3 581 3Q458 3 437 0H427V46H440Q510 46 510 64Q510 66 486 138L462 209H229L209 150Q189 91 189 85Q189 72 209 59T259 46H264V0H255ZM447 255L345 557L244 256Q244 255 345 255H447Z"></path><path data-c="72" d="M36 46H50Q89 46 97 60V68Q97 77 97 91T98 122T98 161T98 203Q98 234 98 269T98 328L97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 60 434T96 436Q112 437 131 438T160 441T171 442H174V373Q213 441 271 441H277Q322 441 343 419T364 373Q364 352 351 337T313 322Q288 322 276 338T263 372Q263 381 265 388T270 400T273 405Q271 407 250 401Q234 393 226 386Q179 341 179 207V154Q179 141 179 127T179 101T180 81T180 66V61Q181 59 183 57T188 54T193 51T200 49T207 48T216 47T225 47T235 46T245 46H276V0H267Q249 3 140 3Q37 3 28 0H20V46H36Z" transform="translate(750,0)"></path><path data-c="65" d="M28 218Q28 273 48 318T98 391T163 433T229 448Q282 448 320 430T378 380T406 316T415 245Q415 238 408 231H126V216Q126 68 226 36Q246 30 270 30Q312 30 342 62Q359 79 369 104L379 128Q382 131 395 131H398Q415 131 415 121Q415 117 412 108Q393 53 349 21T250 -11Q155 -11 92 58T28 218ZM333 275Q322 403 238 411H236Q228 411 220 410T195 402T166 381T143 340T127 274V267H333V275Z" transform="translate(1142,0)"></path><path data-c="61" d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z" transform="translate(1586,0)"></path></g><g data-mml-node="mo" transform="translate(2086,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msub" transform="translate(2475,0)"><g data-mml-node="mi"><path data-c="1D435" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></g><g data-mml-node="mi" transform="translate(792,-150) scale(0.707)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g></g><g data-mml-node="mo" transform="translate(3894.9,0)"><path data-c="2229" d="M88 -21T75 -21T55 -7V200Q55 231 55 280Q56 414 60 428Q61 430 61 431Q77 500 152 549T332 598Q443 598 522 544T610 405Q611 399 611 194V-7Q604 -22 591 -22Q582 -22 572 -9L570 405Q563 433 556 449T529 485Q498 519 445 538T334 558Q251 558 179 518T96 401Q95 396 95 193V-7Q88 -21 75 -21Z"></path></g><g data-mml-node="msub" transform="translate(4784.1,0)"><g data-mml-node="mi"><path data-c="1D435" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></g><g data-mml-node="TeXAtom" transform="translate(792,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D454" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path></g><g data-mml-node="mi" transform="translate(477,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g></g><g data-mml-node="mo" transform="translate(6218.7,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g><g data-mml-node="mrow" transform="translate(220,-710)"><g data-mml-node="mtext"><path data-c="41" d="M255 0Q240 3 140 3Q48 3 39 0H32V46H47Q119 49 139 88Q140 91 192 245T295 553T348 708Q351 716 366 716H376Q396 715 400 709Q402 707 508 390L617 67Q624 54 636 51T687 46H717V0H708Q699 3 581 3Q458 3 437 0H427V46H440Q510 46 510 64Q510 66 486 138L462 209H229L209 150Q189 91 189 85Q189 72 209 59T259 46H264V0H255ZM447 255L345 557L244 256Q244 255 345 255H447Z"></path><path data-c="72" d="M36 46H50Q89 46 97 60V68Q97 77 97 91T98 122T98 161T98 203Q98 234 98 269T98 328L97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 60 434T96 436Q112 437 131 438T160 441T171 442H174V373Q213 441 271 441H277Q322 441 343 419T364 373Q364 352 351 337T313 322Q288 322 276 338T263 372Q263 381 265 388T270 400T273 405Q271 407 250 401Q234 393 226 386Q179 341 179 207V154Q179 141 179 127T179 101T180 81T180 66V61Q181 59 183 57T188 54T193 51T200 49T207 48T216 47T225 47T235 46T245 46H276V0H267Q249 3 140 3Q37 3 28 0H20V46H36Z" transform="translate(750,0)"></path><path data-c="65" d="M28 218Q28 273 48 318T98 391T163 433T229 448Q282 448 320 430T378 380T406 316T415 245Q415 238 408 231H126V216Q126 68 226 36Q246 30 270 30Q312 30 342 62Q359 79 369 104L379 128Q382 131 395 131H398Q415 131 415 121Q415 117 412 108Q393 53 349 21T250 -11Q155 -11 92 58T28 218ZM333 275Q322 403 238 411H236Q228 411 220 410T195 402T166 381T143 340T127 274V267H333V275Z" transform="translate(1142,0)"></path><path data-c="61" d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z" transform="translate(1586,0)"></path></g><g data-mml-node="mo" transform="translate(2086,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msub" transform="translate(2475,0)"><g data-mml-node="mi"><path data-c="1D435" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></g><g data-mml-node="mi" transform="translate(792,-150) scale(0.707)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g></g><g data-mml-node="mo" transform="translate(3894.9,0)"><path data-c="222A" d="M591 598H592Q604 598 611 583V376Q611 345 611 296Q610 162 606 148Q605 146 605 145Q586 68 507 23T333 -22Q268 -22 209 -1T106 66T56 173Q55 180 55 384L56 585Q66 598 75 598Q85 598 95 585V378L96 172L98 162Q112 95 181 57T332 18Q415 18 487 58T570 175Q571 180 571 383V583Q579 598 591 598Z"></path></g><g data-mml-node="msub" transform="translate(4784.1,0)"><g data-mml-node="mi"><path data-c="1D435" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></g><g data-mml-node="TeXAtom" transform="translate(792,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D454" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path></g><g data-mml-node="mi" transform="translate(477,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g></g><g data-mml-node="mo" transform="translate(6218.7,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g><rect width="6807.7" height="60" x="120" y="220"></rect></g></g></g></svg><mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mtext>IoU</mtext><mo>=</mo><mfrac><mrow><mtext>Area</mtext><mo stretchy="false">(</mo><msub><mi>B</mi><mi>p</mi></msub><mo>∩</mo><msub><mi>B</mi><mrow data-mjx-texclass="ORD"><mi>g</mi><mi>t</mi></mrow></msub><mo stretchy="false">)</mo></mrow><mrow><mtext>Area</mtext><mo stretchy="false">(</mo><msub><mi>B</mi><mi>p</mi></msub><mo>∪</mo><msub><mi>B</mi><mrow data-mjx-texclass="ORD"><mi>g</mi><mi>t</mi></mrow></msub><mo stretchy="false">)</mo></mrow></mfrac></math></mjx-assistive-mml></mjx-container>
     </span>
   <p>在 YOLO-UniOW 的代码实现中，IoU 阈值（通常记为 
-    <span id="mjx-7bb0c01">
+    <span id="mjx-6964148">
       <style>
-      #mjx-7bb0c01{
+      #mjx-6964148{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -847,9 +870,9 @@ g[data-mml-node="xypic"] path {
   ）决定了一个预测是“正确”还是“错误”。</p>
 <ul>
 <li><strong>IoU 
-    <span id="mjx-1f607e5">
+    <span id="mjx-31ce46e">
       <style>
-      #mjx-1f607e5{
+      #mjx-31ce46e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1009,9 +1032,9 @@ g[data-mml-node="xypic"] path {
     </span>
    0.5</strong>：通常作为判定 TP（True Positive）的最低门槛。</li>
 <li><strong>IoU 
-    <span id="mjx-d1219be">
+    <span id="mjx-937077a">
       <style>
-      #mjx-d1219be{
+      #mjx-937077a{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1171,7 +1194,7 @@ g[data-mml-node="xypic"] path {
     </span>
    [0.5, 0.95]</strong>：COCO 和 LVIS 标准下的 AP 计算会在此区间内每隔 0.05 取一个阈值，计算平均值，以奖励高精度的定位 6。</li>
 </ul>
-<h3 id="2-2-动态混淆矩阵：TP-FP-FN">2.2 动态混淆矩阵：TP, FP, FN</h3>
+<h3 id="2-2-动态混淆矩阵：TP-FP-FN"><a class="header-anchor" href="#2-2-动态混淆矩阵：TP-FP-FN">🔗</a>2.2 动态混淆矩阵：TP, FP, FN</h3>
 <p>在开放世界设定下，TP、FP、FN 的定义变得极为微妙：</p>
 <ul>
 <li><strong>TP (True Positive)</strong>：预测框与某一<strong>已知类别</strong>的 GT 框 IoU 大于阈值，且类别预测正确。</li>
@@ -1184,18 +1207,18 @@ g[data-mml-node="xypic"] path {
 </li>
 </ul>
 <hr>
-<h2 id="3-深度解析-Table-1：LVIS-开放词汇评估指标">3. 深度解析 Table 1：LVIS 开放词汇评估指标</h2>
+<h2 id="3-深度解析-Table-1：LVIS-开放词汇评估指标"><a class="header-anchor" href="#3-深度解析-Table-1：LVIS-开放词汇评估指标">🔗</a>3. 深度解析 Table 1：LVIS 开放词汇评估指标</h2>
 <p>YOLO-UniOW 的 Table 1 展示了模型在 LVIS 数据集上的表现 3。LVIS（包含 1203 个类别）的数据分布具有极端的长尾特性，这使得它成为评估开放词汇能力的最佳试金石。</p>
-<h3 id="3-1-AP-Average-Precision-——-宏观能力的标尺">3.1 AP (Average Precision) —— 宏观能力的标尺</h3>
+<h3 id="3-1-AP-Average-Precision-——-宏观能力的标尺"><a class="header-anchor" href="#3-1-AP-Average-Precision-——-宏观能力的标尺">🔗</a>3.1 AP (Average Precision) —— 宏观能力的标尺</h3>
 <ul>
 <li><strong>定义</strong>：这是所有类别的平均精度均值（mAP）。计算方式遵循 COCO 标准，即在 IoU=0.5 到 0.95 之间取 10 个阈值计算 AP，然后求平均。</li>
 <li><strong>物理意义</strong>：代表了模型的<strong>综合检测能力</strong>。它同时考量了定位的准确性（高 IoU）和分类的正确性。</li>
 <li><strong>YOLO-UniOW 的表现</strong>：根据 README 4 和论文摘要 1，YOLO-UniOW-L 在 LVIS minival 上达到了 <strong>34.6 AP</strong>。</li>
 <li><strong>教学洞察</strong>：作为教授，你需要告诉学生，34.6 的 AP 在 LVIS 上是一个非常高的分数。相比之下，传统的 YOLOv8 在未经过大规模词汇预训练的情况下，在 LVIS 上的 Zero-Shot 表现几乎为零。这证明了 YOLO-UniOW 通过学习 CLIP 的文本嵌入（Embeddings），成功掌握了大量未在视觉训练数据中密集出现的类别。</li>
 </ul>
-<h3 id="3-2-频率分层指标：APr-APc-APf-——-泛化能力的显微镜">3.2 频率分层指标：APr, APc, APf —— 泛化能力的显微镜</h3>
+<h3 id="3-2-频率分层指标：APr-APc-APf-——-泛化能力的显微镜"><a class="header-anchor" href="#3-2-频率分层指标：APr-APc-APf-——-泛化能力的显微镜">🔗</a>3.2 频率分层指标：APr, APc, APf —— 泛化能力的显微镜</h3>
 <p>这是 Table 1 中最关键、也最容易让初学者困惑的部分。LVIS 数据集根据每个类别在训练集中出现的图片数量，将 1203 个类别划分为三组 9：</p>
-<h4 id="3-2-1-APr-Average-Precision-for-Rare-classes">3.2.1 APr (Average Precision for Rare classes)</h4>
+<h4 id="3-2-1-APr-Average-Precision-for-Rare-classes"><a class="header-anchor" href="#3-2-1-APr-Average-Precision-for-Rare-classes">🔗</a>3.2.1 APr (Average Precision for Rare classes)</h4>
 <ul>
 <li><strong>定义</strong>：仅针对<strong>稀有（Rare）类别</strong>计算的 mAP。稀有类别的定义是：在训练集中出现次数 <strong>&lt; 10 张图片</strong> 的类别 9。</li>
 <li><strong>核心意义</strong>：<strong>这是衡量“Zero-Shot”或“Few-Shot”能力的核心指标。</strong>
@@ -1206,13 +1229,13 @@ g[data-mml-node="xypic"] path {
 </ul>
 </li>
 </ul>
-<h4 id="3-2-2-APc-Average-Precision-for-Common-classes">3.2.2 APc (Average Precision for Common classes)</h4>
+<h4 id="3-2-2-APc-Average-Precision-for-Common-classes"><a class="header-anchor" href="#3-2-2-APc-Average-Precision-for-Common-classes">🔗</a>3.2.2 APc (Average Precision for Common classes)</h4>
 <ul>
 <li><strong>定义</strong>：针对<strong>普通（Common）类别</strong>计算的 mAP。定义为训练集中出现次数在 <strong>10 到 100 张图片</strong> 之间的类别 9。</li>
 <li><strong>核心意义</strong>：代表了模型在<strong>中等样本量</strong>下的学习效率。它考察模型是否能在数据量有限的情况下，快速收敛到较好的特征表示。</li>
 <li><strong>数据支撑</strong>：YOLO-UniOW-L 的 APc 为 <strong>33.6</strong> 4，起到了连接稀有类和频繁类的桥梁作用。</li>
 </ul>
-<h4 id="3-2-3-APf-Average-Precision-for-Frequent-classes">3.2.3 APf (Average Precision for Frequent classes)</h4>
+<h4 id="3-2-3-APf-Average-Precision-for-Frequent-classes"><a class="header-anchor" href="#3-2-3-APf-Average-Precision-for-Frequent-classes">🔗</a>3.2.3 APf (Average Precision for Frequent classes)</h4>
 <ul>
 <li><strong>定义</strong>：针对<strong>频繁（Frequent）类别</strong>计算的 mAP。定义为训练集中出现次数 <strong>&gt; 100 张图片</strong> 的类别 9。</li>
 <li><strong>核心意义</strong>：代表了模型在<strong>充足数据</strong>下的上限能力（Upper Bound）。这通常对应于我们常见的“床”、“椅子”、“人”等类别。</li>
@@ -1222,14 +1245,14 @@ g[data-mml-node="xypic"] path {
 </ul>
 </li>
 </ul>
-<h3 id="3-3-效率指标：F-P-S-与-F-P-Sf-——-速度的真相">3.3 效率指标：F P S 与 F P Sf —— 速度的真相</h3>
+<h3 id="3-3-效率指标：F-P-S-与-F-P-Sf-——-速度的真相"><a class="header-anchor" href="#3-3-效率指标：F-P-S-与-F-P-Sf-——-速度的真相">🔗</a>3.3 效率指标：F P S 与 F P Sf —— 速度的真相</h3>
 <p>学生提到的 &quot;F P S F P Sf&quot; 实际上是对表格表头的误读，它对应的是 <strong>FPS</strong> 和 <strong>FPS_f</strong>。对于 YOLO（You Only Look Once）系列模型，速度是其灵魂，因此这一组指标至关重要。</p>
-<h4 id="3-3-1-FPS-Frames-Per-Second-——-系统级推理速度">3.3.1 FPS (Frames Per Second) —— 系统级推理速度</h4>
+<h4 id="3-3-1-FPS-Frames-Per-Second-——-系统级推理速度"><a class="header-anchor" href="#3-3-1-FPS-Frames-Per-Second-——-系统级推理速度">🔗</a>3.3.1 FPS (Frames Per Second) —— 系统级推理速度</h4>
 <ul>
 <li><strong>定义</strong>：每秒处理的帧数。计算公式为 
-    <span id="mjx-d0af203">
+    <span id="mjx-caedbd8">
       <style>
-      #mjx-d0af203{
+      #mjx-caedbd8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1398,13 +1421,13 @@ g[data-mml-node="xypic"] path {
 </li>
 <li><strong>数值</strong>：YOLO-UniOW-S 达到 <strong>98.3 FPS</strong>，YOLO-UniOW-L 达到 <strong>64.8 FPS</strong> 4。这意味着它完全满足实时性要求（通常认为 &gt;30 FPS 为实时）。</li>
 </ul>
-<h4 id="3-3-2-FPS-f-Forward-FPS-——-纯模型推理速度">3.3.2 FPS_f (Forward FPS) —— 纯模型推理速度</h4>
+<h4 id="3-3-2-FPS-f-Forward-FPS-——-纯模型推理速度"><a class="header-anchor" href="#3-3-2-FPS-f-Forward-FPS-——-纯模型推理速度">🔗</a>3.3.2 FPS_f (Forward FPS) —— 纯模型推理速度</h4>
 <ul>
 <li><strong>定义</strong>：仅计算<strong>模型前向传播</strong>（Backbone + Neck + Head）的时间，<strong>不包含</strong> NMS 后处理 3。</li>
 <li><strong>&quot;f&quot; 的含义</strong>：这里的 &quot;f&quot; 代表 <strong>Forward</strong>（前向）或 <strong>Forward-only</strong>。在某些文献中也可能被标记为 
-    <span id="mjx-5b95cab">
+    <span id="mjx-c238b2a">
       <style>
-      #mjx-5b95cab{
+      #mjx-c238b2a{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1571,9 +1594,9 @@ g[data-mml-node="xypic"] path {
 </li>
 </ul>
 <hr>
-<h2 id="4-深度解析-Table-2：M-OWODB-开放世界评估指标">4. 深度解析 Table 2：M-OWODB 开放世界评估指标</h2>
+<h2 id="4-深度解析-Table-2：M-OWODB-开放世界评估指标"><a class="header-anchor" href="#4-深度解析-Table-2：M-OWODB-开放世界评估指标">🔗</a>4. 深度解析 Table 2：M-OWODB 开放世界评估指标</h2>
 <p>Table 2 评估的是模型在<strong>动态、增量</strong>环境下的表现。这是 YOLO-UniOW 作为“通用”检测器的核心竞争力所在。这里的测试协议（Protocol）通常涉及多个 <strong>Task</strong>（任务阶段），每个 Task 会引入新的已知类别，同时保留未知的“隐形”类别。</p>
-<h3 id="4-1-U-Recall-Unknown-Recall-——-探索未知的雷达">4.1 U-Recall (Unknown Recall) —— 探索未知的雷达</h3>
+<h3 id="4-1-U-Recall-Unknown-Recall-——-探索未知的雷达"><a class="header-anchor" href="#4-1-U-Recall-Unknown-Recall-——-探索未知的雷达">🔗</a>4.1 U-Recall (Unknown Recall) —— 探索未知的雷达</h3>
 <ul>
 <li>
 <p><strong>全称</strong>：Unknown Class Recall（未知类别召回率）。</p>
@@ -1581,9 +1604,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>定义：在所有被标记为“Unknown”的真实物体（Ground Truth）中，有多少被模型成功检测出来（即便模型叫不出它们的名字，只要检测到了物体本身就算成功）。</p>
 
-    <span id="mjx-7c80665">
+    <span id="mjx-d9e08b3">
       <style>
-      #mjx-7c80665{
+      #mjx-d9e08b3{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1745,9 +1768,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>代码实现逻辑：</p>
 <p>在 yolo_world/metrics/ow_metric.py 中 4，U-Recall 是通过计算 IoU 
-    <span id="mjx-709929e">
+    <span id="mjx-0bf096b">
       <style>
-      #mjx-709929e{
+      #mjx-0bf096b{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1920,7 +1943,7 @@ g[data-mml-node="xypic"] path {
 <p><strong>归因分析</strong>：这得益于 <strong>Wildcard Learning</strong> 1。传统的检测器强行将未知物体归类为背景（Background），而 YOLO-UniOW 显式地训练了一个“通配符”（Wildcard）嵌入向量，专门用来捕获那些与已知类别特征不匹配的物体。这直接提升了 U-Recall。</p>
 </li>
 </ul>
-<h3 id="4-2-A-OSE-Absolute-Open-Set-Error-——-拒绝幻觉的能力">4.2 A-OSE (Absolute Open-Set Error) —— 拒绝幻觉的能力</h3>
+<h3 id="4-2-A-OSE-Absolute-Open-Set-Error-——-拒绝幻觉的能力"><a class="header-anchor" href="#4-2-A-OSE-Absolute-Open-Set-Error-——-拒绝幻觉的能力">🔗</a>4.2 A-OSE (Absolute Open-Set Error) —— 拒绝幻觉的能力</h3>
 <ul>
 <li>
 <p><strong>全称</strong>：Absolute Open-Set Error（绝对开放集合误差）。</p>
@@ -1928,9 +1951,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>定义：被错误分类为“已知类别”的未知物体的绝对数量 8。</p>
 
-    <span id="mjx-7fa2a44">
+    <span id="mjx-bfc20f9">
       <style>
-      #mjx-7fa2a44{
+      #mjx-bfc20f9{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2106,7 +2129,7 @@ g[data-mml-node="xypic"] path {
 <p><strong>教学意义</strong>：高 A-OSE 意味着模型在这个开放世界中充满了“幻觉”，它倾向于把没见过的东西强行归类到见过的类别中。YOLO-UniOW 利用 CLIP 的语义空间，使得“狼”和“狗”在特征空间上分离得更开，从而降低 A-OSE。</p>
 </li>
 </ul>
-<h3 id="4-3-WI-Wilderness-Impact-——-荒野中的鲁棒性">4.3 WI (Wilderness Impact) —— 荒野中的鲁棒性</h3>
+<h3 id="4-3-WI-Wilderness-Impact-——-荒野中的鲁棒性"><a class="header-anchor" href="#4-3-WI-Wilderness-Impact-——-荒野中的鲁棒性">🔗</a>4.3 WI (Wilderness Impact) —— 荒野中的鲁棒性</h3>
 <ul>
 <li>
 <p><strong>全称</strong>：Wilderness Impact（荒野影响因子）。</p>
@@ -2115,9 +2138,9 @@ g[data-mml-node="xypic"] path {
 <p>定义：量化了未知物体（Unknowns）的存在对已知类别（Knowns）精度的干扰程度 5。</p>
 <p>公式通常定义为：</p>
 
-    <span id="mjx-58cccec">
+    <span id="mjx-e3b0434">
       <style>
-      #mjx-58cccec{
+      #mjx-e3b0434{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2277,9 +2300,9 @@ g[data-mml-node="xypic"] path {
     </span>
   <p>或者在代码实现中更直观的形式 4：</p>
 
-    <span id="mjx-435129e">
+    <span id="mjx-525a96f">
       <style>
-      #mjx-435129e{
+      #mjx-525a96f{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2447,9 +2470,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p><strong>指标方向</strong>：<strong>越低越好（↓）</strong>。WI 
-    <span id="mjx-9333bdc">
+    <span id="mjx-0c4694d">
       <style>
-      #mjx-9333bdc{
+      #mjx-0c4694d{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2613,9 +2636,9 @@ g[data-mml-node="xypic"] path {
 <p><strong>与 A-OSE 的关系</strong>：A-OSE 是绝对数量，WI 是相对比例。WI 反映了错误检测在所有检测中的占比。</p>
 </li>
 </ul>
-<h3 id="4-4-增量学习指标：PK-CK-Both-——-记忆与学习的博弈">4.4 增量学习指标：PK, CK, Both —— 记忆与学习的博弈</h3>
+<h3 id="4-4-增量学习指标：PK-CK-Both-——-记忆与学习的博弈"><a class="header-anchor" href="#4-4-增量学习指标：PK-CK-Both-——-记忆与学习的博弈">🔗</a>4.4 增量学习指标：PK, CK, Both —— 记忆与学习的博弈</h3>
 <p>开放世界检测是一个**持续学习（Continual Learning）**的过程。Table 2 通常会展示 Task 1, Task 2, Task 3 等不同阶段的指标。</p>
-<h4 id="4-4-1-PK-Previously-Known-——-考量“稳定性”">4.4.1 PK (Previously Known) —— 考量“稳定性”</h4>
+<h4 id="4-4-1-PK-Previously-Known-——-考量“稳定性”"><a class="header-anchor" href="#4-4-1-PK-Previously-Known-——-考量“稳定性”">🔗</a>4.4.1 PK (Previously Known) —— 考量“稳定性”</h4>
 <ul>
 <li><strong>定义</strong>：<strong>之前任务</strong>中引入的类别的 mAP 4。
 <ul>
@@ -2625,7 +2648,7 @@ g[data-mml-node="xypic"] path {
 <li><strong>核心问题</strong>：<strong>灾难性遗忘（Catastrophic Forgetting）</strong>。很多模型在学了新知识（Task 2）后，会把旧知识（Task 1）忘光，导致 PK 大幅下降。</li>
 <li><strong>YOLO-UniOW 的策略</strong>：通过冻结部分参数或使用重放策略，YOLO-UniOW 致力于保持高 PK 值。</li>
 </ul>
-<h4 id="4-4-2-CK-Currently-Known-——-考量“可塑性”">4.4.2 CK (Currently Known) —— 考量“可塑性”</h4>
+<h4 id="4-4-2-CK-Currently-Known-——-考量“可塑性”"><a class="header-anchor" href="#4-4-2-CK-Currently-Known-——-考量“可塑性”">🔗</a>4.4.2 CK (Currently Known) —— 考量“可塑性”</h4>
 <ul>
 <li><strong>定义</strong>：<strong>当前任务</strong>中新引入类别的 mAP 4。
 <ul>
@@ -2635,15 +2658,15 @@ g[data-mml-node="xypic"] path {
 <li><strong>核心问题</strong>：<strong>欠拟合（Underfitting）</strong>。模型能否快速掌握新知识？</li>
 <li><strong>教学洞察</strong>：通常模型会在 PK 和 CK 之间做权衡（Trade-off）。要么死记硬背旧的（高 PK 低 CK），要么只顾新的（低 PK 高 CK）。</li>
 </ul>
-<h4 id="4-4-3-Both-Overall-mAP-——-综合表现">4.4.3 Both (Overall mAP) —— 综合表现</h4>
+<h4 id="4-4-3-Both-Overall-mAP-——-综合表现"><a class="header-anchor" href="#4-4-3-Both-Overall-mAP-——-综合表现">🔗</a>4.4.3 Both (Overall mAP) —— 综合表现</h4>
 <ul>
 <li><strong>定义</strong>：当前阶段<strong>所有</strong>已知类别（PK + CK）的平均 mAP 12。</li>
 <li><strong>价值</strong>：这是评价模型整体生命周期表现的终极指标。YOLO-UniOW 在 Table 2 中通常能取得最佳的 Both 分数，证明它是一个<strong>既学得快又记得牢</strong>的优等生 3。</li>
 </ul>
 <hr>
-<h2 id="5-实战教学：代码中的指标计算">5. 实战教学：代码中的指标计算</h2>
+<h2 id="5-实战教学：代码中的指标计算"><a class="header-anchor" href="#5-实战教学：代码中的指标计算">🔗</a>5. 实战教学：代码中的指标计算</h2>
 <p>作为教授，必须引导学生从理论走向代码。以下是 <code>yolo_world/metrics/ow_metric.py</code> 的核心逻辑解析，建议学生对照源码阅读 4：</p>
-<h3 id="5-1-核心类-OpenWorldMetric">5.1 核心类 <code>OpenWorldMetric</code></h3>
+<h3 id="5-1-核心类-OpenWorldMetric"><a class="header-anchor" href="#5-1-核心类-OpenWorldMetric">🔗</a>5.1 核心类 <code>OpenWorldMetric</code></h3>
 <p>代码中定义了一个 <code>OpenWorldMetric</code> 类，它继承自基础评估类。核心处理逻辑在 <code>process</code> 和 <code>compute_metrics</code> 方法中。</p>
 <ol>
 <li><strong>数据分离 (Data Separation)</strong>：
@@ -2673,10 +2696,10 @@ g[data-mml-node="xypic"] path {
 </ul>
 </li>
 </ol>
-<h3 id="5-2-配置文件的重要性">5.2 配置文件的重要性</h3>
+<h3 id="5-2-配置文件的重要性"><a class="header-anchor" href="#5-2-配置文件的重要性">🔗</a>5.2 配置文件的重要性</h3>
 <p>提醒学生注意配置文件（Configs）中的 <code>ovthresh</code> 参数。虽然标准是 0.5，但有些实验可能会调整这个阈值。如果 A-OSE 异常高，首先检查这个阈值设置是否过低。</p>
 <hr>
-<h2 id="6-总结与教学建议">6. 总结与教学建议</h2>
+<h2 id="6-总结与教学建议"><a class="header-anchor" href="#6-总结与教学建议">🔗</a>6. 总结与教学建议</h2>
 <p>亲爱的同学们，通过对 YOLO-UniOW 实验指标的拆解，我们可以看到计算机视觉评估体系的演进脉络：</p>
 <ol>
 <li><strong>从 AP 到 APr/c/f</strong>：我们不再满足于平均分，开始关注<strong>少数派（长尾类别）**的权益，这是通向**Zero-Shot</strong>的关键一步。</li>
@@ -2691,7 +2714,7 @@ g[data-mml-node="xypic"] path {
 </ol>
 <p>掌握了这些指标，你们就掌握了与最前沿 Open-World Detection 论文对话的语言。</p>
 <hr>
-<h2 id="7-附录：指标速查表">7. 附录：指标速查表</h2>
+<h2 id="7-附录：指标速查表"><a class="header-anchor" href="#7-附录：指标速查表">🔗</a>7. 附录：指标速查表</h2>
 <p>为了方便复习，我整理了这份速查表，请务必熟记：</p>
 <table>
 <thead>
@@ -2711,9 +2734,9 @@ g[data-mml-node="xypic"] path {
 <td>Average Precision</td>
 <td>总体平均精度 (LVIS 1203类)</td>
 <td>
-    <span id="mjx-bd5f017">
+    <span id="mjx-5b1dda4">
       <style>
-      #mjx-bd5f017{
+      #mjx-5b1dda4{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2880,9 +2903,9 @@ g[data-mml-node="xypic"] path {
 <td>AP Rare</td>
 <td>稀有类 (&lt;10张图) 精度</td>
 <td>
-    <span id="mjx-9724235">
+    <span id="mjx-929f57d">
       <style>
-      #mjx-9724235{
+      #mjx-929f57d{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3049,9 +3072,9 @@ g[data-mml-node="xypic"] path {
 <td>AP Common</td>
 <td>普通类 (10-100张图) 精度</td>
 <td>
-    <span id="mjx-2c550e9">
+    <span id="mjx-fffff89">
       <style>
-      #mjx-2c550e9{
+      #mjx-fffff89{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3218,9 +3241,9 @@ g[data-mml-node="xypic"] path {
 <td>AP Frequent</td>
 <td>频繁类 (&gt;100张图) 精度</td>
 <td>
-    <span id="mjx-3c0604">
+    <span id="mjx-29c8f4e">
       <style>
-      #mjx-3c0604{
+      #mjx-29c8f4e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3387,9 +3410,9 @@ g[data-mml-node="xypic"] path {
 <td>Frames Per Second</td>
 <td>端到端推理速度 (含NMS)</td>
 <td>
-    <span id="mjx-21879b9">
+    <span id="mjx-5dcd529">
       <style>
-      #mjx-21879b9{
+      #mjx-5dcd529{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3556,9 +3579,9 @@ g[data-mml-node="xypic"] path {
 <td>Forward FPS</td>
 <td>模型前向推理速度 (不含NMS)</td>
 <td>
-    <span id="mjx-fa1a39b">
+    <span id="mjx-453277d">
       <style>
-      #mjx-fa1a39b{
+      #mjx-453277d{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3725,9 +3748,9 @@ g[data-mml-node="xypic"] path {
 <td>Unknown Recall</td>
 <td>未知物体召回率</td>
 <td>
-    <span id="mjx-264a4dc">
+    <span id="mjx-7c3f3ad">
       <style>
-      #mjx-264a4dc{
+      #mjx-7c3f3ad{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3894,9 +3917,9 @@ g[data-mml-node="xypic"] path {
 <td>Absolute Open-Set Error</td>
 <td>绝对开放集合误差</td>
 <td>
-    <span id="mjx-8bd470c">
+    <span id="mjx-7e8a7df">
       <style>
-      #mjx-8bd470c{
+      #mjx-7e8a7df{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4063,9 +4086,9 @@ g[data-mml-node="xypic"] path {
 <td>Wilderness Impact</td>
 <td>荒野影响因子</td>
 <td>
-    <span id="mjx-9335a28">
+    <span id="mjx-880b797">
       <style>
-      #mjx-9335a28{
+      #mjx-880b797{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4232,9 +4255,9 @@ g[data-mml-node="xypic"] path {
 <td>Previous Known</td>
 <td>旧类别 mAP</td>
 <td>
-    <span id="mjx-e11bd37">
+    <span id="mjx-d51dc07">
       <style>
-      #mjx-e11bd37{
+      #mjx-d51dc07{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4401,9 +4424,9 @@ g[data-mml-node="xypic"] path {
 <td>Current Known</td>
 <td>新类别 mAP</td>
 <td>
-    <span id="mjx-17ae279">
+    <span id="mjx-72751af">
       <style>
-      #mjx-17ae279{
+      #mjx-72751af{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4570,9 +4593,9 @@ g[data-mml-node="xypic"] path {
 <td>Overall mAP</td>
 <td>所有已知类别 mAP</td>
 <td>
-    <span id="mjx-f926ec9">
+    <span id="mjx-1735765">
       <style>
-      #mjx-f926ec9{
+      #mjx-1735765{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4736,18 +4759,18 @@ g[data-mml-node="xypic"] path {
 </tbody>
 </table>
 <p>希望这份报告能成为你们探索 YOLO-UniOW 及更广阔开放世界视觉领域的坚实向导。</p>
-<h1 id="GPT">GPT</h1>
+<h1 id="GPT"><a class="header-anchor" href="#GPT">🔗</a>GPT</h1>
 <p>According to a document from <strong>2024-12-30（YOLO-UniOW 论文）</strong>，你在第 4 节 Experiments 里看到的指标，核心可以分成两大类：**开放词表检测（OVD, open-vocabulary detection）<strong>用的指标（表 1），以及</strong>开放世界检测（OWOD, open-world object detection）**用的指标（表 2/3/4）。下面我把论文里出现的指标逐个拆开讲清楚：它们怎么定义、评估模型什么能力、以及读表时最容易迷糊的点。</p>
 <hr>
-<h2 id="先打地基：IoU、TP-FP、Precision-Recall、PR-曲线是什么关系？">先打地基：IoU、TP/FP、Precision/Recall、PR 曲线是什么关系？</h2>
+<h2 id="先打地基：IoU、TP-FP、Precision-Recall、PR-曲线是什么关系？"><a class="header-anchor" href="#先打地基：IoU、TP-FP、Precision-Recall、PR-曲线是什么关系？">🔗</a>先打地基：IoU、TP/FP、Precision/Recall、PR 曲线是什么关系？</h2>
 <p>很多指标（AP/mAP/U-Recall/WI）本质都建立在同一套“检测评测”逻辑上：</p>
 <ul>
 <li>
 <p><strong>IoU（Intersection over Union）</strong>：预测框与 GT 框（真实标注框）重叠程度</p>
 
-    <span id="mjx-fd92b48">
+    <span id="mjx-7ce22f4">
       <style>
-      #mjx-fd92b48{
+      #mjx-7ce22f4{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4918,9 +4941,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p><strong>Precision / Recall</strong></p>
 
-    <span id="mjx-9daf753">
+    <span id="mjx-a085cc6">
       <style>
-      #mjx-9daf753{
+      #mjx-a085cc6{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5084,9 +5107,9 @@ g[data-mml-node="xypic"] path {
 </li>
 </ul>
 <hr>
-<h2 id="表-1-的指标（OVD-LVIS）：AP、APr、APc、APf、Params、FPS、FPSf">表 1 的指标（OVD / LVIS）：AP、APr、APc、APf、Params、FPS、FPSf</h2>
+<h2 id="表-1-的指标（OVD-LVIS）：AP、APr、APc、APf、Params、FPS、FPSf"><a class="header-anchor" href="#表-1-的指标（OVD-LVIS）：AP、APr、APc、APf、Params、FPS、FPSf">🔗</a>表 1 的指标（OVD / LVIS）：AP、APr、APc、APf、Params、FPS、FPSf</h2>
 <p>表 1 是 <strong>LVIS minival 的 zero-shot OVD 评测</strong>。它同时报告“效果指标”和“效率指标”。</p>
-<h3 id="1-AP（Average-Precision）">1) AP（Average Precision）</h3>
+<h3 id="1-AP（Average-Precision）"><a class="header-anchor" href="#1-AP（Average-Precision）">🔗</a>1) AP（Average Precision）</h3>
 <p><strong>是什么：</strong> AP 是“平均精度”，本质是某个评测协议下 PR 曲线的面积。
 <strong>在 LVIS/COCO 风格里，AP 通常不是单一 IoU 的 AP，而是会在多个 IoU 阈值上取平均。</strong></p>
 <ul>
@@ -5102,7 +5125,7 @@ g[data-mml-node="xypic"] path {
 <li>很多人以为 AP 就是 IoU=0.5 的 AP。<strong>但在 LVIS/COCO 主指标里，AP 往往是多 IoU 平均的</strong>（更严格）。</li>
 </ul>
 <hr>
-<h3 id="2-APr-APc-APf（LVIS-的-long-tail-分组-AP）">2) APr / APc / APf（LVIS 的 long-tail 分组 AP）</h3>
+<h3 id="2-APr-APc-APf（LVIS-的-long-tail-分组-AP）"><a class="header-anchor" href="#2-APr-APc-APf（LVIS-的-long-tail-分组-AP）">🔗</a>2) APr / APc / APf（LVIS 的 long-tail 分组 AP）</h3>
 <p>LVIS 把类别按训练集中出现频次分成三档，并分别计算 AP：</p>
 <ul>
 <li><strong>rare</strong>：该类别在训练集中出现图片数 <strong>1–10</strong></li>
@@ -5126,11 +5149,11 @@ g[data-mml-node="xypic"] path {
 </li>
 </ul>
 <hr>
-<h3 id="3-Params">3) Params</h3>
+<h3 id="3-Params"><a class="header-anchor" href="#3-Params">🔗</a>3) Params</h3>
 <p><strong>是什么：</strong> 参数量（通常以 M=百万为单位）。
 <strong>评估什么能力：</strong> 严格说不是“准确性指标”，而是<strong>模型体量/存储/部署成本</strong>的衡量。Params 越小通常越利于边端部署，但也可能限制上限。</p>
 <hr>
-<h3 id="4-FPS-与-FPSf（速度指标）">4) FPS 与 FPSf（速度指标）</h3>
+<h3 id="4-FPS-与-FPSf（速度指标）"><a class="header-anchor" href="#4-FPS-与-FPSf（速度指标）">🔗</a>4) FPS 与 FPSf（速度指标）</h3>
 <p>表 1 里 YOLO-UniOW 明确解释了：</p>
 <ul>
 <li><strong>FPS</strong>：端到端推理速度（包含后处理，如 NMS），并且为了测 FPS，会在 NMS 前把预测框数量限制在 3000 以内。</li>
@@ -5142,13 +5165,13 @@ g[data-mml-node="xypic"] path {
 <li><strong>FPSf</strong>更反映“网络本体有多快”，常用于对比不同后处理开销（比如 NMS-heavy vs NMS-free）。</li>
 </ul>
 <hr>
-<h3 id="5-你在表-1-里看到的-“a-b”-不是新指标，而是两种-head-的-AP-并列写法">5) 你在表 1 里看到的 “a/b” 不是新指标，而是两种 head 的 AP 并列写法</h3>
+<h3 id="5-你在表-1-里看到的-“a-b”-不是新指标，而是两种-head-的-AP-并列写法"><a class="header-anchor" href="#5-你在表-1-里看到的-“a-b”-不是新指标，而是两种-head-的-AP-并列写法">🔗</a>5) 你在表 1 里看到的 “a/b” 不是新指标，而是两种 head 的 AP 并列写法</h3>
 <p>表 1 caption 写得很清楚：它把 **one-to-one head（左）**和 **one-to-many head（右）**的 AP 都报出来了。</p>
 <hr>
-<h2 id="表-2-的指标（OWOD：M-OWODB-S-OWODB）：U-Recall、PK-CK-Both-mAP">表 2 的指标（OWOD：M-OWODB / S-OWODB）：U-Recall、PK/CK/Both mAP</h2>
+<h2 id="表-2-的指标（OWOD：M-OWODB-S-OWODB）：U-Recall、PK-CK-Both-mAP"><a class="header-anchor" href="#表-2-的指标（OWOD：M-OWODB-S-OWODB）：U-Recall、PK-CK-Both-mAP">🔗</a>表 2 的指标（OWOD：M-OWODB / S-OWODB）：U-Recall、PK/CK/Both mAP</h2>
 <p>表 2 是开放世界检测的经典评测：既要识别已知类，又要把未知物体“当作 unknown 检出来”。表头明确它比较的是 <strong>U-Recall</strong> 和 <strong>known classes 的 mAP</strong>。</p>
 <hr>
-<h3 id="6-mAP（mean-Average-Precision）在-OWOD-里通常用-mAP-0-5">6) mAP（mean Average Precision）在 OWOD 里通常用 mAP@0.5</h3>
+<h3 id="6-mAP（mean-Average-Precision）在-OWOD-里通常用-mAP-0-5"><a class="header-anchor" href="#6-mAP（mean-Average-Precision）在-OWOD-里通常用-mAP-0-5">🔗</a>6) mAP（mean Average Precision）在 OWOD 里通常用 mAP@0.5</h3>
 <p>在 OWOD 经典协议里，Joseph 等人的 OWOD 工作明确：<strong>用 IoU=0.5 的 mAP 来评估已知类</strong>（并说明与既有增量检测文献保持一致）。</p>
 <p>PROB 这篇（也是 M-OWODB/S-OWODB 常用对比方法之一）在表格说明中也写得非常明确：它对比的是 <strong>known class 的 mAP@0.5</strong>，并且拆成 previously/current/both。</p>
 <blockquote>
@@ -5159,7 +5182,7 @@ g[data-mml-node="xypic"] path {
 </ul>
 </blockquote>
 <hr>
-<h3 id="7-PK-CK-Both（mAP-的三种拆分）">7) PK / CK / Both（mAP 的三种拆分）</h3>
+<h3 id="7-PK-CK-Both（mAP-的三种拆分）"><a class="header-anchor" href="#7-PK-CK-Both（mAP-的三种拆分）">🔗</a>7) PK / CK / Both（mAP 的三种拆分）</h3>
 <p>这是 OWOD/增量检测里非常关键的“读表逻辑”：</p>
 <ul>
 <li><strong>PK（Previously Known）mAP</strong>：在“以前学过的已知类”上算 mAP</li>
@@ -5181,7 +5204,7 @@ g[data-mml-node="xypic"] path {
 <li>Both 只是总体，最好结合 PK/CK 一起看</li>
 </ul>
 <hr>
-<h3 id="8-U-Recall（Unknown-Recall-Unknown-class-recall）">8) U-Recall（Unknown Recall / Unknown class recall）</h3>
+<h3 id="8-U-Recall（Unknown-Recall-Unknown-class-recall）"><a class="header-anchor" href="#8-U-Recall（Unknown-Recall-Unknown-class-recall）">🔗</a>8) U-Recall（Unknown Recall / Unknown class recall）</h3>
 <p><strong>定义（最关键）：</strong> PROB 论文给了非常直接的定义：
 U-Recall（unknown object recall）是 <strong>“检测到的未知物体数 / 标注的未知物体总数”</strong>；并解释了为什么不用 unknown 的 mAP：因为并不是所有 unknown 都完整标注。</p>
 <p>OW-DETR 的补充材料也强调：U-Recall 直接对应 unknown 类，衡量模型“检索/找回未知实例”的能力。</p>
@@ -5194,19 +5217,19 @@ U-Recall（unknown object recall）是 <strong>“检测到的未知物体数 / 
 <li>U-Recall 高不一定代表好，有些方法可能通过“更激进地报 unknown 框”来抬 recall，但会带来更多 FP，进而伤害已知类精度（这就是为什么还需要 WI/A-OSE）。</li>
 </ul>
 <hr>
-<h3 id="9-为什么-Task-4-往往不报-U-Recall？">9) 为什么 Task 4 往往不报 U-Recall？</h3>
+<h3 id="9-为什么-Task-4-往往不报-U-Recall？"><a class="header-anchor" href="#9-为什么-Task-4-往往不报-U-Recall？">🔗</a>9) 为什么 Task 4 往往不报 U-Recall？</h3>
 <p>因为到最后一个任务时，很多协议会变成“所有类都已知”，没有 unknown GT 了，所以 U-Recall（以及一些 unknown 相关指标）不可计算。OW-DETR 与 PROB 都明确提到这一点。</p>
 <hr>
-<h2 id="表-3-4-的指标（OWOD-扩展）：WI、A-OSE（以及论文提到的-Recall）">表 3/4 的指标（OWOD 扩展）：WI、A-OSE（以及论文提到的 Recall）</h2>
+<h2 id="表-3-4-的指标（OWOD-扩展）：WI、A-OSE（以及论文提到的-Recall）"><a class="header-anchor" href="#表-3-4-的指标（OWOD-扩展）：WI、A-OSE（以及论文提到的-Recall）">🔗</a>表 3/4 的指标（OWOD 扩展）：WI、A-OSE（以及论文提到的 Recall）</h2>
 <p>YOLO-UniOW 在文中说明：为了评估检测 unknown 类的能力，他们用 Recall（也就是 U-Recall 这类思想）；另外还会报告 <strong>WI</strong> 和 <strong>A-OSE</strong> 来衡量 unknown 对 known 预测的干扰，但认为它们不够稳定，所以“参考为主”。</p>
 <p>这两个指标来自 OWOD 经典定义（Joseph 等）：</p>
 <hr>
-<h3 id="10-WI（Wilderness-Impact）">10) WI（Wilderness Impact）</h3>
+<h3 id="10-WI（Wilderness-Impact）"><a class="header-anchor" href="#10-WI（Wilderness-Impact）">🔗</a>10) WI（Wilderness Impact）</h3>
 <p><strong>定义（带公式）：</strong></p>
 
-    <span id="mjx-2f25aa4">
+    <span id="mjx-574d778">
       <style>
-      #mjx-2f25aa4{
+      #mjx-574d778{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5381,7 +5404,7 @@ g[data-mml-node="xypic"] path {
 <li>“开放集干扰下的稳健性”：unknown 存在时，已知类检测的精度会被拖垮多少。</li>
 </ul>
 <hr>
-<h3 id="11-A-OSE（Absolute-Open-Set-Error）">11) A-OSE（Absolute Open-Set Error）</h3>
+<h3 id="11-A-OSE（Absolute-Open-Set-Error）"><a class="header-anchor" href="#11-A-OSE（Absolute-Open-Set-Error）">🔗</a>11) A-OSE（Absolute Open-Set Error）</h3>
 <p><strong>定义：</strong> A-OSE 是一个“计数型”指标：<strong>unknown 物体被错误分类为任意 known 类的数量</strong>。
 （越多说明越混淆）</p>
 <p><strong>评估什么能力：</strong></p>
@@ -5389,7 +5412,7 @@ g[data-mml-node="xypic"] path {
 <li>模型是否能把 unknown 与 known 分开（降低“unknown→known 的误分类”）。</li>
 </ul>
 <hr>
-<h2 id="一句话把所有指标和“模型能力”对齐">一句话把所有指标和“模型能力”对齐</h2>
+<h2 id="一句话把所有指标和“模型能力”对齐"><a class="header-anchor" href="#一句话把所有指标和“模型能力”对齐">🔗</a>一句话把所有指标和“模型能力”对齐</h2>
 <p>你可以用下面这张“能力-指标”对照表来建立直觉：</p>
 <ul>
 <li><strong>开放词表/zero-shot 分类+定位能力（OVD）</strong>：AP（以及 APr/APc/APf）
@@ -5419,7 +5442,7 @@ g[data-mml-node="xypic"] path {
 </li>
 </ul>
 <hr>
-<h2 id="你接下来怎么“彻底搞懂”读表（给你一个实用检查清单）">你接下来怎么“彻底搞懂”读表（给你一个实用检查清单）</h2>
+<h2 id="你接下来怎么“彻底搞懂”读表（给你一个实用检查清单）"><a class="header-anchor" href="#你接下来怎么“彻底搞懂”读表（给你一个实用检查清单）">🔗</a>你接下来怎么“彻底搞懂”读表（给你一个实用检查清单）</h2>
 <p>当你看到一行结果时，按这个顺序读：</p>
 <ol>
 <li><strong>先看 mAP（Both）</strong>：已知类总体检测能力怎么样？</li>
@@ -5430,7 +5453,7 @@ g[data-mml-node="xypic"] path {
 </ol>
 <hr>
 <p>如果你愿意，我们下一步可以直接拿 <strong>YOLO-UniOW 表 1 和表 2 的某一行</strong>做一次“逐列解读”（你指定一个方法，比如 YOLO-UniOW-S 或 YOLO-World-L），我带你把每个数字翻译成“模型行为”的语言，这样理解会更牢。</p>
-</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/YOLO-UniOW/">YOLO-UniOW</a></div><div class="post-share"><div class="social-share" data-image="/blog/image/cover/6.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2026/01/10/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/hyolo/%E3%80%90hyolo%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【hyolo】论文阅读"><img class="cover" src="/blog/image/cover/3.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">【hyolo】论文阅读</div></div><div class="info-2"><div class="info-item-1">hYOLO Model: Enhancing Object Classification with Hierarchical Context in YOLOv8 Abstract 本节核心结论：论文在 YOLOv8 的分类分支里显式注入“类别层级结构”，让模型不仅预测最终细类，还能在多个层级上输出分类，并用层级一致性损失 + 层级指标来训练/评估，从而把“错得近 vs 错得远”的差别纳入学习目标。  摘要精读  现有问题：flat classification 不看层级    传统 CNN/YOLO 的分类通常是扁平分类：直接在所有类别里选一个（比如 COCO 80 类就是 80-way）。   但现实世界类别天然是有层级的（“饮料→牛奶→低脂牛奶”），忽略层级会导致：  上下文理解差（类间关系没被用到） 错误严重性不可控（把“2% 牛奶”错成“全脂牛奶” vs 错成“红酒”，损失一样离谱）     论文要做的事：端到端的层级检测+分类（基于 YOLO 系列）    提出 hYOLO：在 YOLO...</div></div></div></a><a class="pagination-related" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection"><img class="cover" src="/blog/image/cover/1.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection</div></div><div class="info-2"><div class="info-item-1">Abstract According to a document from Dec 30, 2024, 这篇论文的摘要基本按“问题 → 现有方法不足 → 新设定 → 方法 → 效果”的顺序讲清楚了整篇文章在做什么。 下面我就按摘要原句的逻辑，一句句带你读懂它在说啥：   传统检测器的核心痛点：封闭类别  摘要开头说：传统目标检测受“closed-set datasets（封闭集数据集）”限制，只能检测训练时见过的类别。 直白点：训练集没有的类别，模型往往当背景，或者乱分到已知类里。   多模态（图文）方法虽然扩展了类别，但带来两大问题  摘要接着说：多模态模型通过对齐 text 和 image，确实能扩展识别类别；但：  推理开销大：因为有 cross-modality fusion（跨模态融合），导致 inference overhead（推理负担）明显。 仍被预定义词表卡住：还是依赖 predefined vocabulary（预设词表），所以到了 open-world 场景遇到未知物体就不行。  你可以把它理解为：OVD...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection"><img class="cover" src="/blog/image/cover/1.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-14</div><div class="info-item-2">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection</div></div><div class="info-2"><div class="info-item-1">Abstract According to a document from Dec 30, 2024, 这篇论文的摘要基本按“问题 → 现有方法不足 → 新设定 → 方法 → 效果”的顺序讲清楚了整篇文章在做什么。 下面我就按摘要原句的逻辑，一句句带你读懂它在说啥：   传统检测器的核心痛点：封闭类别  摘要开头说：传统目标检测受“closed-set datasets（封闭集数据集）”限制，只能检测训练时见过的类别。 直白点：训练集没有的类别，模型往往当背景，或者乱分到已知类里。   多模态（图文）方法虽然扩展了类别，但带来两大问题  摘要接着说：多模态模型通过对齐 text 和 image，确实能扩展识别类别；但：  推理开销大：因为有 cross-modality fusion（跨模态融合），导致 inference overhead（推理负担）明显。 仍被预定义词表卡住：还是依赖 predefined vocabulary（预设词表），所以到了 open-world 场景遇到未知物体就不行。  你可以把它理解为：OVD...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GEMINI"><span class="toc-text">GEMINI</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%BB%AA%E8%AE%BA%EF%BC%9A%E4%BB%8E%E5%B0%81%E9%97%AD%E4%B8%96%E7%95%8C%E5%88%B0%E9%80%9A%E7%94%A8%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E7%9A%84%E8%AF%84%E4%BC%B0%E8%8C%83%E5%BC%8F%E8%BD%AC%E5%8F%98"><span class="toc-text">1. 绪论：从封闭世界到通用开放世界的评估范式转变</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E4%B8%A4%E5%A5%97%E5%AE%8C%E5%85%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB%EF%BC%9F"><span class="toc-text">1.1 为什么需要两套完全不同的评估体系？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA%EF%BC%9A%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E8%AF%84%E4%BC%B0%E7%9A%84%E5%9F%BA%E7%9F%B3"><span class="toc-text">2. 基础理论：目标检测评估的基石</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BA%A4%E5%B9%B6%E6%AF%94%EF%BC%88Intersection-over-Union-IoU%EF%BC%89"><span class="toc-text">2.1 交并比（Intersection over Union, IoU）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%8A%A8%E6%80%81%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5%EF%BC%9ATP-FP-FN"><span class="toc-text">2.2 动态混淆矩阵：TP, FP, FN</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Table-1%EF%BC%9ALVIS-%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-text">3. 深度解析 Table 1：LVIS 开放词汇评估指标</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-AP-Average-Precision-%E2%80%94%E2%80%94-%E5%AE%8F%E8%A7%82%E8%83%BD%E5%8A%9B%E7%9A%84%E6%A0%87%E5%B0%BA"><span class="toc-text">3.1 AP (Average Precision) —— 宏观能力的标尺</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E9%A2%91%E7%8E%87%E5%88%86%E5%B1%82%E6%8C%87%E6%A0%87%EF%BC%9AAPr-APc-APf-%E2%80%94%E2%80%94-%E6%B3%9B%E5%8C%96%E8%83%BD%E5%8A%9B%E7%9A%84%E6%98%BE%E5%BE%AE%E9%95%9C"><span class="toc-text">3.2 频率分层指标：APr, APc, APf —— 泛化能力的显微镜</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-APr-Average-Precision-for-Rare-classes"><span class="toc-text">3.2.1 APr (Average Precision for Rare classes)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-APc-Average-Precision-for-Common-classes"><span class="toc-text">3.2.2 APc (Average Precision for Common classes)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-3-APf-Average-Precision-for-Frequent-classes"><span class="toc-text">3.2.3 APf (Average Precision for Frequent classes)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%95%88%E7%8E%87%E6%8C%87%E6%A0%87%EF%BC%9AF-P-S-%E4%B8%8E-F-P-Sf-%E2%80%94%E2%80%94-%E9%80%9F%E5%BA%A6%E7%9A%84%E7%9C%9F%E7%9B%B8"><span class="toc-text">3.3 效率指标：F P S 与 F P Sf —— 速度的真相</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-1-FPS-Frames-Per-Second-%E2%80%94%E2%80%94-%E7%B3%BB%E7%BB%9F%E7%BA%A7%E6%8E%A8%E7%90%86%E9%80%9F%E5%BA%A6"><span class="toc-text">3.3.1 FPS (Frames Per Second) —— 系统级推理速度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-2-FPS-f-Forward-FPS-%E2%80%94%E2%80%94-%E7%BA%AF%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E9%80%9F%E5%BA%A6"><span class="toc-text">3.3.2 FPS_f (Forward FPS) —— 纯模型推理速度</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Table-2%EF%BC%9AM-OWODB-%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-text">4. 深度解析 Table 2：M-OWODB 开放世界评估指标</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-U-Recall-Unknown-Recall-%E2%80%94%E2%80%94-%E6%8E%A2%E7%B4%A2%E6%9C%AA%E7%9F%A5%E7%9A%84%E9%9B%B7%E8%BE%BE"><span class="toc-text">4.1 U-Recall (Unknown Recall) —— 探索未知的雷达</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-A-OSE-Absolute-Open-Set-Error-%E2%80%94%E2%80%94-%E6%8B%92%E7%BB%9D%E5%B9%BB%E8%A7%89%E7%9A%84%E8%83%BD%E5%8A%9B"><span class="toc-text">4.2 A-OSE (Absolute Open-Set Error) —— 拒绝幻觉的能力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-WI-Wilderness-Impact-%E2%80%94%E2%80%94-%E8%8D%92%E9%87%8E%E4%B8%AD%E7%9A%84%E9%B2%81%E6%A3%92%E6%80%A7"><span class="toc-text">4.3 WI (Wilderness Impact) —— 荒野中的鲁棒性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E5%A2%9E%E9%87%8F%E5%AD%A6%E4%B9%A0%E6%8C%87%E6%A0%87%EF%BC%9APK-CK-Both-%E2%80%94%E2%80%94-%E8%AE%B0%E5%BF%86%E4%B8%8E%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%8D%9A%E5%BC%88"><span class="toc-text">4.4 增量学习指标：PK, CK, Both —— 记忆与学习的博弈</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4-1-PK-Previously-Known-%E2%80%94%E2%80%94-%E8%80%83%E9%87%8F%E2%80%9C%E7%A8%B3%E5%AE%9A%E6%80%A7%E2%80%9D"><span class="toc-text">4.4.1 PK (Previously Known) —— 考量“稳定性”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4-2-CK-Currently-Known-%E2%80%94%E2%80%94-%E8%80%83%E9%87%8F%E2%80%9C%E5%8F%AF%E5%A1%91%E6%80%A7%E2%80%9D"><span class="toc-text">4.4.2 CK (Currently Known) —— 考量“可塑性”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4-3-Both-Overall-mAP-%E2%80%94%E2%80%94-%E7%BB%BC%E5%90%88%E8%A1%A8%E7%8E%B0"><span class="toc-text">4.4.3 Both (Overall mAP) —— 综合表现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%AE%9E%E6%88%98%E6%95%99%E5%AD%A6%EF%BC%9A%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9A%84%E6%8C%87%E6%A0%87%E8%AE%A1%E7%AE%97"><span class="toc-text">5. 实战教学：代码中的指标计算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%A0%B8%E5%BF%83%E7%B1%BB-OpenWorldMetric"><span class="toc-text">5.1 核心类 OpenWorldMetric</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="toc-text">5.2 配置文件的重要性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E5%AD%A6%E5%BB%BA%E8%AE%AE"><span class="toc-text">6. 总结与教学建议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E9%99%84%E5%BD%95%EF%BC%9A%E6%8C%87%E6%A0%87%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="toc-text">7. 附录：指标速查表</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GPT"><span class="toc-text">GPT</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E6%89%93%E5%9C%B0%E5%9F%BA%EF%BC%9AIoU%E3%80%81TP-FP%E3%80%81Precision-Recall%E3%80%81PR-%E6%9B%B2%E7%BA%BF%E6%98%AF%E4%BB%80%E4%B9%88%E5%85%B3%E7%B3%BB%EF%BC%9F"><span class="toc-text">先打地基：IoU、TP&#x2F;FP、Precision&#x2F;Recall、PR 曲线是什么关系？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8-1-%E7%9A%84%E6%8C%87%E6%A0%87%EF%BC%88OVD-LVIS%EF%BC%89%EF%BC%9AAP%E3%80%81APr%E3%80%81APc%E3%80%81APf%E3%80%81Params%E3%80%81FPS%E3%80%81FPSf"><span class="toc-text">表 1 的指标（OVD &#x2F; LVIS）：AP、APr、APc、APf、Params、FPS、FPSf</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-AP%EF%BC%88Average-Precision%EF%BC%89"><span class="toc-text">1) AP（Average Precision）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-APr-APc-APf%EF%BC%88LVIS-%E7%9A%84-long-tail-%E5%88%86%E7%BB%84-AP%EF%BC%89"><span class="toc-text">2) APr &#x2F; APc &#x2F; APf（LVIS 的 long-tail 分组 AP）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Params"><span class="toc-text">3) Params</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-FPS-%E4%B8%8E-FPSf%EF%BC%88%E9%80%9F%E5%BA%A6%E6%8C%87%E6%A0%87%EF%BC%89"><span class="toc-text">4) FPS 与 FPSf（速度指标）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E4%BD%A0%E5%9C%A8%E8%A1%A8-1-%E9%87%8C%E7%9C%8B%E5%88%B0%E7%9A%84-%E2%80%9Ca-b%E2%80%9D-%E4%B8%8D%E6%98%AF%E6%96%B0%E6%8C%87%E6%A0%87%EF%BC%8C%E8%80%8C%E6%98%AF%E4%B8%A4%E7%A7%8D-head-%E7%9A%84-AP-%E5%B9%B6%E5%88%97%E5%86%99%E6%B3%95"><span class="toc-text">5) 你在表 1 里看到的 “a&#x2F;b” 不是新指标，而是两种 head 的 AP 并列写法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8-2-%E7%9A%84%E6%8C%87%E6%A0%87%EF%BC%88OWOD%EF%BC%9AM-OWODB-S-OWODB%EF%BC%89%EF%BC%9AU-Recall%E3%80%81PK-CK-Both-mAP"><span class="toc-text">表 2 的指标（OWOD：M-OWODB &#x2F; S-OWODB）：U-Recall、PK&#x2F;CK&#x2F;Both mAP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-mAP%EF%BC%88mean-Average-Precision%EF%BC%89%E5%9C%A8-OWOD-%E9%87%8C%E9%80%9A%E5%B8%B8%E7%94%A8-mAP-0-5"><span class="toc-text">6) mAP（mean Average Precision）在 OWOD 里通常用 mAP@0.5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-PK-CK-Both%EF%BC%88mAP-%E7%9A%84%E4%B8%89%E7%A7%8D%E6%8B%86%E5%88%86%EF%BC%89"><span class="toc-text">7) PK &#x2F; CK &#x2F; Both（mAP 的三种拆分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-U-Recall%EF%BC%88Unknown-Recall-Unknown-class-recall%EF%BC%89"><span class="toc-text">8) U-Recall（Unknown Recall &#x2F; Unknown class recall）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E4%B8%BA%E4%BB%80%E4%B9%88-Task-4-%E5%BE%80%E5%BE%80%E4%B8%8D%E6%8A%A5-U-Recall%EF%BC%9F"><span class="toc-text">9) 为什么 Task 4 往往不报 U-Recall？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8-3-4-%E7%9A%84%E6%8C%87%E6%A0%87%EF%BC%88OWOD-%E6%89%A9%E5%B1%95%EF%BC%89%EF%BC%9AWI%E3%80%81A-OSE%EF%BC%88%E4%BB%A5%E5%8F%8A%E8%AE%BA%E6%96%87%E6%8F%90%E5%88%B0%E7%9A%84-Recall%EF%BC%89"><span class="toc-text">表 3&#x2F;4 的指标（OWOD 扩展）：WI、A-OSE（以及论文提到的 Recall）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-WI%EF%BC%88Wilderness-Impact%EF%BC%89"><span class="toc-text">10) WI（Wilderness Impact）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-A-OSE%EF%BC%88Absolute-Open-Set-Error%EF%BC%89"><span class="toc-text">11) A-OSE（Absolute Open-Set Error）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%8A%8A%E6%89%80%E6%9C%89%E6%8C%87%E6%A0%87%E5%92%8C%E2%80%9C%E6%A8%A1%E5%9E%8B%E8%83%BD%E5%8A%9B%E2%80%9D%E5%AF%B9%E9%BD%90"><span class="toc-text">一句话把所有指标和“模型能力”对齐</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%A0%E6%8E%A5%E4%B8%8B%E6%9D%A5%E6%80%8E%E4%B9%88%E2%80%9C%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%E2%80%9D%E8%AF%BB%E8%A1%A8%EF%BC%88%E7%BB%99%E4%BD%A0%E4%B8%80%E4%B8%AA%E5%AE%9E%E7%94%A8%E6%A3%80%E6%9F%A5%E6%B8%85%E5%8D%95%EF%BC%89"><span class="toc-text">你接下来怎么“彻底搞懂”读表（给你一个实用检查清单）</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读"><img src="/blog/image/cover/9.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【WeDetect】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读">【WeDetect】论文阅读</a><time datetime="2026-01-21T01:41:58.000Z" title="发表于 2026-01-21 09:41:58">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册"><img src="/blog/image/cover/13.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="AI使用手册"/></a><div class="content"><a class="title" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册">AI使用手册</a><time datetime="2026-01-20T01:21:48.000Z" title="发表于 2026-01-20 09:21:48">2026-01-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读"><img src="/blog/image/cover/2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【OV-DQUO】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读">【OV-DQUO】论文阅读</a><time datetime="2026-01-19T07:59:50.000Z" title="发表于 2026-01-19 15:59:50">2026-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释"><img src="/blog/image/cover/6.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="YOLO-UniOW-指标解释"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释">YOLO-UniOW-指标解释</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection"><img src="/blog/image/cover/1.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><script src="/blog/true"></script><div class="js-pjax"><script>(() => {
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/YOLO-UniOW/">YOLO-UniOW</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2026/01/10/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/hyolo/%E3%80%90hyolo%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【hyolo】论文阅读"><img class="cover" src="/blog/image/cover/3.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">【hyolo】论文阅读</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   开放词汇检测 / hyolo  hYOLO Model: Enhancing Object Classification with Hierarchical Context in YOLOv8 🔗Abstract 本节核心结论：论文在 YOLOv8 的分类分支里显式注入“类别层级结构”，让模型不仅预测最终细类，还能在多个层级上输出分类，并用层级一致性损失 + 层级指标来训练/评估，从而把“错得近...</div></div></div></a><a class="pagination-related" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection"><img class="cover" src="/blog/image/cover/1.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   开放词汇检测 / YOLO-UniOW  🔗Abstract According to a document from Dec 30, 2024, 这篇论文的摘要基本按“问题 → 现有方法不足 → 新设定 → 方法 → 效果”的顺序讲清楚了整篇文章在做什么。 下面我就按摘要原句的逻辑，一句句带你读懂它在说啥：   传统检测器的核心痛点：封闭类别  摘要开头说：传统目标检测受“closed-set...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection"><img class="cover" src="/blog/image/cover/1.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-14</div><div class="info-item-2">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   开放词汇检测 / YOLO-UniOW  🔗Abstract According to a document from Dec 30, 2024, 这篇论文的摘要基本按“问题 → 现有方法不足 → 新设定 → 方法 → 效果”的顺序讲清楚了整篇文章在做什么。 下面我就按摘要原句的逻辑，一句句带你读懂它在说啥：   传统检测器的核心痛点：封闭类别  摘要开头说：传统目标检测受“closed-set...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">长期主义学习者，记录技术、论文与生活。</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/qieliqiean"><i class="fab fa-github"></i><span>访问 GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/qieliqiean" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎交流：2895014608@qq.com</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GEMINI"><span class="toc-text">🔗GEMINI</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%BB%AA%E8%AE%BA%EF%BC%9A%E4%BB%8E%E5%B0%81%E9%97%AD%E4%B8%96%E7%95%8C%E5%88%B0%E9%80%9A%E7%94%A8%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E7%9A%84%E8%AF%84%E4%BC%B0%E8%8C%83%E5%BC%8F%E8%BD%AC%E5%8F%98"><span class="toc-text">🔗1. 绪论：从封闭世界到通用开放世界的评估范式转变</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E4%B8%A4%E5%A5%97%E5%AE%8C%E5%85%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB%EF%BC%9F"><span class="toc-text">🔗1.1 为什么需要两套完全不同的评估体系？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA%EF%BC%9A%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E8%AF%84%E4%BC%B0%E7%9A%84%E5%9F%BA%E7%9F%B3"><span class="toc-text">🔗2. 基础理论：目标检测评估的基石</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BA%A4%E5%B9%B6%E6%AF%94%EF%BC%88Intersection-over-Union-IoU%EF%BC%89"><span class="toc-text">🔗2.1 交并比（Intersection over Union, IoU）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%8A%A8%E6%80%81%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5%EF%BC%9ATP-FP-FN"><span class="toc-text">🔗2.2 动态混淆矩阵：TP, FP, FN</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Table-1%EF%BC%9ALVIS-%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-text">🔗3. 深度解析 Table 1：LVIS 开放词汇评估指标</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-AP-Average-Precision-%E2%80%94%E2%80%94-%E5%AE%8F%E8%A7%82%E8%83%BD%E5%8A%9B%E7%9A%84%E6%A0%87%E5%B0%BA"><span class="toc-text">🔗3.1 AP (Average Precision) —— 宏观能力的标尺</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E9%A2%91%E7%8E%87%E5%88%86%E5%B1%82%E6%8C%87%E6%A0%87%EF%BC%9AAPr-APc-APf-%E2%80%94%E2%80%94-%E6%B3%9B%E5%8C%96%E8%83%BD%E5%8A%9B%E7%9A%84%E6%98%BE%E5%BE%AE%E9%95%9C"><span class="toc-text">🔗3.2 频率分层指标：APr, APc, APf —— 泛化能力的显微镜</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-APr-Average-Precision-for-Rare-classes"><span class="toc-text">🔗3.2.1 APr (Average Precision for Rare classes)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-APc-Average-Precision-for-Common-classes"><span class="toc-text">🔗3.2.2 APc (Average Precision for Common classes)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-3-APf-Average-Precision-for-Frequent-classes"><span class="toc-text">🔗3.2.3 APf (Average Precision for Frequent classes)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%95%88%E7%8E%87%E6%8C%87%E6%A0%87%EF%BC%9AF-P-S-%E4%B8%8E-F-P-Sf-%E2%80%94%E2%80%94-%E9%80%9F%E5%BA%A6%E7%9A%84%E7%9C%9F%E7%9B%B8"><span class="toc-text">🔗3.3 效率指标：F P S 与 F P Sf —— 速度的真相</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-1-FPS-Frames-Per-Second-%E2%80%94%E2%80%94-%E7%B3%BB%E7%BB%9F%E7%BA%A7%E6%8E%A8%E7%90%86%E9%80%9F%E5%BA%A6"><span class="toc-text">🔗3.3.1 FPS (Frames Per Second) —— 系统级推理速度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-2-FPS-f-Forward-FPS-%E2%80%94%E2%80%94-%E7%BA%AF%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E9%80%9F%E5%BA%A6"><span class="toc-text">🔗3.3.2 FPS_f (Forward FPS) —— 纯模型推理速度</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-Table-2%EF%BC%9AM-OWODB-%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-text">🔗4. 深度解析 Table 2：M-OWODB 开放世界评估指标</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-U-Recall-Unknown-Recall-%E2%80%94%E2%80%94-%E6%8E%A2%E7%B4%A2%E6%9C%AA%E7%9F%A5%E7%9A%84%E9%9B%B7%E8%BE%BE"><span class="toc-text">🔗4.1 U-Recall (Unknown Recall) —— 探索未知的雷达</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-A-OSE-Absolute-Open-Set-Error-%E2%80%94%E2%80%94-%E6%8B%92%E7%BB%9D%E5%B9%BB%E8%A7%89%E7%9A%84%E8%83%BD%E5%8A%9B"><span class="toc-text">🔗4.2 A-OSE (Absolute Open-Set Error) —— 拒绝幻觉的能力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-WI-Wilderness-Impact-%E2%80%94%E2%80%94-%E8%8D%92%E9%87%8E%E4%B8%AD%E7%9A%84%E9%B2%81%E6%A3%92%E6%80%A7"><span class="toc-text">🔗4.3 WI (Wilderness Impact) —— 荒野中的鲁棒性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E5%A2%9E%E9%87%8F%E5%AD%A6%E4%B9%A0%E6%8C%87%E6%A0%87%EF%BC%9APK-CK-Both-%E2%80%94%E2%80%94-%E8%AE%B0%E5%BF%86%E4%B8%8E%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%8D%9A%E5%BC%88"><span class="toc-text">🔗4.4 增量学习指标：PK, CK, Both —— 记忆与学习的博弈</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4-1-PK-Previously-Known-%E2%80%94%E2%80%94-%E8%80%83%E9%87%8F%E2%80%9C%E7%A8%B3%E5%AE%9A%E6%80%A7%E2%80%9D"><span class="toc-text">🔗4.4.1 PK (Previously Known) —— 考量“稳定性”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4-2-CK-Currently-Known-%E2%80%94%E2%80%94-%E8%80%83%E9%87%8F%E2%80%9C%E5%8F%AF%E5%A1%91%E6%80%A7%E2%80%9D"><span class="toc-text">🔗4.4.2 CK (Currently Known) —— 考量“可塑性”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4-3-Both-Overall-mAP-%E2%80%94%E2%80%94-%E7%BB%BC%E5%90%88%E8%A1%A8%E7%8E%B0"><span class="toc-text">🔗4.4.3 Both (Overall mAP) —— 综合表现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%AE%9E%E6%88%98%E6%95%99%E5%AD%A6%EF%BC%9A%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9A%84%E6%8C%87%E6%A0%87%E8%AE%A1%E7%AE%97"><span class="toc-text">🔗5. 实战教学：代码中的指标计算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%A0%B8%E5%BF%83%E7%B1%BB-OpenWorldMetric"><span class="toc-text">🔗5.1 核心类 OpenWorldMetric</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="toc-text">🔗5.2 配置文件的重要性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E5%AD%A6%E5%BB%BA%E8%AE%AE"><span class="toc-text">🔗6. 总结与教学建议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E9%99%84%E5%BD%95%EF%BC%9A%E6%8C%87%E6%A0%87%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="toc-text">🔗7. 附录：指标速查表</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GPT"><span class="toc-text">🔗GPT</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E6%89%93%E5%9C%B0%E5%9F%BA%EF%BC%9AIoU%E3%80%81TP-FP%E3%80%81Precision-Recall%E3%80%81PR-%E6%9B%B2%E7%BA%BF%E6%98%AF%E4%BB%80%E4%B9%88%E5%85%B3%E7%B3%BB%EF%BC%9F"><span class="toc-text">🔗先打地基：IoU、TP&#x2F;FP、Precision&#x2F;Recall、PR 曲线是什么关系？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8-1-%E7%9A%84%E6%8C%87%E6%A0%87%EF%BC%88OVD-LVIS%EF%BC%89%EF%BC%9AAP%E3%80%81APr%E3%80%81APc%E3%80%81APf%E3%80%81Params%E3%80%81FPS%E3%80%81FPSf"><span class="toc-text">🔗表 1 的指标（OVD &#x2F; LVIS）：AP、APr、APc、APf、Params、FPS、FPSf</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-AP%EF%BC%88Average-Precision%EF%BC%89"><span class="toc-text">🔗1) AP（Average Precision）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-APr-APc-APf%EF%BC%88LVIS-%E7%9A%84-long-tail-%E5%88%86%E7%BB%84-AP%EF%BC%89"><span class="toc-text">🔗2) APr &#x2F; APc &#x2F; APf（LVIS 的 long-tail 分组 AP）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Params"><span class="toc-text">🔗3) Params</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-FPS-%E4%B8%8E-FPSf%EF%BC%88%E9%80%9F%E5%BA%A6%E6%8C%87%E6%A0%87%EF%BC%89"><span class="toc-text">🔗4) FPS 与 FPSf（速度指标）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E4%BD%A0%E5%9C%A8%E8%A1%A8-1-%E9%87%8C%E7%9C%8B%E5%88%B0%E7%9A%84-%E2%80%9Ca-b%E2%80%9D-%E4%B8%8D%E6%98%AF%E6%96%B0%E6%8C%87%E6%A0%87%EF%BC%8C%E8%80%8C%E6%98%AF%E4%B8%A4%E7%A7%8D-head-%E7%9A%84-AP-%E5%B9%B6%E5%88%97%E5%86%99%E6%B3%95"><span class="toc-text">🔗5) 你在表 1 里看到的 “a&#x2F;b” 不是新指标，而是两种 head 的 AP 并列写法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8-2-%E7%9A%84%E6%8C%87%E6%A0%87%EF%BC%88OWOD%EF%BC%9AM-OWODB-S-OWODB%EF%BC%89%EF%BC%9AU-Recall%E3%80%81PK-CK-Both-mAP"><span class="toc-text">🔗表 2 的指标（OWOD：M-OWODB &#x2F; S-OWODB）：U-Recall、PK&#x2F;CK&#x2F;Both mAP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-mAP%EF%BC%88mean-Average-Precision%EF%BC%89%E5%9C%A8-OWOD-%E9%87%8C%E9%80%9A%E5%B8%B8%E7%94%A8-mAP-0-5"><span class="toc-text">🔗6) mAP（mean Average Precision）在 OWOD 里通常用 mAP@0.5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-PK-CK-Both%EF%BC%88mAP-%E7%9A%84%E4%B8%89%E7%A7%8D%E6%8B%86%E5%88%86%EF%BC%89"><span class="toc-text">🔗7) PK &#x2F; CK &#x2F; Both（mAP 的三种拆分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-U-Recall%EF%BC%88Unknown-Recall-Unknown-class-recall%EF%BC%89"><span class="toc-text">🔗8) U-Recall（Unknown Recall &#x2F; Unknown class recall）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E4%B8%BA%E4%BB%80%E4%B9%88-Task-4-%E5%BE%80%E5%BE%80%E4%B8%8D%E6%8A%A5-U-Recall%EF%BC%9F"><span class="toc-text">🔗9) 为什么 Task 4 往往不报 U-Recall？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8-3-4-%E7%9A%84%E6%8C%87%E6%A0%87%EF%BC%88OWOD-%E6%89%A9%E5%B1%95%EF%BC%89%EF%BC%9AWI%E3%80%81A-OSE%EF%BC%88%E4%BB%A5%E5%8F%8A%E8%AE%BA%E6%96%87%E6%8F%90%E5%88%B0%E7%9A%84-Recall%EF%BC%89"><span class="toc-text">🔗表 3&#x2F;4 的指标（OWOD 扩展）：WI、A-OSE（以及论文提到的 Recall）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-WI%EF%BC%88Wilderness-Impact%EF%BC%89"><span class="toc-text">🔗10) WI（Wilderness Impact）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-A-OSE%EF%BC%88Absolute-Open-Set-Error%EF%BC%89"><span class="toc-text">🔗11) A-OSE（Absolute Open-Set Error）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%8A%8A%E6%89%80%E6%9C%89%E6%8C%87%E6%A0%87%E5%92%8C%E2%80%9C%E6%A8%A1%E5%9E%8B%E8%83%BD%E5%8A%9B%E2%80%9D%E5%AF%B9%E9%BD%90"><span class="toc-text">🔗一句话把所有指标和“模型能力”对齐</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%A0%E6%8E%A5%E4%B8%8B%E6%9D%A5%E6%80%8E%E4%B9%88%E2%80%9C%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%E2%80%9D%E8%AF%BB%E8%A1%A8%EF%BC%88%E7%BB%99%E4%BD%A0%E4%B8%80%E4%B8%AA%E5%AE%9E%E7%94%A8%E6%A3%80%E6%9F%A5%E6%B8%85%E5%8D%95%EF%BC%89"><span class="toc-text">🔗你接下来怎么“彻底搞懂”读表（给你一个实用检查清单）</span></a></li></ol></li></ol></div></div><div class="card-widget card-post-series"><div class="item-headline"><i class="fa-solid fa-layer-group"></i><span>系列文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释"><img src="/blog/image/cover/6.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="YOLO-UniOW-指标解释"></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释">YOLO-UniOW-指标解释</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection"><img src="/blog/image/cover/1.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection"></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/easter-egg/" title="彩蛋"><img src="/blog/image/cover/IMG_20260217_201822.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="彩蛋"/></a><div class="content"><a class="title" href="/blog/easter-egg/" title="彩蛋">彩蛋</a><time datetime="2026-02-18T05:09:03.000Z" title="发表于 2026-02-18 13:09:03">2026-02-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读"><img src="/blog/image/cover/9.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【WeDetect】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读">【WeDetect】论文阅读</a><time datetime="2026-01-21T01:41:58.000Z" title="发表于 2026-01-21 09:41:58">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册"><img src="/blog/image/cover/13.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="AI使用手册"/></a><div class="content"><a class="title" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册">AI使用手册</a><time datetime="2026-01-20T01:21:48.000Z" title="发表于 2026-01-20 09:21:48">2026-01-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读"><img src="/blog/image/cover/2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【OV-DQUO】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读">【OV-DQUO】论文阅读</a><time datetime="2026-01-19T07:59:50.000Z" title="发表于 2026-01-19 15:59:50">2026-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释"><img src="/blog/image/cover/6.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="YOLO-UniOW-指标解释"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释">YOLO-UniOW-指标解释</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><script src="/blog/true"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
   const loadMathjax = () => {
     if (!window.MathJax) {
       window.MathJax = {
@@ -5477,7 +5500,7 @@ g[data-mml-node="xypic"] path {
   const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
   const option = null
 
-  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark_dimmed' : 'light'
 
   const createScriptElement = config => {
     const ele = document.createElement('script')
@@ -5548,4 +5571,4 @@ g[data-mml-node="xypic"] path {
   } else {
     window.loadOtherComment = loadGiscus
   }
-})()</script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
+})()</script></div><script defer src="/blog/js/site.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>

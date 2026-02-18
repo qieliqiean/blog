@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【hyolo】论文阅读 | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="hYOLO Model: Enhancing Object Classification with Hierarchical Context in YOLOv8 Abstract 本节核心结论：论文在 YOLOv8 的分类分支里显式注入“类别层级结构”，让模型不仅预测最终细类，还能在多个层级上输出分类，并用层级一致性损失 + 层级指标来训练&#x2F;评估，从而把“错得近 vs 错得远”的差别纳入学习目标。">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【hyolo】论文阅读 | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#fdfcf8"><meta name="description" content="系列文章   &#x2F;   开放词汇检测 &#x2F; hyolo  hYOLO Model: Enhancing Object Classification with Hierarchical Context in YOLOv8 🔗Abstract 本节核心结论：论文在 YOLOv8 的分类分支里显式注入“类别层级结构”，让模型不仅预测最终细类，还能在多个层级上输出分类，并用层级一致性损失 + 层级指标">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【hyolo】论文阅读">
 <meta property="og:url" content="https://qieliqiean.github.io/blog/2026/01/10/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/hyolo/%E3%80%90hyolo%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/index.html">
 <meta property="og:site_name" content="且离且安的碎碎念">
-<meta property="og:description" content="hYOLO Model: Enhancing Object Classification with Hierarchical Context in YOLOv8 Abstract 本节核心结论：论文在 YOLOv8 的分类分支里显式注入“类别层级结构”，让模型不仅预测最终细类，还能在多个层级上输出分类，并用层级一致性损失 + 层级指标来训练&#x2F;评估，从而把“错得近 vs 错得远”的差别纳入学习目标。">
+<meta property="og:description" content="系列文章   &#x2F;   开放词汇检测 &#x2F; hyolo  hYOLO Model: Enhancing Object Classification with Hierarchical Context in YOLOv8 🔗Abstract 本节核心结论：论文在 YOLOv8 的分类分支里显式注入“类别层级结构”，让模型不仅预测最终细类，还能在多个层级上输出分类，并用层级一致性损失 + 层级指标">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qieliqiean.github.io/blog/image/cover/3.jpg">
 <meta property="article:published_time" content="2026-01-10T07:59:50.000Z">
-<meta property="article:modified_time" content="2026-01-19T12:17:25.294Z">
+<meta property="article:modified_time" content="2026-02-18T11:59:46.434Z">
 <meta property="article:author" content="lian">
 <meta property="article:tag" content="hyolo">
 <meta name="twitter:card" content="summary">
@@ -18,7 +18,7 @@
   "url": "https://qieliqiean.github.io/blog/2026/01/10/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/hyolo/%E3%80%90hyolo%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/",
   "image": "https://qieliqiean.github.io/blog/image/cover/3.jpg",
   "datePublished": "2026-01-10T07:59:50.000Z",
-  "dateModified": "2026-01-19T12:17:25.294Z",
+  "dateModified": "2026-02-18T11:59:46.434Z",
   "author": [
     {
       "@type": "Person",
@@ -84,13 +84,13 @@
       const activateDarkMode = () => {
         document.documentElement.setAttribute('data-theme', 'dark')
         if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a')
         }
       }
       const activateLightMode = () => {
         document.documentElement.setAttribute('data-theme', 'light')
         if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fdfcf8')
         }
       }
 
@@ -99,7 +99,25 @@
 
       const theme = saveToLocal.get('theme')
     
-          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
         
       
       const asideStatus = saveToLocal.get('aside-status')
@@ -129,7 +147,7 @@ btf.addGlobalFn('pjaxComplete', () => {
 </script><script>const GLOBAL_CONFIG = {
   root: '/blog/',
   algolia: undefined,
-  localSearch: {"path":"/blog/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  localSearch: {"path":"/blog/search.xml","preload":false,"top_n_per_article":3,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
   translate: undefined,
   highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
   copy: {
@@ -161,19 +179,24 @@ btf.addGlobalFn('pjaxComplete', () => {
   isAnchor: false,
   percent: {
     toc: true,
-    rightside: false,
+    rightside: true,
   },
-  autoDarkmode: false
+  autoDarkmode: true
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
   title: '【hyolo】论文阅读',
   isHighlightShrink: false,
   isToc: true,
   pageType: 'post'
-}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/image/cover/3.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">【hyolo】论文阅读</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-heartbeat"></i><span> 清单</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">【hyolo】论文阅读</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-01-10T07:59:50.000Z" title="发表于 2026-01-10 15:59:50">2026-01-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-19T12:17:25.294Z" title="更新于 2026-01-19 20:17:25">2026-01-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">44.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>230分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>hYOLO Model: Enhancing Object Classification with Hierarchical Context in YOLOv8</p>
-<h1 id="Abstract">Abstract</h1>
+}</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=LXGW+WenKai:wght@400;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/blog/css/custom.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/blog/easter-egg/"><i class="fa-fw fas fa-egg"></i><span> 彩蛋</span></a></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/image/cover/3.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><img class="site-icon" src="/blog/image/background1.png" alt="Logo"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">【hyolo】论文阅读</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/blog/easter-egg/"><i class="fa-fw fas fa-egg"></i><span> 彩蛋</span></a></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">【hyolo】论文阅读</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-01-10T07:59:50.000Z" title="发表于 2026-01-10 15:59:50">2026-01-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-02-18T11:59:46.434Z" title="更新于 2026-02-18 19:59:46">2026-02-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">44.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>230分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><nav class="series-breadcrumb" aria-label="系列导航">
+  <a href="/blog/series/">系列文章</a>
+  <span class="series-breadcrumb__sep">/</span>
+  <a href="/blog/series/5byA5pS-6K-N5rGH5qOA5rWLIC8gaHlvbG8/">开放词汇检测 / hyolo</a>
+</nav>
+<p>hYOLO Model: Enhancing Object Classification with Hierarchical Context in YOLOv8</p>
+<h1 id="Abstract"><a class="header-anchor" href="#Abstract">🔗</a>Abstract</h1>
 <p>本节核心结论：论文在 YOLOv8 的<strong>分类分支</strong>里显式注入“类别层级结构”，让模型不仅预测最终细类，还能在多个层级上输出分类，并用<strong>层级一致性损失 + 层级指标</strong>来训练/评估，从而把“错得近 vs 错得远”的差别纳入学习目标。</p>
 <hr>
-<h2 id="摘要精读">摘要精读</h2>
+<h2 id="摘要精读"><a class="header-anchor" href="#摘要精读">🔗</a>摘要精读</h2>
 <ol>
 <li><strong>现有问题</strong>：flat classification 不看层级</li>
 </ol>
@@ -221,7 +244,7 @@ btf.addGlobalFn('pjaxComplete', () => {
 </li>
 </ul>
 <hr>
-<h2 id="关键概念-符号表">关键概念/符号表</h2>
+<h2 id="关键概念-符号表"><a class="header-anchor" href="#关键概念-符号表">🔗</a>关键概念/符号表</h2>
 <ol>
 <li><strong>hYOLO</strong>：本文提出的层级目标检测与分类模型（基于 YOLOv8 改造）。</li>
 <li><strong>hierarchy depth <code>l</code></strong>：层级深度（有多少个分类层级）。</li>
@@ -233,7 +256,7 @@ btf.addGlobalFn('pjaxComplete', () => {
 <li><strong><code>conf_il</code></strong>：第 l 层对类 i 的置信度（用于“错得越自信罚得越重”）。</li>
 </ol>
 <hr>
-<h2 id="PyTorch-架构映射">PyTorch 架构映射</h2>
+<h2 id="PyTorch-架构映射"><a class="header-anchor" href="#PyTorch-架构映射">🔗</a>PyTorch 架构映射</h2>
 <p>摘要里的想法如何落到 YOLOv8/Ultralytics 代码</p>
 <p>A) “层级架构”在代码里对应什么？</p>
 <p><strong>对应点：改 Detect Head 的分类分支</strong></p>
@@ -275,13 +298,13 @@ btf.addGlobalFn('pjaxComplete', () => {
 <li>训练/评估日志里不只看 flat 的 precision/recall/F1，而是按祖先交集计算 <code>PrecHier/RecHier/Fβ,Hier</code>，用来区分“错得近/远”。</li>
 </ul>
 <hr>
-<h1 id="Ⅰ-Introduction">Ⅰ Introduction</h1>
+<h1 id="Ⅰ-Introduction"><a class="header-anchor" href="#Ⅰ-Introduction">🔗</a>Ⅰ Introduction</h1>
 <p>Introduction 这一节主要是在回答三件事：<strong>什么是层级分类、它为什么比 flat 更合理、以及为什么 YOLO 圈子里这事一直没被系统化做好</strong>。</p>
 <hr>
-<h2 id="1-1-本节核心结论">1.1 本节核心结论</h2>
+<h2 id="1-1-本节核心结论"><a class="header-anchor" href="#1-1-本节核心结论">🔗</a>1.1 本节核心结论</h2>
 <p>作者用“真实世界类别天然成树”的事实，论证 <strong>flat 分类在错误严重性、可解释性与大规模类别学习效率上先天吃亏</strong>，并指出层级数据/指标/loss 的缺失导致实践中仍偏向 flat；因此他们提出在 YOLOv8 上做端到端层级分类来补齐这整套闭环。</p>
 <hr>
-<h2 id="1-2-关键概念-符号表">1.2 关键概念/符号表</h2>
+<h2 id="1-2-关键概念-符号表"><a class="header-anchor" href="#1-2-关键概念-符号表">🔗</a>1.2 关键概念/符号表</h2>
 <ol>
 <li><strong>Hierarchical classification（层级分类）</strong>：类别按多层抽象组织成 taxonomy/树，模型可“从粗到细”逐层细化预测。</li>
 <li><strong>Flat classification（扁平分类）</strong>：直接在最细粒度类别上分类，不利用层级关系（文中用生物分类法作对比）。</li>
@@ -294,7 +317,7 @@ btf.addGlobalFn('pjaxComplete', () => {
 <li><strong>End-to-end hierarchical model on YOLO（论文落点）</strong>：作者明确说要在 YOLO 家族上做端到端层级分类，并用“grocery store item classification”作为核心应用场景。</li>
 </ol>
 <hr>
-<h2 id="1-3-Introduction-精读">1.3 Introduction 精读</h2>
+<h2 id="1-3-Introduction-精读"><a class="header-anchor" href="#1-3-Introduction-精读">🔗</a>1.3 Introduction 精读</h2>
 <ol>
 <li>先把层级分类定义清楚（用生物分类法做类比）</li>
 </ol>
@@ -354,14 +377,14 @@ btf.addGlobalFn('pjaxComplete', () => {
 </li>
 </ol>
 <hr>
-<h1 id="Ⅱ-Related-Work">Ⅱ Related Work</h1>
+<h1 id="Ⅱ-Related-Work"><a class="header-anchor" href="#Ⅱ-Related-Work">🔗</a>Ⅱ Related Work</h1>
 <p>下面我按你的要求来：</p>
 <ol>
 <li><strong>先“过一遍原文”（不跳出作者叙事顺序）</strong>：把 Related Work 这一节在讲什么、每一段在铺垫什么，按原文逻辑用中文串起来。</li>
 <li><strong>再按复现节奏重新归类</strong>：架构改法 / loss 改法 / 指标与评估（你后面写代码、做 ablation 时就是按这三块拆）。</li>
 </ol>
 <hr>
-<h2 id="2-1-原文过一遍">2.1 原文过一遍</h2>
+<h2 id="2-1-原文过一遍"><a class="header-anchor" href="#2-1-原文过一遍">🔗</a>2.1 原文过一遍</h2>
 <p>(A) 先总述：层级结构进深度学习，做法大体分两类</p>
 <p>作者开头先说：把“类别层级结构（taxonomy）”引入深度学习，已经在 CV、文本分类等领域出现很多方法。总体上，大家主要从两条路线推进：</p>
 <ul>
@@ -428,10 +451,10 @@ btf.addGlobalFn('pjaxComplete', () => {
 <blockquote>
 <p>这一段的作用：为论文后面提出的 hierarchical metric 做“合理性证明”，也提醒你复现时必须补齐评估代码，否则你看不出“错得近”的收益。</p>
 </blockquote>
-<h2 id="2-2按复现节奏重新归类">2.2按复现节奏重新归类</h2>
+<h2 id="2-2按复现节奏重新归类"><a class="header-anchor" href="#2-2按复现节奏重新归类">🔗</a>2.2按复现节奏重新归类</h2>
 <p>下面我用“复现工程视角”把 Related Work 里提到的东西分成三类，并告诉你 hYOLO 大概站在哪个位置。</p>
 <hr>
-<h3 id="A-架构改法（architecture-level）">A. 架构改法（architecture-level）</h3>
+<h3 id="A-架构改法（architecture-level）"><a class="header-anchor" href="#A-架构改法（architecture-level）">🔗</a>A. 架构改法（architecture-level）</h3>
 <p>怎么把层级塞进网络输出/特征流？</p>
 <p><strong>主流套路 1：多层级多头输出（multi-head / multi-output）</strong></p>
 <ul>
@@ -451,7 +474,7 @@ btf.addGlobalFn('pjaxComplete', () => {
 <p><strong>hYOLO 的位置（你后面 Methods 会看到）：</strong>
 它走的是 <strong>“多层级输出 + 逐级融合（coarse-to-fine fusion）”</strong> 这条路线，但把它严格落在 YOLOv8 的 head 上，并做了多个融合变体（V1~V6）来比较。</p>
 <hr>
-<h3 id="B-Loss-改法（loss-level）">B. Loss 改法（loss-level）</h3>
+<h3 id="B-Loss-改法（loss-level）"><a class="header-anchor" href="#B-Loss-改法（loss-level）">🔗</a>B. Loss 改法（loss-level）</h3>
 <p>怎么让“错得远”更痛？</p>
 <p>你可以把层级 loss 分成两类工程实现方式：</p>
 <ol>
@@ -477,7 +500,7 @@ btf.addGlobalFn('pjaxComplete', () => {
 <p><strong>hYOLO 的位置：</strong>
 它更像第 2 类：通过一个由 <strong>α 控制的惩罚/正则</strong>，让模型在层级上更一致，并且把这个机制嵌进 YOLO 的端到端训练（而不是单独做分类网络）。</p>
 <hr>
-<h3 id="C-指标与评估（metric-evaluation）">C. 指标与评估（metric/evaluation）</h3>
+<h3 id="C-指标与评估（metric-evaluation）"><a class="header-anchor" href="#C-指标与评估（metric-evaluation）">🔗</a>C. 指标与评估（metric/evaluation）</h3>
 <p>怎么“量化部分正确”？</p>
 <p>层级指标你复现时要抓住两个核心点：</p>
 <ol>
@@ -505,14 +528,14 @@ btf.addGlobalFn('pjaxComplete', () => {
 <li><strong>指标：</strong> 检测任务里怎么把“分类层级指标”跟 bbox 匹配结合？是对每个 matched 的 GT 来算，还是对所有预测来算？</li>
 </ol>
 <p>如果你愿意，我们下一步就进入 <strong>Methods</strong>：我会按这 3 个问题逐段带你读，并且每读完一个小节就把它翻译成你能直接落到 Ultralytics/torch 的“实现清单”。</p>
-<h1 id="Ⅲ-Method">Ⅲ Method</h1>
-<h2 id="3-1-Hierarchical-Architectures">3.1 Hierarchical Architectures</h2>
+<h1 id="Ⅲ-Method"><a class="header-anchor" href="#Ⅲ-Method">🔗</a>Ⅲ Method</h1>
+<h2 id="3-1-Hierarchical-Architectures"><a class="header-anchor" href="#3-1-Hierarchical-Architectures">🔗</a>3.1 Hierarchical Architectures</h2>
 <p>这一节的目标很明确：<strong>先把“层级分类”这件事定义清楚（什么叫层级、用哪种层级分类器），再说明“我到底怎么把层级信息塞进 YOLOv8 的 head（尤其是分类分支）里”。</strong></p>
 <hr>
-<h3 id="本节核心结论">本节核心结论</h3>
+<h3 id="本节核心结论"><a class="header-anchor" href="#本节核心结论">🔗</a>本节核心结论</h3>
 <p><strong>hYOLO 把 YOLOv8 的“分类分支”改造成多层级（level-wise）的分类头：每一层都有自己的分类器（LCL），并把上一层的输出特征在某个位置 concat 到下一层，让粗粒度预测作为细粒度预测的上下文。</strong></p>
 <hr>
-<h3 id="关键概念-符号表-2">关键概念/符号表</h3>
+<h3 id="关键概念-符号表-2"><a class="header-anchor" href="#关键概念-符号表-2">🔗</a>关键概念/符号表</h3>
 <ol>
 <li><strong>Hierarchy（层级/类层次）</strong>：满足 root、父子关系、无环、反自反等条件的类别组织结构</li>
 <li><strong>Tree vs DAG</strong>：树保证 root→任意节点路径唯一；文中选择 tree-based classifier（更简单直观）</li>
@@ -524,7 +547,7 @@ btf.addGlobalFn('pjaxComplete', () => {
 <li><strong>Concatenation point（拼接点）</strong>：把上一层的信息 concat 到下一层的哪个位置</li>
 </ol>
 <hr>
-<h3 id="逻辑分解">逻辑分解</h3>
+<h3 id="逻辑分解"><a class="header-anchor" href="#逻辑分解">🔗</a>逻辑分解</h3>
 <ol>
 <li><u>先定义“层级分类”问题：层级结构 + 走法（classifier 设计）</u></li>
 </ol>
@@ -614,13 +637,13 @@ btf.addGlobalFn('pjaxComplete', () => {
 </ol>
 <hr>
 <p>如果你愿意，我们下一步就接 <strong>3.2 Hierarchical Models Evaluation Metrics</strong>：我会用你正在跑的 <strong>COCO(12→80)</strong> 举一个“预测错在同一大类 vs 错到别的大类”的例子，让你直观看懂他们的 <strong>PrecHier / RecHier / F1Hier</strong> 为什么比普通 precision/recall 更能解释“层级错误”的严重性。</p>
-<h2 id="3-2-Hierarchical-Models-Evaluation-Metrics">3.2 Hierarchical Models Evaluation Metrics</h2>
+<h2 id="3-2-Hierarchical-Models-Evaluation-Metrics"><a class="header-anchor" href="#3-2-Hierarchical-Models-Evaluation-Metrics">🔗</a>3.2 Hierarchical Models Evaluation Metrics</h2>
 <p>Hierarchical Models Evaluation Metrics 的核心是在讲：<strong>普通 precision/recall/F1 不知道“错得近还是错得远”，所以作者采用 Kiritchenko et al. (2006) 的层级指标，用“共同祖先有多少”来给“部分正确”记分。</strong></p>
 <hr>
-<h3 id="本节核心结论-2">本节核心结论</h3>
+<h3 id="本节核心结论-2"><a class="header-anchor" href="#本节核心结论-2">🔗</a>本节核心结论</h3>
 <p><strong>用“祖先集合交集”来定义层级版 Precision/Recall/Fβ，使得同一子树内的误分类罚得更轻、跨远子树罚得更重，从而能反映层级分类真正想优化的目标。</strong></p>
 <hr>
-<h3 id="关键概念-符号">关键概念/符号</h3>
+<h3 id="关键概念-符号"><a class="header-anchor" href="#关键概念-符号">🔗</a>关键概念/符号</h3>
 <ul>
 <li><strong>Ct</strong>：ground-truth class（真值类）</li>
 <li><strong>Cp</strong>：predicted class（预测类）</li>
@@ -629,7 +652,7 @@ btf.addGlobalFn('pjaxComplete', () => {
 <li><strong>β</strong>：Fβ 的权重参数，默认 β=1 时就是 <strong>F1Hier</strong></li>
 </ul>
 <hr>
-<h3 id="指标定义">指标定义</h3>
+<h3 id="指标定义"><a class="header-anchor" href="#指标定义">🔗</a>指标定义</h3>
 <hr>
 <ol>
 <li><strong>为什么要通过“祖先”来评估？(核心思想)</strong></li>
@@ -645,9 +668,9 @@ btf.addGlobalFn('pjaxComplete', () => {
 </ul>
 <p>为了实现这一点，论文引入了 <strong>Kiritchenko 等人 (2006)</strong> 提出的基于 <strong>“祖先节点集合” (Set of Ancestors)</strong> 的评估方法。</p>
 <p>🔑 关键概念：祖先集合 
-    <span id="mjx-5f03db">
+    <span id="mjx-701cfc">
       <style>
-      #mjx-5f03db{
+      #mjx-701cfc{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -807,9 +830,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </p>
 <p>公式的基础是集合论。对于层级树中的任意一个类别节点 
-    <span id="mjx-7893768">
+    <span id="mjx-1102518">
       <style>
-      #mjx-7893768{
+      #mjx-1102518{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -968,9 +991,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.05ex;" xmlns="http://www.w3.org/2000/svg" width="1.719ex" height="1.645ex" role="img" focusable="false" viewBox="0 -705 760 727" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D436" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q484 659 454 652T382 628T299 572T226 479Q194 422 175 346T156 222Q156 108 232 58Q280 24 350 24Q441 24 512 92T606 240Q610 253 612 255T628 257Q648 257 648 248Q648 243 647 239Q618 132 523 55T319 -22Q206 -22 128 53T50 252Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi></math></mjx-assistive-mml></mjx-container>
     </span>
   ，它的<strong>祖先集合</strong> 
-    <span id="mjx-615b18c">
+    <span id="mjx-2e5a5ab">
       <style>
-      #mjx-615b18c{
+      #mjx-2e5a5ab{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1138,9 +1161,9 @@ g[data-mml-node="xypic"] path {
 </ol>
 <p>公式 (1)：层次化精确率 (<strong>Hierarchical Precision</strong>)</p>
 
-    <span id="mjx-9b4e3bb">
+    <span id="mjx-9eedc77">
       <style>
-      #mjx-9b4e3bb{
+      #mjx-9eedc77{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1300,9 +1323,9 @@ g[data-mml-node="xypic"] path {
     </span>
   <ul>
 <li><strong>
-    <span id="mjx-3f1db45">
+    <span id="mjx-3bf36d7">
       <style>
-      #mjx-3f1db45{
+      #mjx-3bf36d7{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1462,9 +1485,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </strong>: 预测的类别 (Predicted Class)。</li>
 <li><strong>
-    <span id="mjx-cb4d519">
+    <span id="mjx-aa385a8">
       <style>
-      #mjx-cb4d519{
+      #mjx-aa385a8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1624,9 +1647,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </strong>: 真实的类别 (True/Ground-truth Class)。</li>
 <li><strong>
-    <span id="mjx-e5f3d6e">
+    <span id="mjx-f362d8b">
       <style>
-      #mjx-e5f3d6e{
+      #mjx-f362d8b{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1786,9 +1809,9 @@ g[data-mml-node="xypic"] path {
     </span>
    (交集)</strong>: 代表预测路径和真实路径中<strong>重合</strong>的部分（即模型预测正确层级节点）。</li>
 <li><strong>
-    <span id="mjx-0a23eae">
+    <span id="mjx-48f2dc5">
       <style>
-      #mjx-0a23eae{
+      #mjx-48f2dc5{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1951,9 +1974,9 @@ g[data-mml-node="xypic"] path {
 <p><strong>🧐 它是怎么来的？</strong></p>
 <p>传统的精确率是</p>
 
-    <span id="mjx-2e6662">
+    <span id="mjx-d849391">
       <style>
-      #mjx-2e6662{
+      #mjx-d849391{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2118,9 +2141,9 @@ g[data-mml-node="xypic"] path {
 </ul>
 <p>公式 (2)：层次化召回率 (<strong>Hierarchical Recall</strong>)</p>
 
-    <span id="mjx-84681">
+    <span id="mjx-bf4489d">
       <style>
-      #mjx-84681{
+      #mjx-bf4489d{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2280,9 +2303,9 @@ g[data-mml-node="xypic"] path {
     </span>
   <p>🧐 它是怎么来的？</p>
 <p>传统的召回率是 
-    <span id="mjx-b4d0cfd">
+    <span id="mjx-84c4367">
       <style>
-      #mjx-b4d0cfd{
+      #mjx-84c4367{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2448,9 +2471,9 @@ g[data-mml-node="xypic"] path {
 </ul>
 <p>公式 (3)：层次化 <strong>F-Score</strong></p>
 
-    <span id="mjx-d45db51">
+    <span id="mjx-e7135a2">
       <style>
-      #mjx-d45db51{
+      #mjx-e7135a2{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2610,9 +2633,9 @@ g[data-mml-node="xypic"] path {
     </span>
   <p>🧐 它是怎么来的？</p>
 <p>这是标准的 F-Measure 公式（精确率和召回率的调和平均数），直接套用了上面的层次化版本。当 
-    <span id="mjx-803dfcc">
+    <span id="mjx-2208013">
       <style>
-      #mjx-803dfcc{
+      #mjx-2208013{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2771,9 +2794,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="5.429ex" height="2.034ex" role="img" focusable="false" viewBox="0 -705 2399.6 899" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D6FD" d="M29 -194Q23 -188 23 -186Q23 -183 102 134T186 465Q208 533 243 584T309 658Q365 705 429 705H431Q493 705 533 667T573 570Q573 465 469 396L482 383Q533 332 533 252Q533 139 448 65T257 -10Q227 -10 203 -2T165 17T143 40T131 59T126 65L62 -188Q60 -194 42 -194H29ZM353 431Q392 431 427 419L432 422Q436 426 439 429T449 439T461 453T472 471T484 495T493 524T501 560Q503 569 503 593Q503 611 502 616Q487 667 426 667Q384 667 347 643T286 582T247 514T224 455Q219 439 186 308T152 168Q151 163 151 147Q151 99 173 68Q204 26 260 26Q302 26 349 51T425 137Q441 171 449 214T457 279Q457 337 422 372Q380 358 347 358H337Q258 358 258 389Q258 396 261 403Q275 431 353 431Z"></path></g><g data-mml-node="mo" transform="translate(843.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1899.6,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>β</mi><mo>=</mo><mn>1</mn></math></mjx-assistive-mml></mjx-container>
     </span>
    时，就是我们最常用的 
-    <span id="mjx-5ec909d">
+    <span id="mjx-1d13231">
       <style>
-      #mjx-5ec909d{
+      #mjx-1d13231{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2941,9 +2964,9 @@ g[data-mml-node="xypic"] path {
 <p>假设：</p>
 <ul>
 <li><strong>真实类别 (
-    <span id="mjx-1ee72a2">
+    <span id="mjx-4f5bf03">
       <style>
-      #mjx-1ee72a2{
+      #mjx-4f5bf03{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3103,9 +3126,9 @@ g[data-mml-node="xypic"] path {
     </span>
   )</strong> 是 <strong>L</strong>。</li>
 <li>根据图 4，L 的路径是 
-    <span id="mjx-7528b61">
+    <span id="mjx-65c09f6">
       <style>
-      #mjx-7528b61{
+      #mjx-65c09f6{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3265,9 +3288,9 @@ g[data-mml-node="xypic"] path {
     </span>
   。</li>
 <li>根据定义（排除根节点），
-    <span id="mjx-19a6488">
+    <span id="mjx-86ba9dd">
       <style>
-      #mjx-19a6488{
+      #mjx-86ba9dd{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3427,9 +3450,9 @@ g[data-mml-node="xypic"] path {
     </span>
   。</li>
 <li>分母 
-    <span id="mjx-b69341e">
+    <span id="mjx-1f9acfe">
       <style>
-      #mjx-b69341e{
+      #mjx-1f9acfe{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3590,9 +3613,9 @@ g[data-mml-node="xypic"] path {
   。</li>
 </ul>
 <p>我们将计算三种不同预测情况下的 
-    <span id="mjx-b1292df">
+    <span id="mjx-f3a0249">
       <style>
-      #mjx-b1292df{
+      #mjx-f3a0249{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3751,9 +3774,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="2.826ex" height="1.538ex" role="img" focusable="false" viewBox="0 -680 1249 680" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D439" d="M48 1Q31 1 31 11Q31 13 34 25Q38 41 42 43T65 46Q92 46 125 49Q139 52 144 61Q146 66 215 342T285 622Q285 629 281 629Q273 632 228 634H197Q191 640 191 642T193 659Q197 676 203 680H742Q749 676 749 669Q749 664 736 557T722 447Q720 440 702 440H690Q683 445 683 453Q683 454 686 477T689 530Q689 560 682 579T663 610T626 626T575 633T503 634H480Q398 633 393 631Q388 629 386 623Q385 622 352 492L320 363H375Q378 363 398 363T426 364T448 367T472 374T489 386Q502 398 511 419T524 457T529 475Q532 480 548 480H560Q567 475 567 470Q567 467 536 339T502 207Q500 200 482 200H470Q463 206 463 212Q463 215 468 234T473 274Q473 303 453 310T364 317H309L277 190Q245 66 245 60Q245 46 334 46H359Q365 40 365 39T363 19Q359 6 353 0H336Q295 2 185 2Q120 2 86 2T48 1Z"></path></g><g data-mml-node="mn" transform="translate(749,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>F</mi><mn>1</mn></math></mjx-assistive-mml></mjx-container>
     </span>
    分数（假设 
-    <span id="mjx-480f4cb">
+    <span id="mjx-521989">
       <style>
-      #mjx-480f4cb{
+      #mjx-521989{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3916,9 +3939,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>
 <p><strong>预测 (
-    <span id="mjx-73970a3">
+    <span id="mjx-29d14da">
       <style>
-      #mjx-73970a3{
+      #mjx-29d14da{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4080,9 +4103,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p><strong>预测路径</strong>：
-    <span id="mjx-b08a7bc">
+    <span id="mjx-f214063">
       <style>
-      #mjx-b08a7bc{
+      #mjx-f214063{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4244,9 +4267,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p><strong>预测祖先集合</strong>：
-    <span id="mjx-c4028c5">
+    <span id="mjx-7ecb9d4">
       <style>
-      #mjx-c4028c5{
+      #mjx-7ecb9d4{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4408,9 +4431,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p><strong>交集 (重合部分)</strong>：
-    <span id="mjx-1267ac7">
+    <span id="mjx-ba8a617">
       <style>
-      #mjx-1267ac7{
+      #mjx-ba8a617{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4578,9 +4601,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>交集数量 = 2。</li>
 <li>
-    <span id="mjx-51b1849">
+    <span id="mjx-6139ca5">
       <style>
-      #mjx-51b1849{
+      #mjx-6139ca5{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4739,9 +4762,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="11.164ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 4934.6 1000" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D443" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path></g><g data-mml-node="mi" transform="translate(751,0)"><path data-c="1D45F" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(1202,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(1668,0)"><path data-c="1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path></g><g data-mml-node="mo" transform="translate(2378.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(3434.6,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(3934.6,0)"><g data-mml-node="mo"><path data-c="2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path></g></g><g data-mml-node="mn" transform="translate(4434.6,0)"><path data-c="33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>P</mi><mi>r</mi><mi>e</mi><mi>c</mi><mo>=</mo><mn>2</mn><mrow data-mjx-texclass="ORD"><mo>/</mo></mrow><mn>3</mn></math></mjx-assistive-mml></mjx-container>
     </span>
   , 
-    <span id="mjx-4d497ec">
+    <span id="mjx-5444709">
       <style>
-      #mjx-4d497ec{
+      #mjx-5444709{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4901,9 +4924,9 @@ g[data-mml-node="xypic"] path {
     </span>
   。</li>
 <li>
-    <span id="mjx-fe2a60e">
+    <span id="mjx-458060d">
       <style>
-      #mjx-fe2a60e{
+      #mjx-458060d{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5072,9 +5095,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>
 <p><strong>预测 (
-    <span id="mjx-ddb494e">
+    <span id="mjx-cff34cf">
       <style>
-      #mjx-ddb494e{
+      #mjx-cff34cf{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5236,9 +5259,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p><strong>预测路径</strong>：
-    <span id="mjx-0c9542b">
+    <span id="mjx-555dc3c">
       <style>
-      #mjx-0c9542b{
+      #mjx-555dc3c{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5400,9 +5423,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p><strong>预测祖先集合</strong>：
-    <span id="mjx-00dc57e">
+    <span id="mjx-40c4dbc">
       <style>
-      #mjx-00dc57e{
+      #mjx-40c4dbc{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5564,9 +5587,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p><strong>交集</strong>：
-    <span id="mjx-56eace3">
+    <span id="mjx-23079eb">
       <style>
-      #mjx-56eace3{
+      #mjx-23079eb{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5734,9 +5757,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>交集数量 = 1。</li>
 <li>
-    <span id="mjx-f45ee66">
+    <span id="mjx-ffe9939">
       <style>
-      #mjx-f45ee66{
+      #mjx-ffe9939{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5895,9 +5918,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="11.164ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 4934.6 1000" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D443" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path></g><g data-mml-node="mi" transform="translate(751,0)"><path data-c="1D45F" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(1202,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(1668,0)"><path data-c="1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path></g><g data-mml-node="mo" transform="translate(2378.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(3434.6,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(3934.6,0)"><g data-mml-node="mo"><path data-c="2F" d="M423 750Q432 750 438 744T444 730Q444 725 271 248T92 -240Q85 -250 75 -250Q68 -250 62 -245T56 -231Q56 -221 230 257T407 740Q411 750 423 750Z"></path></g></g><g data-mml-node="mn" transform="translate(4434.6,0)"><path data-c="33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>P</mi><mi>r</mi><mi>e</mi><mi>c</mi><mo>=</mo><mn>1</mn><mrow data-mjx-texclass="ORD"><mo>/</mo></mrow><mn>3</mn></math></mjx-assistive-mml></mjx-container>
     </span>
   , 
-    <span id="mjx-37250f8">
+    <span id="mjx-0dce8d7">
       <style>
-      #mjx-37250f8{
+      #mjx-0dce8d7{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6057,9 +6080,9 @@ g[data-mml-node="xypic"] path {
     </span>
   。</li>
 <li>
-    <span id="mjx-e22eda6">
+    <span id="mjx-f92b24">
       <style>
-      #mjx-e22eda6{
+      #mjx-f92b24{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6228,9 +6251,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>
 <p><strong>预测 (
-    <span id="mjx-997d3f4">
+    <span id="mjx-cd34f2a">
       <style>
-      #mjx-997d3f4{
+      #mjx-cd34f2a{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6392,9 +6415,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p><strong>预测路径</strong>：
-    <span id="mjx-99dc4ff">
+    <span id="mjx-6886ac4">
       <style>
-      #mjx-99dc4ff{
+      #mjx-6886ac4{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6556,9 +6579,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p><strong>交集</strong>：
-    <span id="mjx-b63c70b">
+    <span id="mjx-496d257">
       <style>
-      #mjx-b63c70b{
+      #mjx-496d257{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6723,9 +6746,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>交集数量 = 0。</li>
 <li>
-    <span id="mjx-5fcb44d">
+    <span id="mjx-886ed9e">
       <style>
-      #mjx-5fcb44d{
+      #mjx-886ed9e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6923,21 +6946,21 @@ g[data-mml-node="xypic"] path {
 <p>你下一步如果要把它和 Ultralytics 的评估接上：核心就是“<strong>先完成检测匹配（TP/FP）</strong>，然后在 TP/FP 的分类结果上算层级指标”。论文这一节讨论的是分类指标本身，匹配策略属于你接到 YOLO 的工程实现部分。</p>
 </blockquote>
 <hr>
-<h2 id="3-3-Modified-Loss-Function">3.3 Modified Loss Function</h2>
+<h2 id="3-3-Modified-Loss-Function"><a class="header-anchor" href="#3-3-Modified-Loss-Function">🔗</a>3.3 Modified Loss Function</h2>
 <p>下面进入 <strong>3.3 Modified Loss Function</strong>。这一节你只要抓住两件事：<strong>(1) 他们把 YOLOv8 的 loss“复制到每个层级”再做平均；(2) 从第 2 层开始，在分类 loss 里加了一个“层级违规惩罚项”，用 α 控制强度。</strong></p>
 <hr>
-<h3 id="本节核心结论-3">本节核心结论</h3>
+<h3 id="本节核心结论-3"><a class="header-anchor" href="#本节核心结论-3">🔗</a>本节核心结论</h3>
 <p><strong>hYOLO 的总 loss = 各层级（level-wise）检测 loss 的平均值；并且在 level&gt;0 的分类项里额外加入“非父子一致”的惩罚，让模型更倾向于把概率质量放到“父类允许的子类集合”里。</strong></p>
 <hr>
-<h3 id="YOLOv8-原始-loss">YOLOv8 原始 loss</h3>
+<h3 id="YOLOv8-原始-loss"><a class="header-anchor" href="#YOLOv8-原始-loss">🔗</a>YOLOv8 原始 loss</h3>
 <p>YOLOv8 的检测 loss 可以概括为：</p>
 <ul>
 <li>
 <p><strong>总 loss</strong></p>
 
-    <span id="mjx-11a96cb">
+    <span id="mjx-21230d3">
       <style>
-      #mjx-11a96cb{
+      #mjx-21230d3{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7099,9 +7122,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p><strong>回归项（bbox）</strong></p>
 
-    <span id="mjx-3f25a0e">
+    <span id="mjx-c11b883">
       <style>
-      #mjx-3f25a0e{
+      #mjx-c11b883{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7263,9 +7286,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p><strong>分类项</strong></p>
 
-    <span id="mjx-5760b6b">
+    <span id="mjx-ebd0042">
       <style>
-      #mjx-5760b6b{
+      #mjx-ebd0042{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7426,9 +7449,9 @@ g[data-mml-node="xypic"] path {
   </li>
 </ul>
 <p>这里的 
-    <span id="mjx-0ee66ef">
+    <span id="mjx-c2a7b85">
       <style>
-      #mjx-0ee66ef{
+      #mjx-c2a7b85{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7588,15 +7611,15 @@ g[data-mml-node="xypic"] path {
     </span>
   是 YOLOv8 默认的三个权重（论文里给了默认值），你可以把它理解成：<strong>“框回归重要程度、边界分布回归重要程度、分类重要程度”</strong> 的配比。</p>
 <hr>
-<h3 id="第一处改动">第一处改动</h3>
+<h3 id="第一处改动"><a class="header-anchor" href="#第一处改动">🔗</a>第一处改动</h3>
 <p><strong>每个层级都算一份 loss，然后平均</strong></p>
 <p>他们引入层级后，不再只有一个分类输出，而是 <strong>每个层级都有自己的分类输出</strong></p>
 <p>于是训练时：</p>
 <ol>
 <li><strong>对每个层级 i</strong> 都计算一份 “检测 loss”：
-    <span id="mjx-8705b3">
+    <span id="mjx-ed5022f">
       <style>
-      #mjx-8705b3{
+      #mjx-ed5022f{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7756,9 +7779,9 @@ g[data-mml-node="xypic"] path {
     </span>
   其中回归仍是 CIoU+DFL，分类仍是 BCE（结构不变，只是“多了一套输出/多了一套计算”）。</li>
 <li><strong>总 loss 取平均</strong>（论文写得很明确，就是 average）：
-    <span id="mjx-1f870b3">
+    <span id="mjx-b354404">
       <style>
-      #mjx-1f870b3{
+      #mjx-b354404{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7924,16 +7947,16 @@ g[data-mml-node="xypic"] path {
 所以你会看到一个很直观的现象：层级越深，<strong>总 loss 的数值尺度会被平均“摊薄”</strong>，这也是为什么他们强调每层用同一套权重，保证每层对总 loss 的贡献可控。</p>
 </blockquote>
 <hr>
-<h3 id="第二处改动">第二处改动</h3>
+<h3 id="第二处改动"><a class="header-anchor" href="#第二处改动">🔗</a>第二处改动</h3>
 <p><strong>在 level&gt;0 的分类 loss 里加“层级违规惩罚”</strong></p>
 <p>这部分就是你后面做实验解释 α 的关键。</p>
 <ol>
 <li>level0：不加惩罚（因为没有父类）</li>
 </ol>
 
-    <span id="mjx-2549d99">
+    <span id="mjx-c138c65">
       <style>
-      #mjx-2549d99{
+      #mjx-c138c65{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8096,9 +8119,9 @@ g[data-mml-node="xypic"] path {
 </ol>
 <p>论文给的形式是：</p>
 
-    <span id="mjx-85d58ae">
+    <span id="mjx-cf7d386">
       <style>
-      #mjx-85d58ae{
+      #mjx-cf7d386{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8259,9 +8282,9 @@ g[data-mml-node="xypic"] path {
   <p>各符号怎么理解（复现时非常重要）：</p>
 <ul>
 <li>
-    <span id="mjx-28ced">
+    <span id="mjx-bd23964">
       <style>
-      #mjx-28ced{
+      #mjx-bd23964{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8421,9 +8444,9 @@ g[data-mml-node="xypic"] path {
     </span>
   ：该层级的类别数（比如你 level1 是 80）</li>
 <li>
-    <span id="mjx-fae960a">
+    <span id="mjx-5fa9d56">
       <style>
-      #mjx-fae960a{
+      #mjx-5fa9d56{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8582,9 +8605,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="5.759ex" height="2.059ex" role="img" focusable="false" viewBox="0 -705 2545.7 910" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path></g><g data-mml-node="mi" transform="translate(433,0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(918,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="msub" transform="translate(1518,0)"><g data-mml-node="mi"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="TeXAtom" transform="translate(523,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(345,0)"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>c</mi><mi>o</mi><mi>n</mi><msub><mi>f</mi><mrow data-mjx-texclass="ORD"><mi>i</mi><mi>l</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   ：当前层 
-    <span id="mjx-00a09b9">
+    <span id="mjx-5b477e7">
       <style>
-      #mjx-00a09b9{
+      #mjx-5b477e7{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8743,9 +8766,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="0.674ex" height="1.595ex" role="img" focusable="false" viewBox="0 -694 298 705" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>l</mi></math></mjx-assistive-mml></mjx-container>
     </span>
   对类别 
-    <span id="mjx-41f8742">
+    <span id="mjx-afc1c9">
       <style>
-      #mjx-41f8742{
+      #mjx-afc1c9{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8905,9 +8928,9 @@ g[data-mml-node="xypic"] path {
     </span>
    的 <strong>置信度</strong>（直觉上就是 sigmoid 后的概率/score）</li>
 <li>
-    <span id="mjx-1a20dd2">
+    <span id="mjx-2b5c548">
       <style>
-      #mjx-1a20dd2{
+      #mjx-2b5c548{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -9068,9 +9091,9 @@ g[data-mml-node="xypic"] path {
   ：
 <ul>
 <li>若 “类别 
-    <span id="mjx-afb404c">
+    <span id="mjx-ce3d3db">
       <style>
-      #mjx-afb404c{
+      #mjx-ce3d3db{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -9229,9 +9252,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>i</mi></math></mjx-assistive-mml></mjx-container>
     </span>
   ” 是 <strong>上一层预测父类</strong> 的子类 → 
-    <span id="mjx-c2c33ef">
+    <span id="mjx-6c7ef98">
       <style>
-      #mjx-c2c33ef{
+      #mjx-6c7ef98{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -9391,9 +9414,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </li>
 <li>否则（不属于那个父类的子类集合）→
-    <span id="mjx-0945f93">
+    <span id="mjx-d664042">
       <style>
-      #mjx-0945f93{
+      #mjx-d664042{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -9556,9 +9579,9 @@ g[data-mml-node="xypic"] path {
 </li>
 </ul>
 <p>所以 
-    <span id="mjx-0f66b9a">
+    <span id="mjx-bf81896">
       <style>
-      #mjx-0f66b9a{
+      #mjx-bf81896{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -9736,9 +9759,9 @@ g[data-mml-node="xypic"] path {
 <li>如果 level1 给了 “cat/dog” 很高置信度
 → 这些类对当前 parent 来说是 <strong>非法子类</strong>
 → 它们对应的 
-    <span id="mjx-d98a237">
+    <span id="mjx-fd63881">
       <style>
-      #mjx-d98a237{
+      #mjx-fd63881{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -9902,7 +9925,7 @@ g[data-mml-node="xypic"] path {
 <p>这件事和 3.2 的层级指标是对齐的：
 <strong>3.2 用指标奖励“错得近”；3.3 用 loss 在训练阶段就把“错得远”变得更痛。</strong></p>
 <hr>
-<h3 id="PyTorch-Ultralytics-复现映射">PyTorch/Ultralytics 复现映射</h3>
+<h3 id="PyTorch-Ultralytics-复现映射"><a class="header-anchor" href="#PyTorch-Ultralytics-复现映射">🔗</a>PyTorch/Ultralytics 复现映射</h3>
 <p>你应该怎么实现这项惩罚（最小可行版本）</p>
 <p>你可以按下面这个“最小实现思路”落地（先别管多尺度，先把单个 feature map/单批次想清楚）：</p>
 <ol>
@@ -9953,12 +9976,12 @@ g[data-mml-node="xypic"] path {
 <p>注意：论文的写法看起来是“对所有类别求和”，所以惩罚更像“把非法概率质量整体压下去”，而不仅仅罚 <code>argmax</code> 那一个类。</p>
 </blockquote>
 <hr>
-<h1 id="Ⅳ-Experiments">Ⅳ Experiments</h1>
-<h2 id="4-1-Experimental-Variants-of-Hierarchical-Architectures">4.1 Experimental Variants of Hierarchical Architectures</h2>
+<h1 id="Ⅳ-Experiments"><a class="header-anchor" href="#Ⅳ-Experiments">🔗</a>Ⅳ Experiments</h1>
+<h2 id="4-1-Experimental-Variants-of-Hierarchical-Architectures"><a class="header-anchor" href="#4-1-Experimental-Variants-of-Hierarchical-Architectures">🔗</a>4.1 Experimental Variants of Hierarchical Architectures</h2>
 <p>论文 <strong>4.1 Experimental Variants of Hierarchical Architectures</strong> 这一节做的事情很“工程化”：<strong>固定“层级检测”的大框架不变，只系统比较 6 种“信息从上一级怎么接到下一级”的接法（V1~V6），看哪种融合点最合理。</strong></p>
 <p>下面我按你说的“分段节奏”来讲（但会把关键结论在这一轮就讲完整，方便你直接对照代码/参数）。</p>
 <hr>
-<h3 id="段-1">段 1</h3>
+<h3 id="段-1"><a class="header-anchor" href="#段-1">🔗</a>段 1</h3>
 <p>4.1 先把“对比实验在比什么”讲清楚（你读这一段要抓的主线）</p>
 <p>他们在比两件事：Insertion point &amp; Concatenation point</p>
 <p>作者说 6 个版本都只在两处做差异：</p>
@@ -9984,7 +10007,7 @@ g[data-mml-node="xypic"] path {
 </ul>
 <p>这就是 4.1 的核心：<strong>找一个“刚刚好”的融合时机</strong>。</p>
 <hr>
-<h3 id="段-2">段 2</h3>
+<h3 id="段-2"><a class="header-anchor" href="#段-2">🔗</a>段 2</h3>
 <p>V1 &amp; V2（作者先讲“早融合”的坑，再讲“稍晚一点”的改进但不稳）</p>
 <p>Version 1：branch 插得还行，但 concat 太早</p>
 <p>作者对 V1 的判断非常明确：</p>
@@ -10003,7 +10026,7 @@ g[data-mml-node="xypic"] path {
 </ul>
 <p>结果：整体 F1Hier 略涨到 0.965，但 <strong>worst-class F1Hier 变低（0.738）</strong>，作者解释为：延迟融合可能让某些困难类别拿不到关键互补的低层特征（或者说，关键上下文来得太晚）。</p>
 <hr>
-<h3 id="段-3">段 3</h3>
+<h3 id="段-3"><a class="header-anchor" href="#段-3">🔗</a>段 3</h3>
 <p>V3~V6（开始围绕“更合理的融合时机 + 融合后怎么消化”做文章）</p>
 <p>评估怎么选“最优结构”？</p>
 <p>作者先说明他们怎么评：</p>
@@ -10049,7 +10072,7 @@ g[data-mml-node="xypic"] path {
 </ul>
 <p>最后作者补了一句“综合判断”：各版本 precision/recall 差异不大、level0 往往都很高，但 V6 在 level0 recall 有下降；整体上 V4 在各层级更均衡、并且 overall + worst-class F1Hier 都最好，所以选 V4 作为最优结构。</p>
 <hr>
-<h3 id="复现">复现</h3>
+<h3 id="复现"><a class="header-anchor" href="#复现">🔗</a>复现</h3>
 <p>把 4.1 和你当前的复现实验对齐（你现在该怎么用这节）</p>
 <p>你现在在跑的是 <strong>COCO 12(super) → 80(leaf)</strong> 的两层层级实验。4.1 给你的直接启发是：</p>
 <ol>
@@ -10058,10 +10081,10 @@ g[data-mml-node="xypic"] path {
 <li>评价不要只看平均，还要看“最难类/最差类”或类似的鲁棒性指标（你可以在 COCO 上用“哪些类最差”来复刻这种思路）。</li>
 </ol>
 <hr>
-<h2 id="4-2-Datasets">4.2 Datasets</h2>
+<h2 id="4-2-Datasets"><a class="header-anchor" href="#4-2-Datasets">🔗</a>4.2 Datasets</h2>
 <p>According to a document from <strong>27 Oct 2025</strong>, 论文 <strong>4.2 Datasets</strong> 这一节其实是在把他们的实验数据“怎么来的、长什么样、为什么这样设计”交代清楚——因为 hYOLO 的核心卖点之一就是：在<strong>超大类数（1011 类）</strong>、而且类之间视觉相近的“超市商品”场景里，层级信息更有价值。</p>
 <hr>
-<h3 id="数据集到底是什么">数据集到底是什么</h3>
+<h3 id="数据集到底是什么"><a class="header-anchor" href="#数据集到底是什么">🔗</a>数据集到底是什么</h3>
 <ol>
 <li>规模与划分</li>
 </ol>
@@ -10140,10 +10163,10 @@ g[data-mml-node="xypic"] path {
 <p><strong>mAP/F1 可能不一定大涨，但层级指标（比如 F1Hier、以及“错在同一 super 的比例”）更容易体现收益。</strong></p>
 </blockquote>
 <hr>
-<h2 id="4-3-Dataset-Hierarchical-Structures">4.3 Dataset Hierarchical Structures</h2>
+<h2 id="4-3-Dataset-Hierarchical-Structures"><a class="header-anchor" href="#4-3-Dataset-Hierarchical-Structures">🔗</a>4.3 Dataset Hierarchical Structures</h2>
 <p><strong>4.3 Dataset Hierarchical Structures</strong> 这一节的主线很清楚：作者在同一套 1011 类商品数据上<strong>手工设计了两种“类层级树”</strong>，用来专门检验两件事——<strong>(1) 层级深度有多重要；(2) 层级是否应该体现“视觉相似性”</strong>。</p>
 <hr>
-<h3 id="核心">核心</h3>
+<h3 id="核心"><a class="header-anchor" href="#核心">🔗</a>核心</h3>
 <p>为什么要做两种 hierarchy？</p>
 <p>他们不是随便分组，而是把 hierarchy 当成一个“可控变量”来做消融：</p>
 <ul>
@@ -10152,7 +10175,7 @@ g[data-mml-node="xypic"] path {
 这就是 Version 1 vs Version 2 的动机。</li>
 </ul>
 <hr>
-<h3 id="Dataset-Hierarchy-Version-1">Dataset Hierarchy Version 1</h3>
+<h3 id="Dataset-Hierarchy-Version-1"><a class="header-anchor" href="#Dataset-Hierarchy-Version-1">🔗</a>Dataset Hierarchy Version 1</h3>
 <p>按“商店品类”建树（不管视觉像不像）</p>
 <p>Version 1 的定义一句话概括就是：</p>
 <blockquote>
@@ -10161,7 +10184,7 @@ g[data-mml-node="xypic"] path {
 </blockquote>
 <p>你可以把它理解成：<strong>语义/业务 taxonomy</strong>，比如“食品→零食→饼干→某品牌某口味某规格”。</p>
 <hr>
-<h3 id="Dataset-Hierarchy-Version-2">Dataset Hierarchy Version 2</h3>
+<h3 id="Dataset-Hierarchy-Version-2"><a class="header-anchor" href="#Dataset-Hierarchy-Version-2">🔗</a>Dataset Hierarchy Version 2</h3>
 <p>把“视觉/语义相似性”显式塞进层级里（5 层）</p>
 <p>Version 2 的思路是反过来：先把<strong>更稳定、视觉更一致</strong>的属性放在更低层（更靠近输入、也更“粗”），再逐步走向商品语义与品牌。</p>
 <p>论文给了一个非常具体的“从上到下（或从粗到细）”设计链：</p>
@@ -10190,7 +10213,7 @@ g[data-mml-node="xypic"] path {
 这比 Version 1 那种“先按货架语义分大类”更贴近模型的视觉学习路径。</p>
 </blockquote>
 <hr>
-<h3 id="两个版本的对比">两个版本的对比</h3>
+<h3 id="两个版本的对比"><a class="header-anchor" href="#两个版本的对比">🔗</a>两个版本的对比</h3>
 <p>两个版本的“深度”也不同：V1 更浅，V2 更深</p>
 <p>从后面实验表（Table 2）能看出来：</p>
 <ul>
@@ -10202,7 +10225,7 @@ g[data-mml-node="xypic"] path {
 <p>作者想传达的“结论味道”（为后面 4.5 铺垫）</p>
 <p>虽然正式对比在 4.5，但论文已经提前点明 Version 2 的价值：它<strong>考虑了视觉与语义相似性</strong>，在 100-class 子集上表现更好（precision/recall/F1、TP conf 更高、FP conf 更低）。</p>
 <hr>
-<h3 id="复现-2">复现</h3>
+<h3 id="复现-2"><a class="header-anchor" href="#复现-2">🔗</a>复现</h3>
 <p>对你复现/做 COCO 12→80 两层实验的启发（非常实用）</p>
 <p>你现在的 12→80 属于“语义大类→细类”。4.3 给你的关键启发是：</p>
 <ol>
@@ -10223,9 +10246,9 @@ Version 1 就是“符合超市分类”，但作者明确说它不管视觉相�
 </ul>
 </li>
 </ol>
-<h2 id="4-4-YOLO-Model-and-Hyperparameters">4.4 YOLO Model and Hyperparameters</h2>
+<h2 id="4-4-YOLO-Model-and-Hyperparameters"><a class="header-anchor" href="#4-4-YOLO-Model-and-Hyperparameters">🔗</a>4.4 YOLO Model and Hyperparameters</h2>
 <p>According to a document from <strong>Oct 27, 2025</strong>（hYOLO 论文 arXiv 版本），<strong>4.4 YOLO Model and Hyperparameters</strong> 这一节主要是在回答：他们把 hYOLO（V4 架构 + 3.3 的改造 loss）接到 YOLOv8 之后，训练时<strong>哪些设置保持默认、哪些必须改</strong>，以及<strong>为什么要改</strong>。</p>
-<h3 id="架构选择">架构选择</h3>
+<h3 id="架构选择"><a class="header-anchor" href="#架构选择">🔗</a>架构选择</h3>
 <ol>
 <li>用的是什么 YOLO？怎么保证不同结构对比公平？</li>
 </ol>
@@ -10236,7 +10259,7 @@ Version 1 就是“符合超市分类”，但作者明确说它不管视觉相�
 <blockquote>
 <p>对你来说，这一条直接解释了：为什么你训练时从 <code>yolov8n.pt</code> / <code>yolov8*.pt</code> 开始是合理的——这就是作者的实验范式。</p>
 </blockquote>
-<h3 id="超参数">超参数</h3>
+<h3 id="超参数"><a class="header-anchor" href="#超参数">🔗</a>超参数</h3>
 <ol start="2">
 <li>哪些超参不动？哪些超参动了？</li>
 </ol>
@@ -10247,9 +10270,9 @@ Version 1 就是“符合超市分类”，但作者明确说它不管视觉相�
 <p>YOLO 的总损失由 **CIoU（box）+ DFL + BCE（cls）**组成；默认权重分别是</p>
 <ul>
 <li>
-    <span id="mjx-a0438f">
+    <span id="mjx-4e3307">
       <style>
-      #mjx-a0438f{
+      #mjx-4e3307{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -10409,9 +10432,9 @@ g[data-mml-node="xypic"] path {
     </span>
   （CIoU）</li>
 <li>
-    <span id="mjx-5178cdb">
+    <span id="mjx-22b648f">
       <style>
-      #mjx-5178cdb{
+      #mjx-22b648f{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -10571,9 +10594,9 @@ g[data-mml-node="xypic"] path {
     </span>
   （DFL）</li>
 <li>
-    <span id="mjx-782ea5d">
+    <span id="mjx-a4879b5">
       <style>
-      #mjx-782ea5d{
+      #mjx-a4879b5{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -10736,9 +10759,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p>作者强调：这些权重应该<strong>任务相关</strong>。比如自动驾驶更偏检测定位，可以提高 
-    <span id="mjx-b7a75ee">
+    <span id="mjx-366143">
       <style>
-      #mjx-b7a75ee{
+      #mjx-366143{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -10897,9 +10920,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="4.185ex" height="1.359ex" role="img" focusable="false" viewBox="0 -443 1849.8 600.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D464" d="M580 385Q580 406 599 424T641 443Q659 443 674 425T690 368Q690 339 671 253Q656 197 644 161T609 80T554 12T482 -11Q438 -11 404 5T355 48Q354 47 352 44Q311 -11 252 -11Q226 -11 202 -5T155 14T118 53T104 116Q104 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Q21 293 29 315T52 366T96 418T161 441Q204 441 227 416T250 358Q250 340 217 250T184 111Q184 65 205 46T258 26Q301 26 334 87L339 96V119Q339 122 339 128T340 136T341 143T342 152T345 165T348 182T354 206T362 238T373 281Q402 395 406 404Q419 431 449 431Q468 431 475 421T483 402Q483 389 454 274T422 142Q420 131 420 107V100Q420 85 423 71T442 42T487 26Q558 26 600 148Q609 171 620 213T632 273Q632 306 619 325T593 357T580 385Z"></path></g><g data-mml-node="TeXAtom" transform="translate(749,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D44F" d="M73 647Q73 657 77 670T89 683Q90 683 161 688T234 694Q246 694 246 685T212 542Q204 508 195 472T180 418L176 399Q176 396 182 402Q231 442 283 442Q345 442 383 396T422 280Q422 169 343 79T173 -11Q123 -11 82 27T40 150V159Q40 180 48 217T97 414Q147 611 147 623T109 637Q104 637 101 637H96Q86 637 83 637T76 640T73 647ZM336 325V331Q336 405 275 405Q258 405 240 397T207 376T181 352T163 330L157 322L136 236Q114 150 114 114Q114 66 138 42Q154 26 178 26Q211 26 245 58Q270 81 285 114T318 219Q336 291 336 325Z"></path></g><g data-mml-node="mi" transform="translate(429,0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(914,0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>w</mi><mrow data-mjx-texclass="ORD"><mi>b</mi><mi>o</mi><mi>x</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   ；但他们的应用（超市商品细粒度识别）更看重“分对类别”，所以要提高 
-    <span id="mjx-de4f3c9">
+    <span id="mjx-8833cfe">
       <style>
-      #mjx-de4f3c9{
+      #mjx-8833cfe{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -11061,9 +11084,9 @@ g[data-mml-node="xypic"] path {
 </li>
 </ul>
 <p>他们怎么选的 
-    <span id="mjx-aa430a6">
+    <span id="mjx-b7ecf4e">
       <style>
-      #mjx-aa430a6{
+      #mjx-b7ecf4e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -11225,9 +11248,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>
 <p>他们在 <strong>100-class reduced dataset</strong> 上实验增大
-    <span id="mjx-7b71996">
+    <span id="mjx-a9d631c">
       <style>
-      #mjx-7b71996{
+      #mjx-a9d631c{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -11388,9 +11411,9 @@ g[data-mml-node="xypic"] path {
   ，观察 test F1：</p>
 <ul>
 <li>从 (
-    <span id="mjx-3f0cadc">
+    <span id="mjx-4c82e38">
       <style>
-      #mjx-3f0cadc{
+      #mjx-4c82e38{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -11550,9 +11573,9 @@ g[data-mml-node="xypic"] path {
     </span>
   =0.5) 时的 <strong>0.948</strong></li>
 <li>提升到 (
-    <span id="mjx-74f44f3">
+    <span id="mjx-c614fd3">
       <style>
-      #mjx-74f44f3{
+      #mjx-c614fd3{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -11721,21 +11744,21 @@ g[data-mml-node="xypic"] path {
 <p>这条和你现在配置里看到的 <code>cls: 2.0</code> 是一致的（在他们附录给的 default.yaml 改动列表里也能直接看到 <code>cls: 2.0</code>）。</p>
 </blockquote>
 <p><img src="/blog/2026/01/10/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/hyolo/%E3%80%90hyolo%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/image-20260112184328438.png" alt="image-20260112184328438"></p>
-<h3 id="优化器">优化器</h3>
+<h3 id="优化器"><a class="header-anchor" href="#优化器">🔗</a>优化器</h3>
 <ol start="3">
 <li>优化器怎么选？</li>
 </ol>
 <p>作者还补充：他们更偏向 <strong>SGD 而不是 Adam</strong>，理由是对他们的模型与数据集来说训练更稳定（stability 更好）。</p>
-<h3 id="复现-3">复现</h3>
+<h3 id="复现-3"><a class="header-anchor" href="#复现-3">🔗</a>复现</h3>
 <ol start="4">
 <li>把 4.4 直接对齐到你现在的 COCO(12→80) 实验：你该怎么理解“自己在调什么”</li>
 </ol>
 <p>你现在的任务（COCO 80 细类 + 12 super 类）其实也偏“分类正确性很重要”，所以 4.4 给你一个很明确的实验抓手：</p>
 <ul>
 <li><strong>想让层级更“发挥作用”</strong>，除了调 α（3.3），还要关注 **分类损失权重 **
-    <span id="mjx-8145a37">
+    <span id="mjx-c3b873f">
       <style>
-      #mjx-8145a37{
+      #mjx-c3b873f{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -11896,9 +11919,9 @@ g[data-mml-node="xypic"] path {
   
 <ul>
 <li>
-    <span id="mjx-5aa13c1">
+    <span id="mjx-282448a">
       <style>
-      #mjx-5aa13c1{
+      #mjx-282448a{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -12058,9 +12081,9 @@ g[data-mml-node="xypic"] path {
     </span>
   小：模型更愿意把容量用在定位/回归上</li>
 <li>
-    <span id="mjx-afe5eaa">
+    <span id="mjx-336751a">
       <style>
-      #mjx-afe5eaa{
+      #mjx-336751a{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -12222,9 +12245,9 @@ g[data-mml-node="xypic"] path {
 </ul>
 </li>
 <li>作者在商品识别里把 
-    <span id="mjx-9779194">
+    <span id="mjx-73f2ddd">
       <style>
-      #mjx-9779194{
+      #mjx-73f2ddd{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -12385,9 +12408,9 @@ g[data-mml-node="xypic"] path {
   提到 2，就是为了匹配“分错类比框偏一点更糟”的目标函数。</li>
 </ul>
 <hr>
-<h2 id="4-5-Model-Training-and-Evaluation">4.5 Model Training and Evaluation</h2>
+<h2 id="4-5-Model-Training-and-Evaluation"><a class="header-anchor" href="#4-5-Model-Training-and-Evaluation">🔗</a>4.5 Model Training and Evaluation</h2>
 <p>According to a document from <strong>27 Oct 2025</strong>（hYOLO 论文 arXiv v1），<strong>4.5 Model Training and Evaluation</strong> 做了三件很关键的事：<strong>定最终架构（V4）→ 统一训练设置跑两种层级（V1/V2）→ 用“F1 + TP/FP 置信度”来解释模型到底“更准了”还是“更靠谱了”。</strong></p>
-<h3 id="训练架构和数据集版本">训练架构和数据集版本</h3>
+<h3 id="训练架构和数据集版本"><a class="header-anchor" href="#训练架构和数据集版本">🔗</a>训练架构和数据集版本</h3>
 <ol>
 <li>他们怎么训练（Training）：架构固定用 V4，然后只换“数据层级版本”</li>
 </ol>
@@ -12398,7 +12421,7 @@ g[data-mml-node="xypic"] path {
 <blockquote>
 <p>你可以把这里理解成：<strong>模型结构先消融定型（V4），再把“层级怎么建”当作主要变量来实验。</strong></p>
 </blockquote>
-<h3 id="评估指标">评估指标</h3>
+<h3 id="评估指标"><a class="header-anchor" href="#评估指标">🔗</a>评估指标</h3>
 <hr>
 <ol start="2">
 <li>他们怎么评估（Evaluation）：不只看 F1，还看 TP/FP 的“置信度校准”</li>
@@ -12434,13 +12457,13 @@ g[data-mml-node="xypic"] path {
 <li><strong>FP conf 低</strong>代表“答错时不那么自信”（更安全、可控）</li>
 </ul>
 </blockquote>
-<h3 id="实验结论">实验结论</h3>
+<h3 id="实验结论"><a class="header-anchor" href="#实验结论">🔗</a>实验结论</h3>
 <ol start="3">
 <li>100-class 实验结论：层级版本 V2（考虑视觉/语义相似性）整体最好</li>
 </ol>
 <p>作者结论写得很直接：<strong>Dataset hierarchy V2</strong>（把视觉与语义相似性编码进层级）在 <strong>100-class reduced dataset</strong> 上表现优于 V1，也优于 flat YOLOv8（在 precision/recall/F1 三项都更好）。</p>
 <p>并且 Table 2 给出了关键现象：V2 往往能做到 <strong>更高 TP conf、且更低 FP conf</strong>（“更有把握地对、但错得更不自信”）。</p>
-<h3 id="层级设置">层级设置</h3>
+<h3 id="层级设置"><a class="header-anchor" href="#层级设置">🔗</a>层级设置</h3>
 <ol start="4">
 <li>为什么 flat YOLO 要训练 5 个？——为了公平对齐每个层级</li>
 </ol>
@@ -12453,7 +12476,7 @@ g[data-mml-node="xypic"] path {
 <p>这段对你做 COCO(12→80) 很有启发：
 如果你想“严格公平”地证明层级训练有效，flat baseline 最好也要做这种“对齐层级标签空间”的对照，而不是只拿一个 80 类 flat 去比所有层级。</p>
 </blockquote>
-<h3 id="扩展到-1011-class">扩展到 1011-class</h3>
+<h3 id="扩展到-1011-class"><a class="header-anchor" href="#扩展到-1011-class">🔗</a>扩展到 1011-class</h3>
 <ol start="5">
 <li>扩展到 1011-class：V2 的“语义一致性”更强，但 flat 的 F1 可能更高（代价是更危险的 FP）</li>
 </ol>
@@ -12471,7 +12494,7 @@ g[data-mml-node="xypic"] path {
 <p>这就是 4.5 最想传达的“应用视角”结论：
 <strong>层级模型不一定让“纯 F1”永远最大，但能让模型更“靠谱”——错了也更不自信、更接近正确语义。</strong></p>
 </blockquote>
-<h3 id="dependency-loss-权重实验">dependency loss 权重实验</h3>
+<h3 id="dependency-loss-权重实验"><a class="header-anchor" href="#dependency-loss-权重实验">🔗</a>dependency loss 权重实验</h3>
 <ol start="6">
 <li>4.5 后半段：开始扫 α（dependency loss 的权重），解释为什么 α=50 也合理</li>
 </ol>
@@ -12495,11 +12518,11 @@ g[data-mml-node="xypic"] path {
 <li><strong>α 不是越大越好</strong>：它会带来均衡性收益（worst-class F1 上升），但可能牺牲 TP conf；你需要用实验去解释这个 trade-off。</li>
 </ul>
 <p>如果你愿意，我下一步就按论文的顺序，带你把 <strong>Table 2 / Table 3 / Table 4</strong> 变成你自己的“复现对照表”：在你的训练日志里应该对应看哪些字段、你该怎么记录每个 level 的 TP/FP conf，最后怎么写成一段像论文那样的结论。</p>
-<h3 id="表格解读">表格解读</h3>
+<h3 id="表格解读"><a class="header-anchor" href="#表格解读">🔗</a>表格解读</h3>
 <p>作者在实验部分用 <strong>Table 2 / Table 3 / Table 4</strong> 把 “层级怎么建、模型到底好在哪里、α 怎么影响 trade-off” 讲得非常集中。</p>
 <p>在正式读表之前，先把作者的“评估口径”钉死：他们在 4.5 里说评估三件事——<strong>F1、TP confidence、FP confidence</strong>，并且 TP/FP conf 是“先按类求平均，再对所有类做平均”。</p>
 <hr>
-<h4 id="Table-2">Table 2</h4>
+<h4 id="Table-2"><a class="header-anchor" href="#Table-2">🔗</a>Table 2</h4>
 <p>100-class 数据集上，V1/V2 层级 vs Flat YOLOv8（都用 V4 架构）</p>
 <p>这张表在回答什么？</p>
 <blockquote>
@@ -12540,7 +12563,7 @@ g[data-mml-node="xypic"] path {
 </ul>
 </blockquote>
 <hr>
-<h4 id="Table-3">Table 3</h4>
+<h4 id="Table-3"><a class="header-anchor" href="#Table-3">🔗</a>Table 3</h4>
 <p>把难度拉满到 1011-class，V2(hYOLO) vs Flat，并加入“语义接近的错分”指标</p>
 <p>这张表在回答什么？</p>
 <blockquote>
@@ -12569,7 +12592,7 @@ g[data-mml-node="xypic"] path {
 <p>这就是 hYOLO 想卖的核心价值：<strong>不只追 F1，还追“可用性/安全性/可解释性”</strong>——答错时别那么自信，错也尽量错在“同大类”。</p>
 </blockquote>
 <hr>
-<h4 id="Table-4">Table 4</h4>
+<h4 id="Table-4"><a class="header-anchor" href="#Table-4">🔗</a>Table 4</h4>
 <p>扫 α（dependency penalty 权重），把“平均效果 vs 最差类”讲透</p>
 <p>这张表在回答什么？</p>
 <blockquote>
@@ -12605,7 +12628,7 @@ g[data-mml-node="xypic"] path {
 <li><strong>Table 4（α sweep）</strong>：最后解释 loss 里 penalty 的权重为什么是一个“要靠实验选的旋钮”，并展示它如何在“平均性能 vs 最差类”之间做取舍</li>
 </ol>
 <p>如果你愿意，下一步我可以按你要复现的口径，把这三张表“翻译成你自己的实验记录模板”：你跑一次训练，应该保存哪些日志字段，怎么从预测结果算 TP/FP conf、FP same-subgraph，最后怎么写出和论文同结构的 Table 2/3/4。</p>
-<h1 id="Ⅴ-Conclusion">Ⅴ Conclusion</h1>
+<h1 id="Ⅴ-Conclusion"><a class="header-anchor" href="#Ⅴ-Conclusion">🔗</a>Ⅴ Conclusion</h1>
 <p>According to a document from <strong>Oct 27, 2025</strong>（hYOLO 论文 arXiv v1），<strong>第 5 节 Conclusion</strong> 主要是在“收束全文贡献 + 强调实验结论 + 给出应用场景 + 提出未来研究方向”。</p>
 <hr>
 <p>5.1 作者在 Conclusion 里怎么概括他们做了什么？</p>
@@ -12650,11 +12673,11 @@ g[data-mml-node="xypic"] path {
 <li><strong>层级必须“像视觉”</strong>（考虑视觉相似性）才能显著增益，而不是只做业务/语义树。</li>
 <li>真正难点在“模型之外”：<strong>怎么建立高质量 hierarchy、怎么评估它、怎么处理深层级不平衡</strong>。</li>
 </ul>
-<h1 id="代码学习">代码学习</h1>
+<h1 id="代码学习"><a class="header-anchor" href="#代码学习">🔗</a>代码学习</h1>
 <blockquote>
 <p>接下来我想按照论文详细的学习这个项目的代码，这个项目是基于yolov8进行修改的，请你阅读完这篇文章后（文章上传到了plan文件夹下），给我制定一份代码的学习计划，我想知道论文对原yolov8哪些地方做了改进，改进后的模型结构、损失函数等是怎么样的，我应该去哪些地方看这些改进，我应该如何学习来让这份代码迁移到我自己的项目中去，请你在plan文件夹下生成一个plan.md的文件，把你的计划填写进去，并根据后面我的要求不断修改</p>
 </blockquote>
-</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/hyolo/">hyolo</a></div><div class="post-share"><div class="social-share" data-image="/blog/image/cover/3.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2025/12/24/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/yoloe/%E3%80%90YOLOE%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【YOLOE】论文阅读"><img class="cover" src="/blog/image/cover/4.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">【YOLOE】论文阅读</div></div><div class="info-2"><div class="info-item-1">12$env:https_proxy=&quot;http://127.0.0.1:7897&quot;; $env:http_proxy=&quot;http://127.0.0.1:7897&quot;;setx ANTHROPIC_API_KEY &quot;sk-22wETtCe2vk5KhbIviLl8FLtoPQ81vYnE2zLcySaK5fpmI2L&quot; 12$env:ANTHROPIC_BASE_URL = &quot;https://uyilink.com&quot;$env:ANTHROPIC_AUTH_TOKEN = &quot;sk-22wETtCe2vk5KhbIviLl8FLtoPQ81vYnE2zLcySaK5fpmI2L&quot; 1sk-MNhq4i6adqrrFkZ1RolZPREzKqMJ9fmdz4fXdyNo1EMW57Vx 123curl -fsSL https://gitee.com/CoderRouter/scripts/raw/master/setup_claude_env.sh \  | sed...</div></div></div></a><a class="pagination-related" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释"><img class="cover" src="/blog/image/cover/6.jpeg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">YOLO-UniOW-指标解释</div></div><div class="info-2"><div class="info-item-1">GEMINI YOLO-UniOW：通用开放世界目标检测评估指标的深度解析与教学报告 1. 绪论：从封闭世界到通用开放世界的评估范式转变 作为计算机视觉领域的教育者，引导学生理解 YOLO-UniOW 这样前沿工作的核心，不仅在于解析其网络架构（如 Adaptive Decision Learning 或 Wildcard Learning），更在于透彻理解其评估体系。在传统的“封闭世界”（Closed-Set）检测任务中，我们习惯了使用 mAP（Mean Average Precision）作为唯一的衡量标准。然而，YOLO-UniOW 提出并解决的是**通用开放世界目标检测（Universal Open-World Object Detection, Uni-OWD）**问题 1。这一范式的转变要求评估指标必须从单一的“准确性”维度，扩展到“泛化性”、“发现能力”、“记忆稳定性”和“推理效率”等多个维度。 本报告将基于 YOLO-UniOW 的论文实验章节（Section 4. Experiments）及项目代码库（特别是...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">太平山上修真我，祖师堂中续香火</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">20</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">QQ-2895014608</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Abstract"><span class="toc-text">Abstract</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81%E7%B2%BE%E8%AF%BB"><span class="toc-text">摘要精读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5-%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-text">关键概念&#x2F;符号表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PyTorch-%E6%9E%B6%E6%9E%84%E6%98%A0%E5%B0%84"><span class="toc-text">PyTorch 架构映射</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E2%85%A0-Introduction"><span class="toc-text">Ⅰ Introduction</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E6%9C%AC%E8%8A%82%E6%A0%B8%E5%BF%83%E7%BB%93%E8%AE%BA"><span class="toc-text">1.1 本节核心结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5-%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-text">1.2 关键概念&#x2F;符号表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-Introduction-%E7%B2%BE%E8%AF%BB"><span class="toc-text">1.3 Introduction 精读</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E2%85%A1-Related-Work"><span class="toc-text">Ⅱ Related Work</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%8E%9F%E6%96%87%E8%BF%87%E4%B8%80%E9%81%8D"><span class="toc-text">2.1 原文过一遍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2%E6%8C%89%E5%A4%8D%E7%8E%B0%E8%8A%82%E5%A5%8F%E9%87%8D%E6%96%B0%E5%BD%92%E7%B1%BB"><span class="toc-text">2.2按复现节奏重新归类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-%E6%9E%B6%E6%9E%84%E6%94%B9%E6%B3%95%EF%BC%88architecture-level%EF%BC%89"><span class="toc-text">A. 架构改法（architecture-level）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-Loss-%E6%94%B9%E6%B3%95%EF%BC%88loss-level%EF%BC%89"><span class="toc-text">B. Loss 改法（loss-level）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E6%8C%87%E6%A0%87%E4%B8%8E%E8%AF%84%E4%BC%B0%EF%BC%88metric-evaluation%EF%BC%89"><span class="toc-text">C. 指标与评估（metric&#x2F;evaluation）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E2%85%A2-Method"><span class="toc-text">Ⅲ Method</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-Hierarchical-Architectures"><span class="toc-text">3.1 Hierarchical Architectures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E8%8A%82%E6%A0%B8%E5%BF%83%E7%BB%93%E8%AE%BA"><span class="toc-text">本节核心结论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5-%E7%AC%A6%E5%8F%B7%E8%A1%A8-2"><span class="toc-text">关键概念&#x2F;符号表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E5%88%86%E8%A7%A3"><span class="toc-text">逻辑分解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-Hierarchical-Models-Evaluation-Metrics"><span class="toc-text">3.2 Hierarchical Models Evaluation Metrics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E8%8A%82%E6%A0%B8%E5%BF%83%E7%BB%93%E8%AE%BA-2"><span class="toc-text">本节核心结论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5-%E7%AC%A6%E5%8F%B7"><span class="toc-text">关键概念&#x2F;符号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E6%A0%87%E5%AE%9A%E4%B9%89"><span class="toc-text">指标定义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-Modified-Loss-Function"><span class="toc-text">3.3 Modified Loss Function</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E8%8A%82%E6%A0%B8%E5%BF%83%E7%BB%93%E8%AE%BA-3"><span class="toc-text">本节核心结论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#YOLOv8-%E5%8E%9F%E5%A7%8B-loss"><span class="toc-text">YOLOv8 原始 loss</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%A4%84%E6%94%B9%E5%8A%A8"><span class="toc-text">第一处改动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%A4%84%E6%94%B9%E5%8A%A8"><span class="toc-text">第二处改动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PyTorch-Ultralytics-%E5%A4%8D%E7%8E%B0%E6%98%A0%E5%B0%84"><span class="toc-text">PyTorch&#x2F;Ultralytics 复现映射</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E2%85%A3-Experiments"><span class="toc-text">Ⅳ Experiments</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-Experimental-Variants-of-Hierarchical-Architectures"><span class="toc-text">4.1 Experimental Variants of Hierarchical Architectures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%B5-1"><span class="toc-text">段 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%B5-2"><span class="toc-text">段 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%B5-3"><span class="toc-text">段 3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0"><span class="toc-text">复现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-Datasets"><span class="toc-text">4.2 Datasets</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">数据集到底是什么</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-Dataset-Hierarchical-Structures"><span class="toc-text">4.3 Dataset Hierarchical Structures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83"><span class="toc-text">核心</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dataset-Hierarchy-Version-1"><span class="toc-text">Dataset Hierarchy Version 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dataset-Hierarchy-Version-2"><span class="toc-text">Dataset Hierarchy Version 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E7%89%88%E6%9C%AC%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-text">两个版本的对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0-2"><span class="toc-text">复现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-4-YOLO-Model-and-Hyperparameters"><span class="toc-text">4.4 YOLO Model and Hyperparameters</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E9%80%89%E6%8B%A9"><span class="toc-text">架构选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B6%85%E5%8F%82%E6%95%B0"><span class="toc-text">超参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E5%99%A8"><span class="toc-text">优化器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0-3"><span class="toc-text">复现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-5-Model-Training-and-Evaluation"><span class="toc-text">4.5 Model Training and Evaluation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E6%9E%B6%E6%9E%84%E5%92%8C%E6%95%B0%E6%8D%AE%E9%9B%86%E7%89%88%E6%9C%AC"><span class="toc-text">训练架构和数据集版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-text">评估指标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E8%AE%BA"><span class="toc-text">实验结论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%82%E7%BA%A7%E8%AE%BE%E7%BD%AE"><span class="toc-text">层级设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E5%88%B0-1011-class"><span class="toc-text">扩展到 1011-class</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dependency-loss-%E6%9D%83%E9%87%8D%E5%AE%9E%E9%AA%8C"><span class="toc-text">dependency loss 权重实验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%BC%E8%A7%A3%E8%AF%BB"><span class="toc-text">表格解读</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Table-2"><span class="toc-text">Table 2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Table-3"><span class="toc-text">Table 3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Table-4"><span class="toc-text">Table 4</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E2%85%A4-Conclusion"><span class="toc-text">Ⅴ Conclusion</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0"><span class="toc-text">代码学习</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读"><img src="/blog/image/cover/9.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【WeDetect】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读">【WeDetect】论文阅读</a><time datetime="2026-01-21T01:41:58.000Z" title="发表于 2026-01-21 09:41:58">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册"><img src="/blog/image/cover/13.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="AI使用手册"/></a><div class="content"><a class="title" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册">AI使用手册</a><time datetime="2026-01-20T01:21:48.000Z" title="发表于 2026-01-20 09:21:48">2026-01-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读"><img src="/blog/image/cover/2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【OV-DQUO】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读">【OV-DQUO】论文阅读</a><time datetime="2026-01-19T07:59:50.000Z" title="发表于 2026-01-19 15:59:50">2026-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释"><img src="/blog/image/cover/6.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="YOLO-UniOW-指标解释"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释">YOLO-UniOW-指标解释</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection"><img src="/blog/image/cover/1.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><script src="/blog/true"></script><div class="js-pjax"><script>(() => {
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/hyolo/">hyolo</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2025/12/24/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/yoloe/%E3%80%90YOLOE%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【YOLOE】论文阅读"><img class="cover" src="/blog/image/cover/5.jpeg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">【YOLOE】论文阅读</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   开放词汇检测 / yoloe  12$env:https_proxy=&quot;http://127.0.0.1:7897&quot;; $env:http_proxy=&quot;http://127.0.0.1:7897&quot;;setx ANTHROPIC_API_KEY...</div></div></div></a><a class="pagination-related" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释"><img class="cover" src="/blog/image/cover/6.jpeg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">YOLO-UniOW-指标解释</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   开放词汇检测 / YOLO-UniOW  🔗GEMINI YOLO-UniOW：通用开放世界目标检测评估指标的深度解析与教学报告 🔗1. 绪论：从封闭世界到通用开放世界的评估范式转变 作为计算机视觉领域的教育者，引导学生理解 YOLO-UniOW 这样前沿工作的核心，不仅在于解析其网络架构（如 Adaptive Decision Learning 或 Wildcard...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">长期主义学习者，记录技术、论文与生活。</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/qieliqiean"><i class="fab fa-github"></i><span>访问 GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/qieliqiean" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎交流：2895014608@qq.com</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Abstract"><span class="toc-text">🔗Abstract</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81%E7%B2%BE%E8%AF%BB"><span class="toc-text">🔗摘要精读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5-%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-text">🔗关键概念&#x2F;符号表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PyTorch-%E6%9E%B6%E6%9E%84%E6%98%A0%E5%B0%84"><span class="toc-text">🔗PyTorch 架构映射</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E2%85%A0-Introduction"><span class="toc-text">🔗Ⅰ Introduction</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E6%9C%AC%E8%8A%82%E6%A0%B8%E5%BF%83%E7%BB%93%E8%AE%BA"><span class="toc-text">🔗1.1 本节核心结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5-%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-text">🔗1.2 关键概念&#x2F;符号表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-Introduction-%E7%B2%BE%E8%AF%BB"><span class="toc-text">🔗1.3 Introduction 精读</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E2%85%A1-Related-Work"><span class="toc-text">🔗Ⅱ Related Work</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%8E%9F%E6%96%87%E8%BF%87%E4%B8%80%E9%81%8D"><span class="toc-text">🔗2.1 原文过一遍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2%E6%8C%89%E5%A4%8D%E7%8E%B0%E8%8A%82%E5%A5%8F%E9%87%8D%E6%96%B0%E5%BD%92%E7%B1%BB"><span class="toc-text">🔗2.2按复现节奏重新归类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-%E6%9E%B6%E6%9E%84%E6%94%B9%E6%B3%95%EF%BC%88architecture-level%EF%BC%89"><span class="toc-text">🔗A. 架构改法（architecture-level）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-Loss-%E6%94%B9%E6%B3%95%EF%BC%88loss-level%EF%BC%89"><span class="toc-text">🔗B. Loss 改法（loss-level）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E6%8C%87%E6%A0%87%E4%B8%8E%E8%AF%84%E4%BC%B0%EF%BC%88metric-evaluation%EF%BC%89"><span class="toc-text">🔗C. 指标与评估（metric&#x2F;evaluation）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E2%85%A2-Method"><span class="toc-text">🔗Ⅲ Method</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-Hierarchical-Architectures"><span class="toc-text">🔗3.1 Hierarchical Architectures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E8%8A%82%E6%A0%B8%E5%BF%83%E7%BB%93%E8%AE%BA"><span class="toc-text">🔗本节核心结论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5-%E7%AC%A6%E5%8F%B7%E8%A1%A8-2"><span class="toc-text">🔗关键概念&#x2F;符号表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E5%88%86%E8%A7%A3"><span class="toc-text">🔗逻辑分解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-Hierarchical-Models-Evaluation-Metrics"><span class="toc-text">🔗3.2 Hierarchical Models Evaluation Metrics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E8%8A%82%E6%A0%B8%E5%BF%83%E7%BB%93%E8%AE%BA-2"><span class="toc-text">🔗本节核心结论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5-%E7%AC%A6%E5%8F%B7"><span class="toc-text">🔗关键概念&#x2F;符号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E6%A0%87%E5%AE%9A%E4%B9%89"><span class="toc-text">🔗指标定义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-Modified-Loss-Function"><span class="toc-text">🔗3.3 Modified Loss Function</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E8%8A%82%E6%A0%B8%E5%BF%83%E7%BB%93%E8%AE%BA-3"><span class="toc-text">🔗本节核心结论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#YOLOv8-%E5%8E%9F%E5%A7%8B-loss"><span class="toc-text">🔗YOLOv8 原始 loss</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%A4%84%E6%94%B9%E5%8A%A8"><span class="toc-text">🔗第一处改动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%A4%84%E6%94%B9%E5%8A%A8"><span class="toc-text">🔗第二处改动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PyTorch-Ultralytics-%E5%A4%8D%E7%8E%B0%E6%98%A0%E5%B0%84"><span class="toc-text">🔗PyTorch&#x2F;Ultralytics 复现映射</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E2%85%A3-Experiments"><span class="toc-text">🔗Ⅳ Experiments</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-Experimental-Variants-of-Hierarchical-Architectures"><span class="toc-text">🔗4.1 Experimental Variants of Hierarchical Architectures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%B5-1"><span class="toc-text">🔗段 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%B5-2"><span class="toc-text">🔗段 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%B5-3"><span class="toc-text">🔗段 3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0"><span class="toc-text">🔗复现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-Datasets"><span class="toc-text">🔗4.2 Datasets</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">🔗数据集到底是什么</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-Dataset-Hierarchical-Structures"><span class="toc-text">🔗4.3 Dataset Hierarchical Structures</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83"><span class="toc-text">🔗核心</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dataset-Hierarchy-Version-1"><span class="toc-text">🔗Dataset Hierarchy Version 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dataset-Hierarchy-Version-2"><span class="toc-text">🔗Dataset Hierarchy Version 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E7%89%88%E6%9C%AC%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-text">🔗两个版本的对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0-2"><span class="toc-text">🔗复现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-4-YOLO-Model-and-Hyperparameters"><span class="toc-text">🔗4.4 YOLO Model and Hyperparameters</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E9%80%89%E6%8B%A9"><span class="toc-text">🔗架构选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B6%85%E5%8F%82%E6%95%B0"><span class="toc-text">🔗超参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E5%99%A8"><span class="toc-text">🔗优化器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0-3"><span class="toc-text">🔗复现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-5-Model-Training-and-Evaluation"><span class="toc-text">🔗4.5 Model Training and Evaluation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E6%9E%B6%E6%9E%84%E5%92%8C%E6%95%B0%E6%8D%AE%E9%9B%86%E7%89%88%E6%9C%AC"><span class="toc-text">🔗训练架构和数据集版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-text">🔗评估指标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E8%AE%BA"><span class="toc-text">🔗实验结论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%82%E7%BA%A7%E8%AE%BE%E7%BD%AE"><span class="toc-text">🔗层级设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E5%88%B0-1011-class"><span class="toc-text">🔗扩展到 1011-class</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dependency-loss-%E6%9D%83%E9%87%8D%E5%AE%9E%E9%AA%8C"><span class="toc-text">🔗dependency loss 权重实验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E6%A0%BC%E8%A7%A3%E8%AF%BB"><span class="toc-text">🔗表格解读</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Table-2"><span class="toc-text">🔗Table 2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Table-3"><span class="toc-text">🔗Table 3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Table-4"><span class="toc-text">🔗Table 4</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E2%85%A4-Conclusion"><span class="toc-text">🔗Ⅴ Conclusion</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0"><span class="toc-text">🔗代码学习</span></a></li></ol></div></div><div class="card-widget card-post-series"><div class="item-headline"><i class="fa-solid fa-layer-group"></i><span>系列文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/10/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/hyolo/%E3%80%90hyolo%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【hyolo】论文阅读"><img src="/blog/image/cover/3.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【hyolo】论文阅读"></a><div class="content"><a class="title" href="/blog/2026/01/10/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/hyolo/%E3%80%90hyolo%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【hyolo】论文阅读">【hyolo】论文阅读</a><time datetime="2026-01-10T07:59:50.000Z" title="发表于 2026-01-10 15:59:50">2026-01-10</time></div></div></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/easter-egg/" title="彩蛋"><img src="/blog/image/cover/IMG_20260217_201822.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="彩蛋"/></a><div class="content"><a class="title" href="/blog/easter-egg/" title="彩蛋">彩蛋</a><time datetime="2026-02-18T05:09:03.000Z" title="发表于 2026-02-18 13:09:03">2026-02-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读"><img src="/blog/image/cover/9.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【WeDetect】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读">【WeDetect】论文阅读</a><time datetime="2026-01-21T01:41:58.000Z" title="发表于 2026-01-21 09:41:58">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册"><img src="/blog/image/cover/13.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="AI使用手册"/></a><div class="content"><a class="title" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册">AI使用手册</a><time datetime="2026-01-20T01:21:48.000Z" title="发表于 2026-01-20 09:21:48">2026-01-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读"><img src="/blog/image/cover/2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【OV-DQUO】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读">【OV-DQUO】论文阅读</a><time datetime="2026-01-19T07:59:50.000Z" title="发表于 2026-01-19 15:59:50">2026-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释"><img src="/blog/image/cover/6.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="YOLO-UniOW-指标解释"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释">YOLO-UniOW-指标解释</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><script src="/blog/true"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
   const loadMathjax = () => {
     if (!window.MathJax) {
       window.MathJax = {
@@ -12701,7 +12724,7 @@ g[data-mml-node="xypic"] path {
   const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
   const option = null
 
-  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark_dimmed' : 'light'
 
   const createScriptElement = config => {
     const ele = document.createElement('script')
@@ -12772,4 +12795,4 @@ g[data-mml-node="xypic"] path {
   } else {
     window.loadOtherComment = loadGiscus
   }
-})()</script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
+})()</script></div><script defer src="/blog/js/site.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
