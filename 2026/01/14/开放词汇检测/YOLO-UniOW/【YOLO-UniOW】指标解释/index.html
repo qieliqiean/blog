@@ -223,9 +223,9 @@ btf.addGlobalFn('pjaxComplete', () => {
 <p>在解析 YOLO-UniOW 的高级指标前，必须复习构建这些指标的数学基石：IoU、混淆矩阵与 AP 计算。这些是理解后续 APr 或 PK 等复杂指标的先决条件。</p>
 <h3 id="2-1-交并比（Intersection-over-Union-IoU）"><a class="header-anchor" href="#2-1-交并比（Intersection-over-Union-IoU）">🔗</a>2.1 交并比（Intersection over Union, IoU）</h3>
 <p>IoU 是衡量预测框（Predicted Box, 
-    <span id="mjx-1a3ba85">
+    <span id="mjx-fafb79e">
       <style>
-      #mjx-1a3ba85{
+      #mjx-fafb79e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -384,9 +384,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.65ex;" xmlns="http://www.w3.org/2000/svg" width="2.71ex" height="2.195ex" role="img" focusable="false" viewBox="0 -683 1197.7 970.2" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D435" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></g><g data-mml-node="mi" transform="translate(792,-150) scale(0.707)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>B</mi><mi>p</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   ）与真实框（Ground Truth, 
-    <span id="mjx-1615288">
+    <span id="mjx-8fc651f">
       <style>
-      #mjx-1615288{
+      #mjx-8fc651f{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -546,9 +546,9 @@ g[data-mml-node="xypic"] path {
     </span>
   ）几何重合度的核心量度：</p>
 
-    <span id="mjx-207176e">
+    <span id="mjx-d98fd31">
       <style>
-      #mjx-207176e{
+      #mjx-d98fd31{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -707,9 +707,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" display="true" style="position: relative;"><svg style="vertical-align: -2.274ex;" xmlns="http://www.w3.org/2000/svg" width="22.607ex" height="5.679ex" role="img" focusable="false" viewBox="0 -1505 9992.2 2509.9" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mtext"><path data-c="49" d="M328 0Q307 3 180 3T32 0H21V46H43Q92 46 106 49T126 60Q128 63 128 342Q128 620 126 623Q122 628 118 630T96 635T43 637H21V683H32Q53 680 180 680T328 683H339V637H317Q268 637 254 634T234 623Q232 620 232 342Q232 63 234 60Q238 55 242 53T264 48T317 46H339V0H328Z"></path><path data-c="6F" d="M28 214Q28 309 93 378T250 448Q340 448 405 380T471 215Q471 120 407 55T250 -10Q153 -10 91 57T28 214ZM250 30Q372 30 372 193V225V250Q372 272 371 288T364 326T348 362T317 390T268 410Q263 411 252 411Q222 411 195 399Q152 377 139 338T126 246V226Q126 130 145 91Q177 30 250 30Z" transform="translate(361,0)"></path><path data-c="55" d="M128 622Q121 629 117 631T101 634T58 637H25V683H36Q57 680 180 680Q315 680 324 683H335V637H302Q262 636 251 634T233 622L232 418V291Q232 189 240 145T280 67Q325 24 389 24Q454 24 506 64T571 183Q575 206 575 410V598Q569 608 565 613T541 627T489 637H472V683H481Q496 680 598 680T715 683H724V637H707Q634 633 622 598L621 399Q620 194 617 180Q617 179 615 171Q595 83 531 31T389 -22Q304 -22 226 33T130 192Q129 201 128 412V622Z" transform="translate(861,0)"></path></g><g data-mml-node="mo" transform="translate(1888.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mfrac" transform="translate(2944.6,0)"><g data-mml-node="mrow" transform="translate(220,755)"><g data-mml-node="mtext"><path data-c="41" d="M255 0Q240 3 140 3Q48 3 39 0H32V46H47Q119 49 139 88Q140 91 192 245T295 553T348 708Q351 716 366 716H376Q396 715 400 709Q402 707 508 390L617 67Q624 54 636 51T687 46H717V0H708Q699 3 581 3Q458 3 437 0H427V46H440Q510 46 510 64Q510 66 486 138L462 209H229L209 150Q189 91 189 85Q189 72 209 59T259 46H264V0H255ZM447 255L345 557L244 256Q244 255 345 255H447Z"></path><path data-c="72" d="M36 46H50Q89 46 97 60V68Q97 77 97 91T98 122T98 161T98 203Q98 234 98 269T98 328L97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 60 434T96 436Q112 437 131 438T160 441T171 442H174V373Q213 441 271 441H277Q322 441 343 419T364 373Q364 352 351 337T313 322Q288 322 276 338T263 372Q263 381 265 388T270 400T273 405Q271 407 250 401Q234 393 226 386Q179 341 179 207V154Q179 141 179 127T179 101T180 81T180 66V61Q181 59 183 57T188 54T193 51T200 49T207 48T216 47T225 47T235 46T245 46H276V0H267Q249 3 140 3Q37 3 28 0H20V46H36Z" transform="translate(750,0)"></path><path data-c="65" d="M28 218Q28 273 48 318T98 391T163 433T229 448Q282 448 320 430T378 380T406 316T415 245Q415 238 408 231H126V216Q126 68 226 36Q246 30 270 30Q312 30 342 62Q359 79 369 104L379 128Q382 131 395 131H398Q415 131 415 121Q415 117 412 108Q393 53 349 21T250 -11Q155 -11 92 58T28 218ZM333 275Q322 403 238 411H236Q228 411 220 410T195 402T166 381T143 340T127 274V267H333V275Z" transform="translate(1142,0)"></path><path data-c="61" d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z" transform="translate(1586,0)"></path></g><g data-mml-node="mo" transform="translate(2086,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msub" transform="translate(2475,0)"><g data-mml-node="mi"><path data-c="1D435" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></g><g data-mml-node="mi" transform="translate(792,-150) scale(0.707)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g></g><g data-mml-node="mo" transform="translate(3894.9,0)"><path data-c="2229" d="M88 -21T75 -21T55 -7V200Q55 231 55 280Q56 414 60 428Q61 430 61 431Q77 500 152 549T332 598Q443 598 522 544T610 405Q611 399 611 194V-7Q604 -22 591 -22Q582 -22 572 -9L570 405Q563 433 556 449T529 485Q498 519 445 538T334 558Q251 558 179 518T96 401Q95 396 95 193V-7Q88 -21 75 -21Z"></path></g><g data-mml-node="msub" transform="translate(4784.1,0)"><g data-mml-node="mi"><path data-c="1D435" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></g><g data-mml-node="TeXAtom" transform="translate(792,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D454" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path></g><g data-mml-node="mi" transform="translate(477,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g></g><g data-mml-node="mo" transform="translate(6218.7,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g><g data-mml-node="mrow" transform="translate(220,-710)"><g data-mml-node="mtext"><path data-c="41" d="M255 0Q240 3 140 3Q48 3 39 0H32V46H47Q119 49 139 88Q140 91 192 245T295 553T348 708Q351 716 366 716H376Q396 715 400 709Q402 707 508 390L617 67Q624 54 636 51T687 46H717V0H708Q699 3 581 3Q458 3 437 0H427V46H440Q510 46 510 64Q510 66 486 138L462 209H229L209 150Q189 91 189 85Q189 72 209 59T259 46H264V0H255ZM447 255L345 557L244 256Q244 255 345 255H447Z"></path><path data-c="72" d="M36 46H50Q89 46 97 60V68Q97 77 97 91T98 122T98 161T98 203Q98 234 98 269T98 328L97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 60 434T96 436Q112 437 131 438T160 441T171 442H174V373Q213 441 271 441H277Q322 441 343 419T364 373Q364 352 351 337T313 322Q288 322 276 338T263 372Q263 381 265 388T270 400T273 405Q271 407 250 401Q234 393 226 386Q179 341 179 207V154Q179 141 179 127T179 101T180 81T180 66V61Q181 59 183 57T188 54T193 51T200 49T207 48T216 47T225 47T235 46T245 46H276V0H267Q249 3 140 3Q37 3 28 0H20V46H36Z" transform="translate(750,0)"></path><path data-c="65" d="M28 218Q28 273 48 318T98 391T163 433T229 448Q282 448 320 430T378 380T406 316T415 245Q415 238 408 231H126V216Q126 68 226 36Q246 30 270 30Q312 30 342 62Q359 79 369 104L379 128Q382 131 395 131H398Q415 131 415 121Q415 117 412 108Q393 53 349 21T250 -11Q155 -11 92 58T28 218ZM333 275Q322 403 238 411H236Q228 411 220 410T195 402T166 381T143 340T127 274V267H333V275Z" transform="translate(1142,0)"></path><path data-c="61" d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z" transform="translate(1586,0)"></path></g><g data-mml-node="mo" transform="translate(2086,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msub" transform="translate(2475,0)"><g data-mml-node="mi"><path data-c="1D435" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></g><g data-mml-node="mi" transform="translate(792,-150) scale(0.707)"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g></g><g data-mml-node="mo" transform="translate(3894.9,0)"><path data-c="222A" d="M591 598H592Q604 598 611 583V376Q611 345 611 296Q610 162 606 148Q605 146 605 145Q586 68 507 23T333 -22Q268 -22 209 -1T106 66T56 173Q55 180 55 384L56 585Q66 598 75 598Q85 598 95 585V378L96 172L98 162Q112 95 181 57T332 18Q415 18 487 58T570 175Q571 180 571 383V583Q579 598 591 598Z"></path></g><g data-mml-node="msub" transform="translate(4784.1,0)"><g data-mml-node="mi"><path data-c="1D435" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></g><g data-mml-node="TeXAtom" transform="translate(792,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D454" d="M311 43Q296 30 267 15T206 0Q143 0 105 45T66 160Q66 265 143 353T314 442Q361 442 401 394L404 398Q406 401 409 404T418 412T431 419T447 422Q461 422 470 413T480 394Q480 379 423 152T363 -80Q345 -134 286 -169T151 -205Q10 -205 10 -137Q10 -111 28 -91T74 -71Q89 -71 102 -80T116 -111Q116 -121 114 -130T107 -144T99 -154T92 -162L90 -164H91Q101 -167 151 -167Q189 -167 211 -155Q234 -144 254 -122T282 -75Q288 -56 298 -13Q311 35 311 43ZM384 328L380 339Q377 350 375 354T369 368T359 382T346 393T328 402T306 405Q262 405 221 352Q191 313 171 233T151 117Q151 38 213 38Q269 38 323 108L331 118L384 328Z"></path></g><g data-mml-node="mi" transform="translate(477,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g></g><g data-mml-node="mo" transform="translate(6218.7,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g><rect width="6807.7" height="60" x="120" y="220"></rect></g></g></g></svg><mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mtext>IoU</mtext><mo>=</mo><mfrac><mrow><mtext>Area</mtext><mo stretchy="false">(</mo><msub><mi>B</mi><mi>p</mi></msub><mo>∩</mo><msub><mi>B</mi><mrow data-mjx-texclass="ORD"><mi>g</mi><mi>t</mi></mrow></msub><mo stretchy="false">)</mo></mrow><mrow><mtext>Area</mtext><mo stretchy="false">(</mo><msub><mi>B</mi><mi>p</mi></msub><mo>∪</mo><msub><mi>B</mi><mrow data-mjx-texclass="ORD"><mi>g</mi><mi>t</mi></mrow></msub><mo stretchy="false">)</mo></mrow></mfrac></math></mjx-assistive-mml></mjx-container>
     </span>
   <p>在 YOLO-UniOW 的代码实现中，IoU 阈值（通常记为 
-    <span id="mjx-6964148">
+    <span id="mjx-ab5ad32">
       <style>
-      #mjx-6964148{
+      #mjx-ab5ad32{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -870,9 +870,9 @@ g[data-mml-node="xypic"] path {
   ）决定了一个预测是“正确”还是“错误”。</p>
 <ul>
 <li><strong>IoU 
-    <span id="mjx-31ce46e">
+    <span id="mjx-f0b71ed">
       <style>
-      #mjx-31ce46e{
+      #mjx-f0b71ed{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1032,9 +1032,9 @@ g[data-mml-node="xypic"] path {
     </span>
    0.5</strong>：通常作为判定 TP（True Positive）的最低门槛。</li>
 <li><strong>IoU 
-    <span id="mjx-937077a">
+    <span id="mjx-25023e3">
       <style>
-      #mjx-937077a{
+      #mjx-25023e3{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1250,9 +1250,9 @@ g[data-mml-node="xypic"] path {
 <h4 id="3-3-1-FPS-Frames-Per-Second-——-系统级推理速度"><a class="header-anchor" href="#3-3-1-FPS-Frames-Per-Second-——-系统级推理速度">🔗</a>3.3.1 FPS (Frames Per Second) —— 系统级推理速度</h4>
 <ul>
 <li><strong>定义</strong>：每秒处理的帧数。计算公式为 
-    <span id="mjx-caedbd8">
+    <span id="mjx-c67851a">
       <style>
-      #mjx-caedbd8{
+      #mjx-c67851a{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1425,9 +1425,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li><strong>定义</strong>：仅计算<strong>模型前向传播</strong>（Backbone + Neck + Head）的时间，<strong>不包含</strong> NMS 后处理 3。</li>
 <li><strong>&quot;f&quot; 的含义</strong>：这里的 &quot;f&quot; 代表 <strong>Forward</strong>（前向）或 <strong>Forward-only</strong>。在某些文献中也可能被标记为 
-    <span id="mjx-c238b2a">
+    <span id="mjx-fd2ebcf">
       <style>
-      #mjx-c238b2a{
+      #mjx-fd2ebcf{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1604,9 +1604,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>定义：在所有被标记为“Unknown”的真实物体（Ground Truth）中，有多少被模型成功检测出来（即便模型叫不出它们的名字，只要检测到了物体本身就算成功）。</p>
 
-    <span id="mjx-d9e08b3">
+    <span id="mjx-6317ea6">
       <style>
-      #mjx-d9e08b3{
+      #mjx-6317ea6{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1768,9 +1768,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>代码实现逻辑：</p>
 <p>在 yolo_world/metrics/ow_metric.py 中 4，U-Recall 是通过计算 IoU 
-    <span id="mjx-0bf096b">
+    <span id="mjx-b975111">
       <style>
-      #mjx-0bf096b{
+      #mjx-b975111{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1951,9 +1951,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>定义：被错误分类为“已知类别”的未知物体的绝对数量 8。</p>
 
-    <span id="mjx-bfc20f9">
+    <span id="mjx-7762658">
       <style>
-      #mjx-bfc20f9{
+      #mjx-7762658{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2138,9 +2138,9 @@ g[data-mml-node="xypic"] path {
 <p>定义：量化了未知物体（Unknowns）的存在对已知类别（Knowns）精度的干扰程度 5。</p>
 <p>公式通常定义为：</p>
 
-    <span id="mjx-e3b0434">
+    <span id="mjx-fd8464f">
       <style>
-      #mjx-e3b0434{
+      #mjx-fd8464f{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2300,9 +2300,9 @@ g[data-mml-node="xypic"] path {
     </span>
   <p>或者在代码实现中更直观的形式 4：</p>
 
-    <span id="mjx-525a96f">
+    <span id="mjx-73b192f">
       <style>
-      #mjx-525a96f{
+      #mjx-73b192f{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2470,9 +2470,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p><strong>指标方向</strong>：<strong>越低越好（↓）</strong>。WI 
-    <span id="mjx-0c4694d">
+    <span id="mjx-5abee33">
       <style>
-      #mjx-0c4694d{
+      #mjx-5abee33{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2734,9 +2734,9 @@ g[data-mml-node="xypic"] path {
 <td>Average Precision</td>
 <td>总体平均精度 (LVIS 1203类)</td>
 <td>
-    <span id="mjx-5b1dda4">
+    <span id="mjx-dc679ce">
       <style>
-      #mjx-5b1dda4{
+      #mjx-dc679ce{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2903,9 +2903,9 @@ g[data-mml-node="xypic"] path {
 <td>AP Rare</td>
 <td>稀有类 (&lt;10张图) 精度</td>
 <td>
-    <span id="mjx-929f57d">
+    <span id="mjx-105d35e">
       <style>
-      #mjx-929f57d{
+      #mjx-105d35e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3072,9 +3072,9 @@ g[data-mml-node="xypic"] path {
 <td>AP Common</td>
 <td>普通类 (10-100张图) 精度</td>
 <td>
-    <span id="mjx-fffff89">
+    <span id="mjx-e89a959">
       <style>
-      #mjx-fffff89{
+      #mjx-e89a959{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3241,9 +3241,9 @@ g[data-mml-node="xypic"] path {
 <td>AP Frequent</td>
 <td>频繁类 (&gt;100张图) 精度</td>
 <td>
-    <span id="mjx-29c8f4e">
+    <span id="mjx-0e54dae">
       <style>
-      #mjx-29c8f4e{
+      #mjx-0e54dae{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3410,9 +3410,9 @@ g[data-mml-node="xypic"] path {
 <td>Frames Per Second</td>
 <td>端到端推理速度 (含NMS)</td>
 <td>
-    <span id="mjx-5dcd529">
+    <span id="mjx-6cf1a6e">
       <style>
-      #mjx-5dcd529{
+      #mjx-6cf1a6e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3579,9 +3579,9 @@ g[data-mml-node="xypic"] path {
 <td>Forward FPS</td>
 <td>模型前向推理速度 (不含NMS)</td>
 <td>
-    <span id="mjx-453277d">
+    <span id="mjx-fe0eac8">
       <style>
-      #mjx-453277d{
+      #mjx-fe0eac8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3748,9 +3748,9 @@ g[data-mml-node="xypic"] path {
 <td>Unknown Recall</td>
 <td>未知物体召回率</td>
 <td>
-    <span id="mjx-7c3f3ad">
+    <span id="mjx-317334">
       <style>
-      #mjx-7c3f3ad{
+      #mjx-317334{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3917,9 +3917,9 @@ g[data-mml-node="xypic"] path {
 <td>Absolute Open-Set Error</td>
 <td>绝对开放集合误差</td>
 <td>
-    <span id="mjx-7e8a7df">
+    <span id="mjx-783f782">
       <style>
-      #mjx-7e8a7df{
+      #mjx-783f782{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4086,9 +4086,9 @@ g[data-mml-node="xypic"] path {
 <td>Wilderness Impact</td>
 <td>荒野影响因子</td>
 <td>
-    <span id="mjx-880b797">
+    <span id="mjx-ad07d73">
       <style>
-      #mjx-880b797{
+      #mjx-ad07d73{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4255,9 +4255,9 @@ g[data-mml-node="xypic"] path {
 <td>Previous Known</td>
 <td>旧类别 mAP</td>
 <td>
-    <span id="mjx-d51dc07">
+    <span id="mjx-9d14abd">
       <style>
-      #mjx-d51dc07{
+      #mjx-9d14abd{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4424,9 +4424,9 @@ g[data-mml-node="xypic"] path {
 <td>Current Known</td>
 <td>新类别 mAP</td>
 <td>
-    <span id="mjx-72751af">
+    <span id="mjx-20c439f">
       <style>
-      #mjx-72751af{
+      #mjx-20c439f{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4593,9 +4593,9 @@ g[data-mml-node="xypic"] path {
 <td>Overall mAP</td>
 <td>所有已知类别 mAP</td>
 <td>
-    <span id="mjx-1735765">
+    <span id="mjx-812d404">
       <style>
-      #mjx-1735765{
+      #mjx-812d404{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4768,9 +4768,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p><strong>IoU（Intersection over Union）</strong>：预测框与 GT 框（真实标注框）重叠程度</p>
 
-    <span id="mjx-7ce22f4">
+    <span id="mjx-42457cf">
       <style>
-      #mjx-7ce22f4{
+      #mjx-42457cf{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4941,9 +4941,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p><strong>Precision / Recall</strong></p>
 
-    <span id="mjx-a085cc6">
+    <span id="mjx-252f516">
       <style>
-      #mjx-a085cc6{
+      #mjx-252f516{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5227,9 +5227,9 @@ U-Recall（unknown object recall）是 <strong>“检测到的未知物体数 / 
 <h3 id="10-WI（Wilderness-Impact）"><a class="header-anchor" href="#10-WI（Wilderness-Impact）">🔗</a>10) WI（Wilderness Impact）</h3>
 <p><strong>定义（带公式）：</strong></p>
 
-    <span id="mjx-574d778">
+    <span id="mjx-5e39d41">
       <style>
-      #mjx-574d778{
+      #mjx-5e39d41{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
