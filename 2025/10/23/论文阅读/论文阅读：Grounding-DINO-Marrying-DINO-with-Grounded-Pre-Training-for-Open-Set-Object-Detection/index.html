@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>论文阅读：Grounding DINO: Marrying DINO with Grounded Pre-Training for Open-Set Object Detection | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#fdfcf8"><meta name="description" content="系列文章   &#x2F;   论文阅读  🔗Introduction  研究动机与问题定义  1）开放世界需求（Why now?） 作者把“能处理开放世界场景”的能力视为通往通用人工智能（AGI）的关键指标之一。传统检测器只会固定类别（如 COCO 的 80 类），一旦出现“未标过的新概念”，模型就失灵。这就是所谓**闭集检测（closed-set）**的局限【p.2, Fig.1a】。  2）目">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>论文阅读：Grounding DINO: Marrying DINO with Grounded Pre-Training for Open-Set Object Detection | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#fdfcf8"><meta name="description" content="系列文章   &#x2F;   论文阅读  Introduction  研究动机与问题定义  1）开放世界需求（Why now?） 作者把“能处理开放世界场景”的能力视为通往通用人工智能（AGI）的关键指标之一。传统检测器只会固定类别（如 COCO 的 80 类），一旦出现“未标过的新概念”，模型就失灵。这就是所谓**闭集检测（closed-set）**的局限【p.2, Fig.1a】。  2）目标任">
 <meta property="og:type" content="article">
 <meta property="og:title" content="论文阅读：Grounding DINO: Marrying DINO with Grounded Pre-Training for Open-Set Object Detection">
 <meta property="og:url" content="https://qieliqiean.github.io/blog/2025/10/23/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AGrounding-DINO-Marrying-DINO-with-Grounded-Pre-Training-for-Open-Set-Object-Detection/index.html">
 <meta property="og:site_name" content="且离且安的碎碎念">
-<meta property="og:description" content="系列文章   &#x2F;   论文阅读  🔗Introduction  研究动机与问题定义  1）开放世界需求（Why now?） 作者把“能处理开放世界场景”的能力视为通往通用人工智能（AGI）的关键指标之一。传统检测器只会固定类别（如 COCO 的 80 类），一旦出现“未标过的新概念”，模型就失灵。这就是所谓**闭集检测（closed-set）**的局限【p.2, Fig.1a】。  2）目">
+<meta property="og:description" content="系列文章   &#x2F;   论文阅读  Introduction  研究动机与问题定义  1）开放世界需求（Why now?） 作者把“能处理开放世界场景”的能力视为通往通用人工智能（AGI）的关键指标之一。传统检测器只会固定类别（如 COCO 的 80 类），一旦出现“未标过的新概念”，模型就失灵。这就是所谓**闭集检测（closed-set）**的局限【p.2, Fig.1a】。  2）目标任">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qieliqiean.github.io/blog/image/A1-1.jpg">
 <meta property="article:published_time" content="2025-10-23T01:48:44.000Z">
@@ -192,7 +192,7 @@ btf.addGlobalFn('pjaxComplete', () => {
   <span class="series-breadcrumb__sep">/</span>
   <a href="/blog/series/6K665paH6ZiF6K-7/">论文阅读</a>
 </nav>
-<h1 id="Introduction"><a class="header-anchor" href="#Introduction">🔗</a>Introduction</h1>
+<h1 id="Introduction"><a class="header-anchor" href="#Introduction"></a>Introduction</h1>
 <ol>
 <li><u>研究动机与问题定义</u></li>
 </ol>
@@ -298,8 +298,8 @@ btf.addGlobalFn('pjaxComplete', () => {
 <hr>
 <p>下面把论文第 <strong>2 节 Related Work</strong>“拆到骨头里”，并给你一张“研究地图”，帮助你快速定位 Grounding DINO 在版图中的位置与差异点。文中页码与表图标注均据论文原文；关键处我会点明页码/表格，方便你回看原文。</p>
 <hr>
-<h1 id="Related-Work"><a class="header-anchor" href="#Related-Work">🔗</a>Related Work</h1>
-<h2 id="从-DETR-系到-DINO：检测器主线（闭集背景）"><a class="header-anchor" href="#从-DETR-系到-DINO：检测器主线（闭集背景）">🔗</a>从 DETR 系到 DINO：检测器主线（闭集背景）</h2>
+<h1 id="Related-Work"><a class="header-anchor" href="#Related-Work"></a>Related Work</h1>
+<h2 id="从-DETR-系到-DINO：检测器主线（闭集背景）"><a class="header-anchor" href="#从-DETR-系到-DINO：检测器主线（闭集背景）"></a>从 DETR 系到 DINO：检测器主线（闭集背景）</h2>
 <p>作者先回顾了 <strong>DETR 家族</strong>，原因是 Grounding DINO 的“底座”就是 DINO（属于 DETR 系），理解这条主线有助于理解后续为何选它做跨模态融合的载体（第 3 节会把语言融合“塞进”这些层里）【p.4, §2; p.4-5, Table 1 关联】。</p>
 <ul>
 <li><strong>DETR（Carion et al., 2020）</strong>：把目标检测做成“<strong>集合预测 + 匈牙利匹配</strong>”，端到端、无 NMS，但早期收敛慢。后续大量工作围绕<strong>收敛/表示/匹配</strong>改进【p.4, §2】。</li>
@@ -311,7 +311,7 @@ btf.addGlobalFn('pjaxComplete', () => {
 <p>小结：这些改进几乎都围绕<strong>闭集检测</strong>优化，<strong>类别空间仍是预定义的</strong>，难以自然泛化到未见类别。这正是 Grounding DINO 要在其上“接入语言、打开类别空间”的动机【p.4, §2】。</p>
 </blockquote>
 <hr>
-<h2 id="开放集目标检测：两条代表性路线"><a class="header-anchor" href="#开放集目标检测：两条代表性路线">🔗</a>开放集目标检测：两条代表性路线</h2>
+<h2 id="开放集目标检测：两条代表性路线"><a class="header-anchor" href="#开放集目标检测：两条代表性路线"></a>开放集目标检测：两条代表性路线</h2>
 <p>作者将<strong>开放集/开放词汇（open-set/open-vocabulary）检测</strong>的典型方法分为两类思路，并逐一点评其长短板与与本文的关系【p.4-5, §2】。</p>
 <p>路线 A：<strong>借助 CLIP 进行蒸馏/对齐</strong></p>
 <ul>
@@ -331,7 +331,7 @@ btf.addGlobalFn('pjaxComplete', () => {
 Grounding DINO 明确在 <strong>A+B+C 三处都融合</strong>，并把 <strong>REC</strong> 纳入标准评测组合，形成更完整的开放集方案与评测谱系【p.5, §2; p.4, Table 1 总表】。</li>
 </ol>
 <hr>
-<h2 id="论文自定位：三相位融合-更细粒度文本表示"><a class="header-anchor" href="#论文自定位：三相位融合-更细粒度文本表示">🔗</a>论文自定位：三相位融合 + 更细粒度文本表示</h2>
+<h2 id="论文自定位：三相位融合-更细粒度文本表示"><a class="header-anchor" href="#论文自定位：三相位融合-更细粒度文本表示"></a>论文自定位：三相位融合 + 更细粒度文本表示</h2>
 <p>Related Work 末尾点出本文的两项“方法论定位”（为第 3 节埋钩子）【p.5, §2】：</p>
 <ol>
 <li>
@@ -348,7 +348,7 @@ Grounding DINO 明确在 <strong>A+B+C 三处都融合</strong>，并把 <strong
 </li>
 </ol>
 <hr>
-<h2 id="Table-1"><a class="header-anchor" href="#Table-1">🔗</a>Table 1</h2>
+<h2 id="Table-1"><a class="header-anchor" href="#Table-1"></a>Table 1</h2>
 <p><img src="/blog/2025/10/23/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AGrounding-DINO-Marrying-DINO-with-Grounded-Pre-Training-for-Open-Set-Object-Detection/A1023-3.png" alt="A1023-3.png"></p>
 <p>Table 1 给出一个<strong>对照坐标系</strong>：</p>
 <ul>
@@ -550,7 +550,7 @@ Grounding DINO 在这张表中的位置是：<strong>底座 DINO + 融合 A/B/C 
 </ol>
 </blockquote>
 <hr>
-<h2 id="小结：Related-Work-给本文“搭了哪些台子”"><a class="header-anchor" href="#小结：Related-Work-给本文“搭了哪些台子”">🔗</a>小结：Related Work 给本文“搭了哪些台子”</h2>
+<h2 id="小结：Related-Work-给本文“搭了哪些台子”"><a class="header-anchor" href="#小结：Related-Work-给本文“搭了哪些台子”"></a>小结：Related Work 给本文“搭了哪些台子”</h2>
 <ul>
 <li><strong>理论台子</strong>：基于 DETR→DINO 的<strong>端到端集合预测框架</strong>，便于把语言在多层多点“插”进来；</li>
 <li><strong>数据台子</strong>：从“图–整句（CLIP）”转向“区域–短语（GLIP/DetCLIP）”，更贴近<strong>检测级监督</strong>；</li>
@@ -558,7 +558,7 @@ Grounding DINO 在这张表中的位置是：<strong>底座 DINO + 融合 A/B/C 
 <li><strong>评测台子</strong>：把<strong>REC</strong> 纳入开放集评测，强调“<strong>语言指代 + 细粒度定位</strong>”这一真实应用场景【p.4-5, §2；p.4, Table 1】。</li>
 </ul>
 <hr>
-<h1 id="Grounding-DINO"><a class="header-anchor" href="#Grounding-DINO">🔗</a>Grounding DINO</h1>
+<h1 id="Grounding-DINO"><a class="header-anchor" href="#Grounding-DINO"></a>Grounding DINO</h1>
 <p><img src="/blog/2025/10/23/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AGrounding-DINO-Marrying-DINO-with-Grounded-Pre-Training-for-Open-Set-Object-Detection/A1023-4.png" alt="A1023-4.png"></p>
 <p>读图时，左边是<strong>总体流程</strong>（Block 1），右下是<strong>Feature Enhancer 的一个层</strong>（Block 2），右上是<strong>Decoder 的一个层</strong>（Block 3）。整套系统是<strong>双编码器 + 单解码器</strong>：图像编码器、文本编码器 → 特征增强（颈部，Phase A）→ 语言引导的查询选择（查询初始化，Phase B）→ 跨模态解码器（检测头，Phase C）。 </p>
 <hr>
@@ -574,9 +574,9 @@ Grounding DINO 在这张表中的位置是：<strong>底座 DINO + 融合 A/B/C 
 <li><strong>语言引导的查询选择（Language-guided Query Selection，Phase B）</strong>：根据<strong>图文相似度</strong>，从<strong>图像特征</strong>中选出最相关的 <strong>Nq 个位置</strong>作为<strong>解码器查询（Cross-Modality Queries）</strong>。默认 Nq=900；特征维度 d=256；通常图像 token 数 NI &gt; 10k、文本 token 数 NT &lt; 256。选择规则是</li>
 </ol>
 
-    <span id="mjx-503eb6e">
+    <span id="mjx-b76d07b">
       <style>
-      #mjx-503eb6e{
+      #mjx-b76d07b{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -787,7 +787,7 @@ g[data-mml-node="xypic"] path {
 <strong>3.1 Feature Extraction and Enhancer（特征提取与增强）</strong> 和 <strong>3.2 Language-Guided Query Selection（语言引导的查询选择）</strong>。
 我会以教授讲课的方式，逐步拆解原文逻辑、补充背景知识，并结合论文的图（主要是 <em>Figure 3, page 5</em>）来帮助你全面理解。</p>
 <hr>
-<h2 id="🧩-Feature-Extraction-and-Enhancer"><a class="header-anchor" href="#🧩-Feature-Extraction-and-Enhancer">🔗</a>🧩  Feature Extraction and Enhancer</h2>
+<h2 id="🧩-Feature-Extraction-and-Enhancer"><a class="header-anchor" href="#🧩-Feature-Extraction-and-Enhancer"></a>🧩  Feature Extraction and Enhancer</h2>
 <p>（特征提取与增强）</p>
 <p><u>（1）总体思路</u></p>
 <p>这一部分讲的是：<strong>如何从图像和文本中提取特征，并在两种模态之间实现有效的信息融合</strong>。
@@ -848,7 +848,7 @@ Grounding DINO 的目标是“用语言引导视觉检测”，因此关键是�
 </ul>
 <p>这部分的视觉意义是：经过增强后，模型能够在视觉空间中更突出地表示与文本描述相关的区域。</p>
 <hr>
-<h2 id="🧭-Language-Guided-Query-Selection"><a class="header-anchor" href="#🧭-Language-Guided-Query-Selection">🔗</a>🧭 Language-Guided Query Selection</h2>
+<h2 id="🧭-Language-Guided-Query-Selection"><a class="header-anchor" href="#🧭-Language-Guided-Query-Selection"></a>🧭 Language-Guided Query Selection</h2>
 <p>（语言引导的查询选择）</p>
 <p>（1）为什么需要“查询选择”？</p>
 <p>在 Transformer 检测器（如 DINO 或 DETR）中，检测的核心是使用一组“查询（queries）”去“询问”特征图上有哪些物体。
@@ -863,9 +863,9 @@ Grounding DINO 的目标是“用语言引导视觉检测”，因此关键是�
 </blockquote>
 <p>论文中给出了具体公式（Eq. 1）：</p>
 
-    <span id="mjx-83795af">
+    <span id="mjx-4017b4d">
       <style>
-      #mjx-83795af{
+      #mjx-4017b4d{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1026,9 +1026,9 @@ g[data-mml-node="xypic"] path {
   <ul>
 <li>
 <p>
-    <span id="mjx-82803b1">
+    <span id="mjx-5355242">
       <style>
-      #mjx-82803b1{
+      #mjx-5355242{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1187,9 +1187,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.339ex;" xmlns="http://www.w3.org/2000/svg" width="2.867ex" height="1.885ex" role="img" focusable="false" viewBox="0 -683 1267.4 833" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D44B" d="M42 0H40Q26 0 26 11Q26 15 29 27Q33 41 36 43T55 46Q141 49 190 98Q200 108 306 224T411 342Q302 620 297 625Q288 636 234 637H206Q200 643 200 645T202 664Q206 677 212 683H226Q260 681 347 681Q380 681 408 681T453 682T473 682Q490 682 490 671Q490 670 488 658Q484 643 481 640T465 637Q434 634 411 620L488 426L541 485Q646 598 646 610Q646 628 622 635Q617 635 609 637Q594 637 594 648Q594 650 596 664Q600 677 606 683H618Q619 683 643 683T697 681T738 680Q828 680 837 683H845Q852 676 852 672Q850 647 840 637H824Q790 636 763 628T722 611T698 593L687 584Q687 585 592 480L505 384Q505 383 536 304T601 142T638 56Q648 47 699 46Q734 46 734 37Q734 35 732 23Q728 7 725 4T711 1Q708 1 678 1T589 2Q528 2 496 2T461 1Q444 1 444 10Q444 11 446 25Q448 35 450 39T455 44T464 46T480 47T506 54Q523 62 523 64Q522 64 476 181L429 299Q241 95 236 84Q232 76 232 72Q232 53 261 47Q262 47 267 47T273 46Q276 46 277 46T280 45T283 42T284 35Q284 26 282 19Q279 6 276 4T261 1Q258 1 243 1T201 2T142 2Q64 2 42 0Z"></path></g><g data-mml-node="mi" transform="translate(861,-150) scale(0.707)"><path data-c="1D43C" d="M43 1Q26 1 26 10Q26 12 29 24Q34 43 39 45Q42 46 54 46H60Q120 46 136 53Q137 53 138 54Q143 56 149 77T198 273Q210 318 216 344Q286 624 286 626Q284 630 284 631Q274 637 213 637H193Q184 643 189 662Q193 677 195 680T209 683H213Q285 681 359 681Q481 681 487 683H497Q504 676 504 672T501 655T494 639Q491 637 471 637Q440 637 407 634Q393 631 388 623Q381 609 337 432Q326 385 315 341Q245 65 245 59Q245 52 255 50T307 46H339Q345 38 345 37T342 19Q338 6 332 0H316Q279 2 179 2Q143 2 113 2T65 2T43 1Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>X</mi><mi>I</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   ：图像特征矩阵（大小 
-    <span id="mjx-f1edb5e">
+    <span id="mjx-8585d5e">
       <style>
-      #mjx-f1edb5e{
+      #mjx-8585d5e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1351,9 +1351,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p>
-    <span id="mjx-ad28818">
+    <span id="mjx-272ae45">
       <style>
-      #mjx-ad28818{
+      #mjx-272ae45{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1512,9 +1512,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.339ex;" xmlns="http://www.w3.org/2000/svg" width="3.187ex" height="1.885ex" role="img" focusable="false" viewBox="0 -683 1408.8 833" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D44B" d="M42 0H40Q26 0 26 11Q26 15 29 27Q33 41 36 43T55 46Q141 49 190 98Q200 108 306 224T411 342Q302 620 297 625Q288 636 234 637H206Q200 643 200 645T202 664Q206 677 212 683H226Q260 681 347 681Q380 681 408 681T453 682T473 682Q490 682 490 671Q490 670 488 658Q484 643 481 640T465 637Q434 634 411 620L488 426L541 485Q646 598 646 610Q646 628 622 635Q617 635 609 637Q594 637 594 648Q594 650 596 664Q600 677 606 683H618Q619 683 643 683T697 681T738 680Q828 680 837 683H845Q852 676 852 672Q850 647 840 637H824Q790 636 763 628T722 611T698 593L687 584Q687 585 592 480L505 384Q505 383 536 304T601 142T638 56Q648 47 699 46Q734 46 734 37Q734 35 732 23Q728 7 725 4T711 1Q708 1 678 1T589 2Q528 2 496 2T461 1Q444 1 444 10Q444 11 446 25Q448 35 450 39T455 44T464 46T480 47T506 54Q523 62 523 64Q522 64 476 181L429 299Q241 95 236 84Q232 76 232 72Q232 53 261 47Q262 47 267 47T273 46Q276 46 277 46T280 45T283 42T284 35Q284 26 282 19Q279 6 276 4T261 1Q258 1 243 1T201 2T142 2Q64 2 42 0Z"></path></g><g data-mml-node="mi" transform="translate(861,-150) scale(0.707)"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>X</mi><mi>T</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   ：文本特征矩阵（大小 
-    <span id="mjx-142ee0a">
+    <span id="mjx-317328c">
       <style>
-      #mjx-142ee0a{
+      #mjx-317328c{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1676,9 +1676,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p>
-    <span id="mjx-3a9f8bc">
+    <span id="mjx-951bda7">
       <style>
-      #mjx-3a9f8bc{
+      #mjx-951bda7{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1936,7 +1936,7 @@ g[data-mml-node="xypic"] path {
 </table>
 <p>通过这两部分，Grounding DINO 实现了从“纯视觉检测器”到“语言引导检测器”的质变，为后续的跨模态解码（3.3）奠定了基础。</p>
 <hr>
-<h2 id="Cross-Modality-Decoder"><a class="header-anchor" href="#Cross-Modality-Decoder">🔗</a>Cross-Modality Decoder</h2>
+<h2 id="Cross-Modality-Decoder"><a class="header-anchor" href="#Cross-Modality-Decoder"></a>Cross-Modality Decoder</h2>
 <p>（跨模态解码器）</p>
 <p>这一部分直接承接前两节的内容：</p>
 <ul>
@@ -1958,9 +1958,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p><strong>Cross-Modality Queries</strong>
 来自前一节的“语言引导查询选择”，共 
-    <span id="mjx-9dfe02c">
+    <span id="mjx-81318a8">
       <style>
-      #mjx-9dfe02c{
+      #mjx-81318a8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2176,9 +2176,9 @@ g[data-mml-node="xypic"] path {
 <blockquote>
 <p><strong>结构总结：</strong></p>
 
-    <span id="mjx-ca42242">
+    <span id="mjx-0ca85db">
       <style>
-      #mjx-ca42242{
+      #mjx-0ca85db{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2367,9 +2367,9 @@ g[data-mml-node="xypic"] path {
 <p>输出的每个查询最终会预测出：</p>
 <ul>
 <li>一个边界框 
-    <span id="mjx-f085bdf">
+    <span id="mjx-8fa399c">
       <style>
-      #mjx-f085bdf{
+      #mjx-8fa399c{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2621,12 +2621,12 @@ Grounding DINO 将检测过程从“类别分类”转化为“语言匹配问�
 </ol>
 <p>因此，它既能“理解类别名”，也能“理解描述性语言”。</p>
 <hr>
-<h2 id="Sub-Sentence-Level-Text-Feature"><a class="header-anchor" href="#Sub-Sentence-Level-Text-Feature">🔗</a>Sub-Sentence Level Text Feature</h2>
+<h2 id="Sub-Sentence-Level-Text-Feature"><a class="header-anchor" href="#Sub-Sentence-Level-Text-Feature"></a>Sub-Sentence Level Text Feature</h2>
 <p>（子句级文本特征）
 这一节虽然篇幅不长，但概念极为关键——它决定了模型在语言理解上的细粒度程度，也是 Grounding DINO 能在开放集检测中表现出强泛化能力的一个核心创新。
 从背景问题讲起，再逐层解释为什么引入“子句级表示”，以及它在模型结构和效果上的影响。</p>
 <hr>
-<h3 id="🧭-一、背景问题：语言特征表示的两种常见方式"><a class="header-anchor" href="#🧭-一、背景问题：语言特征表示的两种常见方式">🔗</a>🧭 一、背景问题：语言特征表示的两种常见方式</h3>
+<h3 id="🧭-一、背景问题：语言特征表示的两种常见方式"><a class="header-anchor" href="#🧭-一、背景问题：语言特征表示的两种常见方式"></a>🧭 一、背景问题：语言特征表示的两种常见方式</h3>
 <p>在多模态检测模型（如 MDETR、GLIP）中，语言输入一般是句子或类别列表。
 模型需要将文本转化为可与视觉特征交互的向量表示（Text Embedding）。
 过去的研究中，主要有两种做法：</p>
@@ -2673,7 +2673,7 @@ Grounding DINO 将检测过程从“类别分类”转化为“语言匹配问�
 <li>这种不必要的语义混合会让模型难以判断哪些词彼此相关。</li>
 </ul>
 <hr>
-<h3 id="🧩-二、问题本质：类别间的“干扰注意力”"><a class="header-anchor" href="#🧩-二、问题本质：类别间的“干扰注意力”">🔗</a>🧩 二、问题本质：类别间的“干扰注意力”</h3>
+<h3 id="🧩-二、问题本质：类别间的“干扰注意力”"><a class="header-anchor" href="#🧩-二、问题本质：类别间的“干扰注意力”"></a>🧩 二、问题本质：类别间的“干扰注意力”</h3>
 <p>论文指出：</p>
 <blockquote>
 <p>在 open-set 训练中，GLIP 直接把所有类别名拼接成一句话输入，如
@@ -2688,7 +2688,7 @@ Grounding DINO 将检测过程从“类别分类”转化为“语言匹配问�
 <li>这种错误的语义耦合在训练中会导致模型学习混乱的语言空间。</li>
 </ul>
 <hr>
-<h3 id="💡-三、Grounding-DINO-的创新：Sub-Sentence-Level-Representation（子句级表示）"><a class="header-anchor" href="#💡-三、Grounding-DINO-的创新：Sub-Sentence-Level-Representation（子句级表示）">🔗</a>💡 三、Grounding DINO 的创新：Sub-Sentence Level Representation（子句级表示）</h3>
+<h3 id="💡-三、Grounding-DINO-的创新：Sub-Sentence-Level-Representation（子句级表示）"><a class="header-anchor" href="#💡-三、Grounding-DINO-的创新：Sub-Sentence-Level-Representation（子句级表示）"></a>💡 三、Grounding DINO 的创新：Sub-Sentence Level Representation（子句级表示）</h3>
 <p>Grounding DINO 通过引入“<strong>子句级注意力屏蔽（attention mask）</strong>”来解决上述问题。
 这就是“Sub-Sentence Level Text Feature” 的核心思想。</p>
 <p>✅ 核心思路：</p>
@@ -2702,9 +2702,9 @@ Grounding DINO 将检测过程从“类别分类”转化为“语言匹配问�
 <li>但每个词内部仍然保持自注意力。</li>
 </ul>
 <p>这相当于对注意力矩阵 
-    <span id="mjx-2b59a37">
+    <span id="mjx-df98095">
       <style>
-      #mjx-2b59a37{
+      #mjx-df98095{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2864,9 +2864,9 @@ g[data-mml-node="xypic"] path {
     </span>
    加了一个 mask，使得：</p>
 
-    <span id="mjx-dc113c4">
+    <span id="mjx-ba98bbd">
       <style>
-      #mjx-dc113c4{
+      #mjx-ba98bbd{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3028,7 +3028,7 @@ g[data-mml-node="xypic"] path {
 <p>BERT 的自注意力像一个“全员对话会议”，
 子句级表示就像是<strong>让每个类别开独立的小会</strong>，互不打扰。</p>
 <hr>
-<h3 id="⚙️-四、实际实现方式"><a class="header-anchor" href="#⚙️-四、实际实现方式">🔗</a>⚙️ 四、实际实现方式</h3>
+<h3 id="⚙️-四、实际实现方式"><a class="header-anchor" href="#⚙️-四、实际实现方式"></a>⚙️ 四、实际实现方式</h3>
 <p>在训练阶段：</p>
 <ul>
 <li>当输入文本是多个类别拼接的形式时（如“cat. dog. chair.”），
@@ -3043,7 +3043,7 @@ g[data-mml-node="xypic"] path {
 <li>同时防止无关类别之间的语义混淆。</li>
 </ul>
 <hr>
-<h3 id="🧮-五、对比三种表示方式（见-Fig-4-Page-6）"><a class="header-anchor" href="#🧮-五、对比三种表示方式（见-Fig-4-Page-6）">🔗</a>🧮 五、对比三种表示方式（见 Fig. 4, Page 6）</h3>
+<h3 id="🧮-五、对比三种表示方式（见-Fig-4-Page-6）"><a class="header-anchor" href="#🧮-五、对比三种表示方式（见-Fig-4-Page-6）"></a>🧮 五、对比三种表示方式（见 Fig. 4, Page 6）</h3>
 <table>
 <thead>
 <tr>
@@ -3073,7 +3073,7 @@ g[data-mml-node="xypic"] path {
 <p>论文中的图 4 展示了这三种对比，
 并强调了 Sub-sentence 表示的效果最优。</p>
 <hr>
-<h3 id="🧠-六、为什么这对开放集检测尤其重要？"><a class="header-anchor" href="#🧠-六、为什么这对开放集检测尤其重要？">🔗</a>🧠 六、为什么这对开放集检测尤其重要？</h3>
+<h3 id="🧠-六、为什么这对开放集检测尤其重要？"><a class="header-anchor" href="#🧠-六、为什么这对开放集检测尤其重要？"></a>🧠 六、为什么这对开放集检测尤其重要？</h3>
 <p>在开放集检测（open-set detection）中，模型往往需要理解成千上万个类别的语义。而这些类别之间通常毫无语义关联。</p>
 <ul>
 <li>
@@ -3092,7 +3092,7 @@ g[data-mml-node="xypic"] path {
 </li>
 </ul>
 <hr>
-<h3 id="📈-七、效果验证"><a class="header-anchor" href="#📈-七、效果验证">🔗</a>📈 七、效果验证</h3>
+<h3 id="📈-七、效果验证"><a class="header-anchor" href="#📈-七、效果验证"></a>📈 七、效果验证</h3>
 <p>论文在消融实验（Table 7, page 14）中明确展示：</p>
 <ul>
 <li>使用子句级文本表示比词级表示在 LVIS zero-shot 测试中提升了 <strong>+0.5 AP</strong>；</li>
@@ -3105,7 +3105,7 @@ g[data-mml-node="xypic"] path {
 <li>并且该改动不增加额外参数，也不影响推理速度。</li>
 </ul>
 <hr>
-<h3 id="🎓-八、总结与教学视角解读"><a class="header-anchor" href="#🎓-八、总结与教学视角解读">🔗</a>🎓 八、总结与教学视角解读</h3>
+<h3 id="🎓-八、总结与教学视角解读"><a class="header-anchor" href="#🎓-八、总结与教学视角解读"></a>🎓 八、总结与教学视角解读</h3>
 <p>我们可以把这部分的贡献总结为一句话：</p>
 <blockquote>
 <p><strong>Grounding DINO 通过将语言特征的 self-attention 限制在“子句级”范围内，
@@ -3118,11 +3118,11 @@ g[data-mml-node="xypic"] path {
 <li>结果就是语义更清晰、检测更准确。</li>
 </ul>
 <hr>
-<h2 id="Loss-Function"><a class="header-anchor" href="#Loss-Function">🔗</a>Loss Function</h2>
+<h2 id="Loss-Function"><a class="header-anchor" href="#Loss-Function"></a>Loss Function</h2>
 <p>（损失函数设计）
 这一节主要关注如何通过损失函数引导模型学习，并让它能够在图像和文本之间进行有效的跨模态匹配。</p>
 <hr>
-<h3 id="🧭-一、损失函数的总体目标"><a class="header-anchor" href="#🧭-一、损失函数的总体目标">🔗</a>🧭 一、损失函数的总体目标</h3>
+<h3 id="🧭-一、损失函数的总体目标"><a class="header-anchor" href="#🧭-一、损失函数的总体目标"></a>🧭 一、损失函数的总体目标</h3>
 <p>在 Grounding DINO 中，损失函数设计的核心目标是让模型能精确地进行<strong>物体检测</strong>和<strong>语言匹配</strong>。
 模型的最终目标是 <strong>给定图像和自然语言描述，输出一个物体的边界框和类别标签</strong>，并且做到“未见过的类别”也能正确识别。</p>
 <p>为了达成这一目标，Grounding DINO 采用了<strong>多任务损失函数</strong>，包括：</p>
@@ -3133,14 +3133,14 @@ g[data-mml-node="xypic"] path {
 <li><strong>辅助损失（Auxiliary Loss）</strong>：每一层解码器都生成辅助预测，并进行损失计算。</li>
 </ol>
 <hr>
-<h3 id="🧩-二、位置损失（Localization-Loss）"><a class="header-anchor" href="#🧩-二、位置损失（Localization-Loss）">🔗</a>🧩 二、位置损失（Localization Loss）</h3>
+<h3 id="🧩-二、位置损失（Localization-Loss）"><a class="header-anchor" href="#🧩-二、位置损失（Localization-Loss）"></a>🧩 二、位置损失（Localization Loss）</h3>
 <p>位置损失的目的是让模型预测的边界框与真实框尽可能接近。
 Grounding DINO 使用了 <strong>L1 Loss</strong> 和 <strong>GIoU（Generalized Intersection over Union）Loss</strong> 结合的方式来优化边框的回归。</p>
 <p>1️⃣ <strong>L1 Loss</strong>（平移误差）：</p>
 <p>这是传统的回归损失，计算预测框与真实框在 
-    <span id="mjx-a73dde2">
+    <span id="mjx-7bc4333">
       <style>
-      #mjx-a73dde2{
+      #mjx-7bc4333{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3300,9 +3300,9 @@ g[data-mml-node="xypic"] path {
     </span>
    四个方向上的绝对误差：</p>
 
-    <span id="mjx-62ca754">
+    <span id="mjx-3c4b784">
       <style>
-      #mjx-62ca754{
+      #mjx-3c4b784{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3461,9 +3461,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" display="true" style="position: relative;"><svg style="vertical-align: -2.697ex;" xmlns="http://www.w3.org/2000/svg" width="17.634ex" height="5.1ex" role="img" focusable="false" viewBox="0 -1062 7794.1 2254.2" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="TeXAtom" transform="translate(714,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mtext"><path data-c="4C" d="M128 622Q121 629 117 631T101 634T58 637H25V683H36Q48 680 182 680Q324 680 348 683H360V637H333Q273 637 258 635T233 622L232 342V129Q232 57 237 52Q243 47 313 47Q384 47 410 53Q470 70 498 110T536 221Q536 226 537 238T540 261T542 272T562 273H582V268Q580 265 568 137T554 5V0H25V46H58Q100 47 109 49T128 61V622Z"></path><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z" transform="translate(625,0)"></path></g></g></g><g data-mml-node="mo" transform="translate(1837.3,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="munder" transform="translate(2893.1,0)"><g data-mml-node="mo"><path data-c="2211" d="M60 948Q63 950 665 950H1267L1325 815Q1384 677 1388 669H1348L1341 683Q1320 724 1285 761Q1235 809 1174 838T1033 881T882 898T699 902H574H543H251L259 891Q722 258 724 252Q725 250 724 246Q721 243 460 -56L196 -356Q196 -357 407 -357Q459 -357 548 -357T676 -358Q812 -358 896 -353T1063 -332T1204 -283T1307 -196Q1328 -170 1348 -124H1388Q1388 -125 1381 -145T1356 -210T1325 -294L1267 -449L666 -450Q64 -450 61 -448Q55 -446 55 -439Q55 -437 57 -433L590 177Q590 178 557 222T452 366T322 544L56 909L55 924Q55 945 60 948Z"></path></g><g data-mml-node="mi" transform="translate(600,-1084.4) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="mo" transform="translate(4503.7,0) translate(0 -0.5)"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g><g data-mml-node="msub" transform="translate(4781.7,0)"><g data-mml-node="mi"><path data-c="1D44F" d="M73 647Q73 657 77 670T89 683Q90 683 161 688T234 694Q246 694 246 685T212 542Q204 508 195 472T180 418L176 399Q176 396 182 402Q231 442 283 442Q345 442 383 396T422 280Q422 169 343 79T173 -11Q123 -11 82 27T40 150V159Q40 180 48 217T97 414Q147 611 147 623T109 637Q104 637 101 637H96Q86 637 83 637T76 640T73 647ZM336 325V331Q336 405 275 405Q258 405 240 397T207 376T181 352T163 330L157 322L136 236Q114 150 114 114Q114 66 138 42Q154 26 178 26Q211 26 245 58Q270 81 285 114T318 219Q336 291 336 325Z"></path></g><g data-mml-node="mi" transform="translate(462,-150) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="mo" transform="translate(5759.9,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="msub" transform="translate(6760.1,0)"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mover"><g data-mml-node="mi"><path data-c="1D44F" d="M73 647Q73 657 77 670T89 683Q90 683 161 688T234 694Q246 694 246 685T212 542Q204 508 195 472T180 418L176 399Q176 396 182 402Q231 442 283 442Q345 442 383 396T422 280Q422 169 343 79T173 -11Q123 -11 82 27T40 150V159Q40 180 48 217T97 414Q147 611 147 623T109 637Q104 637 101 637H96Q86 637 83 637T76 640T73 647ZM336 325V331Q336 405 275 405Q258 405 240 397T207 376T181 352T163 330L157 322L136 236Q114 150 114 114Q114 66 138 42Q154 26 178 26Q211 26 245 58Q270 81 285 114T318 219Q336 291 336 325Z"></path></g><g data-mml-node="mo" transform="translate(214.5,268) translate(-250 0)"><path data-c="5E" d="M112 560L249 694L257 686Q387 562 387 560L361 531Q359 532 303 581L250 627L195 580Q182 569 169 557T148 538L140 532Q138 530 125 546L112 560Z"></path></g></g></g><g data-mml-node="mi" transform="translate(462,-150) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="mo" transform="translate(7516.1,0) translate(0 -0.5)"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><msub><mi>L</mi><mrow data-mjx-texclass="ORD"><mtext>L1</mtext></mrow></msub><mo>=</mo><munder><mo data-mjx-texclass="OP">∑</mo><mi>i</mi></munder><mo data-mjx-texclass="ORD" stretchy="false">|</mo><msub><mi>b</mi><mi>i</mi></msub><mo>−</mo><msub><mrow data-mjx-texclass="ORD"><mover><mi>b</mi><mo stretchy="false">^</mo></mover></mrow><mi>i</mi></msub><mo data-mjx-texclass="ORD" stretchy="false">|</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   <p>其中，
-    <span id="mjx-6597b25">
+    <span id="mjx-9f2e408">
       <style>
-      #mjx-6597b25{
+      #mjx-9f2e408{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3622,9 +3622,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="1.71ex" height="1.927ex" role="img" focusable="false" viewBox="0 -694 756 851.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D44F" d="M73 647Q73 657 77 670T89 683Q90 683 161 688T234 694Q246 694 246 685T212 542Q204 508 195 472T180 418L176 399Q176 396 182 402Q231 442 283 442Q345 442 383 396T422 280Q422 169 343 79T173 -11Q123 -11 82 27T40 150V159Q40 180 48 217T97 414Q147 611 147 623T109 637Q104 637 101 637H96Q86 637 83 637T76 640T73 647ZM336 325V331Q336 405 275 405Q258 405 240 397T207 376T181 352T163 330L157 322L136 236Q114 150 114 114Q114 66 138 42Q154 26 178 26Q211 26 245 58Q270 81 285 114T318 219Q336 291 336 325Z"></path></g><g data-mml-node="mi" transform="translate(462,-150) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>b</mi><mi>i</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
    和 
-    <span id="mjx-aa21948">
+    <span id="mjx-1c2c646">
       <style>
-      #mjx-aa21948{
+      #mjx-1c2c646{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3783,9 +3783,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="1.71ex" height="2.76ex" role="img" focusable="false" viewBox="0 -1062 756 1219.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mover"><g data-mml-node="mi"><path data-c="1D44F" d="M73 647Q73 657 77 670T89 683Q90 683 161 688T234 694Q246 694 246 685T212 542Q204 508 195 472T180 418L176 399Q176 396 182 402Q231 442 283 442Q345 442 383 396T422 280Q422 169 343 79T173 -11Q123 -11 82 27T40 150V159Q40 180 48 217T97 414Q147 611 147 623T109 637Q104 637 101 637H96Q86 637 83 637T76 640T73 647ZM336 325V331Q336 405 275 405Q258 405 240 397T207 376T181 352T163 330L157 322L136 236Q114 150 114 114Q114 66 138 42Q154 26 178 26Q211 26 245 58Q270 81 285 114T318 219Q336 291 336 325Z"></path></g><g data-mml-node="mo" transform="translate(214.5,268) translate(-250 0)"><path data-c="5E" d="M112 560L249 694L257 686Q387 562 387 560L361 531Q359 532 303 581L250 627L195 580Q182 569 169 557T148 538L140 532Q138 530 125 546L112 560Z"></path></g></g></g><g data-mml-node="mi" transform="translate(462,-150) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mrow data-mjx-texclass="ORD"><mover><mi>b</mi><mo stretchy="false">^</mo></mover></mrow><mi>i</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
    分别是第 
-    <span id="mjx-c449232">
+    <span id="mjx-cc41293">
       <style>
-      #mjx-c449232{
+      #mjx-cc41293{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3947,9 +3947,9 @@ g[data-mml-node="xypic"] path {
 <p>2️⃣ <strong>GIoU Loss</strong>（几何重叠度损失）：</p>
 <p>GIoU Loss 是一种衡量两个矩形框之间相似度的指标，尤其在物体没有完全重叠时能够提供更稳定的训练信号：</p>
 
-    <span id="mjx-f392569">
+    <span id="mjx-aa5bd44">
       <style>
-      #mjx-f392569{
+      #mjx-aa5bd44{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4108,9 +4108,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" display="true" style="position: relative;"><svg style="vertical-align: -2.17ex;" xmlns="http://www.w3.org/2000/svg" width="20.658ex" height="5.471ex" role="img" focusable="false" viewBox="0 -1459 9130.7 2418" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="TeXAtom" transform="translate(714,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mtext"><path data-c="47" d="M56 342Q56 428 89 500T174 615T283 681T391 705Q394 705 400 705T408 704Q499 704 569 636L582 624L612 663Q639 700 643 704Q644 704 647 704T653 705H657Q660 705 666 699V419L660 413H626Q620 419 619 430Q610 512 571 572T476 651Q457 658 426 658Q401 658 376 654T316 633T254 592T205 519T177 411Q173 369 173 335Q173 259 192 201T238 111T302 58T370 31T431 24Q478 24 513 45T559 100Q562 110 562 160V212Q561 213 557 216T551 220T542 223T526 225T502 226T463 227H437V273H449L609 270Q715 270 727 273H735V227H721Q674 227 668 215Q666 211 666 108V6Q660 0 657 0Q653 0 639 10Q617 25 600 42L587 54Q571 27 524 3T406 -22Q317 -22 238 22T108 151T56 342Z"></path><path data-c="49" d="M328 0Q307 3 180 3T32 0H21V46H43Q92 46 106 49T126 60Q128 63 128 342Q128 620 126 623Q122 628 118 630T96 635T43 637H21V683H32Q53 680 180 680T328 683H339V637H317Q268 637 254 634T234 623Q232 620 232 342Q232 63 234 60Q238 55 242 53T264 48T317 46H339V0H328Z" transform="translate(785,0)"></path><path data-c="6F" d="M28 214Q28 309 93 378T250 448Q340 448 405 380T471 215Q471 120 407 55T250 -10Q153 -10 91 57T28 214ZM250 30Q372 30 372 193V225V250Q372 272 371 288T364 326T348 362T317 390T268 410Q263 411 252 411Q222 411 195 399Q152 377 139 338T126 246V226Q126 130 145 91Q177 30 250 30Z" transform="translate(1146,0)"></path><path data-c="55" d="M128 622Q121 629 117 631T101 634T58 637H25V683H36Q57 680 180 680Q315 680 324 683H335V637H302Q262 636 251 634T233 622L232 418V291Q232 189 240 145T280 67Q325 24 389 24Q454 24 506 64T571 183Q575 206 575 410V598Q569 608 565 613T541 627T489 637H472V683H481Q496 680 598 680T715 683H724V637H707Q634 633 622 598L621 399Q620 194 617 180Q617 179 615 171Q595 83 531 31T389 -22Q304 -22 226 33T130 192Q129 201 128 412V622Z" transform="translate(1646,0)"></path></g></g></g><g data-mml-node="mo" transform="translate(2736,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(3791.8,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mo" transform="translate(4514,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mfrac" transform="translate(5514.2,0)"><g data-mml-node="mrow" transform="translate(220,709.5)"><g data-mml-node="mo" transform="translate(0 -0.5)"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g><g data-mml-node="mi" transform="translate(278,0)"><path data-c="1D434" d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z"></path></g><g data-mml-node="mo" transform="translate(1250.2,0)"><path data-c="2229" d="M88 -21T75 -21T55 -7V200Q55 231 55 280Q56 414 60 428Q61 430 61 431Q77 500 152 549T332 598Q443 598 522 544T610 405Q611 399 611 194V-7Q604 -22 591 -22Q582 -22 572 -9L570 405Q563 433 556 449T529 485Q498 519 445 538T334 558Q251 558 179 518T96 401Q95 396 95 193V-7Q88 -21 75 -21Z"></path></g><g data-mml-node="mi" transform="translate(2139.4,0)"><path data-c="1D435" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></g><g data-mml-node="mo" transform="translate(2898.4,0) translate(0 -0.5)"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g></g><g data-mml-node="mrow" transform="translate(220,-709.5)"><g data-mml-node="mo" transform="translate(0 -0.5)"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g><g data-mml-node="mi" transform="translate(278,0)"><path data-c="1D434" d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z"></path></g><g data-mml-node="mo" transform="translate(1250.2,0)"><path data-c="222A" d="M591 598H592Q604 598 611 583V376Q611 345 611 296Q610 162 606 148Q605 146 605 145Q586 68 507 23T333 -22Q268 -22 209 -1T106 66T56 173Q55 180 55 384L56 585Q66 598 75 598Q85 598 95 585V378L96 172L98 162Q112 95 181 57T332 18Q415 18 487 58T570 175Q571 180 571 383V583Q579 598 591 598Z"></path></g><g data-mml-node="mi" transform="translate(2139.4,0)"><path data-c="1D435" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></g><g data-mml-node="mo" transform="translate(2898.4,0) translate(0 -0.5)"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g></g><rect width="3376.4" height="60" x="120" y="220"></rect></g></g></g></svg><mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><msub><mi>L</mi><mrow data-mjx-texclass="ORD"><mtext>GIoU</mtext></mrow></msub><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mo data-mjx-texclass="ORD" stretchy="false">|</mo><mi>A</mi><mo>∩</mo><mi>B</mi><mo data-mjx-texclass="ORD" stretchy="false">|</mo></mrow><mrow><mo data-mjx-texclass="ORD" stretchy="false">|</mo><mi>A</mi><mo>∪</mo><mi>B</mi><mo data-mjx-texclass="ORD" stretchy="false">|</mo></mrow></mfrac></math></mjx-assistive-mml></mjx-container>
     </span>
   <p>其中，
-    <span id="mjx-bedbf41">
+    <span id="mjx-c35d4d3">
       <style>
-      #mjx-bedbf41{
+      #mjx-c35d4d3{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4269,9 +4269,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="1.697ex" height="1.62ex" role="img" focusable="false" viewBox="0 -716 750 716" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D434" d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>A</mi></math></mjx-assistive-mml></mjx-container>
     </span>
    和 
-    <span id="mjx-1257869">
+    <span id="mjx-9d6d55d">
       <style>
-      #mjx-1257869{
+      #mjx-9d6d55d{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4430,9 +4430,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="1.717ex" height="1.545ex" role="img" focusable="false" viewBox="0 -683 759 683" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D435" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>B</mi></math></mjx-assistive-mml></mjx-container>
     </span>
    分别是预测框和真实框，
-    <span id="mjx-74855ad">
+    <span id="mjx-51c93d2">
       <style>
-      #mjx-74855ad{
+      #mjx-51c93d2{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4591,9 +4591,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.564ex;" xmlns="http://www.w3.org/2000/svg" width="7.187ex" height="2.26ex" role="img" focusable="false" viewBox="0 -749.5 3176.4 999" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo" transform="translate(0 -0.5)"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g><g data-mml-node="mi" transform="translate(278,0)"><path data-c="1D434" d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z"></path></g><g data-mml-node="mo" transform="translate(1250.2,0)"><path data-c="2229" d="M88 -21T75 -21T55 -7V200Q55 231 55 280Q56 414 60 428Q61 430 61 431Q77 500 152 549T332 598Q443 598 522 544T610 405Q611 399 611 194V-7Q604 -22 591 -22Q582 -22 572 -9L570 405Q563 433 556 449T529 485Q498 519 445 538T334 558Q251 558 179 518T96 401Q95 396 95 193V-7Q88 -21 75 -21Z"></path></g><g data-mml-node="mi" transform="translate(2139.4,0)"><path data-c="1D435" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></g><g data-mml-node="mo" transform="translate(2898.4,0) translate(0 -0.5)"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo data-mjx-texclass="ORD" stretchy="false">|</mo><mi>A</mi><mo>∩</mo><mi>B</mi><mo data-mjx-texclass="ORD" stretchy="false">|</mo></math></mjx-assistive-mml></mjx-container>
     </span>
    表示交集面积，
-    <span id="mjx-e2d07b3">
+    <span id="mjx-4915d44">
       <style>
-      #mjx-e2d07b3{
+      #mjx-4915d44{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4754,15 +4754,15 @@ g[data-mml-node="xypic"] path {
    是并集面积。</p>
 <p>通过结合这两个损失，Grounding DINO 能够更好地优化边框位置，保证高精度的目标定位。</p>
 <hr>
-<h3 id="🔑-三、类别损失（Classification-Loss）"><a class="header-anchor" href="#🔑-三、类别损失（Classification-Loss）">🔗</a>🔑 三、类别损失（Classification Loss）</h3>
+<h3 id="🔑-三、类别损失（Classification-Loss）"><a class="header-anchor" href="#🔑-三、类别损失（Classification-Loss）"></a>🔑 三、类别损失（Classification Loss）</h3>
 <p>类别损失用于训练模型判断每个边界框的类别。
 Grounding DINO 使用了 <strong>Focal Loss</strong>，它能够缓解类别不平衡问题，特别是在背景类别占比较大的情况下。</p>
 <p>1️⃣ <strong>Focal Loss</strong>（焦点损失）：</p>
 <p>Focal Loss 是一种针对类别不平衡问题设计的损失函数，针对容易分类的负样本降低权重，提高难分类样本的权重：</p>
 
-    <span id="mjx-0f34c53">
+    <span id="mjx-70bc869">
       <style>
-      #mjx-0f34c53{
+      #mjx-70bc869{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4921,9 +4921,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" display="true" style="position: relative;"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="27.512ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 12160.4 1000" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="TeXAtom" transform="translate(714,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mtext"><path data-c="66" d="M273 0Q255 3 146 3Q43 3 34 0H26V46H42Q70 46 91 49Q99 52 103 60Q104 62 104 224V385H33V431H104V497L105 564L107 574Q126 639 171 668T266 704Q267 704 275 704T289 705Q330 702 351 679T372 627Q372 604 358 590T321 576T284 590T270 627Q270 647 288 667H284Q280 668 273 668Q245 668 223 647T189 592Q183 572 182 497V431H293V385H185V225Q185 63 186 61T189 57T194 54T199 51T206 49T213 48T222 47T231 47T241 46T251 46H282V0H273Z"></path><path data-c="6F" d="M28 214Q28 309 93 378T250 448Q340 448 405 380T471 215Q471 120 407 55T250 -10Q153 -10 91 57T28 214ZM250 30Q372 30 372 193V225V250Q372 272 371 288T364 326T348 362T317 390T268 410Q263 411 252 411Q222 411 195 399Q152 377 139 338T126 246V226Q126 130 145 91Q177 30 250 30Z" transform="translate(306,0)"></path><path data-c="63" d="M370 305T349 305T313 320T297 358Q297 381 312 396Q317 401 317 402T307 404Q281 408 258 408Q209 408 178 376Q131 329 131 219Q131 137 162 90Q203 29 272 29Q313 29 338 55T374 117Q376 125 379 127T395 129H409Q415 123 415 120Q415 116 411 104T395 71T366 33T318 2T249 -11Q163 -11 99 53T34 214Q34 318 99 383T250 448T370 421T404 357Q404 334 387 320Z" transform="translate(806,0)"></path><path data-c="61" d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z" transform="translate(1250,0)"></path><path data-c="6C" d="M42 46H56Q95 46 103 60V68Q103 77 103 91T103 124T104 167T104 217T104 272T104 329Q104 366 104 407T104 482T104 542T103 586T103 603Q100 622 89 628T44 637H26V660Q26 683 28 683L38 684Q48 685 67 686T104 688Q121 689 141 690T171 693T182 694H185V379Q185 62 186 60Q190 52 198 49Q219 46 247 46H263V0H255L232 1Q209 2 183 2T145 3T107 3T57 1L34 0H26V46H42Z" transform="translate(1750,0)"></path></g></g></g><g data-mml-node="mo" transform="translate(2475.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mo" transform="translate(3531.6,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="msub" transform="translate(4309.6,0)"><g data-mml-node="mi"><path data-c="1D6FC" d="M34 156Q34 270 120 356T309 442Q379 442 421 402T478 304Q484 275 485 237V208Q534 282 560 374Q564 388 566 390T582 393Q603 393 603 385Q603 376 594 346T558 261T497 161L486 147L487 123Q489 67 495 47T514 26Q528 28 540 37T557 60Q559 67 562 68T577 70Q597 70 597 62Q597 56 591 43Q579 19 556 5T512 -10H505Q438 -10 414 62L411 69L400 61Q390 53 370 41T325 18T267 -2T203 -11Q124 -11 79 39T34 156ZM208 26Q257 26 306 47T379 90L403 112Q401 255 396 290Q382 405 304 405Q235 405 183 332Q156 292 139 224T121 120Q121 71 146 49T208 26Z"></path></g><g data-mml-node="mi" transform="translate(673,-150) scale(0.707)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g><g data-mml-node="mo" transform="translate(5287.8,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mn" transform="translate(5676.8,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mo" transform="translate(6399.1,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="msub" transform="translate(7399.3,0)"><g data-mml-node="mi"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g><g data-mml-node="mi" transform="translate(536,-150) scale(0.707)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g><g data-mml-node="msup" transform="translate(8240.5,0)"><g data-mml-node="mo"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mi" transform="translate(422,413) scale(0.707)"><path data-c="1D6FE" d="M31 249Q11 249 11 258Q11 275 26 304T66 365T129 418T206 441Q233 441 239 440Q287 429 318 386T371 255Q385 195 385 170Q385 166 386 166L398 193Q418 244 443 300T486 391T508 430Q510 431 524 431H537Q543 425 543 422Q543 418 522 378T463 251T391 71Q385 55 378 6T357 -100Q341 -165 330 -190T303 -216Q286 -216 286 -188Q286 -138 340 32L346 51L347 69Q348 79 348 100Q348 257 291 317Q251 355 196 355Q148 355 108 329T51 260Q49 251 47 251Q45 249 31 249Z"></path></g></g><g data-mml-node="mi" transform="translate(9263.2,0)"><path data-c="6C" d="M42 46H56Q95 46 103 60V68Q103 77 103 91T103 124T104 167T104 217T104 272T104 329Q104 366 104 407T104 482T104 542T103 586T103 603Q100 622 89 628T44 637H26V660Q26 683 28 683L38 684Q48 685 67 686T104 688Q121 689 141 690T171 693T182 694H185V379Q185 62 186 60Q190 52 198 49Q219 46 247 46H263V0H255L232 1Q209 2 183 2T145 3T107 3T57 1L34 0H26V46H42Z"></path><path data-c="6F" d="M28 214Q28 309 93 378T250 448Q340 448 405 380T471 215Q471 120 407 55T250 -10Q153 -10 91 57T28 214ZM250 30Q372 30 372 193V225V250Q372 272 371 288T364 326T348 362T317 390T268 410Q263 411 252 411Q222 411 195 399Q152 377 139 338T126 246V226Q126 130 145 91Q177 30 250 30Z" transform="translate(278,0)"></path><path data-c="67" d="M329 409Q373 453 429 453Q459 453 472 434T485 396Q485 382 476 371T449 360Q416 360 412 390Q410 404 415 411Q415 412 416 414V415Q388 412 363 393Q355 388 355 386Q355 385 359 381T368 369T379 351T388 325T392 292Q392 230 343 187T222 143Q172 143 123 171Q112 153 112 133Q112 98 138 81Q147 75 155 75T227 73Q311 72 335 67Q396 58 431 26Q470 -13 470 -72Q470 -139 392 -175Q332 -206 250 -206Q167 -206 107 -175Q29 -140 29 -75Q29 -39 50 -15T92 18L103 24Q67 55 67 108Q67 155 96 193Q52 237 52 292Q52 355 102 398T223 442Q274 442 318 416L329 409ZM299 343Q294 371 273 387T221 404Q192 404 171 388T145 343Q142 326 142 292Q142 248 149 227T179 192Q196 182 222 182Q244 182 260 189T283 207T294 227T299 242Q302 258 302 292T299 343ZM403 -75Q403 -50 389 -34T348 -11T299 -2T245 0H218Q151 0 138 -6Q118 -15 107 -34T95 -74Q95 -84 101 -97T122 -127T170 -155T250 -167Q319 -167 361 -139T403 -75Z" transform="translate(778,0)"></path></g><g data-mml-node="mo" transform="translate(10541.2,0)"><path data-c="2061" d=""></path></g><g data-mml-node="mo" transform="translate(10541.2,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msub" transform="translate(10930.2,0)"><g data-mml-node="mi"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g><g data-mml-node="mi" transform="translate(536,-150) scale(0.707)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g><g data-mml-node="mo" transform="translate(11771.4,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><msub><mi>L</mi><mrow data-mjx-texclass="ORD"><mtext>focal</mtext></mrow></msub><mo>=</mo><mo>−</mo><msub><mi>α</mi><mi>t</mi></msub><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msub><mi>p</mi><mi>t</mi></msub><msup><mo stretchy="false">)</mo><mi>γ</mi></msup><mi>log</mi><mo data-mjx-texclass="NONE">⁡</mo><mo stretchy="false">(</mo><msub><mi>p</mi><mi>t</mi></msub><mo stretchy="false">)</mo></math></mjx-assistive-mml></mjx-container>
     </span>
   <p>其中，
-    <span id="mjx-800d5e5">
+    <span id="mjx-d6835c1">
       <style>
-      #mjx-800d5e5{
+      #mjx-d6835c1{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5082,9 +5082,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="2.213ex" height="1.357ex" role="img" focusable="false" viewBox="0 -442 978.3 599.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D6FC" d="M34 156Q34 270 120 356T309 442Q379 442 421 402T478 304Q484 275 485 237V208Q534 282 560 374Q564 388 566 390T582 393Q603 393 603 385Q603 376 594 346T558 261T497 161L486 147L487 123Q489 67 495 47T514 26Q528 28 540 37T557 60Q559 67 562 68T577 70Q597 70 597 62Q597 56 591 43Q579 19 556 5T512 -10H505Q438 -10 414 62L411 69L400 61Q390 53 370 41T325 18T267 -2T203 -11Q124 -11 79 39T34 156ZM208 26Q257 26 306 47T379 90L403 112Q401 255 396 290Q382 405 304 405Q235 405 183 332Q156 292 139 224T121 120Q121 71 146 49T208 26Z"></path></g><g data-mml-node="mi" transform="translate(673,-150) scale(0.707)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>α</mi><mi>t</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
    是类别平衡的因子，
-    <span id="mjx-13ad28">
+    <span id="mjx-4fc9d53">
       <style>
-      #mjx-13ad28{
+      #mjx-4fc9d53{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5243,9 +5243,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.439ex;" xmlns="http://www.w3.org/2000/svg" width="1.903ex" height="1.439ex" role="img" focusable="false" viewBox="0 -442 841.3 636" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g><g data-mml-node="mi" transform="translate(536,-150) scale(0.707)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>p</mi><mi>t</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
    是模型对该类别的预测概率，
-    <span id="mjx-6c5515d">
+    <span id="mjx-a00493e">
       <style>
-      #mjx-6c5515d{
+      #mjx-a00493e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5406,7 +5406,7 @@ g[data-mml-node="xypic"] path {
    是调节难易样本的超参数。</p>
 <p>Focal Loss 通过对难样本赋予更高权重，提升模型对少数类或“难以检测”物体的敏感度。</p>
 <hr>
-<h3 id="🧠-四、对比损失（Contrastive-Loss）"><a class="header-anchor" href="#🧠-四、对比损失（Contrastive-Loss）">🔗</a>🧠 四、对比损失（Contrastive Loss）</h3>
+<h3 id="🧠-四、对比损失（Contrastive-Loss）"><a class="header-anchor" href="#🧠-四、对比损失（Contrastive-Loss）"></a>🧠 四、对比损失（Contrastive Loss）</h3>
 <p>对比损失的目的是加强 <strong>图像特征与文本特征的匹配性</strong>，使得同一物体的视觉和语言信息更加对齐。
 Grounding DINO 使用了一种基于 <strong>双向对比学习（Bi-directional Contrastive Learning）</strong> 的策略，通过对比损失推动图像与文本之间的对齐。</p>
 <p>1️⃣ <strong>双向对比学习</strong>：</p>
@@ -5416,9 +5416,9 @@ Grounding DINO 使用了一种基于 <strong>双向对比学习（Bi-directional
 <li>让它们远离其他物体或描述。</li>
 </ul>
 <p>具体地，给定图像特征 
-    <span id="mjx-d89e1fb">
+    <span id="mjx-b782404">
       <style>
-      #mjx-d89e1fb{
+      #mjx-b782404{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5577,9 +5577,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.669ex;" xmlns="http://www.w3.org/2000/svg" width="5.384ex" height="2.264ex" role="img" focusable="false" viewBox="0 -705 2379.7 1000.7" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="TeXAtom" transform="translate(523,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mtext"><path data-c="69" d="M69 609Q69 637 87 653T131 669Q154 667 171 652T188 609Q188 579 171 564T129 549Q104 549 87 564T69 609ZM247 0Q232 3 143 3Q132 3 106 3T56 1L34 0H26V46H42Q70 46 91 49Q100 53 102 60T104 102V205V293Q104 345 102 359T88 378Q74 385 41 385H30V408Q30 431 32 431L42 432Q52 433 70 434T106 436Q123 437 142 438T171 441T182 442H185V62Q190 52 197 50T232 46H255V0H247Z"></path><path data-c="6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z" transform="translate(278,0)"></path><path data-c="61" d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z" transform="translate(1111,0)"></path><path data-c="67" d="M329 409Q373 453 429 453Q459 453 472 434T485 396Q485 382 476 371T449 360Q416 360 412 390Q410 404 415 411Q415 412 416 414V415Q388 412 363 393Q355 388 355 386Q355 385 359 381T368 369T379 351T388 325T392 292Q392 230 343 187T222 143Q172 143 123 171Q112 153 112 133Q112 98 138 81Q147 75 155 75T227 73Q311 72 335 67Q396 58 431 26Q470 -13 470 -72Q470 -139 392 -175Q332 -206 250 -206Q167 -206 107 -175Q29 -140 29 -75Q29 -39 50 -15T92 18L103 24Q67 55 67 108Q67 155 96 193Q52 237 52 292Q52 355 102 398T223 442Q274 442 318 416L329 409ZM299 343Q294 371 273 387T221 404Q192 404 171 388T145 343Q142 326 142 292Q142 248 149 227T179 192Q196 182 222 182Q244 182 260 189T283 207T294 227T299 242Q302 258 302 292T299 343ZM403 -75Q403 -50 389 -34T348 -11T299 -2T245 0H218Q151 0 138 -6Q118 -15 107 -34T95 -74Q95 -84 101 -97T122 -127T170 -155T250 -167Q319 -167 361 -139T403 -75Z" transform="translate(1611,0)"></path><path data-c="65" d="M28 218Q28 273 48 318T98 391T163 433T229 448Q282 448 320 430T378 380T406 316T415 245Q415 238 408 231H126V216Q126 68 226 36Q246 30 270 30Q312 30 342 62Q359 79 369 104L379 128Q382 131 395 131H398Q415 131 415 121Q415 117 412 108Q393 53 349 21T250 -11Q155 -11 92 58T28 218ZM333 275Q322 403 238 411H236Q228 411 220 410T195 402T166 381T143 340T127 274V267H333V275Z" transform="translate(2111,0)"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>f</mi><mrow data-mjx-texclass="ORD"><mtext>image</mtext></mrow></msub></math></mjx-assistive-mml></mjx-container>
     </span>
    和文本特征 
-    <span id="mjx-58de375">
+    <span id="mjx-90c6578">
       <style>
-      #mjx-58de375{
+      #mjx-90c6578{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5739,9 +5739,9 @@ g[data-mml-node="xypic"] path {
     </span>
   ，它们的相似度通过以下公式计算：</p>
 
-    <span id="mjx-7a785df">
+    <span id="mjx-152cc1d">
       <style>
-      #mjx-7a785df{
+      #mjx-152cc1d{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5900,9 +5900,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" display="true" style="position: relative;"><svg style="vertical-align: -2.578ex;" xmlns="http://www.w3.org/2000/svg" width="39.392ex" height="5.985ex" role="img" focusable="false" viewBox="0 -1505.7 17411.1 2645.3" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="TeXAtom" transform="translate(714,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mtext"><path data-c="63" d="M370 305T349 305T313 320T297 358Q297 381 312 396Q317 401 317 402T307 404Q281 408 258 408Q209 408 178 376Q131 329 131 219Q131 137 162 90Q203 29 272 29Q313 29 338 55T374 117Q376 125 379 127T395 129H409Q415 123 415 120Q415 116 411 104T395 71T366 33T318 2T249 -11Q163 -11 99 53T34 214Q34 318 99 383T250 448T370 421T404 357Q404 334 387 320Z"></path><path data-c="6F" d="M28 214Q28 309 93 378T250 448Q340 448 405 380T471 215Q471 120 407 55T250 -10Q153 -10 91 57T28 214ZM250 30Q372 30 372 193V225V250Q372 272 371 288T364 326T348 362T317 390T268 410Q263 411 252 411Q222 411 195 399Q152 377 139 338T126 246V226Q126 130 145 91Q177 30 250 30Z" transform="translate(444,0)"></path><path data-c="6E" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q450 438 463 329Q464 322 464 190V104Q464 66 466 59T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z" transform="translate(944,0)"></path><path data-c="74" d="M27 422Q80 426 109 478T141 600V615H181V431H316V385H181V241Q182 116 182 100T189 68Q203 29 238 29Q282 29 292 100Q293 108 293 146V181H333V146V134Q333 57 291 17Q264 -10 221 -10Q187 -10 162 2T124 33T105 68T98 100Q97 107 97 248V385H18V422H27Z" transform="translate(1500,0)"></path><path data-c="72" d="M36 46H50Q89 46 97 60V68Q97 77 97 91T98 122T98 161T98 203Q98 234 98 269T98 328L97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 60 434T96 436Q112 437 131 438T160 441T171 442H174V373Q213 441 271 441H277Q322 441 343 419T364 373Q364 352 351 337T313 322Q288 322 276 338T263 372Q263 381 265 388T270 400T273 405Q271 407 250 401Q234 393 226 386Q179 341 179 207V154Q179 141 179 127T179 101T180 81T180 66V61Q181 59 183 57T188 54T193 51T200 49T207 48T216 47T225 47T235 46T245 46H276V0H267Q249 3 140 3Q37 3 28 0H20V46H36Z" transform="translate(1889,0)"></path><path data-c="61" d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z" transform="translate(2281,0)"></path><path data-c="73" d="M295 316Q295 356 268 385T190 414Q154 414 128 401Q98 382 98 349Q97 344 98 336T114 312T157 287Q175 282 201 278T245 269T277 256Q294 248 310 236T342 195T359 133Q359 71 321 31T198 -10H190Q138 -10 94 26L86 19L77 10Q71 4 65 -1L54 -11H46H42Q39 -11 33 -5V74V132Q33 153 35 157T45 162H54Q66 162 70 158T75 146T82 119T101 77Q136 26 198 26Q295 26 295 104Q295 133 277 151Q257 175 194 187T111 210Q75 227 54 256T33 318Q33 357 50 384T93 424T143 442T187 447H198Q238 447 268 432L283 424L292 431Q302 440 314 448H322H326Q329 448 335 442V310L329 304H301Q295 310 295 316Z" transform="translate(2781,0)"></path><path data-c="74" d="M27 422Q80 426 109 478T141 600V615H181V431H316V385H181V241Q182 116 182 100T189 68Q203 29 238 29Q282 29 292 100Q293 108 293 146V181H333V146V134Q333 57 291 17Q264 -10 221 -10Q187 -10 162 2T124 33T105 68T98 100Q97 107 97 248V385H18V422H27Z" transform="translate(3175,0)"></path><path data-c="69" d="M69 609Q69 637 87 653T131 669Q154 667 171 652T188 609Q188 579 171 564T129 549Q104 549 87 564T69 609ZM247 0Q232 3 143 3Q132 3 106 3T56 1L34 0H26V46H42Q70 46 91 49Q100 53 102 60T104 102V205V293Q104 345 102 359T88 378Q74 385 41 385H30V408Q30 431 32 431L42 432Q52 433 70 434T106 436Q123 437 142 438T171 441T182 442H185V62Q190 52 197 50T232 46H255V0H247Z" transform="translate(3564,0)"></path><path data-c="76" d="M338 431Q344 429 422 429Q479 429 503 431H508V385H497Q439 381 423 345Q421 341 356 172T288 -2Q283 -11 263 -11Q244 -11 239 -2Q99 359 98 364Q93 378 82 381T43 385H19V431H25L33 430Q41 430 53 430T79 430T104 429T122 428Q217 428 232 431H240V385H226Q187 384 184 370Q184 366 235 234L286 102L377 341V349Q377 363 367 372T349 383T335 385H331V431H338Z" transform="translate(3842,0)"></path><path data-c="65" d="M28 218Q28 273 48 318T98 391T163 433T229 448Q282 448 320 430T378 380T406 316T415 245Q415 238 408 231H126V216Q126 68 226 36Q246 30 270 30Q312 30 342 62Q359 79 369 104L379 128Q382 131 395 131H398Q415 131 415 121Q415 117 412 108Q393 53 349 21T250 -11Q155 -11 92 58T28 218ZM333 275Q322 403 238 411H236Q228 411 220 410T195 402T166 381T143 340T127 274V267H333V275Z" transform="translate(4370,0)"></path></g></g></g><g data-mml-node="mo" transform="translate(4445.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mo" transform="translate(5501.6,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mi" transform="translate(6446.2,0)"><path data-c="6C" d="M42 46H56Q95 46 103 60V68Q103 77 103 91T103 124T104 167T104 217T104 272T104 329Q104 366 104 407T104 482T104 542T103 586T103 603Q100 622 89 628T44 637H26V660Q26 683 28 683L38 684Q48 685 67 686T104 688Q121 689 141 690T171 693T182 694H185V379Q185 62 186 60Q190 52 198 49Q219 46 247 46H263V0H255L232 1Q209 2 183 2T145 3T107 3T57 1L34 0H26V46H42Z"></path><path data-c="6F" d="M28 214Q28 309 93 378T250 448Q340 448 405 380T471 215Q471 120 407 55T250 -10Q153 -10 91 57T28 214ZM250 30Q372 30 372 193V225V250Q372 272 371 288T364 326T348 362T317 390T268 410Q263 411 252 411Q222 411 195 399Q152 377 139 338T126 246V226Q126 130 145 91Q177 30 250 30Z" transform="translate(278,0)"></path><path data-c="67" d="M329 409Q373 453 429 453Q459 453 472 434T485 396Q485 382 476 371T449 360Q416 360 412 390Q410 404 415 411Q415 412 416 414V415Q388 412 363 393Q355 388 355 386Q355 385 359 381T368 369T379 351T388 325T392 292Q392 230 343 187T222 143Q172 143 123 171Q112 153 112 133Q112 98 138 81Q147 75 155 75T227 73Q311 72 335 67Q396 58 431 26Q470 -13 470 -72Q470 -139 392 -175Q332 -206 250 -206Q167 -206 107 -175Q29 -140 29 -75Q29 -39 50 -15T92 18L103 24Q67 55 67 108Q67 155 96 193Q52 237 52 292Q52 355 102 398T223 442Q274 442 318 416L329 409ZM299 343Q294 371 273 387T221 404Q192 404 171 388T145 343Q142 326 142 292Q142 248 149 227T179 192Q196 182 222 182Q244 182 260 189T283 207T294 227T299 242Q302 258 302 292T299 343ZM403 -75Q403 -50 389 -34T348 -11T299 -2T245 0H218Q151 0 138 -6Q118 -15 107 -34T95 -74Q95 -84 101 -97T122 -127T170 -155T250 -167Q319 -167 361 -139T403 -75Z" transform="translate(778,0)"></path></g><g data-mml-node="mo" transform="translate(7724.2,0)"><path data-c="2061" d=""></path></g><g data-mml-node="mfrac" transform="translate(7890.9,0)"><g data-mml-node="mrow" transform="translate(1150.8,755.7)"><g data-mml-node="mi"><path data-c="65" d="M28 218Q28 273 48 318T98 391T163 433T229 448Q282 448 320 430T378 380T406 316T415 245Q415 238 408 231H126V216Q126 68 226 36Q246 30 270 30Q312 30 342 62Q359 79 369 104L379 128Q382 131 395 131H398Q415 131 415 121Q415 117 412 108Q393 53 349 21T250 -11Q155 -11 92 58T28 218ZM333 275Q322 403 238 411H236Q228 411 220 410T195 402T166 381T143 340T127 274V267H333V275Z"></path><path data-c="78" d="M201 0Q189 3 102 3Q26 3 17 0H11V46H25Q48 47 67 52T96 61T121 78T139 96T160 122T180 150L226 210L168 288Q159 301 149 315T133 336T122 351T113 363T107 370T100 376T94 379T88 381T80 383Q74 383 44 385H16V431H23Q59 429 126 429Q219 429 229 431H237V385Q201 381 201 369Q201 367 211 353T239 315T268 274L272 270L297 304Q329 345 329 358Q329 364 327 369T322 376T317 380T310 384L307 385H302V431H309Q324 428 408 428Q487 428 493 431H499V385H492Q443 385 411 368Q394 360 377 341T312 257L296 236L358 151Q424 61 429 57T446 50Q464 46 499 46H516V0H510H502Q494 1 482 1T457 2T432 2T414 3Q403 3 377 3T327 1L304 0H295V46H298Q309 46 320 51T331 63Q331 65 291 120L250 175Q249 174 219 133T185 88Q181 83 181 74Q181 63 188 55T206 46Q208 46 208 23V0H201Z" transform="translate(444,0)"></path><path data-c="70" d="M36 -148H50Q89 -148 97 -134V-126Q97 -119 97 -107T97 -77T98 -38T98 6T98 55T98 106Q98 140 98 177T98 243T98 296T97 335T97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 61 434T98 436Q115 437 135 438T165 441T176 442H179V416L180 390L188 397Q247 441 326 441Q407 441 464 377T522 216Q522 115 457 52T310 -11Q242 -11 190 33L182 40V-45V-101Q182 -128 184 -134T195 -145Q216 -148 244 -148H260V-194H252L228 -193Q205 -192 178 -192T140 -191Q37 -191 28 -194H20V-148H36ZM424 218Q424 292 390 347T305 402Q234 402 182 337V98Q222 26 294 26Q345 26 384 80T424 218Z" transform="translate(972,0)"></path></g><g data-mml-node="mo" transform="translate(1528,0)"><path data-c="2061" d=""></path></g><g data-mml-node="mo" transform="translate(1528,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msub" transform="translate(1917,0)"><g data-mml-node="mi"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="TeXAtom" transform="translate(523,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mtext"><path data-c="69" d="M69 609Q69 637 87 653T131 669Q154 667 171 652T188 609Q188 579 171 564T129 549Q104 549 87 564T69 609ZM247 0Q232 3 143 3Q132 3 106 3T56 1L34 0H26V46H42Q70 46 91 49Q100 53 102 60T104 102V205V293Q104 345 102 359T88 378Q74 385 41 385H30V408Q30 431 32 431L42 432Q52 433 70 434T106 436Q123 437 142 438T171 441T182 442H185V62Q190 52 197 50T232 46H255V0H247Z"></path><path data-c="6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z" transform="translate(278,0)"></path><path data-c="61" d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z" transform="translate(1111,0)"></path><path data-c="67" d="M329 409Q373 453 429 453Q459 453 472 434T485 396Q485 382 476 371T449 360Q416 360 412 390Q410 404 415 411Q415 412 416 414V415Q388 412 363 393Q355 388 355 386Q355 385 359 381T368 369T379 351T388 325T392 292Q392 230 343 187T222 143Q172 143 123 171Q112 153 112 133Q112 98 138 81Q147 75 155 75T227 73Q311 72 335 67Q396 58 431 26Q470 -13 470 -72Q470 -139 392 -175Q332 -206 250 -206Q167 -206 107 -175Q29 -140 29 -75Q29 -39 50 -15T92 18L103 24Q67 55 67 108Q67 155 96 193Q52 237 52 292Q52 355 102 398T223 442Q274 442 318 416L329 409ZM299 343Q294 371 273 387T221 404Q192 404 171 388T145 343Q142 326 142 292Q142 248 149 227T179 192Q196 182 222 182Q244 182 260 189T283 207T294 227T299 242Q302 258 302 292T299 343ZM403 -75Q403 -50 389 -34T348 -11T299 -2T245 0H218Q151 0 138 -6Q118 -15 107 -34T95 -74Q95 -84 101 -97T122 -127T170 -155T250 -167Q319 -167 361 -139T403 -75Z" transform="translate(1611,0)"></path><path data-c="65" d="M28 218Q28 273 48 318T98 391T163 433T229 448Q282 448 320 430T378 380T406 316T415 245Q415 238 408 231H126V216Q126 68 226 36Q246 30 270 30Q312 30 342 62Q359 79 369 104L379 128Q382 131 395 131H398Q415 131 415 121Q415 117 412 108Q393 53 349 21T250 -11Q155 -11 92 58T28 218ZM333 275Q322 403 238 411H236Q228 411 220 410T195 402T166 381T143 340T127 274V267H333V275Z" transform="translate(2111,0)"></path></g></g></g><g data-mml-node="mo" transform="translate(4518.9,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="msub" transform="translate(5019.1,0)"><g data-mml-node="mi"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="TeXAtom" transform="translate(523,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mtext"><path data-c="74" d="M27 422Q80 426 109 478T141 600V615H181V431H316V385H181V241Q182 116 182 100T189 68Q203 29 238 29Q282 29 292 100Q293 108 293 146V181H333V146V134Q333 57 291 17Q264 -10 221 -10Q187 -10 162 2T124 33T105 68T98 100Q97 107 97 248V385H18V422H27Z"></path><path data-c="65" d="M28 218Q28 273 48 318T98 391T163 433T229 448Q282 448 320 430T378 380T406 316T415 245Q415 238 408 231H126V216Q126 68 226 36Q246 30 270 30Q312 30 342 62Q359 79 369 104L379 128Q382 131 395 131H398Q415 131 415 121Q415 117 412 108Q393 53 349 21T250 -11Q155 -11 92 58T28 218ZM333 275Q322 403 238 411H236Q228 411 220 410T195 402T166 381T143 340T127 274V267H333V275Z" transform="translate(389,0)"></path><path data-c="78" d="M201 0Q189 3 102 3Q26 3 17 0H11V46H25Q48 47 67 52T96 61T121 78T139 96T160 122T180 150L226 210L168 288Q159 301 149 315T133 336T122 351T113 363T107 370T100 376T94 379T88 381T80 383Q74 383 44 385H16V431H23Q59 429 126 429Q219 429 229 431H237V385Q201 381 201 369Q201 367 211 353T239 315T268 274L272 270L297 304Q329 345 329 358Q329 364 327 369T322 376T317 380T310 384L307 385H302V431H309Q324 428 408 428Q487 428 493 431H499V385H492Q443 385 411 368Q394 360 377 341T312 257L296 236L358 151Q424 61 429 57T446 50Q464 46 499 46H516V0H510H502Q494 1 482 1T457 2T432 2T414 3Q403 3 377 3T327 1L304 0H295V46H298Q309 46 320 51T331 63Q331 65 291 120L250 175Q249 174 219 133T185 88Q181 83 181 74Q181 63 188 55T206 46Q208 46 208 23V0H201Z" transform="translate(833,0)"></path><path data-c="74" d="M27 422Q80 426 109 478T141 600V615H181V431H316V385H181V241Q182 116 182 100T189 68Q203 29 238 29Q282 29 292 100Q293 108 293 146V181H333V146V134Q333 57 291 17Q264 -10 221 -10Q187 -10 162 2T124 33T105 68T98 100Q97 107 97 248V385H18V422H27Z" transform="translate(1361,0)"></path></g></g></g><g data-mml-node="mo" transform="translate(6829.5,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g><g data-mml-node="mrow" transform="translate(220,-710)"><g data-mml-node="munder"><g data-mml-node="mo"><path data-c="2211" d="M61 748Q64 750 489 750H913L954 640Q965 609 976 579T993 533T999 516H979L959 517Q936 579 886 621T777 682Q724 700 655 705T436 710H319Q183 710 183 709Q186 706 348 484T511 259Q517 250 513 244L490 216Q466 188 420 134T330 27L149 -187Q149 -188 362 -188Q388 -188 436 -188T506 -189Q679 -189 778 -162T936 -43Q946 -27 959 6H999L913 -249L489 -250Q65 -250 62 -248Q56 -246 56 -239Q56 -234 118 -161Q186 -81 245 -11L428 206Q428 207 242 462L57 717L56 728Q56 744 61 748Z"></path></g><g data-mml-node="mi" transform="translate(1089,-285.4) scale(0.707)"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g></g><g data-mml-node="mi" transform="translate(1597,0)"><path data-c="65" d="M28 218Q28 273 48 318T98 391T163 433T229 448Q282 448 320 430T378 380T406 316T415 245Q415 238 408 231H126V216Q126 68 226 36Q246 30 270 30Q312 30 342 62Q359 79 369 104L379 128Q382 131 395 131H398Q415 131 415 121Q415 117 412 108Q393 53 349 21T250 -11Q155 -11 92 58T28 218ZM333 275Q322 403 238 411H236Q228 411 220 410T195 402T166 381T143 340T127 274V267H333V275Z"></path><path data-c="78" d="M201 0Q189 3 102 3Q26 3 17 0H11V46H25Q48 47 67 52T96 61T121 78T139 96T160 122T180 150L226 210L168 288Q159 301 149 315T133 336T122 351T113 363T107 370T100 376T94 379T88 381T80 383Q74 383 44 385H16V431H23Q59 429 126 429Q219 429 229 431H237V385Q201 381 201 369Q201 367 211 353T239 315T268 274L272 270L297 304Q329 345 329 358Q329 364 327 369T322 376T317 380T310 384L307 385H302V431H309Q324 428 408 428Q487 428 493 431H499V385H492Q443 385 411 368Q394 360 377 341T312 257L296 236L358 151Q424 61 429 57T446 50Q464 46 499 46H516V0H510H502Q494 1 482 1T457 2T432 2T414 3Q403 3 377 3T327 1L304 0H295V46H298Q309 46 320 51T331 63Q331 65 291 120L250 175Q249 174 219 133T185 88Q181 83 181 74Q181 63 188 55T206 46Q208 46 208 23V0H201Z" transform="translate(444,0)"></path><path data-c="70" d="M36 -148H50Q89 -148 97 -134V-126Q97 -119 97 -107T97 -77T98 -38T98 6T98 55T98 106Q98 140 98 177T98 243T98 296T97 335T97 351Q94 370 83 376T38 385H20V408Q20 431 22 431L32 432Q42 433 61 434T98 436Q115 437 135 438T165 441T176 442H179V416L180 390L188 397Q247 441 326 441Q407 441 464 377T522 216Q522 115 457 52T310 -11Q242 -11 190 33L182 40V-45V-101Q182 -128 184 -134T195 -145Q216 -148 244 -148H260V-194H252L228 -193Q205 -192 178 -192T140 -191Q37 -191 28 -194H20V-148H36ZM424 218Q424 292 390 347T305 402Q234 402 182 337V98Q222 26 294 26Q345 26 384 80T424 218Z" transform="translate(972,0)"></path></g><g data-mml-node="mo" transform="translate(3125,0)"><path data-c="2061" d=""></path></g><g data-mml-node="mo" transform="translate(3125,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msub" transform="translate(3514,0)"><g data-mml-node="mi"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="TeXAtom" transform="translate(523,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mtext"><path data-c="69" d="M69 609Q69 637 87 653T131 669Q154 667 171 652T188 609Q188 579 171 564T129 549Q104 549 87 564T69 609ZM247 0Q232 3 143 3Q132 3 106 3T56 1L34 0H26V46H42Q70 46 91 49Q100 53 102 60T104 102V205V293Q104 345 102 359T88 378Q74 385 41 385H30V408Q30 431 32 431L42 432Q52 433 70 434T106 436Q123 437 142 438T171 441T182 442H185V62Q190 52 197 50T232 46H255V0H247Z"></path><path data-c="6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z" transform="translate(278,0)"></path><path data-c="61" d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z" transform="translate(1111,0)"></path><path data-c="67" d="M329 409Q373 453 429 453Q459 453 472 434T485 396Q485 382 476 371T449 360Q416 360 412 390Q410 404 415 411Q415 412 416 414V415Q388 412 363 393Q355 388 355 386Q355 385 359 381T368 369T379 351T388 325T392 292Q392 230 343 187T222 143Q172 143 123 171Q112 153 112 133Q112 98 138 81Q147 75 155 75T227 73Q311 72 335 67Q396 58 431 26Q470 -13 470 -72Q470 -139 392 -175Q332 -206 250 -206Q167 -206 107 -175Q29 -140 29 -75Q29 -39 50 -15T92 18L103 24Q67 55 67 108Q67 155 96 193Q52 237 52 292Q52 355 102 398T223 442Q274 442 318 416L329 409ZM299 343Q294 371 273 387T221 404Q192 404 171 388T145 343Q142 326 142 292Q142 248 149 227T179 192Q196 182 222 182Q244 182 260 189T283 207T294 227T299 242Q302 258 302 292T299 343ZM403 -75Q403 -50 389 -34T348 -11T299 -2T245 0H218Q151 0 138 -6Q118 -15 107 -34T95 -74Q95 -84 101 -97T122 -127T170 -155T250 -167Q319 -167 361 -139T403 -75Z" transform="translate(1611,0)"></path><path data-c="65" d="M28 218Q28 273 48 318T98 391T163 433T229 448Q282 448 320 430T378 380T406 316T415 245Q415 238 408 231H126V216Q126 68 226 36Q246 30 270 30Q312 30 342 62Q359 79 369 104L379 128Q382 131 395 131H398Q415 131 415 121Q415 117 412 108Q393 53 349 21T250 -11Q155 -11 92 58T28 218ZM333 275Q322 403 238 411H236Q228 411 220 410T195 402T166 381T143 340T127 274V267H333V275Z" transform="translate(2111,0)"></path></g></g></g><g data-mml-node="mo" transform="translate(6115.9,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="msub" transform="translate(6616.1,0)"><g data-mml-node="mi"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="TeXAtom" transform="translate(523,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="msub"><g data-mml-node="mtext"><path data-c="74" d="M27 422Q80 426 109 478T141 600V615H181V431H316V385H181V241Q182 116 182 100T189 68Q203 29 238 29Q282 29 292 100Q293 108 293 146V181H333V146V134Q333 57 291 17Q264 -10 221 -10Q187 -10 162 2T124 33T105 68T98 100Q97 107 97 248V385H18V422H27Z"></path><path data-c="65" d="M28 218Q28 273 48 318T98 391T163 433T229 448Q282 448 320 430T378 380T406 316T415 245Q415 238 408 231H126V216Q126 68 226 36Q246 30 270 30Q312 30 342 62Q359 79 369 104L379 128Q382 131 395 131H398Q415 131 415 121Q415 117 412 108Q393 53 349 21T250 -11Q155 -11 92 58T28 218ZM333 275Q322 403 238 411H236Q228 411 220 410T195 402T166 381T143 340T127 274V267H333V275Z" transform="translate(389,0)"></path><path data-c="78" d="M201 0Q189 3 102 3Q26 3 17 0H11V46H25Q48 47 67 52T96 61T121 78T139 96T160 122T180 150L226 210L168 288Q159 301 149 315T133 336T122 351T113 363T107 370T100 376T94 379T88 381T80 383Q74 383 44 385H16V431H23Q59 429 126 429Q219 429 229 431H237V385Q201 381 201 369Q201 367 211 353T239 315T268 274L272 270L297 304Q329 345 329 358Q329 364 327 369T322 376T317 380T310 384L307 385H302V431H309Q324 428 408 428Q487 428 493 431H499V385H492Q443 385 411 368Q394 360 377 341T312 257L296 236L358 151Q424 61 429 57T446 50Q464 46 499 46H516V0H510H502Q494 1 482 1T457 2T432 2T414 3Q403 3 377 3T327 1L304 0H295V46H298Q309 46 320 51T331 63Q331 65 291 120L250 175Q249 174 219 133T185 88Q181 83 181 74Q181 63 188 55T206 46Q208 46 208 23V0H201Z" transform="translate(833,0)"></path><path data-c="74" d="M27 422Q80 426 109 478T141 600V615H181V431H316V385H181V241Q182 116 182 100T189 68Q203 29 238 29Q282 29 292 100Q293 108 293 146V181H333V146V134Q333 57 291 17Q264 -10 221 -10Q187 -10 162 2T124 33T105 68T98 100Q97 107 97 248V385H18V422H27Z" transform="translate(1361,0)"></path></g><g data-mml-node="mi" transform="translate(1783,-150) scale(0.707)"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g></g></g></g><g data-mml-node="mo" transform="translate(8691.2,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g><rect width="9280.2" height="60" x="120" y="220"></rect></g></g></g></svg><mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><msub><mi>L</mi><mrow data-mjx-texclass="ORD"><mtext>contrastive</mtext></mrow></msub><mo>=</mo><mo>−</mo><mi>log</mi><mo data-mjx-texclass="NONE">⁡</mo><mfrac><mrow><mi>exp</mi><mo data-mjx-texclass="NONE">⁡</mo><mo stretchy="false">(</mo><msub><mi>f</mi><mrow data-mjx-texclass="ORD"><mtext>image</mtext></mrow></msub><mo>⋅</mo><msub><mi>f</mi><mrow data-mjx-texclass="ORD"><mtext>text</mtext></mrow></msub><mo stretchy="false">)</mo></mrow><mrow><munder><mo data-mjx-texclass="OP">∑</mo><mi>j</mi></munder><mi>exp</mi><mo data-mjx-texclass="NONE">⁡</mo><mo stretchy="false">(</mo><msub><mi>f</mi><mrow data-mjx-texclass="ORD"><mtext>image</mtext></mrow></msub><mo>⋅</mo><msub><mi>f</mi><mrow data-mjx-texclass="ORD"><msub><mtext>text</mtext><mi>j</mi></msub></mrow></msub><mo stretchy="false">)</mo></mrow></mfrac></math></mjx-assistive-mml></mjx-container>
     </span>
   <p>这里，
-    <span id="mjx-caf06a5">
+    <span id="mjx-b36933a">
       <style>
-      #mjx-caf06a5{
+      #mjx-b36933a{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6063,7 +6063,7 @@ g[data-mml-node="xypic"] path {
    是图像和文本之间的点积相似度，而分母则是所有负样本（其他文本或图像）与当前图像特征的对比。</p>
 <p>这个损失通过最大化正样本对（图像和文本的匹配）之间的相似度，并最小化负样本对之间的相似度，来强化图像与文本的语义对齐。</p>
 <hr>
-<h3 id="💡-五、辅助损失（Auxiliary-Loss）"><a class="header-anchor" href="#💡-五、辅助损失（Auxiliary-Loss）">🔗</a>💡 五、辅助损失（Auxiliary Loss）</h3>
+<h3 id="💡-五、辅助损失（Auxiliary-Loss）"><a class="header-anchor" href="#💡-五、辅助损失（Auxiliary-Loss）"></a>💡 五、辅助损失（Auxiliary Loss）</h3>
 <p>与 DETR 和 DINO 的做法类似，Grounding DINO 采用了 <strong>辅助损失</strong>，即在每个解码器层都会输出一个预测结果，模型会计算每个解码器层的损失并进行反向传播。
 这种做法能够加速收敛并使得训练更加稳定，因为它能让梯度从早期层开始传播。</p>
 <p>1️⃣ <strong>多层损失（Multi-level Loss）</strong>：</p>
@@ -6076,13 +6076,13 @@ g[data-mml-node="xypic"] path {
 </ul>
 <p>这种多层次的训练机制是 Transformer 系列（包括 DINO 和 Grounding DINO）中成功的关键。</p>
 <hr>
-<h3 id="📊-六、最终损失函数"><a class="header-anchor" href="#📊-六、最终损失函数">🔗</a>📊 六、最终损失函数</h3>
+<h3 id="📊-六、最终损失函数"><a class="header-anchor" href="#📊-六、最终损失函数"></a>📊 六、最终损失函数</h3>
 <p>Grounding DINO 最终的损失函数是所有上述损失的加权和。
 公式如下：</p>
 
-    <span id="mjx-77e5563">
+    <span id="mjx-890f676">
       <style>
-      #mjx-77e5563{
+      #mjx-890f676{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6243,9 +6243,9 @@ g[data-mml-node="xypic"] path {
   <p>其中：</p>
 <ul>
 <li>
-    <span id="mjx-d044c83">
+    <span id="mjx-eecfd2">
       <style>
-      #mjx-d044c83{
+      #mjx-eecfd2{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6404,9 +6404,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.375ex;" xmlns="http://www.w3.org/2000/svg" width="5.34ex" height="1.945ex" role="img" focusable="false" viewBox="0 -694 2360.2 859.6" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D706" d="M166 673Q166 685 183 694H202Q292 691 316 644Q322 629 373 486T474 207T524 67Q531 47 537 34T546 15T551 6T555 2T556 -2T550 -11H482Q457 3 450 18T399 152L354 277L340 262Q327 246 293 207T236 141Q211 112 174 69Q123 9 111 -1T83 -12Q47 -12 47 20Q47 37 61 52T199 187Q229 216 266 252T321 306L338 322Q338 323 288 462T234 612Q214 657 183 657Q166 657 166 673Z"></path></g><g data-mml-node="TeXAtom" transform="translate(616,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mtext"><path data-c="47" d="M56 342Q56 428 89 500T174 615T283 681T391 705Q394 705 400 705T408 704Q499 704 569 636L582 624L612 663Q639 700 643 704Q644 704 647 704T653 705H657Q660 705 666 699V419L660 413H626Q620 419 619 430Q610 512 571 572T476 651Q457 658 426 658Q401 658 376 654T316 633T254 592T205 519T177 411Q173 369 173 335Q173 259 192 201T238 111T302 58T370 31T431 24Q478 24 513 45T559 100Q562 110 562 160V212Q561 213 557 216T551 220T542 223T526 225T502 226T463 227H437V273H449L609 270Q715 270 727 273H735V227H721Q674 227 668 215Q666 211 666 108V6Q660 0 657 0Q653 0 639 10Q617 25 600 42L587 54Q571 27 524 3T406 -22Q317 -22 238 22T108 151T56 342Z"></path><path data-c="49" d="M328 0Q307 3 180 3T32 0H21V46H43Q92 46 106 49T126 60Q128 63 128 342Q128 620 126 623Q122 628 118 630T96 635T43 637H21V683H32Q53 680 180 680T328 683H339V637H317Q268 637 254 634T234 623Q232 620 232 342Q232 63 234 60Q238 55 242 53T264 48T317 46H339V0H328Z" transform="translate(785,0)"></path><path data-c="6F" d="M28 214Q28 309 93 378T250 448Q340 448 405 380T471 215Q471 120 407 55T250 -10Q153 -10 91 57T28 214ZM250 30Q372 30 372 193V225V250Q372 272 371 288T364 326T348 362T317 390T268 410Q263 411 252 411Q222 411 195 399Q152 377 139 338T126 246V226Q126 130 145 91Q177 30 250 30Z" transform="translate(1146,0)"></path><path data-c="55" d="M128 622Q121 629 117 631T101 634T58 637H25V683H36Q57 680 180 680Q315 680 324 683H335V637H302Q262 636 251 634T233 622L232 418V291Q232 189 240 145T280 67Q325 24 389 24Q454 24 506 64T571 183Q575 206 575 410V598Q569 608 565 613T541 627T489 637H472V683H481Q496 680 598 680T715 683H724V637H707Q634 633 622 598L621 399Q620 194 617 180Q617 179 615 171Q595 83 531 31T389 -22Q304 -22 226 33T130 192Q129 201 128 412V622Z" transform="translate(1646,0)"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>λ</mi><mrow data-mjx-texclass="ORD"><mtext>GIoU</mtext></mrow></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   ，
-    <span id="mjx-4f2ba52">
+    <span id="mjx-4d92575">
       <style>
-      #mjx-4f2ba52{
+      #mjx-4d92575{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6565,9 +6565,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="4.751ex" height="1.927ex" role="img" focusable="false" viewBox="0 -694 2100 851.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D706" d="M166 673Q166 685 183 694H202Q292 691 316 644Q322 629 373 486T474 207T524 67Q531 47 537 34T546 15T551 6T555 2T556 -2T550 -11H482Q457 3 450 18T399 152L354 277L340 262Q327 246 293 207T236 141Q211 112 174 69Q123 9 111 -1T83 -12Q47 -12 47 20Q47 37 61 52T199 187Q229 216 266 252T321 306L338 322Q338 323 288 462T234 612Q214 657 183 657Q166 657 166 673Z"></path></g><g data-mml-node="TeXAtom" transform="translate(616,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mtext"><path data-c="66" d="M273 0Q255 3 146 3Q43 3 34 0H26V46H42Q70 46 91 49Q99 52 103 60Q104 62 104 224V385H33V431H104V497L105 564L107 574Q126 639 171 668T266 704Q267 704 275 704T289 705Q330 702 351 679T372 627Q372 604 358 590T321 576T284 590T270 627Q270 647 288 667H284Q280 668 273 668Q245 668 223 647T189 592Q183 572 182 497V431H293V385H185V225Q185 63 186 61T189 57T194 54T199 51T206 49T213 48T222 47T231 47T241 46T251 46H282V0H273Z"></path><path data-c="6F" d="M28 214Q28 309 93 378T250 448Q340 448 405 380T471 215Q471 120 407 55T250 -10Q153 -10 91 57T28 214ZM250 30Q372 30 372 193V225V250Q372 272 371 288T364 326T348 362T317 390T268 410Q263 411 252 411Q222 411 195 399Q152 377 139 338T126 246V226Q126 130 145 91Q177 30 250 30Z" transform="translate(306,0)"></path><path data-c="63" d="M370 305T349 305T313 320T297 358Q297 381 312 396Q317 401 317 402T307 404Q281 408 258 408Q209 408 178 376Q131 329 131 219Q131 137 162 90Q203 29 272 29Q313 29 338 55T374 117Q376 125 379 127T395 129H409Q415 123 415 120Q415 116 411 104T395 71T366 33T318 2T249 -11Q163 -11 99 53T34 214Q34 318 99 383T250 448T370 421T404 357Q404 334 387 320Z" transform="translate(806,0)"></path><path data-c="61" d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z" transform="translate(1250,0)"></path><path data-c="6C" d="M42 46H56Q95 46 103 60V68Q103 77 103 91T103 124T104 167T104 217T104 272T104 329Q104 366 104 407T104 482T104 542T103 586T103 603Q100 622 89 628T44 637H26V660Q26 683 28 683L38 684Q48 685 67 686T104 688Q121 689 141 690T171 693T182 694H185V379Q185 62 186 60Q190 52 198 49Q219 46 247 46H263V0H255L232 1Q209 2 183 2T145 3T107 3T57 1L34 0H26V46H42Z" transform="translate(1750,0)"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>λ</mi><mrow data-mjx-texclass="ORD"><mtext>focal</mtext></mrow></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   ，
-    <span id="mjx-d2cbe12">
+    <span id="mjx-f2b43ff">
       <style>
-      #mjx-d2cbe12{
+      #mjx-f2b43ff{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6727,9 +6727,9 @@ g[data-mml-node="xypic"] path {
     </span>
    是权重超参数，用来平衡各个损失项的重要性。</li>
 <li>
-    <span id="mjx-25d4f2b">
+    <span id="mjx-81ba7fc">
       <style>
-      #mjx-25d4f2b{
+      #mjx-81ba7fc{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6890,7 +6890,7 @@ g[data-mml-node="xypic"] path {
    表示来自每一层解码器的辅助损失。</li>
 </ul>
 <hr>
-<h3 id="🧠-七、损失函数设计的意义"><a class="header-anchor" href="#🧠-七、损失函数设计的意义">🔗</a>🧠 七、损失函数设计的意义</h3>
+<h3 id="🧠-七、损失函数设计的意义"><a class="header-anchor" href="#🧠-七、损失函数设计的意义"></a>🧠 七、损失函数设计的意义</h3>
 <ol>
 <li><strong>平衡定位和分类：</strong>
 通过组合 <strong>位置损失（L1 和 GIoU）</strong> 与 <strong>类别损失（Focal Loss）</strong>，保证了边界框的精确定位和正确的类别识别。</li>
@@ -6900,14 +6900,14 @@ g[data-mml-node="xypic"] path {
 多层损失的设计保证了训练过程中每个解码器层都能参与优化，使得模型在推理时可以更加细致地调整预测结果，提高检测的精度和鲁棒性。</li>
 </ol>
 <hr>
-<h3 id="📝-八、总结"><a class="header-anchor" href="#📝-八、总结">🔗</a>📝 八、总结</h3>
+<h3 id="📝-八、总结"><a class="header-anchor" href="#📝-八、总结"></a>📝 八、总结</h3>
 <p>损失函数设计是 Grounding DINO 的关键组成部分，它不仅帮助模型学习如何进行物体定位和分类，还通过对比损失使图像和文本的表示能够精确对齐。
 具体来说，<strong>位置损失</strong>确保边框准确，<strong>类别损失</strong>解决类别不平衡，<strong>对比损失</strong>使得视觉和语言特征对齐，而<strong>辅助损失</strong>通过多层次的训练策略加速收敛、稳定模型训练。</p>
 <p>好的，我们现在进入论文的 <strong>第 4.1 节 Implementation Details（实现细节）</strong>。
 这一节主要讲述 Grounding DINO 在训练和推理阶段的<strong>具体工程实现与训练配置</strong>。虽然看起来是技术参数堆叠，但实际上这一部分揭示了模型在<strong>高效训练、稳定优化与大规模多模态预训练</strong>方面的关键设计。下面我会按照论文顺序详细解释。</p>
 <hr>
-<h2 id="Implementation-Details"><a class="header-anchor" href="#Implementation-Details">🔗</a>Implementation Details</h2>
-<h3 id="🧩-一、总体结构回顾"><a class="header-anchor" href="#🧩-一、总体结构回顾">🔗</a>🧩 一、总体结构回顾</h3>
+<h2 id="Implementation-Details"><a class="header-anchor" href="#Implementation-Details"></a>Implementation Details</h2>
+<h3 id="🧩-一、总体结构回顾"><a class="header-anchor" href="#🧩-一、总体结构回顾"></a>🧩 一、总体结构回顾</h3>
 <p>在前面 3.1–3.5 节中我们了解了模型结构，而 4.1 节的重点是：</p>
 <blockquote>
 <p><strong>如何将这些模块高效地训练起来</strong>。</p>
@@ -6915,7 +6915,7 @@ g[data-mml-node="xypic"] path {
 <p>Grounding DINO 的实现基于 DINO 框架（Zhang et al., 2022），
 但为了支持跨模态输入（图像 + 语言），作者在训练流程、损失设计、batch 组织与数据加载上都做了大量调整。</p>
 <hr>
-<h3 id="⚙️-二、骨干网络与特征提取配置"><a class="header-anchor" href="#⚙️-二、骨干网络与特征提取配置">🔗</a>⚙️ 二、骨干网络与特征提取配置</h3>
+<h3 id="⚙️-二、骨干网络与特征提取配置"><a class="header-anchor" href="#⚙️-二、骨干网络与特征提取配置"></a>⚙️ 二、骨干网络与特征提取配置</h3>
 <p>（1）视觉编码器（Image Backbone）</p>
 <ul>
 <li>模型使用 <strong>Swin Transformer-L</strong>（Large 版本）作为图像骨干；</li>
@@ -6939,7 +6939,7 @@ g[data-mml-node="xypic"] path {
 <li>接着是 6 层 <strong>Cross-Modality Decoder</strong>，用于融合和检测。</li>
 </ul>
 <hr>
-<h3 id="🧮-三、输入与预处理设置"><a class="header-anchor" href="#🧮-三、输入与预处理设置">🔗</a>🧮 三、输入与预处理设置</h3>
+<h3 id="🧮-三、输入与预处理设置"><a class="header-anchor" href="#🧮-三、输入与预处理设置"></a>🧮 三、输入与预处理设置</h3>
 <p>（1）图像输入</p>
 <ul>
 <li>图像被调整为最长边 1333 像素；</li>
@@ -6954,7 +6954,7 @@ g[data-mml-node="xypic"] path {
 <li>Tokenization 使用 BERT 的原始词表。</li>
 </ul>
 <hr>
-<h3 id="🚀-四、训练配置（Training-Configuration）"><a class="header-anchor" href="#🚀-四、训练配置（Training-Configuration）">🔗</a>🚀 四、训练配置（Training Configuration）</h3>
+<h3 id="🚀-四、训练配置（Training-Configuration）"><a class="header-anchor" href="#🚀-四、训练配置（Training-Configuration）"></a>🚀 四、训练配置（Training Configuration）</h3>
 <p>（1）优化器</p>
 <ul>
 <li>
@@ -6989,7 +6989,7 @@ g[data-mml-node="xypic"] path {
 <li>启用 <strong>EMA（Exponential Moving Average）</strong> 以稳定模型权重。</li>
 </ul>
 <hr>
-<h3 id="🧠-五、损失函数与匹配策略"><a class="header-anchor" href="#🧠-五、损失函数与匹配策略">🔗</a>🧠 五、损失函数与匹配策略</h3>
+<h3 id="🧠-五、损失函数与匹配策略"><a class="header-anchor" href="#🧠-五、损失函数与匹配策略"></a>🧠 五、损失函数与匹配策略</h3>
 <p>损失函数在 3.5 节中已有详细介绍，但这里提到<strong>实际实现细节</strong>：</p>
 <ul>
 <li>
@@ -7008,7 +7008,7 @@ g[data-mml-node="xypic"] path {
 </ul>
 <p>此外，每个解码层输出的预测都计算辅助损失（auxiliary loss）。</p>
 <hr>
-<h3 id="🧰-六、预训练与微调（Pre-training-and-Fine-tuning）"><a class="header-anchor" href="#🧰-六、预训练与微调（Pre-training-and-Fine-tuning）">🔗</a>🧰 六、预训练与微调（Pre-training and Fine-tuning）</h3>
+<h3 id="🧰-六、预训练与微调（Pre-training-and-Fine-tuning）"><a class="header-anchor" href="#🧰-六、预训练与微调（Pre-training-and-Fine-tuning）"></a>🧰 六、预训练与微调（Pre-training and Fine-tuning）</h3>
 <p>Grounding DINO 的强大性能主要来自大规模预训练。</p>
 <p>（1）预训练阶段</p>
 <ul>
@@ -7034,7 +7034,7 @@ g[data-mml-node="xypic"] path {
 <li>模型在单个任务微调时仍保持开放词汇表能力（zero-shot）。</li>
 </ul>
 <hr>
-<h3 id="🧪-七、推理阶段（Inference-Details）"><a class="header-anchor" href="#🧪-七、推理阶段（Inference-Details）">🔗</a>🧪 七、推理阶段（Inference Details）</h3>
+<h3 id="🧪-七、推理阶段（Inference-Details）"><a class="header-anchor" href="#🧪-七、推理阶段（Inference-Details）"></a>🧪 七、推理阶段（Inference Details）</h3>
 <p>（1）输入与解码</p>
 <ul>
 <li>
@@ -7072,7 +7072,7 @@ g[data-mml-node="xypic"] path {
 </li>
 </ul>
 <hr>
-<h3 id="💬-八、实现框架与开源细节"><a class="header-anchor" href="#💬-八、实现框架与开源细节">🔗</a>💬 八、实现框架与开源细节</h3>
+<h3 id="💬-八、实现框架与开源细节"><a class="header-anchor" href="#💬-八、实现框架与开源细节"></a>💬 八、实现框架与开源细节</h3>
 <ul>
 <li>
 <p>实现基于 <strong>PyTorch</strong>；</p>
@@ -7094,7 +7094,7 @@ g[data-mml-node="xypic"] path {
 </li>
 </ul>
 <hr>
-<h3 id="🎓-九、小结与理解延伸"><a class="header-anchor" href="#🎓-九、小结与理解延伸">🔗</a>🎓 九、小结与理解延伸</h3>
+<h3 id="🎓-九、小结与理解延伸"><a class="header-anchor" href="#🎓-九、小结与理解延伸"></a>🎓 九、小结与理解延伸</h3>
 <table>
 <thead>
 <tr>
@@ -7142,12 +7142,12 @@ g[data-mml-node="xypic"] path {
 通过精心的优化策略、预训练数据与注意力机制设计，它成为目前最强大的“语言驱动目标检测模型”之一。</p>
 </blockquote>
 <hr>
-<h2 id="Zero-Shot-Transfer-of-Grounding-DINO"><a class="header-anchor" href="#Zero-Shot-Transfer-of-Grounding-DINO">🔗</a>Zero-Shot Transfer of Grounding DINO</h2>
-<h3 id="本节研究设定与目的"><a class="header-anchor" href="#本节研究设定与目的">🔗</a>本节研究设定与目的</h3>
+<h2 id="Zero-Shot-Transfer-of-Grounding-DINO"><a class="header-anchor" href="#Zero-Shot-Transfer-of-Grounding-DINO"></a>Zero-Shot Transfer of Grounding DINO</h2>
+<h3 id="本节研究设定与目的"><a class="header-anchor" href="#本节研究设定与目的"></a>本节研究设定与目的</h3>
 <p>作者在 4.2 节里评估 <strong>Grounding DINO</strong> 在「零样本迁移（zero-shot transfer）」场景下的表现：
 模型<strong>只在大规模通用数据上预训练</strong>（Objects365 等检测数据 + “GoldG” 等短语定位数据 + 可选的伪标注 caption 数据），<strong>不使用目标评测数据集的训练划分</strong>，直接在新数据集上测试（COCO、LVIS、ODinW）。个别地方也列出「微调后」的结果用于横向参考，但这些不计作 zero-shot。</p>
 <hr>
-<h3 id="COCO-基准（表-2）"><a class="header-anchor" href="#COCO-基准（表-2）">🔗</a>COCO 基准（表 2）</h3>
+<h3 id="COCO-基准（表-2）"><a class="header-anchor" href="#COCO-基准（表-2）"></a>COCO 基准（表 2）</h3>
 <p><img src="/blog/2025/10/23/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AGrounding-DINO-Marrying-DINO-with-Grounded-Pre-Training-for-Open-Set-Object-Detection/A1024-7.PNG" alt="A1024-7.PNG"></p>
 <p><strong>设定</strong>：只在 O365 / GoldG / Cap4M 等上预训练；<strong>不看 COCO 训练集</strong>的情况下评估 COCO。作者也给出在 COCO 上微调后的分数用于对比。主要结论：</p>
 <ul>
@@ -7167,7 +7167,7 @@ g[data-mml-node="xypic"] path {
 <li>caption 数据对 COCO zero-shot 有增益，但<strong>幅度有限</strong>（48.1→48.4），说明结构改进与 grounded 预训练是主因。</li>
 </ul>
 <hr>
-<h3 id="LVIS-基准（表-3）"><a class="header-anchor" href="#LVIS-基准（表-3）">🔗</a>LVIS 基准（表 3）</h3>
+<h3 id="LVIS-基准（表-3）"><a class="header-anchor" href="#LVIS-基准（表-3）"></a>LVIS 基准（表 3）</h3>
 <p><img src="/blog/2025/10/23/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AGrounding-DINO-Marrying-DINO-with-Grounded-Pre-Training-for-Open-Set-Object-Detection/A1024-8.PNG" alt="A1024-8.PNG"></p>
 <p><strong>设定</strong>：长尾类别的 LVIS（&gt;1000 类）用于<strong>下游零样本</strong>评估，并与 GLIP、DetCLIPv2 比较；也报告了<strong>微调后的</strong>成绩。</p>
 <ul>
@@ -7191,7 +7191,7 @@ g[data-mml-node="xypic"] path {
 <li><strong>可扩展性更好</strong>：加入 caption 数据后，Grounding DINO 的提升<strong>更明显</strong>（+1.8）——显示其<strong>对数据规模更敏感/更具可扩展性</strong>。</li>
 </ol>
 <hr>
-<h3 id="ODinW（Object-Detection-in-the-Wild）基准（表-4）"><a class="header-anchor" href="#ODinW（Object-Detection-in-the-Wild）基准（表-4）">🔗</a>ODinW（Object Detection in the Wild）基准（表 4）</h3>
+<h3 id="ODinW（Object-Detection-in-the-Wild）基准（表-4）"><a class="header-anchor" href="#ODinW（Object-Detection-in-the-Wild）基准（表-4）"></a>ODinW（Object Detection in the Wild）基准（表 4）</h3>
 <p><img src="/blog/2025/10/23/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AGrounding-DINO-Marrying-DINO-with-Grounded-Pre-Training-for-Open-Set-Object-Detection/A1024-9.PNG" alt="A1024-9.PNG"></p>
 <p><strong>设定</strong>：更贴近真实世界的 35 个数据集综合评测，报告 <strong>Zero-shot / Few-shot / Full-shot</strong> 三种设置。</p>
 <ul>
@@ -7218,7 +7218,7 @@ g[data-mml-node="xypic"] path {
 <li>小模型（Swin-T）在 Full-shot 上能<strong>反超</strong>更大骨干的闭集 DINO，提示<strong>跨模态融合带来的表示质量</strong>对下游监督也有帮助。</li>
 </ul>
 <hr>
-<h3 id="贯穿性的技术洞察（来自作者在本节的讨论）"><a class="header-anchor" href="#贯穿性的技术洞察（来自作者在本节的讨论）">🔗</a>贯穿性的技术洞察（来自作者在本节的讨论）</h3>
+<h3 id="贯穿性的技术洞察（来自作者在本节的讨论）"><a class="header-anchor" href="#贯穿性的技术洞察（来自作者在本节的讨论）"></a>贯穿性的技术洞察（来自作者在本节的讨论）</h3>
 <ol>
 <li>
 <p><strong>Grounding 数据的价值</strong>：在 COCO/LVIS/ODinW 的 zero-shot 上普遍<strong>带来&gt;1 AP</strong>的增益；</p>
@@ -7238,7 +7238,7 @@ g[data-mml-node="xypic"] path {
 </li>
 </ol>
 <hr>
-<h3 id="一页速览（数字总表）"><a class="header-anchor" href="#一页速览（数字总表）">🔗</a>一页速览（数字总表）</h3>
+<h3 id="一页速览（数字总表）"><a class="header-anchor" href="#一页速览（数字总表）"></a>一页速览（数字总表）</h3>
 <ul>
 <li><strong>COCO（zero-shot）</strong>：Swin-T <strong>46.7→48.1→48.4</strong>（O365→+GoldG→+Cap4M）；Swin-L <strong>52.5</strong>（创纪录）。</li>
 <li><strong>COCO（fine-tune）</strong>：Swin-L <strong>62.6</strong>（minival）；1.5× 输入 <strong>63.0</strong>（test-dev）。</li>
@@ -7248,15 +7248,15 @@ g[data-mml-node="xypic"] path {
 <li><strong>ODinW（few/full-shot, Swin-T）</strong>：<strong>46.4 / 70.7</strong>。</li>
 </ul>
 <hr>
-<h2 id="Referring-Object-Detection-Settings"><a class="header-anchor" href="#Referring-Object-Detection-Settings">🔗</a>Referring Object Detection Settings</h2>
-<h3 id="一、研究背景与动机"><a class="header-anchor" href="#一、研究背景与动机">🔗</a>一、研究背景与动机</h3>
+<h2 id="Referring-Object-Detection-Settings"><a class="header-anchor" href="#Referring-Object-Detection-Settings"></a>Referring Object Detection Settings</h2>
+<h3 id="一、研究背景与动机"><a class="header-anchor" href="#一、研究背景与动机"></a>一、研究背景与动机</h3>
 <p>在第 4 章中，作者分别研究了三种任务设定：
 1️⃣ <strong>Closed-set detection（封闭集检测）</strong>
 2️⃣ <strong>Zero-shot open-set detection（零样本开放集检测）</strong>
 3️⃣ <strong>Referring Object Detection (Referring Expression Comprehension, REC)</strong></p>
 <p>第 4.3 节主要聚焦第 3 种设定，即<strong>指代表达检测任务</strong>。这类任务输入通常是一句自然语言描述（例如 “the man in a red shirt”），模型需要返回图像中对应目标的边界框。相比常规类别检测，REC 任务要求模型具有<strong>更细粒度的视觉–语言对齐能力</strong>（不仅识别“人”，还要理解描述中的属性或关系）。</p>
 <hr>
-<h3 id="二、实验设置与对比方法"><a class="header-anchor" href="#二、实验设置与对比方法">🔗</a>二、实验设置与对比方法</h3>
+<h3 id="二、实验设置与对比方法"><a class="header-anchor" href="#二、实验设置与对比方法"></a>二、实验设置与对比方法</h3>
 <p>作者在该小节中：</p>
 <ul>
 <li><strong>基线模型</strong> 选择了 GLIP [25]，因为它同样将检测任务表述为 “grounding（短语定位）” 问题。</li>
@@ -7265,7 +7265,7 @@ g[data-mml-node="xypic"] path {
 <li><strong>骨干网络</strong> 均为 ResNet-101，确保对比公平。</li>
 </ul>
 <hr>
-<h3 id="三、主要结果（表-5-摘要）"><a class="header-anchor" href="#三、主要结果（表-5-摘要）">🔗</a>三、主要结果（表 5 摘要）</h3>
+<h3 id="三、主要结果（表-5-摘要）"><a class="header-anchor" href="#三、主要结果（表-5-摘要）"></a>三、主要结果（表 5 摘要）</h3>
 <p>表 5 报告了多个代表性 REC 模型与 Grounding DINO 的对比：</p>
 <table>
 <thead>
@@ -7313,7 +7313,7 @@ g[data-mml-node="xypic"] path {
 <p>在不使用 REC 训练数据的情况下，Grounding DINO 仍然超过 GLIP 基线；但绝对精度远低于专门针对 REC 训练的 MDETR 或 DQ-DETR。</p>
 </blockquote>
 <hr>
-<h3 id="四、作者分析与结论"><a class="header-anchor" href="#四、作者分析与结论">🔗</a>四、作者分析与结论</h3>
+<h3 id="四、作者分析与结论"><a class="header-anchor" href="#四、作者分析与结论"></a>四、作者分析与结论</h3>
 <p>1️⃣ <strong>零样本性能有限</strong>
  – 作者指出，无论是 GLIP 还是 Grounding DINO，在未见过 REC 数据时效果都不佳。
  – 这表明通用开放集检测模型在面对带有属性与关系的细粒度语言时仍存在泛化障碍。</p>
@@ -7324,7 +7324,7 @@ g[data-mml-node="xypic"] path {
  – 现有开放集检测方法普遍关注类别扩展，而忽视了“细粒度语言–视觉对齐”。
  – Grounding DINO 的实验揭示：若要在 REC 等任务中真正泛化，开放集检测器必须更重视<strong>属性级与关系级别的表征学习</strong>。</p>
 <hr>
-<h3 id="五、延伸讨论"><a class="header-anchor" href="#五、延伸讨论">🔗</a>五、延伸讨论</h3>
+<h3 id="五、延伸讨论"><a class="header-anchor" href="#五、延伸讨论"></a>五、延伸讨论</h3>
 <ul>
 <li><strong>理论意义</strong>：Grounding DINO 展示了同一模型架构在“类别名 → 物体”与“自然描述 → 物体”两种语义层面的统一潜力。</li>
 <li><strong>实践意义</strong>：这为后续多模态应用（如 视觉问答、图文检索、基于文本的图像编辑）奠定了通用基础。</li>
@@ -7335,9 +7335,9 @@ g[data-mml-node="xypic"] path {
 <blockquote>
 <p>第 4.3 节揭示了 Grounding DINO 在指代表达检测中的零样本迁移表现虽超越 GLIP，但仍受限于缺乏 REC 专属监督；注入 RefCOCO 类数据后性能显著跃升，凸显了细粒度语义对齐的重要性。</p>
 </blockquote>
-<h2 id="Effects-of-RefC-and-COCO-Data"><a class="header-anchor" href="#Effects-of-RefC-and-COCO-Data">🔗</a>Effects of RefC and COCO Data</h2>
+<h2 id="Effects-of-RefC-and-COCO-Data"><a class="header-anchor" href="#Effects-of-RefC-and-COCO-Data"></a>Effects of RefC and COCO Data</h2>
 <hr>
-<h3 id="一、研究动机与目标"><a class="header-anchor" href="#一、研究动机与目标">🔗</a>一、研究动机与目标</h3>
+<h3 id="一、研究动机与目标"><a class="header-anchor" href="#一、研究动机与目标"></a>一、研究动机与目标</h3>
 <p>作者在前一节 (4.3) 中发现：</p>
 <ul>
 <li>没有 RefCOCO 类训练数据时，Grounding DINO 和 GLIP 在 Referring Detection 任务上表现都不好。</li>
@@ -7348,7 +7348,7 @@ g[data-mml-node="xypic"] path {
 2️⃣ <strong>是否会出现任务间负迁移</strong>（即 RefC 提升 REC 但损伤其他检测任务）？
 3️⃣ <strong>COCO 检测数据</strong>（虽然常用于闭集训练）对开放集性能有何影响？</p>
 <hr>
-<h3 id="二、实验设置"><a class="header-anchor" href="#二、实验设置">🔗</a>二、实验设置</h3>
+<h3 id="二、实验设置"><a class="header-anchor" href="#二、实验设置"></a>二、实验设置</h3>
 <p>作者基于 <strong>Swin-T</strong> 骨干，分别测试三种预训练组合：</p>
 <table>
 <thead>
@@ -7389,7 +7389,7 @@ g[data-mml-node="xypic"] path {
 Zero-Shot 表示完全未在目标数据上训练；Fine-Tune 表示在该数据上微调后结果。</p>
 </blockquote>
 <hr>
-<h3 id="三、结果分析"><a class="header-anchor" href="#三、结果分析">🔗</a>三、结果分析</h3>
+<h3 id="三、结果分析"><a class="header-anchor" href="#三、结果分析"></a>三、结果分析</h3>
 <p>1️⃣ RefC 数据的影响</p>
 <ul>
 <li>
@@ -7420,7 +7420,7 @@ Zero-Shot 表示完全未在目标数据上训练；Fine-Tune 表示在该数据
 </ul>
 <p>👉 说明 COCO 训练主要提升与其域相近的 COCO 检测性能，对 LVIS 和 ODinW 帮助有限甚至略有冲突。</p>
 <hr>
-<h3 id="四、作者总结与洞察"><a class="header-anchor" href="#四、作者总结与洞察">🔗</a>四、作者总结与洞察</h3>
+<h3 id="四、作者总结与洞察"><a class="header-anchor" href="#四、作者总结与洞察"></a>四、作者总结与洞察</h3>
 <p>1️⃣ <strong>RefC → 细粒度描述增强</strong>
  RefC 可强化模型理解自然语言中对象属性与关系的能力，因此对 Referring 任务有益；
  但因其句式不同于单词级 category 标签，会削弱模型在简短 class name 检测时的泛化。</p>
@@ -7433,14 +7433,14 @@ Zero-Shot 表示完全未在目标数据上训练；Fine-Tune 表示在该数据
  RefC 与 COCO 在语言风格和目标定义上差异较大。RefC 强调<strong>自然语言指称</strong>，COCO 强调<strong>固定类标</strong>；
  混合使用时会带来<strong>领域偏移 (domain shift)</strong>，影响跨域泛化。</p>
 <hr>
-<h3 id="五、可视化理解"><a class="header-anchor" href="#五、可视化理解">🔗</a>五、可视化理解</h3>
+<h3 id="五、可视化理解"><a class="header-anchor" href="#五、可视化理解"></a>五、可视化理解</h3>
 <ul>
 <li>RefC 文本： “the man in a blue shirt” → 对应 1 个 box。</li>
 <li>COCO / ODinW 文本： “person” → 对应 多个 box。</li>
 </ul>
 <p>Grounding DINO 在 RefC 训练时学到“一句描述对应一个 box”的规律，因此在开放集检测（多目标预测）时更容易“收敛过度”，造成 AP 下降。</p>
 <hr>
-<h3 id="✅-总结一句话"><a class="header-anchor" href="#✅-总结一句话">🔗</a>✅ 总结一句话</h3>
+<h3 id="✅-总结一句话"><a class="header-anchor" href="#✅-总结一句话"></a>✅ 总结一句话</h3>
 <blockquote>
 <p><strong>4.4 节揭示了数据源对开放集检测泛化的关键影响：</strong></p>
 <ul>
@@ -7449,9 +7449,9 @@ Zero-Shot 表示完全未在目标数据上训练；Fine-Tune 表示在该数据
 作者强调未来应在<strong>跨数据类型的协同训练与语言风格对齐</strong>上继续探索，以兼顾 fine-grained 理解与泛化能力。</li>
 </ul>
 </blockquote>
-<h2 id="Ablations"><a class="header-anchor" href="#Ablations">🔗</a>Ablations</h2>
+<h2 id="Ablations"><a class="header-anchor" href="#Ablations"></a>Ablations</h2>
 <hr>
-<h3 id="一、研究目的"><a class="header-anchor" href="#一、研究目的">🔗</a>一、研究目的</h3>
+<h3 id="一、研究目的"><a class="header-anchor" href="#一、研究目的"></a>一、研究目的</h3>
 <p>Grounding DINO 的主要创新点包括：
 1️⃣ <strong>多阶段紧耦合（Tight Fusion）跨模态设计</strong>：
  即在 encoder–decoder 的不同阶段都引入语言–视觉交互，包括：</p>
@@ -7466,7 +7466,7 @@ Zero-Shot 表示完全未在目标数据上训练；Fine-Tune 表示在该数据
 <li>哪些改进对零样本（zero-shot）与微调（fine-tune）效果影响不同？</li>
 </ul>
 <hr>
-<h3 id="二、实验设置-2"><a class="header-anchor" href="#二、实验设置-2">🔗</a>二、实验设置</h3>
+<h3 id="二、实验设置-2"><a class="header-anchor" href="#二、实验设置-2"></a>二、实验设置</h3>
 <ul>
 <li>
 <p><strong>模型规模</strong>：均为 <strong>Grounding DINO-T (Swin-T backbone)</strong></p>
@@ -7532,7 +7532,7 @@ Zero-Shot 表示完全未在目标数据上训练；Fine-Tune 表示在该数据
 </tbody>
 </table>
 <hr>
-<h3 id="三、结果与分析"><a class="header-anchor" href="#三、结果与分析">🔗</a>三、结果与分析</h3>
+<h3 id="三、结果与分析"><a class="header-anchor" href="#三、结果与分析"></a>三、结果与分析</h3>
 <p>1️⃣ 编码器融合（Encoder Fusion）的影响最大</p>
 <ul>
 <li>去掉该模块后（#1），<strong>COCO zero-shot 降 0.9，LVIS zero-shot 降 3.0 AP</strong>。</li>
@@ -7568,7 +7568,7 @@ Zero-Shot 表示完全未在目标数据上训练；Fine-Tune 表示在该数据
 <li><strong>Scaling（放大模型）</strong> 仍是提升 Fine-tune 性能的关键途径。</li>
 </ul>
 <hr>
-<h3 id="四、作者进一步讨论"><a class="header-anchor" href="#四、作者进一步讨论">🔗</a>四、作者进一步讨论</h3>
+<h3 id="四、作者进一步讨论"><a class="header-anchor" href="#四、作者进一步讨论"></a>四、作者进一步讨论</h3>
 <p>1️⃣ <strong>Encoder Fusion 的核心地位</strong>
  作者强调这是最关键的跨模态融合阶段，决定了图文特征是否充分对齐。</p>
 <p>2️⃣ <strong>模块轻量但有效</strong>
@@ -7577,22 +7577,22 @@ Zero-Shot 表示完全未在目标数据上训练；Fine-Tune 表示在该数据
  Fine-tune 后性能受模型规模主导，而非模块设计；
  因此更大骨干（如 Swin-L）是未来提升方向。</p>
 <hr>
-<h3 id="五、总体结论（作者原文总结）"><a class="header-anchor" href="#五、总体结论（作者原文总结）">🔗</a>五、总体结论（作者原文总结）</h3>
+<h3 id="五、总体结论（作者原文总结）"><a class="header-anchor" href="#五、总体结论（作者原文总结）"></a>五、总体结论（作者原文总结）</h3>
 <blockquote>
 <p>“Encoder fusion significantly improves model performance on both COCO and LVIS datasets... Other techniques such as language-guided query selection, text cross-attention, and sub-sentence text prompt also contribute positively, particularly on LVIS. These methods enhance zero-shot performance, underscoring their effectiveness.”
 （编码器融合显著提升 COCO 与 LVIS 性能；语言引导查询、文本交叉注意力、子句级文本提示同样带来增益，尤其在 LVIS 上。这些改进主要增强了零样本表现，验证了设计的有效性。）</p>
 </blockquote>
 <hr>
-<h3 id="✅-小结一句话"><a class="header-anchor" href="#✅-小结一句话">🔗</a>✅ 小结一句话</h3>
+<h3 id="✅-小结一句话"><a class="header-anchor" href="#✅-小结一句话"></a>✅ 小结一句话</h3>
 <blockquote>
 <p><strong>第 4.5 节表明：</strong> Grounding DINO 的性能提升来源于系统性的跨模态融合，而非单一技巧。
 其中最关键的是 <strong>Encoder Fusion</strong>；
 而 <strong>Language-guided Query Selection</strong>、<strong>Text Cross-Attention</strong> 与 <strong>Sub-sentence Text Prompt</strong> 则是轻量但对零样本泛化极为重要的补充机制。</p>
 </blockquote>
 <hr>
-<h1 id="Conclusion"><a class="header-anchor" href="#Conclusion">🔗</a>Conclusion</h1>
+<h1 id="Conclusion"><a class="header-anchor" href="#Conclusion"></a>Conclusion</h1>
 <hr>
-<h2 id="一、总体定位：让-DINO-拥抱开放世界"><a class="header-anchor" href="#一、总体定位：让-DINO-拥抱开放世界">🔗</a>一、总体定位：让 DINO 拥抱开放世界</h2>
+<h2 id="一、总体定位：让-DINO-拥抱开放世界"><a class="header-anchor" href="#一、总体定位：让-DINO-拥抱开放世界"></a>一、总体定位：让 DINO 拥抱开放世界</h2>
 <p>作者在开头重申了他们的主要目标：</p>
 <blockquote>
 <p><strong>“We have presented a Grounding DINO model in this paper. Grounding DINO extends DINO to open-set object detection, enabling it to detect arbitrary objects given texts as queries.”</strong></p>
@@ -7605,9 +7605,9 @@ Zero-Shot 表示完全未在目标数据上训练；Fine-Tune 表示在该数据
 </blockquote>
 <p>这一点实现了「从分类器到语言理解者」的跨越。</p>
 <hr>
-<h2 id="二、主要创新点总结"><a class="header-anchor" href="#二、主要创新点总结">🔗</a>二、主要创新点总结</h2>
+<h2 id="二、主要创新点总结"><a class="header-anchor" href="#二、主要创新点总结"></a>二、主要创新点总结</h2>
 <p>作者紧接着总结了本文的三项关键创新设计：</p>
-<h3 id="1️⃣-Tight-Fusion-跨模态融合架构"><a class="header-anchor" href="#1️⃣-Tight-Fusion-跨模态融合架构">🔗</a>1️⃣ <strong>Tight Fusion 跨模态融合架构</strong></h3>
+<h3 id="1️⃣-Tight-Fusion-跨模态融合架构"><a class="header-anchor" href="#1️⃣-Tight-Fusion-跨模态融合架构"></a>1️⃣ <strong>Tight Fusion 跨模态融合架构</strong></h3>
 <p>他们提出了一个“紧耦合的（tight fusion）”视觉–语言融合方案，贯穿整个 DINO 架构的三个阶段：</p>
 <ul>
 <li><strong>Encoder</strong>：引入 image-to-text 与 text-to-image 双向 cross-attention；</li>
@@ -7618,7 +7618,7 @@ Zero-Shot 表示完全未在目标数据上训练；Fine-Tune 表示在该数据
 <p>这个设计使得语言与图像在不同层面充分交互，从而在开放集检测任务中具备强泛化能力。</p>
 </blockquote>
 <hr>
-<h3 id="2️⃣-Sub-sentence-Level-Text-Representation"><a class="header-anchor" href="#2️⃣-Sub-sentence-Level-Text-Representation">🔗</a>2️⃣ <strong>Sub-sentence Level Text Representation</strong></h3>
+<h3 id="2️⃣-Sub-sentence-Level-Text-Representation"><a class="header-anchor" href="#2️⃣-Sub-sentence-Level-Text-Representation"></a>2️⃣ <strong>Sub-sentence Level Text Representation</strong></h3>
 <p>他们提出了“<strong>子句级文本提示</strong>”机制，
 通过掩蔽不相关类别间的注意力，使模型能在处理多类别句子时避免语义干扰。</p>
 <p>例如在输入句子 “cat. person. mouse.” 时，
@@ -7628,7 +7628,7 @@ Zero-Shot 表示完全未在目标数据上训练；Fine-Tune 表示在该数据
 <p>作者认为，这一改进让检测数据中的文本提示（text prompts）更合理地反映语言结构，有助于细粒度理解。</p>
 </blockquote>
 <hr>
-<h3 id="3️⃣-Open-set-Extension-to-Referring-Expression-Comprehension-REC"><a class="header-anchor" href="#3️⃣-Open-set-Extension-to-Referring-Expression-Comprehension-REC">🔗</a>3️⃣ <strong>Open-set Extension to Referring Expression Comprehension (REC)</strong></h3>
+<h3 id="3️⃣-Open-set-Extension-to-Referring-Expression-Comprehension-REC"><a class="header-anchor" href="#3️⃣-Open-set-Extension-to-Referring-Expression-Comprehension-REC"></a>3️⃣ <strong>Open-set Extension to Referring Expression Comprehension (REC)</strong></h3>
 <p>他们首次<strong>把开放集检测模型扩展到 Referring Object Detection（指代表达检测）</strong>，
 并系统评估了模型在该任务下的表现。</p>
 <p>实验显示：</p>
@@ -7640,7 +7640,7 @@ Zero-Shot 表示完全未在目标数据上训练；Fine-Tune 表示在该数据
 <p>因此，他们的工作也为今后的“视觉–语言统一检测模型”提供了可复用框架。</p>
 </blockquote>
 <hr>
-<h2 id="三、关键实验结论"><a class="header-anchor" href="#三、关键实验结论">🔗</a>三、关键实验结论</h2>
+<h2 id="三、关键实验结论"><a class="header-anchor" href="#三、关键实验结论"></a>三、关键实验结论</h2>
 <p>作者在结尾再次强调实验验证的主要发现：</p>
 <ul>
 <li>
@@ -7659,7 +7659,7 @@ Zero-Shot 表示完全未在目标数据上训练；Fine-Tune 表示在该数据
 </ul>
 <p>这说明 Grounding DINO 不仅在开放集泛化上强，同时在标准检测任务中也具备竞争力。</p>
 <hr>
-<h2 id="四、整体贡献与意义"><a class="header-anchor" href="#四、整体贡献与意义">🔗</a>四、整体贡献与意义</h2>
+<h2 id="四、整体贡献与意义"><a class="header-anchor" href="#四、整体贡献与意义"></a>四、整体贡献与意义</h2>
 <p><strong>Grounding DINO 的价值，可以概括为三点：</strong></p>
 <table>
 <thead>
@@ -7687,14 +7687,14 @@ Zero-Shot 表示完全未在目标数据上训练；Fine-Tune 表示在该数据
 他们的研究表明，<strong>“open-set object detection” 不再仅仅是类别扩展问题，而是一个视觉–语言对齐问题。</strong>
 通过强耦合的融合结构与合适的语言建模，模型才能真正理解“任意人类输入的描述”。</p>
 <hr>
-<h2 id="五、未来展望（隐含在结论中的启示）"><a class="header-anchor" href="#五、未来展望（隐含在结论中的启示）">🔗</a>五、未来展望（隐含在结论中的启示）</h2>
+<h2 id="五、未来展望（隐含在结论中的启示）"><a class="header-anchor" href="#五、未来展望（隐含在结论中的启示）"></a>五、未来展望（隐含在结论中的启示）</h2>
 <p>虽然作者在结论中未单独列出“Future Work”小节，但可以从语气中读出几条潜在方向：
 1️⃣ <strong>继续扩展模型规模与数据多样性</strong>（例如结合更多 caption、grounding 数据集）；
 2️⃣ <strong>加强细粒度语义理解</strong>，解决指代表达（REC）任务的性能瓶颈；
 3️⃣ <strong>融合生成模型</strong>（文中提及结合 Stable Diffusion、GLIGEN 的应用潜力）；
 4️⃣ <strong>探索跨任务统一训练</strong>，使模型在 detection、segmentation、grounding 等任务间无缝迁移。</p>
 <hr>
-<h2 id="✅-总结一句话-2"><a class="header-anchor" href="#✅-总结一句话-2">🔗</a>✅ 总结一句话</h2>
+<h2 id="✅-总结一句话-2"><a class="header-anchor" href="#✅-总结一句话-2"></a>✅ 总结一句话</h2>
 <blockquote>
 <p><strong>Grounding DINO 的结论核心是：</strong>
 它成功将 DINO 从闭集检测扩展为一个可理解自然语言指令的开放集检测器；
@@ -7702,7 +7702,7 @@ Zero-Shot 表示完全未在目标数据上训练；Fine-Tune 表示在该数据
 并首次在开放集检测与指代表达理解之间建立了统一框架。</p>
 </blockquote>
 <hr>
-</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/%E9%9B%B6%E6%A0%B7%E6%9C%AC%E6%A3%80%E6%B5%8B/">零样本检测</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2025/10/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AZero-Shot-Detection/" title="论文阅读：Zero-Shot Detection"><img class="cover" src="/blog/image/62aa03063f117eaad7c77592e3b98d7f05b0a86329e44a-TuUO3E.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">论文阅读：Zero-Shot Detection</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   论文阅读  🔗INTRODUCTION 1）动机：检测要走向“长尾、开放世界” 在大规模应用里（想象自动驾驶、通用机器人、视频理解），不可能为每一个可能的目标类别都收集充足的“框+类别”标注。 传统检测（如 YOLOv2、Faster...</div></div></div></a><a class="pagination-related" href="/blog/2025/10/24/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/yolo-world/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AYOLO-World-Real-Time-Open-Vocabulary-Object-Detection/" title="论文阅读：YOLO-World: Real-Time Open-Vocabulary Object Detection"><img class="cover" src="/blog/image/A1-2.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">论文阅读：YOLO-World: Real-Time Open-Vocabulary Object Detection</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   开放词汇检测 / yolo-world  🔗1 Introduction 🔗1. 这节在回答什么问题？  现实动机：传统检测器（例如在 COCO 上训练的模型）只能识别固定词表中的类别（COCO 只有80类）。一旦训练好的类别被定死，模型就无法识别不在词表里的目标，这在开放场景里很受限。作者先明确了这个“固定词表的天花板”问题。 需求与挑战：我们需要的是开放词汇检测（Open-Vocabulary...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2025/10/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AZero-Shot-Detection/" title="论文阅读：Zero-Shot Detection"><img class="cover" src="/blog/image/62aa03063f117eaad7c77592e3b98d7f05b0a86329e44a-TuUO3E.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-10-20</div><div class="info-item-2">论文阅读：Zero-Shot Detection</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   论文阅读  🔗INTRODUCTION 1）动机：检测要走向“长尾、开放世界” 在大规模应用里（想象自动驾驶、通用机器人、视频理解），不可能为每一个可能的目标类别都收集充足的“框+类别”标注。 传统检测（如 YOLOv2、Faster...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">长期主义学习者，记录技术、论文与生活。</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/qieliqiean"><i class="fab fa-github"></i><span>访问 GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/qieliqiean" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎交流：2895014608@qq.com</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduction"><span class="toc-text">🔗Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Related-Work"><span class="toc-text">🔗Related Work</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E-DETR-%E7%B3%BB%E5%88%B0-DINO%EF%BC%9A%E6%A3%80%E6%B5%8B%E5%99%A8%E4%B8%BB%E7%BA%BF%EF%BC%88%E9%97%AD%E9%9B%86%E8%83%8C%E6%99%AF%EF%BC%89"><span class="toc-text">🔗从 DETR 系到 DINO：检测器主线（闭集背景）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E6%94%BE%E9%9B%86%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9A%E4%B8%A4%E6%9D%A1%E4%BB%A3%E8%A1%A8%E6%80%A7%E8%B7%AF%E7%BA%BF"><span class="toc-text">🔗开放集目标检测：两条代表性路线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E8%87%AA%E5%AE%9A%E4%BD%8D%EF%BC%9A%E4%B8%89%E7%9B%B8%E4%BD%8D%E8%9E%8D%E5%90%88-%E6%9B%B4%E7%BB%86%E7%B2%92%E5%BA%A6%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA"><span class="toc-text">🔗论文自定位：三相位融合 + 更细粒度文本表示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Table-1"><span class="toc-text">🔗Table 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93%EF%BC%9ARelated-Work-%E7%BB%99%E6%9C%AC%E6%96%87%E2%80%9C%E6%90%AD%E4%BA%86%E5%93%AA%E4%BA%9B%E5%8F%B0%E5%AD%90%E2%80%9D"><span class="toc-text">🔗小结：Related Work 给本文“搭了哪些台子”</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Grounding-DINO"><span class="toc-text">🔗Grounding DINO</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-Feature-Extraction-and-Enhancer"><span class="toc-text">🔗🧩  Feature Extraction and Enhancer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%AD-Language-Guided-Query-Selection"><span class="toc-text">🔗🧭 Language-Guided Query Selection</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cross-Modality-Decoder"><span class="toc-text">🔗Cross-Modality Decoder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sub-Sentence-Level-Text-Feature"><span class="toc-text">🔗Sub-Sentence Level Text Feature</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%AD-%E4%B8%80%E3%80%81%E8%83%8C%E6%99%AF%E9%97%AE%E9%A2%98%EF%BC%9A%E8%AF%AD%E8%A8%80%E7%89%B9%E5%BE%81%E8%A1%A8%E7%A4%BA%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%B8%B8%E8%A7%81%E6%96%B9%E5%BC%8F"><span class="toc-text">🔗🧭 一、背景问题：语言特征表示的两种常见方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A9-%E4%BA%8C%E3%80%81%E9%97%AE%E9%A2%98%E6%9C%AC%E8%B4%A8%EF%BC%9A%E7%B1%BB%E5%88%AB%E9%97%B4%E7%9A%84%E2%80%9C%E5%B9%B2%E6%89%B0%E6%B3%A8%E6%84%8F%E5%8A%9B%E2%80%9D"><span class="toc-text">🔗🧩 二、问题本质：类别间的“干扰注意力”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%A1-%E4%B8%89%E3%80%81Grounding-DINO-%E7%9A%84%E5%88%9B%E6%96%B0%EF%BC%9ASub-Sentence-Level-Representation%EF%BC%88%E5%AD%90%E5%8F%A5%E7%BA%A7%E8%A1%A8%E7%A4%BA%EF%BC%89"><span class="toc-text">🔗💡 三、Grounding DINO 的创新：Sub-Sentence Level Representation（子句级表示）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9A%99%EF%B8%8F-%E5%9B%9B%E3%80%81%E5%AE%9E%E9%99%85%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="toc-text">🔗⚙️ 四、实际实现方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%AE-%E4%BA%94%E3%80%81%E5%AF%B9%E6%AF%94%E4%B8%89%E7%A7%8D%E8%A1%A8%E7%A4%BA%E6%96%B9%E5%BC%8F%EF%BC%88%E8%A7%81-Fig-4-Page-6%EF%BC%89"><span class="toc-text">🔗🧮 五、对比三种表示方式（见 Fig. 4, Page 6）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%85%AD%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E5%AF%B9%E5%BC%80%E6%94%BE%E9%9B%86%E6%A3%80%E6%B5%8B%E5%B0%A4%E5%85%B6%E9%87%8D%E8%A6%81%EF%BC%9F"><span class="toc-text">🔗🧠 六、为什么这对开放集检测尤其重要？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%88-%E4%B8%83%E3%80%81%E6%95%88%E6%9E%9C%E9%AA%8C%E8%AF%81"><span class="toc-text">🔗📈 七、效果验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%8E%93-%E5%85%AB%E3%80%81%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E5%AD%A6%E8%A7%86%E8%A7%92%E8%A7%A3%E8%AF%BB"><span class="toc-text">🔗🎓 八、总结与教学视角解读</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Loss-Function"><span class="toc-text">🔗Loss Function</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%AD-%E4%B8%80%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E7%9A%84%E6%80%BB%E4%BD%93%E7%9B%AE%E6%A0%87"><span class="toc-text">🔗🧭 一、损失函数的总体目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A9-%E4%BA%8C%E3%80%81%E4%BD%8D%E7%BD%AE%E6%8D%9F%E5%A4%B1%EF%BC%88Localization-Loss%EF%BC%89"><span class="toc-text">🔗🧩 二、位置损失（Localization Loss）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%91-%E4%B8%89%E3%80%81%E7%B1%BB%E5%88%AB%E6%8D%9F%E5%A4%B1%EF%BC%88Classification-Loss%EF%BC%89"><span class="toc-text">🔗🔑 三、类别损失（Classification Loss）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%9B%9B%E3%80%81%E5%AF%B9%E6%AF%94%E6%8D%9F%E5%A4%B1%EF%BC%88Contrastive-Loss%EF%BC%89"><span class="toc-text">🔗🧠 四、对比损失（Contrastive Loss）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%A1-%E4%BA%94%E3%80%81%E8%BE%85%E5%8A%A9%E6%8D%9F%E5%A4%B1%EF%BC%88Auxiliary-Loss%EF%BC%89"><span class="toc-text">🔗💡 五、辅助损失（Auxiliary Loss）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%8A-%E5%85%AD%E3%80%81%E6%9C%80%E7%BB%88%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-text">🔗📊 六、最终损失函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A0-%E4%B8%83%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-text">🔗🧠 七、损失函数设计的意义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%9D-%E5%85%AB%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-text">🔗📝 八、总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Implementation-Details"><span class="toc-text">🔗Implementation Details</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A9-%E4%B8%80%E3%80%81%E6%80%BB%E4%BD%93%E7%BB%93%E6%9E%84%E5%9B%9E%E9%A1%BE"><span class="toc-text">🔗🧩 一、总体结构回顾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9A%99%EF%B8%8F-%E4%BA%8C%E3%80%81%E9%AA%A8%E5%B9%B2%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96%E9%85%8D%E7%BD%AE"><span class="toc-text">🔗⚙️ 二、骨干网络与特征提取配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%AE-%E4%B8%89%E3%80%81%E8%BE%93%E5%85%A5%E4%B8%8E%E9%A2%84%E5%A4%84%E7%90%86%E8%AE%BE%E7%BD%AE"><span class="toc-text">🔗🧮 三、输入与预处理设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%9A%80-%E5%9B%9B%E3%80%81%E8%AE%AD%E7%BB%83%E9%85%8D%E7%BD%AE%EF%BC%88Training-Configuration%EF%BC%89"><span class="toc-text">🔗🚀 四、训练配置（Training Configuration）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A0-%E4%BA%94%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E4%B8%8E%E5%8C%B9%E9%85%8D%E7%AD%96%E7%95%A5"><span class="toc-text">🔗🧠 五、损失函数与匹配策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%B0-%E5%85%AD%E3%80%81%E9%A2%84%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BE%AE%E8%B0%83%EF%BC%88Pre-training-and-Fine-tuning%EF%BC%89"><span class="toc-text">🔗🧰 六、预训练与微调（Pre-training and Fine-tuning）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%AA-%E4%B8%83%E3%80%81%E6%8E%A8%E7%90%86%E9%98%B6%E6%AE%B5%EF%BC%88Inference-Details%EF%BC%89"><span class="toc-text">🔗🧪 七、推理阶段（Inference Details）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%AC-%E5%85%AB%E3%80%81%E5%AE%9E%E7%8E%B0%E6%A1%86%E6%9E%B6%E4%B8%8E%E5%BC%80%E6%BA%90%E7%BB%86%E8%8A%82"><span class="toc-text">🔗💬 八、实现框架与开源细节</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%8E%93-%E4%B9%9D%E3%80%81%E5%B0%8F%E7%BB%93%E4%B8%8E%E7%90%86%E8%A7%A3%E5%BB%B6%E4%BC%B8"><span class="toc-text">🔗🎓 九、小结与理解延伸</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Zero-Shot-Transfer-of-Grounding-DINO"><span class="toc-text">🔗Zero-Shot Transfer of Grounding DINO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E8%8A%82%E7%A0%94%E7%A9%B6%E8%AE%BE%E5%AE%9A%E4%B8%8E%E7%9B%AE%E7%9A%84"><span class="toc-text">🔗本节研究设定与目的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#COCO-%E5%9F%BA%E5%87%86%EF%BC%88%E8%A1%A8-2%EF%BC%89"><span class="toc-text">🔗COCO 基准（表 2）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LVIS-%E5%9F%BA%E5%87%86%EF%BC%88%E8%A1%A8-3%EF%BC%89"><span class="toc-text">🔗LVIS 基准（表 3）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ODinW%EF%BC%88Object-Detection-in-the-Wild%EF%BC%89%E5%9F%BA%E5%87%86%EF%BC%88%E8%A1%A8-4%EF%BC%89"><span class="toc-text">🔗ODinW（Object Detection in the Wild）基准（表 4）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%AF%E7%A9%BF%E6%80%A7%E7%9A%84%E6%8A%80%E6%9C%AF%E6%B4%9E%E5%AF%9F%EF%BC%88%E6%9D%A5%E8%87%AA%E4%BD%9C%E8%80%85%E5%9C%A8%E6%9C%AC%E8%8A%82%E7%9A%84%E8%AE%A8%E8%AE%BA%EF%BC%89"><span class="toc-text">🔗贯穿性的技术洞察（来自作者在本节的讨论）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E9%A1%B5%E9%80%9F%E8%A7%88%EF%BC%88%E6%95%B0%E5%AD%97%E6%80%BB%E8%A1%A8%EF%BC%89"><span class="toc-text">🔗一页速览（数字总表）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Referring-Object-Detection-Settings"><span class="toc-text">🔗Referring Object Detection Settings</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%A0%94%E7%A9%B6%E8%83%8C%E6%99%AF%E4%B8%8E%E5%8A%A8%E6%9C%BA"><span class="toc-text">🔗一、研究背景与动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE%E4%B8%8E%E5%AF%B9%E6%AF%94%E6%96%B9%E6%B3%95"><span class="toc-text">🔗二、实验设置与对比方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%B8%BB%E8%A6%81%E7%BB%93%E6%9E%9C%EF%BC%88%E8%A1%A8-5-%E6%91%98%E8%A6%81%EF%BC%89"><span class="toc-text">🔗三、主要结果（表 5 摘要）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%BD%9C%E8%80%85%E5%88%86%E6%9E%90%E4%B8%8E%E7%BB%93%E8%AE%BA"><span class="toc-text">🔗四、作者分析与结论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%BB%B6%E4%BC%B8%E8%AE%A8%E8%AE%BA"><span class="toc-text">🔗五、延伸讨论</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Effects-of-RefC-and-COCO-Data"><span class="toc-text">🔗Effects of RefC and COCO Data</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%A0%94%E7%A9%B6%E5%8A%A8%E6%9C%BA%E4%B8%8E%E7%9B%AE%E6%A0%87"><span class="toc-text">🔗一、研究动机与目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE"><span class="toc-text">🔗二、实验设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90"><span class="toc-text">🔗三、结果分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%BD%9C%E8%80%85%E6%80%BB%E7%BB%93%E4%B8%8E%E6%B4%9E%E5%AF%9F"><span class="toc-text">🔗四、作者总结与洞察</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%8F%AF%E8%A7%86%E5%8C%96%E7%90%86%E8%A7%A3"><span class="toc-text">🔗五、可视化理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E6%80%BB%E7%BB%93%E4%B8%80%E5%8F%A5%E8%AF%9D"><span class="toc-text">🔗✅ 总结一句话</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ablations"><span class="toc-text">🔗Ablations</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%A0%94%E7%A9%B6%E7%9B%AE%E7%9A%84"><span class="toc-text">🔗一、研究目的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE-2"><span class="toc-text">🔗二、实验设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%BB%93%E6%9E%9C%E4%B8%8E%E5%88%86%E6%9E%90"><span class="toc-text">🔗三、结果与分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%BD%9C%E8%80%85%E8%BF%9B%E4%B8%80%E6%AD%A5%E8%AE%A8%E8%AE%BA"><span class="toc-text">🔗四、作者进一步讨论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%BB%E4%BD%93%E7%BB%93%E8%AE%BA%EF%BC%88%E4%BD%9C%E8%80%85%E5%8E%9F%E6%96%87%E6%80%BB%E7%BB%93%EF%BC%89"><span class="toc-text">🔗五、总体结论（作者原文总结）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E5%B0%8F%E7%BB%93%E4%B8%80%E5%8F%A5%E8%AF%9D"><span class="toc-text">🔗✅ 小结一句话</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Conclusion"><span class="toc-text">🔗Conclusion</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%80%BB%E4%BD%93%E5%AE%9A%E4%BD%8D%EF%BC%9A%E8%AE%A9-DINO-%E6%8B%A5%E6%8A%B1%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C"><span class="toc-text">🔗一、总体定位：让 DINO 拥抱开放世界</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BB%E8%A6%81%E5%88%9B%E6%96%B0%E7%82%B9%E6%80%BB%E7%BB%93"><span class="toc-text">🔗二、主要创新点总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%B8%8F%E2%83%A3-Tight-Fusion-%E8%B7%A8%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E6%9E%B6%E6%9E%84"><span class="toc-text">🔗1️⃣ Tight Fusion 跨模态融合架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%B8%8F%E2%83%A3-Sub-sentence-Level-Text-Representation"><span class="toc-text">🔗2️⃣ Sub-sentence Level Text Representation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%B8%8F%E2%83%A3-Open-set-Extension-to-Referring-Expression-Comprehension-REC"><span class="toc-text">🔗3️⃣ Open-set Extension to Referring Expression Comprehension (REC)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%85%B3%E9%94%AE%E5%AE%9E%E9%AA%8C%E7%BB%93%E8%AE%BA"><span class="toc-text">🔗三、关键实验结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%95%B4%E4%BD%93%E8%B4%A1%E7%8C%AE%E4%B8%8E%E6%84%8F%E4%B9%89"><span class="toc-text">🔗四、整体贡献与意义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%9C%AA%E6%9D%A5%E5%B1%95%E6%9C%9B%EF%BC%88%E9%9A%90%E5%90%AB%E5%9C%A8%E7%BB%93%E8%AE%BA%E4%B8%AD%E7%9A%84%E5%90%AF%E7%A4%BA%EF%BC%89"><span class="toc-text">🔗五、未来展望（隐含在结论中的启示）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%85-%E6%80%BB%E7%BB%93%E4%B8%80%E5%8F%A5%E8%AF%9D-2"><span class="toc-text">🔗✅ 总结一句话</span></a></li></ol></li></ol></div></div><div class="card-widget card-post-series"><div class="item-headline"><i class="fa-solid fa-layer-group"></i><span>系列文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/11/12/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9ATowards-Open-Vocabulary-Learning-A-Survey/" title="论文阅读：Towards Open Vocabulary Learning:  A Survey"><img src="/blog/image/A1-3.webp" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：Towards Open Vocabulary Learning:  A Survey"></a><div class="content"><a class="title" href="/blog/2025/11/12/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9ATowards-Open-Vocabulary-Learning-A-Survey/" title="论文阅读：Towards Open Vocabulary Learning:  A Survey">论文阅读：Towards Open Vocabulary Learning:  A Survey</a><time datetime="2025-11-12T10:36:50.000Z" title="发表于 2025-11-12 18:36:50">2025-11-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/23/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AGrounding-DINO-Marrying-DINO-with-Grounded-Pre-Training-for-Open-Set-Object-Detection/" title="论文阅读：Grounding DINO: Marrying DINO with Grounded Pre-Training for Open-Set Object Detection"><img src="/blog/image/A1-1.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：Grounding DINO: Marrying DINO with Grounded Pre-Training for Open-Set Object Detection"></a><div class="content"><a class="title" href="/blog/2025/10/23/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AGrounding-DINO-Marrying-DINO-with-Grounded-Pre-Training-for-Open-Set-Object-Detection/" title="论文阅读：Grounding DINO: Marrying DINO with Grounded Pre-Training for Open-Set Object Detection">论文阅读：Grounding DINO: Marrying DINO with Grounded Pre-Training for Open-Set Object Detection</a><time datetime="2025-10-23T01:48:44.000Z" title="发表于 2025-10-23 09:48:44">2025-10-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AZero-Shot-Detection/" title="论文阅读：Zero-Shot Detection"><img src="/blog/image/62aa03063f117eaad7c77592e3b98d7f05b0a86329e44a-TuUO3E.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：Zero-Shot Detection"></a><div class="content"><a class="title" href="/blog/2025/10/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AZero-Shot-Detection/" title="论文阅读：Zero-Shot Detection">论文阅读：Zero-Shot Detection</a><time datetime="2025-10-20T11:34:17.000Z" title="发表于 2025-10-20 19:34:17">2025-10-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/17/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/Zero-Shot-Object-Detection/" title="Zero-Shot Object Detection"><img src="/blog/image/5268d877a2a04864b36b4961ab793f4f.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Zero-Shot Object Detection"></a><div class="content"><a class="title" href="/blog/2025/10/17/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/Zero-Shot-Object-Detection/" title="Zero-Shot Object Detection">Zero-Shot Object Detection</a><time datetime="2025-10-17T10:22:18.000Z" title="发表于 2025-10-17 18:22:18">2025-10-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/17/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/DeViSE-A-Deep-Visual-Semantic-Embedding-Model/" title="DeViSE: A Deep Visual-Semantic Embedding Model"><img src="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="DeViSE: A Deep Visual-Semantic Embedding Model"></a><div class="content"><a class="title" href="/blog/2025/10/17/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/DeViSE-A-Deep-Visual-Semantic-Embedding-Model/" title="DeViSE: A Deep Visual-Semantic Embedding Model">DeViSE: A Deep Visual-Semantic Embedding Model</a><time datetime="2025-10-17T06:20:10.000Z" title="发表于 2025-10-17 14:20:10">2025-10-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2025/08/27/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/A-Review-of-Optical-and-SAR-Image-Deep-Feature-Fusion-in-Semantic-Segmentation/" title="A Review of Optical and SAR Image Deep Feature Fusion in Semantic Segmentation">A Review of Optical and SAR Image Deep Feature Fusion in Semantic Segmentation</a><time datetime="2025-08-27T08:57:04.000Z" title="发表于 2025-08-27 16:57:04">2025-08-27</time></div></div></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/easter-egg/" title="彩蛋"><img src="/blog/image/cover/IMG_20260217_201822.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="彩蛋"/></a><div class="content"><a class="title" href="/blog/easter-egg/" title="彩蛋">彩蛋</a><time datetime="2026-02-18T05:09:03.000Z" title="发表于 2026-02-18 13:09:03">2026-02-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读"><img src="/blog/image/cover/9.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【WeDetect】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读">【WeDetect】论文阅读</a><time datetime="2026-01-21T01:41:58.000Z" title="发表于 2026-01-21 09:41:58">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册"><img src="/blog/image/cover/13.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="AI使用手册"/></a><div class="content"><a class="title" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册">AI使用手册</a><time datetime="2026-01-20T01:21:48.000Z" title="发表于 2026-01-20 09:21:48">2026-01-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读"><img src="/blog/image/cover/2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【OV-DQUO】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读">【OV-DQUO】论文阅读</a><time datetime="2026-01-19T07:59:50.000Z" title="发表于 2026-01-19 15:59:50">2026-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释"><img src="/blog/image/cover/6.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="YOLO-UniOW-指标解释"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释">YOLO-UniOW-指标解释</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><script src="/blog/true"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/%E9%9B%B6%E6%A0%B7%E6%9C%AC%E6%A3%80%E6%B5%8B/">零样本检测</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2025/10/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AZero-Shot-Detection/" title="论文阅读：Zero-Shot Detection"><img class="cover" src="/blog/image/62aa03063f117eaad7c77592e3b98d7f05b0a86329e44a-TuUO3E.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">论文阅读：Zero-Shot Detection</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   论文阅读  INTRODUCTION 1）动机：检测要走向“长尾、开放世界” 在大规模应用里（想象自动驾驶、通用机器人、视频理解），不可能为每一个可能的目标类别都收集充足的“框+类别”标注。 传统检测（如 YOLOv2、Faster...</div></div></div></a><a class="pagination-related" href="/blog/2025/10/24/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/yolo-world/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AYOLO-World-Real-Time-Open-Vocabulary-Object-Detection/" title="论文阅读：YOLO-World: Real-Time Open-Vocabulary Object Detection"><img class="cover" src="/blog/image/A1-2.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">论文阅读：YOLO-World: Real-Time Open-Vocabulary Object Detection</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   开放词汇检测 / yolo-world  1 Introduction 1. 这节在回答什么问题？  现实动机：传统检测器（例如在 COCO 上训练的模型）只能识别固定词表中的类别（COCO 只有80类）。一旦训练好的类别被定死，模型就无法识别不在词表里的目标，这在开放场景里很受限。作者先明确了这个“固定词表的天花板”问题。 需求与挑战：我们需要的是开放词汇检测（Open-Vocabulary...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2025/10/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AZero-Shot-Detection/" title="论文阅读：Zero-Shot Detection"><img class="cover" src="/blog/image/62aa03063f117eaad7c77592e3b98d7f05b0a86329e44a-TuUO3E.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-10-20</div><div class="info-item-2">论文阅读：Zero-Shot Detection</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   论文阅读  INTRODUCTION 1）动机：检测要走向“长尾、开放世界” 在大规模应用里（想象自动驾驶、通用机器人、视频理解），不可能为每一个可能的目标类别都收集充足的“框+类别”标注。 传统检测（如 YOLOv2、Faster...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">读研，尝试新技术与记录生活。</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/qieliqiean"><i class="fab fa-github"></i><span>访问 GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/qieliqiean" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎交流：2895014608@qq.com</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduction"><span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Related-Work"><span class="toc-text">Related Work</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E-DETR-%E7%B3%BB%E5%88%B0-DINO%EF%BC%9A%E6%A3%80%E6%B5%8B%E5%99%A8%E4%B8%BB%E7%BA%BF%EF%BC%88%E9%97%AD%E9%9B%86%E8%83%8C%E6%99%AF%EF%BC%89"><span class="toc-text">从 DETR 系到 DINO：检测器主线（闭集背景）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E6%94%BE%E9%9B%86%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%EF%BC%9A%E4%B8%A4%E6%9D%A1%E4%BB%A3%E8%A1%A8%E6%80%A7%E8%B7%AF%E7%BA%BF"><span class="toc-text">开放集目标检测：两条代表性路线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E8%87%AA%E5%AE%9A%E4%BD%8D%EF%BC%9A%E4%B8%89%E7%9B%B8%E4%BD%8D%E8%9E%8D%E5%90%88-%E6%9B%B4%E7%BB%86%E7%B2%92%E5%BA%A6%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA"><span class="toc-text">论文自定位：三相位融合 + 更细粒度文本表示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Table-1"><span class="toc-text">Table 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93%EF%BC%9ARelated-Work-%E7%BB%99%E6%9C%AC%E6%96%87%E2%80%9C%E6%90%AD%E4%BA%86%E5%93%AA%E4%BA%9B%E5%8F%B0%E5%AD%90%E2%80%9D"><span class="toc-text">小结：Related Work 给本文“搭了哪些台子”</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Grounding-DINO"><span class="toc-text">Grounding DINO</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-Feature-Extraction-and-Enhancer"><span class="toc-text">🧩  Feature Extraction and Enhancer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%AD-Language-Guided-Query-Selection"><span class="toc-text">🧭 Language-Guided Query Selection</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cross-Modality-Decoder"><span class="toc-text">Cross-Modality Decoder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sub-Sentence-Level-Text-Feature"><span class="toc-text">Sub-Sentence Level Text Feature</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%AD-%E4%B8%80%E3%80%81%E8%83%8C%E6%99%AF%E9%97%AE%E9%A2%98%EF%BC%9A%E8%AF%AD%E8%A8%80%E7%89%B9%E5%BE%81%E8%A1%A8%E7%A4%BA%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%B8%B8%E8%A7%81%E6%96%B9%E5%BC%8F"><span class="toc-text">🧭 一、背景问题：语言特征表示的两种常见方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A9-%E4%BA%8C%E3%80%81%E9%97%AE%E9%A2%98%E6%9C%AC%E8%B4%A8%EF%BC%9A%E7%B1%BB%E5%88%AB%E9%97%B4%E7%9A%84%E2%80%9C%E5%B9%B2%E6%89%B0%E6%B3%A8%E6%84%8F%E5%8A%9B%E2%80%9D"><span class="toc-text">🧩 二、问题本质：类别间的“干扰注意力”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%A1-%E4%B8%89%E3%80%81Grounding-DINO-%E7%9A%84%E5%88%9B%E6%96%B0%EF%BC%9ASub-Sentence-Level-Representation%EF%BC%88%E5%AD%90%E5%8F%A5%E7%BA%A7%E8%A1%A8%E7%A4%BA%EF%BC%89"><span class="toc-text">💡 三、Grounding DINO 的创新：Sub-Sentence Level Representation（子句级表示）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9A%99%EF%B8%8F-%E5%9B%9B%E3%80%81%E5%AE%9E%E9%99%85%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="toc-text">⚙️ 四、实际实现方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%AE-%E4%BA%94%E3%80%81%E5%AF%B9%E6%AF%94%E4%B8%89%E7%A7%8D%E8%A1%A8%E7%A4%BA%E6%96%B9%E5%BC%8F%EF%BC%88%E8%A7%81-Fig-4-Page-6%EF%BC%89"><span class="toc-text">🧮 五、对比三种表示方式（见 Fig. 4, Page 6）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%85%AD%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E5%AF%B9%E5%BC%80%E6%94%BE%E9%9B%86%E6%A3%80%E6%B5%8B%E5%B0%A4%E5%85%B6%E9%87%8D%E8%A6%81%EF%BC%9F"><span class="toc-text">🧠 六、为什么这对开放集检测尤其重要？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%88-%E4%B8%83%E3%80%81%E6%95%88%E6%9E%9C%E9%AA%8C%E8%AF%81"><span class="toc-text">📈 七、效果验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%8E%93-%E5%85%AB%E3%80%81%E6%80%BB%E7%BB%93%E4%B8%8E%E6%95%99%E5%AD%A6%E8%A7%86%E8%A7%92%E8%A7%A3%E8%AF%BB"><span class="toc-text">🎓 八、总结与教学视角解读</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Loss-Function"><span class="toc-text">Loss Function</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%AD-%E4%B8%80%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E7%9A%84%E6%80%BB%E4%BD%93%E7%9B%AE%E6%A0%87"><span class="toc-text">🧭 一、损失函数的总体目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A9-%E4%BA%8C%E3%80%81%E4%BD%8D%E7%BD%AE%E6%8D%9F%E5%A4%B1%EF%BC%88Localization-Loss%EF%BC%89"><span class="toc-text">🧩 二、位置损失（Localization Loss）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%91-%E4%B8%89%E3%80%81%E7%B1%BB%E5%88%AB%E6%8D%9F%E5%A4%B1%EF%BC%88Classification-Loss%EF%BC%89"><span class="toc-text">🔑 三、类别损失（Classification Loss）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%9B%9B%E3%80%81%E5%AF%B9%E6%AF%94%E6%8D%9F%E5%A4%B1%EF%BC%88Contrastive-Loss%EF%BC%89"><span class="toc-text">🧠 四、对比损失（Contrastive Loss）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%A1-%E4%BA%94%E3%80%81%E8%BE%85%E5%8A%A9%E6%8D%9F%E5%A4%B1%EF%BC%88Auxiliary-Loss%EF%BC%89"><span class="toc-text">💡 五、辅助损失（Auxiliary Loss）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%8A-%E5%85%AD%E3%80%81%E6%9C%80%E7%BB%88%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-text">📊 六、最终损失函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A0-%E4%B8%83%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-text">🧠 七、损失函数设计的意义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%9D-%E5%85%AB%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-text">📝 八、总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Implementation-Details"><span class="toc-text">Implementation Details</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A9-%E4%B8%80%E3%80%81%E6%80%BB%E4%BD%93%E7%BB%93%E6%9E%84%E5%9B%9E%E9%A1%BE"><span class="toc-text">🧩 一、总体结构回顾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9A%99%EF%B8%8F-%E4%BA%8C%E3%80%81%E9%AA%A8%E5%B9%B2%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96%E9%85%8D%E7%BD%AE"><span class="toc-text">⚙️ 二、骨干网络与特征提取配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%AE-%E4%B8%89%E3%80%81%E8%BE%93%E5%85%A5%E4%B8%8E%E9%A2%84%E5%A4%84%E7%90%86%E8%AE%BE%E7%BD%AE"><span class="toc-text">🧮 三、输入与预处理设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%9A%80-%E5%9B%9B%E3%80%81%E8%AE%AD%E7%BB%83%E9%85%8D%E7%BD%AE%EF%BC%88Training-Configuration%EF%BC%89"><span class="toc-text">🚀 四、训练配置（Training Configuration）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A0-%E4%BA%94%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E4%B8%8E%E5%8C%B9%E9%85%8D%E7%AD%96%E7%95%A5"><span class="toc-text">🧠 五、损失函数与匹配策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%B0-%E5%85%AD%E3%80%81%E9%A2%84%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BE%AE%E8%B0%83%EF%BC%88Pre-training-and-Fine-tuning%EF%BC%89"><span class="toc-text">🧰 六、预训练与微调（Pre-training and Fine-tuning）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%AA-%E4%B8%83%E3%80%81%E6%8E%A8%E7%90%86%E9%98%B6%E6%AE%B5%EF%BC%88Inference-Details%EF%BC%89"><span class="toc-text">🧪 七、推理阶段（Inference Details）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%AC-%E5%85%AB%E3%80%81%E5%AE%9E%E7%8E%B0%E6%A1%86%E6%9E%B6%E4%B8%8E%E5%BC%80%E6%BA%90%E7%BB%86%E8%8A%82"><span class="toc-text">💬 八、实现框架与开源细节</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%8E%93-%E4%B9%9D%E3%80%81%E5%B0%8F%E7%BB%93%E4%B8%8E%E7%90%86%E8%A7%A3%E5%BB%B6%E4%BC%B8"><span class="toc-text">🎓 九、小结与理解延伸</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Zero-Shot-Transfer-of-Grounding-DINO"><span class="toc-text">Zero-Shot Transfer of Grounding DINO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E8%8A%82%E7%A0%94%E7%A9%B6%E8%AE%BE%E5%AE%9A%E4%B8%8E%E7%9B%AE%E7%9A%84"><span class="toc-text">本节研究设定与目的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#COCO-%E5%9F%BA%E5%87%86%EF%BC%88%E8%A1%A8-2%EF%BC%89"><span class="toc-text">COCO 基准（表 2）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LVIS-%E5%9F%BA%E5%87%86%EF%BC%88%E8%A1%A8-3%EF%BC%89"><span class="toc-text">LVIS 基准（表 3）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ODinW%EF%BC%88Object-Detection-in-the-Wild%EF%BC%89%E5%9F%BA%E5%87%86%EF%BC%88%E8%A1%A8-4%EF%BC%89"><span class="toc-text">ODinW（Object Detection in the Wild）基准（表 4）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%AF%E7%A9%BF%E6%80%A7%E7%9A%84%E6%8A%80%E6%9C%AF%E6%B4%9E%E5%AF%9F%EF%BC%88%E6%9D%A5%E8%87%AA%E4%BD%9C%E8%80%85%E5%9C%A8%E6%9C%AC%E8%8A%82%E7%9A%84%E8%AE%A8%E8%AE%BA%EF%BC%89"><span class="toc-text">贯穿性的技术洞察（来自作者在本节的讨论）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E9%A1%B5%E9%80%9F%E8%A7%88%EF%BC%88%E6%95%B0%E5%AD%97%E6%80%BB%E8%A1%A8%EF%BC%89"><span class="toc-text">一页速览（数字总表）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Referring-Object-Detection-Settings"><span class="toc-text">Referring Object Detection Settings</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%A0%94%E7%A9%B6%E8%83%8C%E6%99%AF%E4%B8%8E%E5%8A%A8%E6%9C%BA"><span class="toc-text">一、研究背景与动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE%E4%B8%8E%E5%AF%B9%E6%AF%94%E6%96%B9%E6%B3%95"><span class="toc-text">二、实验设置与对比方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%B8%BB%E8%A6%81%E7%BB%93%E6%9E%9C%EF%BC%88%E8%A1%A8-5-%E6%91%98%E8%A6%81%EF%BC%89"><span class="toc-text">三、主要结果（表 5 摘要）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%BD%9C%E8%80%85%E5%88%86%E6%9E%90%E4%B8%8E%E7%BB%93%E8%AE%BA"><span class="toc-text">四、作者分析与结论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%BB%B6%E4%BC%B8%E8%AE%A8%E8%AE%BA"><span class="toc-text">五、延伸讨论</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Effects-of-RefC-and-COCO-Data"><span class="toc-text">Effects of RefC and COCO Data</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%A0%94%E7%A9%B6%E5%8A%A8%E6%9C%BA%E4%B8%8E%E7%9B%AE%E6%A0%87"><span class="toc-text">一、研究动机与目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE"><span class="toc-text">二、实验设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90"><span class="toc-text">三、结果分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%BD%9C%E8%80%85%E6%80%BB%E7%BB%93%E4%B8%8E%E6%B4%9E%E5%AF%9F"><span class="toc-text">四、作者总结与洞察</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%8F%AF%E8%A7%86%E5%8C%96%E7%90%86%E8%A7%A3"><span class="toc-text">五、可视化理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E6%80%BB%E7%BB%93%E4%B8%80%E5%8F%A5%E8%AF%9D"><span class="toc-text">✅ 总结一句话</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ablations"><span class="toc-text">Ablations</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%A0%94%E7%A9%B6%E7%9B%AE%E7%9A%84"><span class="toc-text">一、研究目的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE-2"><span class="toc-text">二、实验设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%BB%93%E6%9E%9C%E4%B8%8E%E5%88%86%E6%9E%90"><span class="toc-text">三、结果与分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%BD%9C%E8%80%85%E8%BF%9B%E4%B8%80%E6%AD%A5%E8%AE%A8%E8%AE%BA"><span class="toc-text">四、作者进一步讨论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%BB%E4%BD%93%E7%BB%93%E8%AE%BA%EF%BC%88%E4%BD%9C%E8%80%85%E5%8E%9F%E6%96%87%E6%80%BB%E7%BB%93%EF%BC%89"><span class="toc-text">五、总体结论（作者原文总结）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E5%B0%8F%E7%BB%93%E4%B8%80%E5%8F%A5%E8%AF%9D"><span class="toc-text">✅ 小结一句话</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Conclusion"><span class="toc-text">Conclusion</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%80%BB%E4%BD%93%E5%AE%9A%E4%BD%8D%EF%BC%9A%E8%AE%A9-DINO-%E6%8B%A5%E6%8A%B1%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C"><span class="toc-text">一、总体定位：让 DINO 拥抱开放世界</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BB%E8%A6%81%E5%88%9B%E6%96%B0%E7%82%B9%E6%80%BB%E7%BB%93"><span class="toc-text">二、主要创新点总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%B8%8F%E2%83%A3-Tight-Fusion-%E8%B7%A8%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E6%9E%B6%E6%9E%84"><span class="toc-text">1️⃣ Tight Fusion 跨模态融合架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%B8%8F%E2%83%A3-Sub-sentence-Level-Text-Representation"><span class="toc-text">2️⃣ Sub-sentence Level Text Representation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%EF%B8%8F%E2%83%A3-Open-set-Extension-to-Referring-Expression-Comprehension-REC"><span class="toc-text">3️⃣ Open-set Extension to Referring Expression Comprehension (REC)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%85%B3%E9%94%AE%E5%AE%9E%E9%AA%8C%E7%BB%93%E8%AE%BA"><span class="toc-text">三、关键实验结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%95%B4%E4%BD%93%E8%B4%A1%E7%8C%AE%E4%B8%8E%E6%84%8F%E4%B9%89"><span class="toc-text">四、整体贡献与意义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%9C%AA%E6%9D%A5%E5%B1%95%E6%9C%9B%EF%BC%88%E9%9A%90%E5%90%AB%E5%9C%A8%E7%BB%93%E8%AE%BA%E4%B8%AD%E7%9A%84%E5%90%AF%E7%A4%BA%EF%BC%89"><span class="toc-text">五、未来展望（隐含在结论中的启示）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%85-%E6%80%BB%E7%BB%93%E4%B8%80%E5%8F%A5%E8%AF%9D-2"><span class="toc-text">✅ 总结一句话</span></a></li></ol></li></ol></div></div><div class="card-widget card-post-series"><div class="item-headline"><i class="fa-solid fa-layer-group"></i><span>系列文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/11/12/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9ATowards-Open-Vocabulary-Learning-A-Survey/" title="论文阅读：Towards Open Vocabulary Learning:  A Survey"><img src="/blog/image/A1-3.webp" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：Towards Open Vocabulary Learning:  A Survey"></a><div class="content"><a class="title" href="/blog/2025/11/12/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9ATowards-Open-Vocabulary-Learning-A-Survey/" title="论文阅读：Towards Open Vocabulary Learning:  A Survey">论文阅读：Towards Open Vocabulary Learning:  A Survey</a><time datetime="2025-11-12T10:36:50.000Z" title="发表于 2025-11-12 18:36:50">2025-11-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/23/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AGrounding-DINO-Marrying-DINO-with-Grounded-Pre-Training-for-Open-Set-Object-Detection/" title="论文阅读：Grounding DINO: Marrying DINO with Grounded Pre-Training for Open-Set Object Detection"><img src="/blog/image/A1-1.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：Grounding DINO: Marrying DINO with Grounded Pre-Training for Open-Set Object Detection"></a><div class="content"><a class="title" href="/blog/2025/10/23/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AGrounding-DINO-Marrying-DINO-with-Grounded-Pre-Training-for-Open-Set-Object-Detection/" title="论文阅读：Grounding DINO: Marrying DINO with Grounded Pre-Training for Open-Set Object Detection">论文阅读：Grounding DINO: Marrying DINO with Grounded Pre-Training for Open-Set Object Detection</a><time datetime="2025-10-23T01:48:44.000Z" title="发表于 2025-10-23 09:48:44">2025-10-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AZero-Shot-Detection/" title="论文阅读：Zero-Shot Detection"><img src="/blog/image/62aa03063f117eaad7c77592e3b98d7f05b0a86329e44a-TuUO3E.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="论文阅读：Zero-Shot Detection"></a><div class="content"><a class="title" href="/blog/2025/10/20/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%EF%BC%9AZero-Shot-Detection/" title="论文阅读：Zero-Shot Detection">论文阅读：Zero-Shot Detection</a><time datetime="2025-10-20T11:34:17.000Z" title="发表于 2025-10-20 19:34:17">2025-10-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/17/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/Zero-Shot-Object-Detection/" title="Zero-Shot Object Detection"><img src="/blog/image/5268d877a2a04864b36b4961ab793f4f.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Zero-Shot Object Detection"></a><div class="content"><a class="title" href="/blog/2025/10/17/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/Zero-Shot-Object-Detection/" title="Zero-Shot Object Detection">Zero-Shot Object Detection</a><time datetime="2025-10-17T10:22:18.000Z" title="发表于 2025-10-17 18:22:18">2025-10-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/17/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/DeViSE-A-Deep-Visual-Semantic-Embedding-Model/" title="DeViSE: A Deep Visual-Semantic Embedding Model"><img src="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="DeViSE: A Deep Visual-Semantic Embedding Model"></a><div class="content"><a class="title" href="/blog/2025/10/17/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/DeViSE-A-Deep-Visual-Semantic-Embedding-Model/" title="DeViSE: A Deep Visual-Semantic Embedding Model">DeViSE: A Deep Visual-Semantic Embedding Model</a><time datetime="2025-10-17T06:20:10.000Z" title="发表于 2025-10-17 14:20:10">2025-10-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2025/08/27/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/A-Review-of-Optical-and-SAR-Image-Deep-Feature-Fusion-in-Semantic-Segmentation/" title="A Review of Optical and SAR Image Deep Feature Fusion in Semantic Segmentation">A Review of Optical and SAR Image Deep Feature Fusion in Semantic Segmentation</a><time datetime="2025-08-27T08:57:04.000Z" title="发表于 2025-08-27 16:57:04">2025-08-27</time></div></div></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/easter-egg/" title="彩蛋"><img src="/blog/image/cover/IMG_20260217_201822.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="彩蛋"/></a><div class="content"><a class="title" href="/blog/easter-egg/" title="彩蛋">彩蛋</a><time datetime="2026-02-18T05:09:03.000Z" title="发表于 2026-02-18 13:09:03">2026-02-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读"><img src="/blog/image/cover/9.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【WeDetect】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读">【WeDetect】论文阅读</a><time datetime="2026-01-21T01:41:58.000Z" title="发表于 2026-01-21 09:41:58">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册"><img src="/blog/image/cover/13.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="AI使用手册"/></a><div class="content"><a class="title" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册">AI使用手册</a><time datetime="2026-01-20T01:21:48.000Z" title="发表于 2026-01-20 09:21:48">2026-01-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读"><img src="/blog/image/cover/2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【OV-DQUO】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读">【OV-DQUO】论文阅读</a><time datetime="2026-01-19T07:59:50.000Z" title="发表于 2026-01-19 15:59:50">2026-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释"><img src="/blog/image/cover/6.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="YOLO-UniOW-指标解释"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释">YOLO-UniOW-指标解释</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><script src="/blog/true"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
   const loadMathjax = () => {
     if (!window.MathJax) {
       window.MathJax = {

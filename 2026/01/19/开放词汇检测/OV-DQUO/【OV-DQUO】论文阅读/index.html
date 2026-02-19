@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【OV-DQUO】论文阅读 | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#fdfcf8"><meta name="description" content="系列文章   &#x2F;   开放词汇检测 &#x2F; OV-DQUO  🔗Abstract 🔗摘要一句话结论 OV-DQUO 通过“开放世界未知物体监督 + 通配符文本匹配 + 去噪文本查询训练（再加 RoQIs 选择）”来缓解 OVD 在 base&#x2F;novel 间的置信度偏置与 novel&#x2F;background 混淆，从而在 OV-COCO 与 OV-LVIS 上刷新 SOTA。  🔗按文章摘要顺">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【OV-DQUO】论文阅读 | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#fdfcf8"><meta name="description" content="系列文章   &#x2F;   开放词汇检测 &#x2F; OV-DQUO  Abstract 摘要一句话结论 OV-DQUO 通过“开放世界未知物体监督 + 通配符文本匹配 + 去噪文本查询训练（再加 RoQIs 选择）”来缓解 OVD 在 base&#x2F;novel 间的置信度偏置与 novel&#x2F;background 混淆，从而在 OV-COCO 与 OV-LVIS 上刷新 SOTA。  按文章摘要顺序讲解一遍">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【OV-DQUO】论文阅读">
 <meta property="og:url" content="https://qieliqiean.github.io/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/index.html">
 <meta property="og:site_name" content="且离且安的碎碎念">
-<meta property="og:description" content="系列文章   &#x2F;   开放词汇检测 &#x2F; OV-DQUO  🔗Abstract 🔗摘要一句话结论 OV-DQUO 通过“开放世界未知物体监督 + 通配符文本匹配 + 去噪文本查询训练（再加 RoQIs 选择）”来缓解 OVD 在 base&#x2F;novel 间的置信度偏置与 novel&#x2F;background 混淆，从而在 OV-COCO 与 OV-LVIS 上刷新 SOTA。  🔗按文章摘要顺">
+<meta property="og:description" content="系列文章   &#x2F;   开放词汇检测 &#x2F; OV-DQUO  Abstract 摘要一句话结论 OV-DQUO 通过“开放世界未知物体监督 + 通配符文本匹配 + 去噪文本查询训练（再加 RoQIs 选择）”来缓解 OVD 在 base&#x2F;novel 间的置信度偏置与 novel&#x2F;background 混淆，从而在 OV-COCO 与 OV-LVIS 上刷新 SOTA。  按文章摘要顺序讲解一遍">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qieliqiean.github.io/blog/image/cover/2.jpg">
 <meta property="article:published_time" content="2026-01-19T07:59:50.000Z">
@@ -192,11 +192,11 @@ btf.addGlobalFn('pjaxComplete', () => {
   <span class="series-breadcrumb__sep">/</span>
   <a href="/blog/series/5byA5pS-6K-N5rGH5qOA5rWLIC8gT1YtRFFVTw/">开放词汇检测 / OV-DQUO</a>
 </nav>
-<h1 id="Abstract"><a class="header-anchor" href="#Abstract">🔗</a>Abstract</h1>
-<h2 id="摘要一句话结论"><a class="header-anchor" href="#摘要一句话结论">🔗</a>摘要一句话结论</h2>
+<h1 id="Abstract"><a class="header-anchor" href="#Abstract"></a>Abstract</h1>
+<h2 id="摘要一句话结论"><a class="header-anchor" href="#摘要一句话结论"></a>摘要一句话结论</h2>
 <p>OV-DQUO 通过“开放世界未知物体监督 + 通配符文本匹配 + 去噪文本查询训练（再加 RoQIs 选择）”来<strong>缓解 OVD 在 base/novel 间的置信度偏置与 novel/background 混淆</strong>，从而在 OV-COCO 与 OV-LVIS 上刷新 SOTA。</p>
 <hr>
-<h2 id="按文章摘要顺序讲解一遍"><a class="header-anchor" href="#按文章摘要顺序讲解一遍">🔗</a>按文章摘要顺序讲解一遍</h2>
+<h2 id="按文章摘要顺序讲解一遍"><a class="header-anchor" href="#按文章摘要顺序讲解一遍"></a>按文章摘要顺序讲解一遍</h2>
 <ol>
 <li><strong>研究问题/痛点</strong>：开放词表检测（Open-Vocabulary Detection, OVD）要在训练只见过 base 类的情况下，推理时检测 novel 类。但现有 OVD 往往对 base 类更自信，导致 novel 类更容易被当成背景（background）或被错分到 base 类上。</li>
 <li><strong>核心框架</strong>：作者提出 <strong>OV-DQUO</strong>：</li>
@@ -215,7 +215,7 @@ btf.addGlobalFn('pjaxComplete', () => {
 在 OV-COCO 上 novel 类达到 <strong>45.6 AP50</strong>，在 OV-LVIS 上 novel/rare 类达到 <strong>39.3 mAP</strong>（摘要里给的主结果口径）。</li>
 </ol>
 <hr>
-<h2 id="关键概念-符号表"><a class="header-anchor" href="#关键概念-符号表">🔗</a>关键概念/符号表</h2>
+<h2 id="关键概念-符号表"><a class="header-anchor" href="#关键概念-符号表"></a>关键概念/符号表</h2>
 <ul>
 <li><strong>OVD（Open-Vocabulary Detection）</strong>：训练只用 base 类标注，测试要识别 base+novel。</li>
 <li><strong>base categories / trained categories</strong>：训练见过、标注完备的类别。</li>
@@ -227,14 +227,14 @@ btf.addGlobalFn('pjaxComplete', () => {
 <li><strong>denoising text query training (DTQT)</strong>：合成 noisy query-box 对，训练模型别把 novel 当背景。</li>
 </ul>
 <hr>
-<h2 id="关键公式-算法"><a class="header-anchor" href="#关键公式-算法">🔗</a>关键公式/算法</h2>
+<h2 id="关键公式-算法"><a class="header-anchor" href="#关键公式-算法"></a>关键公式/算法</h2>
 <ul>
 <li><strong>通配符匹配</strong>：本质是“让未知物体也能有一个可学习的文本条件（text condition）”，用泛语义文本嵌入替代具体类别名，使其能进入 DETR 式训练/匹配流程。</li>
 <li><strong>去噪查询训练</strong>：本质是“构造正/负样本的 query-box 配对”，强化模型对前景/背景、novel/背景的判别边界。</li>
 </ul>
 <p>（等我们读到 Method 部分，我会把他们对应的关键公式：如 wildcard 的 query 加法规则、Hungarian matching 代价、去噪框生成、RoQIs 的几何均值选择准则等一并系统梳理。）</p>
 <hr>
-<h2 id="重点内容讲解及梳理（你读摘要时要抓的主线）"><a class="header-anchor" href="#重点内容讲解及梳理（你读摘要时要抓的主线）">🔗</a>重点内容讲解及梳理（你读摘要时要抓的主线）</h2>
+<h2 id="重点内容讲解及梳理（你读摘要时要抓的主线）"><a class="header-anchor" href="#重点内容讲解及梳理（你读摘要时要抓的主线）"></a>重点内容讲解及梳理（你读摘要时要抓的主线）</h2>
 <ol>
 <li><strong>作者认为真正瓶颈不是“VLM 不够强”</strong>，而是：<strong>训练只监督 base 类 → 导致 detector 的“置信度分布”对 novel 天生不利</strong>，novel 更像背景。</li>
 <li>他们的策略不是去弄更多 caption 数据做 region-text 对齐，而是<strong>直接在训练阶段把“潜在 novel 物体”显式拉回前景学习</strong>：</li>
@@ -248,13 +248,13 @@ btf.addGlobalFn('pjaxComplete', () => {
 <li>摘要里给的结果告诉你：这套机制在两个主流基准上都有效，说明它解决的是一个“普遍结构性问题”（confidence bias），而不是某个小 trick。</li>
 </ol>
 <hr>
-<h1 id="Introduction"><a class="header-anchor" href="#Introduction">🔗</a>Introduction</h1>
-<h2 id="1-本节一句话结论"><a class="header-anchor" href="#1-本节一句话结论">🔗</a>1. 本节一句话结论</h2>
+<h1 id="Introduction"><a class="header-anchor" href="#Introduction"></a>Introduction</h1>
+<h2 id="1-本节一句话结论"><a class="header-anchor" href="#1-本节一句话结论"></a>1. 本节一句话结论</h2>
 <p><strong>引言的核心论点是：当前 OVD 方法的瓶颈不在于 VLM（视觉语言模型）的分类能力，而在于检测器本身的“置信度偏差”——即检测器倾向于将未见过的新类别物体判定为背景，导致这些物体根本没有机会被送到 VLM 去识别。</strong></p>
 <hr>
-<h2 id="2-按文章顺序讲解一遍"><a class="header-anchor" href="#2-按文章顺序讲解一遍">🔗</a>2. 按文章顺序讲解一遍</h2>
+<h2 id="2-按文章顺序讲解一遍"><a class="header-anchor" href="#2-按文章顺序讲解一遍"></a>2. 按文章顺序讲解一遍</h2>
 <p>引言部分的逻辑推演非常严密，我们可以分为“现状批判”、“痛点挖掘”和“方案提出”三个阶段：</p>
-<h4 id="第一阶段：现状与局限-Current-State-Limitations"><a class="header-anchor" href="#第一阶段：现状与局限-Current-State-Limitations">🔗</a>第一阶段：现状与局限 (Current State &amp; Limitations)</h4>
+<h4 id="第一阶段：现状与局限-Current-State-Limitations"><a class="header-anchor" href="#第一阶段：现状与局限-Current-State-Limitations"></a>第一阶段：现状与局限 (Current State &amp; Limitations)</h4>
 <p>作者回顾了现有的 OVD 主流路线，并指出了它们的不足：</p>
 <ol>
 <li><strong>知识蒸馏 (Knowledge Distillation)</strong>：</li>
@@ -292,7 +292,7 @@ btf.addGlobalFn('pjaxComplete', () => {
 <li></li>
 </ul>
 <p><strong>批判点</strong>：这些方法认为性能天花板取决于 VLM 的分类能力，因此拼命去微调 VLM。但作者认为他们<strong>找错了方向</strong> 。</p>
-<h4 id="第二阶段：核心痛点——置信度偏差-The-Confidence-Bias"><a class="header-anchor" href="#第二阶段：核心痛点——置信度偏差-The-Confidence-Bias">🔗</a>第二阶段：核心痛点——置信度偏差 (The Confidence Bias)</h4>
+<h4 id="第二阶段：核心痛点——置信度偏差-The-Confidence-Bias"><a class="header-anchor" href="#第二阶段：核心痛点——置信度偏差-The-Confidence-Bias"></a>第二阶段：核心痛点——置信度偏差 (The Confidence Bias)</h4>
 <p>这是本文最精彩的洞察（见论文图 1(a)）：</p>
 <ul>
 <li></li>
@@ -306,7 +306,7 @@ btf.addGlobalFn('pjaxComplete', () => {
 <li></li>
 </ul>
 <p><strong>结论</strong>：<strong>置信度偏差 (Confidence Bias)</strong> 才是导致性能上不去的主要原因 。</p>
-<h4 id="第三阶段：OV-DQUO-解决方案-Proposed-Solution"><a class="header-anchor" href="#第三阶段：OV-DQUO-解决方案-Proposed-Solution">🔗</a>第三阶段：OV-DQUO 解决方案 (Proposed Solution)</h4>
+<h4 id="第三阶段：OV-DQUO-解决方案-Proposed-Solution"><a class="header-anchor" href="#第三阶段：OV-DQUO-解决方案-Proposed-Solution"></a>第三阶段：OV-DQUO 解决方案 (Proposed Solution)</h4>
 <p>基于上述发现，作者提出了 OV-DQUO：</p>
 <ol>
 <li></li>
@@ -325,7 +325,7 @@ btf.addGlobalFn('pjaxComplete', () => {
 </ol>
 <p><strong>RoQIs 选择 (RoQIs Selection)</strong>：在推理阶段，改进 Proposal 的选择策略，结合 Objectness 和 CLIP 的相似度，避免新类别被漏选 。</p>
 <hr>
-<h2 id="3-关键概念-符号表"><a class="header-anchor" href="#3-关键概念-符号表">🔗</a>3. 关键概念/符号表</h2>
+<h2 id="3-关键概念-符号表"><a class="header-anchor" href="#3-关键概念-符号表"></a>3. 关键概念/符号表</h2>
 <table>
 <thead>
 <tr>
@@ -358,7 +358,7 @@ btf.addGlobalFn('pjaxComplete', () => {
 </tbody>
 </table>
 <hr>
-<h2 id="4-关键公式-算法-逻辑层面"><a class="header-anchor" href="#4-关键公式-算法-逻辑层面">🔗</a>4. 关键公式/算法 (逻辑层面)</h2>
+<h2 id="4-关键公式-算法-逻辑层面"><a class="header-anchor" href="#4-关键公式-算法-逻辑层面"></a>4. 关键公式/算法 (逻辑层面)</h2>
 <p>引言中提到了一个用于验证“置信度偏差”的逻辑，虽然不是最终 loss，但对理解很有帮助：</p>
 <p>作者的实验表明：</p>
 <ol>
@@ -367,23 +367,23 @@ btf.addGlobalFn('pjaxComplete', () => {
 <li><strong>VLM + Detector &amp; IoU Confidence</strong>: 性能回升 (59.1 mAP)。这证明了如果能修好 Detector 的置信度（用 IoU 模拟完美的置信度），性能就能大幅提升。</li>
 </ol>
 <hr>
-<h2 id="5-重点内容讲解及梳理-复现视角"><a class="header-anchor" href="#5-重点内容讲解及梳理-复现视角">🔗</a>5. 重点内容讲解及梳理 (复现视角)</h2>
+<h2 id="5-重点内容讲解及梳理-复现视角"><a class="header-anchor" href="#5-重点内容讲解及梳理-复现视角"></a>5. 重点内容讲解及梳理 (复现视角)</h2>
 <p>在引言中，作者实际上已经通过图 1(c) 泄露了架构设计的核心秘密。对于复现和代码阅读，你需要特别关注以下几点：</p>
-<h4 id="A-数据流的改变"><a class="header-anchor" href="#A-数据流的改变">🔗</a>A. 数据流的改变</h4>
+<h4 id="A-数据流的改变"><a class="header-anchor" href="#A-数据流的改变"></a>A. 数据流的改变</h4>
 <p>传统的 OVD 训练只用 Base Categories 的标注。
 <strong>OV-DQUO 的训练数据流变了</strong>：</p>
 <ul>
 <li><strong>输入</strong>：Image + Base Annotations + <strong>Unknown Object Proposals (from OLN)</strong>。</li>
 <li><strong>复现注意</strong>：你需要检查代码中的 <code>datasets</code> 部分，确认它是如何加载这些额外的 &quot;Unknown Object Proposals&quot; 的。这通常涉及到自定义的数据集类。</li>
 </ul>
-<h4 id="B-文本嵌入的构造"><a class="header-anchor" href="#B-文本嵌入的构造">🔗</a>B. 文本嵌入的构造</h4>
+<h4 id="B-文本嵌入的构造"><a class="header-anchor" href="#B-文本嵌入的构造"></a>B. 文本嵌入的构造</h4>
 <p>普通的 DETR 只需要 Base 类的 Class Embeddings。
 <strong>OV-DQUO 需要构造通配符</strong>：</p>
 <ul>
 <li>你需要一个代表 &quot;Object&quot; 或 &quot;Thing&quot; 的 Text Embedding。</li>
 <li><strong>复现注意</strong>：查看代码中是如何生成 Text Query 的。是否有特殊的逻辑将 &quot;Unknown Objects&quot; 映射到这个通配符 Embedding。</li>
 </ul>
-<h4 id="C-训练目标的改变"><a class="header-anchor" href="#C-训练目标的改变">🔗</a>C. 训练目标的改变</h4>
+<h4 id="C-训练目标的改变"><a class="header-anchor" href="#C-训练目标的改变"></a>C. 训练目标的改变</h4>
 <p>普通的 DETR 会把没有匹配到 GT 的预测框都推向“背景”类。
 <strong>OV-DQUO 的核心逻辑</strong>：</p>
 <ul>
@@ -391,62 +391,62 @@ btf.addGlobalFn('pjaxComplete', () => {
 <li><strong>复现注意</strong>：这是核心修改点，必然位于 <code>loss.py</code> 或 <code>matcher.py</code> 中。</li>
 </ul>
 <hr>
-<h2 id="图表讲解"><a class="header-anchor" href="#图表讲解">🔗</a>图表讲解</h2>
+<h2 id="图表讲解"><a class="header-anchor" href="#图表讲解"></a>图表讲解</h2>
 <p><img src="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/image-20260119184656875.png" alt="image-20260119184656875"></p>
 <p>下面把 <strong>Figure 1</strong> 按 (a)(b)(c) 重新完整过一遍（抓住“它想证明什么 → 用什么对照 → 得出什么结论”）。</p>
 <hr>
-<h3 id="Figure-1-总览：作者想用一张图讲清三件事"><a class="header-anchor" href="#Figure-1-总览：作者想用一张图讲清三件事">🔗</a>Figure 1 总览：作者想用一张图讲清三件事</h3>
+<h3 id="Figure-1-总览：作者想用一张图讲清三件事"><a class="header-anchor" href="#Figure-1-总览：作者想用一张图讲清三件事"></a>Figure 1 总览：作者想用一张图讲清三件事</h3>
 <ul>
 <li><strong>(a)</strong> 证明：OVD 里 novel 性能差的关键原因之一是 <strong>detector 的 confidence bias</strong>（base 更自信、novel 更像背景）。</li>
 <li><strong>(b)</strong> 说明：现有 pseudo-labeling 更关注“用外部 caption 数据学 region-text 对齐”，但<strong>没有正面处理 bias</strong>。</li>
 <li><strong>(c)</strong> 给出：他们的路线——用 <strong>open-world detector</strong> 在训练期挖 unknown objects，并用 <strong>wildcard text embedding</strong> 去匹配学习，从训练阶段就“别把潜在 novel 当背景”。</li>
 </ul>
 <hr>
-<h3 id="a-Detector-Confidence-Bias-and-the-Resulting-Performance-Gap"><a class="header-anchor" href="#a-Detector-Confidence-Bias-and-the-Resulting-Performance-Gap">🔗</a>(a) Detector Confidence Bias and the Resulting Performance Gap</h3>
-<h4 id="它在证明什么？"><a class="header-anchor" href="#它在证明什么？">🔗</a>它在证明什么？</h4>
+<h3 id="a-Detector-Confidence-Bias-and-the-Resulting-Performance-Gap"><a class="header-anchor" href="#a-Detector-Confidence-Bias-and-the-Resulting-Performance-Gap"></a>(a) Detector Confidence Bias and the Resulting Performance Gap</h3>
+<h4 id="它在证明什么？"><a class="header-anchor" href="#它在证明什么？"></a>它在证明什么？</h4>
 <p><strong>detector 训练在 base 上会产生系统性偏置</strong>：对 base 类给更高置信度，同时把 novel 更容易当 background。作者直接点明这一点。</p>
-<h4 id="它怎么证明？"><a class="header-anchor" href="#它怎么证明？">🔗</a>它怎么证明？</h4>
+<h4 id="它怎么证明？"><a class="header-anchor" href="#它怎么证明？"></a>它怎么证明？</h4>
 <p>作者做了三步对照实验（你只要记住这条链）：</p>
 <ol>
 <li><strong>看分数分布</strong>：比较 VLM 和 detector 对 base/novel 的打分，发现 detector 给 novel（例 umbrella）显著低于 base（例 person）。</li>
 <li><strong>看性能差距来源</strong>：用 VLM 去分类 <strong>GT boxes</strong> vs 分类 <strong>detector predictions</strong>，两者差距很大。</li>
 <li><strong>“手工消 bias”的对照</strong>：如果根据预测框与 GT 的 <strong>IoU 来调整预测置信度</strong>（相当于人为纠偏），这个性能 gap 会变小。⇒ 说明 gap 的重要来源是 confidence bias，而不是 VLM “不会分”。</li>
 </ol>
-<h4 id="得出什么结论？"><a class="header-anchor" href="#得出什么结论？">🔗</a>得出什么结论？</h4>
+<h4 id="得出什么结论？"><a class="header-anchor" href="#得出什么结论？"></a>得出什么结论？</h4>
 <p><strong>confidence bias 是 novel 检测不佳的重要因素之一</strong>（作者明确写出来）。</p>
 <hr>
-<h3 id="b-CLIP-Guided-Region-Text-Pseudo-Labeling（现有路线）"><a class="header-anchor" href="#b-CLIP-Guided-Region-Text-Pseudo-Labeling（现有路线）">🔗</a>(b) CLIP-Guided Region-Text Pseudo Labeling（现有路线）</h3>
-<h4 id="它在表达什么？"><a class="header-anchor" href="#它在表达什么？">🔗</a>它在表达什么？</h4>
+<h3 id="b-CLIP-Guided-Region-Text-Pseudo-Labeling（现有路线）"><a class="header-anchor" href="#b-CLIP-Guided-Region-Text-Pseudo-Labeling（现有路线）"></a>(b) CLIP-Guided Region-Text Pseudo Labeling（现有路线）</h3>
+<h4 id="它在表达什么？"><a class="header-anchor" href="#它在表达什么？"></a>它在表达什么？</h4>
 <p>这张子图不是在讲“它错了”，而是在说：
 现有 pseudo-labeling 方法主要在做 <strong>region-text alignment（对齐）</strong>：借助外部 caption 数据，从图文对里生成 region-text 训练信号。图注点明它们“忽略了 confidence bias”。</p>
 <hr>
-<h3 id="c-Open-World-Pseudo-Labeling-Wildcard-Matching（作者路线）"><a class="header-anchor" href="#c-Open-World-Pseudo-Labeling-Wildcard-Matching（作者路线）">🔗</a>(c) Open-World Pseudo Labeling &amp; Wildcard Matching（作者路线）</h3>
-<h4 id="它在解决什么？"><a class="header-anchor" href="#它在解决什么？">🔗</a>它在解决什么？</h4>
+<h3 id="c-Open-World-Pseudo-Labeling-Wildcard-Matching（作者路线）"><a class="header-anchor" href="#c-Open-World-Pseudo-Labeling-Wildcard-Matching（作者路线）"></a>(c) Open-World Pseudo Labeling &amp; Wildcard Matching（作者路线）</h3>
+<h4 id="它在解决什么？"><a class="header-anchor" href="#它在解决什么？"></a>它在解决什么？</h4>
 <p>既然 (a) 说 <strong>novel 被当 background</strong> 是关键问题，那 (c) 就是在回答：
 <strong>如何在训练阶段就把“潜在 novel 前景”拉回来，不要当背景吞掉？</strong></p>
-<h4 id="它怎么做？"><a class="header-anchor" href="#它怎么做？">🔗</a>它怎么做？</h4>
+<h4 id="它怎么做？"><a class="header-anchor" href="#它怎么做？"></a>它怎么做？</h4>
 <ul>
 <li>用 <strong>open-world detector</strong> 在训练集中挖到一批 <strong>unknown objects</strong>（可能包含潜在 novel）。</li>
 <li>因为 unknown 没有具体类别名，所以作者用 <strong>wildcard text embeddings（泛语义文本嵌入）</strong> 来匹配学习（比如 “A photo of an object” 这种通用语义），让这些 unknown 也能进入“文本条件化的匹配训练”，从而避免它们训练时被当背景处理。</li>
 </ul>
 <hr>
-<h3 id="你看-Figure-1-的“最短记忆版”"><a class="header-anchor" href="#你看-Figure-1-的“最短记忆版”">🔗</a>你看 Figure 1 的“最短记忆版”</h3>
+<h3 id="你看-Figure-1-的“最短记忆版”"><a class="header-anchor" href="#你看-Figure-1-的“最短记忆版”"></a>你看 Figure 1 的“最短记忆版”</h3>
 <ul>
 <li><strong>(a)</strong> 证明问题：detector 的 <strong>confidence bias</strong> 让 novel 掉分、像背景；用 IoU 校正能缩小 gap ⇒ bias 真的在伤害 novel。</li>
 <li><strong>(b)</strong> 现有方法主攻对齐，但没专门治 bias。</li>
 <li><strong>(c)</strong> 作者主攻治 bias：OWD 挖 unknown + wildcard 文本匹配，让潜在 novel 别被当背景。</li>
 </ul>
 <hr>
-<h1 id="Related-Works"><a class="header-anchor" href="#Related-Works">🔗</a>Related Works</h1>
+<h1 id="Related-Works"><a class="header-anchor" href="#Related-Works"></a>Related Works</h1>
 <p>该部分本质上分两块：<strong>Open-Vocabulary Detection (OVD)</strong> 和 <strong>Open-World Detection (OWD)</strong>。</p>
 <hr>
-<h2 id="1-Open-Vocabulary-Detection（开放词表检测）相关工作"><a class="header-anchor" href="#1-Open-Vocabulary-Detection（开放词表检测）相关工作">🔗</a>1) Open-Vocabulary Detection（开放词表检测）相关工作</h2>
-<h3 id="1-1-任务起点：OVR-CNN-提出-OVD-范式"><a class="header-anchor" href="#1-1-任务起点：OVR-CNN-提出-OVD-范式">🔗</a>1.1 任务起点：OVR-CNN 提出 OVD 范式</h3>
+<h2 id="1-Open-Vocabulary-Detection（开放词表检测）相关工作"><a class="header-anchor" href="#1-Open-Vocabulary-Detection（开放词表检测）相关工作"></a>1) Open-Vocabulary Detection（开放词表检测）相关工作</h2>
+<h3 id="1-1-任务起点：OVR-CNN-提出-OVD-范式"><a class="header-anchor" href="#1-1-任务起点：OVR-CNN-提出-OVD-范式"></a>1.1 任务起点：OVR-CNN 提出 OVD 范式</h3>
 <p>作者先给定义：OVD 的目标是训练一个检测器，使它能检测<strong>任意类别</strong>的目标，包括训练阶段未见过的类别（novel）。这一范式由 <strong>OVR-CNN</strong> 提出。</p>
 <hr>
-<h3 id="1-2-OVD-方法谱系：三类路线（作者用于“定位自己”）"><a class="header-anchor" href="#1-2-OVD-方法谱系：三类路线（作者用于“定位自己”）">🔗</a>1.2 OVD 方法谱系：三类路线（作者用于“定位自己”）</h3>
+<h3 id="1-2-OVD-方法谱系：三类路线（作者用于“定位自己”）"><a class="header-anchor" href="#1-2-OVD-方法谱系：三类路线（作者用于“定位自己”）"></a>1.2 OVD 方法谱系：三类路线（作者用于“定位自己”）</h3>
 <p>作者在 Related Works 里把已有方法分成三条线，并强调当前 SOTA 更偏向其中一种：</p>
-<h4 id="A-“冻结-VLM-图像编码器当-backbone”的-SOTA-线（作者重点讨论）"><a class="header-anchor" href="#A-“冻结-VLM-图像编码器当-backbone”的-SOTA-线（作者重点讨论）">🔗</a>A) “冻结 VLM 图像编码器当 backbone”的 SOTA 线（作者重点讨论）</h4>
+<h4 id="A-“冻结-VLM-图像编码器当-backbone”的-SOTA-线（作者重点讨论）"><a class="header-anchor" href="#A-“冻结-VLM-图像编码器当-backbone”的-SOTA-线（作者重点讨论）"></a>A) “冻结 VLM 图像编码器当 backbone”的 SOTA 线（作者重点讨论）</h4>
 <p>近年的 SOTA（例如 F-VLM、CORA、CLIPself 等）往往<strong>直接用冻结的 VLM 图像编码器做 backbone</strong>，提取 region feature 并进行 OVD。作者认为这类方法相较于“伪标注”和“蒸馏”更能直接受益于 VLM 的大规模预训练知识，因此泛化到 novel 更好。</p>
 <p>代表性工作与各自贡献（按作者点名顺序）：</p>
 <ul>
@@ -457,12 +457,12 @@ btf.addGlobalFn('pjaxComplete', () => {
 <blockquote>
 <p><strong>作者的关键评价（也是全文的切入点）</strong>：尽管这些 frozen-VLM-backbone 方法强，但仍会受到 <strong>confidence bias</strong> 的影响，从而 OVD 性能不够理想。</p>
 </blockquote>
-<h4 id="B-伪标注（pseudo-labeling）路线（作者用作对照）"><a class="header-anchor" href="#B-伪标注（pseudo-labeling）路线（作者用作对照）">🔗</a>B) 伪标注（pseudo-labeling）路线（作者用作对照）</h4>
+<h4 id="B-伪标注（pseudo-labeling）路线（作者用作对照）"><a class="header-anchor" href="#B-伪标注（pseudo-labeling）路线（作者用作对照）"></a>B) 伪标注（pseudo-labeling）路线（作者用作对照）</h4>
 <p>作者把一批方法归为 pseudo-labeling：核心是借助 VLM 等，从额外数据或弱监督信号中构造 region-level 的监督（如 region-text pairs 等）。在 Related Works 里作者列了一串代表工作作为该路线的引用集合。</p>
-<h4 id="C-知识蒸馏（knowledge-distillation）路线（作者用作对照）"><a class="header-anchor" href="#C-知识蒸馏（knowledge-distillation）路线（作者用作对照）">🔗</a>C) 知识蒸馏（knowledge distillation）路线（作者用作对照）</h4>
+<h4 id="C-知识蒸馏（knowledge-distillation）路线（作者用作对照）"><a class="header-anchor" href="#C-知识蒸馏（knowledge-distillation）路线（作者用作对照）"></a>C) 知识蒸馏（knowledge distillation）路线（作者用作对照）</h4>
 <p>另一批方法被归为蒸馏：将 VLM 的知识“迁移/对齐”到 detector（比如对齐 region embedding 等）。作者同样列举了代表工作集合。</p>
 <hr>
-<h3 id="1-3-Related-Works-在-OVD-部分真正想表达的“结论”"><a class="header-anchor" href="#1-3-Related-Works-在-OVD-部分真正想表达的“结论”">🔗</a>1.3 Related Works 在 OVD 部分真正想表达的“结论”</h3>
+<h3 id="1-3-Related-Works-在-OVD-部分真正想表达的“结论”"><a class="header-anchor" href="#1-3-Related-Works-在-OVD-部分真正想表达的“结论”"></a>1.3 Related Works 在 OVD 部分真正想表达的“结论”</h3>
 <p>把上面三类摆出来后，作者想突出两点（为后文方法服务）：</p>
 <ol>
 <li>当前最强的一派（冻结 VLM backbone）确实更直接利用了 VLM 知识、泛化更强；</li>
@@ -470,19 +470,19 @@ btf.addGlobalFn('pjaxComplete', () => {
 </ol>
 <p>这就把问题从“怎么更好用 VLM”引向“怎么对付 bias”，为 OV-DQUO 的动机铺路。</p>
 <hr>
-<h2 id="2-Open-World-Detection（开放世界检测）相关工作"><a class="header-anchor" href="#2-Open-World-Detection（开放世界检测）相关工作">🔗</a>2) Open-World Detection（开放世界检测）相关工作</h2>
-<h3 id="2-1-OWD-任务起点：ORE"><a class="header-anchor" href="#2-1-OWD-任务起点：ORE">🔗</a>2.1 OWD 任务起点：ORE</h3>
+<h2 id="2-Open-World-Detection（开放世界检测）相关工作"><a class="header-anchor" href="#2-Open-World-Detection（开放世界检测）相关工作"></a>2) Open-World Detection（开放世界检测）相关工作</h2>
+<h3 id="2-1-OWD-任务起点：ORE"><a class="header-anchor" href="#2-1-OWD-任务起点：ORE"></a>2.1 OWD 任务起点：ORE</h3>
 <p>作者接着引入 OWD：由 <strong>ORE</strong> 提出，其目标包含两点：
 (1) 识别训练集中未出现的 <strong>unknown objects</strong>；
 (2) 支持通过引入外部知识做增量检测学习（incremental learning）。</p>
-<h3 id="2-2-OWD-代表方法（作者点名的三类思路）"><a class="header-anchor" href="#2-2-OWD-代表方法（作者点名的三类思路）">🔗</a>2.2 OWD 代表方法（作者点名的三类思路）</h3>
+<h3 id="2-2-OWD-代表方法（作者点名的三类思路）"><a class="header-anchor" href="#2-2-OWD-代表方法（作者点名的三类思路）"></a>2.2 OWD 代表方法（作者点名的三类思路）</h3>
 <p>作者列举了几种 OWD 中“发现 unknown”的典型机制（你可以把它当成：unknown proposal 的产生/打分准则）：</p>
 <ul>
 <li><strong>OW-DETR</strong>：用 feature map 的 activation 强弱来找 unknown——直觉是前景激活更强、背景更弱。</li>
 <li><strong>PROB</strong>：对模型输出 logits 做分布建模来识别 unknown，并且把 background / known / unknown 的识别做了解耦（decouple）。</li>
 <li><strong>MEPU / REW</strong>：基于“前景变化更大、背景变化更单调”的观察，对特征重建误差做 Weibull 建模，提出 REW 给 region proposals 分配“属于 unknown 的可能性/likelihood”。</li>
 </ul>
-<h3 id="2-3-作者把-OWD-拉进来的目的"><a class="header-anchor" href="#2-3-作者把-OWD-拉进来的目的">🔗</a>2.3 作者把 OWD 拉进来的目的</h3>
+<h3 id="2-3-作者把-OWD-拉进来的目的"><a class="header-anchor" href="#2-3-作者把-OWD-拉进来的目的"></a>2.3 作者把 OWD 拉进来的目的</h3>
 <p>Related Works 的最后一句把动机写得很直白：<strong>这些 OWD 方法启发他们用 open-world detector 来解决 OVD 的 confidence bias</strong>。</p>
 <p>换句话说：</p>
 <ul>
@@ -491,18 +491,18 @@ btf.addGlobalFn('pjaxComplete', () => {
 <li>所以作者借 OWD 来提供 <strong>unknown object proposals</strong>，再在 OV-DQUO 中用 wildcard matching / 去噪训练等把这些 unknown 变成“对抗 bias 的训练信号”。</li>
 </ul>
 <hr>
-<h2 id="3-“Related-Works-心智图”"><a class="header-anchor" href="#3-“Related-Works-心智图”">🔗</a>3) “Related Works 心智图”</h2>
+<h2 id="3-“Related-Works-心智图”"><a class="header-anchor" href="#3-“Related-Works-心智图”"></a>3) “Related Works 心智图”</h2>
 <ul>
 <li><strong>OVD</strong>：OVR-CNN → 三条路线（蒸馏 / 伪标注 / 冻结 VLM backbone）→ 当前 SOTA 多为冻结 VLM backbone，但仍有 <strong>confidence bias</strong> 问题</li>
 <li><strong>OWD</strong>：ORE → 各类 unknown 发现机制（activation / logits 分布 / 重建误差+Weibull）→ 启发作者用 open-world detector 去缓解 OVD bias</li>
 </ul>
 <hr>
-<h1 id="Method"><a class="header-anchor" href="#Method">🔗</a>Method</h1>
-<h2 id="1-图表解读"><a class="header-anchor" href="#1-图表解读">🔗</a>1.图表解读</h2>
+<h1 id="Method"><a class="header-anchor" href="#Method"></a>Method</h1>
+<h2 id="1-图表解读"><a class="header-anchor" href="#1-图表解读"></a>1.图表解读</h2>
 <p><img src="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/image-20260119192842817.png" alt="image-20260119192842817"></p>
 <p>下面我按 <strong>“整图总览 → 主干网络 → 三个子模块 (a)(b)(c) → 图例/颜色含义 → 你读图时最容易混的点”</strong> 的顺序，把 Figure 2（OV-DQUO 总览图）详细讲一遍。你可以对照着图片从左到右看。</p>
 <hr>
-<h3 id="0-这张图一句话在讲什么"><a class="header-anchor" href="#0-这张图一句话在讲什么">🔗</a>0) 这张图一句话在讲什么</h3>
+<h3 id="0-这张图一句话在讲什么"><a class="header-anchor" href="#0-这张图一句话在讲什么"></a>0) 这张图一句话在讲什么</h3>
 <p><strong>OV-DQUO = 一个以 VLM(如 CLIP) 为视觉/文本底座的 DETR 框架 + 三个专门针对 open-vocab 的增强模块：</strong></p>
 <ul>
 <li>(a) <strong>Open-World Pseudo Labeling</strong>：从训练数据里“挖” unknown 目标当额外前景监督</li>
@@ -510,19 +510,19 @@ btf.addGlobalFn('pjaxComplete', () => {
 <li>(c) <strong>RoQIs Selection</strong>：选 query/proposal 时同时看 <strong>objectness</strong> 和 <strong>region-text similarity</strong>，避免只靠分数筛掉 novel</li>
 </ul>
 <hr>
-<h3 id="1-主干网络（左半部分）：VLM-DETR-的信息流"><a class="header-anchor" href="#1-主干网络（左半部分）：VLM-DETR-的信息流">🔗</a>1) 主干网络（左半部分）：VLM + DETR 的信息流</h3>
-<h4 id="1-1-顶部：文本进入-Text-Encoder（TE）"><a class="header-anchor" href="#1-1-顶部：文本进入-Text-Encoder（TE）">🔗</a>1.1 顶部：文本进入 Text Encoder（TE）</h4>
+<h3 id="1-主干网络（左半部分）：VLM-DETR-的信息流"><a class="header-anchor" href="#1-主干网络（左半部分）：VLM-DETR-的信息流"></a>1) 主干网络（左半部分）：VLM + DETR 的信息流</h3>
+<h4 id="1-1-顶部：文本进入-Text-Encoder（TE）"><a class="header-anchor" href="#1-1-顶部：文本进入-Text-Encoder（TE）"></a>1.1 顶部：文本进入 Text Encoder（TE）</h4>
 <p>左上角 “A photo of a person” 是一个<strong>类别提示模板</strong>（prompt）。
 它送进 <strong>TE（Text Encoder，通常就是 CLIP 的文本编码器）</strong>，得到该类别的文本嵌入（text embedding）。</p>
 <blockquote>
 <p>你可以把 TE 输出理解成：每个类别名（或 wildcard 文本）在语义空间里的向量。</p>
 </blockquote>
-<h4 id="1-2-右上角：图片进入-Image-Encoder（IE）"><a class="header-anchor" href="#1-2-右上角：图片进入-Image-Encoder（IE）">🔗</a>1.2 右上角：图片进入 Image Encoder（IE）</h4>
+<h4 id="1-2-右上角：图片进入-Image-Encoder（IE）"><a class="header-anchor" href="#1-2-右上角：图片进入-Image-Encoder（IE）"></a>1.2 右上角：图片进入 Image Encoder（IE）</h4>
 <p>图里 IE 带雪花 ❄️，表示 <strong>冻结的 VLM 图像编码器</strong>（CLIP image encoder）。
 IE 输出的是一张特征图/视觉特征（visual embeddings）。</p>
-<h4 id="1-3-中间：Encoder-Layers-×6（DETR-编码器）"><a class="header-anchor" href="#1-3-中间：Encoder-Layers-×6（DETR-编码器）">🔗</a>1.3 中间：Encoder Layers ×6（DETR 编码器）</h4>
+<h4 id="1-3-中间：Encoder-Layers-×6（DETR-编码器）"><a class="header-anchor" href="#1-3-中间：Encoder-Layers-×6（DETR-编码器）"></a>1.3 中间：Encoder Layers ×6（DETR 编码器）</h4>
 <p>视觉特征进入 <strong>Transformer Encoder（6层）</strong>，提炼全局上下文后的特征送往 Decoder（作为 Key/Value）。</p>
-<h4 id="1-4-下方：Decoder-Layers-×6（DETR-解码器）"><a class="header-anchor" href="#1-4-下方：Decoder-Layers-×6（DETR-解码器）">🔗</a>1.4 下方：Decoder Layers ×6（DETR 解码器）</h4>
+<h4 id="1-4-下方：Decoder-Layers-×6（DETR-解码器）"><a class="header-anchor" href="#1-4-下方：Decoder-Layers-×6（DETR-解码器）"></a>1.4 下方：Decoder Layers ×6（DETR 解码器）</h4>
 <p>Decoder 接收两类输入：</p>
 <ul>
 <li>来自 encoder 的 <strong>Key/Value</strong>（全局视觉上下文）</li>
@@ -530,9 +530,9 @@ IE 输出的是一张特征图/视觉特征（visual embeddings）。</p>
 </ul>
 <p>Decoder 输出预测框（prediction boxes）以及与查询相关的匹配/置信信息（后续在 preli 里是 (\hat m) 那类东西）。</p>
 <hr>
-<h3 id="2-c-RoQIs-Selection（左下角大框）：怎么选“值得解码的-query-proposals”"><a class="header-anchor" href="#2-c-RoQIs-Selection（左下角大框）：怎么选“值得解码的-query-proposals”">🔗</a>2) (c) RoQIs Selection（左下角大框）：怎么选“值得解码的 query / proposals”</h3>
+<h3 id="2-c-RoQIs-Selection（左下角大框）：怎么选“值得解码的-query-proposals”"><a class="header-anchor" href="#2-c-RoQIs-Selection（左下角大框）：怎么选“值得解码的-query-proposals”"></a>2) (c) RoQIs Selection（左下角大框）：怎么选“值得解码的 query / proposals”</h3>
 <p>这个模块画在 encoder 下面，意思是它发生在进入 decoder 之前的“筛选阶段”。</p>
-<h4 id="2-1-RoQIs-用两个指标来打分候选区域"><a class="header-anchor" href="#2-1-RoQIs-用两个指标来打分候选区域">🔗</a>2.1 RoQIs 用两个指标来打分候选区域</h4>
+<h4 id="2-1-RoQIs-用两个指标来打分候选区域"><a class="header-anchor" href="#2-1-RoQIs-用两个指标来打分候选区域"></a>2.1 RoQIs 用两个指标来打分候选区域</h4>
 <p>框里明确写了两路信号：</p>
 <ol>
 <li><strong>Region-Text Similarity</strong></li>
@@ -548,50 +548,50 @@ IE 输出的是一张特征图/视觉特征（visual embeddings）。</p>
 <li>这是检测器自身给的“像不像物体”的分数（更偏 detection 的 objectness）</li>
 <li>但它容易有 base-bias：base 类分高，novel 分低</li>
 </ul>
-<h4 id="2-2-Top-N-Selection：用两路融合选-Top-N"><a class="header-anchor" href="#2-2-Top-N-Selection：用两路融合选-Top-N">🔗</a>2.2 Top-N Selection：用两路融合选 Top-N</h4>
+<h4 id="2-2-Top-N-Selection：用两路融合选-Top-N"><a class="header-anchor" href="#2-2-Top-N-Selection：用两路融合选-Top-N"></a>2.2 Top-N Selection：用两路融合选 Top-N</h4>
 <p>RoQIs 的输出是 <strong>Top-N selection</strong>：选出最值得送进 Decoder 的那一批 query/proposals。</p>
 <blockquote>
 <p>直观作用：如果你只按 objectness 选，novel 很可能因为分数低被过滤；
 RoQIs 把 region-text similarity 加进来，让“语义上像物体/像目标”的 novel 也能进入下一阶段。</p>
 </blockquote>
 <hr>
-<h3 id="3-a-Open-World-Pseudo-Labeling（右上虚线框）：怎么得到-unknown-proposals-前景概率"><a class="header-anchor" href="#3-a-Open-World-Pseudo-Labeling（右上虚线框）：怎么得到-unknown-proposals-前景概率">🔗</a>3) (a) Open-World Pseudo Labeling（右上虚线框）：怎么得到 unknown proposals + 前景概率</h3>
+<h3 id="3-a-Open-World-Pseudo-Labeling（右上虚线框）：怎么得到-unknown-proposals-前景概率"><a class="header-anchor" href="#3-a-Open-World-Pseudo-Labeling（右上虚线框）：怎么得到-unknown-proposals-前景概率"></a>3) (a) Open-World Pseudo Labeling（右上虚线框）：怎么得到 unknown proposals + 前景概率</h3>
 <p>这部分是 OV-DQUO 的“数据/监督增强”来源。</p>
-<h4 id="3-1-一个-OWD（Open-World-Detector）被训练"><a class="header-anchor" href="#3-1-一个-OWD（Open-World-Detector）被训练">🔗</a>3.1 一个 OWD（Open-World Detector）被训练</h4>
+<h4 id="3-1-一个-OWD（Open-World-Detector）被训练"><a class="header-anchor" href="#3-1-一个-OWD（Open-World-Detector）被训练"></a>3.1 一个 OWD（Open-World Detector）被训练</h4>
 <p>虚线框左侧写 OWD，表示一个 <strong>开放世界检测器</strong>。
 它用 <strong>Base Training Set</strong> 训练（右边圆柱体），然后对训练集图片进行预测。</p>
-<h4 id="3-2-Predict-→-产生-unknown-object-proposals"><a class="header-anchor" href="#3-2-Predict-→-产生-unknown-object-proposals">🔗</a>3.2 Predict → 产生 unknown object proposals</h4>
+<h4 id="3-2-Predict-→-产生-unknown-object-proposals"><a class="header-anchor" href="#3-2-Predict-→-产生-unknown-object-proposals"></a>3.2 Predict → 产生 unknown object proposals</h4>
 <p>OWD 会给出一堆候选框，其中一些是 known/base 目标，另一些会被判为 <strong>Unknown</strong>（图中狗身上/旁边标 Unknown 的框）。</p>
-<h4 id="3-3-Foreground-Estimation（前景概率估计）"><a class="header-anchor" href="#3-3-Foreground-Estimation（前景概率估计）">🔗</a>3.3 Foreground Estimation（前景概率估计）</h4>
+<h4 id="3-3-Foreground-Estimation（前景概率估计）"><a class="header-anchor" href="#3-3-Foreground-Estimation（前景概率估计）"></a>3.3 Foreground Estimation（前景概率估计）</h4>
 <p>图里画了两条分布曲线（像概率分布/密度曲线），表达的是：
 对这些候选框估计其“前景概率/可靠度”，以区分：</p>
 <ul>
 <li>真正像物体的 unknown（可用作监督）</li>
 <li>噪声框/背景框（应该抑制）</li>
 </ul>
-<h4 id="3-4-Update：迭代更新训练集"><a class="header-anchor" href="#3-4-Update：迭代更新训练集">🔗</a>3.4 Update：迭代更新训练集</h4>
+<h4 id="3-4-Update：迭代更新训练集"><a class="header-anchor" href="#3-4-Update：迭代更新训练集"></a>3.4 Update：迭代更新训练集</h4>
 <p>右边箭头 “Update” 表示把筛出来更可信的 unknown 框，以某种伪标签形式加入/更新训练过程（迭代循环箭头）。</p>
 <blockquote>
 <p>你可以把 (a) 理解成：<strong>我在 base 数据里额外挖出一批“可能是潜在 novel 的前景框”</strong>，让训练不再只看到 base 前景 + 其它全当背景。</p>
 </blockquote>
 <hr>
-<h3 id="4-b-Denoising-Text-Query-Training（右下虚线框）：用-unknown-合成“带噪”查询训练"><a class="header-anchor" href="#4-b-Denoising-Text-Query-Training（右下虚线框）：用-unknown-合成“带噪”查询训练">🔗</a>4) (b) Denoising Text Query Training（右下虚线框）：用 unknown 合成“带噪”查询训练</h3>
+<h3 id="4-b-Denoising-Text-Query-Training（右下虚线框）：用-unknown-合成“带噪”查询训练"><a class="header-anchor" href="#4-b-Denoising-Text-Query-Training（右下虚线框）：用-unknown-合成“带噪”查询训练"></a>4) (b) Denoising Text Query Training（右下虚线框）：用 unknown 合成“带噪”查询训练</h3>
 <p>这块是“训练策略层”的增强，核心目标是：<strong>减少 novel vs background 的混淆</strong>。</p>
-<h4 id="4-1-“A-photo-of-an-Object-base-class-”"><a class="header-anchor" href="#4-1-“A-photo-of-an-Object-base-class-”">🔗</a>4.1 “A photo of an Object / {base class}”</h4>
+<h4 id="4-1-“A-photo-of-an-Object-base-class-”"><a class="header-anchor" href="#4-1-“A-photo-of-an-Object-base-class-”"></a>4.1 “A photo of an Object / {base class}”</h4>
 <p>右上角文字框表明 DTQT 会用两类文本：</p>
 <ul>
 <li><strong>Object（通用物体）</strong>：对应 wildcard 语义</li>
 <li><strong>base class（具体已知类）</strong>：常规类别语义</li>
 </ul>
 <p>文本送进 TE 得到 embedding。</p>
-<h4 id="4-2-从-unknown-objects-合成-noisy-query-box-pairs"><a class="header-anchor" href="#4-2-从-unknown-objects-合成-noisy-query-box-pairs">🔗</a>4.2 从 unknown objects 合成 noisy query-box pairs</h4>
+<h4 id="4-2-从-unknown-objects-合成-noisy-query-box-pairs"><a class="header-anchor" href="#4-2-从-unknown-objects-合成-noisy-query-box-pairs"></a>4.2 从 unknown objects 合成 noisy query-box pairs</h4>
 <p>图中用 <strong>虚线框</strong>画了很多“噪声盒子/噪声 query”，并标注 Pos/Neg、Noise Boxes 等颜色（见下面图例）。
 意思是：围绕 unknown 框构造一些扰动框、正负样本对，让模型学会：</p>
 <ul>
 <li>哪些 query-box 应该 <strong>Match（Query-Box Match）</strong></li>
 <li>哪些应该判为 <strong>No Object</strong>（背景/无目标）</li>
 </ul>
-<h4 id="4-3-Decoder-训练输出两种结果"><a class="header-anchor" href="#4-3-Decoder-训练输出两种结果">🔗</a>4.3 Decoder 训练输出两种结果</h4>
+<h4 id="4-3-Decoder-训练输出两种结果"><a class="header-anchor" href="#4-3-Decoder-训练输出两种结果"></a>4.3 Decoder 训练输出两种结果</h4>
 <p>底部清楚写了两个分支：</p>
 <ul>
 <li><strong>Query-Box Match</strong>：匹配成功（前景/目标）</li>
@@ -601,10 +601,10 @@ RoQIs 把 region-text similarity 加进来，让“语义上像物体/像目标�
 <p>直观作用：让 decoder 更“硬”地学到前景/背景边界，尤其是对那些训练时没明确类别名的 unknown/潜在 novel 区域。</p>
 </blockquote>
 <hr>
-<h3 id="5-图中间的三个-loss：L-pseudo-L-base-L-denoise"><a class="header-anchor" href="#5-图中间的三个-loss：L-pseudo-L-base-L-denoise">🔗</a>5) 图中间的三个 loss：
-    <span id="mjx-6f69bad">
+<h3 id="5-图中间的三个-loss：L-pseudo-L-base-L-denoise"><a class="header-anchor" href="#5-图中间的三个-loss：L-pseudo-L-base-L-denoise"></a>5) 图中间的三个 loss：
+    <span id="mjx-71c7a57">
       <style>
-      #mjx-6f69bad{
+      #mjx-71c7a57{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -763,9 +763,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.65ex;" xmlns="http://www.w3.org/2000/svg" width="6.552ex" height="2.195ex" role="img" focusable="false" viewBox="0 -683 2895.9 970.2" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="TeXAtom" transform="translate(714,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g><g data-mml-node="mi" transform="translate(503,0)"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g><g data-mml-node="mi" transform="translate(972,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(1438,0)"><path data-c="1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(2010,0)"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g><g data-mml-node="mi" transform="translate(2530,0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>L</mi><mrow data-mjx-texclass="ORD"><mi>p</mi><mi>s</mi><mi>e</mi><mi>u</mi><mi>d</mi><mi>o</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   ,$ L_{base}$, 
-    <span id="mjx-d53b645">
+    <span id="mjx-3f8fff8">
       <style>
-      #mjx-d53b645{
+      #mjx-3f8fff8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -927,9 +927,9 @@ g[data-mml-node="xypic"] path {
 <p>在主干 decoder 上方画了三个 loss 框，表示训练时同时优化三类信号：</p>
 <ul>
 <li><strong>
-    <span id="mjx-f47085a">
+    <span id="mjx-ca9e8c8">
       <style>
-      #mjx-f47085a{
+      #mjx-ca9e8c8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1089,9 +1089,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </strong>：常规的 base 类检测监督（你原本就有 GT 的那部分）</li>
 <li><strong>
-    <span id="mjx-519d5be">
+    <span id="mjx-2b7df97">
       <style>
-      #mjx-519d5be{
+      #mjx-2b7df97{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1251,9 +1251,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </strong>：来自 (a) open-world pseudo labeling 的 unknown/伪标签监督（把 unknown 当“前景”来学）</li>
 <li><strong>
-    <span id="mjx-9eb0b6a">
+    <span id="mjx-3bc61a4">
       <style>
-      #mjx-9eb0b6a{
+      #mjx-3bc61a4{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1416,7 +1416,7 @@ g[data-mml-node="xypic"] path {
 <p>你可以把它理解为：
 <strong>同一个 decoder，同时被三股监督拉着学：base 正常学 + unknown 别当背景 + 前景/背景边界更清晰。</strong></p>
 <hr>
-<h3 id="6-图例（底部-legend）逐个对照"><a class="header-anchor" href="#6-图例（底部-legend）逐个对照">🔗</a>6) 图例（底部 legend）逐个对照</h3>
+<h3 id="6-图例（底部-legend）逐个对照"><a class="header-anchor" href="#6-图例（底部-legend）逐个对照"></a>6) 图例（底部 legend）逐个对照</h3>
 <ul>
 <li><strong>IE / TE</strong>：CLIP Image/Text Encoder（通常冻结）</li>
 <li><strong>OWD</strong>：Open-World Detector（用来挖 unknown proposals）</li>
@@ -1425,7 +1425,7 @@ g[data-mml-node="xypic"] path {
 <li><strong>白色框 Prediction Boxes</strong>：预测框输出</li>
 </ul>
 <hr>
-<h3 id="7-这张图最容易看混的-3-个点（我帮你直接分清）"><a class="header-anchor" href="#7-这张图最容易看混的-3-个点（我帮你直接分清）">🔗</a>7) 这张图最容易看混的 3 个点（我帮你直接分清）</h3>
+<h3 id="7-这张图最容易看混的-3-个点（我帮你直接分清）"><a class="header-anchor" href="#7-这张图最容易看混的-3-个点（我帮你直接分清）"></a>7) 这张图最容易看混的 3 个点（我帮你直接分清）</h3>
 <ol>
 <li>
 <p><strong>OWD 不是最终 detector</strong>
@@ -1442,12 +1442,12 @@ OWD 主要是“挖 unknown proposals 的工具/辅助监督来源”；最终�
 </ol>
 <hr>
 <p>如果你愿意，下一步我可以紧贴 Method 的文字，把图中三块对应的小节按<strong>算法步骤</strong>写成“可实现的 pipeline”（输入/输出、每一步产生什么张量、训练时怎么混合三种 loss）。这样你后面看代码会特别顺。</p>
-<h2 id="Preliminarie"><a class="header-anchor" href="#Preliminarie">🔗</a>Preliminarie</h2>
-<h3 id="一句话结论"><a class="header-anchor" href="#一句话结论">🔗</a>一句话结论</h3>
+<h2 id="Preliminarie"><a class="header-anchor" href="#Preliminarie"></a>Preliminarie</h2>
+<h3 id="一句话结论"><a class="header-anchor" href="#一句话结论"></a>一句话结论</h3>
 <p>Preliminaries 做两件事：先明确 OVD 的 <strong>base/novel 训练-测试设定</strong>，再回顾 OV-DETR/CORA 的 <strong>conditional matching</strong>：用 VLM 的 region-text 相似度给每个 query 选“条件类别”，把该类别的文本嵌入注入 query，并在推理时用“匹配概率 × CLIP 相似度”得到最终分类分数。</p>
 <hr>
-<h3 id="顺序讲解"><a class="header-anchor" href="#顺序讲解">🔗</a>顺序讲解</h3>
-<h4 id="1-Task-Formulation"><a class="header-anchor" href="#1-Task-Formulation">🔗</a>1) Task Formulation</h4>
+<h3 id="顺序讲解"><a class="header-anchor" href="#顺序讲解"></a>顺序讲解</h3>
+<h4 id="1-Task-Formulation"><a class="header-anchor" href="#1-Task-Formulation"></a>1) Task Formulation</h4>
 <p>--OVD 的经典设定</p>
 <p>作者沿用 OVR-CNN 的 open-vocabulary 设定：</p>
 <ul>
@@ -1458,7 +1458,7 @@ OWD 主要是“挖 unknown proposals 的工具/辅助监督来源”；最终�
 <p>读到这里你要抓住：OVD 的“开放”体现在 <strong>测试时才给 novel 类名</strong>，训练时从标注角度它们等价于“未标注/背景”。</p>
 </blockquote>
 <hr>
-<h4 id="2-Conditional-Matching"><a class="header-anchor" href="#2-Conditional-Matching">🔗</a>2) Conditional Matching</h4>
+<h4 id="2-Conditional-Matching"><a class="header-anchor" href="#2-Conditional-Matching"></a>2) Conditional Matching</h4>
 <p>--DETR + 文本条件的匹配式 OVD</p>
 <p>作者先复述 DETR 框架：由 <strong>backbone / encoder / decoder</strong> 三部分组成：</p>
 <ul>
@@ -1466,13 +1466,13 @@ OWD 主要是“挖 unknown proposals 的工具/辅助监督来源”；最终�
 <li>decoder：用一组 <strong>object queries</strong>（以及其关联的 proposal）迭代 refine，输出最终框和预测。</li>
 </ul>
 <p>然后进入“conditional matching”（OV-DETR、CORA 在 decoder 里做的关键改动）：</p>
-<h6 id="Step-A：给每个-query-先分配一个“条件类别”-c-i"><a class="header-anchor" href="#Step-A：给每个-query-先分配一个“条件类别”-c-i">🔗</a>Step A：给每个 query 先分配一个“条件类别” $ c_i $</h6>
+<h6 id="Step-A：给每个-query-先分配一个“条件类别”-c-i"><a class="header-anchor" href="#Step-A：给每个-query-先分配一个“条件类别”-c-i"></a>Step A：给每个 query 先分配一个“条件类别” $ c_i $</h6>
 <p>对第 $ i $ 个 object query $ q_i $，它关联一个 region proposal $ b_i $。先取该 proposal 的 region feature $ v_i $（作者说是：对冻结 VLM 的特征图做 RoI Align 得到）。
 接着在 <strong>base 类集合</strong>里找与其文本嵌入最相似的类别：</p>
 
-    <span id="mjx-6763f93">
+    <span id="mjx-3ce6513">
       <style>
-      #mjx-6763f93{
+      #mjx-3ce6513{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1632,12 +1632,12 @@ g[data-mml-node="xypic"] path {
     </span>
   <p>其中 $ t_c $ 是类别名 $ c $ 的 text embedding，$ \cos $ 是余弦相似度。</p>
 <p><strong>直觉</strong>：这一步相当于“先用 CLIP 做一个粗分类”，决定“这个 query 接下来应该朝哪个类别条件去 refine”。</p>
-<h6 id="Step-B：把类别文本嵌入注入-query，得到-class-aware-query-q-i"><a class="header-anchor" href="#Step-B：把类别文本嵌入注入-query，得到-class-aware-query-q-i">🔗</a>Step B：把类别文本嵌入注入 query，得到 class-aware query $ q_i^* $</h6>
+<h6 id="Step-B：把类别文本嵌入注入-query，得到-class-aware-query-q-i"><a class="header-anchor" href="#Step-B：把类别文本嵌入注入-query，得到-class-aware-query-q-i"></a>Step B：把类别文本嵌入注入 query，得到 class-aware query $ q_i^* $</h6>
 <p>有了 $ c_i $ 后，把对应文本嵌入（经过一个 MLP 映射）加到原始 query 上：</p>
 
-    <span id="mjx-0871b9e">
+    <span id="mjx-b561dc6">
       <style>
-      #mjx-0871b9e{
+      #mjx-b561dc6{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1797,7 +1797,7 @@ g[data-mml-node="xypic"] path {
     </span>
   <p>作者明确说 $ q_i $ 是 vanilla object query。</p>
 <p><strong>直觉</strong>：query 不再是“无条件地找物体”，而是变成“带着类别语义去找物体”，所以叫 conditional / class-aware。</p>
-<h6 id="Step-C：decoder-输出两样东西：框-hat-b-i-匹配概率-hat-m-i"><a class="header-anchor" href="#Step-C：decoder-输出两样东西：框-hat-b-i-匹配概率-hat-m-i">🔗</a>Step C：decoder 输出两样东西：框 $ \hat b_i $ + 匹配概率 $ \hat m_i $</h6>
+<h6 id="Step-C：decoder-输出两样东西：框-hat-b-i-匹配概率-hat-m-i"><a class="header-anchor" href="#Step-C：decoder-输出两样东西：框-hat-b-i-匹配概率-hat-m-i"></a>Step C：decoder 输出两样东西：框 $ \hat b_i $ + 匹配概率 $ \hat m_i $</h6>
 <p>decoder 迭代 refine $ (q_i^*, b_i $) 得到 $ (\hat m_i, \hat b_i $)。其中：</p>
 <ul>
 <li>$ \hat b_i $：refined box；</li>
@@ -1806,12 +1806,12 @@ g[data-mml-node="xypic"] path {
 <blockquote>
 <p>你可以把 $ \hat m_i $ 理解成 DETR 里的“匹配/存在质量”分数：它既像 objectness，又与“这个 query 条件类别”绑定。</p>
 </blockquote>
-<h6 id="Step-D（推理阶段）：最终类别分数-匹配概率-×-CLIP-相似度"><a class="header-anchor" href="#Step-D（推理阶段）：最终类别分数-匹配概率-×-CLIP-相似度">🔗</a>Step D（推理阶段）：最终类别分数 = 匹配概率 × CLIP 相似度</h6>
+<h6 id="Step-D（推理阶段）：最终类别分数-匹配概率-×-CLIP-相似度"><a class="header-anchor" href="#Step-D（推理阶段）：最终类别分数-匹配概率-×-CLIP-相似度"></a>Step D（推理阶段）：最终类别分数 = 匹配概率 × CLIP 相似度</h6>
 <p>推理时，冻结 VLM 再对最终预测框 $ \hat b_i $ 做分类（算 $ \cos(\hat v_i, t_c $)），并乘上 $ \hat m_i $ 来“考虑框质量”：</p>
 
-    <span id="mjx-5058ddd">
+    <span id="mjx-6517e91">
       <style>
-      #mjx-5058ddd{
+      #mjx-6517e91{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1976,7 +1976,7 @@ g[data-mml-node="xypic"] path {
 两者相乘，就把“语义”与“检测质量”耦合在一个分数里。</li>
 </ul>
 <hr>
-<h3 id="关键概念-符号表-2"><a class="header-anchor" href="#关键概念-符号表-2">🔗</a>关键概念/符号表</h3>
+<h3 id="关键概念-符号表-2"><a class="header-anchor" href="#关键概念-符号表-2"></a>关键概念/符号表</h3>
 <ul>
 <li>$ C_{base} $：训练有标注的 base 类集合。</li>
 <li>$ C_{novel} $：训练未见、测试要识别的 novel 类集合，且与 base 不相交。</li>
@@ -1987,19 +1987,19 @@ g[data-mml-node="xypic"] path {
 <li>$ \hat m_i $：sigmoid 标量匹配概率（框内物体与 query 类别匹配）。</li>
 </ul>
 <hr>
-<h3 id="关键公式"><a class="header-anchor" href="#关键公式">🔗</a>关键公式</h3>
+<h3 id="关键公式"><a class="header-anchor" href="#关键公式"></a>关键公式</h3>
 <ul>
 <li><strong>$ 1 $ 条件类别分配</strong>：在 $ C_{base} $ 里找最相似文本类 $ c_i $。</li>
 <li><strong>$ 2 $ 文本条件注入</strong>：把 $ \text{MLP}(t_{c_i} $) 加到 query 上得到 $ q_i^* $。</li>
 <li><strong>$ 3 $ 最终分数</strong>：推理时用 $ \hat m_i $ 调制 CLIP 的 region-text 相似度作为类别分数。</li>
 </ul>
 <hr>
-<h3 id="重点梳理"><a class="header-anchor" href="#重点梳理">🔗</a>重点梳理</h3>
+<h3 id="重点梳理"><a class="header-anchor" href="#重点梳理"></a>重点梳理</h3>
 <p>--为什么后面 OV-DQUO 都围绕这套东西改？</p>
 <p>因为在这套 conditional matching 里，**最终分数必须乘 $ \hat m_i 
-    <span id="mjx-07e2f31">
+    <span id="mjx-371c966">
       <style>
-      #mjx-07e2f31{
+      #mjx-371c966{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2159,9 +2159,9 @@ g[data-mml-node="xypic"] path {
     </span>
    \hat m_i $ 对 novel 更“苛刻/更低”，哪怕 CLIP 相似度能指向 novel，乘完也会被压下去——这就是他们后面要用 unknown supervision、DTQT、RoQIs 去“纠偏”的根源（但这些属于后续小节）。</p>
 <hr>
-<h2 id="Open-World-Pseudo-Labeling-Wildcard-Matching"><a class="header-anchor" href="#Open-World-Pseudo-Labeling-Wildcard-Matching">🔗</a>Open-World Pseudo Labeling &amp; Wildcard Matching</h2>
+<h2 id="Open-World-Pseudo-Labeling-Wildcard-Matching"><a class="header-anchor" href="#Open-World-Pseudo-Labeling-Wildcard-Matching"></a>Open-World Pseudo Labeling &amp; Wildcard Matching</h2>
 <hr>
-<h3 id="结论"><a class="header-anchor" href="#结论">🔗</a>结论</h3>
+<h3 id="结论"><a class="header-anchor" href="#结论"></a>结论</h3>
 <blockquote>
 <p>这一部分解决了核心痛点：如何让检测器学会“看到”它叫不出名字的新物体，而不是把它们当成背景。</p>
 </blockquote>
@@ -2176,9 +2176,9 @@ g[data-mml-node="xypic"] path {
 <li>挖出未知物体：用一个“开放世界检测器”（如 OLN）在训练集上跑一遍，把那些“看起来像物体”但没有 Base 标注的框挖出来，作为伪标签（Pseudo Labels） 。</li>
 <li>给个通用名（通配符）：既然不知道具体叫什么（比如不知道是“鳄梨”），那就教模型管它叫“物体”（Wildcard: &quot;Object&quot; / &quot;Thing&quot;）</li>
 <li>加权监督：因为挖出来的框可能有噪声，所以用**前景估计器（Foreground Estimator, FE）**算一个概率 
-    <span id="mjx-de32bec">
+    <span id="mjx-1edbe4f">
       <style>
-      #mjx-de32bec{
+      #mjx-1edbe4f{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2341,14 +2341,14 @@ g[data-mml-node="xypic"] path {
 </li>
 </ul>
 <hr>
-<h3 id="Part-A：Open-World-Pseudo-Labeling（开放世界伪标注）"><a class="header-anchor" href="#Part-A：Open-World-Pseudo-Labeling（开放世界伪标注）">🔗</a>Part A：Open-World Pseudo Labeling（开放世界伪标注）</h3>
-<h4 id="1-它在做什么（直觉版）"><a class="header-anchor" href="#1-它在做什么（直觉版）">🔗</a>1) 它在做什么（直觉版）</h4>
+<h3 id="Part-A：Open-World-Pseudo-Labeling（开放世界伪标注）"><a class="header-anchor" href="#Part-A：Open-World-Pseudo-Labeling（开放世界伪标注）"></a>Part A：Open-World Pseudo Labeling（开放世界伪标注）</h3>
+<h4 id="1-它在做什么（直觉版）"><a class="header-anchor" href="#1-它在做什么（直觉版）"></a>1) 它在做什么（直觉版）</h4>
 <p>你可以把它理解成：</p>
 <blockquote>
 <p>“我在训练图片里找出那些被漏标的物体（大概率包含 novel），给它们一个‘可能是前景’的软标签，让模型训练时别把它们当背景吞掉。”</p>
 </blockquote>
 <hr>
-<h4 id="2-怎么找-unknown-proposals？"><a class="header-anchor" href="#2-怎么找-unknown-proposals？">🔗</a>2) 怎么找 unknown proposals？</h4>
+<h4 id="2-怎么找-unknown-proposals？"><a class="header-anchor" href="#2-怎么找-unknown-proposals？"></a>2) 怎么找 unknown proposals？</h4>
 <p>作者选了一个开放世界检测器 <strong>OLN</strong>（文中说它对 novel 的召回比 RPN 更好），流程是：</p>
 <ol>
 <li>
@@ -2360,9 +2360,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>对每张图输出一堆 unknown objects：</p>
 
-    <span id="mjx-06c1471">
+    <span id="mjx-bb8cdc">
       <style>
-      #mjx-06c1471{
+      #mjx-bb8cdc{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2530,7 +2530,7 @@ g[data-mml-node="xypic"] path {
 <p>直觉：OLN 给你“这张图里我觉得有一些未知物体”，但这些框可能有噪声。</p>
 </blockquote>
 <hr>
-<h4 id="3-噪声框很多怎么办？Foreground-Estimator（FE）给“前景概率”"><a class="header-anchor" href="#3-噪声框很多怎么办？Foreground-Estimator（FE）给“前景概率”">🔗</a>3) 噪声框很多怎么办？Foreground Estimator（FE）给“前景概率”</h4>
+<h4 id="3-噪声框很多怎么办？Foreground-Estimator（FE）给“前景概率”"><a class="header-anchor" href="#3-噪声框很多怎么办？Foreground-Estimator（FE）给“前景概率”"></a>3) 噪声框很多怎么办？Foreground Estimator（FE）给“前景概率”</h4>
 <p>作者用一个叫 <strong>Foreground Estimator $(FE)  $</strong> 的方法给每个 unknown 框一个 <strong>前景概率 $ w_i $</strong>（soft label），目的是：噪声框权重小，靠谱框权重大。</p>
 <p>FE 的核心直觉是：</p>
 <ul>
@@ -2551,9 +2551,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>对某个 unknown 框 $ o_i $，用它的重建误差 $ \eta_{o_i} $ 算它是前景的概率：</p>
 
-    <span id="mjx-262ff6f">
+    <span id="mjx-ea75555">
       <style>
-      #mjx-262ff6f{
+      #mjx-ea75555{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2713,9 +2713,9 @@ g[data-mml-node="xypic"] path {
     </span>
   <p>最后更新 unknown：</p>
 
-    <span id="mjx-b6c8d6b">
+    <span id="mjx-2b6fbed">
       <style>
-      #mjx-b6c8d6b{
+      #mjx-2b6fbed{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2879,20 +2879,20 @@ g[data-mml-node="xypic"] path {
 <p>直觉：<strong>$ w_i $ 就是“这框有多像真物体”的软分数</strong>，后面训练会用它当权重。</p>
 </blockquote>
 <hr>
-<h4 id="4-训练集如何更新（迭代挖掘）"><a class="header-anchor" href="#4-训练集如何更新（迭代挖掘）">🔗</a>4) 训练集如何更新（迭代挖掘）</h4>
+<h4 id="4-训练集如何更新（迭代挖掘）"><a class="header-anchor" href="#4-训练集如何更新（迭代挖掘）"></a>4) 训练集如何更新（迭代挖掘）</h4>
 <p>文中说：对每张 base 训练图，把对应的 $ U $ 经过一些过滤（比如和 GT 冲突的过滤、$ s_i $ 过滤、启发式规则过滤）后，加入/更新训练标注。
 而且这个过程可以 <strong>迭代多轮</strong>：挖到更多 unknown proposals。</p>
 <blockquote>
 <p>直觉：像“滚雪球”。第一轮挖到一些潜在 novel，训练后模型更会找物体，第二轮又能挖到更多。</p>
 </blockquote>
 <hr>
-<h3 id="Part-B：Wildcard-Matching（通配符匹配）"><a class="header-anchor" href="#Part-B：Wildcard-Matching（通配符匹配）">🔗</a>Part B：Wildcard Matching（通配符匹配）</h3>
+<h3 id="Part-B：Wildcard-Matching（通配符匹配）"><a class="header-anchor" href="#Part-B：Wildcard-Matching（通配符匹配）"></a>Part B：Wildcard Matching（通配符匹配）</h3>
 <p>上面的 pseudo labeling 有个致命问题：
 <strong>unknown 框没有类别名</strong>。
 但 OV-DETR/CORA 那套 conditional matching 需要 “给 query 注入一个类别文本 embedding”。</p>
 <p>作者的解决方式非常巧：给 unknown 用一个<strong>通用类别文本</strong>。</p>
 <hr>
-<h4 id="1-什么是-wildcard-text-embedding-t-ow-？"><a class="header-anchor" href="#1-什么是-wildcard-text-embedding-t-ow-？">🔗</a>1) 什么是 wildcard text embedding $ t_{ow} $？</h4>
+<h4 id="1-什么是-wildcard-text-embedding-t-ow-？"><a class="header-anchor" href="#1-什么是-wildcard-text-embedding-t-ow-？"></a>1) 什么是 wildcard text embedding $ t_{ow} $？</h4>
 <p>作者定义：</p>
 <ul>
 <li>
@@ -2904,9 +2904,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>把这句话丢进 VLM 的 Text Encoder（TE）得到文本向量：</p>
 
-    <span id="mjx-ea4df87">
+    <span id="mjx-7d05645">
       <style>
-      #mjx-ea4df87{
+      #mjx-7d05645{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3070,7 +3070,7 @@ g[data-mml-node="xypic"] path {
 <p>直觉：这不是具体类别，但它对“任何前景物体”都有一定相似度，所以可以当 unknown 的“通用语义标签”。</p>
 </blockquote>
 <hr>
-<h4 id="2-wildcard-怎么插进-conditional-matching？（核心规则）"><a class="header-anchor" href="#2-wildcard-怎么插进-conditional-matching？（核心规则）">🔗</a>2) wildcard 怎么插进 conditional matching？（核心规则）</h4>
+<h4 id="2-wildcard-怎么插进-conditional-matching？（核心规则）"><a class="header-anchor" href="#2-wildcard-怎么插进-conditional-matching？（核心规则）"></a>2) wildcard 怎么插进 conditional matching？（核心规则）</h4>
 <p>回忆 preli：原本每个 proposal $ b_i $ 会先在 base 类里找最像的类别 $ c_i $，然后 query 加上 $ t_{c_i} $：</p>
 <p>现在作者改成 <strong>二选一</strong>：</p>
 <ul>
@@ -3083,9 +3083,9 @@ g[data-mml-node="xypic"] path {
 </ul>
 <p>公式写成：</p>
 
-    <span id="mjx-12ccc5b">
+    <span id="mjx-b71de3a">
       <style>
-      #mjx-12ccc5b{
+      #mjx-b71de3a{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3252,7 +3252,7 @@ g[data-mml-node="xypic"] path {
 </blockquote>
 <p>作者还强调：wildcard matching <strong>不是替代 conditional matching</strong>，而是补充它——专门用来处理 unknown 这类“没类别名但应该当作前景”的区域。</p>
 <hr>
-<h3 id="Part-C：训练损失怎么写（为什么是“soft-label”）"><a class="header-anchor" href="#Part-C：训练损失怎么写（为什么是“soft-label”）">🔗</a>Part C：训练损失怎么写（为什么是“soft label”）</h3>
+<h3 id="Part-C：训练损失怎么写（为什么是“soft-label”）"><a class="header-anchor" href="#Part-C：训练损失怎么写（为什么是“soft-label”）"></a>Part C：训练损失怎么写（为什么是“soft label”）</h3>
 <p>有了 unknown 集合 $ U $ 和一批用 wildcard 的预测集合 $ Y^{ow} $，作者用 <strong>Hungarian matching</strong> 给 unknown 框和预测框做一一匹配：</p>
 <ul>
 <li>
@@ -3261,9 +3261,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>得到最优匹配后，定义 unknown 的伪标签损失：</p>
 
-    <span id="mjx-70cb82b">
+    <span id="mjx-49787df">
       <style>
-      #mjx-70cb82b{
+      #mjx-49787df{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3426,9 +3426,9 @@ g[data-mml-node="xypic"] path {
 </ul>
 <p>同时 base 的正常监督损失还是照常做：</p>
 
-    <span id="mjx-c531449">
+    <span id="mjx-0ed2a4c">
       <style>
-      #mjx-c531449{
+      #mjx-0ed2a4c{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3594,26 +3594,26 @@ g[data-mml-node="xypic"] path {
 </ul>
 </blockquote>
 <hr>
-<h3 id="重点"><a class="header-anchor" href="#重点">🔗</a>重点</h3>
+<h3 id="重点"><a class="header-anchor" href="#重点"></a>重点</h3>
 <ol>
 <li><strong>Open-world pseudo labeling 的目标</strong>：在训练集里把“潜在 novel 物体”从背景中挖出来，当作前景参与训练，缓解 confidence bias。</li>
 <li><strong>Foreground Estimator 的作用</strong>：给 unknown 框打软分 $ w $，控制噪声影响。</li>
 <li><strong>Wildcard matching 的关键价值</strong>：unknown 没类别名也没关系——用 “object/thing” 这种通用文本嵌入让它能接入 conditional matching 的训练框架。</li>
 </ol>
 <hr>
-<h2 id="Denoising-Text-Query-Training"><a class="header-anchor" href="#Denoising-Text-Query-Training">🔗</a>Denoising Text Query Training</h2>
+<h2 id="Denoising-Text-Query-Training"><a class="header-anchor" href="#Denoising-Text-Query-Training"></a>Denoising Text Query Training</h2>
 <p>好的，我们接下来详细讲解 <strong>Denoising Text Query Training (去噪文本查询训练)</strong> 模块。</p>
 <p>如果说“通配符匹配”是教模型“<strong>看到</strong>”未知物体，那么“去噪文本查询训练”就是教模型“<strong>看清</strong>”未知物体，即在混乱的背景中坚定地把未知物体从背景里区分出来。</p>
 <hr>
-<h3 id="1-DTQT-要解决什么问题（动机）"><a class="header-anchor" href="#1-DTQT-要解决什么问题（动机）">🔗</a>1) DTQT 要解决什么问题（动机）</h3>
+<h3 id="1-DTQT-要解决什么问题（动机）"><a class="header-anchor" href="#1-DTQT-要解决什么问题（动机）"></a>1) DTQT 要解决什么问题（动机）</h3>
 <p>前一节的 <strong>open-world pseudo labeling + wildcard matching</strong> 能把一部分“潜在 novel 物体”从背景里捞出来当作前景学，但作者强调：<strong>open-world detector 不可能把所有潜在 novel 都找全</strong>。因此模型仍会把不少 novel 和背景混在一起。DTQT 的目标就是：<strong>进一步提升模型区分 “novel vs background” 的能力</strong>。</p>
 <ul>
 <li><strong>解决方案</strong>：通过<strong>人工合成</strong>数据进行对比学习。
 <ul>
 <li>我们拿一个未知的物体框 
-    <span id="mjx-c3adfc1">
+    <span id="mjx-07d75da">
       <style>
-      #mjx-c3adfc1{
+      #mjx-07d75da{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3779,7 +3779,7 @@ g[data-mml-node="xypic"] path {
 <li><strong>目的</strong>：强迫模型去学这样一个边界——只要是物体，哪怕位置有点偏，也要匹配 &quot;Object&quot;；如果是背景，哪怕给了具体类别的提示，也要判定为背景 。</li>
 </ul>
 <hr>
-<h3 id="2-DTQT-的核心想法"><a class="header-anchor" href="#2-DTQT-的核心想法">🔗</a>2) DTQT 的核心想法</h3>
+<h3 id="2-DTQT-的核心想法"><a class="header-anchor" href="#2-DTQT-的核心想法"></a>2) DTQT 的核心想法</h3>
 <p>从每一个 unknown 框出发，<strong>人为合成两类训练样本</strong>：</p>
 <ul>
 <li><strong>“前景样本”</strong>：框跟 unknown 很接近（IoU 高），文本用正确的 wildcard（“object/thing”）→ 应该输出“匹配/有物体”</li>
@@ -3789,13 +3789,13 @@ g[data-mml-node="xypic"] path {
 <strong>“不是只要文本相似就算匹配”，也要看框位置是不是对应真实物体；同时 novel（unknown）不该被当背景。</strong></p>
 <p>作者在引言里也用一句话概括过：DTQT 会从 unknown objects 合成前景/背景 query-box pairs，用对比学习减少 novel 与 background 的混淆。</p>
 <hr>
-<h3 id="3-具体怎么“造”这些带噪-query-box-pairs？"><a class="header-anchor" href="#3-具体怎么“造”这些带噪-query-box-pairs？">🔗</a>3) 具体怎么“造”这些带噪 query-box pairs？</h3>
-<h4 id="3-1-从一个-unknown-物体-u-i-出发，生成-2N-个噪声框（公式-11）"><a class="header-anchor" href="#3-1-从一个-unknown-物体-u-i-出发，生成-2N-个噪声框（公式-11）">🔗</a>3.1 从一个 unknown 物体 $ u_i $ 出发，生成 $ 2N $ 个噪声框（公式 11）</h4>
+<h3 id="3-具体怎么“造”这些带噪-query-box-pairs？"><a class="header-anchor" href="#3-具体怎么“造”这些带噪-query-box-pairs？"></a>3) 具体怎么“造”这些带噪 query-box pairs？</h3>
+<h4 id="3-1-从一个-unknown-物体-u-i-出发，生成-2N-个噪声框（公式-11）"><a class="header-anchor" href="#3-1-从一个-unknown-物体-u-i-出发，生成-2N-个噪声框（公式-11）"></a>3.1 从一个 unknown 物体 $ u_i $ 出发，生成 $ 2N $ 个噪声框（公式 11）</h4>
 <p>作者说：给定一个 open-world unknown object $ u_i $，先拿到它的坐标框 $ o_i $，然后围绕 $ o_i $ 生成 $ 2N $ 个噪声框 $ \tilde{o}_i $：</p>
 
-    <span id="mjx-bd210b2">
+    <span id="mjx-ebd05bb">
       <style>
-      #mjx-bd210b2{
+      #mjx-ebd05bb{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3955,9 +3955,9 @@ g[data-mml-node="xypic"] path {
     </span>
   <ul>
 <li>$ \lambda_1 \sim Uniform(0,1 
-    <span id="mjx-205beb7">
+    <span id="mjx-41e6787">
       <style>
-      #mjx-205beb7{
+      #mjx-41e6787{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4123,7 +4123,7 @@ g[data-mml-node="xypic"] path {
 <p>直觉：前一半是“轻微扰动”= 更像真实物体位置；后一半是“大扰动”= 更像背景/错位区域。</p>
 </blockquote>
 <hr>
-<h4 id="3-2-给这些噪声框配“文本条件”，做成前景-背景-query-box-对（公式-12）"><a class="header-anchor" href="#3-2-给这些噪声框配“文本条件”，做成前景-背景-query-box-对（公式-12）">🔗</a>3.2 给这些噪声框配“文本条件”，做成前景/背景 query-box 对（公式 12）</h4>
+<h4 id="3-2-给这些噪声框配“文本条件”，做成前景-背景-query-box-对（公式-12）"><a class="header-anchor" href="#3-2-给这些噪声框配“文本条件”，做成前景-背景-query-box-对（公式-12）"></a>3.2 给这些噪声框配“文本条件”，做成前景/背景 query-box 对（公式 12）</h4>
 <p>接着作者定义一套“去噪分支”的 query（记作 $ \tilde{q}_i $），并把文本嵌入加进去得到 $ \tilde{q}_i^* $。</p>
 <ul>
 <li>
@@ -4135,9 +4135,9 @@ g[data-mml-node="xypic"] path {
 </ul>
 <p>公式写成：</p>
 
-    <span id="mjx-2b69604">
+    <span id="mjx-a1a2ce4">
       <style>
-      #mjx-2b69604{
+      #mjx-a1a2ce4{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4304,7 +4304,7 @@ g[data-mml-node="xypic"] path {
 </ul>
 </blockquote>
 <hr>
-<h3 id="4-训练时怎么喂进网络（“双分支同时训练”）"><a class="header-anchor" href="#4-训练时怎么喂进网络（“双分支同时训练”）">🔗</a>4) 训练时怎么喂进网络（“双分支同时训练”）</h3>
+<h3 id="4-训练时怎么喂进网络（“双分支同时训练”）"><a class="header-anchor" href="#4-训练时怎么喂进网络（“双分支同时训练”）"></a>4) 训练时怎么喂进网络（“双分支同时训练”）</h3>
 <p>作者说训练时 decoder <strong>同时</strong>处理两部分：</p>
 <ul>
 <li>vanilla 主干部分：$ (q_i^*, b_i $)（也就是正常 OVD 的那批 query/proposals）</li>
@@ -4312,12 +4312,12 @@ g[data-mml-node="xypic"] path {
 </ul>
 <p>并且用 <strong>attention mask 隔离</strong>，避免信息泄漏（比如去噪分支偷看主干分支的答案）。</p>
 <hr>
-<h3 id="5-DTQT-的损失函数在干什么（公式-13）"><a class="header-anchor" href="#5-DTQT-的损失函数在干什么（公式-13）">🔗</a>5) DTQT 的损失函数在干什么（公式 13）</h3>
+<h3 id="5-DTQT-的损失函数在干什么（公式-13）"><a class="header-anchor" href="#5-DTQT-的损失函数在干什么（公式-13）"></a>5) DTQT 的损失函数在干什么（公式 13）</h3>
 <p>DTQT 其实训练的是“匹配概率” $ \tilde{m}_i $（denoising part 的 match probability）。作者定义去噪损失：</p>
 
-    <span id="mjx-10ffa74">
+    <span id="mjx-4fc1302">
       <style>
-      #mjx-10ffa74{
+      #mjx-4fc1302{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4495,12 +4495,12 @@ g[data-mml-node="xypic"] path {
 <p>直觉：DTQT 不是只“瞎造噪声”训练，而是会根据 unknown 的可靠程度调整力度：靠谱 unknown 周围的正负样本更值得学。</p>
 </blockquote>
 <hr>
-<h3 id="6-最终总损失（公式-14）"><a class="header-anchor" href="#6-最终总损失（公式-14）">🔗</a>6) 最终总损失（公式 14）</h3>
+<h3 id="6-最终总损失（公式-14）"><a class="header-anchor" href="#6-最终总损失（公式-14）"></a>6) 最终总损失（公式 14）</h3>
 <p>DTQT 只是额外加的一项，整体目标是三项相加：</p>
 
-    <span id="mjx-1a8bbbd">
+    <span id="mjx-0336319">
       <style>
-      #mjx-1a8bbbd{
+      #mjx-0336319{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4660,7 +4660,7 @@ g[data-mml-node="xypic"] path {
     </span>
   <p>其中 $ \beta $ 是去噪损失权重。</p>
 <hr>
-<h3 id="你读完-DTQT-应该牢牢记住的-3-点"><a class="header-anchor" href="#你读完-DTQT-应该牢牢记住的-3-点">🔗</a>你读完 DTQT 应该牢牢记住的 3 点</h3>
+<h3 id="你读完-DTQT-应该牢牢记住的-3-点"><a class="header-anchor" href="#你读完-DTQT-应该牢牢记住的-3-点"></a>你读完 DTQT 应该牢牢记住的 3 点</h3>
 <ol>
 <li><strong>为什么需要 DTQT</strong>：unknown proposals 覆盖不全，novel 仍会和背景混淆，所以要额外训练“判别边界”。</li>
 <li><strong>DTQT 在学什么</strong>：学一个更可靠的“匹配/No Object 判断”（match probability），让 novel 不再轻易被判背景。</li>
@@ -4671,11 +4671,11 @@ g[data-mml-node="xypic"] path {
 <blockquote>
 <p>DTQT 就像在教模型做“开卷的真假匹配题”：给你一个框 + 一个文本提示，你必须判断“这俩到底配不配”，不配就要果断 No Object。</p>
 </blockquote>
-<h2 id="Region-of-Query-Interests-Selection"><a class="header-anchor" href="#Region-of-Query-Interests-Selection">🔗</a>Region of Query Interests Selection</h2>
+<h2 id="Region-of-Query-Interests-Selection"><a class="header-anchor" href="#Region-of-Query-Interests-Selection"></a>Region of Query Interests Selection</h2>
 <p>According to a document from $ 2025 $.</p>
 <p>下面继续讲 <strong>RoQIs（Region of Query Interests）Selection</strong>，它解决的是：<strong>在进入 Decoder 之前“挑哪些候选框/候选区域”这一步，也会被 confidence bias 带偏</strong>，从而让 novel 更容易在中间环节就被筛掉。</p>
 <hr>
-<h3 id="1-为什么还需要-RoQIs：问题出在“候选区域筛选”阶段"><a class="header-anchor" href="#1-为什么还需要-RoQIs：问题出在“候选区域筛选”阶段">🔗</a>1) 为什么还需要 RoQIs：问题出在“候选区域筛选”阶段</h3>
+<h3 id="1-为什么还需要-RoQIs：问题出在“候选区域筛选”阶段"><a class="header-anchor" href="#1-为什么还需要-RoQIs：问题出在“候选区域筛选”阶段"></a>1) 为什么还需要 RoQIs：问题出在“候选区域筛选”阶段</h3>
 <p>作者说：即便你已经用了 open-world pseudo labeling 和 DTQT 去缓解 bias，<strong>bias 仍然会影响“中间的 region proposal 选择过程”</strong>，导致模型更偏向选择 base 类当 proposals，novel 更容易被漏掉。</p>
 <p>而 OV-DQUO 原本依赖一个 <strong>objectness score $ o $</strong> 去选 proposals：</p>
 <ul>
@@ -4684,7 +4684,7 @@ g[data-mml-node="xypic"] path {
 </ul>
 <p>所以，如果你只按 $ o $ 选 Top-N，很可能 <strong>novel 还没进入后续精修/分类就被扔掉了</strong>。</p>
 <hr>
-<h3 id="2-RoQIs-的核心思路：用-CLIP-相似度“纠偏”，但别丢掉定位质量"><a class="header-anchor" href="#2-RoQIs-的核心思路：用-CLIP-相似度“纠偏”，但别丢掉定位质量">🔗</a>2) RoQIs 的核心思路：用 CLIP 相似度“纠偏”，但别丢掉定位质量</h3>
+<h3 id="2-RoQIs-的核心思路：用-CLIP-相似度“纠偏”，但别丢掉定位质量"><a class="header-anchor" href="#2-RoQIs-的核心思路：用-CLIP-相似度“纠偏”，但别丢掉定位质量"></a>2) RoQIs 的核心思路：用 CLIP 相似度“纠偏”，但别丢掉定位质量</h3>
 <p>作者观察到：<strong>CLIP 的分类分数 bias 更小</strong>，可以用来缓解 objectness 的偏置。</p>
 <p>但 CLIP 分数也有缺点：它更偏“语义像不像”，对 <strong>定位质量（框准不准）不敏感</strong>，直接用它筛框会影响检测质量。</p>
 <p>因此 RoQIs 做了一个折中：</p>
@@ -4692,7 +4692,7 @@ g[data-mml-node="xypic"] path {
 <p><strong>把 CLIP 的语义分数</strong> 和 <strong>objectness 的检测分数</strong> 用“加权几何平均”融合。</p>
 </blockquote>
 <hr>
-<h3 id="3-公式-15-：RoQIs-的新筛选指标-phi"><a class="header-anchor" href="#3-公式-15-：RoQIs-的新筛选指标-phi">🔗</a>3) 公式 $ 15 $：RoQIs 的新筛选指标 $ \phi $</h3>
+<h3 id="3-公式-15-：RoQIs-的新筛选指标-phi"><a class="header-anchor" href="#3-公式-15-：RoQIs-的新筛选指标-phi"></a>3) 公式 $ 15 $：RoQIs 的新筛选指标 $ \phi $</h3>
 <p>给定：</p>
 <ul>
 <li>$ o $：每个候选区域的 objectness 分数（向量）</li>
@@ -4706,9 +4706,9 @@ g[data-mml-node="xypic"] path {
 </ul>
 <p>最终融合得到：</p>
 
-    <span id="mjx-5d25e77">
+    <span id="mjx-e4e2aa5">
       <style>
-      #mjx-5d25e77{
+      #mjx-e4e2aa5{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4867,20 +4867,20 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" display="true" width="full" style="min-width: 37.689ex; position: relative;"><svg style="vertical-align: -0.897ex; min-width: 37.689ex;" xmlns="http://www.w3.org/2000/svg" width="100%" height="2.925ex" role="img" focusable="false" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(0.0181,-0.0181) translate(0, -896.4)"><g data-mml-node="math"><g data-mml-node="mtable" transform="translate(2578,0) translate(-2578,0)"><g transform="translate(0 896.4) matrix(1 0 0 -1 0 0) scale(55.25)"><svg data-table="true" preserveAspectRatio="xMidYMid" viewBox="5751.2 -896.4 1 1292.8"><g transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="mlabeledtr" transform="translate(0,-46.9)"><g data-mml-node="mtd"><g data-mml-node="mi"><path data-c="1D719" d="M409 688Q413 694 421 694H429H442Q448 688 448 686Q448 679 418 563Q411 535 404 504T392 458L388 442Q388 441 397 441T429 435T477 418Q521 397 550 357T579 260T548 151T471 65T374 11T279 -10H275L251 -105Q245 -128 238 -160Q230 -192 227 -198T215 -205H209Q189 -205 189 -198Q189 -193 211 -103L234 -11Q234 -10 226 -10Q221 -10 206 -8T161 6T107 36T62 89T43 171Q43 231 76 284T157 370T254 422T342 441Q347 441 348 445L378 567Q409 686 409 688ZM122 150Q122 116 134 91T167 53T203 35T237 27H244L337 404Q333 404 326 403T297 395T255 379T211 350T170 304Q152 276 137 237Q122 191 122 150ZM500 282Q500 320 484 347T444 385T405 400T381 404H378L332 217L284 29Q284 27 285 27Q293 27 317 33T357 47Q400 66 431 100T475 170T494 234T500 282Z"></path></g><g data-mml-node="mo" transform="translate(873.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1929.6,0)"><g data-mml-node="mo" transform="translate(0 -0.5)"><path data-c="28" d="M152 251Q152 646 388 850H416Q422 844 422 841Q422 837 403 816T357 753T302 649T255 482T236 250Q236 124 255 19T301 -147T356 -251T403 -315T422 -340Q422 -343 416 -349H388Q359 -325 332 -296T271 -213T212 -97T170 56T152 251Z"></path></g></g><g data-mml-node="mtext" transform="translate(2387.6,0)"><path data-c="4D" d="M132 622Q125 629 121 631T105 634T62 637H29V683H135Q221 683 232 682T249 675Q250 674 354 398L458 124L562 398Q666 674 668 675Q671 681 683 682T781 683H887V637H854Q814 636 803 634T785 622V61Q791 51 802 49T854 46H887V0H876Q855 3 736 3Q605 3 596 0H585V46H618Q660 47 669 49T688 61V347Q688 424 688 461T688 546T688 613L687 632Q454 14 450 7Q446 1 430 1T410 7Q409 9 292 316L176 624V606Q175 588 175 543T175 463T175 356L176 86Q187 50 261 46H278V0H269Q254 3 154 3Q52 3 37 0H29V46H46Q78 48 98 56T122 69T132 86V622Z"></path><path data-c="61" d="M137 305T115 305T78 320T63 359Q63 394 97 421T218 448Q291 448 336 416T396 340Q401 326 401 309T402 194V124Q402 76 407 58T428 40Q443 40 448 56T453 109V145H493V106Q492 66 490 59Q481 29 455 12T400 -6T353 12T329 54V58L327 55Q325 52 322 49T314 40T302 29T287 17T269 6T247 -2T221 -8T190 -11Q130 -11 82 20T34 107Q34 128 41 147T68 188T116 225T194 253T304 268H318V290Q318 324 312 340Q290 411 215 411Q197 411 181 410T156 406T148 403Q170 388 170 359Q170 334 154 320ZM126 106Q126 75 150 51T209 26Q247 26 276 49T315 109Q317 116 318 175Q318 233 317 233Q309 233 296 232T251 223T193 203T147 166T126 106Z" transform="translate(917,0)"></path><path data-c="78" d="M201 0Q189 3 102 3Q26 3 17 0H11V46H25Q48 47 67 52T96 61T121 78T139 96T160 122T180 150L226 210L168 288Q159 301 149 315T133 336T122 351T113 363T107 370T100 376T94 379T88 381T80 383Q74 383 44 385H16V431H23Q59 429 126 429Q219 429 229 431H237V385Q201 381 201 369Q201 367 211 353T239 315T268 274L272 270L297 304Q329 345 329 358Q329 364 327 369T322 376T317 380T310 384L307 385H302V431H309Q324 428 408 428Q487 428 493 431H499V385H492Q443 385 411 368Q394 360 377 341T312 257L296 236L358 151Q424 61 429 57T446 50Q464 46 499 46H516V0H510H502Q494 1 482 1T457 2T432 2T414 3Q403 3 377 3T327 1L304 0H295V46H298Q309 46 320 51T331 63Q331 65 291 120L250 175Q249 174 219 133T185 88Q181 83 181 74Q181 63 188 55T206 46Q208 46 208 23V0H201Z" transform="translate(1417,0)"></path></g><g data-mml-node="mo" transform="translate(4332.6,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(4721.6,0)"><path data-c="1D463" d="M173 380Q173 405 154 405Q130 405 104 376T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Q21 294 29 316T53 368T97 419T160 441Q202 441 225 417T249 361Q249 344 246 335Q246 329 231 291T200 202T182 113Q182 86 187 69Q200 26 250 26Q287 26 319 60T369 139T398 222T409 277Q409 300 401 317T383 343T365 361T357 383Q357 405 376 424T417 443Q436 443 451 425T467 367Q467 340 455 284T418 159T347 40T241 -11Q177 -11 139 22Q102 54 102 117Q102 148 110 181T151 298Q173 362 173 380Z"></path></g><g data-mml-node="mo" transform="translate(5428.8,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="msup" transform="translate(5929,0)"><g data-mml-node="mi"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mi" transform="translate(394,413) scale(0.707)"><path data-c="22A4" d="M55 642T55 648T59 659T66 666T71 668H708Q723 660 723 648T708 628H409V15Q402 2 391 0Q387 0 384 1T379 3T375 6T373 9T371 13T369 16V628H71Q70 628 67 630T59 637Z"></path></g></g><g data-mml-node="mo" transform="translate(6923.1,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="msup" transform="translate(7312.1,0)"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo" transform="translate(0 -0.5)"><path data-c="29" d="M305 251Q305 -145 69 -349H56Q43 -349 39 -347T35 -338Q37 -333 60 -307T108 -239T160 -136T204 27T221 250T204 473T160 636T108 740T60 807T35 839Q35 850 50 850H56H69Q197 743 256 566Q305 425 305 251Z"></path></g></g><g data-mml-node="TeXAtom" transform="translate(491,576.6) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D6FC" d="M34 156Q34 270 120 356T309 442Q379 442 421 402T478 304Q484 275 485 237V208Q534 282 560 374Q564 388 566 390T582 393Q603 393 603 385Q603 376 594 346T558 261T497 161L486 147L487 123Q489 67 495 47T514 26Q528 28 540 37T557 60Q559 67 562 68T577 70Q597 70 597 62Q597 56 591 43Q579 19 556 5T512 -10H505Q438 -10 414 62L411 69L400 61Q390 53 370 41T325 18T267 -2T203 -11Q124 -11 79 39T34 156ZM208 26Q257 26 306 47T379 90L403 112Q401 255 396 290Q382 405 304 405Q235 405 183 332Q156 292 139 224T121 120Q121 71 146 49T208 26Z"></path></g></g></g><g data-mml-node="mo" transform="translate(8527.9,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="msup" transform="translate(9028.1,0)"><g data-mml-node="mi"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="TeXAtom" transform="translate(518,413) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mn" transform="translate(389,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mo" transform="translate(889,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mi" transform="translate(1667,0)"><path data-c="1D6FC" d="M34 156Q34 270 120 356T309 442Q379 442 421 402T478 304Q484 275 485 237V208Q534 282 560 374Q564 388 566 390T582 393Q603 393 603 385Q603 376 594 346T558 261T497 161L486 147L487 123Q489 67 495 47T514 26Q528 28 540 37T557 60Q559 67 562 68T577 70Q597 70 597 62Q597 56 591 43Q579 19 556 5T512 -10H505Q438 -10 414 62L411 69L400 61Q390 53 370 41T325 18T267 -2T203 -11Q124 -11 79 39T34 156ZM208 26Q257 26 306 47T379 90L403 112Q401 255 396 290Q382 405 304 405Q235 405 183 332Q156 292 139 224T121 120Q121 71 146 49T208 26Z"></path></g><g data-mml-node="mo" transform="translate(2307,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></g></g></g></svg><svg data-labels="true" preserveAspectRatio="xMaxYMid" viewBox="1778 -896.4 1 1292.8"><g data-labels="true" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="mtd" id="mjx-eqn:15" transform="translate(0,703.1)"><text data-id-align="true"></text><g data-idbox="true" transform="translate(0,-750)"><g data-mml-node="mtext"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z" transform="translate(389,0)"></path><path data-c="35" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z" transform="translate(889,0)"></path><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z" transform="translate(1389,0)"></path></g></g></g></g></svg></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mtable displaystyle="true"><mlabeledtr><mtd><mtext>(15)</mtext></mtd><mtd><mi>ϕ</mi><mo>=</mo><mrow data-mjx-texclass="ORD"><mo minsize="1.2em" maxsize="1.2em">(</mo></mrow><mtext>Max</mtext><mo stretchy="false">(</mo><mi>v</mi><mo>⋅</mo><msup><mi>t</mi><mi mathvariant="normal">⊤</mi></msup><mo stretchy="false">)</mo><msup><mrow data-mjx-texclass="ORD"><mo minsize="1.2em" maxsize="1.2em">)</mo></mrow><mrow data-mjx-texclass="ORD"><mi>α</mi></mrow></msup><mo>⋅</mo><msup><mi>o</mi><mrow data-mjx-texclass="ORD"><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>α</mi><mo stretchy="false">)</mo></mrow></msup></mtd></mlabeledtr></mtable></math></mjx-assistive-mml></mjx-container>
     </span>
   <p>其中 $ \alpha $ 是加权几何平均的权重参数。</p>
-<h4 id="直觉怎么理解？"><a class="header-anchor" href="#直觉怎么理解？">🔗</a>直觉怎么理解？</h4>
+<h4 id="直觉怎么理解？"><a class="header-anchor" href="#直觉怎么理解？"></a>直觉怎么理解？</h4>
 <ul>
 <li>当 $ \alpha $ 越大：越偏向 <strong>CLIP 语义分</strong>（更“开放词表友好”，对 novel 更友好）</li>
 <li>当 $ \alpha $ 越小：越偏向 <strong>objectness</strong>（更“检测质量/定位友好”）</li>
 </ul>
 <p>几何平均的好处是：两边任何一边特别低，$ \phi $ 都会被拉低——能避免“语义很像但框很烂”或“框像物体但语义很弱”的极端情况。</p>
 <hr>
-<h3 id="4-公式-16-：用-phi-从候选集合里选-Top-N"><a class="header-anchor" href="#4-公式-16-：用-phi-从候选集合里选-Top-N">🔗</a>4) 公式 $ 16 $：用 $ \phi $ 从候选集合里选 Top-N</h3>
+<h3 id="4-公式-16-：用-phi-从候选集合里选-Top-N"><a class="header-anchor" href="#4-公式-16-：用-phi-从候选集合里选-Top-N"></a>4) 公式 $ 16 $：用 $ \phi $ 从候选集合里选 Top-N</h3>
 <p>有了每个候选的 $ \phi $ 之后，RoQIs 就做一件事：
 从 proposal 集合 $ B $ 中，按 $ \phi $ 排序取前 $ N $ 个，得到感兴趣区域 $ B^* $：</p>
 
-    <span id="mjx-56b233e">
+    <span id="mjx-2e8c6b4">
       <style>
-      #mjx-56b233e{
+      #mjx-2e8c6b4{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5040,16 +5040,16 @@ g[data-mml-node="xypic"] path {
     </span>
   <p>作者说明 gather 就是“按 $ \phi $ 选 Top N proposals”。</p>
 <hr>
-<h3 id="5-你可以把-RoQIs-当成一句很实用的话"><a class="header-anchor" href="#5-你可以把-RoQIs-当成一句很实用的话">🔗</a>5) 你可以把 RoQIs 当成一句很实用的话</h3>
+<h3 id="5-你可以把-RoQIs-当成一句很实用的话"><a class="header-anchor" href="#5-你可以把-RoQIs-当成一句很实用的话"></a>5) 你可以把 RoQIs 当成一句很实用的话</h3>
 <blockquote>
 <p><strong>别只相信 detector 自己的 objectness（会偏 base），也别只相信 CLIP（不管框准不准）——把两者按权重融合，再选 Top-N。</strong></p>
 </blockquote>
 <hr>
 <p>如果你愿意，下一步我可以把 <strong>整套 OV-DQUO 训练/推理流程</strong>用“输入输出 + 哪一步用到哪条公式”的方式串起来（Preliminaries 的 $ 1 $$ 2 $$ 3 $ + Wildcard + DTQT + RoQIs 的 $ 15 $$ 16 $），这样你读代码时会非常清楚每个张量在哪里用、为什么用。</p>
-<h1 id="Experiments"><a class="header-anchor" href="#Experiments">🔗</a>Experiments</h1>
+<h1 id="Experiments"><a class="header-anchor" href="#Experiments"></a>Experiments</h1>
 <p>这一章的核心目的是：<strong>用数据证明 OV-DQUO 确实解决了“置信度偏差”问题，并且在新类别（Novel Categories）上吊打现有的 SOTA 方法。</strong></p>
 <hr>
-<h3 id="1-实验设置-Experimental-Setup"><a class="header-anchor" href="#1-实验设置-Experimental-Setup">🔗</a>1. 实验设置 (Experimental Setup)</h3>
+<h3 id="1-实验设置-Experimental-Setup"><a class="header-anchor" href="#1-实验设置-Experimental-Setup"></a>1. 实验设置 (Experimental Setup)</h3>
 <p>首先是“竞技场”的规则介绍：</p>
 <ul>
 <li><strong>数据集 (Benchmarks)</strong>：
@@ -5062,9 +5062,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>主要关注 <strong>Novel Categories</strong> 的 AP (Average Precision)。</li>
 <li>对于 COCO 看 
-    <span id="mjx-4aabc74">
+    <span id="mjx-d91beac">
       <style>
-      #mjx-4aabc74{
+      #mjx-d91beac{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5224,9 +5224,9 @@ g[data-mml-node="xypic"] path {
     </span>
   。</li>
 <li>对于 LVIS 看 
-    <span id="mjx-e96c55f">
+    <span id="mjx-615dbca">
       <style>
-      #mjx-e96c55f{
+      #mjx-615dbca{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5393,7 +5393,7 @@ g[data-mml-node="xypic"] path {
 </ul>
 </li>
 </ul>
-<h3 id="2-实现细节-Implementation-Details"><a class="header-anchor" href="#2-实现细节-Implementation-Details">🔗</a>2. 实现细节 (Implementation Details)</h3>
+<h3 id="2-实现细节-Implementation-Details"><a class="header-anchor" href="#2-实现细节-Implementation-Details"></a>2. 实现细节 (Implementation Details)</h3>
 <p>这是复现时必须对齐的参数：</p>
 <ul>
 <li><strong>架构基础</strong>：基于 <strong>DINO</strong> (DETR 的改进版)。</li>
@@ -5408,9 +5408,9 @@ g[data-mml-node="xypic"] path {
 <li><strong>关键参数</strong>：
 <ul>
 <li>RoQIs 参数 
-    <span id="mjx-80f408">
+    <span id="mjx-afce3f7">
       <style>
-      #mjx-80f408{
+      #mjx-afce3f7{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5573,15 +5573,15 @@ g[data-mml-node="xypic"] path {
 </ul>
 </li>
 </ul>
-<h3 id="3-主要结果-Main-Results"><a class="header-anchor" href="#3-主要结果-Main-Results">🔗</a>3. 主要结果 (Main Results)</h3>
+<h3 id="3-主要结果-Main-Results"><a class="header-anchor" href="#3-主要结果-Main-Results"></a>3. 主要结果 (Main Results)</h3>
 <p><strong>一句话总结：OV-DQUO 在各项指标上均取得了 SOTA，尤其是在 Novel 类别上提升巨大。</strong></p>
 <ol>
 <li><strong>OV-COCO 结果 (Table 1)</strong>：
 <ul>
 <li>在 ResNet-50 setting 下，
-    <span id="mjx-8cab397">
+    <span id="mjx-504e8e8">
       <style>
-      #mjx-8cab397{
+      #mjx-504e8e8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5748,9 +5748,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>这是一个“地狱级”难度的数据集。</li>
 <li>使用 ViT-L backbone 时，
-    <span id="mjx-74755e4">
+    <span id="mjx-b99dabf">
       <style>
-      #mjx-74755e4{
+      #mjx-b99dabf{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5914,7 +5914,7 @@ g[data-mml-node="xypic"] path {
 </ul>
 </li>
 </ol>
-<h3 id="4-消融实验-Ablation-Studies-——-最值得关注的部分"><a class="header-anchor" href="#4-消融实验-Ablation-Studies-——-最值得关注的部分">🔗</a>4. 消融实验 (Ablation Studies) —— <em>最值得关注的部分</em></h3>
+<h3 id="4-消融实验-Ablation-Studies-——-最值得关注的部分"><a class="header-anchor" href="#4-消融实验-Ablation-Studies-——-最值得关注的部分"></a>4. 消融实验 (Ablation Studies) —— <em>最值得关注的部分</em></h3>
 <p>作者通过拆解模型，证明了每个组件都不是凑数的：</p>
 <table>
 <thead>
@@ -5955,14 +5955,14 @@ g[data-mml-node="xypic"] path {
 <blockquote>
 <p><strong>注意</strong>：这里的 54.5 是指在某个特定验证集上的分数，趋势比绝对数值更重要。</p>
 </blockquote>
-<h3 id="5-定性分析-Qualitative-Analysis"><a class="header-anchor" href="#5-定性分析-Qualitative-Analysis">🔗</a>5. 定性分析 (Qualitative Analysis)</h3>
+<h3 id="5-定性分析-Qualitative-Analysis"><a class="header-anchor" href="#5-定性分析-Qualitative-Analysis"></a>5. 定性分析 (Qualitative Analysis)</h3>
 <p>论文展示了一些可视化结果（Figure 3）：</p>
 <ul>
 <li><strong>Baseline</strong>：经常漏检新物体（比如把“领带”漏了），或者把“新物体”框出来的置信度极低。</li>
 <li><strong>OV-DQUO</strong>：能以高置信度把“未知物体”框出来，并且通过 RoQIs 把它正确归类。</li>
 </ul>
 <hr>
-</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/OV-DQUO/">OV-DQUO</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection"><img class="cover" src="/blog/image/cover/1.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   开放词汇检测 / YOLO-UniOW  🔗Abstract According to a document from Dec 30, 2024, 这篇论文的摘要基本按“问题 → 现有方法不足 → 新设定 → 方法 → 效果”的顺序讲清楚了整篇文章在做什么。 下面我就按摘要原句的逻辑，一句句带你读懂它在说啥：   传统检测器的核心痛点：封闭类别  摘要开头说：传统目标检测受“closed-set...</div></div></div></a><a class="pagination-related" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册"><img class="cover" src="/blog/image/cover/13.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">AI使用手册</div></div><div class="info-2"><div class="info-item-1">🔗codex 🔗Codex 命令精简速查表 🔗CLI 终端命令 以下列出 Codex CLI 在终端中常用的命令及其用途，每条附有用途说明和示例：    命令 简要说明 示例     codex (无子命令) 启动交互式 Codex 会话（可选地直接附带提示）。启动后可在终端与 Codex 聊天，Codex 将读取当前目录内容并生成方案。 codex &quot;解释这个代码库&quot; –...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">长期主义学习者，记录技术、论文与生活。</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/qieliqiean"><i class="fab fa-github"></i><span>访问 GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/qieliqiean" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎交流：2895014608@qq.com</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Abstract"><span class="toc-text">🔗Abstract</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%BB%93%E8%AE%BA"><span class="toc-text">🔗摘要一句话结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E6%96%87%E7%AB%A0%E6%91%98%E8%A6%81%E9%A1%BA%E5%BA%8F%E8%AE%B2%E8%A7%A3%E4%B8%80%E9%81%8D"><span class="toc-text">🔗按文章摘要顺序讲解一遍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5-%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-text">🔗关键概念&#x2F;符号表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%85%AC%E5%BC%8F-%E7%AE%97%E6%B3%95"><span class="toc-text">🔗关键公式&#x2F;算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E7%82%B9%E5%86%85%E5%AE%B9%E8%AE%B2%E8%A7%A3%E5%8F%8A%E6%A2%B3%E7%90%86%EF%BC%88%E4%BD%A0%E8%AF%BB%E6%91%98%E8%A6%81%E6%97%B6%E8%A6%81%E6%8A%93%E7%9A%84%E4%B8%BB%E7%BA%BF%EF%BC%89"><span class="toc-text">🔗重点内容讲解及梳理（你读摘要时要抓的主线）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduction"><span class="toc-text">🔗Introduction</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%9C%AC%E8%8A%82%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%BB%93%E8%AE%BA"><span class="toc-text">🔗1. 本节一句话结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%8C%89%E6%96%87%E7%AB%A0%E9%A1%BA%E5%BA%8F%E8%AE%B2%E8%A7%A3%E4%B8%80%E9%81%8D"><span class="toc-text">🔗2. 按文章顺序讲解一遍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%EF%BC%9A%E7%8E%B0%E7%8A%B6%E4%B8%8E%E5%B1%80%E9%99%90-Current-State-Limitations"><span class="toc-text">🔗第一阶段：现状与局限 (Current State &amp; Limitations)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%EF%BC%9A%E6%A0%B8%E5%BF%83%E7%97%9B%E7%82%B9%E2%80%94%E2%80%94%E7%BD%AE%E4%BF%A1%E5%BA%A6%E5%81%8F%E5%B7%AE-The-Confidence-Bias"><span class="toc-text">🔗第二阶段：核心痛点——置信度偏差 (The Confidence Bias)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%EF%BC%9AOV-DQUO-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-Proposed-Solution"><span class="toc-text">🔗第三阶段：OV-DQUO 解决方案 (Proposed Solution)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5-%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-text">🔗3. 关键概念&#x2F;符号表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%85%B3%E9%94%AE%E5%85%AC%E5%BC%8F-%E7%AE%97%E6%B3%95-%E9%80%BB%E8%BE%91%E5%B1%82%E9%9D%A2"><span class="toc-text">🔗4. 关键公式&#x2F;算法 (逻辑层面)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E9%87%8D%E7%82%B9%E5%86%85%E5%AE%B9%E8%AE%B2%E8%A7%A3%E5%8F%8A%E6%A2%B3%E7%90%86-%E5%A4%8D%E7%8E%B0%E8%A7%86%E8%A7%92"><span class="toc-text">🔗5. 重点内容讲解及梳理 (复现视角)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E6%94%B9%E5%8F%98"><span class="toc-text">🔗A. 数据流的改变</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B-%E6%96%87%E6%9C%AC%E5%B5%8C%E5%85%A5%E7%9A%84%E6%9E%84%E9%80%A0"><span class="toc-text">🔗B. 文本嵌入的构造</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E8%AE%AD%E7%BB%83%E7%9B%AE%E6%A0%87%E7%9A%84%E6%94%B9%E5%8F%98"><span class="toc-text">🔗C. 训练目标的改变</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E8%A1%A8%E8%AE%B2%E8%A7%A3"><span class="toc-text">🔗图表讲解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Figure-1-%E6%80%BB%E8%A7%88%EF%BC%9A%E4%BD%9C%E8%80%85%E6%83%B3%E7%94%A8%E4%B8%80%E5%BC%A0%E5%9B%BE%E8%AE%B2%E6%B8%85%E4%B8%89%E4%BB%B6%E4%BA%8B"><span class="toc-text">🔗Figure 1 总览：作者想用一张图讲清三件事</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#a-Detector-Confidence-Bias-and-the-Resulting-Performance-Gap"><span class="toc-text">🔗(a) Detector Confidence Bias and the Resulting Performance Gap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%83%E5%9C%A8%E8%AF%81%E6%98%8E%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">🔗它在证明什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%83%E6%80%8E%E4%B9%88%E8%AF%81%E6%98%8E%EF%BC%9F"><span class="toc-text">🔗它怎么证明？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%97%E5%87%BA%E4%BB%80%E4%B9%88%E7%BB%93%E8%AE%BA%EF%BC%9F"><span class="toc-text">🔗得出什么结论？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#b-CLIP-Guided-Region-Text-Pseudo-Labeling%EF%BC%88%E7%8E%B0%E6%9C%89%E8%B7%AF%E7%BA%BF%EF%BC%89"><span class="toc-text">🔗(b) CLIP-Guided Region-Text Pseudo Labeling（现有路线）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%83%E5%9C%A8%E8%A1%A8%E8%BE%BE%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">🔗它在表达什么？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#c-Open-World-Pseudo-Labeling-Wildcard-Matching%EF%BC%88%E4%BD%9C%E8%80%85%E8%B7%AF%E7%BA%BF%EF%BC%89"><span class="toc-text">🔗(c) Open-World Pseudo Labeling &amp; Wildcard Matching（作者路线）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%83%E5%9C%A8%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">🔗它在解决什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%83%E6%80%8E%E4%B9%88%E5%81%9A%EF%BC%9F"><span class="toc-text">🔗它怎么做？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%A0%E7%9C%8B-Figure-1-%E7%9A%84%E2%80%9C%E6%9C%80%E7%9F%AD%E8%AE%B0%E5%BF%86%E7%89%88%E2%80%9D"><span class="toc-text">🔗你看 Figure 1 的“最短记忆版”</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Related-Works"><span class="toc-text">🔗Related Works</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Open-Vocabulary-Detection%EF%BC%88%E5%BC%80%E6%94%BE%E8%AF%8D%E8%A1%A8%E6%A3%80%E6%B5%8B%EF%BC%89%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="toc-text">🔗1) Open-Vocabulary Detection（开放词表检测）相关工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BB%BB%E5%8A%A1%E8%B5%B7%E7%82%B9%EF%BC%9AOVR-CNN-%E6%8F%90%E5%87%BA-OVD-%E8%8C%83%E5%BC%8F"><span class="toc-text">🔗1.1 任务起点：OVR-CNN 提出 OVD 范式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-OVD-%E6%96%B9%E6%B3%95%E8%B0%B1%E7%B3%BB%EF%BC%9A%E4%B8%89%E7%B1%BB%E8%B7%AF%E7%BA%BF%EF%BC%88%E4%BD%9C%E8%80%85%E7%94%A8%E4%BA%8E%E2%80%9C%E5%AE%9A%E4%BD%8D%E8%87%AA%E5%B7%B1%E2%80%9D%EF%BC%89"><span class="toc-text">🔗1.2 OVD 方法谱系：三类路线（作者用于“定位自己”）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-%E2%80%9C%E5%86%BB%E7%BB%93-VLM-%E5%9B%BE%E5%83%8F%E7%BC%96%E7%A0%81%E5%99%A8%E5%BD%93-backbone%E2%80%9D%E7%9A%84-SOTA-%E7%BA%BF%EF%BC%88%E4%BD%9C%E8%80%85%E9%87%8D%E7%82%B9%E8%AE%A8%E8%AE%BA%EF%BC%89"><span class="toc-text">🔗A) “冻结 VLM 图像编码器当 backbone”的 SOTA 线（作者重点讨论）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B-%E4%BC%AA%E6%A0%87%E6%B3%A8%EF%BC%88pseudo-labeling%EF%BC%89%E8%B7%AF%E7%BA%BF%EF%BC%88%E4%BD%9C%E8%80%85%E7%94%A8%E4%BD%9C%E5%AF%B9%E7%85%A7%EF%BC%89"><span class="toc-text">🔗B) 伪标注（pseudo-labeling）路线（作者用作对照）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%EF%BC%88knowledge-distillation%EF%BC%89%E8%B7%AF%E7%BA%BF%EF%BC%88%E4%BD%9C%E8%80%85%E7%94%A8%E4%BD%9C%E5%AF%B9%E7%85%A7%EF%BC%89"><span class="toc-text">🔗C) 知识蒸馏（knowledge distillation）路线（作者用作对照）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Related-Works-%E5%9C%A8-OVD-%E9%83%A8%E5%88%86%E7%9C%9F%E6%AD%A3%E6%83%B3%E8%A1%A8%E8%BE%BE%E7%9A%84%E2%80%9C%E7%BB%93%E8%AE%BA%E2%80%9D"><span class="toc-text">🔗1.3 Related Works 在 OVD 部分真正想表达的“结论”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Open-World-Detection%EF%BC%88%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E6%A3%80%E6%B5%8B%EF%BC%89%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="toc-text">🔗2) Open-World Detection（开放世界检测）相关工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-OWD-%E4%BB%BB%E5%8A%A1%E8%B5%B7%E7%82%B9%EF%BC%9AORE"><span class="toc-text">🔗2.1 OWD 任务起点：ORE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-OWD-%E4%BB%A3%E8%A1%A8%E6%96%B9%E6%B3%95%EF%BC%88%E4%BD%9C%E8%80%85%E7%82%B9%E5%90%8D%E7%9A%84%E4%B8%89%E7%B1%BB%E6%80%9D%E8%B7%AF%EF%BC%89"><span class="toc-text">🔗2.2 OWD 代表方法（作者点名的三类思路）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E4%BD%9C%E8%80%85%E6%8A%8A-OWD-%E6%8B%89%E8%BF%9B%E6%9D%A5%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="toc-text">🔗2.3 作者把 OWD 拉进来的目的</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E2%80%9CRelated-Works-%E5%BF%83%E6%99%BA%E5%9B%BE%E2%80%9D"><span class="toc-text">🔗3) “Related Works 心智图”</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Method"><span class="toc-text">🔗Method</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%9B%BE%E8%A1%A8%E8%A7%A3%E8%AF%BB"><span class="toc-text">🔗1.图表解读</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#0-%E8%BF%99%E5%BC%A0%E5%9B%BE%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%9C%A8%E8%AE%B2%E4%BB%80%E4%B9%88"><span class="toc-text">🔗0) 这张图一句话在讲什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%BB%E5%B9%B2%E7%BD%91%E7%BB%9C%EF%BC%88%E5%B7%A6%E5%8D%8A%E9%83%A8%E5%88%86%EF%BC%89%EF%BC%9AVLM-DETR-%E7%9A%84%E4%BF%A1%E6%81%AF%E6%B5%81"><span class="toc-text">🔗1) 主干网络（左半部分）：VLM + DETR 的信息流</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-%E9%A1%B6%E9%83%A8%EF%BC%9A%E6%96%87%E6%9C%AC%E8%BF%9B%E5%85%A5-Text-Encoder%EF%BC%88TE%EF%BC%89"><span class="toc-text">🔗1.1 顶部：文本进入 Text Encoder（TE）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-%E5%8F%B3%E4%B8%8A%E8%A7%92%EF%BC%9A%E5%9B%BE%E7%89%87%E8%BF%9B%E5%85%A5-Image-Encoder%EF%BC%88IE%EF%BC%89"><span class="toc-text">🔗1.2 右上角：图片进入 Image Encoder（IE）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-%E4%B8%AD%E9%97%B4%EF%BC%9AEncoder-Layers-%C3%976%EF%BC%88DETR-%E7%BC%96%E7%A0%81%E5%99%A8%EF%BC%89"><span class="toc-text">🔗1.3 中间：Encoder Layers ×6（DETR 编码器）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-%E4%B8%8B%E6%96%B9%EF%BC%9ADecoder-Layers-%C3%976%EF%BC%88DETR-%E8%A7%A3%E7%A0%81%E5%99%A8%EF%BC%89"><span class="toc-text">🔗1.4 下方：Decoder Layers ×6（DETR 解码器）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-c-RoQIs-Selection%EF%BC%88%E5%B7%A6%E4%B8%8B%E8%A7%92%E5%A4%A7%E6%A1%86%EF%BC%89%EF%BC%9A%E6%80%8E%E4%B9%88%E9%80%89%E2%80%9C%E5%80%BC%E5%BE%97%E8%A7%A3%E7%A0%81%E7%9A%84-query-proposals%E2%80%9D"><span class="toc-text">🔗2) (c) RoQIs Selection（左下角大框）：怎么选“值得解码的 query &#x2F; proposals”</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-RoQIs-%E7%94%A8%E4%B8%A4%E4%B8%AA%E6%8C%87%E6%A0%87%E6%9D%A5%E6%89%93%E5%88%86%E5%80%99%E9%80%89%E5%8C%BA%E5%9F%9F"><span class="toc-text">🔗2.1 RoQIs 用两个指标来打分候选区域</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-Top-N-Selection%EF%BC%9A%E7%94%A8%E4%B8%A4%E8%B7%AF%E8%9E%8D%E5%90%88%E9%80%89-Top-N"><span class="toc-text">🔗2.2 Top-N Selection：用两路融合选 Top-N</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-a-Open-World-Pseudo-Labeling%EF%BC%88%E5%8F%B3%E4%B8%8A%E8%99%9A%E7%BA%BF%E6%A1%86%EF%BC%89%EF%BC%9A%E6%80%8E%E4%B9%88%E5%BE%97%E5%88%B0-unknown-proposals-%E5%89%8D%E6%99%AF%E6%A6%82%E7%8E%87"><span class="toc-text">🔗3) (a) Open-World Pseudo Labeling（右上虚线框）：怎么得到 unknown proposals + 前景概率</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E4%B8%80%E4%B8%AA-OWD%EF%BC%88Open-World-Detector%EF%BC%89%E8%A2%AB%E8%AE%AD%E7%BB%83"><span class="toc-text">🔗3.1 一个 OWD（Open-World Detector）被训练</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-Predict-%E2%86%92-%E4%BA%A7%E7%94%9F-unknown-object-proposals"><span class="toc-text">🔗3.2 Predict → 产生 unknown object proposals</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-Foreground-Estimation%EF%BC%88%E5%89%8D%E6%99%AF%E6%A6%82%E7%8E%87%E4%BC%B0%E8%AE%A1%EF%BC%89"><span class="toc-text">🔗3.3 Foreground Estimation（前景概率估计）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-Update%EF%BC%9A%E8%BF%AD%E4%BB%A3%E6%9B%B4%E6%96%B0%E8%AE%AD%E7%BB%83%E9%9B%86"><span class="toc-text">🔗3.4 Update：迭代更新训练集</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-b-Denoising-Text-Query-Training%EF%BC%88%E5%8F%B3%E4%B8%8B%E8%99%9A%E7%BA%BF%E6%A1%86%EF%BC%89%EF%BC%9A%E7%94%A8-unknown-%E5%90%88%E6%88%90%E2%80%9C%E5%B8%A6%E5%99%AA%E2%80%9D%E6%9F%A5%E8%AF%A2%E8%AE%AD%E7%BB%83"><span class="toc-text">🔗4) (b) Denoising Text Query Training（右下虚线框）：用 unknown 合成“带噪”查询训练</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-%E2%80%9CA-photo-of-an-Object-base-class-%E2%80%9D"><span class="toc-text">🔗4.1 “A photo of an Object &#x2F; {base class}”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-%E4%BB%8E-unknown-objects-%E5%90%88%E6%88%90-noisy-query-box-pairs"><span class="toc-text">🔗4.2 从 unknown objects 合成 noisy query-box pairs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-Decoder-%E8%AE%AD%E7%BB%83%E8%BE%93%E5%87%BA%E4%B8%A4%E7%A7%8D%E7%BB%93%E6%9E%9C"><span class="toc-text">🔗4.3 Decoder 训练输出两种结果</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%9B%BE%E4%B8%AD%E9%97%B4%E7%9A%84%E4%B8%89%E4%B8%AA-loss%EF%BC%9AL-pseudo-L-base-L-denoise"><span class="toc-text">🔗5) 图中间的三个 loss：
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/OV-DQUO/">OV-DQUO</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection"><img class="cover" src="/blog/image/cover/1.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">论文阅读：YOLO-UniOW: Efficient Universal Open-World Object Detection</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   开放词汇检测 / YOLO-UniOW  Abstract According to a document from Dec 30, 2024, 这篇论文的摘要基本按“问题 → 现有方法不足 → 新设定 → 方法 → 效果”的顺序讲清楚了整篇文章在做什么。 下面我就按摘要原句的逻辑，一句句带你读懂它在说啥：   传统检测器的核心痛点：封闭类别  摘要开头说：传统目标检测受“closed-set...</div></div></div></a><a class="pagination-related" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册"><img class="cover" src="/blog/image/cover/13.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">AI使用手册</div></div><div class="info-2"><div class="info-item-1">codex Codex 命令精简速查表 CLI 终端命令 以下列出 Codex CLI 在终端中常用的命令及其用途，每条附有用途说明和示例：    命令 简要说明 示例     codex (无子命令) 启动交互式 Codex 会话（可选地直接附带提示）。启动后可在终端与 Codex 聊天，Codex 将读取当前目录内容并生成方案。 codex &quot;解释这个代码库&quot; – 在终端快速询问一个问题，Codex...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">读研，尝试新技术与记录生活。</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/qieliqiean"><i class="fab fa-github"></i><span>访问 GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/qieliqiean" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎交流：2895014608@qq.com</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Abstract"><span class="toc-text">Abstract</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%BB%93%E8%AE%BA"><span class="toc-text">摘要一句话结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E6%96%87%E7%AB%A0%E6%91%98%E8%A6%81%E9%A1%BA%E5%BA%8F%E8%AE%B2%E8%A7%A3%E4%B8%80%E9%81%8D"><span class="toc-text">按文章摘要顺序讲解一遍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5-%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-text">关键概念&#x2F;符号表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%85%AC%E5%BC%8F-%E7%AE%97%E6%B3%95"><span class="toc-text">关键公式&#x2F;算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E7%82%B9%E5%86%85%E5%AE%B9%E8%AE%B2%E8%A7%A3%E5%8F%8A%E6%A2%B3%E7%90%86%EF%BC%88%E4%BD%A0%E8%AF%BB%E6%91%98%E8%A6%81%E6%97%B6%E8%A6%81%E6%8A%93%E7%9A%84%E4%B8%BB%E7%BA%BF%EF%BC%89"><span class="toc-text">重点内容讲解及梳理（你读摘要时要抓的主线）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduction"><span class="toc-text">Introduction</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%9C%AC%E8%8A%82%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%BB%93%E8%AE%BA"><span class="toc-text">1. 本节一句话结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%8C%89%E6%96%87%E7%AB%A0%E9%A1%BA%E5%BA%8F%E8%AE%B2%E8%A7%A3%E4%B8%80%E9%81%8D"><span class="toc-text">2. 按文章顺序讲解一遍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%EF%BC%9A%E7%8E%B0%E7%8A%B6%E4%B8%8E%E5%B1%80%E9%99%90-Current-State-Limitations"><span class="toc-text">第一阶段：现状与局限 (Current State &amp; Limitations)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%EF%BC%9A%E6%A0%B8%E5%BF%83%E7%97%9B%E7%82%B9%E2%80%94%E2%80%94%E7%BD%AE%E4%BF%A1%E5%BA%A6%E5%81%8F%E5%B7%AE-The-Confidence-Bias"><span class="toc-text">第二阶段：核心痛点——置信度偏差 (The Confidence Bias)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%EF%BC%9AOV-DQUO-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88-Proposed-Solution"><span class="toc-text">第三阶段：OV-DQUO 解决方案 (Proposed Solution)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5-%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-text">3. 关键概念&#x2F;符号表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%85%B3%E9%94%AE%E5%85%AC%E5%BC%8F-%E7%AE%97%E6%B3%95-%E9%80%BB%E8%BE%91%E5%B1%82%E9%9D%A2"><span class="toc-text">4. 关键公式&#x2F;算法 (逻辑层面)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E9%87%8D%E7%82%B9%E5%86%85%E5%AE%B9%E8%AE%B2%E8%A7%A3%E5%8F%8A%E6%A2%B3%E7%90%86-%E5%A4%8D%E7%8E%B0%E8%A7%86%E8%A7%92"><span class="toc-text">5. 重点内容讲解及梳理 (复现视角)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E6%94%B9%E5%8F%98"><span class="toc-text">A. 数据流的改变</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B-%E6%96%87%E6%9C%AC%E5%B5%8C%E5%85%A5%E7%9A%84%E6%9E%84%E9%80%A0"><span class="toc-text">B. 文本嵌入的构造</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E8%AE%AD%E7%BB%83%E7%9B%AE%E6%A0%87%E7%9A%84%E6%94%B9%E5%8F%98"><span class="toc-text">C. 训练目标的改变</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E8%A1%A8%E8%AE%B2%E8%A7%A3"><span class="toc-text">图表讲解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Figure-1-%E6%80%BB%E8%A7%88%EF%BC%9A%E4%BD%9C%E8%80%85%E6%83%B3%E7%94%A8%E4%B8%80%E5%BC%A0%E5%9B%BE%E8%AE%B2%E6%B8%85%E4%B8%89%E4%BB%B6%E4%BA%8B"><span class="toc-text">Figure 1 总览：作者想用一张图讲清三件事</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#a-Detector-Confidence-Bias-and-the-Resulting-Performance-Gap"><span class="toc-text">(a) Detector Confidence Bias and the Resulting Performance Gap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%83%E5%9C%A8%E8%AF%81%E6%98%8E%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">它在证明什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%83%E6%80%8E%E4%B9%88%E8%AF%81%E6%98%8E%EF%BC%9F"><span class="toc-text">它怎么证明？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%97%E5%87%BA%E4%BB%80%E4%B9%88%E7%BB%93%E8%AE%BA%EF%BC%9F"><span class="toc-text">得出什么结论？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#b-CLIP-Guided-Region-Text-Pseudo-Labeling%EF%BC%88%E7%8E%B0%E6%9C%89%E8%B7%AF%E7%BA%BF%EF%BC%89"><span class="toc-text">(b) CLIP-Guided Region-Text Pseudo Labeling（现有路线）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%83%E5%9C%A8%E8%A1%A8%E8%BE%BE%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">它在表达什么？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#c-Open-World-Pseudo-Labeling-Wildcard-Matching%EF%BC%88%E4%BD%9C%E8%80%85%E8%B7%AF%E7%BA%BF%EF%BC%89"><span class="toc-text">(c) Open-World Pseudo Labeling &amp; Wildcard Matching（作者路线）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%83%E5%9C%A8%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">它在解决什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%83%E6%80%8E%E4%B9%88%E5%81%9A%EF%BC%9F"><span class="toc-text">它怎么做？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%A0%E7%9C%8B-Figure-1-%E7%9A%84%E2%80%9C%E6%9C%80%E7%9F%AD%E8%AE%B0%E5%BF%86%E7%89%88%E2%80%9D"><span class="toc-text">你看 Figure 1 的“最短记忆版”</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Related-Works"><span class="toc-text">Related Works</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Open-Vocabulary-Detection%EF%BC%88%E5%BC%80%E6%94%BE%E8%AF%8D%E8%A1%A8%E6%A3%80%E6%B5%8B%EF%BC%89%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="toc-text">1) Open-Vocabulary Detection（开放词表检测）相关工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BB%BB%E5%8A%A1%E8%B5%B7%E7%82%B9%EF%BC%9AOVR-CNN-%E6%8F%90%E5%87%BA-OVD-%E8%8C%83%E5%BC%8F"><span class="toc-text">1.1 任务起点：OVR-CNN 提出 OVD 范式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-OVD-%E6%96%B9%E6%B3%95%E8%B0%B1%E7%B3%BB%EF%BC%9A%E4%B8%89%E7%B1%BB%E8%B7%AF%E7%BA%BF%EF%BC%88%E4%BD%9C%E8%80%85%E7%94%A8%E4%BA%8E%E2%80%9C%E5%AE%9A%E4%BD%8D%E8%87%AA%E5%B7%B1%E2%80%9D%EF%BC%89"><span class="toc-text">1.2 OVD 方法谱系：三类路线（作者用于“定位自己”）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A-%E2%80%9C%E5%86%BB%E7%BB%93-VLM-%E5%9B%BE%E5%83%8F%E7%BC%96%E7%A0%81%E5%99%A8%E5%BD%93-backbone%E2%80%9D%E7%9A%84-SOTA-%E7%BA%BF%EF%BC%88%E4%BD%9C%E8%80%85%E9%87%8D%E7%82%B9%E8%AE%A8%E8%AE%BA%EF%BC%89"><span class="toc-text">A) “冻结 VLM 图像编码器当 backbone”的 SOTA 线（作者重点讨论）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B-%E4%BC%AA%E6%A0%87%E6%B3%A8%EF%BC%88pseudo-labeling%EF%BC%89%E8%B7%AF%E7%BA%BF%EF%BC%88%E4%BD%9C%E8%80%85%E7%94%A8%E4%BD%9C%E5%AF%B9%E7%85%A7%EF%BC%89"><span class="toc-text">B) 伪标注（pseudo-labeling）路线（作者用作对照）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%EF%BC%88knowledge-distillation%EF%BC%89%E8%B7%AF%E7%BA%BF%EF%BC%88%E4%BD%9C%E8%80%85%E7%94%A8%E4%BD%9C%E5%AF%B9%E7%85%A7%EF%BC%89"><span class="toc-text">C) 知识蒸馏（knowledge distillation）路线（作者用作对照）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Related-Works-%E5%9C%A8-OVD-%E9%83%A8%E5%88%86%E7%9C%9F%E6%AD%A3%E6%83%B3%E8%A1%A8%E8%BE%BE%E7%9A%84%E2%80%9C%E7%BB%93%E8%AE%BA%E2%80%9D"><span class="toc-text">1.3 Related Works 在 OVD 部分真正想表达的“结论”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Open-World-Detection%EF%BC%88%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E6%A3%80%E6%B5%8B%EF%BC%89%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="toc-text">2) Open-World Detection（开放世界检测）相关工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-OWD-%E4%BB%BB%E5%8A%A1%E8%B5%B7%E7%82%B9%EF%BC%9AORE"><span class="toc-text">2.1 OWD 任务起点：ORE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-OWD-%E4%BB%A3%E8%A1%A8%E6%96%B9%E6%B3%95%EF%BC%88%E4%BD%9C%E8%80%85%E7%82%B9%E5%90%8D%E7%9A%84%E4%B8%89%E7%B1%BB%E6%80%9D%E8%B7%AF%EF%BC%89"><span class="toc-text">2.2 OWD 代表方法（作者点名的三类思路）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E4%BD%9C%E8%80%85%E6%8A%8A-OWD-%E6%8B%89%E8%BF%9B%E6%9D%A5%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="toc-text">2.3 作者把 OWD 拉进来的目的</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E2%80%9CRelated-Works-%E5%BF%83%E6%99%BA%E5%9B%BE%E2%80%9D"><span class="toc-text">3) “Related Works 心智图”</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Method"><span class="toc-text">Method</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%9B%BE%E8%A1%A8%E8%A7%A3%E8%AF%BB"><span class="toc-text">1.图表解读</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#0-%E8%BF%99%E5%BC%A0%E5%9B%BE%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%9C%A8%E8%AE%B2%E4%BB%80%E4%B9%88"><span class="toc-text">0) 这张图一句话在讲什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%BB%E5%B9%B2%E7%BD%91%E7%BB%9C%EF%BC%88%E5%B7%A6%E5%8D%8A%E9%83%A8%E5%88%86%EF%BC%89%EF%BC%9AVLM-DETR-%E7%9A%84%E4%BF%A1%E6%81%AF%E6%B5%81"><span class="toc-text">1) 主干网络（左半部分）：VLM + DETR 的信息流</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-%E9%A1%B6%E9%83%A8%EF%BC%9A%E6%96%87%E6%9C%AC%E8%BF%9B%E5%85%A5-Text-Encoder%EF%BC%88TE%EF%BC%89"><span class="toc-text">1.1 顶部：文本进入 Text Encoder（TE）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-%E5%8F%B3%E4%B8%8A%E8%A7%92%EF%BC%9A%E5%9B%BE%E7%89%87%E8%BF%9B%E5%85%A5-Image-Encoder%EF%BC%88IE%EF%BC%89"><span class="toc-text">1.2 右上角：图片进入 Image Encoder（IE）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-%E4%B8%AD%E9%97%B4%EF%BC%9AEncoder-Layers-%C3%976%EF%BC%88DETR-%E7%BC%96%E7%A0%81%E5%99%A8%EF%BC%89"><span class="toc-text">1.3 中间：Encoder Layers ×6（DETR 编码器）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-%E4%B8%8B%E6%96%B9%EF%BC%9ADecoder-Layers-%C3%976%EF%BC%88DETR-%E8%A7%A3%E7%A0%81%E5%99%A8%EF%BC%89"><span class="toc-text">1.4 下方：Decoder Layers ×6（DETR 解码器）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-c-RoQIs-Selection%EF%BC%88%E5%B7%A6%E4%B8%8B%E8%A7%92%E5%A4%A7%E6%A1%86%EF%BC%89%EF%BC%9A%E6%80%8E%E4%B9%88%E9%80%89%E2%80%9C%E5%80%BC%E5%BE%97%E8%A7%A3%E7%A0%81%E7%9A%84-query-proposals%E2%80%9D"><span class="toc-text">2) (c) RoQIs Selection（左下角大框）：怎么选“值得解码的 query &#x2F; proposals”</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-RoQIs-%E7%94%A8%E4%B8%A4%E4%B8%AA%E6%8C%87%E6%A0%87%E6%9D%A5%E6%89%93%E5%88%86%E5%80%99%E9%80%89%E5%8C%BA%E5%9F%9F"><span class="toc-text">2.1 RoQIs 用两个指标来打分候选区域</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-Top-N-Selection%EF%BC%9A%E7%94%A8%E4%B8%A4%E8%B7%AF%E8%9E%8D%E5%90%88%E9%80%89-Top-N"><span class="toc-text">2.2 Top-N Selection：用两路融合选 Top-N</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-a-Open-World-Pseudo-Labeling%EF%BC%88%E5%8F%B3%E4%B8%8A%E8%99%9A%E7%BA%BF%E6%A1%86%EF%BC%89%EF%BC%9A%E6%80%8E%E4%B9%88%E5%BE%97%E5%88%B0-unknown-proposals-%E5%89%8D%E6%99%AF%E6%A6%82%E7%8E%87"><span class="toc-text">3) (a) Open-World Pseudo Labeling（右上虚线框）：怎么得到 unknown proposals + 前景概率</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E4%B8%80%E4%B8%AA-OWD%EF%BC%88Open-World-Detector%EF%BC%89%E8%A2%AB%E8%AE%AD%E7%BB%83"><span class="toc-text">3.1 一个 OWD（Open-World Detector）被训练</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-Predict-%E2%86%92-%E4%BA%A7%E7%94%9F-unknown-object-proposals"><span class="toc-text">3.2 Predict → 产生 unknown object proposals</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-Foreground-Estimation%EF%BC%88%E5%89%8D%E6%99%AF%E6%A6%82%E7%8E%87%E4%BC%B0%E8%AE%A1%EF%BC%89"><span class="toc-text">3.3 Foreground Estimation（前景概率估计）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-Update%EF%BC%9A%E8%BF%AD%E4%BB%A3%E6%9B%B4%E6%96%B0%E8%AE%AD%E7%BB%83%E9%9B%86"><span class="toc-text">3.4 Update：迭代更新训练集</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-b-Denoising-Text-Query-Training%EF%BC%88%E5%8F%B3%E4%B8%8B%E8%99%9A%E7%BA%BF%E6%A1%86%EF%BC%89%EF%BC%9A%E7%94%A8-unknown-%E5%90%88%E6%88%90%E2%80%9C%E5%B8%A6%E5%99%AA%E2%80%9D%E6%9F%A5%E8%AF%A2%E8%AE%AD%E7%BB%83"><span class="toc-text">4) (b) Denoising Text Query Training（右下虚线框）：用 unknown 合成“带噪”查询训练</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-%E2%80%9CA-photo-of-an-Object-base-class-%E2%80%9D"><span class="toc-text">4.1 “A photo of an Object &#x2F; {base class}”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-%E4%BB%8E-unknown-objects-%E5%90%88%E6%88%90-noisy-query-box-pairs"><span class="toc-text">4.2 从 unknown objects 合成 noisy query-box pairs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-Decoder-%E8%AE%AD%E7%BB%83%E8%BE%93%E5%87%BA%E4%B8%A4%E7%A7%8D%E7%BB%93%E6%9E%9C"><span class="toc-text">4.3 Decoder 训练输出两种结果</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%9B%BE%E4%B8%AD%E9%97%B4%E7%9A%84%E4%B8%89%E4%B8%AA-loss%EF%BC%9AL-pseudo-L-base-L-denoise"><span class="toc-text">5) 图中间的三个 loss：
     
       
       Lpseudo
@@ -5972,7 +5972,7 @@ g[data-mml-node="xypic"] path {
       
       Ldenoise
     
-  </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%9B%BE%E4%BE%8B%EF%BC%88%E5%BA%95%E9%83%A8-legend%EF%BC%89%E9%80%90%E4%B8%AA%E5%AF%B9%E7%85%A7"><span class="toc-text">🔗6) 图例（底部 legend）逐个对照</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E8%BF%99%E5%BC%A0%E5%9B%BE%E6%9C%80%E5%AE%B9%E6%98%93%E7%9C%8B%E6%B7%B7%E7%9A%84-3-%E4%B8%AA%E7%82%B9%EF%BC%88%E6%88%91%E5%B8%AE%E4%BD%A0%E7%9B%B4%E6%8E%A5%E5%88%86%E6%B8%85%EF%BC%89"><span class="toc-text">🔗7) 这张图最容易看混的 3 个点（我帮你直接分清）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Preliminarie"><span class="toc-text">🔗Preliminarie</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%BB%93%E8%AE%BA"><span class="toc-text">🔗一句话结论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E8%AE%B2%E8%A7%A3"><span class="toc-text">🔗顺序讲解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Task-Formulation"><span class="toc-text">🔗1) Task Formulation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Conditional-Matching"><span class="toc-text">🔗2) Conditional Matching</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Step-A%EF%BC%9A%E7%BB%99%E6%AF%8F%E4%B8%AA-query-%E5%85%88%E5%88%86%E9%85%8D%E4%B8%80%E4%B8%AA%E2%80%9C%E6%9D%A1%E4%BB%B6%E7%B1%BB%E5%88%AB%E2%80%9D-c-i"><span class="toc-text">🔗Step A：给每个 query 先分配一个“条件类别” $ c_i $</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Step-B%EF%BC%9A%E6%8A%8A%E7%B1%BB%E5%88%AB%E6%96%87%E6%9C%AC%E5%B5%8C%E5%85%A5%E6%B3%A8%E5%85%A5-query%EF%BC%8C%E5%BE%97%E5%88%B0-class-aware-query-q-i"><span class="toc-text">🔗Step B：把类别文本嵌入注入 query，得到 class-aware query $ q_i^* $</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Step-C%EF%BC%9Adecoder-%E8%BE%93%E5%87%BA%E4%B8%A4%E6%A0%B7%E4%B8%9C%E8%A5%BF%EF%BC%9A%E6%A1%86-hat-b-i-%E5%8C%B9%E9%85%8D%E6%A6%82%E7%8E%87-hat-m-i"><span class="toc-text">🔗Step C：decoder 输出两样东西：框 $ \hat b_i $ + 匹配概率 $ \hat m_i $</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Step-D%EF%BC%88%E6%8E%A8%E7%90%86%E9%98%B6%E6%AE%B5%EF%BC%89%EF%BC%9A%E6%9C%80%E7%BB%88%E7%B1%BB%E5%88%AB%E5%88%86%E6%95%B0-%E5%8C%B9%E9%85%8D%E6%A6%82%E7%8E%87-%C3%97-CLIP-%E7%9B%B8%E4%BC%BC%E5%BA%A6"><span class="toc-text">🔗Step D（推理阶段）：最终类别分数 &#x3D; 匹配概率 × CLIP 相似度</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5-%E7%AC%A6%E5%8F%B7%E8%A1%A8-2"><span class="toc-text">🔗关键概念&#x2F;符号表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%85%AC%E5%BC%8F"><span class="toc-text">🔗关键公式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E7%82%B9%E6%A2%B3%E7%90%86"><span class="toc-text">🔗重点梳理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Open-World-Pseudo-Labeling-Wildcard-Matching"><span class="toc-text">🔗Open-World Pseudo Labeling &amp; Wildcard Matching</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-text">🔗结论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Part-A%EF%BC%9AOpen-World-Pseudo-Labeling%EF%BC%88%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E4%BC%AA%E6%A0%87%E6%B3%A8%EF%BC%89"><span class="toc-text">🔗Part A：Open-World Pseudo Labeling（开放世界伪标注）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%AE%83%E5%9C%A8%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%88%E7%9B%B4%E8%A7%89%E7%89%88%EF%BC%89"><span class="toc-text">🔗1) 它在做什么（直觉版）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%80%8E%E4%B9%88%E6%89%BE-unknown-proposals%EF%BC%9F"><span class="toc-text">🔗2) 怎么找 unknown proposals？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%99%AA%E5%A3%B0%E6%A1%86%E5%BE%88%E5%A4%9A%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9FForeground-Estimator%EF%BC%88FE%EF%BC%89%E7%BB%99%E2%80%9C%E5%89%8D%E6%99%AF%E6%A6%82%E7%8E%87%E2%80%9D"><span class="toc-text">🔗3) 噪声框很多怎么办？Foreground Estimator（FE）给“前景概率”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E8%AE%AD%E7%BB%83%E9%9B%86%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%EF%BC%88%E8%BF%AD%E4%BB%A3%E6%8C%96%E6%8E%98%EF%BC%89"><span class="toc-text">🔗4) 训练集如何更新（迭代挖掘）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Part-B%EF%BC%9AWildcard-Matching%EF%BC%88%E9%80%9A%E9%85%8D%E7%AC%A6%E5%8C%B9%E9%85%8D%EF%BC%89"><span class="toc-text">🔗Part B：Wildcard Matching（通配符匹配）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-wildcard-text-embedding-t-ow-%EF%BC%9F"><span class="toc-text">🔗1) 什么是 wildcard text embedding $ t_{ow} $？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-wildcard-%E6%80%8E%E4%B9%88%E6%8F%92%E8%BF%9B-conditional-matching%EF%BC%9F%EF%BC%88%E6%A0%B8%E5%BF%83%E8%A7%84%E5%88%99%EF%BC%89"><span class="toc-text">🔗2) wildcard 怎么插进 conditional matching？（核心规则）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Part-C%EF%BC%9A%E8%AE%AD%E7%BB%83%E6%8D%9F%E5%A4%B1%E6%80%8E%E4%B9%88%E5%86%99%EF%BC%88%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E2%80%9Csoft-label%E2%80%9D%EF%BC%89"><span class="toc-text">🔗Part C：训练损失怎么写（为什么是“soft label”）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E7%82%B9"><span class="toc-text">🔗重点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Denoising-Text-Query-Training"><span class="toc-text">🔗Denoising Text Query Training</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-DTQT-%E8%A6%81%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%88%E5%8A%A8%E6%9C%BA%EF%BC%89"><span class="toc-text">🔗1) DTQT 要解决什么问题（动机）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-DTQT-%E7%9A%84%E6%A0%B8%E5%BF%83%E6%83%B3%E6%B3%95"><span class="toc-text">🔗2) DTQT 的核心想法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%85%B7%E4%BD%93%E6%80%8E%E4%B9%88%E2%80%9C%E9%80%A0%E2%80%9D%E8%BF%99%E4%BA%9B%E5%B8%A6%E5%99%AA-query-box-pairs%EF%BC%9F"><span class="toc-text">🔗3) 具体怎么“造”这些带噪 query-box pairs？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E4%BB%8E%E4%B8%80%E4%B8%AA-unknown-%E7%89%A9%E4%BD%93-u-i-%E5%87%BA%E5%8F%91%EF%BC%8C%E7%94%9F%E6%88%90-2N-%E4%B8%AA%E5%99%AA%E5%A3%B0%E6%A1%86%EF%BC%88%E5%85%AC%E5%BC%8F-11%EF%BC%89"><span class="toc-text">🔗3.1 从一个 unknown 物体 $ u_i $ 出发，生成 $ 2N $ 个噪声框（公式 11）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E7%BB%99%E8%BF%99%E4%BA%9B%E5%99%AA%E5%A3%B0%E6%A1%86%E9%85%8D%E2%80%9C%E6%96%87%E6%9C%AC%E6%9D%A1%E4%BB%B6%E2%80%9D%EF%BC%8C%E5%81%9A%E6%88%90%E5%89%8D%E6%99%AF-%E8%83%8C%E6%99%AF-query-box-%E5%AF%B9%EF%BC%88%E5%85%AC%E5%BC%8F-12%EF%BC%89"><span class="toc-text">🔗3.2 给这些噪声框配“文本条件”，做成前景&#x2F;背景 query-box 对（公式 12）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%AE%AD%E7%BB%83%E6%97%B6%E6%80%8E%E4%B9%88%E5%96%82%E8%BF%9B%E7%BD%91%E7%BB%9C%EF%BC%88%E2%80%9C%E5%8F%8C%E5%88%86%E6%94%AF%E5%90%8C%E6%97%B6%E8%AE%AD%E7%BB%83%E2%80%9D%EF%BC%89"><span class="toc-text">🔗4) 训练时怎么喂进网络（“双分支同时训练”）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-DTQT-%E7%9A%84%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%9C%A8%E5%B9%B2%E4%BB%80%E4%B9%88%EF%BC%88%E5%85%AC%E5%BC%8F-13%EF%BC%89"><span class="toc-text">🔗5) DTQT 的损失函数在干什么（公式 13）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%9C%80%E7%BB%88%E6%80%BB%E6%8D%9F%E5%A4%B1%EF%BC%88%E5%85%AC%E5%BC%8F-14%EF%BC%89"><span class="toc-text">🔗6) 最终总损失（公式 14）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%A0%E8%AF%BB%E5%AE%8C-DTQT-%E5%BA%94%E8%AF%A5%E7%89%A2%E7%89%A2%E8%AE%B0%E4%BD%8F%E7%9A%84-3-%E7%82%B9"><span class="toc-text">🔗你读完 DTQT 应该牢牢记住的 3 点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Region-of-Query-Interests-Selection"><span class="toc-text">🔗Region of Query Interests Selection</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E9%9C%80%E8%A6%81-RoQIs%EF%BC%9A%E9%97%AE%E9%A2%98%E5%87%BA%E5%9C%A8%E2%80%9C%E5%80%99%E9%80%89%E5%8C%BA%E5%9F%9F%E7%AD%9B%E9%80%89%E2%80%9D%E9%98%B6%E6%AE%B5"><span class="toc-text">🔗1) 为什么还需要 RoQIs：问题出在“候选区域筛选”阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-RoQIs-%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E8%B7%AF%EF%BC%9A%E7%94%A8-CLIP-%E7%9B%B8%E4%BC%BC%E5%BA%A6%E2%80%9C%E7%BA%A0%E5%81%8F%E2%80%9D%EF%BC%8C%E4%BD%86%E5%88%AB%E4%B8%A2%E6%8E%89%E5%AE%9A%E4%BD%8D%E8%B4%A8%E9%87%8F"><span class="toc-text">🔗2) RoQIs 的核心思路：用 CLIP 相似度“纠偏”，但别丢掉定位质量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%85%AC%E5%BC%8F-15-%EF%BC%9ARoQIs-%E7%9A%84%E6%96%B0%E7%AD%9B%E9%80%89%E6%8C%87%E6%A0%87-phi"><span class="toc-text">🔗3) 公式 $ 15 $：RoQIs 的新筛选指标 $ \phi $</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E8%A7%89%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3%EF%BC%9F"><span class="toc-text">🔗直觉怎么理解？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%85%AC%E5%BC%8F-16-%EF%BC%9A%E7%94%A8-phi-%E4%BB%8E%E5%80%99%E9%80%89%E9%9B%86%E5%90%88%E9%87%8C%E9%80%89-Top-N"><span class="toc-text">🔗4) 公式 $ 16 $：用 $ \phi $ 从候选集合里选 Top-N</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E4%BD%A0%E5%8F%AF%E4%BB%A5%E6%8A%8A-RoQIs-%E5%BD%93%E6%88%90%E4%B8%80%E5%8F%A5%E5%BE%88%E5%AE%9E%E7%94%A8%E7%9A%84%E8%AF%9D"><span class="toc-text">🔗5) 你可以把 RoQIs 当成一句很实用的话</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Experiments"><span class="toc-text">🔗Experiments</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE-Experimental-Setup"><span class="toc-text">🔗1. 实验设置 (Experimental Setup)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82-Implementation-Details"><span class="toc-text">🔗2. 实现细节 (Implementation Details)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%BB%E8%A6%81%E7%BB%93%E6%9E%9C-Main-Results"><span class="toc-text">🔗3. 主要结果 (Main Results)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C-Ablation-Studies-%E2%80%94%E2%80%94-%E6%9C%80%E5%80%BC%E5%BE%97%E5%85%B3%E6%B3%A8%E7%9A%84%E9%83%A8%E5%88%86"><span class="toc-text">🔗4. 消融实验 (Ablation Studies) —— 最值得关注的部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%AE%9A%E6%80%A7%E5%88%86%E6%9E%90-Qualitative-Analysis"><span class="toc-text">🔗5. 定性分析 (Qualitative Analysis)</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-post-series"><div class="item-headline"><i class="fa-solid fa-layer-group"></i><span>系列文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读"><img src="/blog/image/cover/2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【OV-DQUO】论文阅读"></a><div class="content"><a class="title" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读">【OV-DQUO】论文阅读</a><time datetime="2026-01-19T07:59:50.000Z" title="发表于 2026-01-19 15:59:50">2026-01-19</time></div></div></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/easter-egg/" title="彩蛋"><img src="/blog/image/cover/IMG_20260217_201822.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="彩蛋"/></a><div class="content"><a class="title" href="/blog/easter-egg/" title="彩蛋">彩蛋</a><time datetime="2026-02-18T05:09:03.000Z" title="发表于 2026-02-18 13:09:03">2026-02-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读"><img src="/blog/image/cover/9.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【WeDetect】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读">【WeDetect】论文阅读</a><time datetime="2026-01-21T01:41:58.000Z" title="发表于 2026-01-21 09:41:58">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册"><img src="/blog/image/cover/13.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="AI使用手册"/></a><div class="content"><a class="title" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册">AI使用手册</a><time datetime="2026-01-20T01:21:48.000Z" title="发表于 2026-01-20 09:21:48">2026-01-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读"><img src="/blog/image/cover/2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【OV-DQUO】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读">【OV-DQUO】论文阅读</a><time datetime="2026-01-19T07:59:50.000Z" title="发表于 2026-01-19 15:59:50">2026-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释"><img src="/blog/image/cover/6.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="YOLO-UniOW-指标解释"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释">YOLO-UniOW-指标解释</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><script src="/blog/true"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+  </span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%9B%BE%E4%BE%8B%EF%BC%88%E5%BA%95%E9%83%A8-legend%EF%BC%89%E9%80%90%E4%B8%AA%E5%AF%B9%E7%85%A7"><span class="toc-text">6) 图例（底部 legend）逐个对照</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E8%BF%99%E5%BC%A0%E5%9B%BE%E6%9C%80%E5%AE%B9%E6%98%93%E7%9C%8B%E6%B7%B7%E7%9A%84-3-%E4%B8%AA%E7%82%B9%EF%BC%88%E6%88%91%E5%B8%AE%E4%BD%A0%E7%9B%B4%E6%8E%A5%E5%88%86%E6%B8%85%EF%BC%89"><span class="toc-text">7) 这张图最容易看混的 3 个点（我帮你直接分清）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Preliminarie"><span class="toc-text">Preliminarie</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%BB%93%E8%AE%BA"><span class="toc-text">一句话结论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E8%AE%B2%E8%A7%A3"><span class="toc-text">顺序讲解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Task-Formulation"><span class="toc-text">1) Task Formulation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Conditional-Matching"><span class="toc-text">2) Conditional Matching</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Step-A%EF%BC%9A%E7%BB%99%E6%AF%8F%E4%B8%AA-query-%E5%85%88%E5%88%86%E9%85%8D%E4%B8%80%E4%B8%AA%E2%80%9C%E6%9D%A1%E4%BB%B6%E7%B1%BB%E5%88%AB%E2%80%9D-c-i"><span class="toc-text">Step A：给每个 query 先分配一个“条件类别” $ c_i $</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Step-B%EF%BC%9A%E6%8A%8A%E7%B1%BB%E5%88%AB%E6%96%87%E6%9C%AC%E5%B5%8C%E5%85%A5%E6%B3%A8%E5%85%A5-query%EF%BC%8C%E5%BE%97%E5%88%B0-class-aware-query-q-i"><span class="toc-text">Step B：把类别文本嵌入注入 query，得到 class-aware query $ q_i^* $</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Step-C%EF%BC%9Adecoder-%E8%BE%93%E5%87%BA%E4%B8%A4%E6%A0%B7%E4%B8%9C%E8%A5%BF%EF%BC%9A%E6%A1%86-hat-b-i-%E5%8C%B9%E9%85%8D%E6%A6%82%E7%8E%87-hat-m-i"><span class="toc-text">Step C：decoder 输出两样东西：框 $ \hat b_i $ + 匹配概率 $ \hat m_i $</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Step-D%EF%BC%88%E6%8E%A8%E7%90%86%E9%98%B6%E6%AE%B5%EF%BC%89%EF%BC%9A%E6%9C%80%E7%BB%88%E7%B1%BB%E5%88%AB%E5%88%86%E6%95%B0-%E5%8C%B9%E9%85%8D%E6%A6%82%E7%8E%87-%C3%97-CLIP-%E7%9B%B8%E4%BC%BC%E5%BA%A6"><span class="toc-text">Step D（推理阶段）：最终类别分数 &#x3D; 匹配概率 × CLIP 相似度</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5-%E7%AC%A6%E5%8F%B7%E8%A1%A8-2"><span class="toc-text">关键概念&#x2F;符号表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%85%AC%E5%BC%8F"><span class="toc-text">关键公式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E7%82%B9%E6%A2%B3%E7%90%86"><span class="toc-text">重点梳理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Open-World-Pseudo-Labeling-Wildcard-Matching"><span class="toc-text">Open-World Pseudo Labeling &amp; Wildcard Matching</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-text">结论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Part-A%EF%BC%9AOpen-World-Pseudo-Labeling%EF%BC%88%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E4%BC%AA%E6%A0%87%E6%B3%A8%EF%BC%89"><span class="toc-text">Part A：Open-World Pseudo Labeling（开放世界伪标注）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%AE%83%E5%9C%A8%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%88%E7%9B%B4%E8%A7%89%E7%89%88%EF%BC%89"><span class="toc-text">1) 它在做什么（直觉版）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%80%8E%E4%B9%88%E6%89%BE-unknown-proposals%EF%BC%9F"><span class="toc-text">2) 怎么找 unknown proposals？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%99%AA%E5%A3%B0%E6%A1%86%E5%BE%88%E5%A4%9A%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9FForeground-Estimator%EF%BC%88FE%EF%BC%89%E7%BB%99%E2%80%9C%E5%89%8D%E6%99%AF%E6%A6%82%E7%8E%87%E2%80%9D"><span class="toc-text">3) 噪声框很多怎么办？Foreground Estimator（FE）给“前景概率”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E8%AE%AD%E7%BB%83%E9%9B%86%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0%EF%BC%88%E8%BF%AD%E4%BB%A3%E6%8C%96%E6%8E%98%EF%BC%89"><span class="toc-text">4) 训练集如何更新（迭代挖掘）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Part-B%EF%BC%9AWildcard-Matching%EF%BC%88%E9%80%9A%E9%85%8D%E7%AC%A6%E5%8C%B9%E9%85%8D%EF%BC%89"><span class="toc-text">Part B：Wildcard Matching（通配符匹配）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-wildcard-text-embedding-t-ow-%EF%BC%9F"><span class="toc-text">1) 什么是 wildcard text embedding $ t_{ow} $？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-wildcard-%E6%80%8E%E4%B9%88%E6%8F%92%E8%BF%9B-conditional-matching%EF%BC%9F%EF%BC%88%E6%A0%B8%E5%BF%83%E8%A7%84%E5%88%99%EF%BC%89"><span class="toc-text">2) wildcard 怎么插进 conditional matching？（核心规则）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Part-C%EF%BC%9A%E8%AE%AD%E7%BB%83%E6%8D%9F%E5%A4%B1%E6%80%8E%E4%B9%88%E5%86%99%EF%BC%88%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E2%80%9Csoft-label%E2%80%9D%EF%BC%89"><span class="toc-text">Part C：训练损失怎么写（为什么是“soft label”）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E7%82%B9"><span class="toc-text">重点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Denoising-Text-Query-Training"><span class="toc-text">Denoising Text Query Training</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-DTQT-%E8%A6%81%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%88%E5%8A%A8%E6%9C%BA%EF%BC%89"><span class="toc-text">1) DTQT 要解决什么问题（动机）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-DTQT-%E7%9A%84%E6%A0%B8%E5%BF%83%E6%83%B3%E6%B3%95"><span class="toc-text">2) DTQT 的核心想法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%85%B7%E4%BD%93%E6%80%8E%E4%B9%88%E2%80%9C%E9%80%A0%E2%80%9D%E8%BF%99%E4%BA%9B%E5%B8%A6%E5%99%AA-query-box-pairs%EF%BC%9F"><span class="toc-text">3) 具体怎么“造”这些带噪 query-box pairs？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E4%BB%8E%E4%B8%80%E4%B8%AA-unknown-%E7%89%A9%E4%BD%93-u-i-%E5%87%BA%E5%8F%91%EF%BC%8C%E7%94%9F%E6%88%90-2N-%E4%B8%AA%E5%99%AA%E5%A3%B0%E6%A1%86%EF%BC%88%E5%85%AC%E5%BC%8F-11%EF%BC%89"><span class="toc-text">3.1 从一个 unknown 物体 $ u_i $ 出发，生成 $ 2N $ 个噪声框（公式 11）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E7%BB%99%E8%BF%99%E4%BA%9B%E5%99%AA%E5%A3%B0%E6%A1%86%E9%85%8D%E2%80%9C%E6%96%87%E6%9C%AC%E6%9D%A1%E4%BB%B6%E2%80%9D%EF%BC%8C%E5%81%9A%E6%88%90%E5%89%8D%E6%99%AF-%E8%83%8C%E6%99%AF-query-box-%E5%AF%B9%EF%BC%88%E5%85%AC%E5%BC%8F-12%EF%BC%89"><span class="toc-text">3.2 给这些噪声框配“文本条件”，做成前景&#x2F;背景 query-box 对（公式 12）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%AE%AD%E7%BB%83%E6%97%B6%E6%80%8E%E4%B9%88%E5%96%82%E8%BF%9B%E7%BD%91%E7%BB%9C%EF%BC%88%E2%80%9C%E5%8F%8C%E5%88%86%E6%94%AF%E5%90%8C%E6%97%B6%E8%AE%AD%E7%BB%83%E2%80%9D%EF%BC%89"><span class="toc-text">4) 训练时怎么喂进网络（“双分支同时训练”）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-DTQT-%E7%9A%84%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%9C%A8%E5%B9%B2%E4%BB%80%E4%B9%88%EF%BC%88%E5%85%AC%E5%BC%8F-13%EF%BC%89"><span class="toc-text">5) DTQT 的损失函数在干什么（公式 13）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%9C%80%E7%BB%88%E6%80%BB%E6%8D%9F%E5%A4%B1%EF%BC%88%E5%85%AC%E5%BC%8F-14%EF%BC%89"><span class="toc-text">6) 最终总损失（公式 14）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%A0%E8%AF%BB%E5%AE%8C-DTQT-%E5%BA%94%E8%AF%A5%E7%89%A2%E7%89%A2%E8%AE%B0%E4%BD%8F%E7%9A%84-3-%E7%82%B9"><span class="toc-text">你读完 DTQT 应该牢牢记住的 3 点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Region-of-Query-Interests-Selection"><span class="toc-text">Region of Query Interests Selection</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E9%9C%80%E8%A6%81-RoQIs%EF%BC%9A%E9%97%AE%E9%A2%98%E5%87%BA%E5%9C%A8%E2%80%9C%E5%80%99%E9%80%89%E5%8C%BA%E5%9F%9F%E7%AD%9B%E9%80%89%E2%80%9D%E9%98%B6%E6%AE%B5"><span class="toc-text">1) 为什么还需要 RoQIs：问题出在“候选区域筛选”阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-RoQIs-%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E8%B7%AF%EF%BC%9A%E7%94%A8-CLIP-%E7%9B%B8%E4%BC%BC%E5%BA%A6%E2%80%9C%E7%BA%A0%E5%81%8F%E2%80%9D%EF%BC%8C%E4%BD%86%E5%88%AB%E4%B8%A2%E6%8E%89%E5%AE%9A%E4%BD%8D%E8%B4%A8%E9%87%8F"><span class="toc-text">2) RoQIs 的核心思路：用 CLIP 相似度“纠偏”，但别丢掉定位质量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%85%AC%E5%BC%8F-15-%EF%BC%9ARoQIs-%E7%9A%84%E6%96%B0%E7%AD%9B%E9%80%89%E6%8C%87%E6%A0%87-phi"><span class="toc-text">3) 公式 $ 15 $：RoQIs 的新筛选指标 $ \phi $</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E8%A7%89%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3%EF%BC%9F"><span class="toc-text">直觉怎么理解？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%85%AC%E5%BC%8F-16-%EF%BC%9A%E7%94%A8-phi-%E4%BB%8E%E5%80%99%E9%80%89%E9%9B%86%E5%90%88%E9%87%8C%E9%80%89-Top-N"><span class="toc-text">4) 公式 $ 16 $：用 $ \phi $ 从候选集合里选 Top-N</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E4%BD%A0%E5%8F%AF%E4%BB%A5%E6%8A%8A-RoQIs-%E5%BD%93%E6%88%90%E4%B8%80%E5%8F%A5%E5%BE%88%E5%AE%9E%E7%94%A8%E7%9A%84%E8%AF%9D"><span class="toc-text">5) 你可以把 RoQIs 当成一句很实用的话</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Experiments"><span class="toc-text">Experiments</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE-Experimental-Setup"><span class="toc-text">1. 实验设置 (Experimental Setup)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82-Implementation-Details"><span class="toc-text">2. 实现细节 (Implementation Details)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%BB%E8%A6%81%E7%BB%93%E6%9E%9C-Main-Results"><span class="toc-text">3. 主要结果 (Main Results)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C-Ablation-Studies-%E2%80%94%E2%80%94-%E6%9C%80%E5%80%BC%E5%BE%97%E5%85%B3%E6%B3%A8%E7%9A%84%E9%83%A8%E5%88%86"><span class="toc-text">4. 消融实验 (Ablation Studies) —— 最值得关注的部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%AE%9A%E6%80%A7%E5%88%86%E6%9E%90-Qualitative-Analysis"><span class="toc-text">5. 定性分析 (Qualitative Analysis)</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-post-series"><div class="item-headline"><i class="fa-solid fa-layer-group"></i><span>系列文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读"><img src="/blog/image/cover/2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【OV-DQUO】论文阅读"></a><div class="content"><a class="title" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读">【OV-DQUO】论文阅读</a><time datetime="2026-01-19T07:59:50.000Z" title="发表于 2026-01-19 15:59:50">2026-01-19</time></div></div></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/easter-egg/" title="彩蛋"><img src="/blog/image/cover/IMG_20260217_201822.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="彩蛋"/></a><div class="content"><a class="title" href="/blog/easter-egg/" title="彩蛋">彩蛋</a><time datetime="2026-02-18T05:09:03.000Z" title="发表于 2026-02-18 13:09:03">2026-02-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读"><img src="/blog/image/cover/9.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【WeDetect】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读">【WeDetect】论文阅读</a><time datetime="2026-01-21T01:41:58.000Z" title="发表于 2026-01-21 09:41:58">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册"><img src="/blog/image/cover/13.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="AI使用手册"/></a><div class="content"><a class="title" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册">AI使用手册</a><time datetime="2026-01-20T01:21:48.000Z" title="发表于 2026-01-20 09:21:48">2026-01-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读"><img src="/blog/image/cover/2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【OV-DQUO】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读">【OV-DQUO】论文阅读</a><time datetime="2026-01-19T07:59:50.000Z" title="发表于 2026-01-19 15:59:50">2026-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释"><img src="/blog/image/cover/6.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="YOLO-UniOW-指标解释"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释">YOLO-UniOW-指标解释</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><script src="/blog/true"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
   const loadMathjax = () => {
     if (!window.MathJax) {
       window.MathJax = {

@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>深度学习相关知识 | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#fdfcf8"><meta name="description" content="系列文章   &#x2F;   杂记  🔗Batch Normalization（批量归一化） 和 Layer Normalization（层归一化）  🔗1. 核心概念对比 🔗Batch Normalization (BN)   归一化方向：对 同一特征维度 跨所有样本和空间位置归一化。   核心公式： 假设输入张量形状为 (N, C, H, W)（Batch Size, Channels,">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>深度学习相关知识 | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#fdfcf8"><meta name="description" content="系列文章   &#x2F;   杂记  Batch Normalization（批量归一化） 和 Layer Normalization（层归一化）  1. 核心概念对比 Batch Normalization (BN)   归一化方向：对 同一特征维度 跨所有样本和空间位置归一化。   核心公式： 假设输入张量形状为 (N, C, H, W)（Batch Size, Channels, Height">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深度学习相关知识">
 <meta property="og:url" content="https://qieliqiean.github.io/blog/2025/02/27/%E6%9D%82%E8%AE%B0/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/index.html">
 <meta property="og:site_name" content="且离且安的碎碎念">
-<meta property="og:description" content="系列文章   &#x2F;   杂记  🔗Batch Normalization（批量归一化） 和 Layer Normalization（层归一化）  🔗1. 核心概念对比 🔗Batch Normalization (BN)   归一化方向：对 同一特征维度 跨所有样本和空间位置归一化。   核心公式： 假设输入张量形状为 (N, C, H, W)（Batch Size, Channels,">
+<meta property="og:description" content="系列文章   &#x2F;   杂记  Batch Normalization（批量归一化） 和 Layer Normalization（层归一化）  1. 核心概念对比 Batch Normalization (BN)   归一化方向：对 同一特征维度 跨所有样本和空间位置归一化。   核心公式： 假设输入张量形状为 (N, C, H, W)（Batch Size, Channels, Height">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qieliqiean.github.io/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png">
 <meta property="article:published_time" content="2025-02-27T06:11:35.000Z">
@@ -192,10 +192,10 @@ btf.addGlobalFn('pjaxComplete', () => {
   <span class="series-breadcrumb__sep">/</span>
   <a href="/blog/series/5p2C6K6w/">杂记</a>
 </nav>
-<h1 id="Batch-Normalization（批量归一化）-和-Layer-Normalization（层归一化）"><a class="header-anchor" href="#Batch-Normalization（批量归一化）-和-Layer-Normalization（层归一化）">🔗</a>Batch Normalization（批量归一化） 和 Layer Normalization（层归一化）</h1>
+<h1 id="Batch-Normalization（批量归一化）-和-Layer-Normalization（层归一化）"><a class="header-anchor" href="#Batch-Normalization（批量归一化）-和-Layer-Normalization（层归一化）"></a>Batch Normalization（批量归一化） 和 Layer Normalization（层归一化）</h1>
 <hr>
-<h2 id="1-核心概念对比"><a class="header-anchor" href="#1-核心概念对比">🔗</a>1. <strong>核心概念对比</strong></h2>
-<h3 id="Batch-Normalization-BN"><a class="header-anchor" href="#Batch-Normalization-BN">🔗</a><strong>Batch Normalization (BN)</strong></h3>
+<h2 id="1-核心概念对比"><a class="header-anchor" href="#1-核心概念对比"></a>1. <strong>核心概念对比</strong></h2>
+<h3 id="Batch-Normalization-BN"><a class="header-anchor" href="#Batch-Normalization-BN"></a><strong>Batch Normalization (BN)</strong></h3>
 <ul>
 <li>
 <p><strong>归一化方向</strong>：对 <strong>同一特征维度</strong> 跨所有样本和空间位置归一化。</p>
@@ -204,9 +204,9 @@ btf.addGlobalFn('pjaxComplete', () => {
 <p><strong>核心公式</strong>：</p>
 <p>假设输入张量形状为 <code>(N, C, H, W)</code>（Batch Size, Channels, Height, Width），则对每个通道 <code>c</code> 计算均值和方差：</p>
 
-    <span id="mjx-7755d8c">
+    <span id="mjx-e82068a">
       <style>
-      #mjx-7755d8c{
+      #mjx-e82068a{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -369,7 +369,7 @@ g[data-mml-node="xypic"] path {
 <p><strong>适用场景</strong>：图像处理（CNN）、固定长度的结构化数据。</p>
 </li>
 </ul>
-<h3 id="Layer-Normalization-LN"><a class="header-anchor" href="#Layer-Normalization-LN">🔗</a><strong>Layer Normalization (LN)</strong></h3>
+<h3 id="Layer-Normalization-LN"><a class="header-anchor" href="#Layer-Normalization-LN"></a><strong>Layer Normalization (LN)</strong></h3>
 <ul>
 <li>
 <p><strong>归一化方向</strong>：对 <strong>同一样本</strong> 的所有特征维度归一化。</p>
@@ -378,9 +378,9 @@ g[data-mml-node="xypic"] path {
 <p><strong>核心公式</strong>：</p>
 <p>假设输入张量形状为 <code>(N, C, H, W)</code>，对每个样本 <code>n</code> 计算均值和方差：</p>
 
-    <span id="mjx-456b4ef">
+    <span id="mjx-3d156d3">
       <style>
-      #mjx-456b4ef{
+      #mjx-3d156d3{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -544,8 +544,8 @@ g[data-mml-node="xypic"] path {
 </li>
 </ul>
 <hr>
-<h2 id="2-公式符号解释"><a class="header-anchor" href="#2-公式符号解释">🔗</a>2. <strong>公式符号解释</strong></h2>
-<h3 id="输入张量形状"><a class="header-anchor" href="#输入张量形状">🔗</a><strong>输入张量形状</strong></h3>
+<h2 id="2-公式符号解释"><a class="header-anchor" href="#2-公式符号解释"></a>2. <strong>公式符号解释</strong></h2>
+<h3 id="输入张量形状"><a class="header-anchor" href="#输入张量形状"></a><strong>输入张量形状</strong></h3>
 <p>假设输入为 <code>(N, C, H, W)</code>：</p>
 <ul>
 <li><code>N</code>: 批次大小（Batch Size）</li>
@@ -553,21 +553,21 @@ g[data-mml-node="xypic"] path {
 <li><code>H</code>: 高度（空间维度）</li>
 <li><code>W</code>: 宽度（空间维度）</li>
 </ul>
-<h3 id="BN-公式符号"><a class="header-anchor" href="#BN-公式符号">🔗</a><strong>BN 公式符号</strong></h3>
+<h3 id="BN-公式符号"><a class="header-anchor" href="#BN-公式符号"></a><strong>BN 公式符号</strong></h3>
 <ul>
 <li><code>μₐ</code>: 第 <code>c</code> 个通道的均值（跨所有样本和空间位置）。</li>
 <li><code>σₐ²</code>: 第 <code>c</code> 个通道的方差。</li>
 <li><code>xₙ,ₐ,ₕ,ᵥ</code>: 第 <code>n</code> 个样本、第 <code>c</code> 个通道、位置 <code>(h, w)</code> 的像素值。</li>
 </ul>
-<h3 id="LN-公式符号"><a class="header-anchor" href="#LN-公式符号">🔗</a><strong>LN 公式符号</strong></h3>
+<h3 id="LN-公式符号"><a class="header-anchor" href="#LN-公式符号"></a><strong>LN 公式符号</strong></h3>
 <ul>
 <li><code>μₙ</code>: 第 <code>n</code> 个样本的均值（跨所有特征和空间位置）。</li>
 <li><code>σₙ²</code>: 第 <code>n</code> 个样本的方差。</li>
 <li><code>xₙ,ₐ,ₕ,ᵥ</code>: 同上。</li>
 </ul>
 <hr>
-<h2 id="3-具体示例对比"><a class="header-anchor" href="#3-具体示例对比">🔗</a>3. <strong>具体示例对比</strong></h2>
-<h3 id="输入数据"><a class="header-anchor" href="#输入数据">🔗</a><strong>输入数据</strong></h3>
+<h2 id="3-具体示例对比"><a class="header-anchor" href="#3-具体示例对比"></a>3. <strong>具体示例对比</strong></h2>
+<h3 id="输入数据"><a class="header-anchor" href="#输入数据"></a><strong>输入数据</strong></h3>
 <ul>
 <li><code>N=2</code>（2张图像），<code>C=3</code>（RGB三通道），<code>H=2</code>, <code>W=2</code>（2x2像素）。</li>
 <li><strong>样本1</strong>：
@@ -586,12 +586,12 @@ g[data-mml-node="xypic"] path {
 </li>
 </ul>
 <hr>
-<h3 id="BN-计算示例（以通道0为例）"><a class="header-anchor" href="#BN-计算示例（以通道0为例）">🔗</a><strong>BN 计算示例（以通道0为例）</strong></h3>
+<h3 id="BN-计算示例（以通道0为例）"><a class="header-anchor" href="#BN-计算示例（以通道0为例）"></a><strong>BN 计算示例（以通道0为例）</strong></h3>
 <ol>
 <li><strong>计算均值 <code>μ₀</code></strong>：
-    <span id="mjx-3ba4423">
+    <span id="mjx-ebd38cf">
       <style>
-      #mjx-3ba4423{
+      #mjx-ebd38cf{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -751,9 +751,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </li>
 <li><strong>计算方差 <code>σ₀²</code></strong>：
-    <span id="mjx-a34689b">
+    <span id="mjx-e591a1b">
       <style>
-      #mjx-a34689b{
+      #mjx-e591a1b{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -915,12 +915,12 @@ g[data-mml-node="xypic"] path {
 <li><strong>归一化后</strong>：每个像素值变为 <code>(x - 4.5) / √(5.25 + ε)</code>。</li>
 </ol>
 <hr>
-<h3 id="LN-计算示例（以样本1为例）"><a class="header-anchor" href="#LN-计算示例（以样本1为例）">🔗</a><strong>LN 计算示例（以样本1为例）</strong></h3>
+<h3 id="LN-计算示例（以样本1为例）"><a class="header-anchor" href="#LN-计算示例（以样本1为例）"></a><strong>LN 计算示例（以样本1为例）</strong></h3>
 <ol>
 <li><strong>计算均值 <code>μ₁</code></strong>：
-    <span id="mjx-b522366">
+    <span id="mjx-6dd690c">
       <style>
-      #mjx-b522366{
+      #mjx-6dd690c{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1080,9 +1080,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </li>
 <li><strong>计算方差 <code>σ₁²</code></strong>：
-    <span id="mjx-9061b82">
+    <span id="mjx-bfbc3dc">
       <style>
-      #mjx-9061b82{
+      #mjx-bfbc3dc{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1244,7 +1244,7 @@ g[data-mml-node="xypic"] path {
 <li><strong>归一化后</strong>：每个像素值变为 <code>(x - 5) / √(7 + ε)</code>。</li>
 </ol>
 <hr>
-<h2 id="4-对比总结表格"><a class="header-anchor" href="#4-对比总结表格">🔗</a>4. <strong>对比总结表格</strong></h2>
+<h2 id="4-对比总结表格"><a class="header-anchor" href="#4-对比总结表格"></a>4. <strong>对比总结表格</strong></h2>
 <table>
 <thead>
 <tr>
@@ -1282,7 +1282,7 @@ g[data-mml-node="xypic"] path {
 </tbody>
 </table>
 <hr>
-<h2 id="5-注意事项"><a class="header-anchor" href="#5-注意事项">🔗</a>5. <strong>注意事项</strong></h2>
+<h2 id="5-注意事项"><a class="header-anchor" href="#5-注意事项"></a>5. <strong>注意事项</strong></h2>
 <ol>
 <li>
 <p><strong>BN 的局限性</strong>：</p>
@@ -1300,24 +1300,24 @@ g[data-mml-node="xypic"] path {
 </li>
 </ol>
 <hr>
-<h2 id="6-代码示例（PyTorch）"><a class="header-anchor" href="#6-代码示例（PyTorch）">🔗</a>6. <strong>代码示例（PyTorch）</strong></h2>
+<h2 id="6-代码示例（PyTorch）"><a class="header-anchor" href="#6-代码示例（PyTorch）"></a>6. <strong>代码示例（PyTorch）</strong></h2>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Batch Normalization（图像任务）</span></span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line">bn = nn.BatchNorm2d(num_features=<span class="number">3</span>)  <span class="comment"># 输入通道数 C=3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Layer Normalization（NLP任务）</span></span><br><span class="line">ln = nn.LayerNorm(normalized_shape=<span class="number">256</span>)  <span class="comment"># 输入特征维度=256</span></span><br></pre></td></tr></table></figure>
-<h1 id="上采样（Upsampling）与下采样（Downsampling）详解"><a class="header-anchor" href="#上采样（Upsampling）与下采样（Downsampling）详解">🔗</a>上采样（Upsampling）与下采样（Downsampling）详解</h1>
+<h1 id="上采样（Upsampling）与下采样（Downsampling）详解"><a class="header-anchor" href="#上采样（Upsampling）与下采样（Downsampling）详解"></a>上采样（Upsampling）与下采样（Downsampling）详解</h1>
 <hr>
-<h2 id="核心区别"><a class="header-anchor" href="#核心区别">🔗</a><strong>核心区别</strong></h2>
+<h2 id="核心区别"><a class="header-anchor" href="#核心区别"></a><strong>核心区别</strong></h2>
 <ul>
 <li><strong>上采样</strong>：放大特征图尺寸，<strong>恢复细节信息</strong>（如目标边缘、小物体位置）。</li>
 <li><strong>下采样</strong>：缩小特征图尺寸，<strong>提取抽象语义</strong>（如目标类别、整体形状）。</li>
 <li><strong>协作关系</strong>：两者结合实现多尺度检测（如同时识别近处大车和远处小车）。</li>
 </ul>
 <hr>
-<h2 id="1-下采样（Downsampling）"><a class="header-anchor" href="#1-下采样（Downsampling）">🔗</a><strong>1. 下采样（Downsampling）</strong></h2>
-<h3 id="作用"><a class="header-anchor" href="#作用">🔗</a><strong>作用</strong></h3>
+<h2 id="1-下采样（Downsampling）"><a class="header-anchor" href="#1-下采样（Downsampling）"></a><strong>1. 下采样（Downsampling）</strong></h2>
+<h3 id="作用"><a class="header-anchor" href="#作用"></a><strong>作用</strong></h3>
 <ul>
 <li>压缩特征图，减少计算量。</li>
 <li>捕获高层语义信息（例如“这是一辆车”）。</li>
 </ul>
-<h3 id="实现方式"><a class="header-anchor" href="#实现方式">🔗</a><strong>实现方式</strong></h3>
+<h3 id="实现方式"><a class="header-anchor" href="#实现方式"></a><strong>实现方式</strong></h3>
 <table>
 <thead>
 <tr>
@@ -1336,20 +1336,20 @@ g[data-mml-node="xypic"] path {
 </tr>
 </tbody>
 </table>
-<h3 id="特点"><a class="header-anchor" href="#特点">🔗</a><strong>特点</strong></h3>
+<h3 id="特点"><a class="header-anchor" href="#特点"></a><strong>特点</strong></h3>
 <ul>
 <li><strong>输出尺寸</strong>：缩小（例如输入<code>256x256</code> → 输出<code>128x128</code>）。</li>
 <li><strong>信息保留</strong>：丢弃细节，保留整体特征。</li>
 <li><strong>类比</strong>：眯眼看照片，忽略纹理细节，只关注轮廓。</li>
 </ul>
 <hr>
-<h2 id="2-上采样（Upsampling）"><a class="header-anchor" href="#2-上采样（Upsampling）">🔗</a><strong>2. 上采样（Upsampling）</strong></h2>
-<h3 id="作用-2"><a class="header-anchor" href="#作用-2">🔗</a><strong>作用</strong></h3>
+<h2 id="2-上采样（Upsampling）"><a class="header-anchor" href="#2-上采样（Upsampling）"></a><strong>2. 上采样（Upsampling）</strong></h2>
+<h3 id="作用-2"><a class="header-anchor" href="#作用-2"></a><strong>作用</strong></h3>
 <ul>
 <li>扩大特征图尺寸，辅助精确定位（如车轮、车灯位置）。</li>
 <li>与浅层特征融合，增强小目标检测能力。</li>
 </ul>
-<h3 id="实现方式-2"><a class="header-anchor" href="#实现方式-2">🔗</a><strong>实现方式</strong></h3>
+<h3 id="实现方式-2"><a class="header-anchor" href="#实现方式-2"></a><strong>实现方式</strong></h3>
 <table>
 <thead>
 <tr>
@@ -1368,14 +1368,14 @@ g[data-mml-node="xypic"] path {
 </tr>
 </tbody>
 </table>
-<h3 id="特点-2"><a class="header-anchor" href="#特点-2">🔗</a><strong>特点</strong></h3>
+<h3 id="特点-2"><a class="header-anchor" href="#特点-2"></a><strong>特点</strong></h3>
 <ul>
 <li><strong>输出尺寸</strong>：放大（例如输入<code>128x128</code> → 输出<code>256x256</code>）。</li>
 <li><strong>信息保留</strong>：补充细节，但可能引入噪声。</li>
 <li><strong>类比</strong>：放大模糊图片，猜测缺失的像素。</li>
 </ul>
 <hr>
-<h2 id="对比总结"><a class="header-anchor" href="#对比总结">🔗</a><strong>对比总结</strong></h2>
+<h2 id="对比总结"><a class="header-anchor" href="#对比总结"></a><strong>对比总结</strong></h2>
 <table>
 <thead>
 <tr>
@@ -1407,17 +1407,17 @@ g[data-mml-node="xypic"] path {
 </tr>
 </tbody>
 </table>
-<h2 id="实际例子"><a class="header-anchor" href="#实际例子">🔗</a><strong>实际例子</strong></h2>
+<h2 id="实际例子"><a class="header-anchor" href="#实际例子"></a><strong>实际例子</strong></h2>
 <ul>
 <li><strong>场景</strong>：检测一张包含“近处行人”和“远处车辆”的图像。</li>
 <li><strong>下采样</strong>：深层特征图（20x20）捕获“远处车辆”的抽象轮廓。</li>
 <li><strong>上采样</strong>：将该特征图放大到40x40，与浅层特征（包含“近处行人”细节）融合，实现多尺度检测。</li>
 </ul>
-<h1 id="消融实验"><a class="header-anchor" href="#消融实验">🔗</a>消融实验</h1>
-<h1 id="空洞卷积（Dilated-Convolution）详解"><a class="header-anchor" href="#空洞卷积（Dilated-Convolution）详解">🔗</a>空洞卷积（Dilated Convolution）详解</h1>
-<h2 id="1-概述"><a class="header-anchor" href="#1-概述">🔗</a>1. 概述</h2>
+<h1 id="消融实验"><a class="header-anchor" href="#消融实验"></a>消融实验</h1>
+<h1 id="空洞卷积（Dilated-Convolution）详解"><a class="header-anchor" href="#空洞卷积（Dilated-Convolution）详解"></a>空洞卷积（Dilated Convolution）详解</h1>
+<h2 id="1-概述"><a class="header-anchor" href="#1-概述"></a>1. 概述</h2>
 <p><strong>空洞卷积</strong>（Dilated Convolution），又称<strong>膨胀卷积</strong>或<strong>扩张卷积</strong>，是一种通过<strong>插入“空洞”</strong>（间隔）来扩大感受野的卷积操作。它能在<strong>不增加参数量</strong>的前提下捕捉更大范围的上下文信息，常用于图像分割、语音合成等任务。</p>
-<h2 id="2-为什么需要空洞卷积？"><a class="header-anchor" href="#2-为什么需要空洞卷积？">🔗</a>2. 为什么需要空洞卷积？</h2>
+<h2 id="2-为什么需要空洞卷积？"><a class="header-anchor" href="#2-为什么需要空洞卷积？"></a>2. 为什么需要空洞卷积？</h2>
 <p><strong>问题背景</strong>：</p>
 <ul>
 <li>传统卷积神经网络（CNN）通过堆叠卷积层和池化层（下采样）逐步扩大感受野，但池化会<strong>降低图像分辨率</strong>（丢失细节），导致小目标（如红外弱小目标）难以识别。</li>
@@ -1459,8 +1459,8 @@ g[data-mml-node="xypic"] path {
 </table>
 </li>
 </ul>
-<h2 id="3-优点"><a class="header-anchor" href="#3-优点">🔗</a>3. 优点</h2>
-<h2 id=""><a class="header-anchor" href="#">🔗</a></h2>
+<h2 id="3-优点"><a class="header-anchor" href="#3-优点"></a>3. 优点</h2>
+<h2 id=""><a class="header-anchor" href="#"></a></h2>
 <table>
 <thead>
 <tr>
@@ -1483,7 +1483,7 @@ g[data-mml-node="xypic"] path {
 </tr>
 </tbody>
 </table>
-<h2 id="4-缺点"><a class="header-anchor" href="#4-缺点">🔗</a>4. 缺点</h2>
+<h2 id="4-缺点"><a class="header-anchor" href="#4-缺点"></a>4. 缺点</h2>
 <table>
 <thead>
 <tr>
@@ -1502,7 +1502,7 @@ g[data-mml-node="xypic"] path {
 </tr>
 </tbody>
 </table>
-<h1 id="MIRST与SIRST"><a class="header-anchor" href="#MIRST与SIRST">🔗</a>MIRST与SIRST</h1>
+<h1 id="MIRST与SIRST"><a class="header-anchor" href="#MIRST与SIRST"></a>MIRST与SIRST</h1>
 <p><strong>SIRST</strong></p>
 <ul>
 <li><strong>全称 (Full Name):</strong> <strong>S</strong>ingle-frame <strong>I</strong>nfrared <strong>S</strong>mall <strong>T</strong>arget (单帧红外小目标)</li>
@@ -1530,17 +1530,17 @@ g[data-mml-node="xypic"] path {
 </li>
 <li><strong>相关算法：</strong> 通常涉及背景抑制、目标轨迹跟踪、运动补偿、时空滤波等技术，近年来的深度学习方法也开始更多地利用视频序列信息来提升检测性能。</li>
 </ul>
-<h1 id="评估指标"><a class="header-anchor" href="#评估指标">🔗</a>评估指标</h1>
+<h1 id="评估指标"><a class="header-anchor" href="#评估指标"></a>评估指标</h1>
 <p>TP（True Positives)：真正例，预测为正例而且实际上也是正例；</p>
 <p>FP（False Positives)：假正例，预测为正例然而实际上却是负例；</p>
 <p>FN（false Negatives)：假负例，预测为负例然而实际上却是正例；</p>
 <p>TN（True Negatives)：真负例，预测为负例而且实际上也是负例。</p>
 <p><img src="/blog/2025/02/27/%E6%9D%82%E8%AE%B0/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/TP.PNG" alt="TP.PNG"></p>
-<h2 id="检测率"><a class="header-anchor" href="#检测率">🔗</a>检测率</h2>
+<h2 id="检测率"><a class="header-anchor" href="#检测率"></a>检测率</h2>
 <p><strong>Probability of Detection, 
-    <span id="mjx-7b8c312">
+    <span id="mjx-d2df6af">
       <style>
-      #mjx-7b8c312{
+      #mjx-d2df6af{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1706,9 +1706,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p><strong>计算公式：</strong></p>
 
-    <span id="mjx-f9fcb33">
+    <span id="mjx-8d125e1">
       <style>
-      #mjx-f9fcb33{
+      #mjx-8d125e1{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1870,9 +1870,9 @@ g[data-mml-node="xypic"] path {
 <li><strong>True Positives (TP，真阳性):</strong> 算法正确地将目标识别为目标（即检测到了真实存在的目标）。</li>
 <li><strong>False Negatives (FN，假阴性):</strong> 算法未能检测到真实存在的目标（即漏报了目标）。</li>
 <li><strong>Actual Positives (实际正例):</strong> 数据集中所有真实存在的目标数量 (
-    <span id="mjx-76b56c6">
+    <span id="mjx-0072ae1">
       <style>
-      #mjx-76b56c6{
+      #mjx-0072ae1{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2037,9 +2037,9 @@ g[data-mml-node="xypic"] path {
 <p><strong>含义与解读：</strong></p>
 <ul>
 <li>
-    <span id="mjx-fa003bc">
+    <span id="mjx-d2155b3">
       <style>
-      #mjx-fa003bc{
+      #mjx-d2155b3{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2199,9 +2199,9 @@ g[data-mml-node="xypic"] path {
     </span>
    越高越好，表示算法的“捕获能力”越强，漏掉真实目标的可能性越小。</li>
 <li>在军事侦察、搜救等应用中，
-    <span id="mjx-26b981d">
+    <span id="mjx-af2f26d">
       <style>
-      #mjx-26b981d{
+      #mjx-af2f26d{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2364,11 +2364,11 @@ g[data-mml-node="xypic"] path {
 </li>
 </ul>
 <hr>
-<h2 id="虚警率"><a class="header-anchor" href="#虚警率">🔗</a>虚警率</h2>
+<h2 id="虚警率"><a class="header-anchor" href="#虚警率"></a>虚警率</h2>
 <p>Probability of False Alarm, 
-    <span id="mjx-5f2ed8b">
+    <span id="mjx-d681c64">
       <style>
-      #mjx-5f2ed8b{
+      #mjx-d681c64{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2527,9 +2527,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.667ex;" xmlns="http://www.w3.org/2000/svg" width="3.366ex" height="2.213ex" role="img" focusable="false" viewBox="0 -683 1488 978" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D443" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path></g><g data-mml-node="TeXAtom" transform="translate(675,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="mi" transform="translate(550,0)"><path data-c="1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>P</mi><mrow data-mjx-texclass="ORD"><mi>f</mi><mi>a</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
     </span>
    或 
-    <span id="mjx-a78e101">
+    <span id="mjx-d053524">
       <style>
-      #mjx-a78e101{
+      #mjx-d053524{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2695,9 +2695,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p><strong>计算公式：</strong></p>
 
-    <span id="mjx-3fdf99a">
+    <span id="mjx-54dd804">
       <style>
-      #mjx-3fdf99a{
+      #mjx-54dd804{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2859,9 +2859,9 @@ g[data-mml-node="xypic"] path {
 <li><strong>False Positives (FP，假阳性):</strong> 算法错误地将非目标识别为目标（即误报了）。</li>
 <li><strong>True Negatives (TN，真阴性):</strong> 算法正确地将非目标识别为非目标。</li>
 <li><strong>Actual Negatives (实际负例):</strong> 数据集中所有真实存在的非目标数量 (
-    <span id="mjx-cbaa65">
+    <span id="mjx-e5c5055">
       <style>
-      #mjx-cbaa65{
+      #mjx-e5c5055{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3026,9 +3026,9 @@ g[data-mml-node="xypic"] path {
 <p><strong>含义与解读：</strong></p>
 <ul>
 <li>
-    <span id="mjx-7542c68">
+    <span id="mjx-ba477cf">
       <style>
-      #mjx-7542c68{
+      #mjx-ba477cf{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3192,7 +3192,7 @@ g[data-mml-node="xypic"] path {
 </li>
 </ul>
 <hr>
-<h2 id="精确率"><a class="header-anchor" href="#精确率">🔗</a>精确率</h2>
+<h2 id="精确率"><a class="header-anchor" href="#精确率"></a>精确率</h2>
 <p>Precision</p>
 <ul>
 <li>
@@ -3201,9 +3201,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p><strong>计算公式：</strong></p>
 
-    <span id="mjx-1800804">
+    <span id="mjx-e9c5eff">
       <style>
-      #mjx-1800804{
+      #mjx-e9c5eff{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3366,14 +3366,14 @@ g[data-mml-node="xypic"] path {
 <p><strong>含义与解读：</strong> 关注的是“查得准不准”。高精确率意味着算法报告的检测结果中，<u>错误警报的比例较低</u>。精确度还有一个名字，叫做**“查准率”<strong>，我们关心的主要部分是正例，所以查准率就是相对正例的预测结果而言，正例预测的准确度。直白的意思就是模型预测为正例的样本中，其中真正的正例占预测为正例样本的比例，用此标准来</strong>评估预测正例的准确度**。</p>
 </li>
 </ul>
-<h2 id="召回率"><a class="header-anchor" href="#召回率">🔗</a>召回率</h2>
+<h2 id="召回率"><a class="header-anchor" href="#召回率"></a>召回率</h2>
 <p>Recall</p>
 <ul>
 <li>
 <p><strong>定义：</strong> 召回率就是检测率 
-    <span id="mjx-c04cf33">
+    <span id="mjx-b8affa1">
       <style>
-      #mjx-c04cf33{
+      #mjx-b8affa1{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3535,9 +3535,9 @@ g[data-mml-node="xypic"] path {
 </li>
 <li>
 <p><strong>计算公式：</strong> 同 
-    <span id="mjx-5c75dbe">
+    <span id="mjx-aeb01a3">
       <style>
-      #mjx-5c75dbe{
+      #mjx-aeb01a3{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3697,9 +3697,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </p>
 
-    <span id="mjx-0908dc3">
+    <span id="mjx-3259df6">
       <style>
-      #mjx-0908dc3{
+      #mjx-3259df6{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3862,7 +3862,7 @@ g[data-mml-node="xypic"] path {
 <p><strong>含义与解读：</strong> 关注的是“查得全不全”。高召回率意味着算法能够找到大部分真实目标，很少有漏报。</p>
 </li>
 </ul>
-<h2 id="F1-分数"><a class="header-anchor" href="#F1-分数">🔗</a>F1 分数</h2>
+<h2 id="F1-分数"><a class="header-anchor" href="#F1-分数"></a>F1 分数</h2>
 <p>F1-score</p>
 <ul>
 <li>
@@ -3871,9 +3871,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p><strong>计算公式：</strong></p>
 
-    <span id="mjx-5ccfe05">
+    <span id="mjx-9c72229">
       <style>
-      #mjx-5ccfe05{
+      #mjx-9c72229{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4036,13 +4036,13 @@ g[data-mml-node="xypic"] path {
 <p><strong>含义与解读：</strong> F1分数越高，表示算法在精确率和召回率之间取得了更好的平衡。</p>
 </li>
 </ul>
-<h2 id="ROC-曲线"><a class="header-anchor" href="#ROC-曲线">🔗</a>ROC 曲线</h2>
+<h2 id="ROC-曲线"><a class="header-anchor" href="#ROC-曲线"></a>ROC 曲线</h2>
 <p>Receiver Operating Characteristic Curve</p>
 <ul>
 <li><strong>定义：</strong> 以 
-    <span id="mjx-4a97ae9">
+    <span id="mjx-b87420e">
       <style>
-      #mjx-4a97ae9{
+      #mjx-b87420e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4201,9 +4201,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.667ex;" xmlns="http://www.w3.org/2000/svg" width="3.366ex" height="2.213ex" role="img" focusable="false" viewBox="0 -683 1488 978" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D443" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path></g><g data-mml-node="TeXAtom" transform="translate(675,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="mi" transform="translate(550,0)"><path data-c="1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>P</mi><mrow data-mjx-texclass="ORD"><mi>f</mi><mi>a</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   （或 False Positive Rate, FPR，即虚警率）为<strong>横轴</strong>，以 
-    <span id="mjx-afca9ae">
+    <span id="mjx-3b24a6">
       <style>
-      #mjx-afca9ae{
+      #mjx-3b24a6{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4362,9 +4362,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.355ex;" xmlns="http://www.w3.org/2000/svg" width="2.472ex" height="1.901ex" role="img" focusable="false" viewBox="0 -683 1092.7 840.1" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D443" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path></g><g data-mml-node="mi" transform="translate(675,-150) scale(0.707)"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>P</mi><mi>d</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   （或 True Positive Rate, TPR，即召回率）为<strong>纵轴</strong>绘制的曲线。通过改变分类阈值（例如，检测置信度），可以得到一系列的 (
-    <span id="mjx-af7fd12">
+    <span id="mjx-ea86818">
       <style>
-      #mjx-af7fd12{
+      #mjx-ea86818{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4526,9 +4526,9 @@ g[data-mml-node="xypic"] path {
 <li><strong>含义与解读：</strong>
 <ul>
 <li>ROC 曲线能直观地展示算法在不同检测阈值下，
-    <span id="mjx-d0d5f9f">
+    <span id="mjx-3790404">
       <style>
-      #mjx-d0d5f9f{
+      #mjx-3790404{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4687,9 +4687,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.355ex;" xmlns="http://www.w3.org/2000/svg" width="2.472ex" height="1.901ex" role="img" focusable="false" viewBox="0 -683 1092.7 840.1" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D443" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path></g><g data-mml-node="mi" transform="translate(675,-150) scale(0.707)"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>P</mi><mi>d</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
    和 
-    <span id="mjx-8c72ebe">
+    <span id="mjx-b198d08">
       <style>
-      #mjx-8c72ebe{
+      #mjx-b198d08{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4849,9 +4849,9 @@ g[data-mml-node="xypic"] path {
     </span>
    之间的权衡关系。</li>
 <li>曲线越靠近左上角（即高 
-    <span id="mjx-20afa69">
+    <span id="mjx-f2ac741">
       <style>
-      #mjx-20afa69{
+      #mjx-f2ac741{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5010,9 +5010,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.355ex;" xmlns="http://www.w3.org/2000/svg" width="2.472ex" height="1.901ex" role="img" focusable="false" viewBox="0 -683 1092.7 840.1" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D443" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path></g><g data-mml-node="mi" transform="translate(675,-150) scale(0.707)"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>P</mi><mi>d</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
    和低 
-    <span id="mjx-c41f8e9">
+    <span id="mjx-989e3af">
       <style>
-      #mjx-c41f8e9{
+      #mjx-989e3af{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5176,7 +5176,7 @@ g[data-mml-node="xypic"] path {
 </ul>
 </li>
 </ul>
-<h2 id="AUC"><a class="header-anchor" href="#AUC">🔗</a>AUC</h2>
+<h2 id="AUC"><a class="header-anchor" href="#AUC"></a>AUC</h2>
 <p>(Area Under the ROC Curve)</p>
 <ul>
 <li>
@@ -5187,9 +5187,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>AUC 值介于 0 到 1 之间。</li>
 <li>AUC 越高，表示算法的整体性能越好，因为它综合考虑了所有可能的阈值下的 
-    <span id="mjx-2a78af9">
+    <span id="mjx-527af8b">
       <style>
-      #mjx-2a78af9{
+      #mjx-527af8b{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5348,9 +5348,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.355ex;" xmlns="http://www.w3.org/2000/svg" width="2.472ex" height="1.901ex" role="img" focusable="false" viewBox="0 -683 1092.7 840.1" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D443" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path></g><g data-mml-node="mi" transform="translate(675,-150) scale(0.707)"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>P</mi><mi>d</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
    和 
-    <span id="mjx-5386fc4">
+    <span id="mjx-e76188b">
       <style>
-      #mjx-5386fc4{
+      #mjx-e76188b{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5517,9 +5517,9 @@ g[data-mml-node="xypic"] path {
 </blockquote>
 <p>用公式表示：</p>
 
-    <span id="mjx-7601cb8">
+    <span id="mjx-bfe6908">
       <style>
-      #mjx-7601cb8{
+      #mjx-bfe6908{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5682,9 +5682,9 @@ g[data-mml-node="xypic"] path {
 <hr>
 <p><strong>在红外小目标检测中的特殊考虑：</strong></p>
 <p>在红外小目标检测中，通常会<strong>非常关注
-    <span id="mjx-b9d72d4">
+    <span id="mjx-2db07cf">
       <style>
-      #mjx-b9d72d4{
+      #mjx-2db07cf{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5843,9 +5843,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.355ex;" xmlns="http://www.w3.org/2000/svg" width="2.472ex" height="1.901ex" role="img" focusable="false" viewBox="0 -683 1092.7 840.1" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D443" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path></g><g data-mml-node="mi" transform="translate(675,-150) scale(0.707)"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>P</mi><mi>d</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   和
-    <span id="mjx-664a2d7">
+    <span id="mjx-e8ad1b1">
       <style>
-      #mjx-664a2d7{
+      #mjx-e8ad1b1{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6006,9 +6006,9 @@ g[data-mml-node="xypic"] path {
   </strong>。因为小目标往往数量稀少、特征不明显，背景复杂，检测难度大。</p>
 <ul>
 <li><strong>高
-    <span id="mjx-90fdfb5">
+    <span id="mjx-8e147b9">
       <style>
-      #mjx-90fdfb5{
+      #mjx-8e147b9{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6168,9 +6168,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </strong> 意味着能有效发现目标，避免漏报；</li>
 <li><strong>低
-    <span id="mjx-a92cfc6">
+    <span id="mjx-f081c2b">
       <style>
-      #mjx-a92cfc6{
+      #mjx-f081c2b{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6331,9 +6331,9 @@ g[data-mml-node="xypic"] path {
   </strong> 意味着系统不会被大量虚假警报淹没。</li>
 </ul>
 <p>有时，研究者会绘制 <strong>
-    <span id="mjx-3deae79">
+    <span id="mjx-14e29d7">
       <style>
-      #mjx-3deae79{
+      #mjx-14e29d7{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6492,9 +6492,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.355ex;" xmlns="http://www.w3.org/2000/svg" width="2.472ex" height="1.901ex" role="img" focusable="false" viewBox="0 -683 1092.7 840.1" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D443" d="M287 628Q287 635 230 637Q206 637 199 638T192 648Q192 649 194 659Q200 679 203 681T397 683Q587 682 600 680Q664 669 707 631T751 530Q751 453 685 389Q616 321 507 303Q500 302 402 301H307L277 182Q247 66 247 59Q247 55 248 54T255 50T272 48T305 46H336Q342 37 342 35Q342 19 335 5Q330 0 319 0Q316 0 282 1T182 2Q120 2 87 2T51 1Q33 1 33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM645 554Q645 567 643 575T634 597T609 619T560 635Q553 636 480 637Q463 637 445 637T416 636T404 636Q391 635 386 627Q384 621 367 550T332 412T314 344Q314 342 395 342H407H430Q542 342 590 392Q617 419 631 471T645 554Z"></path></g><g data-mml-node="mi" transform="translate(675,-150) scale(0.707)"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>P</mi><mi>d</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
    vs 
-    <span id="mjx-a5eab7">
+    <span id="mjx-9e116ef">
       <style>
-      #mjx-a5eab7{
+      #mjx-9e116ef{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6655,7 +6655,7 @@ g[data-mml-node="xypic"] path {
    曲线</strong>，以直观地比较不同算法在不同操作点（即不同的阈值设置）下的性能表现。这种曲线在目标检测领域通常被称为 <strong>Detection Error Tradeoff (DET) curve</strong> 或直接就是 ROC 曲线。</p>
 <p>希望这些解释能帮助您更好地理解文章中可能出现的评估指标！</p>
 <p>准确度(accuracy)、精确率（precision)、召回率（recall）、F1值</p>
-</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2025/02/25/%E5%BF%83%E6%83%85/%E4%BA%95%E4%B8%AD%E6%9C%88/" title="井中月"><img class="cover" src="/blog/image/a26f66658e014e06aa70e2753742bef3.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">井中月</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   心情  </div></div></div></a><a class="pagination-related" href="/blog/2025/03/26/%E5%AD%A6%E4%BD%8D%E8%AF%BE/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E6%B1%82%E6%A0%B9/" title="数值分析-非线性方程求根"><img class="cover" src="/blog/image/img3.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">数值分析-非线性方程求根</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   学位课 / 数值分析  此文章包含非线性方程组求根部分---------------------------------------------------------------------------------------------------------------------------------------------------------------- 🔗第七章...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2025/10/17/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/DeViSE-A-Deep-Visual-Semantic-Embedding-Model/" title="DeViSE: A Deep Visual-Semantic Embedding Model"><img class="cover" src="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-10-17</div><div class="info-item-2">DeViSE: A Deep Visual-Semantic Embedding Model</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   论文阅读  好的，接下来我将以教授讲授研究生课程的口吻，系统、深入地为你讲解这篇经典论文—— Frome et al., “DeViSE: A Deep Visual-Semantic Embedding Model” (NIPS...</div></div></div></a><a class="pagination-related" href="/blog/2025/10/17/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/Zero-Shot-Object-Detection/" title="Zero-Shot Object Detection"><img class="cover" src="/blog/image/5268d877a2a04864b36b4961ab793f4f.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-10-17</div><div class="info-item-2">Zero-Shot Object Detection</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   论文阅读  🔗Introduction 这一部分介绍了零样本物体检测（Zero-Shot Object Detection,...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">长期主义学习者，记录技术、论文与生活。</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/qieliqiean"><i class="fab fa-github"></i><span>访问 GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/qieliqiean" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎交流：2895014608@qq.com</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Batch-Normalization%EF%BC%88%E6%89%B9%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%89-%E5%92%8C-Layer-Normalization%EF%BC%88%E5%B1%82%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%89"><span class="toc-text">🔗Batch Normalization（批量归一化） 和 Layer Normalization（层归一化）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E5%AF%B9%E6%AF%94"><span class="toc-text">🔗1. 核心概念对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Batch-Normalization-BN"><span class="toc-text">🔗Batch Normalization (BN)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Layer-Normalization-LN"><span class="toc-text">🔗Layer Normalization (LN)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%85%AC%E5%BC%8F%E7%AC%A6%E5%8F%B7%E8%A7%A3%E9%87%8A"><span class="toc-text">🔗2. 公式符号解释</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E5%BC%A0%E9%87%8F%E5%BD%A2%E7%8A%B6"><span class="toc-text">🔗输入张量形状</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BN-%E5%85%AC%E5%BC%8F%E7%AC%A6%E5%8F%B7"><span class="toc-text">🔗BN 公式符号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LN-%E5%85%AC%E5%BC%8F%E7%AC%A6%E5%8F%B7"><span class="toc-text">🔗LN 公式符号</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%85%B7%E4%BD%93%E7%A4%BA%E4%BE%8B%E5%AF%B9%E6%AF%94"><span class="toc-text">🔗3. 具体示例对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-text">🔗输入数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BN-%E8%AE%A1%E7%AE%97%E7%A4%BA%E4%BE%8B%EF%BC%88%E4%BB%A5%E9%80%9A%E9%81%930%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="toc-text">🔗BN 计算示例（以通道0为例）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LN-%E8%AE%A1%E7%AE%97%E7%A4%BA%E4%BE%8B%EF%BC%88%E4%BB%A5%E6%A0%B7%E6%9C%AC1%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="toc-text">🔗LN 计算示例（以样本1为例）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%AF%B9%E6%AF%94%E6%80%BB%E7%BB%93%E8%A1%A8%E6%A0%BC"><span class="toc-text">🔗4. 对比总结表格</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">🔗5. 注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%88PyTorch%EF%BC%89"><span class="toc-text">🔗6. 代码示例（PyTorch）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%8A%E9%87%87%E6%A0%B7%EF%BC%88Upsampling%EF%BC%89%E4%B8%8E%E4%B8%8B%E9%87%87%E6%A0%B7%EF%BC%88Downsampling%EF%BC%89%E8%AF%A6%E8%A7%A3"><span class="toc-text">🔗上采样（Upsampling）与下采样（Downsampling）详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%8C%BA%E5%88%AB"><span class="toc-text">🔗核心区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%8B%E9%87%87%E6%A0%B7%EF%BC%88Downsampling%EF%BC%89"><span class="toc-text">🔗1. 下采样（Downsampling）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8"><span class="toc-text">🔗作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="toc-text">🔗实现方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-text">🔗特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%8A%E9%87%87%E6%A0%B7%EF%BC%88Upsampling%EF%BC%89"><span class="toc-text">🔗2. 上采样（Upsampling）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8-2"><span class="toc-text">🔗作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F-2"><span class="toc-text">🔗实现方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E7%82%B9-2"><span class="toc-text">🔗特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94%E6%80%BB%E7%BB%93"><span class="toc-text">🔗对比总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E4%BE%8B%E5%AD%90"><span class="toc-text">🔗实际例子</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C"><span class="toc-text">🔗消融实验</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A9%BA%E6%B4%9E%E5%8D%B7%E7%A7%AF%EF%BC%88Dilated-Convolution%EF%BC%89%E8%AF%A6%E8%A7%A3"><span class="toc-text">🔗空洞卷积（Dilated Convolution）详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="toc-text">🔗1. 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E7%A9%BA%E6%B4%9E%E5%8D%B7%E7%A7%AF%EF%BC%9F"><span class="toc-text">🔗2. 为什么需要空洞卷积？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BC%98%E7%82%B9"><span class="toc-text">🔗3. 优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">🔗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%BC%BA%E7%82%B9"><span class="toc-text">🔗4. 缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MIRST%E4%B8%8ESIRST"><span class="toc-text">🔗MIRST与SIRST</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-text">🔗评估指标</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%B5%8B%E7%8E%87"><span class="toc-text">🔗检测率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E8%AD%A6%E7%8E%87"><span class="toc-text">🔗虚警率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B2%BE%E7%A1%AE%E7%8E%87"><span class="toc-text">🔗精确率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AC%E5%9B%9E%E7%8E%87"><span class="toc-text">🔗召回率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#F1-%E5%88%86%E6%95%B0"><span class="toc-text">🔗F1 分数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ROC-%E6%9B%B2%E7%BA%BF"><span class="toc-text">🔗ROC 曲线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AUC"><span class="toc-text">🔗AUC</span></a></li></ol></li></ol></div></div><div class="card-widget card-post-series"><div class="item-headline"><i class="fa-solid fa-layer-group"></i><span>系列文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/12/18/%E6%9D%82%E8%AE%B0/YOLOv8%20Anchor%20Free%E4%B8%8EDFL%E5%8E%9F%E7%90%86/" title="YOLOv8 Anchor Free与DFL原理"><img src="/blog/image/s625d11592724c.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="YOLOv8 Anchor Free与DFL原理"></a><div class="content"><a class="title" href="/blog/2025/12/18/%E6%9D%82%E8%AE%B0/YOLOv8%20Anchor%20Free%E4%B8%8EDFL%E5%8E%9F%E7%90%86/" title="YOLOv8 Anchor Free与DFL原理">YOLOv8 Anchor Free与DFL原理</a><time datetime="2025-12-18T02:04:06.000Z" title="发表于 2025-12-18 10:04:06">2025-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/12/18/%E6%9D%82%E8%AE%B0/python%E8%AF%AD%E6%B3%95%E5%8F%8A%E5%87%BD%E6%95%B0%E7%A7%AF%E7%B4%AF/" title="python语法及函数积累"><img src="/blog/image/q4SynOBjcxn5gA6.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="python语法及函数积累"></a><div class="content"><a class="title" href="/blog/2025/12/18/%E6%9D%82%E8%AE%B0/python%E8%AF%AD%E6%B3%95%E5%8F%8A%E5%87%BD%E6%95%B0%E7%A7%AF%E7%B4%AF/" title="python语法及函数积累">python语法及函数积累</a><time datetime="2025-12-18T02:04:06.000Z" title="发表于 2025-12-18 10:04:06">2025-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/09/23/%E6%9D%82%E8%AE%B0/%E6%9C%AF%E8%AF%AD%E5%8F%8A%E5%85%B3%E9%94%AE%E8%AF%8D/" title="术语及关键词"><img src="/blog/image/29051e0d6c0e82fe7e46a7e50399ff577917a1a3c82ee-6Qx5wo.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="术语及关键词"></a><div class="content"><a class="title" href="/blog/2025/09/23/%E6%9D%82%E8%AE%B0/%E6%9C%AF%E8%AF%AD%E5%8F%8A%E5%85%B3%E9%94%AE%E8%AF%8D/" title="术语及关键词">术语及关键词</a><time datetime="2025-09-23T08:06:54.000Z" title="发表于 2025-09-23 16:06:54">2025-09-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2025/09/17/%E6%9D%82%E8%AE%B0/keywords%E9%9B%86%E5%90%88/" title="keywords集合">keywords集合</a><time datetime="2025-09-17T01:27:17.000Z" title="发表于 2025-09-17 09:27:17">2025-09-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/02/27/%E6%9D%82%E8%AE%B0/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" title="深度学习相关知识"><img src="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="深度学习相关知识"></a><div class="content"><a class="title" href="/blog/2025/02/27/%E6%9D%82%E8%AE%B0/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" title="深度学习相关知识">深度学习相关知识</a><time datetime="2025-02-27T06:11:35.000Z" title="发表于 2025-02-27 14:11:35">2025-02-27</time></div></div></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/easter-egg/" title="彩蛋"><img src="/blog/image/cover/IMG_20260217_201822.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="彩蛋"/></a><div class="content"><a class="title" href="/blog/easter-egg/" title="彩蛋">彩蛋</a><time datetime="2026-02-18T05:09:03.000Z" title="发表于 2026-02-18 13:09:03">2026-02-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读"><img src="/blog/image/cover/9.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【WeDetect】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读">【WeDetect】论文阅读</a><time datetime="2026-01-21T01:41:58.000Z" title="发表于 2026-01-21 09:41:58">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册"><img src="/blog/image/cover/13.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="AI使用手册"/></a><div class="content"><a class="title" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册">AI使用手册</a><time datetime="2026-01-20T01:21:48.000Z" title="发表于 2026-01-20 09:21:48">2026-01-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读"><img src="/blog/image/cover/2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【OV-DQUO】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读">【OV-DQUO】论文阅读</a><time datetime="2026-01-19T07:59:50.000Z" title="发表于 2026-01-19 15:59:50">2026-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释"><img src="/blog/image/cover/6.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="YOLO-UniOW-指标解释"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释">YOLO-UniOW-指标解释</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><script src="/blog/true"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2025/02/25/%E5%BF%83%E6%83%85/%E4%BA%95%E4%B8%AD%E6%9C%88/" title="井中月"><img class="cover" src="/blog/image/a26f66658e014e06aa70e2753742bef3.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">井中月</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   心情  </div></div></div></a><a class="pagination-related" href="/blog/2025/03/26/%E5%AD%A6%E4%BD%8D%E8%AF%BE/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90-%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86/" title="数值分析-数值积分"><img class="cover" src="/blog/image/IMG_0146.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">数值分析-数值积分</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   学位课 /...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2025/10/17/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/DeViSE-A-Deep-Visual-Semantic-Embedding-Model/" title="DeViSE: A Deep Visual-Semantic Embedding Model"><img class="cover" src="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-10-17</div><div class="info-item-2">DeViSE: A Deep Visual-Semantic Embedding Model</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   论文阅读  好的，接下来我将以教授讲授研究生课程的口吻，系统、深入地为你讲解这篇经典论文—— Frome et al., “DeViSE: A Deep Visual-Semantic Embedding Model” (NIPS...</div></div></div></a><a class="pagination-related" href="/blog/2025/10/17/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/Zero-Shot-Object-Detection/" title="Zero-Shot Object Detection"><img class="cover" src="/blog/image/5268d877a2a04864b36b4961ab793f4f.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-10-17</div><div class="info-item-2">Zero-Shot Object Detection</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   论文阅读  Introduction 这一部分介绍了零样本物体检测（Zero-Shot Object Detection,...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">读研，尝试新技术与记录生活。</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">43</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/qieliqiean"><i class="fab fa-github"></i><span>访问 GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/qieliqiean" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎交流：2895014608@qq.com</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Batch-Normalization%EF%BC%88%E6%89%B9%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%89-%E5%92%8C-Layer-Normalization%EF%BC%88%E5%B1%82%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%89"><span class="toc-text">Batch Normalization（批量归一化） 和 Layer Normalization（层归一化）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E5%AF%B9%E6%AF%94"><span class="toc-text">1. 核心概念对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Batch-Normalization-BN"><span class="toc-text">Batch Normalization (BN)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Layer-Normalization-LN"><span class="toc-text">Layer Normalization (LN)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%85%AC%E5%BC%8F%E7%AC%A6%E5%8F%B7%E8%A7%A3%E9%87%8A"><span class="toc-text">2. 公式符号解释</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E5%BC%A0%E9%87%8F%E5%BD%A2%E7%8A%B6"><span class="toc-text">输入张量形状</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BN-%E5%85%AC%E5%BC%8F%E7%AC%A6%E5%8F%B7"><span class="toc-text">BN 公式符号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LN-%E5%85%AC%E5%BC%8F%E7%AC%A6%E5%8F%B7"><span class="toc-text">LN 公式符号</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%85%B7%E4%BD%93%E7%A4%BA%E4%BE%8B%E5%AF%B9%E6%AF%94"><span class="toc-text">3. 具体示例对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-text">输入数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BN-%E8%AE%A1%E7%AE%97%E7%A4%BA%E4%BE%8B%EF%BC%88%E4%BB%A5%E9%80%9A%E9%81%930%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="toc-text">BN 计算示例（以通道0为例）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LN-%E8%AE%A1%E7%AE%97%E7%A4%BA%E4%BE%8B%EF%BC%88%E4%BB%A5%E6%A0%B7%E6%9C%AC1%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="toc-text">LN 计算示例（以样本1为例）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%AF%B9%E6%AF%94%E6%80%BB%E7%BB%93%E8%A1%A8%E6%A0%BC"><span class="toc-text">4. 对比总结表格</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">5. 注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%88PyTorch%EF%BC%89"><span class="toc-text">6. 代码示例（PyTorch）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%8A%E9%87%87%E6%A0%B7%EF%BC%88Upsampling%EF%BC%89%E4%B8%8E%E4%B8%8B%E9%87%87%E6%A0%B7%EF%BC%88Downsampling%EF%BC%89%E8%AF%A6%E8%A7%A3"><span class="toc-text">上采样（Upsampling）与下采样（Downsampling）详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%8C%BA%E5%88%AB"><span class="toc-text">核心区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%8B%E9%87%87%E6%A0%B7%EF%BC%88Downsampling%EF%BC%89"><span class="toc-text">1. 下采样（Downsampling）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8"><span class="toc-text">作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="toc-text">实现方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-text">特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%8A%E9%87%87%E6%A0%B7%EF%BC%88Upsampling%EF%BC%89"><span class="toc-text">2. 上采样（Upsampling）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8-2"><span class="toc-text">作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F-2"><span class="toc-text">实现方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E7%82%B9-2"><span class="toc-text">特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94%E6%80%BB%E7%BB%93"><span class="toc-text">对比总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E4%BE%8B%E5%AD%90"><span class="toc-text">实际例子</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8C"><span class="toc-text">消融实验</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A9%BA%E6%B4%9E%E5%8D%B7%E7%A7%AF%EF%BC%88Dilated-Convolution%EF%BC%89%E8%AF%A6%E8%A7%A3"><span class="toc-text">空洞卷积（Dilated Convolution）详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="toc-text">1. 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E7%A9%BA%E6%B4%9E%E5%8D%B7%E7%A7%AF%EF%BC%9F"><span class="toc-text">2. 为什么需要空洞卷积？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BC%98%E7%82%B9"><span class="toc-text">3. 优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%BC%BA%E7%82%B9"><span class="toc-text">4. 缺点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MIRST%E4%B8%8ESIRST"><span class="toc-text">MIRST与SIRST</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-text">评估指标</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%B5%8B%E7%8E%87"><span class="toc-text">检测率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E8%AD%A6%E7%8E%87"><span class="toc-text">虚警率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B2%BE%E7%A1%AE%E7%8E%87"><span class="toc-text">精确率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AC%E5%9B%9E%E7%8E%87"><span class="toc-text">召回率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#F1-%E5%88%86%E6%95%B0"><span class="toc-text">F1 分数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ROC-%E6%9B%B2%E7%BA%BF"><span class="toc-text">ROC 曲线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AUC"><span class="toc-text">AUC</span></a></li></ol></li></ol></div></div><div class="card-widget card-post-series"><div class="item-headline"><i class="fa-solid fa-layer-group"></i><span>系列文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/12/18/%E6%9D%82%E8%AE%B0/YOLOv8%20Anchor%20Free%E4%B8%8EDFL%E5%8E%9F%E7%90%86/" title="YOLOv8 Anchor Free与DFL原理"><img src="/blog/image/s625d11592724c.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="YOLOv8 Anchor Free与DFL原理"></a><div class="content"><a class="title" href="/blog/2025/12/18/%E6%9D%82%E8%AE%B0/YOLOv8%20Anchor%20Free%E4%B8%8EDFL%E5%8E%9F%E7%90%86/" title="YOLOv8 Anchor Free与DFL原理">YOLOv8 Anchor Free与DFL原理</a><time datetime="2025-12-18T02:04:06.000Z" title="发表于 2025-12-18 10:04:06">2025-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/12/18/%E6%9D%82%E8%AE%B0/python%E8%AF%AD%E6%B3%95%E5%8F%8A%E5%87%BD%E6%95%B0%E7%A7%AF%E7%B4%AF/" title="python语法及函数积累"><img src="/blog/image/q4SynOBjcxn5gA6.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="python语法及函数积累"></a><div class="content"><a class="title" href="/blog/2025/12/18/%E6%9D%82%E8%AE%B0/python%E8%AF%AD%E6%B3%95%E5%8F%8A%E5%87%BD%E6%95%B0%E7%A7%AF%E7%B4%AF/" title="python语法及函数积累">python语法及函数积累</a><time datetime="2025-12-18T02:04:06.000Z" title="发表于 2025-12-18 10:04:06">2025-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/09/23/%E6%9D%82%E8%AE%B0/%E6%9C%AF%E8%AF%AD%E5%8F%8A%E5%85%B3%E9%94%AE%E8%AF%8D/" title="术语及关键词"><img src="/blog/image/29051e0d6c0e82fe7e46a7e50399ff577917a1a3c82ee-6Qx5wo.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="术语及关键词"></a><div class="content"><a class="title" href="/blog/2025/09/23/%E6%9D%82%E8%AE%B0/%E6%9C%AF%E8%AF%AD%E5%8F%8A%E5%85%B3%E9%94%AE%E8%AF%8D/" title="术语及关键词">术语及关键词</a><time datetime="2025-09-23T08:06:54.000Z" title="发表于 2025-09-23 16:06:54">2025-09-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2025/09/17/%E6%9D%82%E8%AE%B0/keywords%E9%9B%86%E5%90%88/" title="keywords集合">keywords集合</a><time datetime="2025-09-17T01:27:17.000Z" title="发表于 2025-09-17 09:27:17">2025-09-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/02/27/%E6%9D%82%E8%AE%B0/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" title="深度学习相关知识"><img src="/blog/image/2aa2662f-d453-4a09-8890-87440bd087b8.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="深度学习相关知识"></a><div class="content"><a class="title" href="/blog/2025/02/27/%E6%9D%82%E8%AE%B0/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" title="深度学习相关知识">深度学习相关知识</a><time datetime="2025-02-27T06:11:35.000Z" title="发表于 2025-02-27 14:11:35">2025-02-27</time></div></div></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/easter-egg/" title="彩蛋"><img src="/blog/image/cover/IMG_20260217_201822.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="彩蛋"/></a><div class="content"><a class="title" href="/blog/easter-egg/" title="彩蛋">彩蛋</a><time datetime="2026-02-18T05:09:03.000Z" title="发表于 2026-02-18 13:09:03">2026-02-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读"><img src="/blog/image/cover/9.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【WeDetect】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读">【WeDetect】论文阅读</a><time datetime="2026-01-21T01:41:58.000Z" title="发表于 2026-01-21 09:41:58">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册"><img src="/blog/image/cover/13.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="AI使用手册"/></a><div class="content"><a class="title" href="/blog/2026/01/20/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册">AI使用手册</a><time datetime="2026-01-20T01:21:48.000Z" title="发表于 2026-01-20 09:21:48">2026-01-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读"><img src="/blog/image/cover/2.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【OV-DQUO】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/19/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/OV-DQUO/%E3%80%90OV-DQUO%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【OV-DQUO】论文阅读">【OV-DQUO】论文阅读</a><time datetime="2026-01-19T07:59:50.000Z" title="发表于 2026-01-19 15:59:50">2026-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释"><img src="/blog/image/cover/6.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="YOLO-UniOW-指标解释"/></a><div class="content"><a class="title" href="/blog/2026/01/14/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/YOLO-UniOW/%E3%80%90YOLO-UniOW%E3%80%91%E6%8C%87%E6%A0%87%E8%A7%A3%E9%87%8A/" title="YOLO-UniOW-指标解释">YOLO-UniOW-指标解释</a><time datetime="2026-01-14T01:44:34.000Z" title="发表于 2026-01-14 09:44:34">2026-01-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><script src="/blog/true"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
   const loadMathjax = () => {
     if (!window.MathJax) {
       window.MathJax = {
