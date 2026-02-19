@@ -84,21 +84,17 @@ a {
 #nav {
   backdrop-filter: blur(14px) saturate(118%);
   -webkit-backdrop-filter: blur(14px) saturate(118%);
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--neo-surface-soft) 94%, white 6%),
-    color-mix(in srgb, var(--neo-surface) 93%, var(--vibe-bg) 7%)
-  );
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--neo-surface-soft) 94%, white 6%),
+      color-mix(in srgb, var(--neo-surface) 93%, var(--vibe-bg) 7%));
   border: 1px solid color-mix(in srgb, var(--neo-ring) 80%, transparent);
   box-shadow: var(--neo-raised);
 }
 
 [data-theme='dark'] #nav {
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--neo-surface-soft) 90%, #1d2d4a 10%),
-    color-mix(in srgb, var(--neo-surface) 94%, #0b1425 6%)
-  );
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--neo-surface-soft) 90%, #1d2d4a 10%),
+      color-mix(in srgb, var(--neo-surface) 94%, #0b1425 6%));
   box-shadow: var(--neo-raised);
 }
 
@@ -160,7 +156,7 @@ a {
     linear-gradient(150deg, rgba(8, 35, 48, 0.22), rgba(8, 35, 48, 0) 52%);
 }
 
-#page-header > * {
+#page-header>* {
   position: relative;
   z-index: 1;
 }
@@ -177,11 +173,9 @@ a {
   padding: 1rem 1.25rem;
   border-radius: 22px;
   border: 1px solid rgba(255, 255, 255, 0.35);
-  background: linear-gradient(
-    145deg,
-    rgba(18, 28, 44, 0.46),
-    rgba(18, 28, 44, 0.24)
-  );
+  background: linear-gradient(145deg,
+      rgba(18, 28, 44, 0.46),
+      rgba(18, 28, 44, 0.24));
   backdrop-filter: blur(10px) saturate(120%);
   -webkit-backdrop-filter: blur(10px) saturate(120%);
   box-shadow: 0 16px 38px rgba(7, 12, 21, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.22);
@@ -214,11 +208,9 @@ a {
 
 [data-theme='dark'] #page-header #site-info {
   border-color: rgba(145, 178, 210, 0.38);
-  background: linear-gradient(
-    145deg,
-    rgba(11, 20, 34, 0.62),
-    rgba(11, 20, 34, 0.36)
-  );
+  background: linear-gradient(145deg,
+      rgba(11, 20, 34, 0.62),
+      rgba(11, 20, 34, 0.36));
 }
 
 [data-theme='dark'] #page-header.full_page #site-info {
@@ -234,11 +226,9 @@ a {
 #archive {
   border: 1px solid var(--neo-ring);
   border-radius: var(--vibe-radius);
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--neo-surface-soft) 88%, white 12%),
-    color-mix(in srgb, var(--neo-surface) 94%, var(--vibe-bg) 6%)
-  );
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--neo-surface-soft) 88%, white 12%),
+      color-mix(in srgb, var(--neo-surface) 94%, var(--vibe-bg) 6%));
   box-shadow: var(--neo-raised);
 }
 
@@ -264,33 +254,31 @@ a {
   border-radius: calc(var(--vibe-radius) + 2px);
 }
 
-#recent-posts .recent-post-item > .post_cover {
+#recent-posts .recent-post-item>.post_cover {
   overflow: hidden;
 }
 
-#recent-posts .recent-post-item > .post_cover a {
+#recent-posts .recent-post-item>.post_cover a {
   position: relative;
   display: block;
   height: 100%;
   isolation: isolate;
 }
 
-#recent-posts .recent-post-item > .post_cover a::after {
+#recent-posts .recent-post-item>.post_cover a::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(
-    0deg,
-    rgba(15, 23, 42, 0.18),
-    rgba(15, 23, 42, 0.04) 35%,
-    rgba(15, 23, 42, 0.05)
-  );
+  background: linear-gradient(0deg,
+      rgba(15, 23, 42, 0.18),
+      rgba(15, 23, 42, 0.04) 35%,
+      rgba(15, 23, 42, 0.05));
   transition: opacity 0.26s ease;
 }
 
-#recent-posts .recent-post-item > .post_cover img.post-bg {
+#recent-posts .recent-post-item>.post_cover img.post-bg {
   width: 100%;
   height: 100%;
   min-height: 240px;
@@ -300,12 +288,12 @@ a {
   transition: transform 0.38s ease, filter 0.38s ease;
 }
 
-#recent-posts .recent-post-item:hover > .post_cover img.post-bg {
+#recent-posts .recent-post-item:hover>.post_cover img.post-bg {
   transform: scale(1.05);
   filter: saturate(1.09) contrast(1.06);
 }
 
-#recent-posts .recent-post-item:hover > .post_cover a::after {
+#recent-posts .recent-post-item:hover>.post_cover a::after {
   opacity: 0.1;
 }
 
@@ -320,11 +308,9 @@ a {
   padding: 0.65rem 0.72rem 0.65rem 0.5rem;
   border: 1px solid var(--neo-ring);
   border-radius: 14px;
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--neo-surface-soft) 90%, white 10%),
-    color-mix(in srgb, var(--neo-surface) 94%, var(--vibe-bg) 6%)
-  );
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--neo-surface-soft) 90%, white 10%),
+      color-mix(in srgb, var(--neo-surface) 94%, var(--vibe-bg) 6%));
   box-shadow: var(--neo-raised);
 }
 
@@ -371,11 +357,9 @@ a {
 #aside-content .card-info #card-info-btn {
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--vibe-main) 28%, var(--neo-ring));
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--vibe-main) 72%, white 28%),
-    color-mix(in srgb, var(--vibe-main) 82%, var(--vibe-bg) 18%)
-  );
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--vibe-main) 72%, white 28%),
+      color-mix(in srgb, var(--vibe-main) 82%, var(--vibe-bg) 18%));
   box-shadow: var(--neo-raised);
 }
 
@@ -428,7 +412,7 @@ a {
   border-radius: 8px;
 }
 
-#article-container :not(pre) > code {
+#article-container :not(pre)>code {
   padding: 0.15em 0.4em;
   border: 1px solid color-mix(in srgb, var(--vibe-main) 24%, transparent);
   background: color-mix(in srgb, var(--vibe-main) 8%, var(--vibe-bg) 92%);
@@ -453,15 +437,15 @@ a {
   display: none;
 }
 
-#article-container blockquote > :first-child {
+#article-container blockquote> :first-child {
   margin-top: 0;
 }
 
-#article-container blockquote > :last-child {
+#article-container blockquote> :last-child {
   margin-bottom: 0;
 }
 
-#article-container blockquote + blockquote {
+#article-container blockquote+blockquote {
   margin-top: 0.45rem;
 }
 
@@ -524,11 +508,9 @@ a {
 #pagination .extend {
   border-radius: 12px;
   border: 1px solid color-mix(in srgb, var(--vibe-main) 30%, var(--neo-ring));
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--neo-control-start) 84%, white 16%),
-    color-mix(in srgb, var(--neo-control-end) 90%, var(--vibe-bg) 10%)
-  );
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--neo-control-start) 84%, white 16%),
+      color-mix(in srgb, var(--neo-control-end) 90%, var(--vibe-bg) 10%));
   box-shadow: var(--neo-raised);
   color: var(--neo-control-text);
   transition: border-color 0.22s ease, box-shadow 0.22s ease, color 0.22s ease;
@@ -543,11 +525,9 @@ a {
 
 #pagination .page-number.current {
   border-color: color-mix(in srgb, var(--vibe-main) 62%, var(--neo-ring));
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--neo-control-active-start) 92%, white 8%),
-    color-mix(in srgb, var(--neo-control-active-end) 95%, var(--vibe-bg) 5%)
-  );
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--neo-control-active-start) 92%, white 8%),
+      color-mix(in srgb, var(--neo-control-active-end) 95%, var(--vibe-bg) 5%));
   color: var(--neo-control-active-text);
   box-shadow: var(--neo-inset);
 }
@@ -557,14 +537,12 @@ a {
   filter: none !important;
 }
 
-#rightside > div > button,
-#rightside > div > a {
+#rightside>div>button,
+#rightside>div>a {
   border: 1px solid color-mix(in srgb, var(--vibe-main) 30%, var(--neo-ring)) !important;
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--neo-control-start) 84%, white 16%),
-    color-mix(in srgb, var(--neo-control-end) 90%, var(--vibe-bg) 10%)
-  ) !important;
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--neo-control-start) 84%, white 16%),
+      color-mix(in srgb, var(--neo-control-end) 90%, var(--vibe-bg) 10%)) !important;
   box-shadow: var(--neo-raised) !important;
   color: var(--neo-control-text) !important;
   opacity: 1 !important;
@@ -575,50 +553,46 @@ a {
     color 0.22s ease !important;
 }
 
-#rightside > div > button:hover,
-#rightside > div > a:hover {
+#rightside>div>button:hover,
+#rightside>div>a:hover {
   border-color: color-mix(in srgb, var(--vibe-main) 52%, var(--neo-ring)) !important;
   box-shadow: var(--neo-raised-strong) !important;
   color: color-mix(in srgb, var(--neo-control-text) 86%, var(--vibe-main) 14%) !important;
 }
 
-#rightside > div > button i,
-#rightside > div > a i,
+#rightside>div>button i,
+#rightside>div>a i,
 #rightside #go-up .scroll-percent {
   color: inherit !important;
   opacity: 1 !important;
   text-shadow: none !important;
 }
 
-[data-theme='dark'] #rightside > div > button,
-[data-theme='dark'] #rightside > div > a {
+[data-theme='dark'] #rightside>div>button,
+[data-theme='dark'] #rightside>div>a {
   border: 1px solid color-mix(in srgb, var(--vibe-main) 34%, var(--neo-ring)) !important;
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--neo-control-start) 88%, #1e304c 12%),
-    color-mix(in srgb, var(--neo-control-end) 92%, #14253d 8%)
-  ) !important;
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--neo-control-start) 88%, #1e304c 12%),
+      color-mix(in srgb, var(--neo-control-end) 92%, #14253d 8%)) !important;
   box-shadow: var(--neo-raised) !important;
   color: var(--neo-control-text) !important;
 }
 
-[data-theme='dark'] #rightside > div > button:hover,
-[data-theme='dark'] #rightside > div > a:hover {
+[data-theme='dark'] #rightside>div>button:hover,
+[data-theme='dark'] #rightside>div>a:hover {
   border-color: color-mix(in srgb, var(--vibe-main) 56%, var(--neo-ring)) !important;
   box-shadow: var(--neo-raised-strong) !important;
   color: color-mix(in srgb, var(--neo-control-text) 90%, white 10%) !important;
 }
 
-#rightside #rightside-config-hide.show + #rightside-config-show #rightside-config,
+#rightside #rightside-config-hide.show+#rightside-config-show #rightside-config,
 html.hide-aside #rightside #hide-aside-btn,
 [data-theme='dark'] #rightside #darkmode,
 #rightside #go-up.show-percent {
   border-color: color-mix(in srgb, var(--vibe-main) 62%, var(--neo-ring)) !important;
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--neo-control-active-start) 92%, white 8%),
-    color-mix(in srgb, var(--neo-control-active-end) 95%, var(--vibe-bg) 5%)
-  ) !important;
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--neo-control-active-start) 92%, white 8%),
+      color-mix(in srgb, var(--neo-control-active-end) 95%, var(--vibe-bg) 5%)) !important;
   box-shadow: var(--neo-inset) !important;
   color: var(--neo-control-active-text) !important;
 }
@@ -659,20 +633,16 @@ html.hide-aside #rightside #hide-aside-btn,
   padding: 1rem 1.1rem;
   border-radius: 14px;
   border: 1px solid var(--neo-ring);
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--neo-surface-soft) 92%, white 8%),
-    color-mix(in srgb, var(--neo-surface) 94%, var(--vibe-bg) 6%)
-  );
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--neo-surface-soft) 92%, white 8%),
+      color-mix(in srgb, var(--neo-surface) 94%, var(--vibe-bg) 6%));
   box-shadow: var(--neo-raised);
 }
 
 [data-theme='dark'] .vibe-card {
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--neo-surface-soft) 88%, #1b2f4d 12%),
-    color-mix(in srgb, var(--neo-surface) 92%, #0c1628 8%)
-  );
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--neo-surface-soft) 88%, #1b2f4d 12%),
+      color-mix(in srgb, var(--neo-surface) 92%, #0c1628 8%));
 }
 
 .vibe-card h4 {
@@ -706,12 +676,13 @@ html.hide-aside #rightside #hide-aside-btn,
 }
 
 @media (max-width: 900px) {
+
   #recent-posts .recent-post-item:hover,
   #aside-content .card-widget:hover {
     transform: none;
   }
 
-  #recent-posts .recent-post-item:hover > .post_cover img.post-bg,
+  #recent-posts .recent-post-item:hover>.post_cover img.post-bg,
   #aside-content .aside-list .thumbnail:hover img {
     transform: none;
   }
@@ -790,11 +761,9 @@ html.hide-aside #rightside #hide-aside-btn,
   padding: 0.65rem 0.8rem;
   border-radius: 10px;
   border: 1px solid var(--neo-ring);
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--neo-surface-soft) 92%, white 8%),
-    color-mix(in srgb, var(--neo-surface) 94%, var(--vibe-bg) 6%)
-  );
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--neo-surface-soft) 92%, white 8%),
+      color-mix(in srgb, var(--neo-surface) 94%, var(--vibe-bg) 6%));
   box-shadow: var(--neo-raised);
 }
 
@@ -817,11 +786,9 @@ html.hide-aside #rightside #hide-aside-btn,
 
 [data-theme='dark'] .series-index__item,
 [data-theme='dark'] .series-posts__item {
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--neo-surface-soft) 88%, #1b2f4d 12%),
-    color-mix(in srgb, var(--neo-surface) 92%, #0c1628 8%)
-  );
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--neo-surface-soft) 88%, #1b2f4d 12%),
+      color-mix(in srgb, var(--neo-surface) 92%, #0c1628 8%));
 }
 
 #article-container .header-anchor {
@@ -871,11 +838,9 @@ html.hide-aside #rightside #hide-aside-btn,
   margin: 0 0.05em;
   border-radius: 0.45em;
   color: color-mix(in srgb, var(--vibe-text) 92%, #12263a 8%);
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--vibe-accent) 24%, white 76%),
-    color-mix(in srgb, var(--vibe-main) 16%, white 84%)
-  );
+  background: linear-gradient(135deg,
+      color-mix(in srgb, var(--vibe-accent) 24%, white 76%),
+      color-mix(in srgb, var(--vibe-main) 16%, white 84%));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.55),
     0 2px 6px rgba(23, 41, 66, 0.12);
@@ -885,35 +850,33 @@ html.hide-aside #rightside #hide-aside-btn,
 [data-theme='dark'] #recent-posts mark,
 [data-theme='dark'] #aside-content mark {
   color: color-mix(in srgb, var(--vibe-text) 96%, white 4%);
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--vibe-main) 34%, #1a2b45 66%),
-    color-mix(in srgb, var(--vibe-accent) 24%, #16243b 76%)
-  );
+  background: linear-gradient(135deg,
+      color-mix(in srgb, var(--vibe-main) 34%, #1a2b45 66%),
+      color-mix(in srgb, var(--vibe-accent) 24%, #16243b 76%));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 2px 8px rgba(0, 0, 0, 0.26);
 }
 
 /* Home aside: keep author/announcement visible and place them after tag area */
-#recent-posts ~ #aside-content {
+#recent-posts~#aside-content {
   display: flex;
   flex-direction: column;
 }
 
-#recent-posts ~ #aside-content > .sticky_layout {
+#recent-posts~#aside-content>.sticky_layout {
   display: contents;
 }
 
-#recent-posts ~ #aside-content > .card-info {
+#recent-posts~#aside-content>.card-info {
   order: -2;
 }
 
-#recent-posts ~ #aside-content > .card-announcement {
+#recent-posts~#aside-content>.card-announcement {
   order: -1;
 }
 
-#recent-posts ~ #aside-content .sticky_layout .card-tags {
+#recent-posts~#aside-content .sticky_layout .card-tags {
   order: -3;
 }
 
@@ -925,16 +888,14 @@ html.hide-aside #rightside #hide-aside-btn,
 .paper-entry__details {
   border: 1px solid var(--neo-ring);
   border-radius: 12px;
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--neo-surface-soft) 92%, white 8%),
-    color-mix(in srgb, var(--neo-surface) 94%, var(--vibe-bg) 6%)
-  );
+  background: linear-gradient(145deg,
+      color-mix(in srgb, var(--neo-surface-soft) 92%, white 8%),
+      color-mix(in srgb, var(--neo-surface) 94%, var(--vibe-bg) 6%));
   box-shadow: var(--neo-raised);
   overflow: hidden;
 }
 
-.paper-entry__details > summary {
+.paper-entry__details>summary {
   cursor: pointer;
   list-style: none;
   padding: 0.72rem 0.92rem;
@@ -942,11 +903,11 @@ html.hide-aside #rightside #hide-aside-btn,
   color: var(--vibe-main);
 }
 
-.paper-entry__details > summary::-webkit-details-marker {
+.paper-entry__details>summary::-webkit-details-marker {
   display: none;
 }
 
-.paper-entry__details > p {
+.paper-entry__details>p {
   margin: 0;
   padding: 0 0.92rem 0.62rem;
 }
@@ -969,4 +930,145 @@ html.hide-aside #rightside #hide-aside-btn,
     height: 62vh;
     min-height: 360px;
   }
+}
+
+/* Mac Style Code Block */
+#article-container figure.highlight {
+  border-radius: 12px;
+  box-shadow: var(--vibe-shadow);
+}
+
+#article-container figure.highlight .highlight-tools {
+  background: rgba(0, 0, 0, 0.2) !important;
+  height: 2em;
+}
+
+#article-container figure.highlight .highlight-tools::after {
+  content: " ";
+  position: absolute;
+  left: 14px;
+  top: 11px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fc625d;
+  box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+}
+
+#article-container figure.highlight .highlight-tools .code-lang {
+  padding-left: 80px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--vibe-main);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--vibe-bg-soft);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--vibe-accent);
+}
+
+/* Home Page Background Breath Animation - Removed due to PJAX conflict */
+/*
+@keyframes bg-breathing {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.02);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+#page-header.full_page {
+  animation: bg-breathing 20s infinite ease-in-out;
+}
+*/
+
+/* Transparent Footer */
+#footer {
+  background: transparent !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid var(--vibe-border);
+  margin-top: 2rem;
+  padding: 40px 20px;
+}
+
+#footer,
+#footer #footer-wrap,
+#footer #footer-wrap div,
+#footer #footer-wrap span,
+#footer #footer-wrap p {
+  color: #4b5563 !important;
+}
+
+#footer a {
+  color: #2f8f9d !important;
+  /* Use theme main color for links */
+  font-weight: 600;
+}
+
+#footer a:hover {
+  text-decoration: underline;
+  color: #ef8354 !important;
+  /* Accent color on hover */
+}
+
+#footer::before {
+  content: none;
+}
+
+/* Link Underline Animation */
+#article-container a:not(.btn):not(.fancybox):not(.header-anchor) {
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  background-image: linear-gradient(var(--vibe-main), var(--vibe-main));
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s, background-position 0.3s cubic-bezier(.19, 1, .22, 1);
+}
+
+#article-container a:not(.btn):not(.fancybox):not(.header-anchor):hover {
+  background-size: 100% 2px;
+}
+
+/* Avatar Rotate on Hover */
+.avatar-img {
+  transition: transform 0.8s ease-in-out;
+}
+
+.avatar-img:hover {
+  transform: rotate(360deg);
+}
+
+/* Social Icons Animation */
+.card-info-social-icons .social-icon {
+  transition: transform 0.3s ease;
+}
+
+.card-info-social-icons .social-icon:hover {
+  transform: scale(1.15) rotate(15deg);
+  color: var(--vibe-accent);
+}
+
+/* Scroll to Top Button Animation */
+#rightside #go-up:hover {
+  transform: translateY(-5px);
 }
