@@ -72,7 +72,7 @@
         document.head.appendChild(link)
       }),
       addGlobalFn: (key, fn, name = false, parent = window) => {
-        if (!false && key.startsWith('pjax')) return
+        if (!true && key.startsWith('pjax')) return
         const globalFn = parent.globalFn || {}
         globalFn[key] = globalFn[key] || {}
         globalFn[key][name || Object.keys(globalFn[key]).length] = fn
@@ -187,7 +187,7 @@ btf.addGlobalFn('pjaxComplete', () => {
   isHighlightShrink: false,
   isToc: true,
   pageType: 'post'
-}</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=LXGW+WenKai:wght@400;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/blog/css/custom.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+}</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=LXGW+WenKai:wght@400;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/blog/css/custom.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
   const $loadingBox = document.getElementById('loading-box')
   const $body = document.body
   const preloader = {
@@ -204,7 +204,7 @@ btf.addGlobalFn('pjaxComplete', () => {
   preloader.initLoading()
   window.addEventListener('load', preloader.endLoading)
 
-  if (false) {
+  if (true) {
     btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
     btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
   }
@@ -623,9 +623,9 @@ RoQIs 把 region-text similarity 加进来，让“语义上像物体/像目标�
 </blockquote>
 <hr>
 <h3 id="5-图中间的三个-loss：L-pseudo-L-base-L-denoise"><a class="header-anchor" href="#5-图中间的三个-loss：L-pseudo-L-base-L-denoise"></a>5) 图中间的三个 loss：
-    <span id="mjx-a62d706">
+    <span id="mjx-ab989b3">
       <style>
-      #mjx-a62d706{
+      #mjx-ab989b3{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -784,9 +784,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.65ex;" xmlns="http://www.w3.org/2000/svg" width="6.552ex" height="2.195ex" role="img" focusable="false" viewBox="0 -683 2895.9 970.2" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="TeXAtom" transform="translate(714,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45D" d="M23 287Q24 290 25 295T30 317T40 348T55 381T75 411T101 433T134 442Q209 442 230 378L240 387Q302 442 358 442Q423 442 460 395T497 281Q497 173 421 82T249 -10Q227 -10 210 -4Q199 1 187 11T168 28L161 36Q160 35 139 -51T118 -138Q118 -144 126 -145T163 -148H188Q194 -155 194 -157T191 -175Q188 -187 185 -190T172 -194Q170 -194 161 -194T127 -193T65 -192Q-5 -192 -24 -194H-32Q-39 -187 -39 -183Q-37 -156 -26 -148H-6Q28 -147 33 -136Q36 -130 94 103T155 350Q156 355 156 364Q156 405 131 405Q109 405 94 377T71 316T59 280Q57 278 43 278H29Q23 284 23 287ZM178 102Q200 26 252 26Q282 26 310 49T356 107Q374 141 392 215T411 325V331Q411 405 350 405Q339 405 328 402T306 393T286 380T269 365T254 350T243 336T235 326L232 322Q232 321 229 308T218 264T204 212Q178 106 178 102Z"></path></g><g data-mml-node="mi" transform="translate(503,0)"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g><g data-mml-node="mi" transform="translate(972,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(1438,0)"><path data-c="1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(2010,0)"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g><g data-mml-node="mi" transform="translate(2530,0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>L</mi><mrow data-mjx-texclass="ORD"><mi>p</mi><mi>s</mi><mi>e</mi><mi>u</mi><mi>d</mi><mi>o</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   ,$ L_{base}$, 
-    <span id="mjx-efe5bbf">
+    <span id="mjx-40417db">
       <style>
-      #mjx-efe5bbf{
+      #mjx-40417db{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -948,9 +948,9 @@ g[data-mml-node="xypic"] path {
 <p>在主干 decoder 上方画了三个 loss 框，表示训练时同时优化三类信号：</p>
 <ul>
 <li><strong>
-    <span id="mjx-a8f1161">
+    <span id="mjx-af3dda4">
       <style>
-      #mjx-a8f1161{
+      #mjx-af3dda4{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1110,9 +1110,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </strong>：常规的 base 类检测监督（你原本就有 GT 的那部分）</li>
 <li><strong>
-    <span id="mjx-209b6dd">
+    <span id="mjx-08e890f">
       <style>
-      #mjx-209b6dd{
+      #mjx-08e890f{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1272,9 +1272,9 @@ g[data-mml-node="xypic"] path {
     </span>
   </strong>：来自 (a) open-world pseudo labeling 的 unknown/伪标签监督（把 unknown 当“前景”来学）</li>
 <li><strong>
-    <span id="mjx-48cad13">
+    <span id="mjx-8635ee1">
       <style>
-      #mjx-48cad13{
+      #mjx-8635ee1{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1491,9 +1491,9 @@ OWD 主要是“挖 unknown proposals 的工具/辅助监督来源”；最终�
 <p>对第 $ i $ 个 object query $ q_i $，它关联一个 region proposal $ b_i $。先取该 proposal 的 region feature $ v_i $（作者说是：对冻结 VLM 的特征图做 RoI Align 得到）。
 接着在 <strong>base 类集合</strong>里找与其文本嵌入最相似的类别：</p>
 
-    <span id="mjx-303adf2">
+    <span id="mjx-ce28eca">
       <style>
-      #mjx-303adf2{
+      #mjx-ce28eca{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1656,9 +1656,9 @@ g[data-mml-node="xypic"] path {
 <h6 id="Step-B：把类别文本嵌入注入-query，得到-class-aware-query-q-i"><a class="header-anchor" href="#Step-B：把类别文本嵌入注入-query，得到-class-aware-query-q-i"></a>Step B：把类别文本嵌入注入 query，得到 class-aware query $ q_i^* $</h6>
 <p>有了 $ c_i $ 后，把对应文本嵌入（经过一个 MLP 映射）加到原始 query 上：</p>
 
-    <span id="mjx-1b8743d">
+    <span id="mjx-013c84d">
       <style>
-      #mjx-1b8743d{
+      #mjx-013c84d{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1830,9 +1830,9 @@ g[data-mml-node="xypic"] path {
 <h6 id="Step-D（推理阶段）：最终类别分数-匹配概率-×-CLIP-相似度"><a class="header-anchor" href="#Step-D（推理阶段）：最终类别分数-匹配概率-×-CLIP-相似度"></a>Step D（推理阶段）：最终类别分数 = 匹配概率 × CLIP 相似度</h6>
 <p>推理时，冻结 VLM 再对最终预测框 $ \hat b_i $ 做分类（算 $ \cos(\hat v_i, t_c $)），并乘上 $ \hat m_i $ 来“考虑框质量”：</p>
 
-    <span id="mjx-dc3926f">
+    <span id="mjx-2557103">
       <style>
-      #mjx-dc3926f{
+      #mjx-2557103{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2018,9 +2018,9 @@ g[data-mml-node="xypic"] path {
 <h3 id="重点梳理"><a class="header-anchor" href="#重点梳理"></a>重点梳理</h3>
 <p>--为什么后面 OV-DQUO 都围绕这套东西改？</p>
 <p>因为在这套 conditional matching 里，**最终分数必须乘 $ \hat m_i 
-    <span id="mjx-abb68d7">
+    <span id="mjx-916052f">
       <style>
-      #mjx-abb68d7{
+      #mjx-916052f{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2197,9 +2197,9 @@ g[data-mml-node="xypic"] path {
 <li>挖出未知物体：用一个“开放世界检测器”（如 OLN）在训练集上跑一遍，把那些“看起来像物体”但没有 Base 标注的框挖出来，作为伪标签（Pseudo Labels） 。</li>
 <li>给个通用名（通配符）：既然不知道具体叫什么（比如不知道是“鳄梨”），那就教模型管它叫“物体”（Wildcard: &quot;Object&quot; / &quot;Thing&quot;）</li>
 <li>加权监督：因为挖出来的框可能有噪声，所以用**前景估计器（Foreground Estimator, FE）**算一个概率 
-    <span id="mjx-f1330e5">
+    <span id="mjx-e87acaf">
       <style>
-      #mjx-f1330e5{
+      #mjx-e87acaf{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2381,9 +2381,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>对每张图输出一堆 unknown objects：</p>
 
-    <span id="mjx-0880896">
+    <span id="mjx-237f559">
       <style>
-      #mjx-0880896{
+      #mjx-237f559{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2572,9 +2572,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>对某个 unknown 框 $ o_i $，用它的重建误差 $ \eta_{o_i} $ 算它是前景的概率：</p>
 
-    <span id="mjx-b981fcc">
+    <span id="mjx-7496c99">
       <style>
-      #mjx-b981fcc{
+      #mjx-7496c99{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2734,9 +2734,9 @@ g[data-mml-node="xypic"] path {
     </span>
   <p>最后更新 unknown：</p>
 
-    <span id="mjx-d85f13b">
+    <span id="mjx-fd2e03c">
       <style>
-      #mjx-d85f13b{
+      #mjx-fd2e03c{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2925,9 +2925,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>把这句话丢进 VLM 的 Text Encoder（TE）得到文本向量：</p>
 
-    <span id="mjx-892e3a6">
+    <span id="mjx-3e5fee">
       <style>
-      #mjx-892e3a6{
+      #mjx-3e5fee{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3104,9 +3104,9 @@ g[data-mml-node="xypic"] path {
 </ul>
 <p>公式写成：</p>
 
-    <span id="mjx-f5293f">
+    <span id="mjx-ed1eaa7">
       <style>
-      #mjx-f5293f{
+      #mjx-ed1eaa7{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3282,9 +3282,9 @@ g[data-mml-node="xypic"] path {
 <li>
 <p>得到最优匹配后，定义 unknown 的伪标签损失：</p>
 
-    <span id="mjx-088bc12">
+    <span id="mjx-5a398bd">
       <style>
-      #mjx-088bc12{
+      #mjx-5a398bd{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3447,9 +3447,9 @@ g[data-mml-node="xypic"] path {
 </ul>
 <p>同时 base 的正常监督损失还是照常做：</p>
 
-    <span id="mjx-1d70829">
+    <span id="mjx-0ee3b21">
       <style>
-      #mjx-1d70829{
+      #mjx-0ee3b21{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3632,9 +3632,9 @@ g[data-mml-node="xypic"] path {
 <li><strong>解决方案</strong>：通过<strong>人工合成</strong>数据进行对比学习。
 <ul>
 <li>我们拿一个未知的物体框 
-    <span id="mjx-95bf936">
+    <span id="mjx-54678b8">
       <style>
-      #mjx-95bf936{
+      #mjx-54678b8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3814,9 +3814,9 @@ g[data-mml-node="xypic"] path {
 <h4 id="3-1-从一个-unknown-物体-u-i-出发，生成-2N-个噪声框（公式-11）"><a class="header-anchor" href="#3-1-从一个-unknown-物体-u-i-出发，生成-2N-个噪声框（公式-11）"></a>3.1 从一个 unknown 物体 $ u_i $ 出发，生成 $ 2N $ 个噪声框（公式 11）</h4>
 <p>作者说：给定一个 open-world unknown object $ u_i $，先拿到它的坐标框 $ o_i $，然后围绕 $ o_i $ 生成 $ 2N $ 个噪声框 $ \tilde{o}_i $：</p>
 
-    <span id="mjx-1925781">
+    <span id="mjx-e1db66c">
       <style>
-      #mjx-1925781{
+      #mjx-e1db66c{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3976,9 +3976,9 @@ g[data-mml-node="xypic"] path {
     </span>
   <ul>
 <li>$ \lambda_1 \sim Uniform(0,1 
-    <span id="mjx-19aaf43">
+    <span id="mjx-fecf">
       <style>
-      #mjx-19aaf43{
+      #mjx-fecf{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4156,9 +4156,9 @@ g[data-mml-node="xypic"] path {
 </ul>
 <p>公式写成：</p>
 
-    <span id="mjx-43e3aaa">
+    <span id="mjx-239434a">
       <style>
-      #mjx-43e3aaa{
+      #mjx-239434a{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4336,9 +4336,9 @@ g[data-mml-node="xypic"] path {
 <h3 id="5-DTQT-的损失函数在干什么（公式-13）"><a class="header-anchor" href="#5-DTQT-的损失函数在干什么（公式-13）"></a>5) DTQT 的损失函数在干什么（公式 13）</h3>
 <p>DTQT 其实训练的是“匹配概率” $ \tilde{m}_i $（denoising part 的 match probability）。作者定义去噪损失：</p>
 
-    <span id="mjx-86a5abf">
+    <span id="mjx-7b2c83a">
       <style>
-      #mjx-86a5abf{
+      #mjx-7b2c83a{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4519,9 +4519,9 @@ g[data-mml-node="xypic"] path {
 <h3 id="6-最终总损失（公式-14）"><a class="header-anchor" href="#6-最终总损失（公式-14）"></a>6) 最终总损失（公式 14）</h3>
 <p>DTQT 只是额外加的一项，整体目标是三项相加：</p>
 
-    <span id="mjx-886f8e7">
+    <span id="mjx-cbfa8b1">
       <style>
-      #mjx-886f8e7{
+      #mjx-cbfa8b1{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4727,9 +4727,9 @@ g[data-mml-node="xypic"] path {
 </ul>
 <p>最终融合得到：</p>
 
-    <span id="mjx-e7ac327">
+    <span id="mjx-63d4436">
       <style>
-      #mjx-e7ac327{
+      #mjx-63d4436{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4899,9 +4899,9 @@ g[data-mml-node="xypic"] path {
 <p>有了每个候选的 $ \phi $ 之后，RoQIs 就做一件事：
 从 proposal 集合 $ B $ 中，按 $ \phi $ 排序取前 $ N $ 个，得到感兴趣区域 $ B^* $：</p>
 
-    <span id="mjx-ef4795d">
+    <span id="mjx-b777868">
       <style>
-      #mjx-ef4795d{
+      #mjx-b777868{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5083,9 +5083,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>主要关注 <strong>Novel Categories</strong> 的 AP (Average Precision)。</li>
 <li>对于 COCO 看 
-    <span id="mjx-f4b54c8">
+    <span id="mjx-eb4fcc7">
       <style>
-      #mjx-f4b54c8{
+      #mjx-eb4fcc7{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5245,9 +5245,9 @@ g[data-mml-node="xypic"] path {
     </span>
   。</li>
 <li>对于 LVIS 看 
-    <span id="mjx-17616e7">
+    <span id="mjx-8bd2677">
       <style>
-      #mjx-17616e7{
+      #mjx-8bd2677{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5429,9 +5429,9 @@ g[data-mml-node="xypic"] path {
 <li><strong>关键参数</strong>：
 <ul>
 <li>RoQIs 参数 
-    <span id="mjx-c05bd2f">
+    <span id="mjx-4b35a6e">
       <style>
-      #mjx-c05bd2f{
+      #mjx-4b35a6e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5600,9 +5600,9 @@ g[data-mml-node="xypic"] path {
 <li><strong>OV-COCO 结果 (Table 1)</strong>：
 <ul>
 <li>在 ResNet-50 setting 下，
-    <span id="mjx-7215f27">
+    <span id="mjx-2db9b5d">
       <style>
-      #mjx-7215f27{
+      #mjx-2db9b5d{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5769,9 +5769,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>这是一个“地狱级”难度的数据集。</li>
 <li>使用 ViT-L backbone 时，
-    <span id="mjx-1d05ade">
+    <span id="mjx-de056c8">
       <style>
-      #mjx-1d05ade{
+      #mjx-de056c8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6111,4 +6111,50 @@ g[data-mml-node="xypic"] path {
   } else {
     window.loadOtherComment = loadGiscus
   }
-})()</script></div><script defer src="/blog/js/site.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
+})()</script></div><script defer src="/blog/js/site.js"></script><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><div class="aplayer" data-id="aplayer" data-fixed="true" data-autoplay="true" data-order="random"></div><script>var ap = new APlayer({container: document.querySelector(".aplayer"), fixed: true, autoplay: true, listFolded: true, audio: [{name: "知我", artist: "国风堂 / 哦漏", url: "/blog/music/zhiwo.mp3", cover: ""}, {name: "在你的身边", artist: "盛哲", url: "/blog/music/zainideshenbian.mp3", cover: ""}]});</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["link[rel=\"canonical\"]","meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      pjax.loadUrl('/blog/404.html')
+    }
+  })
+})()</script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
