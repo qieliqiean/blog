@@ -1,0 +1,2573 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>提示词大全 | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#fdfcf8"><meta name="description" content="系列文章   &#x2F;   提示词  了解方向类指令 这篇文章讲了用于小目标检测的detection transformer，但是我想要了解更多，请你阅读完这篇文献后，帮我设计一些用于web of science的检索的关键词，我想从零开始这一研究方向 现在DETR模型逐渐兴起，我想检索一些使用transformer模型来做红外图像中的小目标检测的文献，请你设计用于web of science检索">
+<meta property="og:type" content="article">
+<meta property="og:title" content="提示词大全">
+<meta property="og:url" content="https://qieliqiean.github.io/blog/2024/10/24/%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%A4%A7%E5%85%A8/index.html">
+<meta property="og:site_name" content="且离且安的碎碎念">
+<meta property="og:description" content="系列文章   &#x2F;   提示词  了解方向类指令 这篇文章讲了用于小目标检测的detection transformer，但是我想要了解更多，请你阅读完这篇文献后，帮我设计一些用于web of science的检索的关键词，我想从零开始这一研究方向 现在DETR模型逐渐兴起，我想检索一些使用transformer模型来做红外图像中的小目标检测的文献，请你设计用于web of science检索">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qieliqiean.github.io/blog/image/cover/20.jpg">
+<meta property="article:published_time" content="2024-10-24T07:19:06.000Z">
+<meta property="article:modified_time" content="2026-03-22T12:11:53.698Z">
+<meta property="article:author" content="lian">
+<meta property="article:tag" content="提示词">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qieliqiean.github.io/blog/image/cover/20.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "提示词大全",
+  "url": "https://qieliqiean.github.io/blog/2024/10/24/%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%A4%A7%E5%85%A8/",
+  "image": "https://qieliqiean.github.io/blog/image/cover/20.jpg",
+  "datePublished": "2024-10-24T07:19:06.000Z",
+  "dateModified": "2026-03-22T12:11:53.698Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "lian",
+      "url": "https://qieliqiean.github.io/blog/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/2024/10/24/%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%A4%A7%E5%85%A8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fdfcf8')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6b5d1303d19816191830cd73eccfdb1e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: {"path":"/blog/search.xml","preload":false,"top_n_per_article":3,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '提示词大全',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=LXGW+WenKai:wght@400;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/blog/css/custom.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (true) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/blog/easter-egg/"><i class="fa-fw fas fa-egg"></i><span> 彩蛋</span></a></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/image/cover/20.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">提示词大全</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/blog/easter-egg/"><i class="fa-fw fas fa-egg"></i><span> 彩蛋</span></a></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">提示词大全</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-10-24T07:19:06.000Z" title="发表于 2024-10-24 15:19:06">2024-10-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-22T12:11:53.698Z" title="更新于 2026-03-22 20:11:53">2026-03-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">20.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>76分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><nav class="series-breadcrumb" aria-label="系列导航">
+  <a href="/blog/series/">系列文章</a>
+  <span class="series-breadcrumb__sep">/</span>
+  <a href="/blog/series/5o-Q56S66K-N/">提示词</a>
+</nav>
+<h1 id="了解方向类指令"><a class="header-anchor" href="#了解方向类指令"></a>了解方向类指令</h1>
+<p>这篇文章讲了用于小目标检测的detection transformer，但是我想要了解更多，请你阅读完这篇文献后，帮我设计一些用于web of science的检索的关键词，我想从零开始这一研究方向</p>
+<p>现在DETR模型逐渐兴起，我想检索一些使用transformer模型来做红外图像中的小目标检测的文献，请你设计用于web of science检索的关键词</p>
+<ul>
+<li>我想了解一下光sar融合在图像处理，目标检测与跟踪等领域的应用，以确定它是否可以作为研究生的研究方向，以及以后是否好发sci ;此外我想要详细理解该领域，请你帮助我从零开始了解，比如先看哪些文章，先了解哪些知识等等</li>
+<li>我想了解一下图像处理领域的小目标跟踪这一研究方向，以确定它是否可以作为研究生的研究方向，以及以后是否好发sci ;此外我想要详细理解该领域，请你帮助我从零开始了解，比如先看哪些文章，先了解哪些知识等等</li>
+<li>这些是我的师兄师姐的毕业论文和已经发表的论文，请你阅读后帮我找到这些论文及其他们研究方向的共同点和差异点，以此来帮我选择我自己的研究方向</li>
+<li>针对 “infrared small target detection” 主题，在学术数据库开展文献检索，梳理该主题研究论文从第一篇到最新文献的历史发展脉络，总结关键时间节点、里程碑研究成果，并基于最新研究进展总结未来研究方向。</li>
+<li>详细梳理某文献为证明肠道菌群在肿瘤免疫及免疫治疗中的作用所进行的实验设计，包括实验分为哪几部分、每一部分需要开展的具体实验，以及每个实验的具体条件</li>
+</ul>
+<hr>
+<h2 id="开放词汇检测"><a class="header-anchor" href="#开放词汇检测"></a>开放词汇检测</h2>
+<p>我现在有一个研究方向：利用开放词汇检测的原理或者既有的模型如yolo-world，grounding dino等，对飞机、直升机、导弹等实现零样本目标检测，目前我手里的训练设备有限，本地只有RTX5070,可在网上租用RTX4090或者5090的消费级云服务器，因此我想基于该方向发论文的话只能基于现有模型进行微调，请你在数据库查阅相关文献，给我提供可供我实施的路线，并给我提供相关文献，我想从复现他们的论文开始从零研究该方向</p>
+<h1 id="阅读文章指令"><a class="header-anchor" href="#阅读文章指令"></a>阅读文章指令</h1>
+<h2 id="读论文"><a class="header-anchor" href="#读论文"></a>读论文</h2>
+<blockquote>
+<p>你现在是我的论文导师+代码带教。请先通读我上传的论文，输出：
+1）一句话核心贡献；2)这篇文章的大致内容</p>
+<p>3）方法总览图对应的模块拆分；4）模型的结构/训练/推理/迁移等（如果有的话）分别新增了哪些组件,有哪些创新点
+5）把每个组件写成“输入-输出-关键公式-伪代码-实现要点-常见坑”的表格。
+最后给我一个 7 天学习/复现计划，每天可交付物是什么。</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">接下来进入论文的精读阶段，一次只精读一小节内容，比如按照Abstract、1. Introduction、2.1. Open-Vocabulary Object Detection、2.2. Large Vision-Language Model、3.1. Model Architecture这样一小节的形式推进，讲解的时候输出固定排版格式，做好序号标记，比如讲解到2.1的时候，讲解内容就从2.1.1这个小标题开始排，讲解内容大致可以参考下面的内容：</span><br><span class="line">本小节概论</span><br><span class="line">关键概念/符号表</span><br><span class="line">关键公式/算法</span><br><span class="line">本小节全部内容讲解</span><br><span class="line">重点内容梳理</span><br><span class="line">（如果某个小节不包含上面的内容就可忽略，比如摘要引言部分可能不含关键公式/算法等，可忽略，不可强行套模版，灵活调整）</span><br><span class="line">接下来从摘要开始</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>你是我的论文精读导师。请以我上传的论文为材料，从零开始带我精读。
+规则：先做“结构化全图”（论文贡献、方法模块、实验过程、结论）。</p>
+<ol>
+<li>精读按 4 轮：速读→方法拆解→实验验证→代码落地。每轮都有可交付物。</li>
+<li>每次只推进一个小节，输出固定格式：</li>
+</ol>
+<ul>
+<li>本节一句话结论</li>
+<li>关键概念/符号表</li>
+<li>关键公式/算法</li>
+<li>与代码实现的对应点（应该出现在哪些模块/函数）</li>
+<li>我需要回答的检查题</li>
+<li>下一步读哪一段（精确到小节标题/图表）</li>
+</ul>
+<p>4.我更关注：把方法讲到能实现/复现。默认用 PyTorch 思维解释。
+现在开始第 1 轮：先读摘要、引言、结论、以及所有总览图（pipeline/框图）。先不要深入细节。</p>
+</blockquote>
+<blockquote>
+<p><strong>Role:</strong> 你是我的“计算机视觉论文复现导师”。不仅要懂论文，更要懂 <code>torch</code> 和 <code>ultralytics</code> 库。</p>
+<p><strong>Task:</strong> 基于我上传的论文《hYOLO Model Enhancing Object Classification with Hierarchical Context in YOLOv8》，带我从零开始精读。</p>
+<p><strong>Goal:</strong> 最终目标是能够用 PyTorch 复现该模型。</p>
+<p><strong>Process (4 Rounds):</strong></p>
+<ol>
+<li><strong>全局蓝图 (Current)</strong>：速读摘要/引言/结论/图表。建立宏观架构图（输入是什么？输出是什么？Loss 怎么算？）。</li>
+<li><strong>核心方法拆解</strong>：精读 Method 部分。推导张量形状变换 
+    <span id="mjx-c91c3fc">
+      <style>
+      #mjx-c91c3fc{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="12.595ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 5567 1000" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(389,0)"><path data-c="1D435" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></g><g data-mml-node="mo" transform="translate(1148,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(1592.7,0)"><path data-c="1D436" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q484 659 454 652T382 628T299 572T226 479Q194 422 175 346T156 222Q156 108 232 58Q280 24 350 24Q441 24 512 92T606 240Q610 253 612 255T628 257Q648 257 648 248Q648 243 647 239Q618 132 523 55T319 -22Q206 -22 128 53T50 252Z"></path></g><g data-mml-node="mo" transform="translate(2352.7,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(2797.3,0)"><path data-c="1D43B" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 219 683Q260 681 355 681Q389 681 418 681T463 682T483 682Q499 682 499 672Q499 670 497 658Q492 641 487 638H485Q483 638 480 638T473 638T464 637T455 637Q416 636 405 634T387 623Q384 619 355 500Q348 474 340 442T328 395L324 380Q324 378 469 378H614L615 381Q615 384 646 504Q674 619 674 627T617 637Q594 637 587 639T580 648Q580 650 582 660Q586 677 588 679T604 682Q609 682 646 681T740 680Q802 680 835 681T871 682Q888 682 888 672Q888 645 876 638H874Q872 638 869 638T862 638T853 637T844 637Q805 636 794 634T776 623Q773 618 704 340T634 58Q634 51 638 51Q646 48 692 46H723Q729 38 729 37T726 19Q722 6 716 0H701Q664 2 567 2Q533 2 504 2T458 2T437 1Q420 1 420 10Q420 15 423 24Q428 43 433 45Q437 46 448 46H454Q481 46 514 49Q520 50 522 50T528 55T534 64T540 82T547 110T558 153Q565 181 569 198Q602 330 602 331T457 332H312L279 197Q245 63 245 58Q245 51 253 49T303 46H334Q340 38 340 37T337 19Q333 6 327 0H312Q275 2 178 2Q144 2 115 2T69 2T48 1Q31 1 31 10Q31 12 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="mo" transform="translate(3685.3,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(4130,0)"><path data-c="1D44A" d="M436 683Q450 683 486 682T553 680Q604 680 638 681T677 682Q695 682 695 674Q695 670 692 659Q687 641 683 639T661 637Q636 636 621 632T600 624T597 615Q597 603 613 377T629 138L631 141Q633 144 637 151T649 170T666 200T690 241T720 295T759 362Q863 546 877 572T892 604Q892 619 873 628T831 637Q817 637 817 647Q817 650 819 660Q823 676 825 679T839 682Q842 682 856 682T895 682T949 681Q1015 681 1034 683Q1048 683 1048 672Q1048 666 1045 655T1038 640T1028 637Q1006 637 988 631T958 617T939 600T927 584L923 578L754 282Q586 -14 585 -15Q579 -22 561 -22Q546 -22 542 -17Q539 -14 523 229T506 480L494 462Q472 425 366 239Q222 -13 220 -15T215 -19Q210 -22 197 -22Q178 -22 176 -15Q176 -12 154 304T131 622Q129 631 121 633T82 637H58Q51 644 51 648Q52 671 64 683H76Q118 680 176 680Q301 680 313 683H323Q329 677 329 674T327 656Q322 641 318 637H297Q236 634 232 620Q262 160 266 136L501 550L499 587Q496 629 489 632Q483 636 447 637Q428 637 422 639T416 648Q416 650 418 660Q419 664 420 669T421 676T424 680T428 682T436 683Z"></path></g><g data-mml-node="mo" transform="translate(5178,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo stretchy="false">(</mo><mi>B</mi><mo>,</mo><mi>C</mi><mo>,</mo><mi>H</mi><mo>,</mo><mi>W</mi><mo stretchy="false">)</mo></math></mjx-assistive-mml></mjx-container>
+    </span>
+  ，明确层级融合方式。</li>
+<li><strong>实验与细节</strong>：精读 Experiments。理解超参 
+    <span id="mjx-767899f">
+      <style>
+      #mjx-767899f{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="1.448ex" height="1.025ex" role="img" focusable="false" viewBox="0 -442 640 453" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D6FC" d="M34 156Q34 270 120 356T309 442Q379 442 421 402T478 304Q484 275 485 237V208Q534 282 560 374Q564 388 566 390T582 393Q603 393 603 385Q603 376 594 346T558 261T497 161L486 147L487 123Q489 67 495 47T514 26Q528 28 540 37T557 60Q559 67 562 68T577 70Q597 70 597 62Q597 56 591 43Q579 19 556 5T512 -10H505Q438 -10 414 62L411 69L400 61Q390 53 370 41T325 18T267 -2T203 -11Q124 -11 79 39T34 156ZM208 26Q257 26 306 47T379 90L403 112Q401 255 396 290Q382 405 304 405Q235 405 183 332Q156 292 139 224T121 120Q121 71 146 49T208 26Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>α</mi></math></mjx-assistive-mml></mjx-container>
+    </span>
+   的影响，数据增强细节。</li>
+<li><strong>代码映射</strong>：伪代码/代码框架生成。</li>
+</ol>
+<p><strong>Output Format (Strict):</strong></p>
+<ul>
+<li><strong>本节核心结论</strong>：一句话总结（技术角度）。</li>
+<li><strong>关键概念/符号表</strong>：最多 10 个，必须包含论文定义的特殊符号。</li>
+<li><strong>PyTorch 架构映射</strong>：这个概念对应代码中的哪个 <code>class</code> 或 <code>forward</code> 的哪一步？</li>
+<li><strong>宏观流向图</strong>：文字描述数据流向（Backbone -&gt; ? -&gt; ?）。</li>
+<li><strong>导师提问</strong>：2-3 个考察我是否理解本质的<mark>问题</mark>。</li>
+<li><strong>下一步</strong>：精确到小节。</li>
+</ul>
+<p><strong>Constraint:</strong> 遇到公式时，必须解释每个变量对应的物理/代码含义。</p>
+<p><strong>Start:</strong> 现在执行 <strong>第 1 轮</strong>。仅关注摘要、引言、结论和所有架构图（Fig 1-6, A1）。</p>
+</blockquote>
+<h2 id="读代码仓库：先画地图，再定位改哪里"><a class="header-anchor" href="#读代码仓库：先画地图，再定位改哪里"></a>读代码仓库：先画地图，再定位改哪里</h2>
+<blockquote>
+<p>我接下来会给你仓库（链接或zip）。你先不要解释细节，先做“代码地图”：</p>
+<ul>
+<li>目录结构（每个目录负责什么）</li>
+<li>训练入口/配置入口/推理入口各是哪几个文件</li>
+<li>模型结构定义在哪，loss/assigner/heads 在哪</li>
+<li>与论文三大模块对应的文件/类/函数位置
+然后告诉我：为了复现论文，需要按顺序跑哪些命令、依赖哪些数据。</li>
+</ul>
+</blockquote>
+<h2 id="复现优先：最短路径跑通"><a class="header-anchor" href="#复现优先：最短路径跑通"></a>复现优先：最短路径跑通</h2>
+<blockquote>
+<p>目标：先在最小成本下跑通一次训练+一次推理（不追指标）。
+请你基于仓库 README 和脚本，给出一份“最短路径 checklist”：
+环境安装 → 数据准备 → 启动命令 → 预期输出文件 → 如何验证结果是否正常。
+每一步都给我可复制的命令，并标注最容易踩坑的 3 个点。</p>
+</blockquote>
+<h2 id="定点攻克：只学-只改某个模块（例：RepRTA）"><a class="header-anchor" href="#定点攻克：只学-只改某个模块（例：RepRTA）"></a>定点攻克：只学/只改某个模块（例：RepRTA）</h2>
+<blockquote>
+<p>我只想把论文里的【RepRTA】在代码里实现并对齐论文说法：
+1）指出代码里对应的实现位置；如果没有，给出最小侵入的改法；
+2）给出需要新增/修改的类与函数签名；
+3）给出单元测试或最小验证脚本（输入随机张量也行）来证明 re-parameterization 前后输出一致/近似一致。</p>
+</blockquote>
+<h2 id="你跑出报错-日志后这样问，效率最高"><a class="header-anchor" href="#你跑出报错-日志后这样问，效率最高"></a>你跑出报错/日志后这样问，效率最高</h2>
+<blockquote>
+<p>我执行到第 X 步报错了：</p>
+<ul>
+<li>命令：…</li>
+<li>报错全文：…</li>
+<li>环境：Python/torch/cuda…
+请你：先判断根因属于（依赖/路径/数据格式/张量维度/配置不匹配/版本冲突）哪类；
+再给出 1）最快修复；2）更稳的长期修复；3）如何验证修复有效。</li>
+</ul>
+</blockquote>
+<h2 id="一个很实用的小技巧：在-Project-里放“自定义指令”"><a class="header-anchor" href="#一个很实用的小技巧：在-Project-里放“自定义指令”"></a>一个很实用的小技巧：在 Project 里放“自定义指令”</h2>
+<p>你可以在 Project 的 instructions 里写类似这段（复制即可）：</p>
+<blockquote>
+<p>你是我的论文复现带教。回答必须：</p>
+<ul>
+<li>先给结论/下一步行动（checklist）</li>
+<li>涉及代码时给到文件路径+函数名+改动点</li>
+<li>解释公式要落到张量维度与实现细节</li>
+<li>每次输出最后给“我现在该做什么（≤5条）”</li>
+</ul>
+</blockquote>
+<p>Projects 支持把文件和指令长期放在一起，特别适合这种多天推进的学习。</p>
+<blockquote>
+<ul>
+<li><strong>侧重创新点</strong></li>
+</ul>
+<p>请你以教授的口吻给我详细的讲解这篇文献中的所有内容，要求给出文章的创新点，重要的部分给我详细的深入讲解。</p>
+<ul>
+<li><strong>大概</strong></li>
+</ul>
+<p>接下来开始带领我学习这篇文章，你的视角必须专业客观严谨，之前我对该领域不了解，所以你的讲解需要详细具体。首先带领我大致了解这篇文章的内容。</p>
+<hr>
+<p>接下来我将针对这篇论文进行提问，我是该领域的初学者，之前上过深度学习的通识课，但时间比较久，一些概念已经忘了，对   都不是很了解</p>
+<p>接下来我将针对这篇论文进行提问，之前上过深度学习的通识课，但时间比较久，一些概念已经忘了，对 的了解较少</p>
+</blockquote>
+<blockquote>
+<p><strong>中间详解提问</strong></p>
+<p>对这部分进行详细讲解：</p>
+<p>我对 这一概念不是很了解，请你解释一下，帮助我理解</p>
+<p>你能否借助代码和注释（python和pytorch）给我详细讲解一下它的工作原理和工作流程</p>
+<ul>
+<li>图片类</li>
+</ul>
+<p>我对图片中的内容不是很理解，请你解释一下，帮助我理</p>
+</blockquote>
+<blockquote>
+<p><strong>结束</strong></p>
+<ul>
+<li>思维导图</li>
+</ul>
+<p>请你详细阅读完这篇文献，梳理文章结构和内容，生成思维导图，以markdown的语法输出</p>
+<hr>
+<ul>
+<li>重新梳理</li>
+</ul>
+<p>好的，现在我基本阅读完你对论文的讲解了，现在需要你进行进一步的梳理，来帮助我更好的理解这篇文章</p>
+</blockquote>
+<h1 id="思维导图"><a class="header-anchor" href="#思维导图"></a>思维导图</h1>
+<p>梳理文章结构，生成思维导图，以markdown的语法输出，要求内容详细，重点突出，格式中不准出现*和`这俩符号</p>
+<p>梳理文章结构，生成思维导图，以markdown的语法输出，要求内容精炼，重点突出，格式中不准出现表格和加粗符号*</p>
+<p>梳理文章结构，生成文章中算法的流程图，以mermaid的语法输出</p>
+<h1 id="开题报告"><a class="header-anchor" href="#开题报告"></a>开题报告</h1>
+<blockquote>
+<p>我现在有一个研究方向：“多维光电目标指纹特征精细提取与零样本融合识别技术 ”，该方向的主要目的是：解决光电目标识别中型号级细粒度识别能力不足和未见类别目标识别困难两大核心问题。其中的技术细节是：依据多维光电指纹这一概念构建多支路深度神经网络，分别针对如空域（可见光、红外）、时域（图像序列）、频域、偏振、多光谱、高光谱、微动、激光雷达等等不同维度的光电信息，设计专用特征提取架构，实现对目标多维度特征的解耦与精细化提取，在成功提取各维度精细特征的基础上，设计一个多模态特征融合机制，旨在将这些异构的特征向量智能地整合成一个统一、信息增强且鲁棒的最终“指纹”表示，最后构建一个广义零样本学习框架，利用精细化多维光电指纹融合后的信息，解决光电目标识别中型号级细粒度识别能力不足和未见类别目标识别困难两大核心问题。
+请你设计一份技术路线，该技术路线可以分为3块：特征提取架构、多模态融合机制、零样本目标识别（分别针对已见类和未见类）</p>
+</blockquote>
+<p>基于多维光电目标指纹特征精细提取与零样本融合识别技术这份文档的内容和思想，给我编写开题报告模版这份文件，要求内容详尽，紧扣模版中的问题，如果模版中涉及到的问题参考文档中没有，可以在数据库中进行深度检索，以获得满意的答案。语言风格以及各种细节请参考开题19这份文档。文档内容，严格按照下面这些东西进行展开：</p>
+<p>一、选题依据</p>
+<p>1.课题来源</p>
+<p>2.研究内容及重点解决的问题</p>
+<p>3.理论意义及应用价值</p>
+<p>4.预期目标</p>
+<p>二、研究方法</p>
+<ol>
+<li>拟采取的研究方法</li>
+<li>拟采取的技术路线</li>
+<li>总体安排与计划进度</li>
+</ol>
+<p>三、开题条件</p>
+<ol>
+<li>学术或技术条件</li>
+<li>实验设备条件</li>
+<li>经费预算及落实情况</li>
+</ol>
+<hr>
+<h2 id="对多模态融合的研究"><a class="header-anchor" href="#对多模态融合的研究"></a>对多模态融合的研究</h2>
+<p>我想看一些关于多模态特征融合后做目标识别与检测的论文，论文的关注点应该在融合的信号以及融合技术。这里的多模态包括但不局限于RGB、红外图像、多光谱、偏振、微动、激光雷达等等。请你帮我设计一些在一些数据库（如web of science）检索的关键词。</p>
+<blockquote>
+<p><code>&quot;Object Detection&quot; AND &quot;Multi-modal&quot; AND &quot;Feature Fusion&quot;</code></p>
+<ul>
+<li>这个检索的大多数文章都是两种模态融合的</li>
+</ul>
+<p><code>&quot;Target Recognition&quot; AND &quot;Multi-sensor&quot; AND &quot;Data Fusion&quot;</code></p>
+<ul>
+<li>不相干的论文很多</li>
+</ul>
+<p>&quot;Multi-sensor Fusion&quot; AND &quot;Object Detection&quot; AND (RGB OR Camera) AND (Infrared OR IR) AND (Multispectral OR Hyperspectral)</p>
+</blockquote>
+<blockquote>
+<p>我想看一些关于多模态特征融合后做目标识别与检测的论文，论文的关注点应该在融合的信号以及融合技术。这里的多模态包括但不局限于空域（可见光、红外）、时域（图像序列）、频域、偏振、多光谱、高光谱、微动、激光雷达等等。请你在数据库进行深度检索，检索的时候关注融合2种及以上信号的论文，梳理该主题研究论文从第一篇到最新文献的历史发展脉络，总结关键时间节点、里程碑研究成果，并基于最新研究进展总结未来研究方向。</p>
+</blockquote>
+<blockquote>
+<p>deepl秘钥：038f707e-2055-4007-a69f-e20f0529c211:dp</p>
+</blockquote>
+<h2 id="对广义零样本学习的研究"><a class="header-anchor" href="#对广义零样本学习的研究"></a>对广义零样本学习的研究</h2>
+<p>我现在有一个研究方向：在获得各种传感器信号后（如空域（可见光、红外）、时域（图像序列）、频域、偏振、多光谱、高光谱、微动、激光雷达等等）利用广义零样本学习达到下面的效果：未见类能够识别到（如识别出坦克/飞机这样的大类），对已见类达到型号级识别（如不仅识别出飞机，更能识别到具体的型号F22与F35等），梳理该主题研究论文从第一篇到最新文献的历史发展脉络，总结关键时间节点、里程碑研究成果，并基于最新研究进展总结未来研究方向。</p>
+<hr>
+<p>我现在有一个研究方向：在获得各种异构传感器信号后（如空域（可见光、红外）、时域（图像序列）、频域、偏振、多光谱、高光谱、微动、激光雷达等等）利用广义零样本学习实现目标检测，梳理该主题研究论文从第一篇到最新文献的历史发展脉络，总结关键时间节点、里程碑研究成果，并基于最新研究进展总结未来研究方向。</p>
+<h2 id="文章润色修改"><a class="header-anchor" href="#文章润色修改"></a>文章润色修改</h2>
+<p>开题报告是挑选“多维光电目标指纹特征精细提取与零样本融合识别技术”这份文件的相关内容进行编写的，这两份文件都存在内容和技术上的错误，请你在学术文献库进行深度检索，对开题报告进行修改润色调整，要求如下：</p>
+<p>1.修改文章结构不清晰，逻辑不完整，前后不一致的问题等</p>
+<p>2.修改文章表达时的语序语病，对文章相关的句子进行润色，使其变得严谨且有学术报告的氛围。</p>
+<p>3.修改文章中相关技术乱用的问题-即与要解决的问题所用的技术不匹配，随便在网上瞎搜的资料就乱用的问题</p>
+<h2 id="开放词汇检测-2"><a class="header-anchor" href="#开放词汇检测-2"></a>开放词汇检测</h2>
+<p>针对 “零样本检测与开放词汇检测（OVD）” 主题，我是该领域的初学者，我想系统学习该领域的知识和相关的技术成果，需要你在学术数据库开展文献检索，梳理该主题研究论文从第一篇到最新文献的历史发展脉络，总结关键时间节点、里程碑研究成果，并基于最新研究进展总结未来研究方向；并且推荐一些适合初学者的综述型文章我学习路线</p>
+<h2 id="制作PPT"><a class="header-anchor" href="#制作PPT"></a>制作PPT</h2>
+<p>接下来针对我的开题报告，帮助我制作开题答辩PPT，需要你先详细阅读完我的开题报告和已经制作一部分的答辩PPT。接下来给我一些制作零样本学习框架PPT的建议</p>
+<h1 id="生成图片"><a class="header-anchor" href="#生成图片"></a>生成图片</h1>
+<blockquote>
+<p>按照以下要求，以svg格式生成一份关于“xxx（此主题可自行修改）”的科研绘图： 语言：图中所有文本标签使用英文。 字体：使用衬线字体(Serif font)。 风格：整体为专业学术风格的架构/流程图，包含简洁易懂的示意性图像内容。 颜色：主色调使用清晰的蓝色和灰色，关键创新点使用柔和的强调色（如橙色、青色或绿色，具体可在各Prompt中指定或由AI选择）。 数据流：使用清晰的箭头指示数据/信息流向。 示意图：AI需自行生成代表各个阶段或组件的示意图，并整合到图中。  ps.以上的语言、字体、风格、颜色等等都可以自行调整   用gemini生成的svg文件，可以导入到ppt中进行手动调整编辑，到这里就差不多啦</p>
+</blockquote>
+<blockquote>
+<p>以svg格式生成一份流程图： 语言：图中所有文本标签使用英文。 字体：使用衬线字体(Serif font)。 风格：整体为专业学术风格的架构/流程图，包含简洁易懂的示意性图像内容。 颜色：主色调使用清晰的蓝色和灰色，关键创新点使用柔和的强调色（如橙色、青色或绿色，）。 数据流：使用清晰的箭头指示数据/信息流向。 示意图：自行生成代表各个阶段或组件的示意图，并整合到图中</p>
+</blockquote>
+<h1 id="latex"><a class="header-anchor" href="#latex"></a>latex</h1>
+<p>将图片中的内容以markdown源代码的形式输出，要求里面的每一个公式符号都要完整和正确的识别出来，不可以修改识别出来的内容。公式用latex语法输出，行内公式用$ 
+    <span id="mjx-3265c44">
+      <style>
+      #mjx-3265c44{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="13.575ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 6000 950" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mi" transform="translate(1000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">段</text></g><g data-mml-node="mi" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">落</text></g><g data-mml-node="mi" transform="translate(3000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">公</text></g><g data-mml-node="mi" transform="translate(4000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">式</text></g><g data-mml-node="mi" transform="translate(5000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">用</text></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>，</mi><mi mathvariant="normal">段</mi><mi mathvariant="normal">落</mi><mi mathvariant="normal">公</mi><mi mathvariant="normal">式</mi><mi mathvariant="normal">用</mi></math></mjx-assistive-mml></mjx-container>
+    </span>
+  
+    <span id="mjx-9502bd7">
+      <style>
+      #mjx-9502bd7{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="1.635ex" height="0.271ex" role="img" focusable="false" viewBox="0 -120 722.7 120" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path></g><g data-mml-node="mo" transform="translate(444.7,0)"><path data-c="2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>.</mo><mo>.</mo></math></mjx-assistive-mml></mjx-container>
+    </span>
+  $输出</p>
+<h1 id="hexo"><a class="header-anchor" href="#hexo"></a>hexo</h1>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br><span class="line"></span><br><span class="line">hexo clean&amp;&amp; hexo g  &amp;&amp; hexo s</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://github.com/qieliqiean/blog.git">https://github.com/qieliqiean/blog.git</a></p>
+<p>npm uninstall hexo-renderer-pandoc --save
+npm install hexo-renderer-marked --save</p>
+<p>npm uninstall hexo-renderer-kramed --save
+npm install hexo-renderer-marked --save</p>
+<p>C:/Program Files (x86)/pandoc-3.6.4</p>
+<h1 id="博客插入PDF"><a class="header-anchor" href="#博客插入PDF"></a>博客插入PDF</h1>
+<p>已做成可复用模板，并且已经在你的 <code>hyolo</code> 文章里替换完成。</p>
+<ul>
+<li>模板标签实现：<code>scripts/paper-pdf-tag.js:49</code></li>
+<li>参数解析与中文/空格路径兼容：<code>scripts/paper-pdf-tag.js:29</code>、<code>scripts/paper-pdf-tag.js:36</code></li>
+<li>示例调用（已替换进文章）：<code>source/_posts/开放词汇检测/hyolo/【hyolo】论文阅读.md:13</code></li>
+<li>样式沿用：<code>source/css/custom.css:888</code></li>
+</ul>
+<p>通用写法（直接复制到任意文章）：</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% paperpdf pdf/你的文件名.pdf &quot;查看原始论文 PDF（点击展开预览）&quot; &quot;新窗口打开 PDF&quot; &quot;PDF 预览&quot; %&#125;</span><br></pre></td></tr></table></figure>
+<p>最简写法（只传路径）：</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% paperpdf pdf/你的文件名.pdf %&#125;</span><br></pre></td></tr></table></figure>
+<p>使用规则：</p>
+<ol>
+<li>把 PDF 放到 <code>source/pdf/</code>（例如 <code>source/pdf/abc.pdf</code>）。</li>
+<li>在文章里写上面的标签（路径写 <code>pdf/abc.pdf</code>）。</li>
+<li><code>npm run build</code> 后即可预览和新窗口打开。</li>
+</ol>
+<p>这次我已本地构建验证通过，<code>hyolo</code> 页面已正确渲染 PDF 折叠预览。</p>
+<h1 id="字体颜色"><a class="header-anchor" href="#字体颜色"></a>字体颜色</h1>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">./实验进度整理附件/</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:blue&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:rgb(116, 219, 38)&quot;</span>&gt;</span>文本<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">-------------------------------------------</span><br><span class="line">红色</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#FF0000&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">------------------------------------------</span><br><span class="line">蓝</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:rgb(28, 57, 123)&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">明黄</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:rgb(255, 246, 224)&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">绿</span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:rgb(0, 210, 106)&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"></span><br><span class="line">![](/image/)</span><br><span class="line">![](/image/A11-.PNG)</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">&quot;color:#FF0000&quot;</span>&gt;</span>$ \bigstar \bigstar \bigstar$<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">💡</span><br><span class="line">✅</span><br><span class="line">📘</span><br><span class="line">⚙️</span><br><span class="line">🧮</span><br><span class="line">🧠</span><br><span class="line">🧭</span><br></pre></td></tr></table></figure>
+<h1 id="typora查找替换"><a class="header-anchor" href="#typora查找替换"></a>typora查找替换</h1>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#使用正则表达式</span><br><span class="line">\[cite: (?:\d+,?\s*)+\]</span><br></pre></td></tr></table></figure>
+<h2 id="GPT公式复制问题"><a class="header-anchor" href="#GPT公式复制问题"></a>GPT公式复制问题</h2>
+<h3 id="段落公式"><a class="header-anchor" href="#段落公式"></a>段落公式</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\[([\s\S]*?)\]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$$$ $1 $$$</span><br></pre></td></tr></table></figure>
+<p>行内公式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\(([^)]*)\)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ $1 $</span><br></pre></td></tr></table></figure>
+<h1 id="问答结束整理笔记"><a class="header-anchor" href="#问答结束整理笔记"></a>问答结束整理笔记</h1>
+<blockquote>
+<p>将上面的内容回答整理好以markdown源代码输出。公式用latex语法输出，行内公式用
+    <span id="mjx-286ae94">
+      <style>
+      #mjx-286ae94{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="1.635ex" height="0.271ex" role="img" focusable="false" viewBox="0 -120 722.7 120" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path></g><g data-mml-node="mo" transform="translate(444.7,0)"><path data-c="2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>.</mo><mo>.</mo></math></mjx-assistive-mml></mjx-container>
+    </span>
+  ，段落公式用$$..$$输出 。然后无需区别标题（如一级二级标题，这个我会自己整理），重点内容加粗即可</p>
+</blockquote>
+<blockquote>
+<p>将对XXXXX的回答重新以markdown的语言输出，方便我整理记录</p>
+</blockquote>
+<h1 id="识别图片"><a class="header-anchor" href="#识别图片"></a>识别图片</h1>
+<p>将图片中的内容以markdown源代码的形式输出，要求里面的每一个公式符号都要完整和正确的识别出来，不可以修改识别出来的内容。公式用latex语法输出，行内公式用
+    <span id="mjx-f2aef2a">
+      <style>
+      #mjx-f2aef2a{
+        display:contents;
+        mjx-assistive-mml {
+          user-select: text !important;
+          clip: auto !important;
+          color: rgba(0,0,0,0);
+        }
+        
+mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][display="true"][width="full"] {
+  display: flex;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line], svg[data-table] > g > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame], svg[data-table] > g > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed, svg[data-table] > g > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted, svg[data-table] > g > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > g > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] path[data-c], mjx-container[jax="SVG"] use[data-c] {
+  stroke-width: 3;
+}
+
+g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+.MathJax g[data-mml-node="xypic"] path {
+  stroke-width: inherit;
+}
+
+      }
+      </style>
+      <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="1.635ex" height="0.271ex" role="img" focusable="false" viewBox="0 -120 722.7 120" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path></g><g data-mml-node="mo" transform="translate(444.7,0)"><path data-c="2E" d="M78 60Q78 84 95 102T138 120Q162 120 180 104T199 61Q199 36 182 18T139 0T96 17T78 60Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mo>.</mo><mo>.</mo></math></mjx-assistive-mml></mjx-container>
+    </span>
+  ，段落公式用$$..$$输出</p>
+<p>开放动态场景</p>
+<h1 id="pycharm小技巧"><a class="header-anchor" href="#pycharm小技巧"></a>pycharm小技巧</h1>
+<h2 id="搜索"><a class="header-anchor" href="#搜索"></a>搜索</h2>
+<hr>
+<h3 id="1-“上帝视角”：万能搜索-Search-Everywhere"><a class="header-anchor" href="#1-“上帝视角”：万能搜索-Search-Everywhere"></a>1. “上帝视角”：万能搜索 (Search Everywhere)</h3>
+<p>如果你只记一个快捷键，必须是这个。</p>
+<ul>
+<li><strong>快捷键：</strong> <strong>Double Shift</strong> (连续按两次 Shift)</li>
+<li><strong>作用：</strong> 这是一个聚合搜索。它能搜文件名、类名、方法名、甚至 IDE 的设置选项和功能名称。</li>
+<li><strong>技巧：</strong>
+<ul>
+<li>勾选右上角的 &quot;Include non-project items&quot; 可以搜索外部库（site-packages）里的源码。</li>
+<li>支持缩写匹配（比如搜 <code>UserProfile</code>，输入 <code>UP</code> 或 <code>UsePro</code> 就能搜到）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="2-文本内容搜索-Text-Search"><a class="header-anchor" href="#2-文本内容搜索-Text-Search"></a>2. 文本内容搜索 (Text Search)</h3>
+<p>这是最传统的“找字”功能，分为<strong>局部</strong>和<strong>全局</strong>。</p>
+<table>
+<thead>
+<tr>
+<th><strong>场景</strong></th>
+<th><strong>快捷键</strong></th>
+<th><strong>关键功能点</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>当前文件搜索</strong></td>
+<td><strong>Ctrl + F</strong></td>
+<td>就在当前打开的文件里找。按 <code>F3</code> 下一个，<code>Shift + F3</code> 上一个。</td>
+</tr>
+<tr>
+<td><strong>当前文件替换</strong></td>
+<td><strong>Ctrl + R</strong></td>
+<td>替换当前文件里的内容。支持正则 (Regex)。</td>
+</tr>
+<tr>
+<td><strong>全局搜索</strong></td>
+<td><strong>Ctrl + Shift + F</strong></td>
+<td><strong>核心技巧：</strong> 1. <strong>File Mask:</strong> 右上角可以设置只搜 <code>*.py</code> 或 <code>*.html</code>，排除杂项。 2. <strong>Scope:</strong> 可以指定只搜“Project Files”还是整个“Project and Libraries”。</td>
+</tr>
+<tr>
+<td><strong>全局替换</strong></td>
+<td><strong>Ctrl + Shift + R</strong></td>
+<td>慎用！威力巨大，建议先用搜索确认范围，再进行替换。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 搜索结果预览窗口 (Find Window):</p>
+<p>使用全局搜索时，建议点击右下角的 &quot;Open in Find Window&quot;。这样结果会固定在底部栏，你可以用键盘上下键快速在不同文件的结果间跳转，不用反复按搜索键。</p>
+</blockquote>
+<hr>
+<h3 id="3-结构导航搜索-Navigation-Search"><a class="header-anchor" href="#3-结构导航搜索-Navigation-Search"></a>3. 结构导航搜索 (Navigation Search)</h3>
+<p>当你不想搜具体的代码内容，而是记得文件名字或者类名字时，用这就对了。</p>
+<ul>
+<li><strong>搜类 (Class):</strong> <strong>Ctrl + N</strong>
+<ul>
+<li>专门用来找 Python 的 <code>class</code> 定义。</li>
+</ul>
+</li>
+<li><strong>搜文件 (File):</strong> <strong>Ctrl + Shift + N</strong>
+<ul>
+<li>找具体的 <code>.py</code>, <code>.yaml</code>, <code>.txt</code> 文件。</li>
+<li><strong>技巧：</strong> 支持路径匹配。比如你想找 <code>app/models/user.py</code>，可以直接输入 <code>app/user</code> 或者 <code>mo/us</code>，PyCharm 能智能匹配到。</li>
+</ul>
+</li>
+<li><strong>搜符号 (Symbol):</strong> <strong>Ctrl + Alt + Shift + N</strong>
+<ul>
+<li>直接找某个具体的<strong>函数名</strong>或<strong>全局变量名</strong>，不管它在哪个文件里。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="4-逻辑关系搜索-Usage-Search"><a class="header-anchor" href="#4-逻辑关系搜索-Usage-Search"></a>4. 逻辑关系搜索 (Usage Search)</h3>
+<p>这是写代码时最“懂你”的搜索，用来分析代码的影响范围。</p>
+<ul>
+<li><strong>查找引用 (Find Usages):</strong> <strong>Alt + F7</strong>
+<ul>
+<li><strong>场景：</strong> 你想改一个函数名，但不知道它在项目里被哪些地方调用了。</li>
+<li>光标放在函数/变量名上，按 <code>Alt + F7</code>，底部会列出<strong>所有用到它的地方</strong>。</li>
+</ul>
+</li>
+<li><strong>高亮引用 (Highlight Usages):</strong> <strong>Ctrl + Shift + F7</strong>
+<ul>
+<li><strong>场景：</strong> 只想看当前文件里这个变量在哪里用过。</li>
+<li>按完后，当前文件里所有该变量都会高亮显示，按 <code>Esc</code> 取消。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="5-救命稻草：查找动作-Find-Action"><a class="header-anchor" href="#5-救命稻草：查找动作-Find-Action"></a>5. 救命稻草：查找动作 (Find Action)</h3>
+<ul>
+<li><strong>快捷键：</strong> <strong>Ctrl + Shift + A</strong></li>
+<li><strong>作用：</strong> <strong>当你忘了某个功能的快捷键，或者找不到某个菜单在哪时用。</strong></li>
+<li><strong>例子：</strong>
+<ul>
+<li>想调整字体大小？按 <code>Ctrl+Shift+A</code>，搜 <code>font size</code>。</li>
+<li>想打开 Git 提交界面？搜 <code>commit</code>。</li>
+<li>想把代码转成大写？搜 <code>upper case</code>。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="总结建议"><a class="header-anchor" href="#总结建议"></a>总结建议</h3>
+<ol>
+<li>日常开发最常用：<strong>Double Shift</strong> (随便找) 和 <strong>Ctrl + Click</strong> (鼠标左键点击跳转定义)。</li>
+<li>重构代码必用：<strong>Alt + F7</strong> (看哪里调用了)。</li>
+<li>排查 Bug 必用：<strong>Ctrl + Shift + F</strong> (全局搜报错信息或关键词)。</li>
+</ol>
+<p><strong>需要我演示一下如何利用“书签 (Bookmarks)”功能来标记重要的代码位置吗？这在大型项目中穿梭非常方便。</strong></p>
+<h2 id="debug"><a class="header-anchor" href="#debug"></a>debug</h2>
+<h3 id="快捷键清单"><a class="header-anchor" href="#快捷键清单"></a>快捷键清单</h3>
+<table>
+<thead>
+<tr>
+<th><strong>按键</strong></th>
+<th><strong>英文名称</strong></th>
+<th><strong>中文含义</strong></th>
+<th><strong>作用描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>F8</strong></td>
+<td>Step Over</td>
+<td><strong>步过</strong></td>
+<td>往下走一行。如果这一行是函数，<strong>不进去</strong>，直接把函数执行完。</td>
+</tr>
+<tr>
+<td><strong>F7</strong></td>
+<td>Step Into</td>
+<td><strong>步入</strong></td>
+<td>往下走一行。如果这一行是函数，<strong>跳进去</strong>看细节。</td>
+</tr>
+<tr>
+<td><strong>Alt + Shift + F7</strong></td>
+<td>Force Step Into</td>
+<td><strong>强制步入</strong></td>
+<td>即使是 Python 源码或第三方库的函数，也强制跳进去（普通 F7 可能会忽略库文件）。</td>
+</tr>
+<tr>
+<td><strong>Shift + F8</strong></td>
+<td>Step Out</td>
+<td><strong>步出</strong></td>
+<td>执行完当前函数剩余的所有代码，<strong>跳回</strong>到调用它的地方（想赶紧结束当前函数时用）。</td>
+</tr>
+<tr>
+<td><strong>F9</strong></td>
+<td>Resume</td>
+<td><strong>恢复运行</strong></td>
+<td>直接跑到下一个断点（如果没有断点就跑完程序）。</td>
+</tr>
+<tr>
+<td><strong>Alt + F10</strong></td>
+<td>Show Execution Point</td>
+<td><strong>显示执行点</strong></td>
+<td>如果你看代码看晕了，按这个键，光标瞬间回到当前程序正停在的那一行。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="以数组形式查看"><a class="header-anchor" href="#以数组形式查看"></a>以数组形式查看</h3>
+<p>PyCharm 的“以数组形式查看”功能最喜欢处理 <strong>CPU 上的 NumPy 数组</strong>。因为你的数据在 GPU 上，PyCharm 有时认不出它是可以表格化的数组。</p>
+<ol>
+<li>
+<p>打开你截图中的**“对表达式求值 (Evaluate)”**窗口（快捷键 <code>Alt + F8</code>）。</p>
+</li>
+<li>
+<p>在输入框输入以下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">assigned_scores.cpu().numpy()</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>点击 <strong>“求值 (Evaluate)”</strong>。</p>
+</li>
+<li>
+<p>在下方的结果区域，你会看到结果变成了 <code>ndarray</code>。此时再<strong>右键点击这个结果</strong>，你应该就能看到 <strong>“View as Array”</strong>（以数组形式查看）了。</p>
+</li>
+</ol>
+<p><img src="/blog/markdown%E4%BF%AE%E6%94%B9/yolo_world/image/image-20251226200108128.png" alt="image-20251226200108128"></p>
+<h3 id="对表达式求值"><a class="header-anchor" href="#对表达式求值"></a>对表达式求值</h3>
+<p>你想了解PyCharm调试模式下“表达式求值”窗口右键菜单中各选项的具体用途，同时需要掌握能详细查看（比如截图里<code>flatten_cls_preds</code>这个张量）表达式求值结果的操作方法。</p>
+<h4 id="一、右键菜单各选项的详细用途"><a class="header-anchor" href="#一、右键菜单各选项的详细用途"></a>一、右键菜单各选项的详细用途</h4>
+<p>结合你截图里的菜单选项，逐个解释核心用途（按常用度排序）：</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>核心用途</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>添加到监视</td>
+<td>把表达式加入“监视窗口”，调试全程实时显示其最新值，无需手动重复求值</td>
+<td>跟踪变量/张量在代码执行过程中的动态变化（比如训练时张量值的更新）</td>
+</tr>
+<tr>
+<td>检查...</td>
+<td>打开“检查器”窗口，展示表达式的<strong>所有属性、方法、类型、内存地址</strong>等深度信息</td>
+<td>想彻底摸清复杂数据（如PyTorch张量）的全貌（shape、dtype、设备、梯度等）</td>
+</tr>
+<tr>
+<td>自定义数据视图</td>
+<td>定制数据的展示格式（比如张量转numpy、调整数值精度、显示长度）</td>
+<td>对默认显示格式不满意（比如张量只显示前几个值，想调格式看更多）</td>
+</tr>
+<tr>
+<td>复制值</td>
+<td>仅复制表达式的“纯值内容”（如张量的具体数值），不含变量名等冗余信息</td>
+<td>把数值粘贴到记事本/Excel里分析（比如统计张量的数值分布）</td>
+</tr>
+<tr>
+<td>设置值...</td>
+<td>调试时临时修改表达式对应变量的值</td>
+<td>测试不同值的运行效果（比如改张量值，看后续loss计算是否变化）</td>
+</tr>
+<tr>
+<td>对表达式求值(X)...</td>
+<td>重新计算当前表达式的值（变量被修改后，刷新结果）</td>
+<td>手动触发重新求值，确认最新值（快捷键Alt+F8）</td>
+</tr>
+<tr>
+<td>View as Image</td>
+<td>若表达式是图像张量（[C,H,W]格式），以图片形式可视化</td>
+<td>CV场景（如查看输入图片张量、检测框可视化），你这个一维张量用不上</td>
+</tr>
+<tr>
+<td>与剪贴板比较值</td>
+<td>对比当前表达式值和剪贴板内容，高亮差异</td>
+<td>验证两个张量/数组是否完全一致（比如前后两次计算的结果是否相同）</td>
+</tr>
+<tr>
+<td>复制名称</td>
+<td>仅复制表达式的变量名（如<code>flatten_cls_preds</code>）</td>
+<td>快速粘贴变量名到其他调试窗口/代码里，避免手动输入</td>
+</tr>
+<tr>
+<td>显示到对象...</td>
+<td>以对象浏览器展开所有层级属性</td>
+<td>查看自定义类实例、嵌套字典等复杂对象的层级结构</td>
+</tr>
+<tr>
+<td>跳转到源/跳转到类型源</td>
+<td>跳转到变量生成的源码位置/变量数据类型的源码位置（比如Tensor类的源码）</td>
+<td>想溯源变量的生成逻辑，或查看数据类型的底层实现</td>
+</tr>
+</tbody>
+</table>
+<h4 id="二、详细查看表达式求值结果的操作方法（针对张量-复杂数据）"><a class="header-anchor" href="#二、详细查看表达式求值结果的操作方法（针对张量-复杂数据）"></a>二、详细查看表达式求值结果的操作方法（针对张量/复杂数据）</h4>
+<p>你截图里的<code>flatten_cls_preds</code>是PyTorch张量，默认显示会省略中间值（...），以下是能完整/清晰查看的核心方法：</p>
+<h5 id="方法1：用“检查-”功能（最推荐，信息最全）"><a class="header-anchor" href="#方法1：用“检查-”功能（最推荐，信息最全）"></a>方法1：用“检查...”功能（最推荐，信息最全）</h5>
+<ol>
+<li>在“表达式求值”窗口右键点击结果区域 → 选择“检查...”；</li>
+<li>弹出“检查器”窗口后，可实现：
+<ul>
+<li>查看张量的<code>shape</code>、<code>dtype</code>、<code>device</code>（CPU/GPU）、<code>requires_grad</code>等核心属性；</li>
+<li>展开<code>data</code>字段查看具体数值，甚至右键选择“Copy Value”复制完整数值；</li>
+<li>临时调用张量方法（比如点击<code>cpu()</code>/<code>numpy()</code>，实时转换格式查看）。</li>
+</ul>
+</li>
+</ol>
+<h5 id="方法2：自定义数据视图（解决“-省略值”问题）"><a class="header-anchor" href="#方法2：自定义数据视图（解决“-省略值”问题）"></a>方法2：自定义数据视图（解决“...省略值”问题）</h5>
+<ol>
+<li>右键 → 选择“自定义数据视图” → 选择“Python” → 找到“PyTorch Tensor”；</li>
+<li>勾选“Show as NumPy array”（转numpy数组显示，更易读）；</li>
+<li>调整“Maximum number of elements to show”（显示的最大元素数），比如从默认100改成10000；</li>
+<li>勾选“Show full value”（显示完整值），点击“OK”，重新求值后就能看到更多张量值，不再显示...。</li>
+</ol>
+<h5 id="方法3：直接修改表达式（快速转numpy查看）"><a class="header-anchor" href="#方法3：直接修改表达式（快速转numpy查看）"></a>方法3：直接修改表达式（快速转numpy查看）</h5>
+<p>在“表达式求值”的输入框里，把原表达式改成：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果是GPU张量，先转CPU再转numpy</span></span><br><span class="line">flatten_cls_preds.cpu().numpy()</span><br><span class="line"><span class="comment"># 如果是CPU张量，直接转</span></span><br><span class="line">flatten_cls_preds.numpy()</span><br></pre></td></tr></table></figure>
+<p>按回车求值，会以numpy数组形式显示，不仅更易读，还能看到更多数值（numpy数组的默认显示长度更长）。</p>
+<h5 id="方法4：全局调整PyCharm显示设置（一劳永逸）"><a class="header-anchor" href="#方法4：全局调整PyCharm显示设置（一劳永逸）"></a>方法4：全局调整PyCharm显示设置（一劳永逸）</h5>
+<p>如果经常需要查看大张量，可修改PyCharm默认配置：</p>
+<ol>
+<li>打开设置：<code>File → Settings → Build, Execution, Deployment → Debugger → Data Views → Python</code>；</li>
+<li>把“Maximum number of array elements to show”调大（比如10000）；</li>
+<li>勾选“Show full value”和“Allow viewing of large arrays”；</li>
+<li>点击“Apply → OK”，之后所有表达式求值都会显示更多数值。</li>
+</ol>
+<h4 id="总结"><a class="header-anchor" href="#总结"></a>总结</h4>
+<ol>
+<li>想快速看张量核心信息：用“检查...”功能，能查shape、设备、数值等全量信息；</li>
+<li>想解决“...省略值”：自定义数据视图或修改PyCharm的调试显示设置；</li>
+<li>想跟踪值变化：把表达式“添加到监视”，调试时实时看最新值；</li>
+<li>想临时改值测试：用“设置值...”，调试时快速验证不同值的效果。</li>
+</ol>
+<p>这些方法能覆盖你查看张量（如<code>flatten_cls_preds</code>）求值结果的所有需求，既可以看完整数值，也能深入分析张量的属性和变化。</p>
+<h1 id="VS-code技巧"><a class="header-anchor" href="#VS-code技巧"></a>VS code技巧</h1>
+<h2 id="右键多功能菜单"><a class="header-anchor" href="#右键多功能菜单"></a>右键多功能菜单</h2>
+<h3 id="一、快速设置（推荐，可视化界面）"><a class="header-anchor" href="#一、快速设置（推荐，可视化界面）"></a>一、快速设置（推荐，可视化界面）</h3>
+<ol>
+<li>打开设置：快捷键 <code>Ctrl+,</code>（Windows/Linux）或 <code>Cmd+,</code>（macOS）</li>
+<li>在搜索框输入：<code>terminal right click behavior</code></li>
+<li>找到 <strong>Terminal &gt; Integrated: Right Click Behavior</strong> 选项</li>
+<li>下拉选择 <strong><code>default</code></strong>（显示完整上下文菜单）Visual Studio Code</li>
+</ol>
+<hr>
+<h3 id="二、直接改-settings-json（精准配置）"><a class="header-anchor" href="#二、直接改-settings-json（精准配置）"></a>二、直接改 settings.json（精准配置）</h3>
+<ol>
+<li>打开命令面板：<code>Ctrl+Shift+P</code> → 输入 <code>Open Settings (JSON)</code></li>
+<li>在配置对象中添加 / 修改这一行：</li>
+</ol>
+<p>json</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;terminal.integrated.rightClickBehavior&quot;: &quot;default&quot;,</span><br><span class="line">&quot;terminal.integrated.contextMenu&quot;: true</span><br></pre></td></tr></table></figure>
+<p>保存后立即生效，无需重启 VS Code</p>
+<h1 id="pytorch版本问题"><a class="header-anchor" href="#pytorch版本问题"></a>pytorch版本问题</h1>
+<p>这是Ultralytics公司的yolov3项目，我在运行的时候出现了一些问题，我的显卡是RTX5070，该项目所要求的pytorch与cuda版本过低，我的显卡不能安装，于是我安装的是cuda12.8，在运行文件的时候好像出现了一些兼容性的问题，比如我在运行detect.py文件的时候出现了下面的报错：</p>
+<h1 id="anaconda指令"><a class="header-anchor" href="#anaconda指令"></a>anaconda指令</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#删除yolov3_3环境</span></span><br><span class="line">conda remove -n yolov3_3 --<span class="built_in">all</span></span><br><span class="line"><span class="comment">#查看现有环境</span></span><br><span class="line">conda env <span class="built_in">list</span></span><br><span class="line">--------------------------------</span><br><span class="line"><span class="comment">#创建新的yolov3环境</span></span><br><span class="line">conda create -n yolov3 python==<span class="number">3.10</span></span><br><span class="line"><span class="comment">#激活yolov3环境</span></span><br><span class="line">activate yolov3</span><br><span class="line"><span class="comment">#查看该环境下的库</span></span><br><span class="line">conda <span class="built_in">list</span></span><br><span class="line"><span class="comment">#安装cuda12.8命令（最近挂梯子不行唉）</span></span><br><span class="line">pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu128</span><br><span class="line"><span class="comment">#判断cuda是否可用</span></span><br><span class="line">python -c <span class="string">&quot;import torch</span></span><br><span class="line"><span class="string">print(torch.__version__)          # 应该包含 dev 或 nightly 字样</span></span><br><span class="line"><span class="string">print(torch.version.cuda)         # 应该是 12.8</span></span><br><span class="line"><span class="string">print(torch.cuda.is_available())  # 必须是 True</span></span><br><span class="line"><span class="string">print(torch.cuda.get_arch_list()) # 检查是否包含 sm_100 或类似支持</span></span><br><span class="line"><span class="string">exit()&quot;</span></span><br><span class="line">----------------------------------</span><br><span class="line"><span class="comment">#镜像源</span></span><br><span class="line">-i https://pypi.douban.com/simple/  </span><br><span class="line">-i https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">-i https://mirrors.aliyun.com/pypi/simple/</span><br><span class="line">------------------</span><br><span class="line">C:\Program Files (x86)\Microsoft Visual Studio\<span class="number">18</span>\BuildTools</span><br><span class="line"><span class="built_in">set</span> <span class="string">&quot;VSINSTALLDIR=C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools&quot;</span></span><br><span class="line">----</span><br><span class="line"><span class="comment">#yolo-world项目链接</span></span><br><span class="line">https://github.com/AILab-CVC/YOLO-World</span><br></pre></td></tr></table></figure>
+<h1 id="环境配置"><a class="header-anchor" href="#环境配置"></a>环境配置</h1>
+<h2 id="yolov8"><a class="header-anchor" href="#yolov8"></a>yolov8</h2>
+<p>我现在有一个项目文件，是ultralytics公司开发的yolov8项目代码，现在我在使用的时候出现了一些冲突，主要原因如下，我的显卡是RTX5070，目前只支持cuda12.8及更高版本，现在的yolov8虚拟环境下的conda list见conda_list文件</p>
+<p>该项目所要安装的一些库见requirements文件，首先看到requirements文件里的很多库，比如numpy、matplotlib等版本都与我的高版本的torch发生了冲突，一旦运行文件就会发生报错，我该如何解决高版本的cuda与pytorch的与低版本的这些库的兼容性问题。</p>
+<p>给出具体完整且详细的解决方案。</p>
+<h3 id="yolov8模型指令"><a class="header-anchor" href="#yolov8模型指令"></a>yolov8模型指令</h3>
+<h4 id="模型训练"><a class="header-anchor" href="#模型训练"></a>模型训练</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yolo task=detect mode=train model=weights/yolov8s.pt data=ultralytics/cfg/datasets/VOC-test.yaml batch=<span class="number">32</span> epochs=<span class="number">150</span> imgsz=<span class="number">640</span> workers=<span class="number">0</span> device=<span class="number">0</span> cache=<span class="literal">True</span></span><br><span class="line">--------------------------------</span><br><span class="line"><span class="comment">#船舶训练，图片尺寸可以是32的整数倍</span></span><br><span class="line">yolo task=detect mode=train model=weights/yolov8s.pt data=ultralytics/cfg/datasets/coco_ship.yaml batch=<span class="number">32</span> epochs=<span class="number">5</span> imgsz=<span class="number">416</span> workers=<span class="number">0</span> device=<span class="number">0</span> cache=<span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h4 id="模型验证"><a class="header-anchor" href="#模型验证"></a>模型验证</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yolo task=detect mode=val model=runs/detect/train7/weights/best.pt data=ultralytics/cfg/datasets/VOC-test.yaml device=<span class="number">0</span> plots=<span class="literal">True</span></span><br><span class="line">-----------------------------------</span><br><span class="line"><span class="comment">#船舶训练</span></span><br><span class="line">yolo task=detect mode=val model=runs/detect/train/weights/best.pt data=ultralytics/cfg/datasets/coco_ship.yaml device=<span class="number">0</span> plots=<span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h4 id="模型预测"><a class="header-anchor" href="#模型预测"></a>模型预测</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">yolo task=detect mode=predict model=weights/yolov8s.pt source=ultralytics/assets device=<span class="number">0</span>  </span><br><span class="line">-----------------------------</span><br><span class="line"><span class="comment">#推理验证集</span></span><br><span class="line">yolo task=detect mode=predict model=runs/detect/train7/weights/best.pt source=VOCdevkit/images/val device=<span class="number">0</span>  </span><br><span class="line"><span class="comment">#推理视频，显示结果</span></span><br><span class="line">yolo task=detect mode=predict model=runs/detect/train7/weights/best.pt source=cat2.mp4 device=<span class="number">0</span> show=<span class="literal">True</span></span><br><span class="line">-------------------</span><br><span class="line"><span class="comment">#船舶训练，显示结果</span></span><br><span class="line">yolo task=detect mode=predict model=runs/detect/train/weights/best.pt source=test_data device=<span class="number">0</span> show=<span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<h2 id="yolov4"><a class="header-anchor" href="#yolov4"></a>yolov4</h2>
+<p>我现在有个项目文件是yolov4，我现在运行detect.py文件来测试环境，发现项目代码中是些库的老写法而报错或者其他问题，接下来我会把conda_list和相关的项目代码发给你，你需要逐个排查冲突，并给出完整详细的代码修改方案。（因为cuda和torch版本不可调整，一些库做了升级，原先项目代码的写法就会出现报错）</p>
+<hr>
+<p>我现在运行detect.py文件来测试环境，发现项目代码中是些库的老写法而报错或者其他问题，接下来我会把conda_list和相关的项目代码发给你，你需要逐个排查冲突，并给出完整详细的代码修改方案。</p>
+<h2 id="yolo-world项目问题"><a class="header-anchor" href="#yolo-world项目问题"></a>yolo-world项目问题</h2>
+<p>我现在有一个yolo-world的项目，目前在配置环境的时候出现了一些问题，主要是由于我的显卡是5070，只支持cuda12.8及更高版本，与项目中的库产生了冲突，现在发现mmcv有很大的问题，</p>
+<blockquote>
+<p>我现在有一个yolo-world的项目，目前在配置环境的时候出现了一些问题，主要是由于我的显卡是5070，只支持cuda12.8及更高版本，与项目中的库产生了冲突，之前你帮助我写了一个check_env.py的文件来判断环境是否成功，后来定位到mmcv库发生了问题，下面是你之前给我的回答，我将把生成的日志文件发给你，请你继续帮助我解决问题。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">C:\Program Files (x86)\Microsoft Visual Studio\<span class="number">18</span>\BuildTools\VC\Auxiliary\Build</span><br><span class="line">call <span class="string">&quot;C:\Program Files (x86)\Microsoft Visual Studio\18\BuildTools\VC\Auxiliary\Build\vcvars64.bat&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#x64 Native Tools Command Prompt下激活conda，环境是yolow-5070</span></span><br><span class="line">call C:\Users\Administrator\anaconda3\Scripts\activate.bat yolow-<span class="number">5070</span></span><br><span class="line">---</span><br><span class="line">call C:\Users\Administrator\anaconda3\Scripts\activate.bat</span><br><span class="line">conda activate yoloworld-cu128</span><br><span class="line">cd C:\Users\Administrator\mmcv</span><br><span class="line">where python</span><br><span class="line">python -V</span><br><span class="line">python -c <span class="string">&quot;import torch; print(torch.__version__)&quot;</span></span><br><span class="line">python -m pip -V</span><br><span class="line">python -m pip install -v -e . --no-build-isolation &gt; mmcv_build.log <span class="number">2</span>&gt;&amp;<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;chair&quot;</span>, <span class="string">&quot;person&quot;</span>,<span class="string">&quot;mouse&quot;</span>,<span class="string">&quot;window&quot;</span>,<span class="string">&quot;monitor&quot;</span>,<span class="string">&quot;book&quot;</span>,<span class="string">&quot;Computer Case&quot;</span></span><br></pre></td></tr></table></figure>
+<h3 id="WSL下配置记录"><a class="header-anchor" href="#WSL下配置记录"></a>WSL下配置记录</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">conda create -n yoloworld-cu128 python=3.10 -y</span><br><span class="line">conda activate yoloworld-cu128</span><br><span class="line"></span><br><span class="line"><span class="comment"># 锁 pip &lt; 25（你之前踩过 pip 25 的 PEP660 / build_editable 坑，这里直接规避）</span></span><br><span class="line">python -m pip install -U <span class="string">&quot;pip&lt;25&quot;</span> setuptools wheel</span><br><span class="line">python -m pip -V</span><br><span class="line">python -V</span><br><span class="line">----</span><br><span class="line"><span class="comment"># 先装 PyTorch cu128（我们用官方 wheel 源）</span></span><br><span class="line">pip install --index-url https://download.pytorch.org/whl/cu128 torch torchvision torchaudio</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证 CUDA 是否可用 + 打印架构能力</span></span><br><span class="line">python - &lt;&lt;<span class="string">&#x27;PY&#x27;</span></span><br><span class="line">import torch</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;torch:&quot;</span>, torch.__version__)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;cuda available:&quot;</span>, torch.cuda.is_available())</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;cuda version:&quot;</span>, torch.version.cuda)</span><br><span class="line"><span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;gpu:&quot;</span>, torch.cuda.get_device_name(0))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;capability:&quot;</span>, torch.cuda.get_device_capability(0))</span><br><span class="line">PY</span><br><span class="line">---</span><br><span class="line">pip install --index-url https://download.pytorch.org/whl/cu128 \</span><br><span class="line">  --extra-index-url https://pypi.org/simple \</span><br><span class="line">  torch torchvision torchaudio</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="ultralytics和yolo-world-master项目哪个更好"><a class="header-anchor" href="#ultralytics和yolo-world-master项目哪个更好"></a>ultralytics和yolo-world-master项目哪个更好</h3>
+<blockquote>
+<p>这两个项目都包含yolo-world这个项目，目前我想先用预训练权重进行模型推理，之后会对网络进行改进来发篇论文，你更推荐哪个项目。目前我的显卡是RTX5070，在配置yolo-world-master项目的时候，mmcv库配置困难。但是如果以后修改代码yolo-world-master项目是不是更加方便一些，ultralytics项目虽然能够在我的显卡上进行推理，但是写的比较完善复杂，我担心以后不好下手改。请你给我一些建议</p>
+</blockquote>
+<h3 id="代码解读问题"><a class="header-anchor" href="#代码解读问题"></a>代码解读问题</h3>
+<p>压缩包上传的是原作者在github上上传的yolo-world开源项目源码（部分.py文件是为了适配我的环境而增加的），pdf为论文文件，几个md文件是我的学习笔记，目前正在学到YOLO-World-master/yolo_world/models/dense_heads/yolo_world_head.py这份文件中的class YOLOWorldHead(YOLOv8Head)下的def loss_by_feat这里。在学习过程中我也在不断反思自己的学习方法，逐行代码学习与解读进度太慢了，就算是逐行学习，对整个项目文件中的代码中变量流向还是迷迷糊糊，流程还是不够清晰。我学习该项目的主要原因还是对该项目进行改进或者针对特定数据集微调来发论文，因此我反思逐行学习是否太慢且没有效率。并且我在反思就算关键的代码部分需要逐行学习，用在pycharm中进行debug的方式是不是更加的合理且正确。（目前该项目我已经能够在我的4060显卡上进行单张图片的推理，环境大致已经配好了）。
+请你针对我现在的进度与困惑，指导我下一步的学习</p>
+<h3 id="基于yolo-world改进提示词"><a class="header-anchor" href="#基于yolo-world改进提示词"></a>基于yolo-world改进提示词</h3>
+<p>我这里有篇论文，我的目标就是基于这篇论文进行改进优化等，具体的方向我还没想清楚，大概是基于微调或者一些模型改进，比如改进backbone、输入信号不是单一的可见光图片而是加入多模态信号，neck、检测头等地方（或者其他地方，目前我的想法还没成熟），或者是基于具体场景的开放词汇检测，比如实现：训练时见过的样本实现型号级别的区分，未见过的能够区分到大类，比如训练的时候见过飞机，最终推理的时候能够区分J-20与J-35，比如训练的时候没有无人机样本，推理的时候能够识别出这是无人机而不是战斗机或者直升飞机。</p>
+<p>因此我需要你在文献数据库进行深度检索，我想查阅目前所有的基于yolo-world进行改进的模型，无论是结构上的改进或者模型功能的改进部署等等，都可以是我参考的目标或者进行的方向。</p>
+<p>当然我的想法还不是很成熟，如果你有更好的想法也可以告诉我</p>
+<h1 id="AI接力提示词"><a class="header-anchor" href="#AI接力提示词"></a>AI接力提示词</h1>
+<blockquote>
+<p>“请帮我总结一下我们刚才的讨论重点。特别是我们确认了哪些代码逻辑、解决了什么报错，以及下一步的计划是什么？请整理成一段可以直接发给新 AI 的‘背景提示词’。”</p>
+</blockquote>
+<blockquote>
+<p>“请帮我总结一下我们刚才的讨论过的东西。特别是我们已经做了哪些工作，确认了哪些问题逻辑、梳理提出了什么解决方案，以及下一步的计划是什么？请整理成一段可以直接发给新 AI 的‘背景提示词’。”</p>
+</blockquote>
+<h2 id="第一篇论文"><a class="header-anchor" href="#第一篇论文"></a>第一篇论文</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">这是一个我准备发论文的项目，目前正在编写</span><br><span class="line">/home/lian/projects/YOLO-UniOW-backup-2026-02-07/docs/paper/05_experiments.md</span><br><span class="line">接下来需要你全面了解我的项目之后帮助我一步步的解决问题。</span><br><span class="line">接下来需要你全面阅读项目文档，形成最基础的记忆，避免接下来误操作而改废了我的项目，之前我们做了大量的实验，都需要你去了解</span><br><span class="line">先看这个：/home/lian/projects/YOLO-UniOW-backup-2026-02-07/docs/AI_Handover_Prompt.md</span><br><span class="line">然后看各种文档</span><br><span class="line">/home/lian/projects/YOLO-UniOW-backup-2026-02-07/docs</span><br><span class="line">然后看模型结构</span><br><span class="line">看做过的实验和各种推理</span><br><span class="line">看已经获得的实验结果（模型权重推理结果等等）</span><br><span class="line">总之，在没有充分了解我的工作之前，不要着急动手。</span><br><span class="line">在完全理解过后，告诉我你准备好了，可以开始接手我的工作了</span><br></pre></td></tr></table></figure>
+<h1 id="遗忘策略"><a class="header-anchor" href="#遗忘策略"></a>遗忘策略</h1>
+<p>在学习这份文件的时候发现一个问题，学到后面忘了前面的东西，比如后面代码中出现的一些变量已经忘记了它的含义功能形状等等，这导致我的学习很痛苦，所以我决定遵循源代码文件和做的笔记重新梳理一遍学过的东西。在这个梳理过程中，我主要关注：①对笔记不合理的地方进行修改和优化②对每一个class及下面的def的前后连接对象搞清楚，对它的功能及其他class的联系搞清楚③对出现的一些变量，比如cls_pred, cls_contrast等等前后有关联的变量进行梳理，重新编写一份笔记，对他们重点记录（记录他们的意义、形状。来源与生成函数等等，凡是方便加深我印象的都应该考虑在内），在后面的class中出现的时候可以方便查看</p>
+<h1 id="typora超链接跳转"><a class="header-anchor" href="#typora超链接跳转"></a>typora超链接跳转</h1>
+<h2 id="文件内跳转"><a class="header-anchor" href="#文件内跳转"></a>文件内跳转</h2>
+<hr>
+<h3 id="方法一：跳转到标题（最常用）"><a class="header-anchor" href="#方法一：跳转到标题（最常用）"></a>方法一：跳转到标题（最常用）</h3>
+<p>Typora 会自动为每一个标题（H1-H6）生成一个锚点。</p>
+<ol>
+<li>
+<p><strong>定义锚点：</strong> 正常写标题即可。</p>
+<p>Markdown</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">## 目标章节名称</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>设置跳转：</strong> 在需要点击的地方输入以下格式：</p>
+<p>Markdown</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[点击跳转到目标章节](#目标章节名称)</span><br></pre></td></tr></table></figure>
+<p><em>注意：括号里的 <code>#</code> 后面必须与标题文字<strong>完全一致</strong>（包括空格和特殊字符）。</em></p>
+</li>
+</ol>
+<hr>
+<h3 id="方法二：跳转到任意位置（使用-HTML-锚点）"><a class="header-anchor" href="#方法二：跳转到任意位置（使用-HTML-锚点）"></a>方法二：跳转到任意位置（使用 HTML 锚点）</h3>
+<p>如果你想跳转到某个段落中间，或者某个不是标题的地方，可以使用 HTML 的 <code>id</code> 属性。</p>
+<ol>
+<li>
+<p>第一步：定义锚点（目标位置）</p>
+<p>在你想跳转到的地方，插入一段 HTML 代码（建议使用 span 或 a 标签）：</p>
+<p>HTML</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;my-anchor&quot;</span>&gt;</span>可以写点东西或者不写<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;my-anchor&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><em>注：<code>id</code> 的值可以自定义，只要在当前文档中唯一即可。</em></p>
+</li>
+<li>
+<p>第二步：设置跳转链接（起点位置）</p>
+<p>在需要发起跳转的地方，使用 Markdown 的链接语法指向那个 id：</p>
+<p>Markdown</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[跳转](#my-anchor)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<h3 id="方法三：使用-HTML-链接语法"><a class="header-anchor" href="#方法三：使用-HTML-链接语法"></a>方法三：使用 HTML 链接语法</h3>
+<p>如果你觉得 Markdown 语法不够直观，也可以直接全部使用 HTML 语法：</p>
+<ul>
+<li>
+<p><strong>起点：</strong></p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#my-point&quot;</span>&gt;</span>点击跳转<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>终点：</strong></p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">&quot;my-point&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h3 id="💡-进阶技巧与注意事项"><a class="header-anchor" href="#💡-进阶技巧与注意事项"></a>💡 进阶技巧与注意事项</h3>
+<ul>
+<li>
+<p><strong>Typora 内部跳转：</strong> 在 Typora 编辑器中，按住 <strong>Ctrl 键 (Windows)</strong> 或 <strong>Command 键 (Mac)</strong> 并点击链接，即可直接跳转到目标位置。</p>
+</li>
+<li>
+<p>标题带空格怎么办？</p>
+<p>如果标题是 ## Hello World，跳转链接通常写成 <a href="#hello-world">Jump</a>（空格换成连字符），但在 Typora 中，直接写 <a href="#hello-world">Jump</a> 或 [Jump](#Hello World) 通常都能识别。</p>
+</li>
+<li>
+<p><strong>自动补全：</strong> 在 Typora 中输入 <code>[描述](#</code> 之后，通常会弹出当前文档中所有标题的建议列表，直接选择即可，非常方便。</p>
+</li>
+</ul>
+<hr>
+<h2 id="跨文件跳转"><a class="header-anchor" href="#跨文件跳转"></a>跨文件跳转</h2>
+<p>具体操作步骤如下：</p>
+<h3 id="1-核心语法"><a class="header-anchor" href="#1-核心语法"></a>1. 核心语法</h3>
+<p>基本格式为：</p>
+<p><a href="%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%E6%88%96%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84#%E7%9B%AE%E6%A0%87%E6%A0%87%E9%A2%98%E5%90%8D%E7%A7%B0">链接文字</a></p>
+<hr>
+<h3 id="2-具体操作实例"><a class="header-anchor" href="#2-具体操作实例"></a>2. 具体操作实例</h3>
+<p>假设你有两个文件，分别在同一个文件夹下：</p>
+<ul>
+<li>文件 A：<code>Project_Notes.md</code></li>
+<li>文件 B：<code>Meeting_Minutes.md</code>（包含一个标题叫 <code>## 2025年计划</code>）</li>
+</ul>
+<p>如果你想在 <strong>文件 A</strong> 中直接跳转到 <strong>文件 B</strong> 的“2025年计划”位置：</p>
+<ol>
+<li>
+<p><strong>在文件 A 中输入：</strong></p>
+<p>Markdown</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请参考：[去年的计划安排](./Meeting_Minutes.md#2025年计划)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>触发跳转：</strong></p>
+<ul>
+<li>按住 <strong>Ctrl (Windows)</strong> 或 <strong>Command (Mac)</strong> 并点击该链接。</li>
+<li>Typora 会自动打开 <code>Meeting_Minutes.md</code> 并将光标定位到 <code>## 2025年计划</code> 这一行。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="3-注意事项与技巧"><a class="header-anchor" href="#3-注意事项与技巧"></a>3. 注意事项与技巧</h3>
+<ul>
+<li>
+<p><strong>相对路径最稳妥：</strong> 建议使用 <code>./文件名.md</code> 这种路径方式。这样即使你把整个文件夹移动到其他地方，链接依然有效。</p>
+</li>
+<li>
+<p><strong>处理空格：</strong> 如果文件名或标题中含有空格，虽然 Typora 通常能智能识别，但为了兼容性，建议：</p>
+<ul>
+<li>标题中的空格通常可以直接写，或者换成减号 <code>-</code>（取决于 Markdown 解析器，Typora 对直接写原标题支持很好）。</li>
+<li>示例：<code>[跳转](File%20Name.md#目标标题)</code></li>
+</ul>
+</li>
+<li>
+<p><strong>结合 HTML ID：</strong> 同理，如果目标文件里的位置不是标题，而是你定义的 HTML 锚点（如 <code>&lt;span id=&quot;step-1&quot;&gt;&lt;/span&gt;</code>），跳转方式是一样的：</p>
+<p>Markdown</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[跳转到步骤1](./TargetFile.md#step-1)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>自动补全：</strong> 在 Typora 中，当你输入 <code>[描述](./</code> 后，它通常会弹出当前目录下的文件列表，选好文件后再手动输入 <code>#标题</code> 即可。</p>
+</li>
+</ul>
+<hr>
+<h3 id="4-常见问题：点击没反应？"><a class="header-anchor" href="#4-常见问题：点击没反应？"></a>4. 常见问题：点击没反应？</h3>
+<p>如果跳转失败，请检查以下几点：</p>
+<ol>
+<li><strong>后缀名：</strong> 确保路径里写了 <code>.md</code> 后缀。</li>
+<li><strong>标题一致性：</strong> <code>#</code> 后面的文字必须和目标文件里的标题文字<strong>完全一模一样</strong>。</li>
+<li><strong>文件路径：</strong> 确保相对路径层级正确（例如 <code>../</code> 表示上一级目录）。</li>
+</ol>
+<hr>
+<p><strong>你想学习如何利用 Typora 的“文件树”或“大纲视图”来更高效地管理这些长文档跳转吗？</strong></p>
+<h2 id="外部链接跳转"><a class="header-anchor" href="#外部链接跳转"></a>外部链接跳转</h2>
+<h3 id="方法1"><a class="header-anchor" href="#方法1"></a>方法1</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[跳转百度](https://www.baidu.com/)</span><br><span class="line"></span><br><span class="line">[跳转到百度](https://www.baidu.com &quot;这是百度&quot;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://www.baidu.com" title="这是百度">跳转到百度</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.baidu.com/">跳转百度</a></p>
+<h3 id="方法2"><a class="header-anchor" href="#方法2"></a>方法2</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[Link Text][Ref]</span><br><span class="line"></span><br><span class="line">[Ref]: link-address &quot;optional title&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>示例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[https://www.baidu.com &quot;百度网址&quot;][点击后就能跳转百度]</span><br><span class="line">[点击后就能跳转百度]: https://www.baidu.com	&quot;标题可选&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://www.baidu.com" title="标题可选">https://www.baidu.com &quot;百度网址&quot;</a></p>
+<hr>
+<p>缩写形式（推荐）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[Ref][]</span><br><span class="line"></span><br><span class="line">[Ref]: link-address</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://www.baidu.com">百度</a></p>
+<p>好处是当我们在多处地方使用这个 跳转链接时，都没必要复制一遍地址，而是根据 <code>Ref</code> 来使文本和链接连接起来</p>
+<h1 id="Windows-PowerShell-环境"><a class="header-anchor" href="#Windows-PowerShell-环境"></a>Windows PowerShell 环境</h1>
+<h2 id="执行python脚本"><a class="header-anchor" href="#执行python脚本"></a>执行python脚本</h2>
+<h3 id="步骤-1：创建-Python-脚本文件"><a class="header-anchor" href="#步骤-1：创建-Python-脚本文件"></a>步骤 1：创建 Python 脚本文件</h3>
+<p>在 PowerShell 中输入以下命令，打开记事本创建脚本：</p>
+<p>powershell</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">notepad generate_coco_ann.py</span><br></pre></td></tr></table></figure>
+<h3 id="步骤-2：粘贴代码到记事本"><a class="header-anchor" href="#步骤-2：粘贴代码到记事本"></a>步骤 2：粘贴代码到记事本</h3>
+<p>把这段 Python 代码复制到记事本里（注意完整复制）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json, os</span><br><span class="line">ann = &#123;</span><br><span class="line">    <span class="string">&quot;info&quot;</span>: &#123;&#125;,</span><br><span class="line">    <span class="string">&quot;licenses&quot;</span>: [],</span><br><span class="line">    <span class="string">&quot;images&quot;</span>: [</span><br><span class="line">        &#123;<span class="string">&quot;id&quot;</span>: <span class="number">1</span>, <span class="string">&quot;file_name&quot;</span>: <span class="string">&quot;000000000001.jpg&quot;</span>, <span class="string">&quot;width&quot;</span>: <span class="number">810</span>, <span class="string">&quot;height&quot;</span>: <span class="number">1080</span>&#125;</span><br><span class="line">    ],</span><br></pre></td></tr></table></figure>
+<h3 id="步骤-3：保存并运行脚本"><a class="header-anchor" href="#步骤-3：保存并运行脚本"></a>步骤 3：保存并运行脚本</h3>
+<ol>
+<li>记事本里按<code>Ctrl+S</code>保存，关闭记事本。</li>
+<li>回到 PowerShell，执行脚本：</li>
+</ol>
+<p>powershell</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python generate_coco_ann.py</span><br></pre></td></tr></table></figure>
+<h2 id="清屏"><a class="header-anchor" href="#清屏"></a>清屏</h2>
+<p>Ctrl L
+clear
+cls
+这样不会影响设置好的变量</p>
+<h1 id="opencode-cc在wsl系统中的问题"><a class="header-anchor" href="#opencode-cc在wsl系统中的问题"></a>opencode cc在wsl系统中的问题</h1>
+<h2 id="启动"><a class="header-anchor" href="#启动"></a>启动</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmd.exe /c opencode --port 41078</span><br><span class="line">cmd.exe /c opencode --port 48384</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">打开ubuntu下的claude code配置文件 需在wsl中</span><br><span class="line">code ~/.claude/settings.json</span><br></pre></td></tr></table></figure>
+<h1 id="微调话术"><a class="header-anchor" href="#微调话术"></a>微调话术</h1>
+<p>这篇论文我大致看了一遍，作者是否公布了预训练权重和微调的方案，是否有应用于军事目标检测的潜力：训练时见过的样本实现型号级别的区分，未见过的能够区分到大类，比如训练的时候见过飞机，最终推理的时候能够区分J-20与J-35，比如训练的时候没有无人机样本，推理的时候能够识别出这是无人机而不是战斗机或者直升飞机。
+以这篇论文和项目代码为基础实现上述的目标是不是很有难度</p>
+<h1 id="型号级识别实战"><a class="header-anchor" href="#型号级识别实战"></a>型号级识别实战</h1>
+<h2 id="数据集检索"><a class="header-anchor" href="#数据集检索"></a>数据集检索</h2>
+<p>我现在有个论文选题，主要目标是实现如下：训练时见过的样本实现型号级别的区分，未见过的能够区分到大类，比如训练的时候见过飞机，最终推理的时候能够区分J-20与J-35，比如训练的时候没有无人机样本，推理的时候能够识别出这是无人机而不是战斗机或者直升飞机。总体思路是基于开放词汇检测的能力，但是在动手做之前我想要知道是否有可以应用的相关数据集来让我训练，并且为了达到型号级的识别，对于数据集的质量要求很高，对于这样的目的，如果有多模态的数据集显然会更好，需要你对开源的数据集进行检索分析，帮我评估方案的可行性，并列出相关数据集介绍和下载链接</p>
+<h2 id="微调评估"><a class="header-anchor" href="#微调评估"></a>微调评估</h2>
+<p>目前我已上传yolo-world项目，我想要基于该项目和上面检索到的数据集进行微调，总体目标还是对已见类达到型号级识别，未见类能够识别到大类（鉴于目前已经检索到的数据集情况，我认为大类可以细分成两个父类，比如说飞机/...-战斗机/运输机/民航客机/轰炸机/武装直升机/.....-F35战斗机等具体型号/...，具体识别到哪层父类，这个看模型具体怎么修改了，我暂时还没有拿定主意）</p>
+<p>本次方案目前只考虑单一模态的可见光图像</p>
+<p>我想让你从零开始评估该方案的可行性，包括从最基础的数据集准备，模型的修改/训练微调/评估，到后面的结果评估（我最终的目的是发一篇论文，不是实际应用于工程落地，目标是在中科院一区期刊（如 IEEE Transactions on Geoscience and Remote Sensing 或 IEEE JSTARS）上发表）。
+此外如果你对该方案有更好的版本，可以对我的进行修改完善。
+在做完上述两步之后，给我一份可以完全按照的你的说明进行实操的计划</p>
+<h2 id="数据集下载整理"><a class="header-anchor" href="#数据集下载整理"></a>数据集下载整理</h2>
+<p>接下来需要你一步步的指导我进行方案的实操，首先从数据集注备开始，我看到你写的第一个步骤是整合多来源可见光遥感数据集，由于我之前没有进行过这么复杂的项目实践，需要你一步一步的指导我进行，把我当成纯小白。首先需要你指导我需要下载哪些数据集</p>
+<h2 id="40epoch日志解读"><a class="header-anchor" href="#40epoch日志解读"></a>40epoch日志解读</h2>
+<p>目前AI帮我写了一版新的训练脚本：configs/mar20/yolo_world_v2_xl_mar20_train.py。txt文档是训练日志，接下来需要你做以下工作：</p>
+<p>1.对训练日志进行解读，告诉我训练日志中出现了什么指标，每个指标代表什么意思，在训练过程中我应该重点关注什么，看什么指标有什么变化</p>
+<p>2.对目前我们已经做的工作进行总结，我们做了什么，进行到了哪一步，对终极目标：已见类型号级识别，未见类识别到大类。做出了哪些进展</p>
+<p>3.接下来这40epoch做完之后我们将做什么，你之前制定的计划（整合多来源可见光遥感数据集-&gt;建立层次化标签体系-&gt;标签清洗与统一-&gt;划分训练/验证/未见类测试集-&gt;模型结构修改.......）我们接下来将怎么进行</p>
+<p>4.由于我的基础比较差，所以需要你事无巨细的带着我进行</p>
+<h2 id="进程询问"><a class="header-anchor" href="#进程询问"></a>进程询问</h2>
+<p>我对目前我们的工作存在一些疑问，主要是不明白我们在调什么参数，为了什么，这对最终的目标有什么关联。接下来需要你写一份说明.md格式的说明文档，文档需要解释清楚下面这些东西</p>
+<p>1.对目前我们已经做的工作进行总结，我们做了什么，进行到了哪一步，对终极目标：已见类型号级识别，未见类识别到大类。做出了哪些进展</p>
+<p>3.接下来我们将做什么，之前制定的计划（整合多来源可见光遥感数据集-&gt;建立层次化标签体系-&gt;标签清洗与统一-&gt;划分训练/验证/未见类测试集-&gt;模型结构修改.......）我们接下来将怎么进行，现在我们在MAR数据集上调参，目的是为了什么，对最终的型号级识别有什么贡献</p>
+<p>4.由于我的基础比较差，所以需要你事无巨细的带着我进行</p>
+<h1 id="型号级识别实战（yolo-uniow）"><a class="header-anchor" href="#型号级识别实战（yolo-uniow）"></a>型号级识别实战（yolo-uniow）</h1>
+<p>我现在有个论文选题，我想要基于YOLO-UNIOW项目和检索到的数据集进行微调（数据集检索附件已上传到项目附件），总体目标还是对已见类（训练过的样本）达到型号级识别，未见类能够识别到大类（鉴于目前已经检索到的数据集情况，我认为大类可以细分成两个父类，比如说飞机/...-战斗机/运输机/民航客机/轰炸机/武装直升机/.....-F35战斗机等具体型号/...，具体识别到哪层父类，这个看模型具体怎么修改了，我暂时还没有拿定主意）。总体思路是基于yolo-uniow的开放词汇检测的能力。</p>
+<p>本次方案目前只考虑单一模态的可见光图像</p>
+<p>我想让你从零开始评估该方案的可行性，包括从最基础的数据集准备，模型的修改/训练微调/评估，到后面的结果评估（我最终的目的是发一篇论文，不是实际应用于工程落地，目标是在中科院一区期刊（如 IEEE Transactions on Geoscience and Remote Sensing 或 IEEE JSTARS）上发表）。
+此外如果你对该方案有更好的版本，可以对我的进行修改完善。
+在做完上述两步之后，给我一份可以完全按照的你的说明进行实操的计划</p>
+<h2 id="数据集处理完成之后的进展"><a class="header-anchor" href="#数据集处理完成之后的进展"></a>数据集处理完成之后的进展</h2>
+<p>在正式进入实验前，我们先做一个梳理</p>
+<p>1.对目前我们已经做的工作进行总结，我们做了什么，进行到了哪一步，对终极目标：已见类型号级识别，未见类识别到大类。做出了哪些进展</p>
+<p>2.接下来我们将做什么，之前制定的计划我们接下来将怎么进行，将如何进行实验，之前你说的只训练 coarse（13 类），验证 dataloader、bbox、NMS、训练流程全部正常；这个做完之后我们做什么</p>
+<p>3.根据目前我们的进展对我们的最终目标重新梳理一遍计划，使它更加完善详细可执行</p>
+<h2 id="与claude起手"><a class="header-anchor" href="#与claude起手"></a>与claude起手</h2>
+<p>在进行正式的实验前，我需要你先对目前的项目和计划有个完整的了解
+1.数据集，数据集是我和ai进行整理完善用于该项目的，地址在：E:\datasets_yolo_uniow\aircraft_ow  我需要你完全阅读完数据集的说明文档（里面有好几份，这对后面我们的实验很重要）
+2.计划，计划文件在：/home/lian/projects/YOLO-UniOW-main/plan 里面有两份，一份是在为完成最终目标进行的大致规划，一份在整理完成数据集之后进行的梳理
+3.该项目的论文我放在了：/home/lian/projects/YOLO-UniOW-main/PDF/Liu 等 - 2024 - YOLO-UniOW Efficient Universal Open-World Object Detection.pdf
+我需要你完全理解我的需求和项目修改训练计划后，写一份说明文档，接下来一步步的指导我进行（我的基础很差，你的指导需要详细）</p>
+<h3 id="训练过程中查看日志"><a class="header-anchor" href="#训练过程中查看日志"></a>训练过程中查看日志</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">方法1：直接指定最新的日志文件</span><br><span class="line"></span><br><span class="line"><span class="built_in">tail</span> -f work_dirs/yolo_uniow_s_aircraft_coarse_baseline/20260131_093108/20260131_093108.<span class="built_in">log</span></span><br><span class="line"></span><br><span class="line">方法2：使用find自动查找</span><br><span class="line"></span><br><span class="line"><span class="built_in">tail</span> -f $(find work_dirs/yolo_uniow_s_aircraft_coarse_baseline -name <span class="string">&quot;*.log&quot;</span> -<span class="built_in">type</span> f | <span class="built_in">sort</span> | <span class="built_in">tail</span> -1)</span><br></pre></td></tr></table></figure>
+<h3 id="中断后继续训练"><a class="header-anchor" href="#中断后继续训练"></a>中断后继续训练</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用--resume auto自动找到最新检查点恢复</span></span><br><span class="line">python tools/train.py configs/aircraft/yolo_uniow_s_aircraft_coarse_baseline.py --resume auto</span><br></pre></td></tr></table></figure>
+<h2 id="换数据集继续训练"><a class="header-anchor" href="#换数据集继续训练"></a>换数据集继续训练</h2>
+<p>为了你从零开始了解我们现在的项目（这个项目之前用AI做了一半，发现不对，重新设立一个分支再开始），我需要你从头开始了解项目里的东西，下面有两份总结，你阅读一下</p>
+<p>/home/lian/projects/YOLO-UniOW-main/plan/Implementing OWOD <a target="_blank" rel="noopener" href="http://Detection.md">Detection.md</a></p>
+<p>/home/lian/projects/YOLO-UniOW-main/plan/GPT/2026-02-03_Aircraft-OW_阶段性总结（接手至今）.md</p>
+<p>你也可以阅读一遍项目里的其他文件</p>
+<p>我对目前的进展产生了困惑，你阅读完之后给我梳理一遍</p>
+<h2 id="核心指标"><a class="header-anchor" href="#核心指标"></a>核心指标</h2>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align:right">数值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>U‑Recall(box)</td>
+<td style="text-align:right">0.9728</td>
+<td>未见 GT 被任意输出（coarse/unknown/fine）抓住</td>
+</tr>
+<tr>
+<td>U‑Recall(coarse‑correct)</td>
+<td style="text-align:right">0.4475</td>
+<td>未见 GT 抓住且 coarse 预测正确（unknown 不计入）</td>
+</tr>
+<tr>
+<td>U‑Recall(coarse‑from‑fine‑match)</td>
+<td style="text-align:right">0.4473</td>
+<td>未见 GT 抓住且 fine 匹配到的 coarse 映射正确（上限参考）</td>
+</tr>
+<tr>
+<td>OSE(unseen→fine)</td>
+<td style="text-align:right">1423</td>
+<td>未见 GT 被输出成 fine（任何型号输出都算 OSE）</td>
+</tr>
+<tr>
+<td>OSE rate</td>
+<td style="text-align:right">0.0798</td>
+<td>OSE / 未见 GT 总数</td>
+</tr>
+<tr>
+<td>Seen fine acc (on fine decisions)</td>
+<td style="text-align:right">0.9913</td>
+<td>已见目标：在我们决定输出 fine 的那部分里，型号正确率</td>
+</tr>
+<tr>
+<td>Coarse acc (matched all)</td>
+<td style="text-align:right">0.5313</td>
+<td>所有 matched GT：预测 coarse 是否正确（unknown 视为错误）</td>
+</tr>
+<tr>
+<td>Coarse acc (matched non-unknown)</td>
+<td style="text-align:right">0.5533</td>
+<td>只看非 unknown 的 matched：预测 coarse 是否正确</td>
+</tr>
+</tbody>
+</table>
+<h1 id="agent-skills"><a class="header-anchor" href="#agent-skills"></a>agent skills</h1>
+<p>你先通过网页搜索学习一下claude code的agent skills，帮助我写一份学术论文讲解的skills，总体思想大概如下：对论文（可用项目代码进行辅助讲解）进行讲解，讲解的内容用md文件进行输出，其讲解方式可从由粗到细再到精的思路，整个skills需要输出几个md文件。
+比如第一个文件是对应文章的总览，这里面会介绍“结构化全图”（论文创新点、方法模块、训练/推理流程等），建立宏观架构图。
+第二份文件是对整篇论文的精读，精读按照论文的标题顺序进行，比如说abstract/introduction/related works/Method/Experiments....；在讲解的过程某个大标题比如method下面又分了好几个小标题，继续依次逐个进行讲解；这部分的精读就是对论文进行非常详细的讲解，每次只推进一个小节，可以按照下面的固定格式：- 本小节结论</p>
+<ul>
+<li>
+<p>按文章顺序讲解一遍</p>
+</li>
+<li>
+<p>关键概念/符号表</p>
+</li>
+<li>
+<p>关键公式/算法</p>
+</li>
+<li>
+<p>重点内容讲解及梳理</p>
+</li>
+<li>
+<p>宏观流向图。
+第3份文件可以是对整篇论文的图表进行梳理，详细讲解图片中的内容（这部分可能是论文中比较关键的论文结构方法），表格可能是论文的实验部分，可以尝试从不同维度解读表格，但凡图表中涉及到了技术指标，都需要逐个解释这些指标的定义，公式，物理意义，与相似指标的对比分析等等。
+第4份文件可以是对整个文章整理出的思维导图，方便进行速览查阅
+。你先写一份大概的，然后和我继续对话完善这份skills</p>
+</li>
+</ul>
+<hr>
+<p>你先通过网页搜索学习一下claude code的agent skills，帮助我写一份学术论文讲解的skills，总体思想大概如下：对论文（可用项目代码进行辅助讲解）进行讲解，讲解的内容用md文件进行输出，整个skills需要输出1个md文件。
+文件是对整篇论文的精读，一次只精读一小节内容，比如按照Abstract、1. Introduction、2.1. Open-Vocabulary Object Detection、2.2. Large Vision-Language Model、3.1. Model Architecture这样一小节的形式推进，讲解的时候输出固定排版格式，做好序号标记，比如讲解到2.1的时候，讲解内容就从2.1.1这个小标题开始排，讲解内容大致可以参考下面的内容：
+本小节概论
+关键概念/符号表
+关键公式/算法
+本小节全部内容讲解
+重点内容梳理
+（如果某个小节不包含上面的内容就可忽略，比如摘要引言部分可能不含关键公式/算法等，可忽略，不可强行套模版，灵活调整）</p>
+<h1 id="WSL系统"><a class="header-anchor" href="#WSL系统"></a>WSL系统</h1>
+<h2 id="配置环境和项目"><a class="header-anchor" href="#配置环境和项目"></a>配置环境和项目</h2>
+<ul>
+<li>在 VS Code 左下角会有一个绿色的小图标（像 <code>&gt;&lt;</code> 或显示 Remote 状态）。</li>
+<li>点它 → 选择 <strong>“Connect to WSL”</strong>（连接到 WSL）。</li>
+<li>连接成功后，VS Code 会打开一个 <strong>新的窗口</strong>，窗口左下角会显示类似 <strong>“WSL: Ubuntu”</strong>（或你的发行版名字）。</li>
+<li>终端里输入</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /mnt/d/pycharm_project/WeDetect-main</span><br><span class="line">code .</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /mnt/d/pycharm_project/YOLO-UniOW-main</span><br><span class="line">code .</span><br><span class="line">复制项目到WSL</span><br><span class="line"><span class="built_in">cp</span> -r /mnt/d/pycharm_project/YOLO-UniOW-main /home/lian/projects/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<p>假如文件已经导入到wsl</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd ~/YOLO-UniOW-main</span><br><span class="line">code .</span><br><span class="line"></span><br><span class="line">cd ~/projects/YOLO-World-master</span><br><span class="line">code .</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>在 VS Code 里按 <strong>Ctrl + Shift + P</strong></p>
+</li>
+<li>
+<p>输入：<code>Python: Select Interpreter</code> 并回车</p>
+</li>
+<li>
+<p>在列表里找到带 <strong>conda</strong> 且名字是 <strong>wedetect</strong> 的那一项（路径通常像 <code>.../miniconda3/envs/wedetect/bin/python</code> 或 <code>.../anaconda3/envs/wedetect/bin/python</code>）</p>
+</li>
+<li>
+<p>点选它</p>
+</li>
+<li>
+<p>选完后，VS Code 右下角会显示当前解释器（或在状态栏显示 Python 版本/路径）。</p>
+<p><strong>固定解释器</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/YOLO-UniOW-main</span><br><span class="line"><span class="built_in">mkdir</span> -p .vscode</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; .vscode/settings.json &lt;&lt;<span class="string">&#x27;JSON&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;python.defaultInterpreterPath&quot;</span>: <span class="string">&quot;/home/lian/miniconda3/envs/yolouniow-cu128/bin/python&quot;</span>,</span><br><span class="line">  <span class="string">&quot;python.terminal.activateEnvironment&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="string">&quot;terminal.integrated.defaultProfile.linux&quot;</span>: <span class="string">&quot;bash&quot;</span>,</span><br><span class="line">  <span class="string">&quot;terminal.integrated.profiles.linux&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;bash&quot;</span>: &#123;</span><br><span class="line">      <span class="string">&quot;path&quot;</span>: <span class="string">&quot;/bin/bash&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;python.analysis.extraPaths&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;<span class="variable">$&#123;workspaceFolder&#125;</span>&quot;</span>,</span><br><span class="line">    <span class="string">&quot;<span class="variable">$&#123;workspaceFolder&#125;</span>/third_party/mmyolo&quot;</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">JSON</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>复制文件到WSL</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">创建文件夹</span><br><span class="line">mkdir -p pretrained_models</span><br><span class="line">---</span><br><span class="line">cp &quot;/mnt/d/小米互传/yolo_world_v2_xl_obj365v1_goldg_cc3mlite_pretrain-5daf1395.pth&quot; \</span><br><span class="line">   &quot;pretrained_models/&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="在文件资源管理器中打开"><a class="header-anchor" href="#在文件资源管理器中打开"></a>在文件资源管理器中打开</h2>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explorer.exe <span class="string">&quot;<span class="subst">$(wslpath -w <span class="string">&quot;<span class="variable">$PWD</span>&quot;</span>)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+<h1 id="WSL配置claude-code"><a class="header-anchor" href="#WSL配置claude-code"></a>WSL配置claude code</h1>
+<p>修改配置文件</p>
+<ul>
+<li>打开</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">code ~/.claude/settings.json</span><br></pre></td></tr></table></figure>
+<h1 id="导出与AI的聊天记录"><a class="header-anchor" href="#导出与AI的聊天记录"></a>导出与AI的聊天记录</h1>
+<h2 id="claude"><a class="header-anchor" href="#claude"></a>claude</h2>
+<p>这是一份基于 <code>claude-conversation-extractor</code> 工具源码和文档整理的完整使用指南。该工具专门用于导出 <strong>Claude Code</strong>（Anthropic 的命令行工具）生成的对话记录。</p>
+<hr>
+<h3 id="Claude-Conversation-Extractor-使用指南"><a class="header-anchor" href="#Claude-Conversation-Extractor-使用指南"></a>Claude Conversation Extractor 使用指南</h3>
+<p>这是一个专门用于导出、备份和搜索 <strong>Claude Code</strong>（CLI 版本）对话历史的工具。由于 Claude Code 将对话以无文档说明的 JSONL 格式存储在本地 (<code>~/.claude/projects/</code>) 且没有自带导出按钮，该工具解决了这一问题。</p>
+<h4 id="1-安装方法"><a class="header-anchor" href="#1-安装方法"></a>1. 安装方法</h4>
+<p>使用该工具前，请确保已安装 Python 3.8 或更高版本。</p>
+<p>推荐安装方式 (使用 pipx)</p>
+<p><code>pipx</code> 可以避免 Python 环境冲突，是官方推荐的安装方式。</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># macOS / Linux / Windows</span><br><span class="line">pipx install claude-conversation-extractor</span><br></pre></td></tr></table></figure>
+<p>替代安装方式 (使用 pip)</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install claude-conversation-extractor</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="2-核心功能与使用模式"><a class="header-anchor" href="#2-核心功能与使用模式"></a>2. 核心功能与使用模式</h4>
+<p>该工具提供两种主要的使用模式：<strong>交互式界面</strong>和<strong>命令行接口</strong>。</p>
+<p><strong>模式一：交互式界面 (推荐)</strong></p>
+<p>适合直观地浏览和操作。</p>
+<ol>
+<li>
+<p>在终端输入命令：</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude-start</span><br></pre></td></tr></table></figure>
+<p>(或者运行 <code>claude-extract</code> 也会进入菜单)</p>
+</li>
+<li>
+<p><strong>功能菜单</strong>：</p>
+<p>启动后你会看到一个图形化菜单，支持：</p>
+<ul>
+<li><strong>导出所有对话 (A)</strong>：一键备份所有历史记录。</li>
+<li><strong>导出最近对话 (R)</strong>：快速导出最近的 5 个会话。</li>
+<li><strong>选择特定对话 (S)</strong>：输入序号导出特定会话。</li>
+<li><strong>实时搜索 (F)</strong>：输入关键词搜索历史记录。</li>
+</ul>
+</li>
+</ol>
+<p><strong>模式二：命令行接口 (CLI)</strong></p>
+<p>适合脚本自动化或快速操作。</p>
+<p>基础导出命令</p>
+<ul>
+<li>
+<p><strong>列出所有会话</strong>：</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude-extract --list</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>导出最近的 N 个会话</strong>：</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude-extract --recent 5</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>导出指定序号的会话</strong>（序号来自 <code>--list</code> 的结果）：</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude-extract --extract 1,3,5</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>导出所有会话</strong>：</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude-extract --all</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>指定导出目录</strong>：</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude-extract --output ~/Documents/MyClaudeLogs</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h4 id="3-高级功能：搜索与格式转换"><a class="header-anchor" href="#3-高级功能：搜索与格式转换"></a>3. 高级功能：搜索与格式转换</h4>
+<p>搜索历史对话</p>
+<p>你可以搜索所有历史对话中的内容，支持模糊匹配和正则。</p>
+<ul>
+<li>
+<p><strong>交互式搜索</strong>（推荐）：</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude-search</span><br></pre></td></tr></table></figure>
+<p>输入后按提示输入关键词，可实时查看结果预览。</p>
+</li>
+<li>
+<p><strong>命令行直接搜索</strong>：</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude-search &quot;API key&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>高级搜索选项</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用正则表达式搜索</span></span><br><span class="line">claude-extract --search-regex <span class="string">&quot;Error code: \d+&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 按日期范围搜索</span></span><br><span class="line">claude-extract --search-date-from 2024-01-01</span><br><span class="line"></span><br><span class="line"><span class="comment"># 区分大小写</span></span><br><span class="line">claude-extract --search <span class="string">&quot;Python&quot;</span> --case-sensitive</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>多种导出格式</strong></p>
+<p>默认导出为 Markdown，但也支持其他格式：</p>
+<ol>
+<li>
+<p><strong>Markdown (默认)</strong>：清晰易读的文本格式。</p>
+</li>
+<li>
+<p><strong>HTML</strong>：带有语法高亮和美观样式的网页格式。</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude-extract --format html --recent 1</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>JSON</strong>：包含完整元数据的结构化数据，适合程序处理。</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude-extract --format json --all</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>详细模式 (Detailed Mode)</p>
+<p>如果你需要完整的调试信息，可以使用 <code>--detailed</code> 参数。</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude-extract --detailed --extract 1</span><br></pre></td></tr></table></figure>
+<p><strong>详细模式包含：</strong></p>
+<ul>
+<li>工具使用调用 (Tool use invocations) 和参数。</li>
+<li>MCP 服务器响应。</li>
+<li>系统消息和错误信息。</li>
+<li>终端命令输出。</li>
+</ul>
+<hr>
+<h4 id="4-常见问题-FAQ"><a class="header-anchor" href="#4-常见问题-FAQ"></a>4. 常见问题 (FAQ)</h4>
+<ul>
+<li>
+<p><strong>文件保存在哪里？</strong></p>
+<p>如果不指定目录，工具会自动尝试保存到桌面 (<code>~/Desktop/Claude logs</code>) 或当前目录下的 <code>claude-logs</code> 文件夹中。</p>
+</li>
+<li>
+<p><strong>找不到会话 (&quot;No Claude sessions found&quot;)？</strong></p>
+<ul>
+<li>确保你已经安装并运行过 <strong>Claude Code</strong> (命令行工具)。</li>
+<li>该工具不支持导出 <a target="_blank" rel="noopener" href="http://Claude.ai">Claude.ai</a> (网页版) 的对话。</li>
+<li>检查 <code>~/.claude/projects/</code> 目录是否存在且有权限访问。</li>
+</ul>
+</li>
+<li>
+<p><strong>支持哪些操作系统？</strong></p>
+<p>支持 Windows, macOS, 和 Linux。</p>
+</li>
+<li>
+<p><strong>如何查看帮助？</strong></p>
+<p>运行 <code>claude-extract --help</code> 查看所有可用参数。</p>
+</li>
+</ul>
+<h1 id="Ubuntu系统指令"><a class="header-anchor" href="#Ubuntu系统指令"></a>Ubuntu系统指令</h1>
+<h2 id="切换到目标文件夹"><a class="header-anchor" href="#切换到目标文件夹"></a>切换到目标文件夹</h2>
+<p>在 Ubuntu（以及所有 Linux 环境）中，切换文件夹的核心指令是 <strong><code>cd</code></strong>（Change Directory 的缩写）。</p>
+<h3 id="1-基础切换指令（你刚才用到的方式）"><a class="header-anchor" href="#1-基础切换指令（你刚才用到的方式）"></a>1. 基础切换指令（你刚才用到的方式）</h3>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ~/projects/YOLO-UniOW-backup-2026-02-07</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>~</code> (波浪号)：</strong> 代表当前用户的<strong>主目录</strong>。在你的 WSL 环境中，它等同于绝对路径 <code>/home/lian/</code>。所以这条指令的意思是：无论你当前身在何处，直接跳转到主目录下的 <code>projects/YOLO-UniOW-backup-2026-02-07</code> 文件夹。</li>
+</ul>
+<h3 id="2-相对路径与绝对路径"><a class="header-anchor" href="#2-相对路径与绝对路径"></a>2. 相对路径与绝对路径</h3>
+<ul>
+<li>
+<p><strong>进入当前目录下的子文件夹（相对路径）：</strong> 如果你已经处在 <code>~/projects</code> 目录下，不需要再打波浪号或全路径，直接输入文件夹名即可：</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd YOLO-UniOW-backup-2026-02-07</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>使用完整路径（绝对路径）：</strong> 从系统的最顶层根目录 <code>/</code> 开始写起：</p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /home/lian/projects/YOLO-UniOW-backup-2026-02-07</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="3-常用的高频切换技巧"><a class="header-anchor" href="#3-常用的高频切换技巧"></a>3. 常用的高频切换技巧</h3>
+<ul>
+<li>
+<p><strong>返回上一级目录：</strong></p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ..</span><br></pre></td></tr></table></figure>
+<p>(注意：<code>cd</code> 和 <code>..</code> 之间必须有一个空格。如果想连续返回上两级，可以输入 <code>cd ../..</code>)</p>
+</li>
+<li>
+<p><strong>一键回到主目录：</strong></p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd</span><br></pre></td></tr></table></figure>
+<p><em>(后面什么都不加，直接敲回车，就会瞬间回到你的 <code>~</code> 目录)</em></p>
+</li>
+<li>
+<p><strong>返回上一次所在的目录（来回横跳）：</strong></p>
+<p>Bash</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd -</span><br></pre></td></tr></table></figure>
+<p><em>(非常适合在两个路径很长的文件夹之间频繁切换)</em></p>
+</li>
+</ul>
+<hr>
+<h3 id="💡-终端防迷路必备搭档"><a class="header-anchor" href="#💡-终端防迷路必备搭档"></a>💡 终端防迷路必备搭档</h3>
+<p>在频繁使用 <code>cd</code> 切换文件夹时，通常会配合以下两个指令，让你时刻清楚自己的位置：</p>
+<ul>
+<li><strong><code>pwd</code></strong> (Print Working Directory)：当你不知道自己当前到底在哪一层目录时，输入这个指令，它会打印出你当前的完整绝对路径。</li>
+<li><strong><code>ls</code></strong> (List)：切换到一个新文件夹后，输入 <code>ls</code> 可以查看里面都有哪些文件和子文件夹（输入 <code>ls -l</code> 可以查看详细列表和权限）。</li>
+</ul>
+<p><strong>终极护肝技巧：</strong> 在终端里输入长长的文件夹名字时，<strong>千万不要一个字母一个字母地手打</strong>！输入前几个字母（比如输入 <code>cd YOL</code>），然后按下键盘上的 <strong><code>Tab</code> 键</strong>，系统会自动帮你把后面的名字补全。</p>
+<h2 id="解压"><a class="header-anchor" href="#解压"></a>解压</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">文件类型</th>
+<th style="text-align:left">解压命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>.zip</code></td>
+<td style="text-align:left"><code>unzip xxx.zip</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>.tar.gz</code></td>
+<td style="text-align:left"><code>tar -xzvf xxx.tar.gz</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>.tar</code></td>
+<td style="text-align:left"><code>tar -xvf xxx.tar</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>.gz</code></td>
+<td style="text-align:left"><code>gunzip xxx.gz</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="创建软链接"><a class="header-anchor" href="#创建软链接"></a>创建软链接</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 创建软链接：images/all → 图片目录</span><br><span class="line">#图片在all目录下</span><br><span class="line">ln -s /root/autodl-tmp/all /root/autodl-tmp/YOLO-UniOW-v2/data/aircraft_ow_v2/images/all</span><br></pre></td></tr></table></figure>
+<h2 id="查看目录结构"><a class="header-anchor" href="#查看目录结构"></a>查看目录结构</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lh aircraft_ow/</span><br></pre></td></tr></table></figure>
+<h2 id="查看文件夹大小的命令"><a class="header-anchor" href="#查看文件夹大小的命令"></a>查看文件夹大小的命令</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最简方式（只看文件夹总大小）</span></span><br><span class="line"><span class="built_in">du</span> -sh autodl-tmp/YOLO-UniOW-v2/work_dirs</span><br><span class="line"></span><br><span class="line"><span class="comment">#查看文件夹内各子项大小（定位大文件 / 文件夹)-----&gt;--max-depth=1：只显示一级子目录 / 文件的大小</span></span><br><span class="line"><span class="built_in">du</span> -h --max-depth=1 autodl-tmp/YOLO-UniOW-v2/work_dirs</span><br><span class="line"></span><br><span class="line"><span class="comment">#按大小排序（更直观）----&gt; -r：反向排序（从大到小）；-h：识别 KB/MB/GB 单位并正确排序</span></span><br><span class="line"><span class="built_in">du</span> -h --max-depth=1 autodl-tmp/YOLO-UniOW-v2/work_dirs | <span class="built_in">sort</span> -hr</span><br></pre></td></tr></table></figure>
+<h2 id="环境"><a class="header-anchor" href="#环境"></a>环境</h2>
+<p>YOLO-uniow的环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> /root/conda_envs/yolouniow-cu128/bin/activate</span><br><span class="line">python -c <span class="string">&quot;import torch; print(&#x27;torch&#x27;, torch.__version__, &#x27;cuda&#x27;, torch.cuda.is_available(), &#x27;torch_cuda&#x27;, torch.version.cuda)&quot;</span></span><br><span class="line">python -c <span class="string">&quot;import mmcv; from mmcv.ops import nms; print(&#x27;mmcv&#x27;, mmcv.__version__, &#x27;ops_ok&#x27;)&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="设置离线模式"><a class="header-anchor" href="#设置离线模式"></a>设置离线模式</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置离线模式</span></span><br><span class="line"><span class="built_in">export</span> HF_HUB_OFFLINE=1</span><br><span class="line"><span class="built_in">export</span> TRANSFORMERS_OFFLINE=1</span><br></pre></td></tr></table></figure>
+<p>tar -xzvf /mnt/e/autodl文件下载/h_oe_results.tar.gz --strip-components=3</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \</span><br><span class="line">torchrun --nproc_per_node=3 --master_port=29501 \</span><br><span class="line">    tools/train.py \</span><br><span class="line">    configs/aircraft_v2/yolo_uniow_s_aircraft_v2_dual_head.py \</span><br><span class="line">    --amp --launcher pytorch \</span><br><span class="line">    --work-dir work_dirs/aircraft_v2_dual_head \</span><br><span class="line">    --cfg-options train_dataloader.batch_size=80 train_dataloader.num_workers=12</span><br><span class="line"></span><br><span class="line">HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \</span><br><span class="line">torchrun --nproc_per_node=3 --master_port=29501 \</span><br><span class="line">    tools/train.py \</span><br><span class="line">    configs/aircraft_v2/yolo_uniow_s_aircraft_v2_dual_head.py \</span><br><span class="line">    --amp --launcher pytorch \</span><br><span class="line">    --work-dir work_dirs/aircraft_v2_dual_head \</span><br><span class="line">    --cfg-options train_dataloader.batch_size=64 train_dataloader.num_workers=12</span><br></pre></td></tr></table></figure>
+<h1 id="AI审稿"><a class="header-anchor" href="#AI审稿"></a>AI审稿</h1>
+<h2 id="指令"><a class="header-anchor" href="#指令"></a>指令</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">你现在是对应研究领域全球顶刊 / 顶会的首席严苛审稿人，以学术零容忍、挑错极致苛刻、提问直击致命缺陷闻名，业内公认 “拒稿杀手”。你的唯一核心目标：以远超常规审稿人的进攻性、严谨性和公正性，对我提供的论文内容进行全维度地狱级审核，找出所有会被审稿人质疑、甚至直接导致拒稿的问题 —— 大到核心创新与逻辑闭环，小到标点符号、引用格式与术语统一，无论是正文还是图表无一遗漏。最终帮我把内容打磨到能一次性通过审稿、顺利录用的水平。</span><br></pre></td></tr></table></figure>
+<h1 id="通过镜像站访问和下载-Hugging-Face-资源笔记"><a class="header-anchor" href="#通过镜像站访问和下载-Hugging-Face-资源笔记"></a>通过镜像站访问和下载 Hugging Face 资源笔记</h1>
+<p>在国内网络环境下，直接访问 <code>https://huggingface.co</code> 有时会出现无法打开、连接被重置或下载失败等问题。这个教程的解决思路很直接：<strong>只替换域名，不修改后面的资源路径</strong>，把 <code>huggingface.co</code> 替换成国内可访问的镜像域名 <code>hf-mirror.com</code> 即可。</p>
+<h2 id="核心规则"><a class="header-anchor" href="#核心规则"></a>核心规则</h2>
+<p>原始链接格式：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://huggingface.co/仓库路径/文件路径</span><br></pre></td></tr></table></figure>
+<p>替换后格式：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://hf-mirror.com/仓库路径/文件路径</span><br></pre></td></tr></table></figure>
+<p>也就是说：</p>
+<ul>
+<li>只改域名：<code>huggingface.co</code> → <code>hf-mirror.com</code></li>
+<li>路径部分保持完全不变</li>
+<li>适用于模型页、数据集页、文件下载直链等场景</li>
+</ul>
+<hr>
+<h2 id="示例说明"><a class="header-anchor" href="#示例说明"></a>示例说明</h2>
+<p>以这个原始文件链接为例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://huggingface.co/leonnil/yolo-uniow/resolve/main/yolo_uniow_l_lora_bn_5e-4_100e_8gpus_obj365v1_goldg_train_lvis_minival.pth</span><br></pre></td></tr></table></figure>
+<p>按照教程的方法，把域名替换为镜像站后，得到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://hf-mirror.com/leonnil/yolo-uniow/resolve/main/yolo_uniow_l_lora_bn_5e-4_100e_8gpus_obj365v1_goldg_train_lvis_minival.pth</span><br></pre></td></tr></table></figure>
+<p>这就是可用于国内访问或下载的镜像链接。</p>
+<hr>
+<h2 id="命令行下载示例"><a class="header-anchor" href="#命令行下载示例"></a>命令行下载示例</h2>
+<h3 id="使用-wget"><a class="header-anchor" href="#使用-wget"></a>使用 <code>wget</code></h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://hf-mirror.com/leonnil/yolo-uniow/resolve/main/yolo_uniow_l_lora_bn_5e-4_100e_8gpus_obj365v1_goldg_train_lvis_minival.pth</span><br></pre></td></tr></table></figure>
+<h3 id="使用-curl"><a class="header-anchor" href="#使用-curl"></a>使用 <code>curl</code></h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -LO https://hf-mirror.com/leonnil/yolo-uniow/resolve/main/yolo_uniow_l_lora_bn_5e-4_100e_8gpus_obj365v1_goldg_train_lvis_minival.pth</span><br></pre></td></tr></table></figure>
+<h3 id="使用-aria2c"><a class="header-anchor" href="#使用-aria2c"></a>使用 <code>aria2c</code></h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aria2c <span class="string">&quot;https://hf-mirror.com/leonnil/yolo-uniow/resolve/main/yolo_uniow_l_lora_bn_5e-4_100e_8gpus_obj365v1_goldg_train_lvis_minival.pth&quot;</span></span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://qieliqiean.github.io/blog">lian</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://qieliqiean.github.io/blog/2024/10/24/%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%A4%A7%E5%85%A8/">https://qieliqiean.github.io/blog/2024/10/24/%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%A4%A7%E5%85%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://qieliqiean.github.io/blog" target="_blank">且离且安的碎碎念</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/%E6%8F%90%E7%A4%BA%E8%AF%8D/">提示词</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/blog/2025/01/27/markdown/%E8%AF%AD%E6%B3%95%E5%86%99%E4%BD%9C%E7%AC%94%E8%AE%B0/" title="markdown和latex语法写作笔记"><img class="cover" src="/blog/image/1686e9cab38e46abb370f15a7baacd10.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">markdown和latex语法写作笔记</div></div><div class="info-2"><div class="info-item-1">引用块 引用块用&gt; 中间有个空格，引用块里可以接二级引用块 示例  一级引用块  二级引用块  三级引用块    代码段 记住符号是键盘数字1左边的那个，不是enter左边的那个 1`中间的就是代码段` 中间的就是代码段 hello world hello...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">读研，尝试新技术与记录生活。</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/qieliqiean"><i class="fab fa-github"></i><span>访问 GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/qieliqiean" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎交流：2895014608@qq.com</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%86%E8%A7%A3%E6%96%B9%E5%90%91%E7%B1%BB%E6%8C%87%E4%BB%A4"><span class="toc-text">了解方向类指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B"><span class="toc-text">开放词汇检测</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E6%96%87%E7%AB%A0%E6%8C%87%E4%BB%A4"><span class="toc-text">阅读文章指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E8%AE%BA%E6%96%87"><span class="toc-text">读论文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93%EF%BC%9A%E5%85%88%E7%94%BB%E5%9C%B0%E5%9B%BE%EF%BC%8C%E5%86%8D%E5%AE%9A%E4%BD%8D%E6%94%B9%E5%93%AA%E9%87%8C"><span class="toc-text">读代码仓库：先画地图，再定位改哪里</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0%E4%BC%98%E5%85%88%EF%BC%9A%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E8%B7%91%E9%80%9A"><span class="toc-text">复现优先：最短路径跑通</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E7%82%B9%E6%94%BB%E5%85%8B%EF%BC%9A%E5%8F%AA%E5%AD%A6-%E5%8F%AA%E6%94%B9%E6%9F%90%E4%B8%AA%E6%A8%A1%E5%9D%97%EF%BC%88%E4%BE%8B%EF%BC%9ARepRTA%EF%BC%89"><span class="toc-text">定点攻克：只学&#x2F;只改某个模块（例：RepRTA）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%A0%E8%B7%91%E5%87%BA%E6%8A%A5%E9%94%99-%E6%97%A5%E5%BF%97%E5%90%8E%E8%BF%99%E6%A0%B7%E9%97%AE%EF%BC%8C%E6%95%88%E7%8E%87%E6%9C%80%E9%AB%98"><span class="toc-text">你跑出报错&#x2F;日志后这样问，效率最高</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%BE%88%E5%AE%9E%E7%94%A8%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7%EF%BC%9A%E5%9C%A8-Project-%E9%87%8C%E6%94%BE%E2%80%9C%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4%E2%80%9D"><span class="toc-text">一个很实用的小技巧：在 Project 里放“自定义指令”</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE"><span class="toc-text">思维导图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%80%E9%A2%98%E6%8A%A5%E5%91%8A"><span class="toc-text">开题报告</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E5%A4%9A%E6%A8%A1%E6%80%81%E8%9E%8D%E5%90%88%E7%9A%84%E7%A0%94%E7%A9%B6"><span class="toc-text">对多模态融合的研究</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E5%B9%BF%E4%B9%89%E9%9B%B6%E6%A0%B7%E6%9C%AC%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%A0%94%E7%A9%B6"><span class="toc-text">对广义零样本学习的研究</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E6%B6%A6%E8%89%B2%E4%BF%AE%E6%94%B9"><span class="toc-text">文章润色修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B-2"><span class="toc-text">开放词汇检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%B6%E4%BD%9CPPT"><span class="toc-text">制作PPT</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%9B%BE%E7%89%87"><span class="toc-text">生成图片</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#latex"><span class="toc-text">latex</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#hexo"><span class="toc-text">hexo</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%85%A5PDF"><span class="toc-text">博客插入PDF</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%97%E4%BD%93%E9%A2%9C%E8%89%B2"><span class="toc-text">字体颜色</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#typora%E6%9F%A5%E6%89%BE%E6%9B%BF%E6%8D%A2"><span class="toc-text">typora查找替换</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#GPT%E5%85%AC%E5%BC%8F%E5%A4%8D%E5%88%B6%E9%97%AE%E9%A2%98"><span class="toc-text">GPT公式复制问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%B5%E8%90%BD%E5%85%AC%E5%BC%8F"><span class="toc-text">段落公式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%AE%E7%AD%94%E7%BB%93%E6%9D%9F%E6%95%B4%E7%90%86%E7%AC%94%E8%AE%B0"><span class="toc-text">问答结束整理笔记</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%86%E5%88%AB%E5%9B%BE%E7%89%87"><span class="toc-text">识别图片</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pycharm%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="toc-text">pycharm小技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2"><span class="toc-text">搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E2%80%9C%E4%B8%8A%E5%B8%9D%E8%A7%86%E8%A7%92%E2%80%9D%EF%BC%9A%E4%B8%87%E8%83%BD%E6%90%9C%E7%B4%A2-Search-Everywhere"><span class="toc-text">1. “上帝视角”：万能搜索 (Search Everywhere)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%96%87%E6%9C%AC%E5%86%85%E5%AE%B9%E6%90%9C%E7%B4%A2-Text-Search"><span class="toc-text">2. 文本内容搜索 (Text Search)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BB%93%E6%9E%84%E5%AF%BC%E8%88%AA%E6%90%9C%E7%B4%A2-Navigation-Search"><span class="toc-text">3. 结构导航搜索 (Navigation Search)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%80%BB%E8%BE%91%E5%85%B3%E7%B3%BB%E6%90%9C%E7%B4%A2-Usage-Search"><span class="toc-text">4. 逻辑关系搜索 (Usage Search)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%95%91%E5%91%BD%E7%A8%BB%E8%8D%89%EF%BC%9A%E6%9F%A5%E6%89%BE%E5%8A%A8%E4%BD%9C-Find-Action"><span class="toc-text">5. 救命稻草：查找动作 (Find Action)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E5%BB%BA%E8%AE%AE"><span class="toc-text">总结建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#debug"><span class="toc-text">debug</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%B8%85%E5%8D%95"><span class="toc-text">快捷键清单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A5%E6%95%B0%E7%BB%84%E5%BD%A2%E5%BC%8F%E6%9F%A5%E7%9C%8B"><span class="toc-text">以数组形式查看</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC"><span class="toc-text">对表达式求值</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95%E5%90%84%E9%80%89%E9%A1%B9%E7%9A%84%E8%AF%A6%E7%BB%86%E7%94%A8%E9%80%94"><span class="toc-text">一、右键菜单各选项的详细用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%AF%A6%E7%BB%86%E6%9F%A5%E7%9C%8B%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC%E7%BB%93%E6%9E%9C%E7%9A%84%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95%EF%BC%88%E9%92%88%E5%AF%B9%E5%BC%A0%E9%87%8F-%E5%A4%8D%E6%9D%82%E6%95%B0%E6%8D%AE%EF%BC%89"><span class="toc-text">二、详细查看表达式求值结果的操作方法（针对张量&#x2F;复杂数据）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%B9%E6%B3%951%EF%BC%9A%E7%94%A8%E2%80%9C%E6%A3%80%E6%9F%A5-%E2%80%9D%E5%8A%9F%E8%83%BD%EF%BC%88%E6%9C%80%E6%8E%A8%E8%8D%90%EF%BC%8C%E4%BF%A1%E6%81%AF%E6%9C%80%E5%85%A8%EF%BC%89"><span class="toc-text">方法1：用“检查...”功能（最推荐，信息最全）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%B9%E6%B3%952%EF%BC%9A%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E8%A7%86%E5%9B%BE%EF%BC%88%E8%A7%A3%E5%86%B3%E2%80%9C-%E7%9C%81%E7%95%A5%E5%80%BC%E2%80%9D%E9%97%AE%E9%A2%98%EF%BC%89"><span class="toc-text">方法2：自定义数据视图（解决“...省略值”问题）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%B9%E6%B3%953%EF%BC%9A%E7%9B%B4%E6%8E%A5%E4%BF%AE%E6%94%B9%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%88%E5%BF%AB%E9%80%9F%E8%BD%ACnumpy%E6%9F%A5%E7%9C%8B%EF%BC%89"><span class="toc-text">方法3：直接修改表达式（快速转numpy查看）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%B9%E6%B3%954%EF%BC%9A%E5%85%A8%E5%B1%80%E8%B0%83%E6%95%B4PyCharm%E6%98%BE%E7%A4%BA%E8%AE%BE%E7%BD%AE%EF%BC%88%E4%B8%80%E5%8A%B3%E6%B0%B8%E9%80%B8%EF%BC%89"><span class="toc-text">方法4：全局调整PyCharm显示设置（一劳永逸）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#VS-code%E6%8A%80%E5%B7%A7"><span class="toc-text">VS code技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%B3%E9%94%AE%E5%A4%9A%E5%8A%9F%E8%83%BD%E8%8F%9C%E5%8D%95"><span class="toc-text">右键多功能菜单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%BF%AB%E9%80%9F%E8%AE%BE%E7%BD%AE%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%8C%E5%8F%AF%E8%A7%86%E5%8C%96%E7%95%8C%E9%9D%A2%EF%BC%89"><span class="toc-text">一、快速设置（推荐，可视化界面）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%9B%B4%E6%8E%A5%E6%94%B9-settings-json%EF%BC%88%E7%B2%BE%E5%87%86%E9%85%8D%E7%BD%AE%EF%BC%89"><span class="toc-text">二、直接改 settings.json（精准配置）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pytorch%E7%89%88%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="toc-text">pytorch版本问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#anaconda%E6%8C%87%E4%BB%A4"><span class="toc-text">anaconda指令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-text">环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#yolov8"><span class="toc-text">yolov8</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#yolov8%E6%A8%A1%E5%9E%8B%E6%8C%87%E4%BB%A4"><span class="toc-text">yolov8模型指令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="toc-text">模型训练</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E9%AA%8C%E8%AF%81"><span class="toc-text">模型验证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E9%A2%84%E6%B5%8B"><span class="toc-text">模型预测</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#yolov4"><span class="toc-text">yolov4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#yolo-world%E9%A1%B9%E7%9B%AE%E9%97%AE%E9%A2%98"><span class="toc-text">yolo-world项目问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WSL%E4%B8%8B%E9%85%8D%E7%BD%AE%E8%AE%B0%E5%BD%95"><span class="toc-text">WSL下配置记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ultralytics%E5%92%8Cyolo-world-master%E9%A1%B9%E7%9B%AE%E5%93%AA%E4%B8%AA%E6%9B%B4%E5%A5%BD"><span class="toc-text">ultralytics和yolo-world-master项目哪个更好</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB%E9%97%AE%E9%A2%98"><span class="toc-text">代码解读问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8Eyolo-world%E6%94%B9%E8%BF%9B%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="toc-text">基于yolo-world改进提示词</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AI%E6%8E%A5%E5%8A%9B%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="toc-text">AI接力提示词</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AF%87%E8%AE%BA%E6%96%87"><span class="toc-text">第一篇论文</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%81%97%E5%BF%98%E7%AD%96%E7%95%A5"><span class="toc-text">遗忘策略</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#typora%E8%B6%85%E9%93%BE%E6%8E%A5%E8%B7%B3%E8%BD%AC"><span class="toc-text">typora超链接跳转</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%86%85%E8%B7%B3%E8%BD%AC"><span class="toc-text">文件内跳转</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E8%B7%B3%E8%BD%AC%E5%88%B0%E6%A0%87%E9%A2%98%EF%BC%88%E6%9C%80%E5%B8%B8%E7%94%A8%EF%BC%89"><span class="toc-text">方法一：跳转到标题（最常用）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E8%B7%B3%E8%BD%AC%E5%88%B0%E4%BB%BB%E6%84%8F%E4%BD%8D%E7%BD%AE%EF%BC%88%E4%BD%BF%E7%94%A8-HTML-%E9%94%9A%E7%82%B9%EF%BC%89"><span class="toc-text">方法二：跳转到任意位置（使用 HTML 锚点）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%89%EF%BC%9A%E4%BD%BF%E7%94%A8-HTML-%E9%93%BE%E6%8E%A5%E8%AF%AD%E6%B3%95"><span class="toc-text">方法三：使用 HTML 链接语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%A1-%E8%BF%9B%E9%98%B6%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">💡 进阶技巧与注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%A8%E6%96%87%E4%BB%B6%E8%B7%B3%E8%BD%AC"><span class="toc-text">跨文件跳转</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%A0%B8%E5%BF%83%E8%AF%AD%E6%B3%95"><span class="toc-text">1. 核心语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%85%B7%E4%BD%93%E6%93%8D%E4%BD%9C%E5%AE%9E%E4%BE%8B"><span class="toc-text">2. 具体操作实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%E4%B8%8E%E6%8A%80%E5%B7%A7"><span class="toc-text">3. 注意事项与技巧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%EF%BC%9A%E7%82%B9%E5%87%BB%E6%B2%A1%E5%8F%8D%E5%BA%94%EF%BC%9F"><span class="toc-text">4. 常见问题：点击没反应？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E9%93%BE%E6%8E%A5%E8%B7%B3%E8%BD%AC"><span class="toc-text">外部链接跳转</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%951"><span class="toc-text">方法1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%952"><span class="toc-text">方法2</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Windows-PowerShell-%E7%8E%AF%E5%A2%83"><span class="toc-text">Windows PowerShell 环境</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A7%E8%A1%8Cpython%E8%84%9A%E6%9C%AC"><span class="toc-text">执行python脚本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-1%EF%BC%9A%E5%88%9B%E5%BB%BA-Python-%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6"><span class="toc-text">步骤 1：创建 Python 脚本文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-2%EF%BC%9A%E7%B2%98%E8%B4%B4%E4%BB%A3%E7%A0%81%E5%88%B0%E8%AE%B0%E4%BA%8B%E6%9C%AC"><span class="toc-text">步骤 2：粘贴代码到记事本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-3%EF%BC%9A%E4%BF%9D%E5%AD%98%E5%B9%B6%E8%BF%90%E8%A1%8C%E8%84%9A%E6%9C%AC"><span class="toc-text">步骤 3：保存并运行脚本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%85%E5%B1%8F"><span class="toc-text">清屏</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#opencode-cc%E5%9C%A8wsl%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">opencode cc在wsl系统中的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8"><span class="toc-text">启动</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BE%AE%E8%B0%83%E8%AF%9D%E6%9C%AF"><span class="toc-text">微调话术</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9E%8B%E5%8F%B7%E7%BA%A7%E8%AF%86%E5%88%AB%E5%AE%9E%E6%88%98"><span class="toc-text">型号级识别实战</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E6%A3%80%E7%B4%A2"><span class="toc-text">数据集检索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AE%E8%B0%83%E8%AF%84%E4%BC%B0"><span class="toc-text">微调评估</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8B%E8%BD%BD%E6%95%B4%E7%90%86"><span class="toc-text">数据集下载整理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#40epoch%E6%97%A5%E5%BF%97%E8%A7%A3%E8%AF%BB"><span class="toc-text">40epoch日志解读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E8%AF%A2%E9%97%AE"><span class="toc-text">进程询问</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9E%8B%E5%8F%B7%E7%BA%A7%E8%AF%86%E5%88%AB%E5%AE%9E%E6%88%98%EF%BC%88yolo-uniow%EF%BC%89"><span class="toc-text">型号级识别实战（yolo-uniow）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E5%A4%84%E7%90%86%E5%AE%8C%E6%88%90%E4%B9%8B%E5%90%8E%E7%9A%84%E8%BF%9B%E5%B1%95"><span class="toc-text">数据集处理完成之后的进展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8Eclaude%E8%B5%B7%E6%89%8B"><span class="toc-text">与claude起手</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B%E4%B8%AD%E6%9F%A5%E7%9C%8B%E6%97%A5%E5%BF%97"><span class="toc-text">训练过程中查看日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E6%96%AD%E5%90%8E%E7%BB%A7%E7%BB%AD%E8%AE%AD%E7%BB%83"><span class="toc-text">中断后继续训练</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8D%A2%E6%95%B0%E6%8D%AE%E9%9B%86%E7%BB%A7%E7%BB%AD%E8%AE%AD%E7%BB%83"><span class="toc-text">换数据集继续训练</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%8C%87%E6%A0%87"><span class="toc-text">核心指标</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#agent-skills"><span class="toc-text">agent skills</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#WSL%E7%B3%BB%E7%BB%9F"><span class="toc-text">WSL系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%92%8C%E9%A1%B9%E7%9B%AE"><span class="toc-text">配置环境和项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E6%96%87%E4%BB%B6%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8%E4%B8%AD%E6%89%93%E5%BC%80"><span class="toc-text">在文件资源管理器中打开</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#WSL%E9%85%8D%E7%BD%AEclaude-code"><span class="toc-text">WSL配置claude code</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%BC%E5%87%BA%E4%B8%8EAI%E7%9A%84%E8%81%8A%E5%A4%A9%E8%AE%B0%E5%BD%95"><span class="toc-text">导出与AI的聊天记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#claude"><span class="toc-text">claude</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Claude-Conversation-Extractor-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97"><span class="toc-text">Claude Conversation Extractor 使用指南</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95"><span class="toc-text">1. 安装方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%E4%B8%8E%E4%BD%BF%E7%94%A8%E6%A8%A1%E5%BC%8F"><span class="toc-text">2. 核心功能与使用模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E9%AB%98%E7%BA%A7%E5%8A%9F%E8%83%BD%EF%BC%9A%E6%90%9C%E7%B4%A2%E4%B8%8E%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2"><span class="toc-text">3. 高级功能：搜索与格式转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98-FAQ"><span class="toc-text">4. 常见问题 (FAQ)</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Ubuntu%E7%B3%BB%E7%BB%9F%E6%8C%87%E4%BB%A4"><span class="toc-text">Ubuntu系统指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%87%E6%8D%A2%E5%88%B0%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-text">切换到目标文件夹</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%9F%BA%E7%A1%80%E5%88%87%E6%8D%A2%E6%8C%87%E4%BB%A4%EF%BC%88%E4%BD%A0%E5%88%9A%E6%89%8D%E7%94%A8%E5%88%B0%E7%9A%84%E6%96%B9%E5%BC%8F%EF%BC%89"><span class="toc-text">1. 基础切换指令（你刚才用到的方式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%E4%B8%8E%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="toc-text">2. 相对路径与绝对路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B8%B8%E7%94%A8%E7%9A%84%E9%AB%98%E9%A2%91%E5%88%87%E6%8D%A2%E6%8A%80%E5%B7%A7"><span class="toc-text">3. 常用的高频切换技巧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%A1-%E7%BB%88%E7%AB%AF%E9%98%B2%E8%BF%B7%E8%B7%AF%E5%BF%85%E5%A4%87%E6%90%AD%E6%A1%A3"><span class="toc-text">💡 终端防迷路必备搭档</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%8E%8B"><span class="toc-text">解压</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%BD%AF%E9%93%BE%E6%8E%A5"><span class="toc-text">创建软链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">查看目录结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%A4%B9%E5%A4%A7%E5%B0%8F%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="toc-text">查看文件夹大小的命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83"><span class="toc-text">环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E7%A6%BB%E7%BA%BF%E6%A8%A1%E5%BC%8F"><span class="toc-text">设置离线模式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AI%E5%AE%A1%E7%A8%BF"><span class="toc-text">AI审稿</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4"><span class="toc-text">指令</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E9%95%9C%E5%83%8F%E7%AB%99%E8%AE%BF%E9%97%AE%E5%92%8C%E4%B8%8B%E8%BD%BD-Hugging-Face-%E8%B5%84%E6%BA%90%E7%AC%94%E8%AE%B0"><span class="toc-text">通过镜像站访问和下载 Hugging Face 资源笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E8%A7%84%E5%88%99"><span class="toc-text">核心规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E8%AF%B4%E6%98%8E"><span class="toc-text">示例说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%8B%E8%BD%BD%E7%A4%BA%E4%BE%8B"><span class="toc-text">命令行下载示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-wget"><span class="toc-text">使用 wget</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-curl"><span class="toc-text">使用 curl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-aria2c"><span class="toc-text">使用 aria2c</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-post-series"><div class="item-headline"><i class="fa-solid fa-layer-group"></i><span>系列文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2024/10/24/%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%A4%A7%E5%85%A8/" title="提示词大全"><img src="/blog/image/cover/20.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="提示词大全"></a><div class="content"><a class="title" href="/blog/2024/10/24/%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%A4%A7%E5%85%A8/" title="提示词大全">提示词大全</a><time datetime="2024-10-24T07:19:06.000Z" title="发表于 2024-10-24 15:19:06">2024-10-24</time></div></div></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/easter-egg/" title="给对象的一点小要求"><img src="/blog/image/cover/21.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="给对象的一点小要求"/></a><div class="content"><a class="title" href="/blog/easter-egg/" title="给对象的一点小要求">给对象的一点小要求</a><time datetime="2026-03-22T11:50:03.000Z" title="发表于 2026-03-22 19:50:03">2026-03-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/02/27/%E6%9D%82%E8%AE%B0/Windows-%E7%9B%AE%E5%BD%95%E8%81%94%E6%8E%A5%EF%BC%88Junction%EF%BC%89%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="Windows 目录联接（Junction）使用手册"><img src="/blog/image/cover/17.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Windows 目录联接（Junction）使用手册"/></a><div class="content"><a class="title" href="/blog/2026/02/27/%E6%9D%82%E8%AE%B0/Windows-%E7%9B%AE%E5%BD%95%E8%81%94%E6%8E%A5%EF%BC%88Junction%EF%BC%89%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="Windows 目录联接（Junction）使用手册">Windows 目录联接（Junction）使用手册</a><time datetime="2026-02-27T06:09:50.000Z" title="发表于 2026-02-27 14:09:50">2026-02-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/easter-egg/" title="彩蛋"><img src="/blog/image/cover/22.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="彩蛋"/></a><div class="content"><a class="title" href="/blog/easter-egg/" title="彩蛋">彩蛋</a><time datetime="2026-02-18T05:09:03.000Z" title="发表于 2026-02-18 13:09:03">2026-02-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读"><img src="/blog/image/cover/9.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【WeDetect】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读">【WeDetect】论文阅读</a><time datetime="2026-01-21T01:41:58.000Z" title="发表于 2026-01-21 09:41:58">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/20/AI%E7%9B%B8%E5%85%B3/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册"><img src="/blog/image/cover/13.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="AI使用手册"/></a><div class="content"><a class="title" href="/blog/2026/01/20/AI%E7%9B%B8%E5%85%B3/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册">AI使用手册</a><time datetime="2026-01-20T01:21:48.000Z" title="发表于 2026-01-20 09:21:48">2026-01-20</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><script src="/blog/true"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark_dimmed' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'qieliqiean/blog',
+      'data-repo-id': 'R_kgDONvpdYw',
+      'data-category-id': 'DIC_kwDONvpdY84C1DqB',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !true) {
+    if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><script defer src="/blog/js/site.js"></script><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><div class="aplayer" data-id="aplayer" data-fixed="true" data-autoplay="true" data-order="random"></div><script>var ap = new APlayer({container: document.querySelector(".aplayer"), fixed: true, autoplay: true, listFolded: true, audio: [{name: "知我", artist: "国风堂 / 哦漏", url: "/blog/music/zhiwo.mp3", cover: ""}, {name: "在你的身边", artist: "盛哲", url: "/blog/music/zainideshenbian.mp3", cover: ""}]});</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["link[rel=\"canonical\"]","meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      pjax.loadUrl('/blog/404.html')
+    }
+  })
+})()</script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
