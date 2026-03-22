@@ -1,0 +1,386 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Z to J | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#fdfcf8"><meta name="description" content="加密摘要（列表页显示）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Z to J">
+<meta property="og:url" content="https://qieliqiean.github.io/blog/easter-egg-ztoj/index.html">
+<meta property="og:site_name" content="且离且安的碎碎念">
+<meta property="og:description" content="加密摘要（列表页显示）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qieliqiean.github.io/blog/image/cover/21.jpg">
+<meta property="article:published_time" content="2026-03-22T11:50:03.000Z">
+<meta property="article:modified_time" content="2026-03-22T14:19:37.290Z">
+<meta property="article:author" content="lian">
+<meta property="article:tag" content="彩蛋">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qieliqiean.github.io/blog/image/cover/21.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Z to J",
+  "url": "https://qieliqiean.github.io/blog/easter-egg-ztoj/",
+  "image": "https://qieliqiean.github.io/blog/image/cover/21.jpg",
+  "datePublished": "2026-03-22T11:50:03.000Z",
+  "dateModified": "2026-03-22T14:19:37.290Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "lian",
+      "url": "https://qieliqiean.github.io/blog/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/easter-egg-ztoj/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fdfcf8')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6b5d1303d19816191830cd73eccfdb1e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: {"path":"/blog/search.xml","preload":false,"top_n_per_article":3,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Z to J',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=LXGW+WenKai:wght@400;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/blog/css/custom.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (true) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/blog/easter-egg/"><i class="fa-fw fas fa-egg"></i><span> 彩蛋</span></a></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/image/cover/21.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">Z to J</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/blog/easter-egg/"><i class="fa-fw fas fa-egg"></i><span> 彩蛋</span></a></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Z to J</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-03-22T11:50:03.000Z" title="发表于 2026-03-22 19:50:03">2026-03-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-22T14:19:37.290Z" title="更新于 2026-03-22 22:19:37">2026-03-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E6%83%B3%E6%B3%95/">想法</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">9</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="密码错误，请重试" data-whm="Decryption check failed, but you can still view the content.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="7d4d7a4a454e653fe81c9d77f91bce10d294df93be10d310c4c2560657f2d415">3695f48431ad4ae6c01b80165966c916ed8f0bb92ffdd5445b3fea8164419a3b4599081c62638fe81a211a4a52fbf4e88751548dd49c32e265928690f421d4d720fa298f84e61b5cbc22e408ed4f9e434a460f08e6c2b56316f6f3fc114e5b43182d56206912c208cf31bf289919db48ef3e1b47cd9b4923526b00e58d24f5ce8eaf3f438ddab4b893a5869db74a2ff96190dc69e8a34628ba9882defb5d21ca75ae7b40fa7365c2d999fa321264c521205255164b7b1af5341abb96b9f9b372757f14795d9e72934ff0868a653c043010494b3316e8801697f4b3205cb6b068d1403b97ad2563695c61807bf33a3830250bbced61e7329da3f48741db6346969b4b53f94de0335952cac6bcff5611aeef715f96cee4de99737490204d6b7801955a7d46c0c0348aa5d9f52ea8b1d80fa1ece1309f1ea3a5ca4ba12ffeb7bba19853ab62ed03080430de50d291b740f265d6bf96f4e3fd698ca7005e1772760447a06c98bd08ba6183fa9d1de630e3eee16f332da1d7e33d661a034bfb751798b893f1ce6bd0c2a7c9bdde4ceb9ca2d79161677d1c14d3d6628768a3300ebd46f552e5fb9fcf517ee4f5e7f578c3998d81e040233235695524febbeab570fd2ffe6e4e3cbd6f5730ce810668f7b1d2afe21e8a78e8b9788e525e4e929793f0cbfc1302de59ca224904a18e9dbb10d0cc613cdd982de88415abf119c84607a0f8b774345f2dd5249ea7e96cef8222f8182efc6743a7f298930f728b22cc5a74d1d941186f78f34cb61b1aebafb8abe8127c70cef81ee0cf84c541f93fcf6016e6d1dd9723dedb667babeec80d4cd317baef5fb77856dcf8d6c957d2c64fdaf1567c6dd91673af18332d94012af183b584bcc17a799d93cbb14771acdd481ecd25e142338a9af436ef8cfd36d48afb939e41756cd20b9b3bb13ed3d7006f75c20170ce80a99ceefbd5fcc02cd03474f04f91e0341a1a64a5ecd73bf025816749fff63ead90aa0b631d09f1b5244197734e2443065f1524b94591eb6dbda98040bbd3c2742588ad01dea35e69bfa3a151622e7191707d607def93f1c2883136afd992b81ac68f0c5bf58f80654cb463a4be56d972ee82a45e29806b72dd8137668ea2bb2ca47622b77c2ff887f61cb9bc66eddf63127db5141ff7caf974d4476321e5ad9f56b7fd13fdae8ec20806c373c439370d7dd9c62d96ef5c69b635511bb599f2c4b5c7d36f35b164509af9c2ae95b34f74d3fb295763db7dc5f187a027620660eb14e00a4f6a2a72a31981418ddf5d39f391dc3feee113921182e0a24afb410f994400d9b5732a701cb2756ab899a4b94d14db5911216b590e7f8f13f38610db670f6b2d068a31710cb1555bb69b99ee2827dedff797348ed1c6eb55cab8cba73321e7f8ad207c2318e74c7143ad2211caabf02928f7e82144b2bd5d039e1d7e921b2e1fd7ab04617f38bfdbe4896c2edcd254b49708e07179651472afbb355dffd9a7503aab19d8d694aa5d14afe0829e80164b5d4a8ff1f88acd759e6f32c0b163bb43f0e559b4aff9cbe9209e0845e15387e843745dfe99456ad6488290a5aaae1f4c3eebfdd9da370f3fafb787110087e410b3bfb00d3752bd5fff56829a0f1d35d7b906d45922ba9bb25ee24c7aae0ccf280596b21b088d753f53030eb25fe86c8f8b828ef0e3eec898d0fffc4daeb348787283c1abcf71feccfed7fcf85543b973e8e163a87a2e16f07d6d3e2cfe56696c698d97cfeeff4a2e6344578fca1aea43804187e0a52f5242feb6b99a925bae2201ffcc6bc05ada657f8a6e5a52f4bd0b4d116b48e22b6bac4a2645bc60eb45ac4696dbd271ba8742eb9c12ca3753d36cca4a2b32e3992a16e9e0a6f7a22767cc1cbc113743441131f4ad26c9e622bb7bfc1b2b68ab8cca0a4a5e501ab3a4edd9ca037060522e5e5c7562d692b375420e19b3b73d45fbaa8237a50d48050781601787952fabeafa492013458c4f96f95a0cdd1e216d60bf760b7e61437ad0ef2830fbb665d7ca8bb6e3f2dfd657fe8c9bcf473ca30085baf5beb09485df303366488cccb82a4602f1f7c027c8bee826b2362b4233566fce6803a6769883684bc9ff29eb2826b78cbb495f3498c63b7a87056db5cecfea81d22410c4afbba29a432d1b38ffa98d5673e96626ee9c2c0f21c1d2a07e3bccfcd40b359a2410f1bf24af1cb91e7c7e70fefd6ac27f931f49b31a131b1b719554b417341895d9eb0825979ff2cdd138a7caed90922dec3245f9467b722a832052cdbb9f6e6e63064f96e3ee272574d7111381d94c1c60f89e4dbe6ac2c8424baec8a2d7dc632a80aeea6eb8a2ca0594e28adc33c9f1fa4d22e232410d7e3f2f4c1b91321273db7dcd09a971a499d8dafcf83ac23939d70f941b44108a267d08b3a554ace3dd7e3a684149f7736831eac60c3a3ee1f616be8d9a440df1ec32839144fd7dfbfa7e7ddb350bda42325192ce34c5cb8ad49ccb071035955a008a06e0bb5eed018e93d44242c10428941651d45201d3ded83f696d57acc6c52e2e4fb837a33fd44d3ca014029b298ed2ea426cc0f9b44c0a6d3adbacabbfd5116267ea4e00084dedbc277366c5e3da38b5e56082284af81c7c06cd069001921d4696a7066fd1a3755a1ebd3e32be38245288b02feecae92753bc0afd47150a3103586941019ddf9ae4a3cee52c78975d3657aabe4ce88447fcfc83d485fd9d9233b007709fb92be35f8976c22fcaf00825424a38c8334004f492e13b90eae30a4ed6a7727231c7ba98205df2bf34dc212454eee2b6c5f8bdf8bfbc67999a350a4250315923fdc22184682ff5281823a052619edc286bb8110c99943f6759b00816ad92b16782063c139459a923a50306231a4d8db0b6fcec3a36ec711a604533082ea7e00aa306e5e884c5054cf0b1691db877323691c61131d1b700cfe4ac6b10bb67b58c660426120daf44d71ad3bfb6609da1fd3c5d89080430cb46595d471adb95d5d751da9f770721d4c490cee0a63743f4bdf65bb57cfda280c2599047be1498d014fe174779620d8dbc616053d506491c0f4ef506c7c0805ea2d5d9e3fa32cc788b521c853f386b74009798312c462047a0644b937a55c684c2a5d375c1ae6860f7b0690f27bfde1a5517db99b85f40f449db7d06075e6bc08b640ea8f72abd8cd5b6ae2b28ab69a13c6a33f76d32cdadb66f6631705e348e8ebb401d73ac89e75aeb70f8b6cb3704aad39c9dcc9e37f6f476631a7c7ee6978ff69d8b80f9a20f56d236ced9130d89f8b3c2f7bd58299aacba2c1a23850ab191340fe072c8a31def2a62fdfcec5d72b7058f03be2af65d949c86667e371db727bf57822031faafe244b543fa8fee61fc66210300170a6d270bcacadc4324169ff578768fdffeb3cfa2014495b0b106f8390762d458d1b0dc9cac1569ef4d39835f8ebd972eeb2f2433725ed6e11f02b880ef052947dd1a05e0c735bf9a5c401a53b21fd32f3963e458f8822e194a39e1f6a42cca5a512a282c9bd2eae7d752a6cf82805a138e70f05bc21716df8a914ea409517d6f5bc23772f2019c2b6b0c69ac4531c3dea8a32fd45c40d69335fe5581428e08eda588554af190c6bfb21611ea46499d516bbe6696e995bf0055d7561d2549fe472aa13a3919564614033213262acb9b9e684ec50ef02b829397028432ecce6bafec070389bee2599203b8d566ad25c3e0cbffcb87b0acadba4123e10edc859e4f2c482b5397d58e9472f0b80206743e6ad472145bf7186e9b0364aa213b2e8fcbef184a4c377d3092f9321c9a6792962e792251ae70c2dd1b4b6896f07f92caf0f7d20223ef380c25b60dbaa9e4722a501f95641e6993b0870a9b134d3d6d1224d658d1f8558e7120f569e5d83a34ee706277d1e8472276bc3b275ebe3e955a14c4f9abd78abda0a163e0bdf32587ae1acb3af030787b3f4e59165c94879269e81a49b54f17700216f2cd957feb32d38e2d48e730bb5eaf70bfa7125ed77c06d77399e54cfd84eb3bf00f5588ec9a807086e77e86a6840277bc2f8b4568d1230cd24b5be5ab3cd50d6e5012b89798e1f0c9234afc7212dc0843a6799b13a2720ab99e819c42fa6f719fc6aeddaf8066fb5d9350a0b65ad2b5047aca5ac8f3ce031180ca7c1ef60fe14989256d08e98151ed7e9a177789c4947fbe7dafd65b6a2522e169debc9021b2997ce1a35d8b58cafc356d5faa6102ac7966f0e2738350950501b2a2ff23504c4823f8cba7ba826b55878c778c9c55d8b0d0028fec434f51cba70c76480e3126f7f92de635ab202b188eaa75dd86e79d8beec6ce8aaffefc230c30fdfbc96248d305f590e6df018e920a4f5d448b0cc8517d1bd7ebd254103aa92ad23419f4b630fd4c7d5a0cbb629b58420152528e4ec743873c141331036633a57dc5e26c461a83cf8cd078131ebd6496fb6bcb8777b7bb046d00d47b843c7ef2764afb3f4ece48521e2eb5e5b2794be5a05228e60136a2c0ac5fa9c64604fe31f712543891b7397e32de5fbabc31b8611391516360487c874b06fdf9f5892627a9a213d64842f2f705b8e1bec65616f1596cf88f900c7b0ced15e704ebf2d2f96aac73528b12da9c717694dc2202063455c8d072dc7b3051af48bffcf67872ab343dbdb36c09427130eca3b2942ce919e42fa9de0d78dd2340ee516f34c35de10fdd31d3a3b3be1bcfbe75b8737aa01ddafd86c5abb93f4f17f9eb2de496ee5d20028177e24a4fcae978d14e056570c20515e5bed06eeefba63f3351551a2af17d9bcb0dfa984d47133292061b8ed80f934628bab83cfbb0d2ddfb733f1d34ebe095f0c6be1d50dade550a06102c9b857db9b98650668c8039d38a961bbf308a8942aaf703269f62473c951236c286c7020da55c36185267ae0355daeb656405ed2c1d27072a18f4e24cc1c5258ace343559677763716fe468b6863a4813869eb7de3bd789b71bdc509e145bd9432a92c67f50023f231cee2425743634ca7c198fdb79de55890b3679907cdd0cb20d978c47b8e0c4c3cc36e0505383b6c7172235ae6e6319b50180cb9cab213d01ac97bec3449758c16053cefce22acb78270b407a8ef1e38443b73cefe637e48cc7497dff2df4ba7b88a13c6424e2ee5fd7de3d0d655166df0a0151603deccf91f13bcf7c6162db5b5265593e86ee004989030bc9603163518d28850da361a6379f27f82b2109c85f974fc408bbe6877065d3c586fdb16fd7dc4de0d6ae61a2a5f69f86848c9839baad9816dec18c0c46f5ae7f20e62a415719fede0e7c4cc44f61644fa3f28372df4179b5dd871c26de652f93b302ac23b085aefb9ab74778493e175fa0105cada0d09b95fa46d10247618cfd2c08a3fd01455455111eea4dbb0eb113</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">请输入密码后查看</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/blog/lib/hbe.js"></script><link href="/blog/css/hbe.style.css" rel="stylesheet" type="text/css"></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://qieliqiean.github.io/blog">lian</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://qieliqiean.github.io/blog/easter-egg-ztoj/">https://qieliqiean.github.io/blog/easter-egg-ztoj/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://qieliqiean.github.io/blog" target="_blank">且离且安的碎碎念</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/%E5%BD%A9%E8%9B%8B/">彩蛋</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/blog/2026/02/27/%E6%9D%82%E8%AE%B0/Windows-%E7%9B%AE%E5%BD%95%E8%81%94%E6%8E%A5%EF%BC%88Junction%EF%BC%89%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="Windows 目录联接（Junction）使用手册"><img class="cover" src="/blog/image/cover/17.jpeg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Windows 目录联接（Junction）使用手册</div></div><div class="info-2"><div class="info-item-1">   系列文章   /   杂七杂八 / 目录链接  Windows 目录联接（Junction）使用手册  最后更新：2026-02-27   目录  概念介绍 前置准备 创建目录联接 查看已有联接 解除（删除）联接 注意事项与安全守则 常见问题排查 附录：Junction vs Symbolic Link 对比   1. 概念介绍 目录联接（Junction） 是 Windows NTFS...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/easter-egg/" title="彩蛋"><img class="cover" src="/blog/image/cover/22.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-18</div><div class="info-item-2">彩蛋</div></div><div class="info-2"><div class="info-item-1">  ...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">读研，尝试新技术与记录生活。</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/qieliqiean"><i class="fab fa-github"></i><span>访问 GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/qieliqiean" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎交流：2895014608@qq.com</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content toc-div-class is-expand" style="display:none"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E9%95%BF%E6%9C%9F"><span class="toc-text">重要长期</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%81%B6%E5%B0%94%E5%8D%B3%E5%85%B4"><span class="toc-text">偶尔即兴</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B7%83%E8%B7%83%E6%AC%B2%E8%AF%95"><span class="toc-text">跃跃欲试</span></a></li></ol></div></div><div class="card-widget card-post-series"><div class="item-headline"><i class="fa-solid fa-layer-group"></i><span>系列文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/easter-egg-ztoj/" title="Z to J"><img src="/blog/image/cover/21.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Z to J"></a><div class="content"><a class="title" href="/blog/easter-egg-ztoj/" title="Z to J">Z to J</a><time datetime="2026-03-22T11:50:03.000Z" title="发表于 2026-03-22 19:50:03">2026-03-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/easter-egg/" title="彩蛋"><img src="/blog/image/cover/22.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="彩蛋"></a><div class="content"><a class="title" href="/blog/easter-egg/" title="彩蛋">彩蛋</a><time datetime="2026-02-18T05:09:03.000Z" title="发表于 2026-02-18 13:09:03">2026-02-18</time></div></div></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/easter-egg-ztoj/" title="Z to J"><img src="/blog/image/cover/21.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Z to J"/></a><div class="content"><a class="title" href="/blog/easter-egg-ztoj/" title="Z to J">Z to J</a><time datetime="2026-03-22T11:50:03.000Z" title="发表于 2026-03-22 19:50:03">2026-03-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/02/27/%E6%9D%82%E8%AE%B0/Windows-%E7%9B%AE%E5%BD%95%E8%81%94%E6%8E%A5%EF%BC%88Junction%EF%BC%89%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="Windows 目录联接（Junction）使用手册"><img src="/blog/image/cover/17.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Windows 目录联接（Junction）使用手册"/></a><div class="content"><a class="title" href="/blog/2026/02/27/%E6%9D%82%E8%AE%B0/Windows-%E7%9B%AE%E5%BD%95%E8%81%94%E6%8E%A5%EF%BC%88Junction%EF%BC%89%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="Windows 目录联接（Junction）使用手册">Windows 目录联接（Junction）使用手册</a><time datetime="2026-02-27T06:09:50.000Z" title="发表于 2026-02-27 14:09:50">2026-02-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/easter-egg/" title="彩蛋"><img src="/blog/image/cover/22.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="彩蛋"/></a><div class="content"><a class="title" href="/blog/easter-egg/" title="彩蛋">彩蛋</a><time datetime="2026-02-18T05:09:03.000Z" title="发表于 2026-02-18 13:09:03">2026-02-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读"><img src="/blog/image/cover/9.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【WeDetect】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读">【WeDetect】论文阅读</a><time datetime="2026-01-21T01:41:58.000Z" title="发表于 2026-01-21 09:41:58">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/20/AI%E7%9B%B8%E5%85%B3/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册"><img src="/blog/image/cover/19.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="AI使用手册"/></a><div class="content"><a class="title" href="/blog/2026/01/20/AI%E7%9B%B8%E5%85%B3/AI%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="AI使用手册">AI使用手册</a><time datetime="2026-01-20T01:21:48.000Z" title="发表于 2026-01-20 09:21:48">2026-01-20</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><script src="/blog/true"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark_dimmed' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'qieliqiean/blog',
+      'data-repo-id': 'R_kgDONvpdYw',
+      'data-category-id': 'DIC_kwDONvpdY84C1DqB',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !true) {
+    if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><script defer src="/blog/js/site.js"></script><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><div class="aplayer" data-id="aplayer" data-fixed="true" data-autoplay="true" data-order="random"></div><script>var ap = new APlayer({container: document.querySelector(".aplayer"), fixed: true, autoplay: true, listFolded: true, audio: [{name: "带我走", artist: "未知", url: "/blog/music/daiwozou.mp3", cover: ""}, {name: "知我", artist: "国风堂 / 哦漏", url: "/blog/music/zhiwo.mp3", cover: ""}, {name: "在你的身边", artist: "盛哲", url: "/blog/music/zainideshenbian.mp3", cover: ""}]});</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["link[rel=\"canonical\"]","meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      pjax.loadUrl('/blog/404.html')
+    }
+  })
+})()</script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
