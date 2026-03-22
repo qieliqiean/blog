@@ -1072,3 +1072,8 @@ html.hide-aside #rightside #hide-aside-btn,
 #rightside #go-up:hover {
   transform: translateY(-5px);
 }
+
+/* Hide inaccurate word count on encrypted posts */
+#post:has(#hexo-blog-encrypt) .post-meta-wordcount {
+  display: none !important;
+}
