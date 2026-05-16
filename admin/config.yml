@@ -1,0 +1,81 @@
+backend:
+  name: github
+  repo: qieliqiean/blog
+  branch: source
+  open_authoring: true
+  squash_merges: true
+  # After deploying an OAuth proxy, uncomment and fill these:
+  # base_url: https://your-decap-oauth.example.com
+  # auth_endpoint: /auth
+
+local_backend:
+  url: http://localhost:8081/api/v1
+
+publish_mode: editorial_workflow
+site_url: https://qieliqiean.github.io/blog
+display_url: https://qieliqiean.github.io/blog
+media_folder: source/image/uploads
+public_folder: /image/uploads
+
+collections:
+  - name: posts
+    label: 文章
+    label_singular: 文章
+    folder: source/_posts
+    create: true
+    delete: false
+    extension: md
+    format: yaml-frontmatter
+    identifier_field: title
+    summary: "{{title}} - {{date}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    nested:
+      depth: 100
+      summary: "{{title}}"
+      subfolders: false
+    meta:
+      path:
+        label: 保存路径
+        widget: string
+        index_file: index
+    fields:
+      - label: 标题
+        name: title
+        widget: string
+      - label: 发布时间
+        name: date
+        widget: datetime
+        format: "YYYY-MM-DD HH:mm:ss"
+        date_format: "YYYY-MM-DD"
+        time_format: "HH:mm:ss"
+      - label: 系列
+        name: series
+        widget: string
+        required: false
+      - label: 封面图
+        name: cover
+        widget: image
+        required: false
+        allow_multiple: false
+      - label: 启用公式渲染
+        name: mathjax
+        widget: boolean
+        required: false
+        default: true
+      - label: 标签
+        name: tags
+        widget: list
+        required: false
+        allow_add: true
+      - label: 分类
+        name: categories
+        widget: list
+        required: false
+        allow_add: true
+      - label: 关键词
+        name: keywords
+        widget: string
+        required: false
+      - label: 正文
+        name: body
+        widget: markdown

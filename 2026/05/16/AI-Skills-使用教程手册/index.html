@@ -1,0 +1,889 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>AI Skills 使用教程手册 | 且离且安的碎碎念</title><meta name="author" content="lian"><meta name="copyright" content="lian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#fdfcf8"><meta name="description" content="系列文章   &#x2F;   提示词  AI Skills 使用教程手册 这份手册整理当前电脑里已经安装的用户级 skill，覆盖 Windows 和 WSL 下的 Codex &#x2F; Claude Code。它不是官方文档，而是给自己日常学习、写代码、读论文、写论文和做研究选题时快速查用的操作指南。 1. 通用使用方式 在 Codex 中通常直接说： 1请使用 [skill 名称]，帮我完成…… 在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI Skills 使用教程手册">
+<meta property="og:url" content="https://qieliqiean.github.io/blog/2026/05/16/AI-Skills-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B%E6%89%8B%E5%86%8C/index.html">
+<meta property="og:site_name" content="且离且安的碎碎念">
+<meta property="og:description" content="系列文章   &#x2F;   提示词  AI Skills 使用教程手册 这份手册整理当前电脑里已经安装的用户级 skill，覆盖 Windows 和 WSL 下的 Codex &#x2F; Claude Code。它不是官方文档，而是给自己日常学习、写代码、读论文、写论文和做研究选题时快速查用的操作指南。 1. 通用使用方式 在 Codex 中通常直接说： 1请使用 [skill 名称]，帮我完成…… 在">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qieliqiean.github.io/blog/image/cover/20.jpg">
+<meta property="article:published_time" content="2026-05-16T07:20:00.000Z">
+<meta property="article:modified_time" content="2026-05-16T09:26:29.116Z">
+<meta property="article:author" content="lian">
+<meta property="article:tag" content="AI技能">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qieliqiean.github.io/blog/image/cover/20.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "AI Skills 使用教程手册",
+  "url": "https://qieliqiean.github.io/blog/2026/05/16/AI-Skills-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B%E6%89%8B%E5%86%8C/",
+  "image": "https://qieliqiean.github.io/blog/image/cover/20.jpg",
+  "datePublished": "2026-05-16T07:20:00.000Z",
+  "dateModified": "2026-05-16T09:26:29.116Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "lian",
+      "url": "https://qieliqiean.github.io/blog/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/blog/image/1.jpg"><link rel="canonical" href="https://qieliqiean.github.io/blog/2026/05/16/AI-Skills-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B%E6%89%8B%E5%86%8C/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fdfcf8')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+          
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6b5d1303d19816191830cd73eccfdb1e";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+btf.addGlobalFn('pjaxComplete', () => {
+  _hmt.push(['_trackPageview',window.location.pathname])
+}, 'baidu_analytics')
+</script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: {"path":"/blog/search.xml","preload":false,"top_n_per_article":3,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'AI Skills 使用教程手册',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=LXGW+WenKai:wght@400;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/blog/css/custom.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load', preloader.endLoading)
+
+  if (true) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/blog/easter-egg/"><i class="fa-fw fas fa-egg"></i><span> 彩蛋</span></a></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/image/cover/20.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">AI Skills 使用教程手册</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/blog/easter-egg/"><i class="fa-fw fas fa-egg"></i><span> 彩蛋</span></a></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">AI Skills 使用教程手册</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-05-16T07:20:00.000Z" title="发表于 2026-05-16 15:20:00">2026-05-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-05-16T09:26:29.116Z" title="更新于 2026-05-16 17:26:29">2026-05-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">5.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>18分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><nav class="series-breadcrumb" aria-label="系列导航">
+  <a href="/blog/series/">系列文章</a>
+  <span class="series-breadcrumb__sep">/</span>
+  <a href="/blog/series/5o-Q56S66K-N/">提示词</a>
+</nav>
+<h1 id="AI-Skills-使用教程手册"><a class="header-anchor" href="#AI-Skills-使用教程手册"></a>AI Skills 使用教程手册</h1>
+<p>这份手册整理当前电脑里已经安装的用户级 skill，覆盖 Windows 和 WSL 下的 Codex / Claude Code。它不是官方文档，而是给自己日常学习、写代码、读论文、写论文和做研究选题时快速查用的操作指南。</p>
+<h2 id="1-通用使用方式"><a class="header-anchor" href="#1-通用使用方式"></a>1. 通用使用方式</h2>
+<p>在 Codex 中通常直接说：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请使用 [skill 名称]，帮我完成……</span><br></pre></td></tr></table></figure>
+<p>在 Claude Code 中可以直接用 slash command：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/skill-name 你的任务描述</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/research-ideation 帮我围绕开放世界检测生成 5 个 research question cards。</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请使用 nature-citation，帮我给这段引言补 Nature/CNS 方向的支撑引用。</span><br></pre></td></tr></table></figure>
+<h2 id="2-当前已安装-Skill-总览"><a class="header-anchor" href="#2-当前已安装-Skill-总览"></a>2. 当前已安装 Skill 总览</h2>
+<table>
+<thead>
+<tr>
+<th>Skill</th>
+<th>主要用途</th>
+<th>优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>deep-research</code></td>
+<td>多来源联网深度调研，生成带引用的研究报告</td>
+<td>高频</td>
+</tr>
+<tr>
+<td><code>research-ideation</code></td>
+<td>5W1H、gap analysis、研究问题卡片、开题选题</td>
+<td>高频</td>
+</tr>
+<tr>
+<td><code>aminer-data-search</code></td>
+<td>AMiner 学术数据检索总入口</td>
+<td>高频</td>
+</tr>
+<tr>
+<td><code>aminer-free-academic</code></td>
+<td>AMiner 免费接口，论文/学者/机构初筛</td>
+<td>高频</td>
+</tr>
+<tr>
+<td><code>aminer-academic-search</code></td>
+<td>AMiner 深度学术分析，可能调用付费接口</td>
+<td>中频</td>
+</tr>
+<tr>
+<td><code>aminer-daily-paper</code></td>
+<td>按主题或学者推荐论文</td>
+<td>中频</td>
+</tr>
+<tr>
+<td><code>explaining-academic-papers</code></td>
+<td>论文精读，生成多文件 Markdown 讲解笔记</td>
+<td>高频</td>
+</tr>
+<tr>
+<td><code>literature-review</code></td>
+<td>系统综述、scoping review、meta-analysis 草稿</td>
+<td>中频</td>
+</tr>
+<tr>
+<td><code>citation-management</code></td>
+<td>DOI/arXiv/PMID 转 BibTeX，清理引用库</td>
+<td>高频</td>
+</tr>
+<tr>
+<td><code>citation-verification</code></td>
+<td>核验引用真实性、元数据和 claim 支撑关系</td>
+<td>高频</td>
+</tr>
+<tr>
+<td><code>nature-polishing</code></td>
+<td>Nature 风格学术英文润色、中译英</td>
+<td>高频</td>
+</tr>
+<tr>
+<td><code>nature-citation</code></td>
+<td>Nature/CNS 引用检索、分段补引用、RIS/ENW 导出</td>
+<td>高频</td>
+</tr>
+<tr>
+<td><code>nature-figure</code></td>
+<td>Nature 风格科研图、多面板图、SVG/PNG 输出</td>
+<td>高频</td>
+</tr>
+<tr>
+<td><code>nature-data</code></td>
+<td>Data Availability、FAIR、数据仓库与数据声明</td>
+<td>中频</td>
+</tr>
+<tr>
+<td><code>nature-response</code></td>
+<td>审稿意见逐点回复、rebuttal letter</td>
+<td>中频</td>
+</tr>
+<tr>
+<td><code>nature-paper2ppt</code></td>
+<td>论文转中文组会/文献汇报 PPTX</td>
+<td>中频</td>
+</tr>
+<tr>
+<td><code>ppt-image-to-editable-ppt</code></td>
+<td>把 PPT 截图/图片重建成可编辑 PPTX</td>
+<td>工具型</td>
+</tr>
+<tr>
+<td><code>defuddle</code></td>
+<td>网页正文清洗成干净 Markdown</td>
+<td>工具型</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-研究调研与选题类"><a class="header-anchor" href="#3-研究调研与选题类"></a>3. 研究调研与选题类</h2>
+<h3 id="3-1-deep-research"><a class="header-anchor" href="#3-1-deep-research"></a>3.1 deep-research</h3>
+<h4 id="一句话用途"><a class="header-anchor" href="#一句话用途"></a>一句话用途</h4>
+<p><code>deep-research</code> 用来做多来源联网深度调研，适合快速了解某个研究方向、技术路线、竞品格局或最新热点。</p>
+<h4 id="适合场景"><a class="header-anchor" href="#适合场景"></a>适合场景</h4>
+<ul>
+<li>调研开放世界检测、开放词表检测等研究方向</li>
+<li>查某个领域最近 1-2 年热点</li>
+<li>做选题前的方向扫描</li>
+<li>写带来源链接的研究报告</li>
+<li>对比多个方法、模型、工具或数据集</li>
+</ul>
+<h4 id="前置条件"><a class="header-anchor" href="#前置条件"></a>前置条件</h4>
+<p>已配置 Exa MCP：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://mcp.exa.ai/mcp</span><br></pre></td></tr></table></figure>
+<h4 id="基本用法"><a class="header-anchor" href="#基本用法"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">请使用 deep-research，调研开放世界目标检测截至 2026-05-16 的最新热点。</span><br><span class="line">重点关注 OWOD、OVD、unknown object discovery、objectness modeling、VLM/MLLM detector 和 continual detection。</span><br><span class="line">输出论文表格、研究空白、可复现实验路线和适合研究生切入的选题。</span><br></pre></td></tr></table></figure>
+<p>Claude Code：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/deep-research 调研开放世界检测最新热点，优先检索 CVPR、ICCV、ECCV、NeurIPS、ICLR、arXiv、OpenReview、项目主页和 GitHub。</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项"><a class="header-anchor" href="#注意事项"></a>注意事项</h4>
+<p><code>deep-research</code> 适合第一轮方向扫描，不建议把它的结论直接当论文依据。真正写论文前，要精读核心论文并核对引用。</p>
+<h3 id="3-2-research-ideation"><a class="header-anchor" href="#3-2-research-ideation"></a>3.2 research-ideation</h3>
+<h4 id="一句话用途-2"><a class="header-anchor" href="#一句话用途-2"></a>一句话用途</h4>
+<p><code>research-ideation</code> 用来把模糊想法收敛成可执行研究问题，核心方法是 5W1H、gap analysis 和 research question card。</p>
+<h4 id="适合场景-2"><a class="header-anchor" href="#适合场景-2"></a>适合场景</h4>
+<ul>
+<li>想开题，但问题还不够具体</li>
+<li>想从大方向里找可发论文的小切口</li>
+<li>想整理 research gap、假设、证据需求和最小实验</li>
+<li>想判断一个想法是否可做、可证伪、可复现</li>
+</ul>
+<h4 id="基本用法-2"><a class="header-anchor" href="#基本用法-2"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">请使用 research-ideation，围绕开放世界目标检测做选题分析。</span><br><span class="line">我的背景是计算机视觉研究生，已有目标检测和开放世界检测代码基础。</span><br><span class="line"></span><br><span class="line">请输出：</span><br><span class="line">1. 5W1H 分析</span><br><span class="line">2. 当前方向的主要 gap</span><br><span class="line">3. 5 个 research question cards</span><br><span class="line">4. 每个问题的核心假设、证据需求、可证伪条件和最小实验</span><br><span class="line">5. 推荐优先级</span><br></pre></td></tr></table></figure>
+<p>Claude Code：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/research-ideation 帮我把“开放世界检测中的未知目标发现”收敛成 3 个可做论文的研究问题。</span><br></pre></td></tr></table></figure>
+<h4 id="输出重点"><a class="header-anchor" href="#输出重点"></a>输出重点</h4>
+<p>优先看它生成的 <code>Research Question Card</code>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">研究问题：</span><br><span class="line">核心假设：</span><br><span class="line">已有证据：</span><br><span class="line">缺失证据：</span><br><span class="line">如何支持：</span><br><span class="line">如何证伪：</span><br><span class="line">最小下一步实验：</span><br></pre></td></tr></table></figure>
+<h3 id="3-3-literature-review"><a class="header-anchor" href="#3-3-literature-review"></a>3.3 literature-review</h3>
+<h4 id="一句话用途-3"><a class="header-anchor" href="#一句话用途-3"></a>一句话用途</h4>
+<p><code>literature-review</code> 用来做系统综述、scoping review、meta-analysis 或大规模文献综述草稿。</p>
+<h4 id="适合场景-3"><a class="header-anchor" href="#适合场景-3"></a>适合场景</h4>
+<ul>
+<li>写毕业论文 related work 大章</li>
+<li>做开放世界检测方向系统综述</li>
+<li>做方法分类、数据集分类和 benchmark 梳理</li>
+<li>需要明确检索范围、纳入/排除标准和引用格式</li>
+</ul>
+<h4 id="基本用法-3"><a class="header-anchor" href="#基本用法-3"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">请使用 literature-review，帮我做一份开放世界目标检测的 scoping review。</span><br><span class="line"></span><br><span class="line">范围：</span><br><span class="line">2020-2026，优先 CVPR、ICCV、ECCV、NeurIPS、ICLR、TPAMI、IJCV、arXiv。</span><br><span class="line"></span><br><span class="line">请输出：</span><br><span class="line">1. 检索关键词</span><br><span class="line">2. 纳入和排除标准</span><br><span class="line">3. 方法分类</span><br><span class="line">4. 数据集和评价指标分类</span><br><span class="line">5. 代表论文表格</span><br><span class="line">6. 当前研究空白</span><br><span class="line">7. 可写入 related work 的综述草稿</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-2"><a class="header-anchor" href="#注意事项-2"></a>注意事项</h4>
+<p>这个 skill 比 <code>deep-research</code> 更正式、更重。普通快速调研优先用 <code>deep-research</code>；需要写综述或论文 related work 大章时再用它。</p>
+<h3 id="3-4-explaining-academic-papers"><a class="header-anchor" href="#3-4-explaining-academic-papers"></a>3.4 explaining-academic-papers</h3>
+<h4 id="一句话用途-4"><a class="header-anchor" href="#一句话用途-4"></a>一句话用途</h4>
+<p><code>explaining-academic-papers</code> 用来精读论文，并生成多文件 Markdown 笔记：总览、逐节精读、图表讲解、思维导图。</p>
+<h4 id="适合场景-4"><a class="header-anchor" href="#适合场景-4"></a>适合场景</h4>
+<ul>
+<li>精读一篇核心论文</li>
+<li>把论文和代码仓库对应起来</li>
+<li>做组会讲解前的系统笔记</li>
+<li>梳理论文方法、公式、实验和指标</li>
+</ul>
+<h4 id="基本用法-4"><a class="header-anchor" href="#基本用法-4"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">请使用 explaining-academic-papers，精读这篇论文：</span><br><span class="line">PDF 路径：C:\path\paper.pdf</span><br><span class="line">代码仓库：C:\path\repo</span><br><span class="line"></span><br><span class="line">请生成：</span><br><span class="line">1. 总览</span><br><span class="line">2. 按章节深度讲解</span><br><span class="line">3. 图表逐个解释</span><br><span class="line">4. 思维导图</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-3"><a class="header-anchor" href="#注意事项-3"></a>注意事项</h4>
+<p>这个 skill 会生成文件，默认适合比较完整的论文精读任务。如果只是问“这篇论文讲了什么”，可以先用轻量总结。</p>
+<h2 id="4-AMiner-学术数据类"><a class="header-anchor" href="#4-AMiner-学术数据类"></a>4. AMiner 学术数据类</h2>
+<h3 id="4-1-aminer-data-search"><a class="header-anchor" href="#4-1-aminer-data-search"></a>4.1 aminer-data-search</h3>
+<h4 id="一句话用途-5"><a class="header-anchor" href="#一句话用途-5"></a>一句话用途</h4>
+<p><code>aminer-data-search</code> 是 AMiner 学术数据检索总入口，会根据任务自动路由到免费检索、深度检索或论文推荐。</p>
+<h4 id="适合场景-5"><a class="header-anchor" href="#适合场景-5"></a>适合场景</h4>
+<ul>
+<li>查论文</li>
+<li>查学者</li>
+<li>查机构</li>
+<li>查期刊/会议</li>
+<li>查专利</li>
+<li>查引用链</li>
+<li>查某个方向代表论文和代表学者</li>
+</ul>
+<h4 id="前置条件-2"><a class="header-anchor" href="#前置条件-2"></a>前置条件</h4>
+<p>需要配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AMINER_API_KEY</span><br></pre></td></tr></table></figure>
+<p>Token 获取地址：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://open.aminer.cn/open/board?tab=control</span><br></pre></td></tr></table></figure>
+<p>WSL 配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export AMINER_API_KEY=&quot;你的Token&quot;&#x27;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>Windows PowerShell 配置：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setx AMINER_API_KEY <span class="string">&quot;你的Token&quot;</span></span><br></pre></td></tr></table></figure>
+<h4 id="基本用法-5"><a class="header-anchor" href="#基本用法-5"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">请使用 aminer-data-search，先走免费接口，检索开放世界目标检测近三年的代表论文。</span><br><span class="line">请返回标题、作者、年份、venue、引用信息、AMiner 链接。</span><br></pre></td></tr></table></figure>
+<p>Claude Code：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/aminer-data-search 查开放世界检测和开放词表检测方向的代表学者。</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-4"><a class="header-anchor" href="#注意事项-4"></a>注意事项</h4>
+<p>AMiner 深度接口可能收费。默认应先走免费接口；预计费用超过 5 元时要先确认。</p>
+<h3 id="4-2-aminer-free-academic"><a class="header-anchor" href="#4-2-aminer-free-academic"></a>4.2 aminer-free-academic</h3>
+<h4 id="一句话用途-6"><a class="header-anchor" href="#一句话用途-6"></a>一句话用途</h4>
+<p><code>aminer-free-academic</code> 只使用 AMiner 免费接口，适合轻量检索和初筛。</p>
+<h4 id="适合场景-6"><a class="header-anchor" href="#适合场景-6"></a>适合场景</h4>
+<ul>
+<li>已知论文标题，查 paper id、年份、venue</li>
+<li>查某位学者是否是目标人</li>
+<li>查机构规范名称</li>
+<li>查期刊/会议类型</li>
+<li>先判断一个方向是否值得深挖</li>
+</ul>
+<h4 id="基本用法-6"><a class="header-anchor" href="#基本用法-6"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/aminer-free-academic 搜索论文 &quot;OW-OVD: Unified Open World and Open Vocabulary Object Detection&quot;，返回年份、venue、作者和 AMiner 链接。</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-5"><a class="header-anchor" href="#注意事项-5"></a>注意事项</h4>
+<p>免费接口字段有限。需要完整摘要、引用链、机构产出分析时，转 <code>aminer-academic-search</code>。</p>
+<h3 id="4-3-aminer-academic-search"><a class="header-anchor" href="#4-3-aminer-academic-search"></a>4.3 aminer-academic-search</h3>
+<h4 id="一句话用途-7"><a class="header-anchor" href="#一句话用途-7"></a>一句话用途</h4>
+<p><code>aminer-academic-search</code> 是 AMiner 深度学术分析 skill，覆盖论文详情、引用关系、学者画像、机构分析、期刊监控和专利分析。</p>
+<h4 id="适合场景-7"><a class="header-anchor" href="#适合场景-7"></a>适合场景</h4>
+<ul>
+<li>深入分析一篇论文</li>
+<li>查某位学者完整画像</li>
+<li>查机构科研能力</li>
+<li>查某个 venue 某年的论文</li>
+<li>查论文引用链和相关论文</li>
+</ul>
+<h4 id="基本用法-7"><a class="header-anchor" href="#基本用法-7"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/aminer-academic-search 深度分析论文 OW-OVD: Unified Open World and Open Vocabulary Object Detection。</span><br><span class="line">请返回论文信息、作者机构、摘要关键词、引用关系、相关论文和 AMiner 链接。</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-6"><a class="header-anchor" href="#注意事项-6"></a>注意事项</h4>
+<p>可能调用付费接口。高成本任务必须先确认。</p>
+<h3 id="4-4-aminer-daily-paper"><a class="header-anchor" href="#4-4-aminer-daily-paper"></a>4.4 aminer-daily-paper</h3>
+<h4 id="一句话用途-8"><a class="header-anchor" href="#一句话用途-8"></a>一句话用途</h4>
+<p><code>aminer-daily-paper</code> 用于按主题、学者或 AMiner 账号做个性化论文推荐。</p>
+<h4 id="适合场景-8"><a class="header-anchor" href="#适合场景-8"></a>适合场景</h4>
+<ul>
+<li>每天看几篇方向相关论文</li>
+<li>按研究主题推荐论文</li>
+<li>按学者画像推荐论文</li>
+<li>跟踪开放世界检测、开放词表检测、多模态检测等方向</li>
+</ul>
+<h4 id="基本用法-8"><a class="header-anchor" href="#基本用法-8"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/aminer-daily-paper topics: open-world object detection, open-vocabulary detection, unknown object discovery</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/aminer-daily-paper topics: 具身智能, 环境感知 size: 5</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-7"><a class="header-anchor" href="#注意事项-7"></a>注意事项</h4>
+<p>中文主题可以直接保留中文，不要强行翻译成别的研究方向。</p>
+<h2 id="5-引用、文献与写作类"><a class="header-anchor" href="#5-引用、文献与写作类"></a>5. 引用、文献与写作类</h2>
+<h3 id="5-1-citation-management"><a class="header-anchor" href="#5-1-citation-management"></a>5.1 citation-management</h3>
+<h4 id="一句话用途-9"><a class="header-anchor" href="#一句话用途-9"></a>一句话用途</h4>
+<p><code>citation-management</code> 用来查论文元数据、生成 BibTeX、清理 <code>.bib</code>、去重和统一引用格式。</p>
+<h4 id="适合场景-9"><a class="header-anchor" href="#适合场景-9"></a>适合场景</h4>
+<ul>
+<li>DOI / arXiv / PMID 转 BibTeX</li>
+<li>清理 references.bib</li>
+<li>查重和统一引用 key</li>
+<li>检查作者、标题、年份、venue 是否正确</li>
+<li>投论文前整理参考文献</li>
+</ul>
+<h4 id="基本用法-9"><a class="header-anchor" href="#基本用法-9"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">请使用 citation-management，检查这个 references.bib。</span><br><span class="line">要求：</span><br><span class="line">1. 找出重复项</span><br><span class="line">2. 找出缺 DOI、缺年份、venue 不规范的条目</span><br><span class="line">3. 修正 BibTeX 格式</span><br><span class="line">4. 输出修改建议和清理后的 bib 文件</span><br></pre></td></tr></table></figure>
+<p>Claude Code：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/citation-management 把这些 DOI 和 arXiv 链接整理成 BibTeX。</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-8"><a class="header-anchor" href="#注意事项-8"></a>注意事项</h4>
+<p>不要让 AI 直接编 BibTeX。优先用 DOI、arXiv、CrossRef、Semantic Scholar 等来源核对。</p>
+<h3 id="5-2-citation-verification"><a class="header-anchor" href="#5-2-citation-verification"></a>5.2 citation-verification</h3>
+<h4 id="一句话用途-10"><a class="header-anchor" href="#一句话用途-10"></a>一句话用途</h4>
+<p><code>citation-verification</code> 用来核验引用真实性、DOI、作者、年份、venue 和“引用是否真的支撑对应句子”。</p>
+<h4 id="适合场景-10"><a class="header-anchor" href="#适合场景-10"></a>适合场景</h4>
+<ul>
+<li>防止假引用</li>
+<li>检查 AI 生成的引用</li>
+<li>检查 related work 里的引用是否支持原句</li>
+<li>检查 <code>.bib</code> 里 DOI、作者、年份是否错误</li>
+<li>投稿前引用体检</li>
+</ul>
+<h4 id="基本用法-10"><a class="header-anchor" href="#基本用法-10"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">请使用 citation-verification，检查下面 related work 中每个引用是否真实存在，并判断是否真的支持对应句子。</span><br><span class="line"></span><br><span class="line">文本：</span><br><span class="line">这里粘贴 related work</span><br><span class="line"></span><br><span class="line">BibTeX：</span><br><span class="line">这里粘贴 references.bib 或提供路径</span><br></pre></td></tr></table></figure>
+<p>Claude Code：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/citation-verification 检查 references.bib 里是否有假 DOI、错误年份、错误作者和重复文献。</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-9"><a class="header-anchor" href="#注意事项-9"></a>注意事项</h4>
+<p>它和 <code>citation-management</code> 很互补：一个负责管理格式，一个负责核验真实性和支撑关系。</p>
+<h3 id="5-3-nature-polishing"><a class="header-anchor" href="#5-3-nature-polishing"></a>5.3 nature-polishing</h3>
+<h4 id="一句话用途-11"><a class="header-anchor" href="#一句话用途-11"></a>一句话用途</h4>
+<p><code>nature-polishing</code> 用于 Nature 风格学术英文润色、中译英、摘要/引言/结果/讨论重写。</p>
+<h4 id="适合场景-11"><a class="header-anchor" href="#适合场景-11"></a>适合场景</h4>
+<ul>
+<li>中文论文段落转英文</li>
+<li>英文摘要润色</li>
+<li>引言逻辑重构</li>
+<li>结果段落降噪</li>
+<li>讨论部分降低 overclaim</li>
+</ul>
+<h4 id="基本用法-11"><a class="header-anchor" href="#基本用法-11"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">请使用 nature-polishing，把下面摘要润色成 Nature 风格英文。</span><br><span class="line">要求：</span><br><span class="line">1. 保留所有数据和结论</span><br><span class="line">2. 不要虚构引用或结果</span><br><span class="line">3. 每句话尽量简洁</span><br><span class="line">4. 输出润色版本、修改说明和风险提示</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-10"><a class="header-anchor" href="#注意事项-10"></a>注意事项</h4>
+<p>不要让它凭空生成论文核心结论。它适合改表达、改逻辑，不适合发明研究贡献。</p>
+<h3 id="5-4-nature-citation"><a class="header-anchor" href="#5-4-nature-citation"></a>5.4 nature-citation</h3>
+<h4 id="一句话用途-12"><a class="header-anchor" href="#一句话用途-12"></a>一句话用途</h4>
+<p><code>nature-citation</code> 用来给句子或段落寻找 Nature/CNS/Cell/Science 方向支撑引用，并可导出 RIS/ENW/Zotero RDF。</p>
+<h4 id="适合场景-12"><a class="header-anchor" href="#适合场景-12"></a>适合场景</h4>
+<ul>
+<li>给引言补引用</li>
+<li>给讨论补背景文献</li>
+<li>按 claim 查支撑论文</li>
+<li>判断文献是强支撑、部分支撑还是背景支撑</li>
+</ul>
+<h4 id="基本用法-12"><a class="header-anchor" href="#基本用法-12"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">请使用 nature-citation，为下面引言段落补充 Nature / CNS 及其子刊方向的支撑引用。</span><br><span class="line">要求：</span><br><span class="line">1. 先拆成可引用 claim</span><br><span class="line">2. 每个 claim 给 2-4 篇候选文献</span><br><span class="line">3. 标注支撑强度</span><br><span class="line">4. 最后导出 RIS</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-11"><a class="header-anchor" href="#注意事项-11"></a>注意事项</h4>
+<p>题目相关不代表能支撑原句。最终仍要人工核对摘要、实验和结论。</p>
+<h3 id="5-5-nature-data"><a class="header-anchor" href="#5-5-nature-data"></a>5.5 nature-data</h3>
+<h4 id="一句话用途-13"><a class="header-anchor" href="#一句话用途-13"></a>一句话用途</h4>
+<p><code>nature-data</code> 用来写 Data Availability、数据仓库计划、FAIR 元数据检查和数据引用。</p>
+<h4 id="适合场景-13"><a class="header-anchor" href="#适合场景-13"></a>适合场景</h4>
+<ul>
+<li>Nature 系列投稿的数据可用性声明</li>
+<li>数据是否公开、受限、请求获取</li>
+<li>补充材料、source data、代码公开说明</li>
+<li>FAIR checklist</li>
+</ul>
+<h4 id="基本用法-13"><a class="header-anchor" href="#基本用法-13"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">请使用 nature-data，为我的论文准备 Data Availability statement。</span><br><span class="line"></span><br><span class="line">数据情况：</span><br><span class="line">1. 原始数据：</span><br><span class="line">2. 处理后数据：</span><br><span class="line">3. 公共数据库：</span><br><span class="line">4. 受限数据：</span><br><span class="line">5. 代码：</span><br><span class="line"></span><br><span class="line">请输出投稿可用英文、缺失信息和 FAIR 检查清单。</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-12"><a class="header-anchor" href="#注意事项-12"></a>注意事项</h4>
+<p>不要笼统写 “available upon reasonable request”。需要说明数据类型、限制原因、获取流程和责任人。</p>
+<h3 id="5-6-nature-response"><a class="header-anchor" href="#5-6-nature-response"></a>5.6 nature-response</h3>
+<h4 id="一句话用途-14"><a class="header-anchor" href="#一句话用途-14"></a>一句话用途</h4>
+<p><code>nature-response</code> 用来写审稿意见逐点回复、rebuttal letter 和修回信。</p>
+<h4 id="适合场景-14"><a class="header-anchor" href="#适合场景-14"></a>适合场景</h4>
+<ul>
+<li>大修/小修回复</li>
+<li>审稿意见分类</li>
+<li>回复草稿降火</li>
+<li>将每条意见映射到具体修改</li>
+</ul>
+<h4 id="基本用法-14"><a class="header-anchor" href="#基本用法-14"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">请使用 nature-response，根据下面审稿意见起草 point-by-point response。</span><br><span class="line">要求：</span><br><span class="line">1. 保留 reviewer 原话</span><br><span class="line">2. 每条意见编号</span><br><span class="line">3. 每条回复映射到具体修改或 AUTHOR_INPUT_NEEDED</span><br><span class="line">4. 不要虚构实验、页码、行号或图号</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-13"><a class="header-anchor" href="#注意事项-13"></a>注意事项</h4>
+<p>不要让它编造已经完成的实验或修改位置。缺信息时必须标 <code>AUTHOR_INPUT_NEEDED</code>。</p>
+<h2 id="6-图表、PPT-与网页工具类"><a class="header-anchor" href="#6-图表、PPT-与网页工具类"></a>6. 图表、PPT 与网页工具类</h2>
+<h3 id="6-1-nature-figure"><a class="header-anchor" href="#6-1-nature-figure"></a>6.1 nature-figure</h3>
+<h4 id="一句话用途-15"><a class="header-anchor" href="#一句话用途-15"></a>一句话用途</h4>
+<p><code>nature-figure</code> 用来生成 Nature / 高水平期刊风格科研图、多面板图和投稿级 SVG/PNG/PDF/TIFF。</p>
+<h4 id="适合场景-15"><a class="header-anchor" href="#适合场景-15"></a>适合场景</h4>
+<ul>
+<li>多面板科研图</li>
+<li>柱状图、折线图、热图、散点图、气泡图</li>
+<li>统一字体、颜色、图例和 panel label</li>
+<li>输出可编辑 SVG</li>
+</ul>
+<h4 id="基本用法-15"><a class="header-anchor" href="#基本用法-15"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">请使用 nature-figure，用 Python 生成一张 Nature 风格多面板图。</span><br><span class="line"></span><br><span class="line">数据路径：</span><br><span class="line">图的核心结论：</span><br><span class="line">panel 设计：</span><br><span class="line">统计要求：</span><br><span class="line">输出格式：SVG + 300 dpi PNG</span><br></pre></td></tr></table></figure>
+<h4 id="重要规则"><a class="header-anchor" href="#重要规则"></a>重要规则</h4>
+<p>作图前必须选择后端：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Python 或 R？</span><br></pre></td></tr></table></figure>
+<p>如果你已经知道用 Python，就在提示词里直接写“用 Python”。</p>
+<h3 id="6-2-nature-paper2ppt"><a class="header-anchor" href="#6-2-nature-paper2ppt"></a>6.2 nature-paper2ppt</h3>
+<h4 id="一句话用途-16"><a class="header-anchor" href="#一句话用途-16"></a>一句话用途</h4>
+<p><code>nature-paper2ppt</code> 用来把论文、PDF、摘要或阅读笔记做成中文组会/文献汇报 PPTX。</p>
+<h4 id="适合场景-16"><a class="header-anchor" href="#适合场景-16"></a>适合场景</h4>
+<ul>
+<li>组会汇报</li>
+<li>journal club</li>
+<li>论文分享</li>
+<li>课程展示</li>
+<li>论文答辩前的背景介绍</li>
+</ul>
+<h4 id="基本用法-16"><a class="header-anchor" href="#基本用法-16"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">请使用 nature-paper2ppt，把这篇论文做成中文组会汇报 PPTX。</span><br><span class="line"></span><br><span class="line">材料：</span><br><span class="line">PDF 路径或论文链接</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line">1. 汇报时长 20 分钟</span><br><span class="line">2. 面向计算机视觉方向研究生</span><br><span class="line">3. 重点讲清楚研究问题、方法、关键证据、创新点和局限性</span><br><span class="line">4. 输出真实 .pptx 文件和每页 speaker notes 摘要</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-14"><a class="header-anchor" href="#注意事项-14"></a>注意事项</h4>
+<p>如果只给标题和摘要，不要让它虚构具体实验图。缺失内容要标占位。</p>
+<h3 id="6-3-ppt-image-to-editable-ppt"><a class="header-anchor" href="#6-3-ppt-image-to-editable-ppt"></a>6.3 ppt-image-to-editable-ppt</h3>
+<h4 id="一句话用途-17"><a class="header-anchor" href="#一句话用途-17"></a>一句话用途</h4>
+<p><code>ppt-image-to-editable-ppt</code> 用来把 PPT 截图或导出的 slide 图片重建成可编辑 PowerPoint。</p>
+<h4 id="适合场景-17"><a class="header-anchor" href="#适合场景-17"></a>适合场景</h4>
+<ul>
+<li>只有 PPT 图片，没有原始 <code>.pptx</code></li>
+<li>想把截图里的文字变成可编辑文本框</li>
+<li>想把图标、logo、照片拆成独立 PNG</li>
+<li>想重建卡片、线条、圆形、分隔符等 PPT 原生形状</li>
+</ul>
+<h4 id="基本用法-17"><a class="header-anchor" href="#基本用法-17"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">请使用 ppt-image-to-editable-ppt，把这些 PPT 截图重建成可编辑 PPTX。</span><br><span class="line"></span><br><span class="line">输入：</span><br><span class="line">图片文件夹路径：</span><br><span class="line"></span><br><span class="line">要求：</span><br><span class="line">1. 普通文字保持可编辑</span><br><span class="line">2. logo、图标、照片提取成独立 PNG</span><br><span class="line">3. 简单形状用 PowerPoint 原生 shape 重建</span><br><span class="line">4. 输出最终 .pptx、资产目录和 QA 报告</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-15"><a class="header-anchor" href="#注意事项-15"></a>注意事项</h4>
+<p>不要把整张截图直接铺成背景图。那样虽然看起来像，但不可编辑。</p>
+<h3 id="6-4-defuddle"><a class="header-anchor" href="#6-4-defuddle"></a>6.4 defuddle</h3>
+<h4 id="一句话用途-18"><a class="header-anchor" href="#一句话用途-18"></a>一句话用途</h4>
+<p><code>defuddle</code> 用来把网页正文清洗成干净 Markdown，去掉导航栏、广告、页脚和杂乱 HTML。</p>
+<h4 id="适合场景-18"><a class="header-anchor" href="#适合场景-18"></a>适合场景</h4>
+<ul>
+<li>读取项目主页</li>
+<li>清洗在线文档</li>
+<li>把博客/教程转成 Markdown</li>
+<li>降低网页噪声，方便后续总结和写作</li>
+</ul>
+<h4 id="基本用法-18"><a class="header-anchor" href="#基本用法-18"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">请使用 defuddle，清洗这个网页并总结核心内容：</span><br><span class="line">https://example.com</span><br></pre></td></tr></table></figure>
+<p>命令行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defuddle parse &lt;url&gt; --md</span><br></pre></td></tr></table></figure>
+<p>保存成文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defuddle parse &lt;url&gt; --md -o content.md</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-16"><a class="header-anchor" href="#注意事项-16"></a>注意事项</h4>
+<p>不要用于 <code>.md</code> 结尾的原生 Markdown URL，那种直接读取原文即可。</p>
+<h2 id="7-推荐工作流"><a class="header-anchor" href="#7-推荐工作流"></a>7. 推荐工作流</h2>
+<h3 id="7-1-开放世界检测选题工作流"><a class="header-anchor" href="#7-1-开放世界检测选题工作流"></a>7.1 开放世界检测选题工作流</h3>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1. deep-research：做方向扫描，找最新热点和代表论文</span><br><span class="line">2. aminer-data-search：查论文、学者、机构和 AMiner 链接</span><br><span class="line">3. research-ideation：做 gap analysis，生成 research question cards</span><br><span class="line">4. explaining-academic-papers：精读核心论文</span><br><span class="line">5. citation-management：整理 BibTeX</span><br><span class="line">6. citation-verification：核验引用</span><br><span class="line">7. nature-polishing：润色论文段落</span><br><span class="line">8. nature-figure：生成投稿图</span><br></pre></td></tr></table></figure>
+<h3 id="7-2-写论文工作流"><a class="header-anchor" href="#7-2-写论文工作流"></a>7.2 写论文工作流</h3>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. deep-research / literature-review：整理相关工作</span><br><span class="line">2. nature-polishing：润色摘要、引言、结果、讨论</span><br><span class="line">3. nature-citation：给关键 claim 补引用</span><br><span class="line">4. citation-management：整理 references.bib</span><br><span class="line">5. citation-verification：核验所有引用</span><br><span class="line">6. nature-data：写 Data Availability</span><br><span class="line">7. nature-response：审稿后写回复</span><br></pre></td></tr></table></figure>
+<h3 id="7-3-组会汇报工作流"><a class="header-anchor" href="#7-3-组会汇报工作流"></a>7.3 组会汇报工作流</h3>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. explaining-academic-papers：精读论文</span><br><span class="line">2. nature-paper2ppt：做中文汇报 PPT</span><br><span class="line">3. ppt-image-to-editable-ppt：把截图页重建成可编辑 PPT</span><br><span class="line">4. defuddle：清洗项目主页或在线文档</span><br></pre></td></tr></table></figure>
+<h2 id="8-常见注意事项"><a class="header-anchor" href="#8-常见注意事项"></a>8. 常见注意事项</h2>
+<h3 id="8-1-需要-API-Key-的-Skill"><a class="header-anchor" href="#8-1-需要-API-Key-的-Skill"></a>8.1 需要 API Key 的 Skill</h3>
+<p>AMiner 相关 skill 需要：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AMINER_API_KEY</span><br></pre></td></tr></table></figure>
+<p><code>deep-research</code> 当前已配置 Exa MCP，可以直接使用。</p>
+<h3 id="8-2-需要重启的情况"><a class="header-anchor" href="#8-2-需要重启的情况"></a>8.2 需要重启的情况</h3>
+<p>新安装或更新 skill 后，需要重启 Codex / 重新打开 Claude Code 会话。</p>
+<h3 id="8-3-最安全的使用原则"><a class="header-anchor" href="#8-3-最安全的使用原则"></a>8.3 最安全的使用原则</h3>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AI 负责检索、整理、生成草稿和检查风险；</span><br><span class="line">作者负责确认事实、实验、引用、结论和投稿要求。</span><br></pre></td></tr></table></figure>
+<h2 id="9-Codex-内置-系统-Skill-简表"><a class="header-anchor" href="#9-Codex-内置-系统-Skill-简表"></a>9. Codex 内置/系统 Skill 简表</h2>
+<p>下面这些是 Codex 自带或插件提供的系统级 skill，通常不需要手动安装，也不一定会同步成 Claude Code slash command。日常使用时，直接用自然语言触发即可。</p>
+<h3 id="9-1-imagegen"><a class="header-anchor" href="#9-1-imagegen"></a>9.1 imagegen</h3>
+<h4 id="一句话用途-19"><a class="header-anchor" href="#一句话用途-19"></a>一句话用途</h4>
+<p><code>imagegen</code> 用来生成或编辑位图图片，比如封面图、插图、纹理、素材图和透明背景 cutout。</p>
+<h4 id="适合场景-19"><a class="header-anchor" href="#适合场景-19"></a>适合场景</h4>
+<ul>
+<li>给博客文章生成封面图</li>
+<li>给 PPT 做示意图素材</li>
+<li>生成论文汇报里的非数据型插图</li>
+<li>根据参考图生成风格接近的视觉素材</li>
+</ul>
+<h4 id="基本用法-19"><a class="header-anchor" href="#基本用法-19"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">请使用 imagegen，生成一张适合“开放世界目标检测综述”的博客封面图。</span><br><span class="line">要求：科技感、目标检测框、视觉大模型元素、16:9。</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-17"><a class="header-anchor" href="#注意事项-17"></a>注意事项</h4>
+<p>科研数据图优先用 <code>nature-figure</code>，不要用生成图替代真实实验结果。</p>
+<h3 id="9-2-openai-docs"><a class="header-anchor" href="#9-2-openai-docs"></a>9.2 openai-docs</h3>
+<h4 id="一句话用途-20"><a class="header-anchor" href="#一句话用途-20"></a>一句话用途</h4>
+<p><code>openai-docs</code> 用来查询 OpenAI 官方文档、模型能力、API 用法和迁移建议。</p>
+<h4 id="适合场景-20"><a class="header-anchor" href="#适合场景-20"></a>适合场景</h4>
+<ul>
+<li>写 OpenAI API 代码前查最新参数</li>
+<li>比较当前可用模型</li>
+<li>检查 Responses API、工具调用、结构化输出等用法</li>
+<li>升级旧代码里的模型或接口</li>
+</ul>
+<h4 id="基本用法-20"><a class="header-anchor" href="#基本用法-20"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请使用 openai-docs，查询 Responses API 中结构化输出的最新官方写法，并给我一个 Python 示例。</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-18"><a class="header-anchor" href="#注意事项-18"></a>注意事项</h4>
+<p>涉及 OpenAI 产品时优先查官方文档，不要只凭记忆写代码。</p>
+<h3 id="9-3-skill-installer"><a class="header-anchor" href="#9-3-skill-installer"></a>9.3 skill-installer</h3>
+<h4 id="一句话用途-21"><a class="header-anchor" href="#一句话用途-21"></a>一句话用途</h4>
+<p><code>skill-installer</code> 用来安装 Codex skill，可以从 curated list 或 GitHub 仓库安装。</p>
+<h4 id="适合场景-21"><a class="header-anchor" href="#适合场景-21"></a>适合场景</h4>
+<ul>
+<li>安装别人分享的 skill</li>
+<li>更新本地 skill</li>
+<li>检查某个 skill 是否已经安装</li>
+<li>把 GitHub 上的 skill 装进 Codex</li>
+</ul>
+<h4 id="基本用法-21"><a class="header-anchor" href="#基本用法-21"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请使用 skill-installer，从 https://agentskill.sh/@affaan-m/deep-research 安装 deep-research。</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-19"><a class="header-anchor" href="#注意事项-19"></a>注意事项</h4>
+<p>安装后通常要重启 Codex 或重新打开会话，新的 skill 才会进入可用列表。</p>
+<h3 id="9-4-skill-creator"><a class="header-anchor" href="#9-4-skill-creator"></a>9.4 skill-creator</h3>
+<h4 id="一句话用途-22"><a class="header-anchor" href="#一句话用途-22"></a>一句话用途</h4>
+<p><code>skill-creator</code> 用来创建或改造自己的 skill，把固定工作流沉淀成可复用能力。</p>
+<h4 id="适合场景-22"><a class="header-anchor" href="#适合场景-22"></a>适合场景</h4>
+<ul>
+<li>把自己的论文精读流程做成 skill</li>
+<li>把某类代码审查规范做成 skill</li>
+<li>把实验记录、复现检查、论文润色模板固化下来</li>
+<li>给团队共享统一工作方式</li>
+</ul>
+<h4 id="基本用法-22"><a class="header-anchor" href="#基本用法-22"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请使用 skill-creator，帮我创建一个“开放世界检测论文复现实验检查”skill。</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-20"><a class="header-anchor" href="#注意事项-20"></a>注意事项</h4>
+<p>好的 skill 应该写清触发场景、输入约定、输出格式和质量检查，不要只写一段泛泛提示词。</p>
+<h3 id="9-5-plugin-creator"><a class="header-anchor" href="#9-5-plugin-creator"></a>9.5 plugin-creator</h3>
+<h4 id="一句话用途-23"><a class="header-anchor" href="#一句话用途-23"></a>一句话用途</h4>
+<p><code>plugin-creator</code> 用来创建 Codex plugin 目录结构，包括 plugin.json、skills、MCP 或应用入口等。</p>
+<h4 id="适合场景-23"><a class="header-anchor" href="#适合场景-23"></a>适合场景</h4>
+<ul>
+<li>想把多个 skill 和 MCP 打包成一个插件</li>
+<li>想做一个本地 Codex 插件模板</li>
+<li>想把团队工具链整理成可分发 plugin</li>
+</ul>
+<h4 id="基本用法-23"><a class="header-anchor" href="#基本用法-23"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">请使用 plugin-creator，帮我创建一个 computer-vision-research plugin。</span><br><span class="line">里面包含论文调研、代码复现、实验记录三个 skill 的目录骨架。</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-21"><a class="header-anchor" href="#注意事项-21"></a>注意事项</h4>
+<p>普通个人工作流通常先做 skill；只有多个能力需要打包、共享或带 MCP 时，再考虑 plugin。</p>
+<h3 id="9-6-chrome"><a class="header-anchor" href="#9-6-chrome"></a>9.6 chrome</h3>
+<h4 id="一句话用途-24"><a class="header-anchor" href="#一句话用途-24"></a>一句话用途</h4>
+<p><code>chrome</code> 是 Chrome 浏览器自动化能力，用来操作需要登录态、Cookie、扩展或现有标签页的网站。</p>
+<h4 id="适合场景-24"><a class="header-anchor" href="#适合场景-24"></a>适合场景</h4>
+<ul>
+<li>打开需要登录的学术平台</li>
+<li>操作网页后台或表单</li>
+<li>读取当前 Chrome 标签页内容</li>
+<li>配合浏览器扩展完成需要用户会话的任务</li>
+</ul>
+<h4 id="基本用法-24"><a class="header-anchor" href="#基本用法-24"></a>基本用法</h4>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请使用 chrome，打开我当前 Chrome 里的论文网页，帮我提取标题、作者、摘要和项目链接。</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项-22"><a class="header-anchor" href="#注意事项-22"></a>注意事项</h4>
+<p>普通公开网页检索优先用 <code>deep-research</code> 或浏览工具；只有需要你的浏览器登录态时，再用 <code>chrome</code>。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://qieliqiean.github.io/blog">lian</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://qieliqiean.github.io/blog/2026/05/16/AI-Skills-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B%E6%89%8B%E5%86%8C/">https://qieliqiean.github.io/blog/2026/05/16/AI-Skills-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B%E6%89%8B%E5%86%8C/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://qieliqiean.github.io/blog" target="_blank">且离且安的碎碎念</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/AI%E6%8A%80%E8%83%BD/">AI技能</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/blog/easter-egg-ztoj/" title="Z to J"><img class="cover" src="/blog/image/cover/21.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Z to J</div></div><div class="info-2"><div class="info-item-1">  ...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">lian</div><div class="author-info-description">读研，尝试新技术与记录生活。</div><div class="site-data"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">46</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/qieliqiean"><i class="fab fa-github"></i><span>访问 GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/qieliqiean" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:2895014608@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎交流：2895014608@qq.com</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#AI-Skills-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B%E6%89%8B%E5%86%8C"><span class="toc-text">AI Skills 使用教程手册</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%80%9A%E7%94%A8%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-text">1. 通用使用方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%BD%93%E5%89%8D%E5%B7%B2%E5%AE%89%E8%A3%85-Skill-%E6%80%BB%E8%A7%88"><span class="toc-text">2. 当前已安装 Skill 总览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%A0%94%E7%A9%B6%E8%B0%83%E7%A0%94%E4%B8%8E%E9%80%89%E9%A2%98%E7%B1%BB"><span class="toc-text">3. 研究调研与选题类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-deep-research"><span class="toc-text">3.1 deep-research</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6"><span class="toc-text">前置条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-research-ideation"><span class="toc-text">3.2 research-ideation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-2"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-2"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-2"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E9%87%8D%E7%82%B9"><span class="toc-text">输出重点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-literature-review"><span class="toc-text">3.3 literature-review</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-3"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-3"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-3"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-2"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-explaining-academic-papers"><span class="toc-text">3.4 explaining-academic-papers</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-4"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-4"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-4"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-3"><span class="toc-text">注意事项</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-AMiner-%E5%AD%A6%E6%9C%AF%E6%95%B0%E6%8D%AE%E7%B1%BB"><span class="toc-text">4. AMiner 学术数据类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-aminer-data-search"><span class="toc-text">4.1 aminer-data-search</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-5"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-5"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6-2"><span class="toc-text">前置条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-5"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-4"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-aminer-free-academic"><span class="toc-text">4.2 aminer-free-academic</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-6"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-6"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-6"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-5"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-aminer-academic-search"><span class="toc-text">4.3 aminer-academic-search</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-7"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-7"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-7"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-6"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-aminer-daily-paper"><span class="toc-text">4.4 aminer-daily-paper</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-8"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-8"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-8"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-7"><span class="toc-text">注意事项</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%BC%95%E7%94%A8%E3%80%81%E6%96%87%E7%8C%AE%E4%B8%8E%E5%86%99%E4%BD%9C%E7%B1%BB"><span class="toc-text">5. 引用、文献与写作类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-citation-management"><span class="toc-text">5.1 citation-management</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-9"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-9"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-9"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-8"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-citation-verification"><span class="toc-text">5.2 citation-verification</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-10"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-10"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-10"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-9"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-nature-polishing"><span class="toc-text">5.3 nature-polishing</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-11"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-11"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-11"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-10"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-nature-citation"><span class="toc-text">5.4 nature-citation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-12"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-12"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-12"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-11"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-nature-data"><span class="toc-text">5.5 nature-data</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-13"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-13"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-13"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-12"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-6-nature-response"><span class="toc-text">5.6 nature-response</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-14"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-14"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-14"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-13"><span class="toc-text">注意事项</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%9B%BE%E8%A1%A8%E3%80%81PPT-%E4%B8%8E%E7%BD%91%E9%A1%B5%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="toc-text">6. 图表、PPT 与网页工具类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-nature-figure"><span class="toc-text">6.1 nature-figure</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-15"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-15"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-15"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E8%A7%84%E5%88%99"><span class="toc-text">重要规则</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-nature-paper2ppt"><span class="toc-text">6.2 nature-paper2ppt</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-16"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-16"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-16"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-14"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-ppt-image-to-editable-ppt"><span class="toc-text">6.3 ppt-image-to-editable-ppt</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-17"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-17"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-17"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-15"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-defuddle"><span class="toc-text">6.4 defuddle</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-18"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-18"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-18"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-16"><span class="toc-text">注意事项</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E6%8E%A8%E8%8D%90%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="toc-text">7. 推荐工作流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E6%A3%80%E6%B5%8B%E9%80%89%E9%A2%98%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="toc-text">7.1 开放世界检测选题工作流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E5%86%99%E8%AE%BA%E6%96%87%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="toc-text">7.2 写论文工作流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E7%BB%84%E4%BC%9A%E6%B1%87%E6%8A%A5%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="toc-text">7.3 组会汇报工作流</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%B8%B8%E8%A7%81%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">8. 常见注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E9%9C%80%E8%A6%81-API-Key-%E7%9A%84-Skill"><span class="toc-text">8.1 需要 API Key 的 Skill</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-%E9%9C%80%E8%A6%81%E9%87%8D%E5%90%AF%E7%9A%84%E6%83%85%E5%86%B5"><span class="toc-text">8.2 需要重启的情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-%E6%9C%80%E5%AE%89%E5%85%A8%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8E%9F%E5%88%99"><span class="toc-text">8.3 最安全的使用原则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-Codex-%E5%86%85%E7%BD%AE-%E7%B3%BB%E7%BB%9F-Skill-%E7%AE%80%E8%A1%A8"><span class="toc-text">9. Codex 内置&#x2F;系统 Skill 简表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-imagegen"><span class="toc-text">9.1 imagegen</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-19"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-19"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-19"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-17"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-openai-docs"><span class="toc-text">9.2 openai-docs</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-20"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-20"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-20"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-18"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-skill-installer"><span class="toc-text">9.3 skill-installer</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-21"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-21"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-21"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-19"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-4-skill-creator"><span class="toc-text">9.4 skill-creator</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-22"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-22"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-22"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-20"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-5-plugin-creator"><span class="toc-text">9.5 plugin-creator</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-23"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-23"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-23"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-21"><span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-6-chrome"><span class="toc-text">9.6 chrome</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%A8%E9%80%94-24"><span class="toc-text">一句话用途</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%9C%BA%E6%99%AF-24"><span class="toc-text">适合场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-24"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9-22"><span class="toc-text">注意事项</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-post-series"><div class="item-headline"><i class="fa-solid fa-layer-group"></i><span>系列文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/05/16/AI-Skills-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B%E6%89%8B%E5%86%8C/" title="AI Skills 使用教程手册"><img src="/blog/image/cover/20.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="AI Skills 使用教程手册"></a><div class="content"><a class="title" href="/blog/2026/05/16/AI-Skills-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B%E6%89%8B%E5%86%8C/" title="AI Skills 使用教程手册">AI Skills 使用教程手册</a><time datetime="2026-05-16T07:20:00.000Z" title="发表于 2026-05-16 15:20:00">2026-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2024/10/24/%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%A4%A7%E5%85%A8/" title="提示词大全"><img src="/blog/image/cover/20.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="提示词大全"></a><div class="content"><a class="title" href="/blog/2024/10/24/%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%A4%A7%E5%85%A8/" title="提示词大全">提示词大全</a><time datetime="2024-10-24T07:19:06.000Z" title="发表于 2024-10-24 15:19:06">2024-10-24</time></div></div></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/05/16/AI-Skills-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B%E6%89%8B%E5%86%8C/" title="AI Skills 使用教程手册"><img src="/blog/image/cover/20.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="AI Skills 使用教程手册"/></a><div class="content"><a class="title" href="/blog/2026/05/16/AI-Skills-%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B%E6%89%8B%E5%86%8C/" title="AI Skills 使用教程手册">AI Skills 使用教程手册</a><time datetime="2026-05-16T07:20:00.000Z" title="发表于 2026-05-16 15:20:00">2026-05-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/easter-egg-ztoj/" title="Z to J"><img src="/blog/image/cover/21.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Z to J"/></a><div class="content"><a class="title" href="/blog/easter-egg-ztoj/" title="Z to J">Z to J</a><time datetime="2026-03-22T11:50:03.000Z" title="发表于 2026-03-22 19:50:03">2026-03-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/02/27/%E6%9D%82%E8%AE%B0/Windows-%E7%9B%AE%E5%BD%95%E8%81%94%E6%8E%A5%EF%BC%88Junction%EF%BC%89%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="Windows 目录联接（Junction）使用手册"><img src="/blog/image/cover/17.jpeg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Windows 目录联接（Junction）使用手册"/></a><div class="content"><a class="title" href="/blog/2026/02/27/%E6%9D%82%E8%AE%B0/Windows-%E7%9B%AE%E5%BD%95%E8%81%94%E6%8E%A5%EF%BC%88Junction%EF%BC%89%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" title="Windows 目录联接（Junction）使用手册">Windows 目录联接（Junction）使用手册</a><time datetime="2026-02-27T06:09:50.000Z" title="发表于 2026-02-27 14:09:50">2026-02-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/easter-egg/" title="彩蛋"><img src="/blog/image/cover/22.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="彩蛋"/></a><div class="content"><a class="title" href="/blog/easter-egg/" title="彩蛋">彩蛋</a><time datetime="2026-02-18T05:09:03.000Z" title="发表于 2026-02-18 13:09:03">2026-02-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读"><img src="/blog/image/cover/9.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="【WeDetect】论文阅读"/></a><div class="content"><a class="title" href="/blog/2026/01/21/%E5%BC%80%E6%94%BE%E8%AF%8D%E6%B1%87%E6%A3%80%E6%B5%8B/WeDetect/%E3%80%90WeDetect%E3%80%91%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="【WeDetect】论文阅读">【WeDetect】论文阅读</a><time datetime="2026-01-21T01:41:58.000Z" title="发表于 2026-01-21 09:41:58">2026-01-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2025 - 2026 By lian</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">岁岁平，岁岁安，岁岁平安</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><script src="/blog/true"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark_dimmed' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'qieliqiean/blog',
+      'data-repo-id': 'R_kgDONvpdYw',
+      'data-category-id': 'DIC_kwDONvpdY84C1DqB',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !true) {
+    if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><script defer src="/blog/js/site.js"></script><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><div class="aplayer" data-id="aplayer" data-fixed="true" data-autoplay="true" data-order="random"></div><script>var ap = new APlayer({container: document.querySelector(".aplayer"), fixed: true, autoplay: true, listFolded: true, audio: [{name: "是非题", artist: "王赫野", url: "/blog/music/shifeiti.mp3", cover: ""}, {name: "这世界那么多人", artist: "莫文蔚", url: "/blog/music/zheshijie.mp3", cover: ""}, {name: "唯一", artist: "G.E.M.邓紫棋", url: "/blog/music/weiyi.mp3", cover: ""}, {name: "小城夏天", artist: "LBI利比", url: "/blog/music/xiaochengxiatian.mp3", cover: ""}, {name: "遇见", artist: "孙燕姿", url: "/blog/music/yujian.mp3", cover: ""}, {name: "特别的人", artist: "方大同", url: "/blog/music/tebiederen.mp3", cover: ""}, {name: "永不失联的爱", artist: "周兴哲", url: "/blog/music/yongbushiliande.mp3", cover: ""}, {name: "带我走", artist: "未知", url: "/blog/music/daiwozou.mp3", cover: ""}, {name: "带我走", artist: "杨丞琳", url: "/blog/music/daiwozou_ycl.mp3", cover: ""}, {name: "知我", artist: "国风堂 / 哦漏", url: "/blog/music/zhiwo.mp3", cover: ""}, {name: "在你的身边", artist: "盛哲", url: "/blog/music/zainideshenbian.mp3", cover: ""}]});</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["link[rel=\"canonical\"]","meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      pjax.loadUrl('/blog/404.html')
+    }
+  })
+})()</script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
