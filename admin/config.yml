@@ -4,9 +4,8 @@ backend:
   branch: source
   open_authoring: false
   squash_merges: true
-  # After deploying an OAuth proxy, uncomment and fill these:
-  # base_url: https://your-decap-oauth.example.com
-  # auth_endpoint: /auth
+  base_url: https://blog-cms-auth.2895014608.workers.dev
+  auth_endpoint: /auth
 
 local_backend:
   url: http://localhost:8081/api/v1
