@@ -1,8 +1,8 @@
 backend:
   name: github
-  repo: qieliqiean/blog
+  repo: qieliqiean/blog-source
   branch: source
-  open_authoring: true
+  open_authoring: false
   squash_merges: true
   # After deploying an OAuth proxy, uncomment and fill these:
   # base_url: https://your-decap-oauth.example.com
