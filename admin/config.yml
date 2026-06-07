@@ -17,11 +17,70 @@ media_folder: source/image/uploads
 public_folder: /image/uploads
 
 collections:
+  - name: quick_posts
+    label: 快速发布
+    label_singular: 文章
+    folder: source/_posts/CMS投稿
+    create: true
+    delete: false
+    extension: md
+    format: yaml-frontmatter
+    identifier_field: title
+    summary: "{{title}} - {{date}}"
+    slug: "{{slug}}"
+    path: "{{slug}}"
+    media_folder: "{{filename}}"
+    public_folder: "{{filename}}"
+    fields:
+      - label: 标题
+        name: title
+        widget: string
+      - label: 发布时间
+        name: date
+        widget: datetime
+        default: "{{now}}"
+        format: "YYYY-MM-DD HH:mm:ss"
+        date_format: "YYYY-MM-DD"
+        time_format: "HH:mm:ss"
+      - label: 系列
+        name: series
+        widget: string
+        required: false
+      - label: 封面图
+        name: cover
+        widget: image
+        required: false
+        allow_multiple: false
+        choose_url: false
+        media_folder: /source/image/cover
+        public_folder: /image/cover
+      - label: 启用公式渲染
+        name: mathjax
+        widget: boolean
+        required: false
+        default: true
+      - label: 标签
+        name: tags
+        widget: list
+        required: false
+        allow_add: true
+      - label: 分类
+        name: categories
+        widget: list
+        required: false
+        allow_add: true
+      - label: 关键词
+        name: keywords
+        widget: string
+        required: false
+      - label: 正文
+        name: body
+        widget: markdown
   - name: posts
-    label: 文章
+    label: 文章库
     label_singular: 文章
     folder: source/_posts
-    create: true
+    create: false
     delete: false
     extension: md
     format: yaml-frontmatter
@@ -56,6 +115,9 @@ collections:
         widget: image
         required: false
         allow_multiple: false
+        choose_url: false
+        media_folder: /source/image/cover
+        public_folder: /image/cover
       - label: 启用公式渲染
         name: mathjax
         widget: boolean
