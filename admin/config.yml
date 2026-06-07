@@ -87,6 +87,8 @@ collections:
     identifier_field: title
     summary: "{{title}} - {{date}}"
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    media_folder: "{{filename}}"
+    public_folder: "{{filename}}"
     nested:
       depth: 100
       summary: "{{title}}"
