@@ -80,7 +80,7 @@ collections:
     label: 文章库
     label_singular: 文章
     folder: source/_posts
-    create: false
+    create: true
     delete: false
     extension: md
     format: yaml-frontmatter
@@ -96,6 +96,7 @@ collections:
     meta:
       path:
         label: 保存路径
+        hint: 进入文件夹后新建会自动生成“当前目录/文章名”，也可以手动修改
         widget: string
         index_file: index
     fields:
