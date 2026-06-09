@@ -223,6 +223,10 @@
       if (!asset) return '';
       if (typeof asset === 'string') return asset;
 
+      if (asset && typeof asset.url === 'string') {
+        return asset.url;
+      }
+
       const nextValue = String(typeof asset.toString === 'function' ? asset.toString() : asset);
       return nextValue && nextValue !== '[object Object]' ? nextValue : '';
     } catch (error) {
@@ -304,14 +308,16 @@
     if (URL_LIKE_RE.test(normalized)) return normalized;
 
     const cmsAsset = resolveAssetWithCms(normalized, getAsset);
-    if (cmsAsset) return cmsAsset;
+    const candidatePath = String(cmsAsset || normalized).trim();
 
-    if (normalized.startsWith('/')) {
-      return absolutizeSitePath(normalized);
+    if (URL_LIKE_RE.test(candidatePath)) return candidatePath;
+
+    if (candidatePath.startsWith('/')) {
+      return absolutizeSitePath(candidatePath);
     }
 
-    const publishedAsset = getPublishedAssetUrl(normalized, entry);
-    return publishedAsset || normalized;
+    const publishedAsset = getPublishedAssetUrl(candidatePath, entry);
+    return publishedAsset || candidatePath;
   }
 
   function rewriteStyleUrls(styleValue, resolveUrl) {
