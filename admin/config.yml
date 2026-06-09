@@ -96,9 +96,8 @@ collections:
     meta:
       path:
         label: 保存路径
-        hint: 进入文件夹后新建会自动生成“当前目录/文章名”，也可以手动修改
+        hint: 进入文件夹后新建会自动生成“当前目录/文章名.md”，正文图片会放进同名文件夹
         widget: string
-        index_file: index
     fields:
       - label: 标题
         name: title

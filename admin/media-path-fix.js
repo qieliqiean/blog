@@ -2,11 +2,19 @@
   const TARGET_COLLECTIONS = new Set(['quick_posts', 'posts']);
   const IMAGE_EXT_RE = /\.(?:avif|bmp|gif|heic|heif|jpe?g|png|svg|tiff?|webp)(?:[?#].*)?$/i;
   const SKIP_PATH_RE = /^(?:[a-z][a-z0-9+.-]*:|\/\/|\/|#)/i;
+  const URL_LIKE_RE = /^(?:https?:|blob:|data:|\/\/)/i;
   const POSTS_COLLECTION_PATH_RE = /^\/collections\/posts(?:\/filter(?:\/.*)?)?\/?$/;
   const POSTS_NEW_PATH_RE = /^\/collections\/posts\/new\/?$/;
   const POSTS_FILTER_PREFIX = '/collections/posts/filter/';
   const POSTS_CREATE_BUTTON_ATTR = 'data-blog-cms-folder-create-button';
   const POSTS_CREATE_BUTTON_STYLE_ID = 'blog-cms-folder-create-button-style';
+  const PREVIEW_STYLE_ID = 'blog-cms-preview-style';
+  const SITE_URL = 'https://qieliqiean.github.io/blog';
+  const SITE_URL_OBJECT = new URL(SITE_URL.endsWith('/') ? SITE_URL : `${SITE_URL}/`);
+  const SITE_ORIGIN = SITE_URL_OBJECT.origin;
+  const SITE_BASE_PATH = normalizePathPart(SITE_URL_OBJECT.pathname);
+  const SITE_BASE_PREFIX = SITE_BASE_PATH ? `/${SITE_BASE_PATH}` : '';
+  let previewTemplatesRegistered = false;
 
   function normalizeLabelText(value) {
     return String(value || '').replace(/\s+/g, ' ').trim();
@@ -14,6 +22,15 @@
 
   function getEntryValue(entry, key) {
     return entry && typeof entry.get === 'function' ? entry.get(key) : '';
+  }
+
+  function getEntryData(entry) {
+    return getEntryValue(entry, 'data');
+  }
+
+  function getEntryDataValue(entry, key) {
+    const data = getEntryData(entry);
+    return data && typeof data.get === 'function' ? data.get(key) : '';
   }
 
   function normalizePathPart(value) {
@@ -147,6 +164,345 @@
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
       .replace(/^-|-$/g, '');
+  }
+
+  function encodePathSegments(value) {
+    return String(value || '')
+      .split('/')
+      .filter(Boolean)
+      .map(segment => encodeURIComponent(segment))
+      .join('/');
+  }
+
+  function absolutizeSitePath(rawPath) {
+    const path = String(rawPath || '').trim();
+    if (!path) return '';
+    if (URL_LIKE_RE.test(path)) return path;
+
+    if (SITE_BASE_PREFIX && (path === SITE_BASE_PREFIX || path.startsWith(`${SITE_BASE_PREFIX}/`))) {
+      return `${SITE_ORIGIN}${path}`;
+    }
+
+    if (path.startsWith('/')) {
+      return `${SITE_ORIGIN}${SITE_BASE_PREFIX}${path}`;
+    }
+
+    return `${SITE_ORIGIN}${SITE_BASE_PREFIX}/${path.replace(/^\/+/, '')}`;
+  }
+
+  function extractMarkdownImagePaths(markdown) {
+    if (!markdown) return [];
+
+    let inFence = false;
+    const paths = [];
+
+    String(markdown)
+      .split('\n')
+      .forEach(line => {
+        if (/^\s*(```|~~~)/.test(line)) {
+          inFence = !inFence;
+          return;
+        }
+
+        if (inFence) return;
+
+        line.replace(/!\[[^\]]*]\(([^)\s]+)(?:[^)]*)\)/g, (match, imagePath) => {
+          paths.push(imagePath);
+          return match;
+        });
+      });
+
+    return paths;
+  }
+
+  function resolveAssetWithCms(rawPath, getAsset) {
+    if (!rawPath || typeof getAsset !== 'function') return '';
+
+    try {
+      const asset = getAsset(rawPath);
+      if (!asset) return '';
+      if (typeof asset === 'string') return asset;
+
+      const nextValue = String(typeof asset.toString === 'function' ? asset.toString() : asset);
+      return nextValue && nextValue !== '[object Object]' ? nextValue : '';
+    } catch (error) {
+      return '';
+    }
+  }
+
+  function getEntryDateParts(entry) {
+    const rawValue = String(getEntryDataValue(entry, 'date') || '').trim();
+    const match = rawValue.match(/(\d{4})-(\d{2})-(\d{2})/);
+    if (match) {
+      return {
+        year: match[1],
+        month: match[2],
+        day: match[3],
+      };
+    }
+
+    if (!rawValue) return null;
+
+    const parsed = new Date(rawValue);
+    if (Number.isNaN(parsed.getTime())) return null;
+
+    return {
+      year: String(parsed.getFullYear()),
+      month: String(parsed.getMonth() + 1).padStart(2, '0'),
+      day: String(parsed.getDate()).padStart(2, '0'),
+    };
+  }
+
+  function getEntrySourcePath(entry) {
+    const entryPath = String(getEntryValue(entry, 'path') || '').trim();
+    if (entryPath) {
+      return entryPath
+        .replace(/^source\/_posts\//, '')
+        .replace(/^_posts\//, '')
+        .replace(/\\/g, '/')
+        .replace(/\.md$/i, '');
+    }
+
+    const dataPath = String(getEntryDataValue(entry, 'path') || '').trim();
+    if (dataPath) {
+      return dataPath.replace(/\\/g, '/').replace(/\.md$/i, '');
+    }
+
+    const slug = String(getEntryValue(entry, 'slug') || '').trim();
+    return slug ? slug.replace(/\\/g, '/').replace(/\.md$/i, '') : '';
+  }
+
+  function getEntryPermalinkBase(entry) {
+    const customPermalink = normalizePathPart(getEntryDataValue(entry, 'permalink'));
+    if (customPermalink) {
+      return `${SITE_BASE_PREFIX}/${encodePathSegments(customPermalink)}`;
+    }
+
+    const dateParts = getEntryDateParts(entry);
+    const sourcePath = normalizePathPart(getEntrySourcePath(entry));
+    if (!dateParts || !sourcePath) return '';
+
+    return `${SITE_BASE_PREFIX}/${dateParts.year}/${dateParts.month}/${dateParts.day}/${encodePathSegments(sourcePath)}`;
+  }
+
+  function getPublishedAssetUrl(rawPath, entry) {
+    const normalized = String(rawPath || '').trim().replace(/^\.\//, '');
+    if (!normalized || URL_LIKE_RE.test(normalized) || normalized.startsWith('/')) return '';
+
+    const permalinkBase = getEntryPermalinkBase(entry);
+    if (!permalinkBase) return '';
+
+    const filename = normalized.split('/').filter(Boolean).pop();
+    if (!filename) return '';
+
+    return `${SITE_ORIGIN}${permalinkBase}/${encodePathSegments(filename)}`;
+  }
+
+  function resolveCmsImageUrl(rawPath, entry, getAsset) {
+    const normalized = String(rawPath || '').trim();
+    if (!normalized) return '';
+    if (URL_LIKE_RE.test(normalized)) return normalized;
+
+    const cmsAsset = resolveAssetWithCms(normalized, getAsset);
+    if (cmsAsset) return cmsAsset;
+
+    if (normalized.startsWith('/')) {
+      return absolutizeSitePath(normalized);
+    }
+
+    const publishedAsset = getPublishedAssetUrl(normalized, entry);
+    return publishedAsset || normalized;
+  }
+
+  function rewriteStyleUrls(styleValue, resolveUrl) {
+    return String(styleValue || '').replace(/url\((['"]?)([^'")]+)\1\)/g, (match, quote, rawPath) => {
+      const nextUrl = resolveUrl(rawPath);
+      return nextUrl ? `url(${quote}${nextUrl}${quote})` : match;
+    });
+  }
+
+  function patchImageElements(root, resolveUrl) {
+    if (!root || typeof root.querySelectorAll !== 'function') return;
+
+    root.querySelectorAll('img[src]').forEach(image => {
+      const rawSrc = String(image.getAttribute('src') || '').trim();
+      const nextSrc = resolveUrl(rawSrc);
+      if (nextSrc && nextSrc !== rawSrc) {
+        image.setAttribute('src', nextSrc);
+      }
+    });
+  }
+
+  function patchBackgroundImageElements(root, resolveUrl) {
+    if (!root || typeof root.querySelectorAll !== 'function') return;
+
+    root.querySelectorAll('[style*="background-image"]').forEach(element => {
+      const rawStyle = element.getAttribute('style') || '';
+      const nextStyle = rewriteStyleUrls(rawStyle, resolveUrl);
+      if (nextStyle !== rawStyle) {
+        element.setAttribute('style', nextStyle);
+      }
+    });
+  }
+
+  function patchAdminDocumentMedia() {
+    patchImageElements(document, rawPath => {
+      return String(rawPath || '').startsWith('/image/') ? absolutizeSitePath(rawPath) : '';
+    });
+
+    patchBackgroundImageElements(document, rawPath => {
+      return String(rawPath || '').startsWith('/image/') ? absolutizeSitePath(rawPath) : '';
+    });
+  }
+
+  function patchPreviewRoot(root, entry, getAsset) {
+    if (!root) return;
+
+    const resolveUrl = rawPath => resolveCmsImageUrl(rawPath, entry, getAsset);
+    patchImageElements(root, resolveUrl);
+    patchBackgroundImageElements(root, resolveUrl);
+  }
+
+  function createPostPreviewComponent() {
+    return createClass({
+      displayName: 'BlogCmsPostPreview',
+
+      componentDidMount: function () {
+        this.setupPreviewObserver();
+        this.patchPreviewMedia();
+      },
+
+      componentDidUpdate: function () {
+        this.patchPreviewMedia();
+      },
+
+      componentWillUnmount: function () {
+        if (this.previewObserver) {
+          this.previewObserver.disconnect();
+          this.previewObserver = null;
+        }
+      },
+
+      setRootRef: function (element) {
+        this.previewRoot = element;
+      },
+
+      setupPreviewObserver: function () {
+        if (this.previewObserver || !this.previewRoot) return;
+
+        this.previewObserver = new MutationObserver(() => {
+          this.patchPreviewMedia();
+        });
+
+        this.previewObserver.observe(this.previewRoot, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ['src', 'style'],
+        });
+      },
+
+      patchPreviewMedia: function () {
+        patchPreviewRoot(this.previewRoot, this.props.entry, this.props.getAsset);
+      },
+
+      render: function () {
+        const title = String(getEntryDataValue(this.props.entry, 'title') || '未命名文章');
+        const date = String(getEntryDataValue(this.props.entry, 'date') || '').trim();
+        const cover = getEntryDataValue(this.props.entry, 'cover');
+        const coverUrl = resolveCmsImageUrl(cover, this.props.entry, this.props.getAsset);
+
+        return h(
+          'article',
+          {
+            className: 'blog-cms-preview',
+            ref: element => this.setRootRef(element),
+          },
+          coverUrl
+            ? h(
+              'figure',
+              { className: 'blog-cms-preview__cover' },
+              h('img', { src: coverUrl, alt: title })
+            )
+            : null,
+          h(
+            'header',
+            { className: 'blog-cms-preview__header' },
+            h('h1', { className: 'blog-cms-preview__title' }, title),
+            date ? h('p', { className: 'blog-cms-preview__meta' }, date) : null
+          ),
+          h('section', { className: 'blog-cms-preview__content' }, this.props.widgetFor('body'))
+        );
+      },
+    });
+  }
+
+  function ensurePreviewStyles(CMS) {
+    if (document.getElementById(PREVIEW_STYLE_ID) || typeof CMS.registerPreviewStyle !== 'function') return;
+
+    const previewCss = `
+      .blog-cms-preview {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 28px 24px 48px;
+        color: #1f2937;
+        font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+        line-height: 1.8;
+      }
+
+      .blog-cms-preview__cover {
+        margin: 0 0 24px;
+      }
+
+      .blog-cms-preview__cover img {
+        display: block;
+        width: 100%;
+        max-height: 320px;
+        border-radius: 18px;
+        object-fit: cover;
+        box-shadow: 0 18px 50px rgba(15, 23, 42, 0.14);
+      }
+
+      .blog-cms-preview__header {
+        margin-bottom: 24px;
+      }
+
+      .blog-cms-preview__title {
+        margin: 0;
+        color: #111827;
+        font-size: 2rem;
+        line-height: 1.25;
+      }
+
+      .blog-cms-preview__meta {
+        margin: 10px 0 0;
+        color: #6b7280;
+        font-size: 0.95rem;
+      }
+
+      .blog-cms-preview__content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+      }
+    `;
+
+    CMS.registerPreviewStyle(previewCss, { raw: true });
+
+    const marker = document.createElement('meta');
+    marker.id = PREVIEW_STYLE_ID;
+    document.head.appendChild(marker);
+  }
+
+  function registerPreviewTemplates(CMS) {
+    if (previewTemplatesRegistered || typeof createClass !== 'function' || typeof h !== 'function') return;
+
+    ensurePreviewStyles(CMS);
+
+    const previewComponent = createPostPreviewComponent();
+    CMS.registerPreviewTemplate('quick_posts', previewComponent);
+    CMS.registerPreviewTemplate('posts', previewComponent);
+    previewTemplatesRegistered = true;
   }
 
   function ensurePostsCreateButtonStyles() {
@@ -319,6 +675,7 @@
   function runPostsEnhancements() {
     bindPostsPathSync();
     ensurePostsCollectionCreateButton();
+    patchAdminDocumentMedia();
   }
 
   function schedulePostsEnhancements() {
@@ -337,6 +694,8 @@
   }
 
   function registerMediaPathFix(CMS) {
+    registerPreviewTemplates(CMS);
+
     CMS.registerEventListener({
       name: 'preSave',
       handler: ({ entry, collection }) => {
@@ -363,6 +722,8 @@
   }
 
   window.BlogCmsMediaPathFix = {
+    extractMarkdownImagePaths,
+    resolveCmsImageUrl,
     rewriteMarkdownImagePaths,
     postAssetFolderName,
   };
