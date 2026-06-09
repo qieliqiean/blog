@@ -190,11 +190,11 @@
     return `${SITE_ORIGIN}${SITE_BASE_PREFIX}/${path.replace(/^\/+/, '')}`;
   }
 
-  function extractMarkdownImagePaths(markdown) {
+  function extractMarkdownImages(markdown) {
     if (!markdown) return [];
 
     let inFence = false;
-    const paths = [];
+    const images = [];
 
     String(markdown)
       .split('\n')
@@ -206,13 +206,20 @@
 
         if (inFence) return;
 
-        line.replace(/!\[[^\]]*]\(([^)\s]+)(?:[^)]*)\)/g, (match, imagePath) => {
-          paths.push(imagePath);
+        line.replace(/!\[([^\]]*)]\(([^)\s]+)(?:[^)]*)\)/g, (match, alt, imagePath) => {
+          images.push({
+            alt: String(alt || '').trim(),
+            path: imagePath,
+          });
           return match;
         });
       });
 
-    return paths;
+    return images;
+  }
+
+  function extractMarkdownImagePaths(markdown) {
+    return extractMarkdownImages(markdown).map(image => image.path);
   }
 
   function resolveAssetWithCms(rawPath, getAsset) {
@@ -351,6 +358,43 @@
     });
   }
 
+  function patchMarkdownPreviewImages(root, entry, getAsset) {
+    if (!root || typeof root.querySelectorAll !== 'function') return;
+
+    const contentRoot = root.querySelector('.blog-cms-preview__content') || root;
+    const markdownImages = extractMarkdownImages(getEntryDataValue(entry, 'body'));
+    if (!markdownImages.length) return;
+
+    const imageNodes = Array.from(contentRoot.querySelectorAll('img'));
+    if (!imageNodes.length) return;
+
+    const usedIndexes = new Set();
+
+    imageNodes.forEach((imageNode, nodeIndex) => {
+      const altText = String(imageNode.getAttribute('alt') || '').trim();
+
+      let matchIndex = markdownImages.findIndex((image, imageIndex) => {
+        return !usedIndexes.has(imageIndex) && image.alt === altText;
+      });
+
+      if (matchIndex < 0 && nodeIndex < markdownImages.length && !usedIndexes.has(nodeIndex)) {
+        matchIndex = nodeIndex;
+      }
+
+      if (matchIndex < 0) return;
+
+      usedIndexes.add(matchIndex);
+
+      const image = markdownImages[matchIndex];
+      const nextSrc = resolveCmsImageUrl(image.path, entry, getAsset);
+      const currentSrc = String(imageNode.getAttribute('src') || '').trim();
+
+      if (nextSrc && nextSrc !== currentSrc) {
+        imageNode.setAttribute('src', nextSrc);
+      }
+    });
+  }
+
   function patchAdminDocumentMedia() {
     patchImageElements(document, rawPath => {
       return String(rawPath || '').startsWith('/image/') ? absolutizeSitePath(rawPath) : '';
@@ -367,6 +411,7 @@
     const resolveUrl = rawPath => resolveCmsImageUrl(rawPath, entry, getAsset);
     patchImageElements(root, resolveUrl);
     patchBackgroundImageElements(root, resolveUrl);
+    patchMarkdownPreviewImages(root, entry, getAsset);
   }
 
   function createPostPreviewComponent() {
