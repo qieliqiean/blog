@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qieliqiean.github.io/blog/image/5268d877a2a04864b36b4961ab793f4f.jpg">
 <meta property="article:published_time" content="2025-10-17T18:22:18.000Z">
-<meta property="article:modified_time" content="2026-06-10T10:33:57.207Z">
+<meta property="article:modified_time" content="2026-06-10T10:48:29.990Z">
 <meta property="article:author" content="lian">
 <meta property="article:tag" content="深度学习">
 <meta name="twitter:card" content="summary">
@@ -18,7 +18,7 @@
   "url": "https://qieliqiean.github.io/blog/2025/10/17/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/Zero-Shot-Object-Detection/",
   "image": "https://qieliqiean.github.io/blog/image/5268d877a2a04864b36b4961ab793f4f.jpg",
   "datePublished": "2025-10-17T18:22:18.000Z",
-  "dateModified": "2026-06-10T10:33:57.207Z",
+  "dateModified": "2026-06-10T10:48:29.990Z",
   "author": [
     {
       "@type": "Person",
@@ -208,7 +208,7 @@ btf.addGlobalFn('pjaxComplete', () => {
     btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
     btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
   }
-})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/blog/easter-egg/"><i class="fa-fw fas fa-egg"></i><span> 彩蛋</span></a></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/image/5268d877a2a04864b36b4961ab793f4f.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">Zero-Shot Object Detection</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/blog/easter-egg/"><i class="fa-fw fas fa-egg"></i><span> 彩蛋</span></a></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Zero-Shot Object Detection</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-10-17T18:22:18.000Z" title="发表于 2025-10-17 18:22:18">2025-10-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-06-10T10:33:57.207Z" title="更新于 2026-06-10 10:33:57">2026-06-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">36.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>178分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><nav class="series-breadcrumb" aria-label="系列导航">
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/image/IMG_20250131_155849.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/blog/easter-egg/"><i class="fa-fw fas fa-egg"></i><span> 彩蛋</span></a></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/image/5268d877a2a04864b36b4961ab793f4f.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><span class="site-name">且离且安的碎碎念</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">Zero-Shot Object Detection</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/blog/easter-egg/"><i class="fa-fw fas fa-egg"></i><span> 彩蛋</span></a></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Zero-Shot Object Detection</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-10-17T18:22:18.000Z" title="发表于 2025-10-17 18:22:18">2025-10-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-06-10T10:48:29.990Z" title="更新于 2026-06-10 10:48:29">2026-06-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">36.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>178分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><nav class="series-breadcrumb" aria-label="系列导航">
   <a href="/blog/series/">系列文章</a>
   <span class="series-breadcrumb__sep">/</span>
   <a href="/blog/series/6K665paH6ZiF6K-7/">论文阅读</a>
@@ -417,9 +417,9 @@ btf.addGlobalFn('pjaxComplete', () => {
 <p><strong>提取视觉特征</strong>
 利用CNN（文中采用Inception-ResNet v2）从候选框区域提取深度特征：</p>
 
-    <span id="mjx-c777a8e">
+    <span id="mjx-dd61ba">
       <style>
-      #mjx-c777a8e{
+      #mjx-dd61ba{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -582,9 +582,9 @@ g[data-mml-node="xypic"] path {
 <p><strong>获取语义特征</strong>
 对应的类标签（如“dog”、“car”）使用<strong>词向量</strong>（如GloVe或fastText）表示：</p>
 
-    <span id="mjx-7df0175">
+    <span id="mjx-9738486">
       <style>
-      #mjx-7df0175{
+      #mjx-9738486{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -747,9 +747,9 @@ g[data-mml-node="xypic"] path {
 <p><strong>学习投影矩阵</strong>
 作者学习一个线性投影</p>
 
-    <span id="mjx-2b5c491">
+    <span id="mjx-a7f07a2">
       <style>
-      #mjx-2b5c491{
+      #mjx-a7f07a2{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -909,9 +909,9 @@ g[data-mml-node="xypic"] path {
     </span>
   <p>将视觉特征映射到语义空间：</p>
 
-    <span id="mjx-eb04442">
+    <span id="mjx-b5dfe9">
       <style>
-      #mjx-eb04442{
+      #mjx-b5dfe9{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1075,9 +1075,9 @@ g[data-mml-node="xypic"] path {
 <hr>
 <h3 id="⚖️-相似度与损失函数"><a class="header-anchor" href="#⚖️-相似度与损失函数"></a>⚖️ 相似度与损失函数</h3>
 <p>模型通过<strong>余弦相似度</strong>衡量投影特征 
-    <span id="mjx-bf6ae3c">
+    <span id="mjx-ce28d77">
       <style>
-      #mjx-bf6ae3c{
+      #mjx-ce28d77{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1236,9 +1236,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="2.213ex" height="2.034ex" role="img" focusable="false" viewBox="0 -694 978 899" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D713" d="M161 441Q202 441 226 417T250 358Q250 338 218 252T187 127Q190 85 214 61Q235 43 257 37Q275 29 288 29H289L371 360Q455 691 456 692Q459 694 472 694Q492 694 492 687Q492 678 411 356Q329 28 329 27T335 26Q421 26 498 114T576 278Q576 302 568 319T550 343T532 361T524 384Q524 405 541 424T583 443Q602 443 618 425T634 366Q634 337 623 288T605 220Q573 125 492 57T329 -11H319L296 -104Q272 -198 272 -199Q270 -205 252 -205H239Q233 -199 233 -197Q233 -192 256 -102T279 -9Q272 -8 265 -8Q106 14 106 139Q106 174 139 264T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Q21 299 34 333T82 404T161 441Z"></path></g><g data-mml-node="mi" transform="translate(684,-150) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>ψ</mi><mi>i</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
    与类语义向量 
-    <span id="mjx-c086e51">
+    <span id="mjx-7e7661">
       <style>
-      #mjx-c086e51{
+      #mjx-7e7661{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1398,9 +1398,9 @@ g[data-mml-node="xypic"] path {
     </span>
    的匹配程度：</p>
 
-    <span id="mjx-98b8e3">
+    <span id="mjx-172992b">
       <style>
-      #mjx-98b8e3{
+      #mjx-172992b{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1560,9 +1560,9 @@ g[data-mml-node="xypic"] path {
     </span>
   <p>训练时采用<strong>最大间隔损失（max-margin loss）</strong>，保证正确类别的相似度高于错误类别：</p>
 
-    <span id="mjx-9359115">
+    <span id="mjx-a3554d8">
       <style>
-      #mjx-9359115{
+      #mjx-a3554d8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1723,9 +1723,9 @@ g[data-mml-node="xypic"] path {
   <p>其中：</p>
 <ul>
 <li>
-    <span id="mjx-9c754ef">
+    <span id="mjx-1f3ed6e">
       <style>
-      #mjx-9c754ef{
+      #mjx-1f3ed6e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -1885,9 +1885,9 @@ g[data-mml-node="xypic"] path {
     </span>
    是margin；</li>
 <li>
-    <span id="mjx-b3391b9">
+    <span id="mjx-35cdc48">
       <style>
-      #mjx-b3391b9{
+      #mjx-35cdc48{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2052,9 +2052,9 @@ g[data-mml-node="xypic"] path {
 <p><strong>损失计算：</strong></p>
 <ul>
 <li>该损失函数要求，真实类别
-    <span id="mjx-4d9a623">
+    <span id="mjx-b1d92c2">
       <style>
-      #mjx-4d9a623{
+      #mjx-b1d92c2{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2213,9 +2213,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.464ex;" xmlns="http://www.w3.org/2000/svg" width="1.848ex" height="1.464ex" role="img" focusable="false" viewBox="0 -442 817 647" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D466" d="M21 287Q21 301 36 335T84 406T158 442Q199 442 224 419T250 355Q248 336 247 334Q247 331 231 288T198 191T182 105Q182 62 196 45T238 27Q261 27 281 38T312 61T339 94Q339 95 344 114T358 173T377 247Q415 397 419 404Q432 431 462 431Q475 431 483 424T494 412T496 403Q496 390 447 193T391 -23Q363 -106 294 -155T156 -205Q111 -205 77 -183T43 -117Q43 -95 50 -80T69 -58T89 -48T106 -45Q150 -45 150 -87Q150 -107 138 -122T115 -142T102 -147L99 -148Q101 -153 118 -160T152 -167H160Q177 -167 186 -165Q219 -156 247 -127T290 -65T313 -9T321 21L315 17Q309 13 296 6T270 -6Q250 -11 231 -11Q185 -11 150 11T104 82Q103 89 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(523,-150) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>y</mi><mi>i</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   的相似度
-    <span id="mjx-5e11745">
+    <span id="mjx-85c5bca">
       <style>
-      #mjx-5e11745{
+      #mjx-85c5bca{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2374,9 +2374,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="2.679ex" height="1.952ex" role="img" focusable="false" viewBox="0 -705 1183.9 862.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D446" d="M308 24Q367 24 416 76T466 197Q466 260 414 284Q308 311 278 321T236 341Q176 383 176 462Q176 523 208 573T273 648Q302 673 343 688T407 704H418H425Q521 704 564 640Q565 640 577 653T603 682T623 704Q624 704 627 704T632 705Q645 705 645 698T617 577T585 459T569 456Q549 456 549 465Q549 471 550 475Q550 478 551 494T553 520Q553 554 544 579T526 616T501 641Q465 662 419 662Q362 662 313 616T263 510Q263 480 278 458T319 427Q323 425 389 408T456 390Q490 379 522 342T554 242Q554 216 546 186Q541 164 528 137T492 78T426 18T332 -20Q320 -22 298 -22Q199 -22 144 33L134 44L106 13Q83 -14 78 -18T65 -22Q52 -22 52 -14Q52 -11 110 221Q112 227 130 227H143Q149 221 149 216Q149 214 148 207T144 186T142 153Q144 114 160 87T203 47T255 29T308 24Z"></path></g><g data-mml-node="TeXAtom" transform="translate(646,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(345,0)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>S</mi><mrow data-mjx-texclass="ORD"><mi>i</mi><mi>i</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
     </span>
    要大于所有其他类别
-    <span id="mjx-6d830ec">
+    <span id="mjx-20ab1ff">
       <style>
-      #mjx-6d830ec{
+      #mjx-20ab1ff{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2535,9 +2535,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.486ex;" xmlns="http://www.w3.org/2000/svg" width="10.893ex" height="2.106ex" role="img" focusable="false" viewBox="0 -716 4814.8 931" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g><g data-mml-node="mo" transform="translate(689.8,0)"><path data-c="2208" d="M84 250Q84 372 166 450T360 539Q361 539 377 539T419 540T469 540H568Q583 532 583 520Q583 511 570 501L466 500Q355 499 329 494Q280 482 242 458T183 409T147 354T129 306T124 272V270H568Q583 262 583 250T568 230H124V228Q124 207 134 177T167 112T231 48T328 7Q355 1 466 0H570Q583 -10 583 -20Q583 -32 568 -40H471Q464 -40 446 -40T417 -41Q262 -41 172 45Q84 127 84 250Z"></path></g><g data-mml-node="mi" transform="translate(1634.6,0)"><path data-c="1D446" d="M308 24Q367 24 416 76T466 197Q466 260 414 284Q308 311 278 321T236 341Q176 383 176 462Q176 523 208 573T273 648Q302 673 343 688T407 704H418H425Q521 704 564 640Q565 640 577 653T603 682T623 704Q624 704 627 704T632 705Q645 705 645 698T617 577T585 459T569 456Q549 456 549 465Q549 471 550 475Q550 478 551 494T553 520Q553 554 544 579T526 616T501 641Q465 662 419 662Q362 662 313 616T263 510Q263 480 278 458T319 427Q323 425 389 408T456 390Q490 379 522 342T554 242Q554 216 546 186Q541 164 528 137T492 78T426 18T332 -20Q320 -22 298 -22Q199 -22 144 33L134 44L106 13Q83 -14 78 -18T65 -22Q52 -22 52 -14Q52 -11 110 221Q112 227 130 227H143Q149 221 149 216Q149 214 148 207T144 186T142 153Q144 114 160 87T203 47T255 29T308 24Z"></path></g><g data-mml-node="mo" transform="translate(2279.6,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mi" transform="translate(2724.2,0)"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g><g data-mml-node="mo" transform="translate(3414,0)"><path data-c="2260" d="M166 -215T159 -215T147 -212T141 -204T139 -197Q139 -190 144 -183L306 133H70Q56 140 56 153Q56 168 72 173H327L406 327H72Q56 332 56 347Q56 360 70 367H426Q597 702 602 707Q605 716 618 716Q625 716 630 712T636 703T638 696Q638 692 471 367H707Q722 359 722 347Q722 336 708 328L451 327L371 173H708Q722 163 722 153Q722 140 707 133H351Q175 -210 170 -212Q166 -215 159 -215Z"></path></g><g data-mml-node="mi" transform="translate(4469.8,0)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>j</mi><mo>∈</mo><mi>S</mi><mo>,</mo><mi>j</mi><mo>≠</mo><mi>i</mi></math></mjx-assistive-mml></mjx-container>
     </span>
   的相似度
-    <span id="mjx-230880d">
+    <span id="mjx-cebd391">
       <style>
-      #mjx-230880d{
+      #mjx-cebd391{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2698,9 +2698,9 @@ g[data-mml-node="xypic"] path {
   </li>
 <li><strong>最大间隔</strong>：为了确保正确类别的预测相对于错误类别的预测有足够大的间隔，损失函数通过<strong>最大间隔</strong>的思想来优化：</li>
 <li><strong>若</strong>
-    <span id="mjx-7d8297e">
+    <span id="mjx-3e45fc8">
       <style>
-      #mjx-7d8297e{
+      #mjx-3e45fc8{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -2859,9 +2859,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="2.679ex" height="1.952ex" role="img" focusable="false" viewBox="0 -705 1183.9 862.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D446" d="M308 24Q367 24 416 76T466 197Q466 260 414 284Q308 311 278 321T236 341Q176 383 176 462Q176 523 208 573T273 648Q302 673 343 688T407 704H418H425Q521 704 564 640Q565 640 577 653T603 682T623 704Q624 704 627 704T632 705Q645 705 645 698T617 577T585 459T569 456Q549 456 549 465Q549 471 550 475Q550 478 551 494T553 520Q553 554 544 579T526 616T501 641Q465 662 419 662Q362 662 313 616T263 510Q263 480 278 458T319 427Q323 425 389 408T456 390Q490 379 522 342T554 242Q554 216 546 186Q541 164 528 137T492 78T426 18T332 -20Q320 -22 298 -22Q199 -22 144 33L134 44L106 13Q83 -14 78 -18T65 -22Q52 -22 52 -14Q52 -11 110 221Q112 227 130 227H143Q149 221 149 216Q149 214 148 207T144 186T142 153Q144 114 160 87T203 47T255 29T308 24Z"></path></g><g data-mml-node="TeXAtom" transform="translate(646,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(345,0)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>S</mi><mrow data-mjx-texclass="ORD"><mi>i</mi><mi>i</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
     </span>
    与$ S_{ij}$ 之间的差距小于预设的 $ m
-    <span id="mjx-a9cbffc">
+    <span id="mjx-67bfebb">
       <style>
-      #mjx-a9cbffc{
+      #mjx-67bfebb{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3021,9 +3021,9 @@ g[data-mml-node="xypic"] path {
     </span>
   m - S_{ii} + S_{ij}$，从而惩罚预测错误的情况。</li>
 <li><strong>若</strong>
-    <span id="mjx-8a74035">
+    <span id="mjx-882d02f">
       <style>
-      #mjx-8a74035{
+      #mjx-882d02f{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3191,9 +3191,9 @@ g[data-mml-node="xypic"] path {
 <hr>
 <h3 id="🔍-测试阶段（Zero-Shot-Detection）"><a class="header-anchor" href="#🔍-测试阶段（Zero-Shot-Detection）"></a>🔍 测试阶段（Zero-Shot Detection）</h3>
 <p>测试时，对于每个候选框 
-    <span id="mjx-a0efc33">
+    <span id="mjx-f101381">
       <style>
-      #mjx-a0efc33{
+      #mjx-f101381{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3353,9 +3353,9 @@ g[data-mml-node="xypic"] path {
     </span>
   ，模型计算它与所有<strong>未见类别</strong>语义向量的相似度，然后取最相似的类别：</p>
 
-    <span id="mjx-3e9d4a9">
+    <span id="mjx-7cbf9f9">
       <style>
-      #mjx-3e9d4a9{
+      #mjx-7cbf9f9{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3521,9 +3521,9 @@ g[data-mml-node="xypic"] path {
 <h4 id="变量解释："><a class="header-anchor" href="#变量解释："></a><strong>变量解释：</strong></h4>
 <ul>
 <li>
-    <span id="mjx-f05e072">
+    <span id="mjx-45cf82e">
       <style>
-      #mjx-f05e072{
+      #mjx-45cf82e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3683,9 +3683,9 @@ g[data-mml-node="xypic"] path {
     </span>
   ：表示第$ i$个候选框的<strong>预测类别</strong>。</li>
 <li>
-    <span id="mjx-308cffa">
+    <span id="mjx-c2dbbdb">
       <style>
-      #mjx-308cffa{
+      #mjx-c2dbbdb{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -3844,9 +3844,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.666ex;" xmlns="http://www.w3.org/2000/svg" width="2.786ex" height="2.261ex" role="img" focusable="false" viewBox="0 -705 1231.3 999.2" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D446" d="M308 24Q367 24 416 76T466 197Q466 260 414 284Q308 311 278 321T236 341Q176 383 176 462Q176 523 208 573T273 648Q302 673 343 688T407 704H418H425Q521 704 564 640Q565 640 577 653T603 682T623 704Q624 704 627 704T632 705Q645 705 645 698T617 577T585 459T569 456Q549 456 549 465Q549 471 550 475Q550 478 551 494T553 520Q553 554 544 579T526 616T501 641Q465 662 419 662Q362 662 313 616T263 510Q263 480 278 458T319 427Q323 425 389 408T456 390Q490 379 522 342T554 242Q554 216 546 186Q541 164 528 137T492 78T426 18T332 -20Q320 -22 298 -22Q199 -22 144 33L134 44L106 13Q83 -14 78 -18T65 -22Q52 -22 52 -14Q52 -11 110 221Q112 227 130 227H143Q149 221 149 216Q149 214 148 207T144 186T142 153Q144 114 160 87T203 47T255 29T308 24Z"></path></g><g data-mml-node="TeXAtom" transform="translate(646,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(345,0)"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>S</mi><mrow data-mjx-texclass="ORD"><mi>i</mi><mi>j</mi></mrow></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   ：表示第$ i
-    <span id="mjx-04609e">
+    <span id="mjx-8ea63a9">
       <style>
-      #mjx-04609e{
+      #mjx-8ea63a9{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4005,9 +4005,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.452ex;" xmlns="http://www.w3.org/2000/svg" width="13.575ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 6000 950" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">个</text></g><g data-mml-node="mi" transform="translate(1000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">候</text></g><g data-mml-node="mi" transform="translate(2000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">选</text></g><g data-mml-node="mi" transform="translate(3000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">框</text></g><g data-mml-node="mi" transform="translate(4000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">与</text></g><g data-mml-node="mi" transform="translate(5000,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">第</text></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi mathvariant="normal">个</mi><mi mathvariant="normal">候</mi><mi mathvariant="normal">选</mi><mi mathvariant="normal">框</mi><mi mathvariant="normal">与</mi><mi mathvariant="normal">第</mi></math></mjx-assistive-mml></mjx-container>
     </span>
    j$ 个类别
-    <span id="mjx-f246222">
+    <span id="mjx-d7470fe">
       <style>
-      #mjx-f246222{
+      #mjx-d7470fe{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4167,9 +4167,9 @@ g[data-mml-node="xypic"] path {
     </span>
   之间的相似度。</li>
 <li>
-    <span id="mjx-6901843">
+    <span id="mjx-b98f211">
       <style>
-      #mjx-6901843{
+      #mjx-b98f211{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4333,9 +4333,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>在测试阶段，模型已经学会了从已见类别中获取特征，并将这些特征映射到一个共享的语义空间。</li>
 <li>对于每个候选框 
-    <span id="mjx-908bb7">
+    <span id="mjx-8b32288">
       <style>
-      #mjx-908bb7{
+      #mjx-8b32288{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4494,9 +4494,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="1.71ex" height="1.927ex" role="img" focusable="false" viewBox="0 -694 756 851.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D44F" d="M73 647Q73 657 77 670T89 683Q90 683 161 688T234 694Q246 694 246 685T212 542Q204 508 195 472T180 418L176 399Q176 396 182 402Q231 442 283 442Q345 442 383 396T422 280Q422 169 343 79T173 -11Q123 -11 82 27T40 150V159Q40 180 48 217T97 414Q147 611 147 623T109 637Q104 637 101 637H96Q86 637 83 637T76 640T73 647ZM336 325V331Q336 405 275 405Q258 405 240 397T207 376T181 352T163 330L157 322L136 236Q114 150 114 114Q114 66 138 42Q154 26 178 26Q211 26 245 58Q270 81 285 114T318 219Q336 291 336 325Z"></path></g><g data-mml-node="mi" transform="translate(462,-150) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>b</mi><mi>i</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
   ，模型计算该框与所有未见类别的相似度 
-    <span id="mjx-87858c4">
+    <span id="mjx-18e084f">
       <style>
-      #mjx-87858c4{
+      #mjx-18e084f{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -4656,9 +4656,9 @@ g[data-mml-node="xypic"] path {
     </span>
   。</li>
 <li>公式中的<strong>arg max</strong>操作表示从所有未见类别中选择<strong>相似度最大</strong>的类别作为最终的预测类别 
-    <span id="mjx-06d7626">
+    <span id="mjx-cd063eb">
       <style>
-      #mjx-06d7626{
+      #mjx-cd063eb{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5139,9 +5139,9 @@ g[data-mml-node="xypic"] path {
 </ol>
 <ul>
 <li><strong>类别向量</strong>：为每个类别使用 <strong>分布式词向量</strong>（常见为 <strong>GloVe/fastText</strong>，维度 300），记为 
-    <span id="mjx-75f7ffb">
+    <span id="mjx-159e63a">
       <style>
-      #mjx-75f7ffb{
+      #mjx-159e63a{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5309,9 +5309,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>
 <p><strong>线性投影</strong>：学习一个矩阵 
-    <span id="mjx-ca22b0a">
+    <span id="mjx-8849048">
       <style>
-      #mjx-ca22b0a{
+      #mjx-8849048{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5471,9 +5471,9 @@ g[data-mml-node="xypic"] path {
     </span>
   ，把 RoI 视觉特征$\phi(b) $映射到语义空间：</p>
 
-    <span id="mjx-7dcf6f9">
+    <span id="mjx-c436387">
       <style>
-      #mjx-7dcf6f9{
+      #mjx-c436387{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5634,9 +5634,9 @@ g[data-mml-node="xypic"] path {
   </li>
 <li>
 <p><strong>打分方式</strong>：与每个类别的词向量做 <strong>余弦相似度</strong> 
-    <span id="mjx-a108724">
+    <span id="mjx-df44e58">
       <style>
-      #mjx-a108724{
+      #mjx-df44e58{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5797,9 +5797,9 @@ g[data-mml-node="xypic"] path {
   </p>
 <ul>
 <li><strong>训练期</strong>：与 <strong>已见类集合 
-    <span id="mjx-1dd8fdb">
+    <span id="mjx-55495f7">
       <style>
-      #mjx-1dd8fdb{
+      #mjx-55495f7{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -5995,9 +5995,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li><strong>ZSD（纯未见）</strong>：对每个 RoI，仅在 <strong>未见类集合 U</strong> 上打分，取最高者为预测类；再做 NMS，得到检测结果。</li>
 <li><strong>GZSD（泛化零样本）</strong>：需要在
-    <span id="mjx-3b78217">
+    <span id="mjx-bb72707">
       <style>
-      #mjx-3b78217{
+      #mjx-bb72707{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6265,9 +6265,9 @@ GZSD 还会给 <strong>Seen/Unseen 的 Recall</strong> 以及 <strong>调和平�
 对每张测试图像，模型输出一系列候选框及其类别预测。
 但在计算得分时，<strong>只在未见类集合 U</strong> 上打分。</p>
 
-    <span id="mjx-adeef2">
+    <span id="mjx-4907209">
       <style>
-      #mjx-adeef2{
+      #mjx-4907209{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6448,9 +6448,9 @@ g[data-mml-node="xypic"] path {
 </blockquote>
 <p>具体计算：</p>
 
-    <span id="mjx-ece3d37">
+    <span id="mjx-da63e05">
       <style>
-      #mjx-ece3d37{
+      #mjx-da63e05{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6669,9 +6669,9 @@ g[data-mml-node="xypic"] path {
 <p>(2) 测试流程</p>
 <p>与 ZSD 类似，但这次模型的打分范围扩大到：</p>
 
-    <span id="mjx-ef10ec7">
+    <span id="mjx-59ec74d">
       <style>
-      #mjx-ef10ec7{
+      #mjx-59ec74d{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -6842,9 +6842,9 @@ g[data-mml-node="xypic"] path {
 <ol>
 <li>对于每个候选框，模型计算与所有类的相似度；</li>
 <li>若该框的最大相似度小于阈值 
-    <span id="mjx-591561a">
+    <span id="mjx-f9ca2f4">
       <style>
-      #mjx-591561a{
+      #mjx-f9ca2f4{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7006,9 +7006,9 @@ g[data-mml-node="xypic"] path {
 <li>否则，认为它属于 <strong>seen 类集合</strong>。</li>
 </ol>
 <p>通过调整 
-    <span id="mjx-d3e21fa">
+    <span id="mjx-d30f4c7">
       <style>
-      #mjx-d3e21fa{
+      #mjx-d30f4c7{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7172,9 +7172,9 @@ g[data-mml-node="xypic"] path {
 <p>在 GZSD 中，需要同时评估两种召回率：</p>
 <ul>
 <li>
-    <span id="mjx-b029b1">
+    <span id="mjx-abf1e77">
       <style>
-      #mjx-b029b1{
+      #mjx-abf1e77{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7334,9 +7334,9 @@ g[data-mml-node="xypic"] path {
     </span>
   ：检测到的 seen 类实例数 / seen 类总数；</li>
 <li>
-    <span id="mjx-95869e7">
+    <span id="mjx-718374a">
       <style>
-      #mjx-95869e7{
+      #mjx-718374a{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7498,9 +7498,9 @@ g[data-mml-node="xypic"] path {
 </ul>
 <p>单看任何一个指标都不公平，于是作者采用<strong>调和平均（H-Mean）</strong>：</p>
 
-    <span id="mjx-d75645b">
+    <span id="mjx-0166b01">
       <style>
-      #mjx-d75645b{
+      #mjx-0166b01{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7660,9 +7660,9 @@ g[data-mml-node="xypic"] path {
     </span>
   <ul>
 <li>当模型只关注 seen 类时，$Recall_s $高但 
-    <span id="mjx-2653045">
+    <span id="mjx-16f511a">
       <style>
-      #mjx-2653045{
+      #mjx-16f511a{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7822,9 +7822,9 @@ g[data-mml-node="xypic"] path {
     </span>
    低 → H 很低；</li>
 <li>当模型只关注 unseen 类时，
-    <span id="mjx-1c1aedd">
+    <span id="mjx-c6f3dee">
       <style>
-      #mjx-1c1aedd{
+      #mjx-c6f3dee{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -7983,9 +7983,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.357ex;" xmlns="http://www.w3.org/2000/svg" width="7.399ex" height="1.927ex" role="img" focusable="false" viewBox="0 -694 3270.5 851.8" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D445" d="M230 637Q203 637 198 638T193 649Q193 676 204 682Q206 683 378 683Q550 682 564 680Q620 672 658 652T712 606T733 563T739 529Q739 484 710 445T643 385T576 351T538 338L545 333Q612 295 612 223Q612 212 607 162T602 80V71Q602 53 603 43T614 25T640 16Q668 16 686 38T712 85Q717 99 720 102T735 105Q755 105 755 93Q755 75 731 36Q693 -21 641 -21H632Q571 -21 531 4T487 82Q487 109 502 166T517 239Q517 290 474 313Q459 320 449 321T378 323H309L277 193Q244 61 244 59Q244 55 245 54T252 50T269 48T302 46H333Q339 38 339 37T336 19Q332 6 326 0H311Q275 2 180 2Q146 2 117 2T71 2T50 1Q33 1 33 10Q33 12 36 24Q41 43 46 45Q50 46 61 46H67Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628Q287 635 230 637ZM630 554Q630 586 609 608T523 636Q521 636 500 636T462 637H440Q393 637 386 627Q385 624 352 494T319 361Q319 360 388 360Q466 361 492 367Q556 377 592 426Q608 449 619 486T630 554Z"></path></g><g data-mml-node="mi" transform="translate(759,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(1225,0)"><path data-c="1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path></g><g data-mml-node="mi" transform="translate(1658,0)"><path data-c="1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g><g data-mml-node="mi" transform="translate(2187,0)"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g><g data-mml-node="msub" transform="translate(2485,0)"><g data-mml-node="mi"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g><g data-mml-node="mi" transform="translate(331,-150) scale(0.707)"><path data-c="1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>R</mi><mi>e</mi><mi>c</mi><mi>a</mi><mi>l</mi><msub><mi>l</mi><mi>u</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
    高但 
-    <span id="mjx-9491dca">
+    <span id="mjx-e779c47">
       <style>
-      #mjx-9491dca{
+      #mjx-e779c47{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8162,9 +8162,9 @@ g[data-mml-node="xypic"] path {
 </tr>
 <tr>
 <td>
-    <span id="mjx-0d5d2e9">
+    <span id="mjx-bd228cd">
       <style>
-      #mjx-0d5d2e9{
+      #mjx-bd228cd{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8323,9 +8323,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.355ex;" xmlns="http://www.w3.org/2000/svg" width="7.234ex" height="1.926ex" role="img" focusable="false" viewBox="0 -694 3197.6 851.1" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D445" d="M230 637Q203 637 198 638T193 649Q193 676 204 682Q206 683 378 683Q550 682 564 680Q620 672 658 652T712 606T733 563T739 529Q739 484 710 445T643 385T576 351T538 338L545 333Q612 295 612 223Q612 212 607 162T602 80V71Q602 53 603 43T614 25T640 16Q668 16 686 38T712 85Q717 99 720 102T735 105Q755 105 755 93Q755 75 731 36Q693 -21 641 -21H632Q571 -21 531 4T487 82Q487 109 502 166T517 239Q517 290 474 313Q459 320 449 321T378 323H309L277 193Q244 61 244 59Q244 55 245 54T252 50T269 48T302 46H333Q339 38 339 37T336 19Q332 6 326 0H311Q275 2 180 2Q146 2 117 2T71 2T50 1Q33 1 33 10Q33 12 36 24Q41 43 46 45Q50 46 61 46H67Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628Q287 635 230 637ZM630 554Q630 586 609 608T523 636Q521 636 500 636T462 637H440Q393 637 386 627Q385 624 352 494T319 361Q319 360 388 360Q466 361 492 367Q556 377 592 426Q608 449 619 486T630 554Z"></path></g><g data-mml-node="mi" transform="translate(759,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(1225,0)"><path data-c="1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path></g><g data-mml-node="mi" transform="translate(1658,0)"><path data-c="1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g><g data-mml-node="mi" transform="translate(2187,0)"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g><g data-mml-node="msub" transform="translate(2485,0)"><g data-mml-node="mi"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g><g data-mml-node="mi" transform="translate(331,-150) scale(0.707)"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>R</mi><mi>e</mi><mi>c</mi><mi>a</mi><mi>l</mi><msub><mi>l</mi><mi>s</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
    / 
-    <span id="mjx-bd40cac">
+    <span id="mjx-1bac983">
       <style>
-      #mjx-bd40cac{
+      #mjx-1bac983{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8496,9 +8496,9 @@ g[data-mml-node="xypic"] path {
 <ul>
 <li>在 ZSD 中：Recall 高；</li>
 <li>在 GZSD 中：
-    <span id="mjx-67b384d">
+    <span id="mjx-5bffe5e">
       <style>
-      #mjx-67b384d{
+      #mjx-5bffe5e{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -8657,9 +8657,9 @@ g[data-mml-node="xypic"] path {
       <mjx-container class="MathJax" jax="SVG" style="position: relative;"><svg style="vertical-align: -0.355ex;" xmlns="http://www.w3.org/2000/svg" width="7.234ex" height="1.926ex" role="img" focusable="false" viewBox="0 -694 3197.6 851.1" aria-hidden="true"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D445" d="M230 637Q203 637 198 638T193 649Q193 676 204 682Q206 683 378 683Q550 682 564 680Q620 672 658 652T712 606T733 563T739 529Q739 484 710 445T643 385T576 351T538 338L545 333Q612 295 612 223Q612 212 607 162T602 80V71Q602 53 603 43T614 25T640 16Q668 16 686 38T712 85Q717 99 720 102T735 105Q755 105 755 93Q755 75 731 36Q693 -21 641 -21H632Q571 -21 531 4T487 82Q487 109 502 166T517 239Q517 290 474 313Q459 320 449 321T378 323H309L277 193Q244 61 244 59Q244 55 245 54T252 50T269 48T302 46H333Q339 38 339 37T336 19Q332 6 326 0H311Q275 2 180 2Q146 2 117 2T71 2T50 1Q33 1 33 10Q33 12 36 24Q41 43 46 45Q50 46 61 46H67Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628Q287 635 230 637ZM630 554Q630 586 609 608T523 636Q521 636 500 636T462 637H440Q393 637 386 627Q385 624 352 494T319 361Q319 360 388 360Q466 361 492 367Q556 377 592 426Q608 449 619 486T630 554Z"></path></g><g data-mml-node="mi" transform="translate(759,0)"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="mi" transform="translate(1225,0)"><path data-c="1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path></g><g data-mml-node="mi" transform="translate(1658,0)"><path data-c="1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g><g data-mml-node="mi" transform="translate(2187,0)"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g><g data-mml-node="msub" transform="translate(2485,0)"><g data-mml-node="mi"><path data-c="1D459" d="M117 59Q117 26 142 26Q179 26 205 131Q211 151 215 152Q217 153 225 153H229Q238 153 241 153T246 151T248 144Q247 138 245 128T234 90T214 43T183 6T137 -11Q101 -11 70 11T38 85Q38 97 39 102L104 360Q167 615 167 623Q167 626 166 628T162 632T157 634T149 635T141 636T132 637T122 637Q112 637 109 637T101 638T95 641T94 647Q94 649 96 661Q101 680 107 682T179 688Q194 689 213 690T243 693T254 694Q266 694 266 686Q266 675 193 386T118 83Q118 81 118 75T117 65V59Z"></path></g><g data-mml-node="mi" transform="translate(331,-150) scale(0.707)"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g></g></g></g></svg><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>R</mi><mi>e</mi><mi>c</mi><mi>a</mi><mi>l</mi><msub><mi>l</mi><mi>s</mi></msub></math></mjx-assistive-mml></mjx-container>
     </span>
    和 
-    <span id="mjx-1f09c15">
+    <span id="mjx-1d5ee82">
       <style>
-      #mjx-1f09c15{
+      #mjx-1d5ee82{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
@@ -9934,9 +9934,9 @@ LAB 模型的优势不仅是偶然，而是对不同匹配条件都有效。</p>
 <li>测试时：计算与未见类语义向量的相似度，取最高者为预测类。</li>
 </ul>
 
-    <span id="mjx-b0e7806">
+    <span id="mjx-d84326a">
       <style>
-      #mjx-b0e7806{
+      #mjx-d84326a{
         display:contents;
         mjx-assistive-mml {
           user-select: text !important;
