@@ -10,7 +10,6 @@ backend:
 local_backend:
   url: http://localhost:8081/api/v1
 
-publish_mode: editorial_workflow
 site_url: https://qieliqiean.github.io/blog
 display_url: https://qieliqiean.github.io/blog
 media_folder: source/image/uploads

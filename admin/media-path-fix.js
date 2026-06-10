@@ -72,10 +72,16 @@
   }
 
   function postAssetFolderName(entry, collectionName) {
+    const titleValue = String(getEntryDataValue(entry, 'title') || '').trim();
+    const titlePathSegment = slugifyPathSegment(titleValue) || titleValue.replace(/[\\/]+/g, '-').trim();
     const entryPath = String(getEntryValue(entry, 'path') || getEntryValue(entry, 'slug') || '');
     const parts = entryPath.split('/').filter(Boolean);
     const filename = parts.pop() || '';
     const name = filename.replace(/\.[^.]+$/, '');
+
+    if (collectionName === 'posts' && !entryPath && titlePathSegment) {
+      return titlePathSegment;
+    }
 
     if (collectionName === 'posts' && isIndexEntryPath(entryPath)) {
       return 'index';
@@ -83,7 +89,19 @@
 
     if (name && name !== 'index') return name;
 
-    return parts.pop() || name;
+    const sourcePath = normalizePathPart(getEntrySourcePath(entry));
+    const sourceParts = sourcePath.split('/').filter(Boolean);
+    const sourceName = sourceParts.pop() || '';
+
+    if (sourceName && sourceName !== 'index') {
+      if (collectionName === 'posts' && titlePathSegment && sourceName === normalizePathPart(getCurrentFolderFromSearch())) {
+        return titlePathSegment;
+      }
+
+      return sourceName;
+    }
+
+    return parts.pop() || titlePathSegment || name;
   }
 
   function prefixBareImagePath(rawPath, folderName) {
@@ -690,11 +708,15 @@
 
     const baseFolder = getCurrentFolderFromSearch();
     const slug = slugifyPathSegment(titleInput.value);
-    const nextAutoPath = slug ? (baseFolder ? `${baseFolder}/${slug}` : slug) : baseFolder;
+    const legacyAutoPath = slug ? (baseFolder ? `${baseFolder}/${slug}` : slug) : baseFolder;
+    const nextAutoPath = baseFolder;
     const currentValue = String(pathInput.value || '').trim();
     const lastAutoPath = pathInput.dataset.cmsAutoPath || '';
     const canAutoUpdate =
-      currentValue === '' || currentValue === baseFolder || currentValue === lastAutoPath;
+      currentValue === '' ||
+      currentValue === baseFolder ||
+      currentValue === legacyAutoPath ||
+      currentValue === lastAutoPath;
 
     if (canAutoUpdate && currentValue !== nextAutoPath) {
       setInputValue(pathInput, nextAutoPath);
